@@ -9,6 +9,8 @@ Step-up Self-Service
  * [Composer](https://getcomposer.org/)
  * A web server (Apache, Nginx)
  * Graylog2 (or disable this Monolog handler)
+ * A working [Gateway](https://github.com/SURFnet/Stepup-Gateway)
+ * Working [Middleware](https://github.com/SURFnet/Stepup-Middleware)
 
 ## Installation
 
