@@ -1,12 +1,15 @@
-Step-up Middleware
-==================
+Step-up Self-Service
+====================
 
-[![Build Status](https://travis-ci.org/SURFnet/Stepup-Middleware.svg)](https://travis-ci.org/SURFnet/Stepup-Middleware) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SURFnet/Stepup-Middleware/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/SURFnet/Stepup-Middleware/?branch=develop) [![SensioLabs Insight](https://insight.sensiolabs.com/projects/TODO/mini.png)](https://insight.sensiolabs.com/projects/TODO)
+[![Build Status](https://travis-ci.org/SURFnet/Stepup-Self-Service.svg)](https://travis-ci.org/SURFnet/Stepup-Self-Service) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SURFnet/Stepup-Self-Service/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/SURFnet/Stepup-Self-Service/?branch=develop) [![SensioLabs Insight](https://insight.sensiolabs.com/projects/TODO/mini.png)](https://insight.sensiolabs.com/projects/TODO)
+
+## Requirements
+
+ * PHP 5.4+
+ * [Composer](https://getcomposer.org/)
+ * A web server (Apache, Nginx)
+ * Graylog2 (or disable this Monolog handler)
 
 ## Installation
 
-Clone into directory as specified by the [development box](https://github.com/SURFnet/Stepup-Deploy/tree/dev).
-
-```sh-session
-$ composer install
-```
+Clone the repository or download the archive to a directory. Install the dependencies by running `composer install`.
