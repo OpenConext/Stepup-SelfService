@@ -1,6 +1,6 @@
 {
 	"composerBinDir": "vendor\/bin",
-	"projectName": "StepupMiddleware",
+	"projectName": "StepupSelfService",
 	"buildArtifacts": {
 		"enabled": false
 	},
