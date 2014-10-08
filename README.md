@@ -1,7 +1,7 @@
 Step-up Self-Service
 ====================
 
-[![Build Status](https://travis-ci.org/SURFnet/Stepup-Self-Service.svg)](https://travis-ci.org/SURFnet/Stepup-Self-Service) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SURFnet/Stepup-Self-Service/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/SURFnet/Stepup-Self-Service/?branch=develop) [![SensioLabs Insight](https://insight.sensiolabs.com/projects/TODO/mini.png)](https://insight.sensiolabs.com/projects/TODO)
+[![Build Status](https://travis-ci.org/SURFnet/Stepup-SelfService.svg)](https://travis-ci.org/SURFnet/Stepup-SelfService) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SURFnet/Stepup-SelfService/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/SURFnet/Stepup-SelfService/?branch=develop) [![SensioLabs Insight](https://insight.sensiolabs.com/projects/TODO/mini.png)](https://insight.sensiolabs.com/projects/TODO)
 
 ## Requirements
 
