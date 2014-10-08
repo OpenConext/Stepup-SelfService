@@ -1,6 +1,6 @@
 parameters:
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            NotSoSecretReplaceMe!
 
     debug_toolbar:          true
     debug_redirects:        false
