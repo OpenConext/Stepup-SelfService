@@ -1,5 +1,5 @@
 parameters:
-    locale:            nl
+    default_locale:    nl
     secret:            NotSoSecretReplaceMe!
 
     debug_toolbar:          true
