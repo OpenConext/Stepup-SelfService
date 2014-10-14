@@ -11,3 +11,9 @@ framework:
 web_profiler:
     toolbar: false
     intercept_redirects: false
+
+nelmio_security:
+    csp:
+        img: [ self, 'data:' ]
+        script: [ self, unsafe-inline ]
+        style: [ self, unsafe-inline ]
