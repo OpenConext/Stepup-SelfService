@@ -13,3 +13,5 @@
 /cache.properties
 /app/SymfonyRequirements.php
 /app/check.php
+/bin/*
+!/bin/extract-translations.sh
