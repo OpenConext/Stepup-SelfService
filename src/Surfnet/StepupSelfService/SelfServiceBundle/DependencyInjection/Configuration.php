@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('surfnet_stepup_self_service_self_service');
+        /*$rootNode = */$treeBuilder->root('surfnet_stepup_self_service_self_service');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
