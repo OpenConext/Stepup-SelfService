@@ -1,0 +1,4 @@
+services:
+#    surfnet_stepup_self_service_self_service.example:
+#        class: Surfnet\StepupSelfService\SelfServiceBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
