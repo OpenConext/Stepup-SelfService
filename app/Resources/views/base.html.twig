@@ -3,8 +3,8 @@
 
 {% block title %}{{ 'app.name'|trans }}{% endblock title %}
 {% block head_style %}
-    {% stylesheets
-    '@SurfnetStepupSelfServiceBundle/Resources/public/less/style.less' filter='less'
+    {% stylesheets filter='less'
+    '@SurfnetStepupSelfServiceSelfServiceBundle/Resources/public/less/style.less'
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
@@ -48,11 +48,11 @@
         {% endblock footer %}
 
 {% block foot_script %}
-    {% javascripts
-    '@SurfnetStepupSelfServiceBundle/Resources/public/js/jquery-1.11.1.min.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {#{% javascripts#}
+    {#'@SurfnetStepupSelfServiceBundle/Resources/public/js/jquery-1.11.1.min.js'#}
+    {#%}#}
+    {#<script type="text/javascript" src="{{ asset_url }}"></script>#}
+    {#{% endjavascripts %}#}
 {% endblock foot_script %}
 {% block foot_script_additional %}
 {% endblock foot_script_additional %}
