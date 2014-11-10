@@ -31,9 +31,11 @@ class EntryPointController extends Controller
         $service = $this->get('surfnet_stepup_self_service_self_service.service.identity');
 
         if ($service->hasSecondFactorsRegistered()) {
-            return new Response('Go to second factor list');
+            return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_second_factor_list'));
         } else {
-            return new Response('Go to second factor registration flow');
+            return $this->redirect(
+                $this->generateUrl('surfnet_stepup_self_service_self_service_registration_display_types')
+            );
         }
     }
 }
