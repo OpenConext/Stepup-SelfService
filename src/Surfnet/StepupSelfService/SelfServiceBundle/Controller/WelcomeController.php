@@ -16,10 +16,18 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfServiceBundle;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class SurfnetStepupSelfServiceBundle extends Bundle
+class WelcomeController extends Controller
 {
+    /**
+     * @Template
+     */
+    public function welcomeAction()
+    {
+        return [];
+    }
 }
