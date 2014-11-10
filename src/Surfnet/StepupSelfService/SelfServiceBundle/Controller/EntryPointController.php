@@ -27,10 +27,12 @@ class EntryPointController extends Controller
 {
     public function decideSecondFactorFlowAction()
     {
+        $identityId = '45fb401a-22b6-4829-9495-08b9610c18d4';
+
         /** @var IdentityService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.identity');
 
-        if ($service->hasSecondFactorsRegistered()) {
+        if ($service->hasSecondFactorsRegistered($identityId)) {
             return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_second_factor_list'));
         } else {
             return $this->redirect(

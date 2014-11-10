@@ -24,9 +24,10 @@ class IdentityService
      * Returns whether the registrant has registered second factors with Step-up. The state of the second factor is
      * irrelevant.
      *
+     * @param string $identityId
      * @return bool
      */
-    public function hasSecondFactorsRegistered()
+    public function hasSecondFactorsRegistered($identityId)
     {
         return false;
     }
