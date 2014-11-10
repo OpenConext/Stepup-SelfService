@@ -1,3 +1,7 @@
 surfnet_stepup_self_service_self_service_entry_point:
     path:     /
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:EntryPoint:decideSecondFactorFlow }
+
+surfnet_stepup_self_service_self_service_second_factor_list:
+    path:     /overview
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list }
