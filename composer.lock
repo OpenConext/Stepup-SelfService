@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "780d1e387b991b765ca0df5aa2fac546",
+    "hash": "ac57f68e4124f1b3a197506706da1c1b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1428,6 +1428,52 @@
                 "xmlsec"
             ],
             "time": "2013-06-19 00:00:00"
+        },
+        {
+            "name": "surfnet/stepup-saml-bundle",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SURFnet/Stepup-saml-bundle.git",
+                "reference": "b21f0fc40da7c870ffacbaabe6b6bedc324d38f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/b21f0fc40da7c870ffacbaabe6b6bedc324d38f9",
+                "reference": "b21f0fc40da7c870ffacbaabe6b6bedc324d38f9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "php": "~5.4",
+                "simplesamlphp/saml2": "dev-master",
+                "symfony/framework-bundle": "~2.5"
+            },
+            "require-dev": {
+                "ibuildings/qa-tools": "~1.1",
+                "liip/rmt": "~1.1",
+                "mockery/mockery": "~0.9",
+                "psr/log": "~1.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Surfnet\\SamlBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A Symfony2 bundle that integrates the simplesamlphp\\saml2 library with Symfony",
+            "keywords": [
+                "SAML2",
+                "saml",
+                "simplesamlphp",
+                "stepup",
+                "surfnet"
+            ],
+            "time": "2014-11-06 16:09:38"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -3680,7 +3726,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "mopa/bootstrap-bundle": 10,
-        "simplesamlphp/saml2": 20
+        "simplesamlphp/saml2": 20,
+        "surfnet/stepup-saml-bundle": 20
     },
     "prefer-stable": false,
     "platform": {

@@ -23,7 +23,8 @@
         "fortawesome/font-awesome": "~4.2.0",
         "jms/translation-bundle": "~1.1.0",
         "jms/di-extra-bundle": "~1.4.0",
-        "simplesamlphp/saml2": "@dev"
+        "simplesamlphp/saml2": "@dev",
+        "surfnet/stepup-saml-bundle": "dev-develop"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
