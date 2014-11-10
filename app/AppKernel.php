@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Nelmio\SecurityBundle\NelmioSecurityBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Surfnet\StepupSelfService\SelfServiceBundle\SurfnetStepupSelfServiceSelfServiceBundle(),
+            new Surfnet\StepupMiddlewareClientBundle\SurfnetStepupMiddlewareClientBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

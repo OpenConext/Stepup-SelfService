@@ -61,6 +61,14 @@ nelmio_security:
     encrypted_cookie:
         names: ['*']
 
+surfnet_stepup_middleware_client:
+    authorisation:
+        username: ss
+        password: ss
+    url:
+        command_api: http://mw-dev.stepup.coin.surf.net/app_dev.php/command
+        api: http://mw-dev.stepup.coin.surf.net/app_dev.php/
+
 services:
     twig.extension.text: # Required by JMSTranslationBundle
         class: Twig_Extensions_Extension_Text

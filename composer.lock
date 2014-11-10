@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "780d1e387b991b765ca0df5aa2fac546",
+    "hash": "a8b4789c7b0421ff7eea165b66ec5368",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -452,6 +452,124 @@
                 "icon"
             ],
             "time": "2014-08-26 16:36:44"
+        },
+        {
+            "name": "guzzlehttp/guzzle",
+            "version": "4.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "66fd916e9f9130bc22c51450476823391cb2f67c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/66fd916e9f9130bc22c51450476823391cb2f67c",
+                "reference": "66fd916e9f9130bc22c51450476823391cb2f67c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/streams": "~2.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "~4.0",
+                "psr/log": "~1.0"
+            },
+            "suggest": {
+                "ext-curl": "Guzzle will use specific adapters if cURL is present"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2014-10-05 19:29:14"
+        },
+        {
+            "name": "guzzlehttp/streams",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/streams.git",
+                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/streams/zipball/f91b721d73f0e561410903b3b3c90a5d0e40b534",
+                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Stream\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Provides a simple abstraction over streams of data (Guzzle 4+)",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "stream"
+            ],
+            "time": "2014-08-17 21:15:53"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -935,6 +1053,42 @@
             "time": "2014-09-30 13:30:58"
         },
         {
+            "name": "moontoast/math",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moontoast/math.git",
+                "reference": "fce28a9d1e73e73376cb44e5e581675d15fbe2f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moontoast/math/zipball/fce28a9d1e73e73376cb44e5e581675d15fbe2f3",
+                "reference": "fce28a9d1e73e73376cb44e5e581675d15fbe2f3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Moontoast\\Math": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A mathematics library, providing functionality for large numbers",
+            "homepage": "https://github.com/moontoast/math",
+            "keywords": [
+                "bcmath",
+                "math"
+            ],
+            "time": "2013-01-19 17:42:34"
+        },
+        {
             "name": "mopa/bootstrap-bundle",
             "version": "v3.0.0-beta4",
             "target-dir": "Mopa/Bundle/BootstrapBundle",
@@ -1176,6 +1330,72 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "rhumsaa/uuid",
+            "version": "2.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/uuid.git",
+                "reference": "cca98c652cac412c9c2f109c69e5532f313435fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/cca98c652cac412c9c2f109c69e5532f313435fc",
+                "reference": "cca98c652cac412c9c2f109c69e5532f313435fc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "doctrine/dbal": ">=2.3",
+                "moontoast/math": "~1.1",
+                "phpunit/phpunit": "~4.1",
+                "satooshi/php-coveralls": "~0.6",
+                "symfony/console": "~2.3"
+            },
+            "suggest": {
+                "doctrine/dbal": "Allow the use of a UUID as doctrine field type.",
+                "moontoast/math": "Support for converting UUID to 128-bit integer (in string form).",
+                "symfony/console": "Support for use of the bin/uuid command line tool."
+            },
+            "bin": [
+                "bin/uuid"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rhumsaa\\Uuid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marijn Huizendveld",
+                    "email": "marijn.huizendveld@gmail.com"
+                },
+                {
+                    "name": "Ben Ramsey",
+                    "homepage": "http://benramsey.com"
+                }
+            ],
+            "description": "A PHP 5.3+ library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).",
+            "homepage": "https://github.com/ramsey/uuid",
+            "keywords": [
+                "guid",
+                "identifier",
+                "uuid"
+            ],
+            "time": "2014-11-09 18:42:56"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -1428,6 +1648,89 @@
                 "xmlsec"
             ],
             "time": "2013-06-19 00:00:00"
+        },
+        {
+            "name": "surfnet/stepup-middleware-client",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SURFnet/Stepup-Middleware-client.git",
+                "reference": "55a0f5b05f58ba9ba9bba7ac645e4d251fef221c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-client/zipball/55a0f5b05f58ba9ba9bba7ac645e4d251fef221c",
+                "reference": "55a0f5b05f58ba9ba9bba7ac645e4d251fef221c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~4",
+                "php": "~5.4"
+            },
+            "require-dev": {
+                "ibuildings/qa-tools": "~1.1,>=1.1.27",
+                "liip/rmt": "1.1.*",
+                "mockery/mockery": "0.9.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Surfnet\\StepupMiddlewareClient\\": [
+                        "src",
+                        "tests"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Library for consuming the Step-up Middleware API.",
+            "time": "2014-11-07 14:47:16"
+        },
+        {
+            "name": "surfnet/stepup-middleware-client-bundle",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
+                "reference": "78402027e4309c3f3ed1448417f7ccb47f5c644a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/78402027e4309c3f3ed1448417f7ccb47f5c644a",
+                "reference": "78402027e4309c3f3ed1448417f7ccb47f5c644a",
+                "shasum": ""
+            },
+            "require": {
+                "moontoast/math": "~1.1",
+                "php": "~5.4",
+                "psr/log": "~1.0",
+                "rhumsaa/uuid": "~2.7",
+                "surfnet/stepup-middleware-client": "dev-develop",
+                "symfony/config": "~2",
+                "symfony/dependency-injection": "~2",
+                "symfony/http-kernel": "~2",
+                "symfony/validator": "~2"
+            },
+            "require-dev": {
+                "ibuildings/qa-tools": "~1.1",
+                "liip/rmt": "1.1.*",
+                "matthiasnoback/symfony-config-test": "0.*",
+                "mockery/mockery": "0.9.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Surfnet\\StepupMiddlewareClientBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
+            "time": "2014-11-07 14:46:57"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -2364,124 +2667,6 @@
                 "scraper"
             ],
             "time": "2014-07-22 13:24:11"
-        },
-        {
-            "name": "guzzlehttp/guzzle",
-            "version": "4.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "66fd916e9f9130bc22c51450476823391cb2f67c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/66fd916e9f9130bc22c51450476823391cb2f67c",
-                "reference": "66fd916e9f9130bc22c51450476823391cb2f67c",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "guzzlehttp/streams": "~2.1",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "phpunit/phpunit": "~4.0",
-                "psr/log": "~1.0"
-            },
-            "suggest": {
-                "ext-curl": "Guzzle will use specific adapters if cURL is present"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "client",
-                "curl",
-                "framework",
-                "http",
-                "http client",
-                "rest",
-                "web service"
-            ],
-            "time": "2014-10-05 19:29:14"
-        },
-        {
-            "name": "guzzlehttp/streams",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/streams.git",
-                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/streams/zipball/f91b721d73f0e561410903b3b3c90a5d0e40b534",
-                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Stream\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Provides a simple abstraction over streams of data (Guzzle 4+)",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "Guzzle",
-                "stream"
-            ],
-            "time": "2014-08-17 21:15:53"
         },
         {
             "name": "ibuildings/qa-tools",
@@ -3680,7 +3865,9 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "mopa/bootstrap-bundle": 10,
-        "simplesamlphp/saml2": 20
+        "simplesamlphp/saml2": 20,
+        "surfnet/stepup-middleware-client-bundle": 20,
+        "surfnet/stepup-middleware-client": 20
     },
     "prefer-stable": false,
     "platform": {
