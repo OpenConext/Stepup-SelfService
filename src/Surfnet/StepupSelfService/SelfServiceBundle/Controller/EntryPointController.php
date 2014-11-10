@@ -19,15 +19,14 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
-class WelcomeController extends Controller
+class EntryPointController extends Controller
 {
-    /**
-     * @Template
-     */
-    public function welcomeAction()
+    public function decideSecondFactorFlowAction()
     {
-        return [];
+        return new Response('', Response::HTTP_NO_CONTENT);
     }
 }
