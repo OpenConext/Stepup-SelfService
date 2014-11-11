@@ -1,7 +1,7 @@
 {% extends "::base.html.twig" %}
 
 {% block content %}
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 5} only %}
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 0} only %}
 
     <h2>{{ 'ss.registration.selector.title.welcome'|trans({'%name%': 'Fabien'}) }}</h2>
     <div class="alert alert-info" role="alert">{{ 'ss.registration.selector.alert.no_second_factors_yet'|trans }}</div>
