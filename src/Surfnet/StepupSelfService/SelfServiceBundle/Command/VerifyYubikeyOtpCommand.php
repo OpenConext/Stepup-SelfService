@@ -18,10 +18,29 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class VerifyYubikeyOtpCommand
 {
     /**
+     * @Assert\NotBlank(message="ss.verify_yubikey_command.otp.may_not_be_empty")
+     * @Assert\Type(type="string", message="ss.verify_yubikey_command.otp.must_be_string")
+     *
      * @var string
      */
     public $otp;
+
+    /**
+     * The requesting identity's ID (not name ID).
+     *
+     * @var string
+     */
+    public $identity;
+
+    /**
+     * The requesting identity's institution.
+     *
+     * @var string
+     */
+    public $institution;
 }

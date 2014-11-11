@@ -69,6 +69,13 @@ surfnet_stepup_middleware_client:
         command_api: http://mw-dev.stepup.coin.surf.net/app_dev.php/command
         api: http://mw-dev.stepup.coin.surf.net/app_dev.php/
 
+surfnet_stepup_self_service_self_service:
+    gateway_api:
+        url: %gateway_api_url%
+        credentials:
+            username: %gateway_api_username%
+            password: %gateway_api_password%
+
 mopa_bootstrap:
     form:
         show_legend: false

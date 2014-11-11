@@ -25,7 +25,8 @@
         "jms/di-extra-bundle": "~1.4.0",
         "simplesamlphp/saml2": "@dev",
         "surfnet/stepup-middleware-client-bundle": "dev-develop",
-        "surfnet/stepup-middleware-client": "@dev"
+        "surfnet/stepup-middleware-client": "@dev",
+        "guzzlehttp/guzzle": "~4"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

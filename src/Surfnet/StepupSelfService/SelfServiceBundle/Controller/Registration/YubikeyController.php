@@ -19,7 +19,10 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyVerificationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,11 +33,23 @@ class YubikeyController extends Controller
      */
     public function verifyAction(Request $request)
     {
-        $form = $this->createForm('ss_verify_yubikey_otp')->handleRequest($request);
+        $command = new VerifyYubikeyOtpCommand();
+        $command->identity = md5('rjkip'); // @TODO
+        $command->institution = 'Ibuildings bv';
+
+        $form = $this->createForm('ss_verify_yubikey_otp', $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            return new Response('<h1>Not yet implemented</h1>', Response::HTTP_I_AM_A_TEAPOT);
+            /** @var YubikeyVerificationService $service */
+            $service = $this->get('surfnet_stepup_self_service_self_service.service.yubikey_verification');
+
+            if ($service->verify($command)) {
+                return new Response('<h1>OTP verified</h1>', Response::HTTP_I_AM_A_TEAPOT);
+            } else {
+                $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
+            }
         }
+
 
         return ['form' => $form->createView()];
     }

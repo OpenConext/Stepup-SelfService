@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Copyright 2014 SURFnet bv
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 namespace Surfnet\StepupSelfService\SelfServiceBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -18,11 +34,57 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        /*$rootNode = */$treeBuilder->root('surfnet_stepup_self_service_self_service');
+        $rootNode = $treeBuilder->root('surfnet_stepup_self_service_self_service');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('gateway_api')
+                    ->info('Gateway API configuration')
+                    ->children()
+                        ->arrayNode('credentials')
+                            ->info('Basic authentication credentials')
+                            ->children()
+                                ->scalarNode('username')
+                                    ->info('Username for the Gateway API')
+                                    ->isRequired()
+                                    ->validate()
+                                        ->ifTrue(function ($value) {
+                                            return (!is_string($value) || empty($value));
+                                        })
+                                        ->thenInvalid(
+                                            'Invalid Gateway API username specified: "%s". Must be non-empty string'
+                                        )
+                                    ->end()
+                                ->end()
+                                ->scalarNode('password')
+                                    ->info('Password for the Gateway API')
+                                    ->isRequired()
+                                    ->validate()
+                                        ->ifTrue(function ($value) {
+                                            return (!is_string($value) || empty($value));
+                                        })
+                                        ->thenInvalid(
+                                            'Invalid Gateway API password specified: "%s". Must be non-empty string'
+                                        )
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->scalarNode('url')
+                            ->info('The URL to the Gateway application (e.g. https://gateway.tld)')
+                            ->isRequired()
+                            ->validate()
+                                ->ifTrue(function ($value) {
+                                    return (!is_string($value) || empty($value) || !preg_match('~/$~', $value));
+                                })
+                                ->thenInvalid(
+                                    'Invalid Gateway URL specified: "%s". Must be string ending in forward slash'
+                                )
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
