@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}
+    <h1>{{ 'ss.registration.yubikey.title.enter_challenge'|trans }}</h1>
+{% endblock %}
+
+{% block content %}
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 25+5} only %}
+
+    <h2>{{ 'ss.registration.yubikey.title.enter_challenge'|trans }}</h2>
+
+    <p>{{ 'ss.registration.yubikey.text.help_user_enter_challenge'|trans }}</p>
+
+    <ol>
+        <li>{{ 'ss.registration.yubikey.text.connect_yubikey_to_pc'|trans }}</li>
+        <li>{{ 'ss.registration.yubikey.text.ensure_form_field_focus'|trans }}</li>
+        <li>{{ 'ss.registration.yubikey.text.press_once_form_auto_submitted'|trans }}</li>
+    </ol>
+
+    <hr>
+
+    {{ form(form) }}
+
+{% endblock %}

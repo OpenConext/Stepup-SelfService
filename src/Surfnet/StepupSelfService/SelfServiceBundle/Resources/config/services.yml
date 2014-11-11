@@ -1,3 +1,7 @@
 services:
     surfnet_stepup_self_service_self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
+
+    surfnet_stepup_self_service_self_service.form.type.verify_yubikey_otp:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifyYubikeyOtpType
+        tags: [{ name: form.type, alias: ss_verify_yubikey_otp }]
