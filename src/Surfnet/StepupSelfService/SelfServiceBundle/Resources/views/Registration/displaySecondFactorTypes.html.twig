@@ -13,8 +13,20 @@
     <p>{{ 'ss.registration.selector.text.please_select_second_factor'|trans }}</p>
 
     <div class="row">
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {'type': 'yubikey', 'security': 3 } only %}
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {'type': 'sms', 'security': 2 } only %}
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {'type': 'tiqr', 'security': 2 } only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+            'type': 'yubikey',
+            'security': 3,
+            'url': path('surfnet_stepup_self_service_self_service_registration_yubikey_verify')
+        } only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+            'type': 'sms',
+            'security': 2,
+            'url': '#'
+        } only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+            'type': 'tiqr',
+            'security': 2,
+            'url': '#'
+        } only %}
     </div>
 {% endblock %}
