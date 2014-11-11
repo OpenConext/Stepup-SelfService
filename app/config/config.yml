@@ -69,6 +69,12 @@ surfnet_stepup_middleware_client:
         command_api: http://mw-dev.stepup.coin.surf.net/app_dev.php/command
         api: http://mw-dev.stepup.coin.surf.net/app_dev.php/
 
+mopa_bootstrap:
+    form:
+        show_legend: false
+    icons:
+        icon_set: fontawesome4
+
 services:
     twig.extension.text: # Required by JMSTranslationBundle
         class: Twig_Extensions_Extension_Text
