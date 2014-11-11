@@ -44,7 +44,9 @@ class YubikeyController extends Controller
             $service = $this->get('surfnet_stepup_self_service_self_service.service.yubikey_verification');
 
             if ($service->verify($command)) {
-                return new Response('<h1>OTP verified</h1>', Response::HTTP_I_AM_A_TEAPOT);
+                $this->get('session')->getFlashBag()->add('notice', 'ss.flash.token_was_registered');
+
+                return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_entry_point'));
             } else {
                 $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
             }
