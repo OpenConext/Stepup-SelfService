@@ -1,0 +1,24 @@
+<div class="col-xs-12 col-md-4">
+    <div class="thumbnail second-factor-selector">
+        <img src="/images/{{ type }}.png"
+             alt="{{ 'ss.registration.selector.'~type~'.alt'|trans }}">
+        <h3>{{ 'ss.registration.selector.'~type~'.title'|trans }}</h3>
+        <p class="ranking">
+            {% for i in 1 .. security %}
+            <i class="fa fa-lock text-warning"></i>
+            {% endfor %}
+            {% for i in security+1 .. 4 %}
+            <i class="fa fa-unlock-alt text-muted"></i>
+            {% endfor %}
+        </p>
+        <hr>
+        <p>
+            {{ 'ss.registration.selector.'~type~'.description'|trans }}
+        </p>
+        <p>
+            <a href="#" class="btn btn-primary">
+                {{ 'ss.registration.selector.button.use_'~type|trans }}
+            </a>
+        </p>
+    </div>
+</div>

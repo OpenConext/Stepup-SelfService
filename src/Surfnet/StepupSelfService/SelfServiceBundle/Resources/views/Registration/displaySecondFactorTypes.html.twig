@@ -1,5 +1,19 @@
 {% extends "::base.html.twig" %}
 
 {% block content %}
-    <h1>{{ 'surfnet_stepup_self_service.registration.display_second_factor_types.title'|trans }}</h1>
+    <h1>{{ 'ss.registration.selector.title.welcome'|trans({'%name%': 'Fabien'}) }}</h1>
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 5} only %}
+
+    <h2>{{ 'ss.registration.selector.title'|trans }}</h2>
+    <div class="alert alert-info" role="alert">{{ 'ss.registration.selector.alert.no_second_factors_yet'|trans }}</div>
+
+    <p>{{ 'ss.registration.selector.text.explain_wizard'|trans }}</p>
+    <p>{{ 'ss.registration.selector.text.please_select_second_factor'|trans }}</p>
+
+    <div class="row">
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {'type': 'yubikey', 'security': 3 } only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {'type': 'sms', 'security': 2 } only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {'type': 'tiqr', 'security': 2 } only %}
+    </div>
 {% endblock %}
