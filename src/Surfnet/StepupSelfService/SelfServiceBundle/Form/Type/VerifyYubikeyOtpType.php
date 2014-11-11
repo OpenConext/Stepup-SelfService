@@ -26,19 +26,17 @@ class VerifyYubikeyOtpType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $builder->setAttribute('show_legend', true);
-        $builder
-            ->add('otp', 'text', array(
-                'label' => /** @Ignore */ false,
-                'required' => true,
-                'widget_addon_prepend' => array(
-                    'icon' => 'key'
-                ),
-                'attr' => array(
-                    'autofocus' => true,
-                    'autocomplete' => 'off',
-                )
-            ));
+        $builder->add('otp', 'text', array(
+            'label' => /** @Ignore */ false,
+            'required' => true,
+            'widget_addon_prepend' => array(
+                'icon' => 'key'
+            ),
+            'attr' => array(
+                'autofocus' => true,
+                'autocomplete' => 'off',
+            )
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
