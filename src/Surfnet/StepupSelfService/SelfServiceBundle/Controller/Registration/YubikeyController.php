@@ -23,7 +23,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Command\VerifyYubikeySecondFac
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyVerificationService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,10 +42,10 @@ class YubikeyController extends Controller
         $form = $this->createForm('ss_verify_yubikey_otp', $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            /** @var YubikeyVerificationService $verificationService */
-            $verificationService = $this->get('surfnet_stepup_self_service_self_service.service.yubikey_verification');
+            /** @var YubikeyService $yubikeyService */
+            $yubikeyService = $this->get('surfnet_stepup_self_service_self_service.service.yubikey');
 
-            if (!$verificationService->verify($command)) {
+            if (!$yubikeyService->verify($command)) {
                 $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
 
                 return ['form' => $form->createView()];
@@ -54,7 +54,7 @@ class YubikeyController extends Controller
             $verifySecondFactorCommand = new VerifyYubikeySecondFactorCommand();
             $verifySecondFactorCommand->identityId = $command->identity;
             $verifySecondFactorCommand->secondFactorId = Uuid::generate();
-            $verifySecondFactorCommand->yubikeyPublicId = $verificationService->getPublicId($command->otp);
+            $verifySecondFactorCommand->yubikeyPublicId = $yubikeyService->getPublicId($command->otp);
 
             /** @var CommandService $commandService */
             $commandService = $this->get('surfnet_stepup_middleware_client.service.command');

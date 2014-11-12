@@ -23,7 +23,7 @@ use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
-class YubikeyVerificationService
+class YubikeyService
 {
     /**
      * @var ClientInterface

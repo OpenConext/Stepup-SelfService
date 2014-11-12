@@ -6,8 +6,8 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifyYubikeyOtpType
         tags: [{ name: form.type, alias: ss_verify_yubikey_otp }]
 
-    surfnet_stepup_self_service_self_service.service.yubikey_verification:
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyVerificationService
+    surfnet_stepup_self_service_self_service.service.yubikey:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
         arguments:
             - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
             - @logger
