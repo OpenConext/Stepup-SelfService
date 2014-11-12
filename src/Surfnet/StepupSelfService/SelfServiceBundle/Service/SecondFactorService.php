@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\SecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 
 class SecondFactorService
@@ -47,5 +48,16 @@ class SecondFactorService
         $secondFactors = $this->secondFactors->findByIdentity($identityId);
 
         return count($secondFactors) > 0;
+    }
+
+    /**
+     * Returns the given registrant's second factors, regardless of their states.
+     *
+     * @param string $identityId
+     * @return SecondFactor[]
+     */
+    public function findByIdentity($identityId)
+    {
+        return $this->secondFactors->findByIdentity($identityId);
     }
 }

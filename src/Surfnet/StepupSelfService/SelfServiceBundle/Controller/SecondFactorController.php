@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class SecondFactorController extends Controller
@@ -28,6 +29,14 @@ class SecondFactorController extends Controller
      */
     public function listAction()
     {
-        return [];
+        $identityId = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
+
+        /** @var SecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+        $secondFactors = $service->findByIdentity($identityId);
+
+        return [
+            'secondFactors' => $secondFactors,
+        ];
     }
 }
