@@ -61,7 +61,7 @@ class YubikeyController extends Controller
             $result = $commandService->execute($verifySecondFactorCommand);
 
             if (!$result->isSuccessful()) {
-                $this->get('session')->getFlashBag()->add('error', 'ss.flash.token_registration_failed');
+                $form->addError(new FormError('ss.verify_yubikey_command.second_factor_verification_failed'));
 
                 return ['form' => $form->createView()];
             }
