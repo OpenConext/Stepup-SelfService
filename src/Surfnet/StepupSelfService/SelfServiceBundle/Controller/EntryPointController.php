@@ -19,7 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,10 +29,10 @@ class EntryPointController extends Controller
     {
         $identityId = '45fb401a-22b6-4829-9495-08b9610c18d4';
 
-        /** @var IdentityService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.identity');
+        /** @var SecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
-        if ($service->hasSecondFactorsRegistered($identityId)) {
+        if ($service->doSecondFactorsExistForIdentity($identityId)) {
             return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_second_factor_list'));
         } else {
             $this->get('session')->getFlashBag()->add('notice', 'ss.registration.selector.alert.no_second_factors_yet');
