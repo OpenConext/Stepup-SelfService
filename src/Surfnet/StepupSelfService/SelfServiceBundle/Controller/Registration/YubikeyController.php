@@ -19,11 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Command\VerifyYubikeySecondFactorCommand;
-use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
-use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,33 +39,19 @@ class YubikeyController extends Controller
         $form = $this->createForm('ss_verify_yubikey_otp', $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            /** @var YubikeyService $yubikeyService */
-            $yubikeyService = $this->get('surfnet_stepup_self_service_self_service.service.yubikey');
+            /** @var YubikeySecondFactorService $service */
+            $service = $this->get('surfnet_stepup_self_service_self_service.service.yubikey_second_factor');
+            $result = $service->verify($command);
 
-            if (!$yubikeyService->verify($command)) {
+            if ($result->isSuccessful()) {
+                $this->get('session')->getFlashBag()->add('success', 'ss.flash.token_was_registered');
+
+                return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_entry_point'));
+            } elseif ($result->didOtpVerificationFail()) {
                 $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
-
-                return ['form' => $form->createView()];
-            }
-
-            $verifySecondFactorCommand = new VerifyYubikeySecondFactorCommand();
-            $verifySecondFactorCommand->identityId = $command->identity;
-            $verifySecondFactorCommand->secondFactorId = Uuid::generate();
-            $verifySecondFactorCommand->yubikeyPublicId = $yubikeyService->getPublicId($command->otp);
-
-            /** @var CommandService $commandService */
-            $commandService = $this->get('surfnet_stepup_middleware_client.service.command');
-            $result = $commandService->execute($verifySecondFactorCommand);
-
-            if (!$result->isSuccessful()) {
+            } else {
                 $form->addError(new FormError('ss.verify_yubikey_command.second_factor_verification_failed'));
-
-                return ['form' => $form->createView()];
             }
-
-            $this->get('session')->getFlashBag()->add('success', 'ss.flash.token_was_registered');
-
-            return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_entry_point'));
         }
 
 

@@ -7,6 +7,7 @@ services:
         tags: [{ name: form.type, alias: ss_verify_yubikey_otp }]
 
     surfnet_stepup_self_service_self_service.service.yubikey:
+        public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
         arguments:
             - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
@@ -17,3 +18,9 @@ services:
         class: GuzzleHttp\Client
         arguments:
             - {} # Set from the extension
+
+    surfnet_stepup_self_service_self_service.service.yubikey_second_factor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
+        arguments:
+            - @surfnet_stepup_self_service_self_service.service.yubikey
+            - @surfnet_stepup_middleware_client.service.command

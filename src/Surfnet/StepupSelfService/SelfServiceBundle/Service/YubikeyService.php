@@ -89,15 +89,4 @@ class YubikeyService
 
         return true;
     }
-
-    /**
-     * @param string $otp
-     * @return string
-     */
-    public function getPublicId($otp)
-    {
-        InvalidArgumentException::invalidType('string', 'otp', $otp);
-
-        return substr($otp, 0, 12);
-    }
 }
