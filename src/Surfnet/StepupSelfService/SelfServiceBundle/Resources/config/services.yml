@@ -1,4 +1,35 @@
 services:
-#    surfnet_stepup_self_service_self_service.example:
-#        class: Surfnet\StepupSelfService\SelfServiceBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    self_service.service.identity:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
+        arguments:
+            - @surfnet_stepup_middleware_client.identity.service.identity
+
+    self_service.security.authentication.provider:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
+        arguments:
+            - @self_service.service.identity
+            - @surfnet_saml.saml.attribute_dictionary
+
+    self_service.security.authentication.listener:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Firewall\SamlListener
+        arguments:
+            - @security.context
+            - @security.authentication.manager
+            - @self_service.security.authentication.saml
+            - @logger
+
+    self_service.security.authentication.saml:
+        public: false
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider
+        arguments:
+            - @surfnet_saml.hosted.service_provider
+            - @surfnet_saml.remote.idp
+            - @surfnet_saml.http.redirect_binding
+            - @surfnet_saml.http.post_binding
+            - @self_service.security.authentication.session_handler
+
+    self_service.security.authentication.session_handler:
+        public: false
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SessionHandler
+        arguments:
+            - @session

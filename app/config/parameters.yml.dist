@@ -6,3 +6,13 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    saml_sp_publickey:
+    saml_sp_privatekey:
+
+    saml_metadata_publickey:
+    saml_metadata_privatekey:
+
+    saml_remote_idp_entity_id:
+    saml_remote_idp_sso_url:
+    saml_remote_idp_certificate:
