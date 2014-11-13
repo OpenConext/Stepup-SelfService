@@ -30,18 +30,18 @@ class YubikeyController extends Controller
     /**
      * @Template
      */
-    public function verifyAction(Request $request)
+    public function provePossessionAction(Request $request)
     {
         $command = new VerifyYubikeyOtpCommand();
         $command->identity = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
         $command->institution = 'Ibuildings bv';
 
-        $form = $this->createForm('ss_verify_yubikey_otp', $command)->handleRequest($request);
+        $form = $this->createForm('ss_prove_yubikey_possession', $command)->handleRequest($request);
 
         if ($form->isValid()) {
             /** @var YubikeySecondFactorService $service */
             $service = $this->get('surfnet_stepup_self_service_self_service.service.yubikey_second_factor');
-            $result = $service->verify($command);
+            $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
                 $this->get('session')->getFlashBag()->add('success', 'ss.flash.token_was_registered');
@@ -50,7 +50,7 @@ class YubikeyController extends Controller
             } elseif ($result->didOtpVerificationFail()) {
                 $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
             } else {
-                $form->addError(new FormError('ss.verify_yubikey_command.second_factor_verification_failed'));
+                $form->addError(new FormError('ss.prove_yubikey_possession.proof_of_possession_failed'));
             }
         }
 

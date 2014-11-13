@@ -22,7 +22,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class VerifyYubikeyOtpType extends AbstractType
+class ProveYubikeyPossessionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -48,6 +48,6 @@ class VerifyYubikeyOtpType extends AbstractType
 
     public function getName()
     {
-        return 'ss_verify_yubikey_otp';
+        return 'ss_prove_yubikey_possession';
     }
 }

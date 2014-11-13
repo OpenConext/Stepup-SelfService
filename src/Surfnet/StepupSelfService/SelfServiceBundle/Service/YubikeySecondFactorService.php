@@ -18,11 +18,11 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Command\VerifyYubikeySecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor\VerificationResult;
+use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProveYubikeyPossessionCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor\ProofOfPossessionResult;
 
 class YubikeySecondFactorService
 {
@@ -48,27 +48,27 @@ class YubikeySecondFactorService
 
     /**
      * @param VerifyYubikeyOtpCommand $command
-     * @return VerificationResult
+     * @return ProofOfPossessionResult
      */
-    public function verify(VerifyYubikeyOtpCommand $command)
+    public function provePossession(VerifyYubikeyOtpCommand $command)
     {
         if (!$this->yubikeyService->verify($command)) {
-            return new VerificationResult(null, true, false);
+            return new ProofOfPossessionResult(null, true, false);
         }
 
         $secondFactorId = Uuid::generate();
 
-        $verifySecondFactorCommand = new VerifyYubikeySecondFactorCommand();
-        $verifySecondFactorCommand->identityId = $command->identity;
-        $verifySecondFactorCommand->secondFactorId = $secondFactorId;
-        $verifySecondFactorCommand->yubikeyPublicId = substr($command->otp, 0, 12);
+        $provePossessionCommand = new ProveYubikeyPossessionCommand();
+        $provePossessionCommand->identityId = $command->identity;
+        $provePossessionCommand->secondFactorId = $secondFactorId;
+        $provePossessionCommand->yubikeyPublicId = substr($command->otp, 0, 12);
 
-        $result = $this->commandService->execute($verifySecondFactorCommand);
+        $result = $this->commandService->execute($provePossessionCommand);
 
         if (!$result->isSuccessful()) {
-            return new VerificationResult(null, false, true);
+            return new ProofOfPossessionResult(null, false, true);
         }
 
-        return new Verificationresult($secondFactorId, false, false);
+        return new ProofOfPossessionResult($secondFactorId, false, false);
     }
 }

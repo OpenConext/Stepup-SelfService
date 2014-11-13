@@ -12,7 +12,7 @@ surfnet_stepup_self_service_self_service_registration_display_types:
     path:     /registration/select-token
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:displaySecondFactorTypes }
 
-surfnet_stepup_self_service_self_service_registration_yubikey_verify:
-    path:     /registration/yubikey/verify
+surfnet_stepup_self_service_self_service_registration_yubikey_prove_possession:
+    path:     /registration/yubikey/prove-possession
     methods:  [GET,POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Yubikey:verify }
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Yubikey:provePossession }

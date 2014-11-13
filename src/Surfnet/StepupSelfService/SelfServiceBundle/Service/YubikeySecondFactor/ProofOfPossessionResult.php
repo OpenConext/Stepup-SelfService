@@ -18,10 +18,10 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor;
 
-class VerificationResult
+class ProofOfPossessionResult
 {
     /**
-     * The ID of the verified second factor.
+     * The ID of the second factor that has been proven to be in possession of the registrant.
      *
      * @var string|null A UUID or null.
      */
@@ -35,18 +35,18 @@ class VerificationResult
     /**
      * @var bool
      */
-    private $secondFactorVerificationFailed;
+    private $proofOfPossessionFailed;
 
     /**
      * @param string|null $secondFactorId
      * @param bool $otpVerificationFailed
-     * @param bool $secondFactorVerificationFailed
+     * @param bool $proofOfPossessionFailed
      */
-    public function __construct($secondFactorId, $otpVerificationFailed, $secondFactorVerificationFailed)
+    public function __construct($secondFactorId, $otpVerificationFailed, $proofOfPossessionFailed)
     {
         $this->secondFactorId = $secondFactorId;
         $this->otpVerificationFailed = $otpVerificationFailed;
-        $this->secondFactorVerificationFailed = $secondFactorVerificationFailed;
+        $this->proofOfPossessionFailed = $proofOfPossessionFailed;
     }
 
     /**
@@ -76,8 +76,8 @@ class VerificationResult
     /**
      * @return boolean
      */
-    public function didSecondFactorVerificationFail()
+    public function didProofOfPossessionFail()
     {
-        return $this->secondFactorVerificationFailed;
+        return $this->proofOfPossessionFailed;
     }
 }

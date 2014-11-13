@@ -16,7 +16,7 @@
         {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
             'type': 'yubikey',
             'security': 3,
-            'url': path('surfnet_stepup_self_service_self_service_registration_yubikey_verify')
+            'url': path('surfnet_stepup_self_service_self_service_registration_yubikey_prove_possession')
         } only %}
         {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
             'type': 'sms',
