@@ -21,7 +21,6 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
 class YubikeyService
 {
