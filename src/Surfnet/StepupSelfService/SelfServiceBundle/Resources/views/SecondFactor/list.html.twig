@@ -3,6 +3,8 @@
 {% block content %}
     <h1>{{ 'surfnet_stepup_self_service.second_factor.list.title'|trans }}</h1>
 
+    <h2>{{ 'surfnet_stepup_self_service.second_factor.list.unverified.title'|trans }}</h2>
+
     <table class="table-striped">
         <thead>
             <tr>
@@ -11,10 +13,10 @@
             </tr>
         </thead>
         <tbody>
-            {% for secondFactor in secondFactors %}
+            {% for unverifiedSecondFactor in unverifiedSecondFactors %}
                 <tr>
-                    <td>{{ 'ss.second_factor.type.'~secondFactor.type|trans }}</td>
-                    <td>{{ secondFactor.secondFactorIdentifier }}</td>
+                    <td>{{ 'ss.second_factor.type.'~unverifiedSecondFactor.type|trans }}</td>
+                    <td>{{ unverifiedSecondFactor.secondFactorIdentifier }}</td>
                 </tr>
             {% endfor %}
         </tbody>

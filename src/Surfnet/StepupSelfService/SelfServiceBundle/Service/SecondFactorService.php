@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\SecondFactor;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 
 class SecondFactorService
@@ -59,5 +60,16 @@ class SecondFactorService
     public function findByIdentity($identityId)
     {
         return $this->secondFactors->findByIdentity($identityId);
+    }
+
+    /**
+     * Returns the given registrant's unverified second factors.
+     *
+     * @param string $identityId
+     * @return UnverifiedSecondFactor[]
+     */
+    public function findUnverifiedByIdentity($identityId)
+    {
+        return $this->secondFactors->findUnverifiedByIdentity($identityId);
     }
 }

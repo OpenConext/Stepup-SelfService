@@ -33,10 +33,10 @@ class SecondFactorController extends Controller
 
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-        $secondFactors = $service->findByIdentity($identityId);
+        $unverifiedSecondFactors = $service->findUnverifiedByIdentity($identityId);
 
         return [
-            'secondFactors' => $secondFactors,
+            'unverifiedSecondFactors' => $unverifiedSecondFactors,
         ];
     }
 }

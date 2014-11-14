@@ -1655,12 +1655,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-client.git",
-                "reference": "32555d5fbde0365e1834154fa7233c83d933c890"
+                "reference": "df8399cddf5e212651c21fc3cdaa854064a2501f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-client/zipball/32555d5fbde0365e1834154fa7233c83d933c890",
-                "reference": "32555d5fbde0365e1834154fa7233c83d933c890",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-client/zipball/df8399cddf5e212651c21fc3cdaa854064a2501f",
+                "reference": "df8399cddf5e212651c21fc3cdaa854064a2501f",
                 "shasum": ""
             },
             "require": {
@@ -1686,7 +1686,7 @@
                 "Apache-2.0"
             ],
             "description": "Library for consuming the Step-up Middleware API.",
-            "time": "2014-11-12 15:20:35"
+            "time": "2014-11-14 09:24:51"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -1694,12 +1694,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "b8ef1cf15eae1301e4b9972c74a45a4dd62d38b7"
+                "reference": "3728909c99966dbe6f35425757b1838e502f4f22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/b8ef1cf15eae1301e4b9972c74a45a4dd62d38b7",
-                "reference": "b8ef1cf15eae1301e4b9972c74a45a4dd62d38b7",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/3728909c99966dbe6f35425757b1838e502f4f22",
+                "reference": "3728909c99966dbe6f35425757b1838e502f4f22",
                 "shasum": ""
             },
             "require": {
@@ -1730,7 +1730,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2014-11-12 16:37:50"
+            "time": "2014-11-14 09:29:41"
         },
         {
             "name": "symfony/assetic-bundle",
