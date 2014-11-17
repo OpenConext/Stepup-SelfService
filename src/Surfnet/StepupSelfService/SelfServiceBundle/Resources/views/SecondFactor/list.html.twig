@@ -7,20 +7,28 @@
 
     <h3>{{ 'surfnet_stepup_self_service.second_factor.list.unverified.title'|trans }}</h3>
 
-    <table class="table-striped">
-        <thead>
-            <tr>
-                <th>{{ 'ss.second_factor_list.header.type'|trans }}</th>
-                <th>{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for unverifiedSecondFactor in unverifiedSecondFactors %}
+    {% if unverifiedSecondFactors is empty %}
+        <p>{{ 'surfnet_stepup_self_service.second_factor.list.text.no_second_factors' }}</p>
+        <a href="{{ path('surfnet_stepup_self_service_self_service_registration_display_types') }}"
+           class="btn btn-primary">
+            {{ 'surfnet_stepup_self_service.second_factor.list.button.register_second_factor' }}
+        </a>
+    {% else %}
+        <table class="table-striped">
+            <thead>
                 <tr>
-                    <td>{{ 'ss.second_factor.type.'~unverifiedSecondFactor.type|trans }}</td>
-                    <td>{{ unverifiedSecondFactor.secondFactorIdentifier }}</td>
+                    <th>{{ 'ss.second_factor_list.header.type'|trans }}</th>
+                    <th>{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for unverifiedSecondFactor in unverifiedSecondFactors %}
+                    <tr>
+                        <td>{{ 'ss.second_factor.type.'~unverifiedSecondFactor.type|trans }}</td>
+                        <td>{{ unverifiedSecondFactor.secondFactorIdentifier }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}
