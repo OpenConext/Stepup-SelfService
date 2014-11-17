@@ -26,11 +26,18 @@ class ProofOfPossessionResult
     private $secondFactorId;
 
     /**
-     * @param string|null $secondFactorId
+     * @var bool
      */
-    public function __construct($secondFactorId)
+    private $incorrectChallengeResponse;
+
+    /**
+     * @param string|null $secondFactorId
+     * @param bool $incorrectChallengeResponse
+     */
+    public function __construct($secondFactorId, $incorrectChallengeResponse)
     {
         $this->secondFactorId = $secondFactorId;
+        $this->incorrectChallengeResponse = $incorrectChallengeResponse;
     }
 
     /**
@@ -47,5 +54,13 @@ class ProofOfPossessionResult
     public function getSecondFactorId()
     {
         return $this->secondFactorId;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function wasIncorrectChallengeResponseGiven()
+    {
+        return $this->incorrectChallengeResponse;
     }
 }

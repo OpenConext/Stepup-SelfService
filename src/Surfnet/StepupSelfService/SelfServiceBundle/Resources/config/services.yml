@@ -50,5 +50,11 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
         arguments:
             - @surfnet_stepup_self_service_self_service.service.sms
+            - @surfnet_stepup_self_service_self_service.challenge_store
             - @translator
             - @surfnet_stepup_middleware_client.service.command
+
+    surfnet_stepup_self_service_self_service.challenge_store:
+        public: false
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\SessionChallengeStore
+        arguments: [ @session, 'Surfnet/SelfService/SecondFactor/Sms:challenge' ]
