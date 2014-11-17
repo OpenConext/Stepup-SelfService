@@ -8,9 +8,20 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType
         tags: [{ name: form.type, alias: ss_prove_yubikey_possession }]
 
+    surfnet_stepup_self_service_self_service.form.type.send_sms_challenge:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\SendSmsChallengeType
+        tags: [{ name: form.type, alias: ss_send_sms_challenge }]
+
     surfnet_stepup_self_service_self_service.service.yubikey:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
+        arguments:
+            - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
+            - @logger
+
+    surfnet_stepup_self_service_self_service.service.sms:
+        public: true # @TODO
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsService
         arguments:
             - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
             - @logger
