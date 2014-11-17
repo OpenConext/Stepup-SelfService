@@ -46,7 +46,7 @@ class SendSmsChallengeType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsCommand',
+            'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand',
         ]);
     }
 

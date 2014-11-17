@@ -21,15 +21,13 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProvePhonePossessionCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class SmsController extends Controller
 {
@@ -38,24 +36,24 @@ class SmsController extends Controller
      */
     public function sendChallengeAction(Request $request)
     {
-        $command = new SendSmsCommand();
+        $command = new SendSmsChallengeCommand();
         $form = $this->createForm('ss_send_sms_challenge', $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            $challenge = 'derp';
-
-            /** @var TranslatorInterface $translator */
-            $translator = $this->get('translator');
-            $smsBody = $translator->trans('ss.registration.sms.sms_challenge_body', ['%challenge%' => $challenge]);
-
             $command->originator = substr(preg_replace('~[^a-z0-9]~i', '', 'Institution Ltd.'), 0, 11);
-            $command->body = $smsBody;
             $command->identity = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
             $command->institution = 'Ibuildings bv';
 
-            /** @var SmsService $smsService */
-            $smsService = $this->get('surfnet_stepup_self_service_self_service.service.sms');
-            $smsService->sendSms($command);
+            /** @var SmsSecondFactorService $service */
+            $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+
+            if ($service->sendChallenge($command)) {
+                return $this->redirect(
+                    $this->generateUrl('surfnet_stepup_self_service_self_service_registration_sms_prove_possession')
+                );
+            } else {
+                $form->addError(new FormError('ss.prove_phone_possession.send_sms_challenge_failed'));
+            }
         }
 
         return ['form' => $form->createView()];

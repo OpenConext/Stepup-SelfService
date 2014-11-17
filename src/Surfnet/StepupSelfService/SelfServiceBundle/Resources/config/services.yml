@@ -28,7 +28,7 @@ services:
             - @logger
 
     surfnet_stepup_self_service_self_service.service.sms:
-        public: true # @TODO
+        public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsService
         arguments:
             - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
@@ -44,4 +44,11 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
         arguments:
             - @surfnet_stepup_self_service_self_service.service.yubikey
+            - @surfnet_stepup_middleware_client.service.command
+
+    surfnet_stepup_self_service_self_service.service.sms_second_factor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
+        arguments:
+            - @surfnet_stepup_self_service_self_service.service.sms
+            - @translator
             - @surfnet_stepup_middleware_client.service.command
