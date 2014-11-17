@@ -26,24 +26,24 @@ class ProveYubikeyPossessionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('otp', 'text', array(
+        $builder->add('otp', 'text', [
             'label' => /** @Ignore */ false,
             'required' => true,
-            'widget_addon_prepend' => array(
+            'widget_addon_prepend' => [
                 'icon' => 'key'
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'autofocus' => true,
                 'autocomplete' => 'off',
-            )
-        ));
+            ]
+        ]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand',
-        ));
+        ]);
     }
 
     public function getName()
