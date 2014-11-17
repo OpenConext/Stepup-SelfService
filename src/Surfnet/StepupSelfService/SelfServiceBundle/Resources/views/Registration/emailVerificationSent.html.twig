@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.email_sent.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 50} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.registration.email_sent.text.email_verification_has_been_sent'|trans({'%email%': email}) }}</p>
+{% endblock %}

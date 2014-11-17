@@ -30,4 +30,12 @@ class RegistrationController extends Controller
     {
         return [];
     }
+
+    /**
+     * @Template
+     */
+    public function emailVerificationSentAction()
+    {
+        return ['email' => 'foo@bar.com']; // @TODO
+    }
 }
