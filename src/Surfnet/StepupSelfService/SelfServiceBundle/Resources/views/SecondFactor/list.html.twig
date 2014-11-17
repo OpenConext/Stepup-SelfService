@@ -1,9 +1,11 @@
 {% extends "::base.html.twig" %}
 
-{% block content %}
-    <h1>{{ 'surfnet_stepup_self_service.second_factor.list.title'|trans }}</h1>
+{% block page_title %}{{ 'surfnet_stepup_self_service.second_factor.list.title'|trans }}{% endblock %}
 
-    <h2>{{ 'surfnet_stepup_self_service.second_factor.list.unverified.title'|trans }}</h2>
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <h3>{{ 'surfnet_stepup_self_service.second_factor.list.unverified.title'|trans }}</h3>
 
     <table class="table-striped">
         <thead>

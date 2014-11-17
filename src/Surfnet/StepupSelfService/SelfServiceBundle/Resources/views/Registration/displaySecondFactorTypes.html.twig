@@ -1,5 +1,7 @@
 {% extends "::base.html.twig" %}
 
+{% block page_title %}{{ 'ss.registration.selector.title.welcome'|trans({'%name%': 'Fabien'}) }}{% endblock %}
+
 {% block page_header %}
     {{ parent() }}
 
@@ -7,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ 'ss.registration.selector.title.welcome'|trans({'%name%': 'Fabien'}) }}</h2>
+    <h2>{{ block('page_title') }}</h2>
 
     <p>{{ 'ss.registration.selector.text.explain_wizard'|trans }}</p>
     <p>{{ 'ss.registration.selector.text.please_select_second_factor'|trans }}</p>

@@ -1,13 +1,15 @@
 {% extends "::base.html.twig" %}
 
-{% block page_title %}
-    <h1>{{ 'ss.registration.yubikey.title.enter_challenge'|trans }}</h1>
+{% block page_title %}{{ 'ss.registration.yubikey.title.enter_challenge'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 25} only %}
 {% endblock %}
 
 {% block content %}
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 25} only %}
-
-    <h2>{{ 'ss.registration.yubikey.title.enter_challenge'|trans }}</h2>
+    <h2>{{ block('page_title') }}</h2>
 
     <p>{{ 'ss.registration.yubikey.text.help_user_enter_challenge'|trans }}</p>
 
