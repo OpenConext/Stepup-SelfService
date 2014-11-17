@@ -25,10 +25,5 @@
             'security': 2,
             'url': path('surfnet_stepup_self_service_self_service_registration_sms_send_challenge')
         } only %}
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-            'type': 'tiqr',
-            'security': 2,
-            'url': '#'
-        } only %}
     </div>
 {% endblock %}
