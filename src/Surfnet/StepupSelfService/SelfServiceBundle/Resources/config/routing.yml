@@ -1,28 +1,28 @@
-surfnet_stepup_self_service_self_service_entry_point:
+ss_entry_point:
     path:     /
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:EntryPoint:decideSecondFactorFlow }
 
-surfnet_stepup_self_service_self_service_second_factor_list:
+ss_second_factor_list:
     path:     /overview
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list }
 
-surfnet_stepup_self_service_self_service_registration_display_types:
+ss_registration_display_types:
     path:     /registration/select-token
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:displaySecondFactorTypes }
 
-surfnet_stepup_self_service_self_service_registration_yubikey_prove_possession:
+ss_registration_yubikey_prove_possession:
     path:     /registration/yubikey/prove-possession
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Yubikey:provePossession }
 
-surfnet_stepup_self_service_self_service_registration_sms_send_challenge:
+ss_registration_sms_send_challenge:
     path:     /registration/sms/send-challenge
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:sendChallenge }
 
-surfnet_stepup_self_service_self_service_registration_sms_prove_possession:
+ss_registration_sms_prove_possession:
     path:     /registration/sms/prove-possession
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:provePossession }

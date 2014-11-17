@@ -31,12 +31,12 @@ class EntryPointController extends Controller
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
         if ($service->doSecondFactorsExistForIdentity($identityId)) {
-            return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_second_factor_list'));
+            return $this->redirect($this->generateUrl('ss_second_factor_list'));
         } else {
             $this->get('session')->getFlashBag()->add('notice', 'ss.registration.selector.alert.no_second_factors_yet');
 
             return $this->redirect(
-                $this->generateUrl('surfnet_stepup_self_service_self_service_registration_display_types')
+                $this->generateUrl('ss_registration_display_types')
             );
         }
     }

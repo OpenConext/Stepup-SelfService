@@ -36,7 +36,7 @@ class VerifySmsChallengeType extends AbstractType
         $builder->add('resend-challenge', 'anchor', [
             'label' => 'ss.form.ss_verify_sms_challenge.button.resend_challenge',
             'attr' => [ 'class' => 'btn btn-default pull-right' ],
-            'route' => 'surfnet_stepup_self_service_self_service_registration_sms_send_challenge',
+            'route' => 'ss_registration_sms_send_challenge',
         ]);
         $builder->add('verify-challenge', 'submit', [
             'label' => 'ss.form.ss_verify_sms_challenge.button.verify_challenge',

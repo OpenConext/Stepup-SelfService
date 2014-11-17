@@ -46,7 +46,7 @@ class SmsController extends Controller
 
             if ($service->sendChallenge($command)) {
                 return $this->redirect(
-                    $this->generateUrl('surfnet_stepup_self_service_self_service_registration_sms_prove_possession')
+                    $this->generateUrl('ss_registration_sms_prove_possession')
                 );
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.send_sms_challenge_failed'));
@@ -73,7 +73,7 @@ class SmsController extends Controller
             if ($result->isSuccessful()) {
                 $this->get('session')->getFlashBag()->add('success', 'ss.flash.second_factor_was_registered');
 
-                return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_entry_point'));
+                return $this->redirect($this->generateUrl('ss_entry_point'));
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.proof_of_possession_failed'));
             }
