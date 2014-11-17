@@ -19,8 +19,11 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
+use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProvePhonePossessionCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class SmsSecondFactorService
@@ -66,5 +69,20 @@ class SmsSecondFactorService
         $smsCommand->institution = $command->institution;
 
         return $this->smsService->sendSms($smsCommand);
+    }
+
+    /**
+     * @return ProofOfPossessionResult
+     */
+    public function provePossession()
+    {
+        $command = new ProvePhonePossessionCommand();
+        $command->identityId = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
+        $command->secondFactorId = Uuid::generate();
+        $command->phoneNumber = '+31681819571';
+
+        $result = $this->commandService->execute($command);
+
+        return new ProofOfPossessionResult($result->isSuccessful() ? $command->secondFactorId : null);
     }
 }

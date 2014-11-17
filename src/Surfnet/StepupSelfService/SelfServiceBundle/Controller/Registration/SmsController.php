@@ -19,11 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
-use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
@@ -70,14 +67,10 @@ class SmsController extends Controller
         $form = $this->createForm('ss_verify_sms_challenge', $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            $command = new ProvePhonePossessionCommand();
-            $command->identityId = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
-            $command->secondFactorId = Uuid::generate();
-            $command->phoneNumber = '+31681819571';
+            /** @var SmsSecondFactorService $service */
+            $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
 
-            /** @var CommandService $commandService */
-            $commandService = $this->get('surfnet_stepup_middleware_client.service.command');
-            $result = $commandService->execute($command);
+            $result = $service->provePossession();
 
             if ($result->isSuccessful()) {
                 $this->get('session')->getFlashBag()->add('success', 'ss.flash.second_factor_was_registered');
