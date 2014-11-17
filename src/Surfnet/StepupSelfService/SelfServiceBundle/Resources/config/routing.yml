@@ -21,3 +21,8 @@ surfnet_stepup_self_service_self_service_registration_sms_send_challenge:
     path:     /registration/sms/send-challenge
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:sendChallenge }
+
+surfnet_stepup_self_service_self_service_registration_sms_prove_possession:
+    path:     /registration/sms/prove-possession
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:provePossession }

@@ -12,6 +12,14 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\SendSmsChallengeType
         tags: [{ name: form.type, alias: ss_send_sms_challenge }]
 
+    surfnet_stepup_self_service_self_service.form.type.verify_sms_challenge:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifySmsChallengeType
+        tags: [{ name: form.type, alias: ss_verify_sms_challenge }]
+
+    surfnet_stepup_self_service_self_service.form.type.anchor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\AnchorType
+        tags: [{ name: form.type, alias: anchor }]
+
     surfnet_stepup_self_service_self_service.service.yubikey:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService

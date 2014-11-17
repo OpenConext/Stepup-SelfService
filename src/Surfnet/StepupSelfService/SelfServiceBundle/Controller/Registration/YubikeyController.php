@@ -44,7 +44,7 @@ class YubikeyController extends Controller
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
-                $this->get('session')->getFlashBag()->add('success', 'ss.flash.token_was_registered');
+                $this->get('session')->getFlashBag()->add('success', 'ss.flash.second_factor_was_registered');
 
                 return $this->redirect($this->generateUrl('surfnet_stepup_self_service_self_service_entry_point'));
             } elseif ($result->didOtpVerificationFail()) {
