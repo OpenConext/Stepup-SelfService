@@ -68,11 +68,11 @@ services:
 
 surfnet_stepup_middleware_client:
     authorisation:
-        username: foo
+        username: ss
         password: bar
     url:
-        command_api: '/command'
-        api: '/'
+        command_api: 'http://mw-dev.stepup.coin.surf.net/app_dev.php/command'
+        api: 'http://mw-dev.stepup.coin.surf.net/app_dev.php/'
 
 surfnet_saml:
     hosted:

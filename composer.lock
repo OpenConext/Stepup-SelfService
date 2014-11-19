@@ -4,8 +4,57 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b30f963cf4dfc3c8fe7f1b2d3df1913f",
+    "hash": "5ce4973d62e256810f4e5f1a88cc3cc8",
     "packages": [
+        {
+            "name": "beberlei/assert",
+            "version": "v2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beberlei/assert.git",
+                "reference": "8c60f8a1c31dcd61c928bf024bc59a3472f00632"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/8c60f8a1c31dcd61c928bf024bc59a3472f00632",
+                "reference": "8c60f8a1c31dcd61c928bf024bc59a3472f00632",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Assert": "lib/"
+                },
+                "files": [
+                    "lib/Assert/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                }
+            ],
+            "description": "Thin assertion library for input validation in business models.",
+            "keywords": [
+                "assert",
+                "assertion",
+                "validation"
+            ],
+            "time": "2014-11-06 10:17:53"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.1",
@@ -1749,19 +1798,20 @@
         },
         {
             "name": "surfnet/stepup-middleware-client",
-            "version": "dev-develop",
+            "version": "dev-feature/identity-search",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-client.git",
-                "reference": "55a0f5b05f58ba9ba9bba7ac645e4d251fef221c"
+                "reference": "c51d5f281ea181744912734d94038c23ec4dddb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-client/zipball/55a0f5b05f58ba9ba9bba7ac645e4d251fef221c",
-                "reference": "55a0f5b05f58ba9ba9bba7ac645e4d251fef221c",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-client/zipball/c51d5f281ea181744912734d94038c23ec4dddb1",
+                "reference": "c51d5f281ea181744912734d94038c23ec4dddb1",
                 "shasum": ""
             },
             "require": {
+                "beberlei/assert": "~2.0",
                 "guzzlehttp/guzzle": "~4",
                 "php": "~5.4"
             },
@@ -1784,20 +1834,20 @@
                 "Apache-2.0"
             ],
             "description": "Library for consuming the Step-up Middleware API.",
-            "time": "2014-11-07 14:47:16"
+            "time": "2014-11-18 13:20:13"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "dev-develop",
+            "version": "dev-feature/search-create-identity",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "78402027e4309c3f3ed1448417f7ccb47f5c644a"
+                "reference": "7900f283bab37a811f9c34aa7e03aef33534fa3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/78402027e4309c3f3ed1448417f7ccb47f5c644a",
-                "reference": "78402027e4309c3f3ed1448417f7ccb47f5c644a",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/7900f283bab37a811f9c34aa7e03aef33534fa3b",
+                "reference": "7900f283bab37a811f9c34aa7e03aef33534fa3b",
                 "shasum": ""
             },
             "require": {
@@ -1805,7 +1855,7 @@
                 "php": "~5.4",
                 "psr/log": "~1.0",
                 "rhumsaa/uuid": "~2.7",
-                "surfnet/stepup-middleware-client": "dev-develop",
+                "surfnet/stepup-middleware-client": "dev-feature/identity-search",
                 "symfony/config": "~2",
                 "symfony/dependency-injection": "~2",
                 "symfony/http-kernel": "~2",
@@ -1828,7 +1878,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2014-11-07 14:46:57"
+            "time": "2014-11-19 11:40:09"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -1836,12 +1886,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-saml-bundle.git",
-                "reference": "9244390e6e027816f728f6f1a88d1ee82bf47355"
+                "reference": "b9ff68f77e6493c5c2194ded0ca0eabca5d34262"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/9244390e6e027816f728f6f1a88d1ee82bf47355",
-                "reference": "9244390e6e027816f728f6f1a88d1ee82bf47355",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/b9ff68f77e6493c5c2194ded0ca0eabca5d34262",
+                "reference": "b9ff68f77e6493c5c2194ded0ca0eabca5d34262",
                 "shasum": ""
             },
             "require": {
@@ -1874,7 +1924,7 @@
                 "stepup",
                 "surfnet"
             ],
-            "time": "2014-11-13 10:00:35"
+            "time": "2014-11-19 12:37:53"
         },
         {
             "name": "symfony/assetic-bundle",

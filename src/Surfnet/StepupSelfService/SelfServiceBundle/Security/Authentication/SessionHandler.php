@@ -18,11 +18,14 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class SessionHandler
 {
-    const SESSION_KEY = '__saml/';
+    const AUTH_SESSION_KEY = '__auth/';
+    const SAML_SESSION_KEY = '__saml/';
 
     private $session;
 
@@ -31,18 +34,53 @@ class SessionHandler
         $this->session = $session;
     }
 
+    public function setCurrentRequestUri($uri)
+    {
+        $this->session->set(self::AUTH_SESSION_KEY . 'current_uri', $uri);
+    }
+
+    public function getCurrentRequestUri()
+    {
+        $uri = $this->session->get(self::AUTH_SESSION_KEY . 'current_uri');
+        $this->session->remove(self::AUTH_SESSION_KEY . 'current_uri');
+
+        return $uri;
+    }
+
     public function getRequestId()
     {
-        return $this->session->get(self::SESSION_KEY . 'request_id');
+        return $this->session->get(self::SAML_SESSION_KEY . 'request_id');
     }
 
     public function setRequestId($requestId)
     {
-        $this->session->set(self::SESSION_KEY . 'request_id', $requestId);
+        $this->session->set(self::SAML_SESSION_KEY . 'request_id', $requestId);
     }
 
     public function hasRequestId()
     {
-        return $this->session->has(self::SESSION_KEY. 'request_id');
+        return $this->session->has(self::SAML_SESSION_KEY. 'request_id');
+    }
+
+    public function clearRequestId()
+    {
+        $this->session->remove(self::SAML_SESSION_KEY . 'request_id');
+    }
+
+    public function hasBeenAuthenticated()
+    {
+        return $this->session->has(self::AUTH_SESSION_KEY . 'token');
+    }
+
+    public function setToken(TokenInterface $token)
+    {
+        $this->session->set(self::AUTH_SESSION_KEY . 'token', serialize($token));
+    }
+
+    public function getToken()
+    {
+        $token = unserialize($this->session->get(self::AUTH_SESSION_KEY . 'token'));
+
+        return $token;
     }
 }

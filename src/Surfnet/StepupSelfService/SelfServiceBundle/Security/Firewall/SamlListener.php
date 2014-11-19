@@ -21,7 +21,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Firewall;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SessionHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
@@ -46,26 +48,40 @@ class SamlListener implements ListenerInterface
      */
     private $logger;
 
-    /** @var \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider
-     *
+    /**
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider
      */
     private $samlInteractionProvider;
+
+    /**
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SessionHandler
+     */
+    private $sessionHandler;
 
     public function __construct(
         SecurityContextInterface $securityContext,
         AuthenticationManagerInterface $authenticationManager,
         SamlInteractionProvider $samlInteractionProvider,
+        SessionHandler $sessionHandler,
         LoggerInterface $logger
     ) {
         $this->securityContext          = $securityContext;
         $this->authenticationManager    = $authenticationManager;
         $this->samlInteractionProvider  = $samlInteractionProvider;
+        $this->sessionHandler           = $sessionHandler;
         $this->logger                   = $logger;
     }
 
     public function handle(GetResponseEvent $event)
     {
+        // reinstate the token from the session. Could be expanded with logout check if needed
+        if ($this->sessionHandler->hasBeenAuthenticated()) {
+            $this->securityContext->setToken($this->sessionHandler->getToken());
+            return;
+        }
+
         if (!$this->samlInteractionProvider->isSamlAuthenticationInitiated()) {
+            $this->sessionHandler->setCurrentRequestUri($event->getRequest()->getUri());
             $event->setResponse($this->samlInteractionProvider->initiateSamlRequest());
 
             return;
@@ -83,8 +99,12 @@ class SamlListener implements ListenerInterface
 
         try {
             $authToken = $this->authenticationManager->authenticate($token);
+            // for the current request
             $this->securityContext->setToken($authToken);
+            // for future requests
+            $this->sessionHandler->setToken($authToken);
 
+            $event->setResponse(new RedirectResponse($this->sessionHandler->getCurrentRequestUri()));
             return;
         } catch (AuthenticationException $failed) {
             $this->logger->error(sprintf('Authentication Failed, reason: "%s"', $failed->getMessage()));

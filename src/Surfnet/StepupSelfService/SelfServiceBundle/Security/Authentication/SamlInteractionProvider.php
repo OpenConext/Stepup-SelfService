@@ -61,8 +61,8 @@ class SamlInteractionProvider
             $this->serviceProvider,
             $this->identityProvider
         );
-//
-//        $authnRequest->setAuthenticationContext(['http://gw-dev.stepup.coin.surf.net/assurance/loa2']);
+
+        $authnRequest->setAuthenticationContext(['http://gw-dev.stepup.coin.surf.net/assurance/loa2']);
 
         $this->sessionHandler->setRequestId($authnRequest->getRequestId());
 
@@ -81,6 +81,8 @@ class SamlInteractionProvider
             $this->identityProvider,
             $this->serviceProvider
         );
+
+        $this->sessionHandler->clearRequestId();
 
         return $assertion;
     }

@@ -26,7 +26,7 @@
         "simplesamlphp/saml2": "@dev",
         "surfnet/stepup-saml-bundle": "dev-feature/attribute-parsing",
         "surfnet/stepup-middleware-client": "@dev",
-        "surfnet/stepup-middleware-client-bundle": "dev-develop",
+        "surfnet/stepup-middleware-client-bundle": "dev-feature/search-create-identity",
         "surfnet/stepup-bundle": "dev-develop"
     },
     "require-dev": {

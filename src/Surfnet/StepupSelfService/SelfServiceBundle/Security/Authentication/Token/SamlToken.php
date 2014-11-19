@@ -20,20 +20,19 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\To
 
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
-// @todo consider just implementing the TokenInterface for better control
 class SamlToken extends AbstractToken
 {
     /**
      * @var \SAML2_Assertion
      */
     public $assertion;
+    public $identity;
 
     public function __construct(array $roles = array())
     {
         parent::__construct($roles);
 
-        // reconsider if needed
-        $this->setAuthenticated(count($roles) > 1);
+        $this->setAuthenticated(true);
     }
 
     /**

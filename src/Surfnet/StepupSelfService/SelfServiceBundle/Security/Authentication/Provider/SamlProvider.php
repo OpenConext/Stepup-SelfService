@@ -20,6 +20,8 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Pr
 
 
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
@@ -27,7 +29,14 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class SamlProvider implements AuthenticationProviderInterface
 {
+    /**
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
+     */
     private $identityService;
+
+    /**
+     * @var \Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary
+     */
     private $attributeDictionary;
 
     public function __construct(
@@ -44,12 +53,36 @@ class SamlProvider implements AuthenticationProviderInterface
      */
     public function authenticate(TokenInterface $token)
     {
-        $assertionAdapter = $this->attributeDictionary->translate($token->assertion);
+        $translatedAssertion = $this->attributeDictionary->translate($token->assertion);
 
-        $nameId = $assertionAdapter->getNameID();
-        $institution = $assertionAdapter->getAttribute('schacHomeOrganization');
+        $nameId      = $translatedAssertion->getNameID();
+        $institution = $translatedAssertion->getAttribute('schacHomeOrganization');
+        $email       = $translatedAssertion->getAttribute('mail');
+        $commonName  = $translatedAssertion->getAttribute('displayName');
 
-        var_dump($nameId, $institution);
+        $identity = $this->identityService->findByNameIdAndInstitution($nameId, $institution);
+
+        if ($identity === null) {
+            $identity = new Identity();
+            $identity->id           = Uuid::generate();
+            $identity->nameId       = $nameId;
+            $identity->institution  = $institution;
+            $identity->email        = $email;
+            $identity->commonName   = $commonName;
+
+            $this->identityService->createIdentity($identity);
+        } elseif ($identity->email !== $email || $identity->commonName !== $commonName) {
+            $identity->email = $email;
+            $identity->commonName = $commonName;
+
+            $this->identityService->updateIdentity($identity);
+        }
+
+        $authenticatedToken = new SamlToken(['ROLE_USER']);
+
+        $authenticatedToken->setUser($identity);
+
+        return $authenticatedToken;
     }
 
     public function supports(TokenInterface $token)

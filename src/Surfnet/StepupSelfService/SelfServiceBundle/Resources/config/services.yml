@@ -3,6 +3,8 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
         arguments:
             - @surfnet_stepup_middleware_client.identity.service.identity
+            - @surfnet_stepup_middleware_client.service.command
+            - @logger
 
     self_service.security.authentication.provider:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
@@ -16,6 +18,7 @@ services:
             - @security.context
             - @security.authentication.manager
             - @self_service.security.authentication.saml
+            - @self_service.security.authentication.session_handler
             - @logger
 
     self_service.security.authentication.saml:

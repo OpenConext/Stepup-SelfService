@@ -18,58 +18,63 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Exception;
+use Psr\Log\LoggerInterface;
+use Surfnet\StepupMiddlewareClient\Identity\Dto\IdentitySearchQuery;
+use Surfnet\StepupMiddlewareClientBundle\Command\Command;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\CreateIdentityCommand;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\UpdateIdentityCommand;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\IdentityService as ApiIdentityService;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
+use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class IdentityService implements UserProviderInterface
 {
+    /**
+     * @var \Surfnet\StepupMiddlewareClientBundle\Identity\Service\IdentityService
+     */
     private $apiIdentityService;
 
-    public function __construct(ApiIdentityService $apiIdentityService)
-    {
+    /**
+     * @var \Surfnet\StepupMiddlewareClientBundle\Service\CommandService
+     */
+    private $commandService;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        ApiIdentityService $apiIdentityService,
+        CommandService $commandService,
+        LoggerInterface $logger
+    ) {
         $this->apiIdentityService = $apiIdentityService;
+        $this->commandService = $commandService;
+        $this->logger = $logger;
     }
 
     /**
-     * Loads the user for the given username.
+     * For now this functionality is disabled, unsure if actually needed
      *
-     * This method must throw UsernameNotFoundException if the user is not
-     * found.
-     *
-     * @param string $username The username
-     *
-     * @return UserInterface
-     *
-     * @see UsernameNotFoundException
-     *
-     * @throws UsernameNotFoundException if the user is not found
-     *
+     * If needed, the username is the UUID of the identity so it can be fetched rather easy
      */
     public function loadUserByUsername($username)
     {
-        // TODO: Implement loadUserByUsername() method.
+        throw new RuntimeException(sprintf('Cannot Load User By Username "%s"', $username));
     }
 
     /**
-     * Refreshes the user for the account interface.
-     *
-     * It is up to the implementation to decide if the user data should be
-     * totally reloaded (e.g. from the database), or if the UserInterface
-     * object can just be merged into some internal array of users / identity
-     * map.
-     *
-     * @param UserInterface $user
-     *
-     * @return UserInterface
-     *
-     * @throws UnsupportedUserException if the account is not supported
+     * For now this functionality is disabled, unsure if actually needed
      */
     public function refreshUser(UserInterface $user)
     {
-        // TODO: Implement refreshUser() method.
+        throw new RuntimeException(sprintf('Cannot Refresh User "%s"', $user->getUsername()));
     }
 
     /**
@@ -81,17 +86,93 @@ class IdentityService implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        // TODO: Implement supportsClass() method.
+        return $class instanceof Identity;
     }
 
+    /**
+     * @param string $nameId
+     * @param string $institution
+     * @return null|\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity
+     * @throws \Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException
+     */
     public function findByNameIdAndInstitution($nameId, $institution)
     {
-        // @todo implement find
-//        return $this->apiIdentityService->get()
+        $searchQuery = new IdentitySearchQuery($institution);
+        $searchQuery->setNameId($nameId);
+
+        try {
+            $result = $this->apiIdentityService->search($searchQuery);
+        } catch (Exception $e) {
+            $message = sprintf('Exception when searching identity: "%s"', $e->getMessage());
+            $this->logger->critical($message);
+            throw new RuntimeException($message, 0, $e);
+        }
+
+        $elements = $result->getElements();
+        if (count($elements) === 0) {
+            return null;
+        }
+
+        if (count($elements) === 1) {
+            return reset($elements);
+        }
+
+        throw new RuntimeException(sprintf(
+            'Got an unexpected amount of identities, expected 0 or 1, got "%d"',
+            count($elements)
+        ));
     }
 
-    public function createIdentity($name)
+    /**
+     * Save or Update an existing Identity
+     *
+     * @param Identity $identity
+     */
+    public function createIdentity(Identity $identity)
     {
+        $command = new CreateIdentityCommand();
+        $command->id          = $identity->id;
+        $command->nameId      = $identity->nameId;
+        $command->institution = $identity->institution;
+        $command->email       = $identity->email;
+        $command->commonName  = $identity->commonName;
 
+        $this->processCommand($command);
+    }
+
+    /**
+     * @param Identity $identity
+     */
+    public function updateIdentity(Identity $identity)
+    {
+        $command = new UpdateIdentityCommand($identity->id);
+        $command->email      = $identity->email;
+        $command->commonName = $identity->commonName;
+
+        $this->processCommand($command);
+    }
+
+    /**
+     * @param $command
+     */
+    public function processCommand($command)
+    {
+        $messageTemplate = 'Exception when saving Identity[%s]: with command "%s", error: "%s"';
+
+        try {
+            $result = $this->commandService->execute($command);
+        } catch (Exception $e) {
+            $message = sprintf($messageTemplate, $command->id, get_class($command), $e->getMessage());
+            $this->logger->critical($message);
+
+            throw new RuntimeException($message, 0, $e);
+        }
+
+        if (!$result->isSuccessful()) {
+            $note = sprintf($messageTemplate, $command->id, get_class($command), implode('", "', $result->getErrors()));
+            $this->logger->critical($note);
+
+            throw new RuntimeException($note);
+        }
     }
 }
