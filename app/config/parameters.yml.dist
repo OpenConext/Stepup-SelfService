@@ -7,6 +7,11 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
+    middleware_credentials_username:
+    middleware_credentials_password:
+    middleware_url_command_api:
+    middleware_url_api:
+
     saml_sp_publickey:
     saml_sp_privatekey:
 
