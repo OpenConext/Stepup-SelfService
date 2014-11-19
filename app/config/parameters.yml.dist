@@ -7,10 +7,10 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
-    middleware_credentials_username:
-    middleware_credentials_password:
-    middleware_url_command_api:
-    middleware_url_api:
+    middleware_credentials_username: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    middleware_credentials_password: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    middleware_url_command_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL (http://etc)'
+    middleware_url_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL (http://etc)'
 
     saml_sp_publickey:
     saml_sp_privatekey:
