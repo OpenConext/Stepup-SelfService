@@ -16,18 +16,10 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Exception;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use RuntimeException as CoreRuntimeException;
 
-class WelcomeController extends Controller
+class RuntimeException extends CoreRuntimeException
 {
-    /**
-     * @Template
-     */
-    public function welcomeAction()
-    {
-        return ['user' => $this->get('security.context')->getToken()->getUser()->commonName];
-    }
 }
