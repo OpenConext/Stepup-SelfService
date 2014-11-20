@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ce4973d62e256810f4e5f1a88cc3cc8",
+    "hash": "0313b837b4006a55d87d9bf30c85d3fb",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1882,16 +1882,16 @@
         },
         {
             "name": "surfnet/stepup-saml-bundle",
-            "version": "dev-feature/attribute-parsing",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-saml-bundle.git",
-                "reference": "b9ff68f77e6493c5c2194ded0ca0eabca5d34262"
+                "reference": "bf38c444f6a340aed5896fb53043f2828628e5d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/b9ff68f77e6493c5c2194ded0ca0eabca5d34262",
-                "reference": "b9ff68f77e6493c5c2194ded0ca0eabca5d34262",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/bf38c444f6a340aed5896fb53043f2828628e5d7",
+                "reference": "bf38c444f6a340aed5896fb53043f2828628e5d7",
                 "shasum": ""
             },
             "require": {
@@ -1924,7 +1924,7 @@
                 "stepup",
                 "surfnet"
             ],
-            "time": "2014-11-19 12:37:53"
+            "time": "2014-11-20 09:43:29"
         },
         {
             "name": "symfony/assetic-bundle",
