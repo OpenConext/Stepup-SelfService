@@ -18,27 +18,41 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class SessionHandler
 {
+    /**
+     * Session keys
+     */
     const AUTH_SESSION_KEY = '__auth/';
     const SAML_SESSION_KEY = '__saml/';
 
+    /**
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
     private $session;
 
-    public function __construct(Session $session)
+    /**
+     * @param SessionInterface $session
+     */
+    public function __construct(SessionInterface $session)
     {
         $this->session = $session;
     }
 
+    /**
+     * @param string $uri
+     */
     public function setCurrentRequestUri($uri)
     {
         $this->session->set(self::AUTH_SESSION_KEY . 'current_uri', $uri);
     }
 
+    /**
+     * @return string
+     */
     public function getCurrentRequestUri()
     {
         $uri = $this->session->get(self::AUTH_SESSION_KEY . 'current_uri');
@@ -47,36 +61,57 @@ class SessionHandler
         return $uri;
     }
 
+    /**
+     * @return string
+     */
     public function getRequestId()
     {
         return $this->session->get(self::SAML_SESSION_KEY . 'request_id');
     }
 
+    /**
+     * @param string $requestId
+     */
     public function setRequestId($requestId)
     {
         $this->session->set(self::SAML_SESSION_KEY . 'request_id', $requestId);
     }
 
+    /**
+     * @return bool
+     */
     public function hasRequestId()
     {
         return $this->session->has(self::SAML_SESSION_KEY. 'request_id');
     }
 
+    /**
+     * Removes the requestId from the session
+     */
     public function clearRequestId()
     {
         $this->session->remove(self::SAML_SESSION_KEY . 'request_id');
     }
 
+    /**
+     * @return bool
+     */
     public function hasBeenAuthenticated()
     {
         return $this->session->has(self::AUTH_SESSION_KEY . 'token');
     }
 
+    /**
+     * @param TokenInterface $token
+     */
     public function setToken(TokenInterface $token)
     {
         $this->session->set(self::AUTH_SESSION_KEY . 'token', serialize($token));
     }
 
+    /**
+     * @return TokenInterface
+     */
     public function getToken()
     {
         $token = unserialize($this->session->get(self::AUTH_SESSION_KEY . 'token'));

@@ -26,13 +26,17 @@ class SamlToken extends AbstractToken
      * @var \SAML2_Assertion
      */
     public $assertion;
+
+    /**
+     * @var \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity
+     */
     public $identity;
 
     public function __construct(array $roles = array())
     {
         parent::__construct($roles);
 
-        $this->setAuthenticated(true);
+        $this->setAuthenticated(count($roles));
     }
 
     /**

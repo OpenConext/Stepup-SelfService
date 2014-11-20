@@ -27,10 +27,29 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SamlInteractionProvider
 {
+    /**
+     * @var \Surfnet\SamlBundle\Entity\ServiceProvider
+     */
     private $serviceProvider;
+
+    /**
+     * @var \Surfnet\SamlBundle\Entity\IdentityProvider
+     */
     private $identityProvider;
+
+    /**
+     * @var \Surfnet\SamlBundle\Http\RedirectBinding
+     */
     private $redirectBinding;
+
+    /**
+     * @var \Surfnet\SamlBundle\Http\PostBinding
+     */
     private $postBinding;
+
+    /**
+     * @var SessionHandler
+     */
     private $sessionHandler;
 
     public function __construct(
@@ -47,6 +66,9 @@ class SamlInteractionProvider
         $this->sessionHandler = $sessionHandler;
     }
 
+    /**
+     * @return bool
+     */
     public function isSamlAuthenticationInitiated()
     {
         return $this->sessionHandler->hasRequestId();

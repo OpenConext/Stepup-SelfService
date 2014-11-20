@@ -21,13 +21,11 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\IdentitySearchQuery;
-use Surfnet\StepupMiddlewareClientBundle\Command\Command;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\CreateIdentityCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\UpdateIdentityCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\IdentityService as ApiIdentityService;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
-use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -86,7 +84,7 @@ class IdentityService implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class instanceof Identity;
+        return $class === 'Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity';
     }
 
     /**
