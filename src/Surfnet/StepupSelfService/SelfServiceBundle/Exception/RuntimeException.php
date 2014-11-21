@@ -16,26 +16,10 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Exception;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use RuntimeException as CoreRuntimeException;
 
-class RegistrationController extends Controller
+class RuntimeException extends CoreRuntimeException
 {
-    /**
-     * @Template
-     */
-    public function displaySecondFactorTypesAction()
-    {
-        return ['user' => $this->get('security.context')->getToken()->getUser()->commonName];
-    }
-
-    /**
-     * @Template
-     */
-    public function emailVerificationSentAction()
-    {
-        return ['email' => 'foo@bar.com']; // @TODO
-    }
 }

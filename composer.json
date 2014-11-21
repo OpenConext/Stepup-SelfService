@@ -26,13 +26,21 @@
         "simplesamlphp/saml2": "@dev",
         "surfnet/stepup-middleware-client-bundle": "dev-feature/list-second-factors",
         "surfnet/stepup-middleware-client": "@dev",
-        "guzzlehttp/guzzle": "~4"
+        "guzzlehttp/guzzle": "~4",
+        "surfnet/stepup-saml-bundle": "dev-develop",
+        "surfnet/stepup-bundle": "dev-develop"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
         "ibuildings/qa-tools": "~1.1,>=1.1.27",
         "liip/rmt": "1.1.*"
     },
+    "repositories" : [
+        {
+            "type": "vcs",
+            "url": "https://github.com/SURFnet/saml2"
+        }
+    ],
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

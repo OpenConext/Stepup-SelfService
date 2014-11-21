@@ -30,3 +30,13 @@ ss_registration_sms_prove_possession:
     path:     /registration/sms/prove-possession
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:provePossession }
+
+selfservice_saml_metadata:
+    path: /authentication/metadata
+    methods: [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Saml:metadata }
+
+selfservice_serviceprovider_consume_assertion:
+    path: /authentication/consume-assertion
+    methods: [POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Saml:consumeAssertion }

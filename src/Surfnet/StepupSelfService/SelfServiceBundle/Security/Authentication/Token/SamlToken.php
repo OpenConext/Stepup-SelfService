@@ -16,26 +16,36 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
-class RegistrationController extends Controller
+class SamlToken extends AbstractToken
 {
     /**
-     * @Template
+     * @var \SAML2_Assertion
      */
-    public function displaySecondFactorTypesAction()
+    public $assertion;
+
+    /**
+     * @var \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity
+     */
+    public $identity;
+
+    public function __construct(array $roles = array())
     {
-        return ['user' => $this->get('security.context')->getToken()->getUser()->commonName];
+        parent::__construct($roles);
+
+        $this->setAuthenticated(count($roles));
     }
 
     /**
-     * @Template
+     * Returns the user credentials.
+     *
+     * @return mixed The user credentials
      */
-    public function emailVerificationSentAction()
+    public function getCredentials()
     {
-        return ['email' => 'foo@bar.com']; // @TODO
+        return '';
     }
 }

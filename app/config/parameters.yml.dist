@@ -10,3 +10,18 @@ parameters:
     gateway_api_url: https://gw-dev.stepup.coin.surf.net/
     gateway_api_username: ss
     gateway_api_password: ss
+
+    middleware_credentials_username: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    middleware_credentials_password: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    middleware_url_command_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
+    middleware_url_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
+
+    saml_sp_publickey:
+    saml_sp_privatekey:
+
+    saml_metadata_publickey:
+    saml_metadata_privatekey:
+
+    saml_remote_idp_entity_id:
+    saml_remote_idp_sso_url:
+    saml_remote_idp_certificate:

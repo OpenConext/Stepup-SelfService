@@ -1,7 +1,7 @@
 security:
     providers:
-        in_memory:
-            memory: ~
+        middleware:
+            id: self_service.service.identity
 
     firewalls:
         dev:
@@ -9,4 +9,12 @@ security:
             security: false
 
         default:
+            pattern: ^/authentication/metadata$
             anonymous: ~
+
+        saml_based:
+            saml: true
+
+    access_control:
+        - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel:https }
+        - { path: ^/, roles: ROLE_USER, requires_channel: https }
