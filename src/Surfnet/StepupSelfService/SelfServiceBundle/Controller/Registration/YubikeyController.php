@@ -20,8 +20,8 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,9 +32,11 @@ class YubikeyController extends Controller
      */
     public function provePossessionAction(Request $request)
     {
+        $identity = $this->getIdentity();
+
         $command = new VerifyYubikeyOtpCommand();
-        $command->identity = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
-        $command->institution = 'Ibuildings bv';
+        $command->identity = $identity->id;
+        $command->institution = $identity->institution;
 
         $form = $this->createForm('ss_prove_yubikey_possession', $command)->handleRequest($request);
 

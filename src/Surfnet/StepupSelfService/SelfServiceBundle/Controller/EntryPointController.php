@@ -19,18 +19,17 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class EntryPointController extends Controller
 {
     public function decideSecondFactorFlowAction()
     {
-        $identityId = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
+        $identity = $this->getIdentity();
 
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
-        if ($service->doSecondFactorsExistForIdentity($identityId)) {
+        if ($service->doSecondFactorsExistForIdentity($identity->id)) {
             return $this->redirect($this->generateUrl('ss_second_factor_list'));
         } else {
             $this->get('session')->getFlashBag()->add('notice', 'ss.registration.selector.alert.no_second_factors_yet');

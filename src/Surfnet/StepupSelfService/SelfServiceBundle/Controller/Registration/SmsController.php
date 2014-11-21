@@ -21,8 +21,8 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,13 +33,15 @@ class SmsController extends Controller
      */
     public function sendChallengeAction(Request $request)
     {
+        $identity = $this->getIdentity();
+
         $command = new SendSmsChallengeCommand();
         $form = $this->createForm('ss_send_sms_challenge', $command)->handleRequest($request);
 
         if ($form->isValid()) {
             $command->originator = substr(preg_replace('~[^a-z0-9]~i', '', 'Institution Ltd.'), 0, 11);
-            $command->identity = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
-            $command->institution = 'Ibuildings bv';
+            $command->identity = $identity->id;
+            $command->institution = $identity->institution;
 
             /** @var SmsSecondFactorService $service */
             $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');

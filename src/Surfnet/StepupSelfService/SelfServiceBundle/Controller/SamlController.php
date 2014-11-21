@@ -20,10 +20,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\SamlBundle\Http\XMLResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as FrameworkController;
 use Symfony\Component\HttpFoundation\Request;
 
-class SamlController extends Controller
+class SamlController extends FrameworkController
 {
     /**
      * @Template

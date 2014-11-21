@@ -19,7 +19,6 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class RegistrationController extends Controller
 {
@@ -28,7 +27,7 @@ class RegistrationController extends Controller
      */
     public function displaySecondFactorTypesAction()
     {
-        return ['user' => $this->get('security.context')->getToken()->getUser()->commonName];
+        return ['user' => $this->getIdentity()->commonName];
     }
 
     /**
@@ -36,6 +35,6 @@ class RegistrationController extends Controller
      */
     public function emailVerificationSentAction()
     {
-        return ['email' => 'foo@bar.com']; // @TODO
+        return ['email' => $this->getIdentity()->email];
     }
 }
