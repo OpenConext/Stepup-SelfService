@@ -19,6 +19,10 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationController extends Controller
 {
@@ -36,5 +40,35 @@ class RegistrationController extends Controller
     public function emailVerificationSentAction()
     {
         return ['email' => $this->getIdentity()->email];
+    }
+
+    /**
+     * @Template
+     */
+    public function verifyEmailAction(Request $request, $identityId, $secondFactorId)
+    {
+        $nonce = $request->query->get('n', '');
+
+        $command = new VerifyEmailCommand();
+        $command->identityId = $identityId;
+        $command->secondFactorId = $secondFactorId;
+        $command->verificationNonce = $nonce;
+
+        $form = $this->createForm('ss_verify_email', $command)->handleRequest($request);
+
+        if ($form->isValid()) {
+            /** @var SmsSecondFactorService $service */
+            $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+
+            if ($service->verifyEmail($command)) {
+                $this->get('session')->getFlashBag()->add('success', 'ss.flash.second_factor_was_registered');
+
+                return $this->redirect($this->generateUrl('ss_second_factor_list'));
+            } else {
+                $form->addError(new FormError('ss.verify_email.email_verification_failed'));
+            }
+        }
+
+        return ['form' => $form->createView()];
     }
 }

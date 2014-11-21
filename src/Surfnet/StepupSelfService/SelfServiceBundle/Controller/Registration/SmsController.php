@@ -73,8 +73,6 @@ class SmsController extends Controller
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
-                $this->get('session')->getFlashBag()->add('success', 'ss.flash.second_factor_was_registered');
-
                 return $this->redirect($this->generateUrl('ss_registration_email_verification_sent'));
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.proof_of_possession_failed'));

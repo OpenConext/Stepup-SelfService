@@ -20,6 +20,10 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\AnchorType
         tags: [{ name: form.type, alias: anchor }]
 
+    surfnet_stepup_self_service_self_service.form.type.verify_email:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifyEmailType
+        tags: [{ name: form.type, alias: ss_verify_email }]
+
     surfnet_stepup_self_service_self_service.service.yubikey:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
