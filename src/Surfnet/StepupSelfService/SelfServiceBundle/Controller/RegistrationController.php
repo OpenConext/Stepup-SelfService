@@ -54,20 +54,14 @@ class RegistrationController extends Controller
         $command->secondFactorId = $secondFactorId;
         $command->verificationNonce = $nonce;
 
-        $form = $this->createForm('ss_verify_email', $command)->handleRequest($request);
+        /** @var SmsSecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
 
-        if ($form->isValid()) {
-            /** @var SmsSecondFactorService $service */
-            $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-
-            if ($service->verifyEmail($command)) {
-                return $this->redirect($this->generateUrl('ss_registration_registration_email_sent'));
-            } else {
-                $form->addError(new FormError('ss.verify_email.email_verification_failed'));
-            }
+        if ($service->verifyEmail($command)) {
+            return $this->redirect($this->generateUrl('ss_registration_registration_email_sent'));
         }
 
-        return ['form' => $form->createView()];
+        return [];
     }
 
     /**
