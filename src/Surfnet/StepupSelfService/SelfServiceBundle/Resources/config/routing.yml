@@ -10,10 +10,12 @@ ss_second_factor_list:
 
 ss_registration_display_types:
     path:     /registration/select-token
+    methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:displaySecondFactorTypes }
 
 ss_registration_email_verification_email_sent:
     path:     /registration/email-verification-email-sent
+    methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:emailVerificationEmailSent }
 
 ss_registration_verify_email:
@@ -25,6 +27,7 @@ ss_registration_verify_email:
 
 ss_registration_registration_email_sent:
     path:     /registration/registration-email-sent
+    methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent }
 
 ss_registration_yubikey_prove_possession:
