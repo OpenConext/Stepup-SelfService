@@ -1,0 +1,20 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.registration_email_sent.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 100} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.registration.registration_email_sent.text.registration_codehas_been_sent'|trans({'%email%': email}) }}</p>
+    <p>
+        <a class="btn btn-primary" href="{{ path('ss_second_factor_list') }}">
+            {{ 'ss.registration.registration_email-sent.button.to_overview' }}
+        </a>
+    </p>
+{% endblock %}

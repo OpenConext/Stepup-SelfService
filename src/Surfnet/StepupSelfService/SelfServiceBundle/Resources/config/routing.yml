@@ -22,6 +22,10 @@ ss_registration_verify_email:
     requirements:
         secondFactorId: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 
+ss_registration_registration_email_sent:
+    path:     /registration/registration-email-sent
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent }
+
 ss_registration_yubikey_prove_possession:
     path:     /registration/yubikey/prove-possession
     methods:  [GET,POST]

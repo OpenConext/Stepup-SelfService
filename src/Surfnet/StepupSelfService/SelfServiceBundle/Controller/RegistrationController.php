@@ -61,14 +61,20 @@ class RegistrationController extends Controller
             $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
 
             if ($service->verifyEmail($command)) {
-                $this->get('session')->getFlashBag()->add('success', 'ss.flash.second_factor_was_registered');
-
-                return $this->redirect($this->generateUrl('ss_second_factor_list'));
+                return $this->redirect($this->generateUrl('ss_registration_registration_email_sent'));
             } else {
                 $form->addError(new FormError('ss.verify_email.email_verification_failed'));
             }
         }
 
         return ['form' => $form->createView()];
+    }
+
+    /**
+     * @Template
+     */
+    public function registrationEmailSentAction()
+    {
+        return ['email' => $this->getIdentity()->email];
     }
 }
