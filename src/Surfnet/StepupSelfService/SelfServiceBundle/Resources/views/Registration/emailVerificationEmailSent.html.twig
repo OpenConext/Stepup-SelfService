@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block page_title %}{{ 'ss.registration.email_sent.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'ss.registration.email_verification_email_sent.title'|trans }}{% endblock %}
 
 {% block page_header %}
     {{ parent() }}
@@ -11,5 +11,5 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <p>{{ 'ss.registration.email_sent.text.email_verification_has_been_sent'|trans({'%email%': email}) }}</p>
+    <p>{{ 'ss.registration.email_verification_email_sent.text.email_verification_has_been_sent'|trans({'%email%': email}) }}</p>
 {% endblock %}
