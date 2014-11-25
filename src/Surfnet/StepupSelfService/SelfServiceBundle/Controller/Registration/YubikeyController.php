@@ -46,7 +46,7 @@ class YubikeyController extends Controller
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
-                return $this->redirect($this->generateUrl('ss_registration_email_verification_sent'));
+                return $this->redirect($this->generateUrl('ss_registration_email_verification_email_sent'));
             } elseif ($result->didOtpVerificationFail()) {
                 $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
             } else {

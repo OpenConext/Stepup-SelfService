@@ -37,7 +37,7 @@ class RegistrationController extends Controller
     /**
      * @Template
      */
-    public function emailVerificationSentAction()
+    public function emailVerificationEmailSentAction()
     {
         return ['email' => $this->getIdentity()->email];
     }

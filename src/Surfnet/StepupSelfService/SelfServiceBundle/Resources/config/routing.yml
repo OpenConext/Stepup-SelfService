@@ -12,9 +12,9 @@ ss_registration_display_types:
     path:     /registration/select-token
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:displaySecondFactorTypes }
 
-ss_registration_email_verification_sent:
-    path:     /registration/email-verification-sent
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:emailVerificationSent }
+ss_registration_email_verification_email_sent:
+    path:     /registration/email-verification-email-sent
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:emailVerificationEmailSent }
 
 ss_registration_verify_email:
     path:     /registration/verify-email/{identityId}/{secondFactorId}
