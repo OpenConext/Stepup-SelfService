@@ -45,13 +45,14 @@ class RegistrationController extends Controller
     /**
      * @Template
      */
-    public function verifyEmailAction(Request $request, $identityId, $secondFactorId)
+    public function verifyEmailAction(Request $request)
     {
         $nonce = $request->query->get('n', '');
 
+        $identityId = $this->getIdentity()->id;
+
         $command = new VerifyEmailCommand();
         $command->identityId = $identityId;
-        $command->secondFactorId = $secondFactorId;
         $command->verificationNonce = $nonce;
 
         /** @var SmsSecondFactorService $service */

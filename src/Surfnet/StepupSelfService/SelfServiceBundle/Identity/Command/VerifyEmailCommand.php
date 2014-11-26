@@ -31,27 +31,12 @@ class VerifyEmailCommand extends AbstractCommand
     /**
      * @var string
      */
-    public $secondFactorId;
-
-    /**
-     * @Assert\NotBlank(message="ss.verify_email_command.verification_code.may_not_be_empty")
-     * @Assert\Type(type="string", message="ss.verify_email_command.verification_code.must_be_string")
-     *
-     * @var string
-     */
-    public $verificationCode;
-
-    /**
-     * @var string
-     */
     public $verificationNonce;
 
     public function serialise()
     {
         return [
             'identity_id' => $this->identityId,
-            'second_factor_id' => $this->secondFactorId,
-            'verification_code' => $this->verificationCode,
             'verification_nonce' => $this->verificationNonce,
         ];
     }
