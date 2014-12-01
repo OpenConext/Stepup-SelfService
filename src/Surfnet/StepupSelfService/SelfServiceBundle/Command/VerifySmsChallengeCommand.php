@@ -29,4 +29,11 @@ class VerifySmsChallengeCommand
      * @var string
      */
     public $challenge;
+
+    /**
+     * The requesting identity's ID (not name ID).
+     *
+     * @var string
+     */
+    public $identity;
 }

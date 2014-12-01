@@ -63,7 +63,11 @@ class SmsController extends Controller
      */
     public function provePossessionAction(Request $request)
     {
+        $identity = $this->getIdentity();
+
         $command = new VerifySmsChallengeCommand();
+        $command->identity = $identity->id;
+
         $form = $this->createForm('ss_verify_sms_challenge', $command)->handleRequest($request);
 
         if ($form->isValid()) {

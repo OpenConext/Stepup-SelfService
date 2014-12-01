@@ -90,17 +90,17 @@ class SmsSecondFactorService
     }
 
     /**
-     * @param VerifySmsChallengeCommand $command
+     * @param VerifySmsChallengeCommand $challengeCommand
      * @return ProofOfPossessionResult
      */
-    public function provePossession(VerifySmsChallengeCommand $command)
+    public function provePossession(VerifySmsChallengeCommand $challengeCommand)
     {
-        if (!$this->challengeStore->verifyChallenge($command->challenge)) {
+        if (!$this->challengeStore->verifyChallenge($challengeCommand->challenge)) {
             return new ProofOfPossessionResult(null, true);
         }
 
         $command = new ProvePhonePossessionCommand();
-        $command->identityId = '45fb401a-22b6-4829-9495-08b9610c18d4'; // @TODO
+        $command->identityId = $challengeCommand->identity;
         $command->secondFactorId = Uuid::generate();
         $command->phoneNumber = '+31681819571';
 
