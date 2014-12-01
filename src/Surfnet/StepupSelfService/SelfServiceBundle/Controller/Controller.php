@@ -36,18 +36,14 @@ class Controller extends FrameworkController
         $tokenStorage = $this->get('security.context');
         $token = $tokenStorage->getToken();
 
-        if (!$token instanceof SamlToken) {
-            throw new AccessDeniedException('Registrant must be authenticated using a SAML token.');
-        }
-
         $user = $token->getUser();
 
         if (!$user instanceof Identity) {
             $actualType = is_object($token) ? get_class($token) : gettype($token);
 
-            throw new \RuntimeException(
+            throw new \UnexpectedValueException(
                 sprintf(
-                    "SAML token did not contain user of type '%s', but one of type '%s'",
+                    "Token did not contain user of type '%s', but one of type '%s'",
                     'Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity',
                     $actualType
                 )
