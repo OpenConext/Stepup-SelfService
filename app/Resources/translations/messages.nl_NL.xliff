@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2014-12-01T19:09:21Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="e73fbdf37675844502b8b8e3a1de45079dfbe2ee" resname=".alt">
+        <jms:reference-file line="4">Registration/partial/secondFactor.html.twig</jms:reference-file>
+        <source>.alt</source>
+        <target state="new">.alt</target>
+      </trans-unit>
+      <trans-unit id="b8a86f2df14ab4b5b384006026c42f7733330ee4" resname=".description">
+        <jms:reference-file line="16">Registration/partial/secondFactor.html.twig</jms:reference-file>
+        <source>.description</source>
+        <target state="new">.description</target>
+      </trans-unit>
+      <trans-unit id="f2e5f1243797e0fc89bedab0f0fe5f36df4f8f57" resname=".title">
+        <jms:reference-file line="5">Registration/partial/secondFactor.html.twig</jms:reference-file>
+        <source>.title</source>
+        <target state="new">.title</target>
+      </trans-unit>
+      <trans-unit id="0c3112826a8c897ac0b6a3d3a8432059b74dd996" resname="app.name">
+        <jms:reference-file line="6">Resources/views/base.html.twig</jms:reference-file>
+        <jms:reference-file line="26">Resources/views/base.html.twig</jms:reference-file>
+        <source>app.name</source>
+        <target state="new">app.name</target>
+      </trans-unit>
+      <trans-unit id="e81e43e3bee8ede5bc43425f96030ec09f268e7e" resname="ss.form.ss_send_sms_challenge.button.send_challenge">
+        <jms:reference-file line="41">Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <source>ss.form.ss_send_sms_challenge.button.send_challenge</source>
+        <target state="new">ss.form.ss_send_sms_challenge.button.send_challenge</target>
+      </trans-unit>
+      <trans-unit id="dcb8e6ab8b77916403b532a97e955a3445f1918f" resname="ss.form.ss_verify_email.button.verify_email">
+        <jms:reference-file line="38">Form/Type/VerifyEmailType.php</jms:reference-file>
+        <source>ss.form.ss_verify_email.button.verify_email</source>
+        <target state="new">ss.form.ss_verify_email.button.verify_email</target>
+      </trans-unit>
+      <trans-unit id="f8c912debc51cbf991a497fcf244c07c03d67650" resname="ss.form.ss_verify_email.text.verification_code">
+        <jms:reference-file line="30">Form/Type/VerifyEmailType.php</jms:reference-file>
+        <source>ss.form.ss_verify_email.text.verification_code</source>
+        <target state="new">ss.form.ss_verify_email.text.verification_code</target>
+      </trans-unit>
+      <trans-unit id="13bd61d79492403adcd7cc4a71a6b7acbc61216c" resname="ss.form.ss_verify_sms_challenge.button.resend_challenge">
+        <jms:reference-file line="37">Form/Type/VerifySmsChallengeType.php</jms:reference-file>
+        <source>ss.form.ss_verify_sms_challenge.button.resend_challenge</source>
+        <target state="new">ss.form.ss_verify_sms_challenge.button.resend_challenge</target>
+      </trans-unit>
+      <trans-unit id="8237b3cb8724d01124f8cc3588bd38db546c51b8" resname="ss.form.ss_verify_sms_challenge.button.verify_challenge">
+        <jms:reference-file line="42">Form/Type/VerifySmsChallengeType.php</jms:reference-file>
+        <source>ss.form.ss_verify_sms_challenge.button.verify_challenge</source>
+        <target state="new">ss.form.ss_verify_sms_challenge.button.verify_challenge</target>
+      </trans-unit>
+      <trans-unit id="35226fe84f63f1a41504b91b70800b70414a9265" resname="ss.form.ss_verify_sms_challenge.text.challenge">
+        <jms:reference-file line="30">Form/Type/VerifySmsChallengeType.php</jms:reference-file>
+        <source>ss.form.ss_verify_sms_challenge.text.challenge</source>
+        <target state="new">ss.form.ss_verify_sms_challenge.text.challenge</target>
+      </trans-unit>
+      <trans-unit id="1fd92b34e65dcbb10330e06d6079564e19252093" resname="ss.registration.email_verification_email_sent.text.email_verification_has_been_sent">
+        <jms:reference-file line="14">views/Registration/emailVerificationEmailSent.html.twig</jms:reference-file>
+        <source>ss.registration.email_verification_email_sent.text.email_verification_has_been_sent</source>
+        <target state="new">ss.registration.email_verification_email_sent.text.email_verification_has_been_sent</target>
+      </trans-unit>
+      <trans-unit id="081d879f1df81f9c54dd58b6f4105617e779c692" resname="ss.registration.email_verification_email_sent.title">
+        <jms:reference-file line="3">views/Registration/emailVerificationEmailSent.html.twig</jms:reference-file>
+        <source>ss.registration.email_verification_email_sent.title</source>
+        <target state="new">ss.registration.email_verification_email_sent.title</target>
+      </trans-unit>
+      <trans-unit id="3d9422c99d74fc7a2dee4d8a9d6faa9c46d929ec" resname="ss.registration.progress_bar.confirm_second_factor">
+        <jms:reference-file line="4">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <source>ss.registration.progress_bar.confirm_second_factor</source>
+        <target state="new">ss.registration.progress_bar.confirm_second_factor</target>
+      </trans-unit>
+      <trans-unit id="9a3c965947c1bf3aa872007ffb234307e48238a8" resname="ss.registration.progress_bar.link_second_factor">
+        <jms:reference-file line="3">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <source>ss.registration.progress_bar.link_second_factor</source>
+        <target state="new">ss.registration.progress_bar.link_second_factor</target>
+      </trans-unit>
+      <trans-unit id="e935c8330461a6bc4e9a59ac919ffa376ef5c00b" resname="ss.registration.progress_bar.register_second_factor">
+        <jms:reference-file line="5">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <source>ss.registration.progress_bar.register_second_factor</source>
+        <target state="new">ss.registration.progress_bar.register_second_factor</target>
+      </trans-unit>
+      <trans-unit id="2ca10f36a20c14c466645750646de2a51b9d7bd0" resname="ss.registration.progress_bar.select_second_factor">
+        <jms:reference-file line="2">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <source>ss.registration.progress_bar.select_second_factor</source>
+        <target state="new">ss.registration.progress_bar.select_second_factor</target>
+      </trans-unit>
+      <trans-unit id="7c9ea58235246dd0f14a2d6aaed379ad0638d0e7" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent">
+        <jms:reference-file line="14">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent</source>
+        <target state="new">ss.registration.registration_email_sent.text.registration_code_has_been_sent</target>
+      </trans-unit>
+      <trans-unit id="61c16d1cf1191b8bfb09d98779fbbf5cb748bd6b" resname="ss.registration.registration_email_sent.title">
+        <jms:reference-file line="3">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <source>ss.registration.registration_email_sent.title</source>
+        <target state="new">ss.registration.registration_email_sent.title</target>
+      </trans-unit>
+      <trans-unit id="38dcce9bee21e4005e1609868dbe48d08c63507e" resname="ss.registration.selector.text.explain_wizard">
+        <jms:reference-file line="14">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
+        <source>ss.registration.selector.text.explain_wizard</source>
+        <target state="new">ss.registration.selector.text.explain_wizard</target>
+      </trans-unit>
+      <trans-unit id="cd82a900fa62708fd26a61a0b95221a41b070945" resname="ss.registration.selector.text.please_select_second_factor">
+        <jms:reference-file line="15">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
+        <source>ss.registration.selector.text.please_select_second_factor</source>
+        <target state="new">ss.registration.selector.text.please_select_second_factor</target>
+      </trans-unit>
+      <trans-unit id="2e0728618c2f9b97d4b5e52a55782b3babe62dbb" resname="ss.registration.selector.title.welcome">
+        <jms:reference-file line="3">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
+        <source>ss.registration.selector.title.welcome</source>
+        <target state="new">ss.registration.selector.title.welcome</target>
+      </trans-unit>
+      <trans-unit id="c50571e9afcd050cbd75609b1334730df8dae3f0" resname="ss.registration.sms.challenge_body">
+        <jms:reference-file line="80">SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
+        <source>ss.registration.sms.challenge_body</source>
+        <target state="new">ss.registration.sms.challenge_body</target>
+      </trans-unit>
+      <trans-unit id="9d363fe71a339b50940b951f20b0a2d93ce416bf" resname="ss.registration.sms.prove_possession.title.page">
+        <jms:reference-file line="3">Registration/Sms/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.sms.prove_possession.title.page</source>
+        <target state="new">ss.registration.sms.prove_possession.title.page</target>
+      </trans-unit>
+      <trans-unit id="cff04ef8b49fed356c7daf53dc4a38626d331a2f" resname="ss.registration.sms.send_challenge.title.page">
+        <jms:reference-file line="3">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <source>ss.registration.sms.send_challenge.title.page</source>
+        <target state="new">ss.registration.sms.send_challenge.title.page</target>
+      </trans-unit>
+      <trans-unit id="68f41985771eac9a0faeb0dfa58256154c9df4c8" resname="ss.registration.sms.text.after_pressing_proceed">
+        <jms:reference-file line="19">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <source>ss.registration.sms.text.after_pressing_proceed</source>
+        <target state="new">ss.registration.sms.text.after_pressing_proceed</target>
+      </trans-unit>
+      <trans-unit id="5cac3b52eed8f48770d80fb00b871e3dc3ae565a" resname="ss.registration.sms.text.ensure_phone_has_signal">
+        <jms:reference-file line="17">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <source>ss.registration.sms.text.ensure_phone_has_signal</source>
+        <target state="new">ss.registration.sms.text.ensure_phone_has_signal</target>
+      </trans-unit>
+      <trans-unit id="61e00906a71f4cde92328a327aaa55e55061186e" resname="ss.registration.sms.text.enter_challenge_below">
+        <jms:reference-file line="17">Registration/Sms/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.sms.text.enter_challenge_below</source>
+        <target state="new">ss.registration.sms.text.enter_challenge_below</target>
+      </trans-unit>
+      <trans-unit id="7a3ffc345262052d848b83714296cd342950ec0a" resname="ss.registration.sms.text.enter_phone_number_below">
+        <jms:reference-file line="18">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <source>ss.registration.sms.text.enter_phone_number_below</source>
+        <target state="new">ss.registration.sms.text.enter_phone_number_below</target>
+      </trans-unit>
+      <trans-unit id="1c6c4046436965583c51f835f122786636d3bf57" resname="ss.registration.sms.text.help_user_enter_challenge">
+        <jms:reference-file line="14">Registration/Sms/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.sms.text.help_user_enter_challenge</source>
+        <target state="new">ss.registration.sms.text.help_user_enter_challenge</target>
+      </trans-unit>
+      <trans-unit id="78dff419254d1597b04d675eed021d333f86a87e" resname="ss.registration.sms.text.help_user_enter_phone_number">
+        <jms:reference-file line="14">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <source>ss.registration.sms.text.help_user_enter_phone_number</source>
+        <target state="new">ss.registration.sms.text.help_user_enter_phone_number</target>
+      </trans-unit>
+      <trans-unit id="66bcc644c0a26ef762954fc544a03885175587c8" resname="ss.registration.sms.text.retry_if_not_received">
+        <jms:reference-file line="18">Registration/Sms/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.sms.text.retry_if_not_received</source>
+        <target state="new">ss.registration.sms.text.retry_if_not_received</target>
+      </trans-unit>
+      <trans-unit id="c0b7cacbe163182d07eadf53926718aad310c6a5" resname="ss.registration.verify_email.text.verification_failed">
+        <jms:reference-file line="14">views/Registration/verifyEmail.html.twig</jms:reference-file>
+        <source>ss.registration.verify_email.text.verification_failed</source>
+        <target state="new">ss.registration.verify_email.text.verification_failed</target>
+      </trans-unit>
+      <trans-unit id="c5719a6d57fbfa9823d56313e5db6e89cafe3110" resname="ss.registration.verify_email.title">
+        <jms:reference-file line="3">views/Registration/verifyEmail.html.twig</jms:reference-file>
+        <source>ss.registration.verify_email.title</source>
+        <target state="new">ss.registration.verify_email.title</target>
+      </trans-unit>
+      <trans-unit id="51b48a932a70ae43f768348cb7631f248fffd1b1" resname="ss.registration.yubikey.text.connect_yubikey_to_pc">
+        <jms:reference-file line="17">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.yubikey.text.connect_yubikey_to_pc</source>
+        <target state="new">ss.registration.yubikey.text.connect_yubikey_to_pc</target>
+      </trans-unit>
+      <trans-unit id="f5adfdb9d55ddc728cc5a406e88dbd9b562dfd36" resname="ss.registration.yubikey.text.ensure_form_field_focus">
+        <jms:reference-file line="18">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.yubikey.text.ensure_form_field_focus</source>
+        <target state="new">ss.registration.yubikey.text.ensure_form_field_focus</target>
+      </trans-unit>
+      <trans-unit id="a4d13265c29f792e3c9ea0560798627b41d051b1" resname="ss.registration.yubikey.text.help_user_enter_challenge">
+        <jms:reference-file line="14">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.yubikey.text.help_user_enter_challenge</source>
+        <target state="new">ss.registration.yubikey.text.help_user_enter_challenge</target>
+      </trans-unit>
+      <trans-unit id="a640511e7b860eb4e56b71c4137b8960f04b3d0e" resname="ss.registration.yubikey.text.press_once_form_auto_submitted">
+        <jms:reference-file line="19">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.yubikey.text.press_once_form_auto_submitted</source>
+        <target state="new">ss.registration.yubikey.text.press_once_form_auto_submitted</target>
+      </trans-unit>
+      <trans-unit id="96ca4e93bee3c9288f14fd9bb4e700819155d7f4" resname="ss.registration.yubikey.title.enter_challenge">
+        <jms:reference-file line="3">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.yubikey.title.enter_challenge</source>
+        <target state="new">ss.registration.yubikey.title.enter_challenge</target>
+      </trans-unit>
+      <trans-unit id="59ae5f416e832eeec457e8f73d11d196bcf9c6e5" resname="ss.second_factor.list.title">
+        <jms:reference-file line="3">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor.list.title</source>
+        <target state="new">ss.second_factor.list.title</target>
+      </trans-unit>
+      <trans-unit id="dd988cd2bcd7da3e41b2ec6abae092e67c562827" resname="ss.second_factor.list.unverified.title">
+        <jms:reference-file line="8">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor.list.unverified.title</source>
+        <target state="new">ss.second_factor.list.unverified.title</target>
+      </trans-unit>
+      <trans-unit id="fedd12f3e661692730a3650ef6db64e71c9d8441" resname="ss.second_factor_list.header.second_factor_identifier">
+        <jms:reference-file line="21">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor_list.header.second_factor_identifier</source>
+        <target state="new">ss.second_factor_list.header.second_factor_identifier</target>
+      </trans-unit>
+      <trans-unit id="e4d199fd46ed7fa1c78a8fde6faef80f034cd662" resname="ss.second_factor_list.header.type">
+        <jms:reference-file line="20">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor_list.header.type</source>
+        <target state="new">ss.second_factor_list.header.type</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
