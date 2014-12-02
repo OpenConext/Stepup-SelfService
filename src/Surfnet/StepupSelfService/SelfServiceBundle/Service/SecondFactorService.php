@@ -47,20 +47,10 @@ class SecondFactorService
      */
     public function doSecondFactorsExistForIdentity($identityId)
     {
-        $secondFactors = $this->secondFactors->findByIdentity($identityId);
+        $unverifiedSecondFactors = $this->secondFactors->findUnverifiedByIdentity($identityId);
+        $verifiedSecondFactors = $this->secondFactors->findVerifiedByIdentity($identityId);
 
-        return count($secondFactors) > 0;
-    }
-
-    /**
-     * Returns the given registrant's second factors, regardless of their states.
-     *
-     * @param string $identityId
-     * @return SecondFactor[]
-     */
-    public function findByIdentity($identityId)
-    {
-        return $this->secondFactors->findByIdentity($identityId);
+        return $unverifiedSecondFactors->getTotalItems() + $verifiedSecondFactors->getTotalItems() > 0;
     }
 
     /**
@@ -72,5 +62,16 @@ class SecondFactorService
     public function findUnverifiedByIdentity($identityId)
     {
         return $this->secondFactors->findUnverifiedByIdentity($identityId);
+    }
+
+    /**
+     * Returns the given registrant's verified second factors.
+     *
+     * @param string $identityId
+     * @return SecondFactor[]
+     */
+    public function findVerifiedByIdentity($identityId)
+    {
+        return $this->secondFactors->findByIdentity($identityId);
     }
 }
