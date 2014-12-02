@@ -62,6 +62,7 @@ nelmio_security:
         names: ['*']
 
 surfnet_stepup_self_service_self_service:
+    sms_originator: %sms_originator%
     gateway_api:
         url: %gateway_api_url%
         credentials:

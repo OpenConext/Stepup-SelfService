@@ -23,12 +23,16 @@ use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ChallengeStore;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class SmsSecondFactorService
 {
     /**
@@ -52,21 +56,39 @@ class SmsSecondFactorService
     private $commandService;
 
     /**
+     * @var string
+     */
+    private $originator;
+
+    /**
      * @param SmsService $smsService
      * @param ChallengeStore $challengeStore
      * @param TranslatorInterface $translator
      * @param CommandService $commandService
+     * @param string $originator
      */
     public function __construct(
         SmsService $smsService,
         ChallengeStore $challengeStore,
         TranslatorInterface $translator,
-        CommandService $commandService
+        CommandService $commandService,
+        $originator
     ) {
+        if (!is_string($originator)) {
+            throw InvalidArgumentException::invalidType('string', 'originator', $originator);
+        }
+
+        if (!preg_match('~^[a-z0-9]{1,11}$~i', $originator)) {
+            throw new InvalidArgumentException(
+                'Invalid SMS originator given: may only contain alphanumerical characters.'
+            );
+        }
+
         $this->smsService = $smsService;
         $this->challengeStore = $challengeStore;
         $this->translator = $translator;
         $this->commandService = $commandService;
+        $this->originator = $originator;
     }
 
     /**
@@ -81,7 +103,7 @@ class SmsSecondFactorService
 
         $smsCommand = new SendSmsCommand();
         $smsCommand->recipient = $command->recipient;
-        $smsCommand->originator = $command->originator;
+        $smsCommand->originator = $this->originator;
         $smsCommand->body = $body;
         $smsCommand->identity = $command->identity;
         $smsCommand->institution = $command->institution;

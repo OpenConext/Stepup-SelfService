@@ -16,6 +16,8 @@ parameters:
     middleware_url_command_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
     middleware_url_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
 
+    sms_originator: SURFStepup
+
     saml_sp_publickey:
     saml_sp_privatekey:
 

@@ -84,6 +84,18 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->scalarNode('sms_originator')
+                    ->info('Originator (sender) for SMS messages')
+                    ->isRequired()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return (!is_string($value) || !preg_match('~^[a-z0-9]{1,11}$~i', $value));
+                        })
+                        ->thenInvalid(
+                            'Invalid SMS originator specified: "%s". Must be a string matching "~^[a-z0-9]{1,11}$~i".'
+                        )
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

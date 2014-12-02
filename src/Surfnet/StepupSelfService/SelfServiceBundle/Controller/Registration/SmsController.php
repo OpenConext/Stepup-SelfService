@@ -39,7 +39,6 @@ class SmsController extends Controller
         $form = $this->createForm('ss_send_sms_challenge', $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            $command->originator = substr(preg_replace('~[^a-z0-9]~i', '', 'Institution Ltd.'), 0, 11);
             $command->identity = $identity->id;
             $command->institution = $identity->institution;
 

@@ -57,5 +57,9 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
 
         $gatewayGuzzle = $container->getDefinition('surfnet_stepup_self_service_self_service.guzzle.gateway_api');
         $gatewayGuzzle->replaceArgument(0, $gatewayGuzzleOptions);
+
+        $smsSecondFactorService =
+            $container->getDefinition('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+        $smsSecondFactorService->replaceArgument(4, $config['sms_originator']);
     }
 }

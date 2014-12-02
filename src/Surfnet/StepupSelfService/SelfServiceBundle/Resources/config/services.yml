@@ -57,6 +57,7 @@ services:
             - @surfnet_stepup_self_service_self_service.challenge_store
             - @translator
             - @surfnet_stepup_middleware_client.service.command
+            - '' # Originator set in extension
 
     surfnet_stepup_self_service_self_service.challenge_store:
         public: false

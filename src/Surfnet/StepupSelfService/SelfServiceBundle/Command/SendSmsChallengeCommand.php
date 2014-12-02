@@ -34,11 +34,6 @@ class SendSmsChallengeCommand
     public $recipient;
 
     /**
-     * @var string
-     */
-    public $originator;
-
-    /**
      * The requesting identity's ID (not name ID).
      *
      * @var string
