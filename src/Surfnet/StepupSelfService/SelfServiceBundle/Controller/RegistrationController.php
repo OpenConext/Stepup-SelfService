@@ -31,7 +31,7 @@ class RegistrationController extends Controller
      */
     public function displaySecondFactorTypesAction()
     {
-        return ['user' => $this->getIdentity()->commonName];
+        return ['commonName' => $this->getIdentity()->commonName];
     }
 
     /**
