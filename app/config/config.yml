@@ -72,6 +72,7 @@ surfnet_stepup_self_service_self_service:
 mopa_bootstrap:
     form:
         show_legend: false
+        templating: SurfnetStepupSelfServiceSelfServiceBundle:Form:fields.html.twig
     icons:
         icon_set: fontawesome4
 
