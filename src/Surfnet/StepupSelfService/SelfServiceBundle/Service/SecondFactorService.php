@@ -72,6 +72,6 @@ class SecondFactorService
      */
     public function findVerifiedByIdentity($identityId)
     {
-        return $this->secondFactors->findByIdentity($identityId);
+        return $this->secondFactors->findVerifiedByIdentity($identityId);
     }
 }
