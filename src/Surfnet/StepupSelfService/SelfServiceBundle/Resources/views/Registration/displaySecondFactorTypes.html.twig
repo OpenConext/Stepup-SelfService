@@ -1,0 +1,29 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.selector.title.welcome'|trans({'%name%': commonName}) }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 0} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.registration.selector.text.explain_wizard'|trans }}</p>
+    <p>{{ 'ss.registration.selector.text.please_select_second_factor'|trans }}</p>
+
+    <div class="row">
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+            'type': 'yubikey',
+            'security': 3,
+            'url': path('ss_registration_yubikey_prove_possession')
+        } only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+            'type': 'sms',
+            'security': 2,
+            'url': path('ss_registration_sms_send_challenge')
+        } only %}
+    </div>
+{% endblock %}

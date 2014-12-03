@@ -1,0 +1,25 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.sms.prove_possession.title.page'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/progressBar.html.twig' with {'progress': 35} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.registration.sms.text.help_user_enter_challenge'|trans }}</p>
+
+    <ol>
+        <li>{{ 'ss.registration.sms.text.enter_challenge_below'|trans }}</li>
+        <li>{{ 'ss.registration.sms.text.retry_if_not_received'|trans }}</li>
+    </ol>
+
+    <hr>
+
+    {{ form(form) }}
+
+{% endblock %}

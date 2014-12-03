@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2014-12-03T11:33:01Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="f033a6177f4f371fbc302f07a6b8c67ec8b46549" resname="middleware_client.dto.identity.common_name.must_be_string">
+        <source>middleware_client.dto.identity.common_name.must_be_string</source>
+        <target>Remote identity common name must be a string.</target>
+      </trans-unit>
+      <trans-unit id="a7840bc30c7a24c3f4f850d48c53104b9b92bd39" resname="middleware_client.dto.identity.common_name.must_not_be_blank">
+        <source>middleware_client.dto.identity.common_name.must_not_be_blank</source>
+        <target>Remote identity common name may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="fbd782fbf74d2eda128f308f91f6a2f857da8c95" resname="middleware_client.dto.identity.email.must_be_string">
+        <source>middleware_client.dto.identity.email.must_be_string</source>
+        <target>Remote identity e-mail must be a string.</target>
+      </trans-unit>
+      <trans-unit id="8782f69a696f3e4839ad013364a381ac33eceebc" resname="middleware_client.dto.identity.email.must_not_be_blank">
+        <source>middleware_client.dto.identity.email.must_not_be_blank</source>
+        <target>Remote identity e-mail may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="5ed2c409bba8d24ef59c2b1ed33c6375ddf367a3" resname="middleware_client.dto.identity.id.must_be_string">
+        <source>middleware_client.dto.identity.id.must_be_string</source>
+        <target>Remote identity ID must be string.</target>
+      </trans-unit>
+      <trans-unit id="df370930b57750d68a7ed0a8907dc0d842e970c8" resname="middleware_client.dto.identity.id.must_not_be_blank">
+        <source>middleware_client.dto.identity.id.must_not_be_blank</source>
+        <target>Remote identity ID may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="2101515569e429b72e5dda1b24a81a150bd4c5d7" resname="middleware_client.dto.identity.institution.must_be_string">
+        <source>middleware_client.dto.identity.institution.must_be_string</source>
+        <target>Remote identity's institution must be string</target>
+      </trans-unit>
+      <trans-unit id="24355be237e3847a287c446acdd520c78647503d" resname="middleware_client.dto.identity.institution.must_not_be_blank">
+        <source>middleware_client.dto.identity.institution.must_not_be_blank</source>
+        <target>Remote identity's institution may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="d149bb7bd045a12b2e652954af3c5a2fcc176178" resname="middleware_client.dto.identity.name_id.must_be_string">
+        <source>middleware_client.dto.identity.name_id.must_be_string</source>
+        <target>Remote identity's NameID must be string.</target>
+      </trans-unit>
+      <trans-unit id="7174eff8bbc2102aee4f3af7e3a73e7681fe9abc" resname="middleware_client.dto.identity.name_id.must_not_be_blank">
+        <source>middleware_client.dto.identity.name_id.must_not_be_blank</source>
+        <target>Remote identity's NameID may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="4f314988de33fb4e4a1700e530247565d7d2a65b" resname="middleware_client.dto.unverified_second_factor.id.must_be_string">
+        <source>middleware_client.dto.unverified_second_factor.id.must_be_string</source>
+        <target>Remote unverified second factor ID must be string.</target>
+      </trans-unit>
+      <trans-unit id="4c4985921fff483147aa8232cd50b0d3cf7a049c" resname="middleware_client.dto.unverified_second_factor.id.must_not_be_blank">
+        <source>middleware_client.dto.unverified_second_factor.id.must_not_be_blank</source>
+        <target>Remote unverified second factor ID may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="27bb088e7b5f3cb46861b45b4544272b71005356" resname="middleware_client.dto.unverified_second_factor.second_factor_identifier.must_be_string">
+        <source>middleware_client.dto.unverified_second_factor.second_factor_identifier.must_be_string</source>
+        <target>Remote unverified second factor identifier must be string.</target>
+      </trans-unit>
+      <trans-unit id="4137b0cf5a8b42cacd916685a0537a2f7b1ba790" resname="middleware_client.dto.unverified_second_factor.second_factor_identifier.must_not_be_blank">
+        <source>middleware_client.dto.unverified_second_factor.second_factor_identifier.must_not_be_blank</source>
+        <target>Remote unverified second factor identifier may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="eab56e38ed16c322800da917adddd7f9fda7c55c" resname="middleware_client.dto.unverified_second_factor.type.must_be_string">
+        <source>middleware_client.dto.unverified_second_factor.type.must_be_string</source>
+        <target>Remote unverified second factor type must be string.</target>
+      </trans-unit>
+      <trans-unit id="f83f994a6097b5fff0c50ed4c324458482680f52" resname="middleware_client.dto.unverified_second_factor.type.must_not_be_blank">
+        <source>middleware_client.dto.unverified_second_factor.type.must_not_be_blank</source>
+        <target>Remote unverified second factor type may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="f698eaa978e06a006719be57650566e044f6438d" resname="middleware_client.dto.verified_second_factor.id.must_be_string">
+        <source>middleware_client.dto.verified_second_factor.id.must_be_string</source>
+        <target>Remote unverified second factor ID must be string.</target>
+      </trans-unit>
+      <trans-unit id="89cd06f61965837c0b36e3c041f1c3212c85aca2" resname="middleware_client.dto.verified_second_factor.id.must_not_be_blank">
+        <source>middleware_client.dto.verified_second_factor.id.must_not_be_blank</source>
+        <target>Remote unverified second factor ID may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="81d066f7f22e6fbe8e97f68b51b49caf338c3dbb" resname="middleware_client.dto.verified_second_factor.second_factor_identifier.must_be_string">
+        <source>middleware_client.dto.verified_second_factor.second_factor_identifier.must_be_string</source>
+        <target>Remote unverified second factor identifier must be string.</target>
+      </trans-unit>
+      <trans-unit id="d1b8a9fb6a8032d823e7c4d3416d401a362522ce" resname="middleware_client.dto.verified_second_factor.second_factor_identifier.must_not_be_blank">
+        <source>middleware_client.dto.verified_second_factor.second_factor_identifier.must_not_be_blank</source>
+        <target>Remote unverified second factor identifier may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="d057ea32b23c1d67cb42666219c449efc1755d97" resname="middleware_client.dto.verified_second_factor.type.must_be_string">
+        <source>middleware_client.dto.verified_second_factor.type.must_be_string</source>
+        <target>Remote unverified second factor type must be string.</target>
+      </trans-unit>
+      <trans-unit id="f1f53987b53df83e27296d02f32759b0bc9f8b24" resname="middleware_client.dto.verified_second_factor.type.must_not_be_blank">
+        <source>middleware_client.dto.verified_second_factor.type.must_not_be_blank</source>
+        <target>Remote unverified second factor type may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="d23ad73b357db56cd8de5ead80613a379e7fb7f9" resname="ss.send_sms_challenge_command.recipient.may_not_be_empty">
+        <source>ss.send_sms_challenge_command.recipient.may_not_be_empty</source>
+        <target>SMS challenge recipient may not be empty.</target>
+      </trans-unit>
+      <trans-unit id="84180da4a52125c173dd3718fc680f619c43d334" resname="ss.send_sms_challenge_command.recipient.must_be_full_number_with_country_code_no_plus">
+        <source>ss.send_sms_challenge_command.recipient.must_be_full_number_with_country_code_no_plus</source>
+        <target>SMS recipient must consist of digits, include country code, exclude plus sign. Example: 31612345678.</target>
+      </trans-unit>
+      <trans-unit id="5f39ae7a72c57c188064a17deddd98d4e7ff5397" resname="ss.send_sms_challenge_command.recipient.must_be_string">
+        <source>ss.send_sms_challenge_command.recipient.must_be_string</source>
+        <target>SMS challenge recipient must be string.</target>
+      </trans-unit>
+      <trans-unit id="5445b7554bf403272afdbd8df0235e7b271bcd7f" resname="ss.send_sms_command.recipient.may_not_be_empty">
+        <source>ss.send_sms_command.recipient.may_not_be_empty</source>
+        <target>SMS recipient may not be empty.</target>
+      </trans-unit>
+      <trans-unit id="a0c7b3a25ab6f042b6cd6c6b628a025179d496f4" resname="ss.send_sms_command.recipient.must_be_string">
+        <source>ss.send_sms_command.recipient.must_be_string</source>
+        <target>SMS recipient must be string.</target>
+      </trans-unit>
+      <trans-unit id="38db36f5d3beb6d0138a9cf91486e5f6c029506c" resname="ss.send_sms_command.recipient.must_consist_of_digits">
+        <source>ss.send_sms_command.recipient.must_consist_of_digits</source>
+        <target>SMS recipient may consist of digits only.</target>
+      </trans-unit>
+      <trans-unit id="67ba1e3d487524fe3b3d1d3658569992ff551798" resname="ss.verify_sms_challenge_command.challenge.may_not_be_empty">
+        <source>ss.verify_sms_challenge_command.challenge.may_not_be_empty</source>
+        <target>SMS challenge may not be empty.</target>
+      </trans-unit>
+      <trans-unit id="091e5eae2a73ed4d22919a369646201df022c6d3" resname="ss.verify_sms_challenge_command.challenge.must_be_string">
+        <source>ss.verify_sms_challenge_command.challenge.must_be_string</source>
+        <target>SMS challenge must be string.</target>
+      </trans-unit>
+      <trans-unit id="c9813a06e25a8dee4f6d73b9a20fa04f1e946898" resname="ss.verify_yubikey_command.otp.may_not_be_empty">
+        <source>ss.verify_yubikey_command.otp.may_not_be_empty</source>
+        <target>Yubikey OTP may not be empty.</target>
+      </trans-unit>
+      <trans-unit id="5bb2ccce54de9798253a1be8ae00560f2e219e7e" resname="ss.verify_yubikey_command.otp.must_be_string">
+        <source>ss.verify_yubikey_command.otp.must_be_string</source>
+        <target>Yubikey OTP must be string.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

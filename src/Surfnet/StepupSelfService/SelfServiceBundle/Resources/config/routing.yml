@@ -1,6 +1,47 @@
-surfnet_stepup_self_service_self_service_homepage:
+ss_entry_point:
     path:     /
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Welcome:welcome }
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:EntryPoint:decideSecondFactorFlow }
+
+ss_second_factor_list:
+    path:     /overview
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list }
+
+ss_registration_display_types:
+    path:     /registration/select-token
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:displaySecondFactorTypes }
+
+ss_registration_email_verification_email_sent:
+    path:     /registration/email-verification-email-sent
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:emailVerificationEmailSent }
+
+ss_registration_verify_email:
+    path:     /verify-email
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:verifyEmail }
+
+ss_registration_registration_email_sent:
+    path:     /registration/registration-email-sent
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent }
+
+ss_registration_yubikey_prove_possession:
+    path:     /registration/yubikey/prove-possession
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Yubikey:provePossession }
+
+ss_registration_sms_send_challenge:
+    path:     /registration/sms/send-challenge
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:sendChallenge }
+
+ss_registration_sms_prove_possession:
+    path:     /registration/sms/prove-possession/{phoneNumber}
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:provePossession }
 
 selfservice_saml_metadata:
     path: /authentication/metadata

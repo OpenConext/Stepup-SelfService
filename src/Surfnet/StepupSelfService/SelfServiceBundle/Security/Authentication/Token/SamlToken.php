@@ -27,11 +27,6 @@ class SamlToken extends AbstractToken
      */
     public $assertion;
 
-    /**
-     * @var \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity
-     */
-    public $identity;
-
     public function __construct(array $roles = array())
     {
         parent::__construct($roles);

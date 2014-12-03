@@ -16,18 +16,22 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-class WelcomeController extends Controller
+interface ChallengeStore
 {
     /**
-     * @Template
+     * Generates a challenge, stores it and returns it.
+     *
+     * @return string
      */
-    public function welcomeAction()
-    {
-        return ['user' => $this->get('security.context')->getToken()->getUser()->commonName];
-    }
+    public function generateChallenge();
+
+    /**
+     * Verifies a previously generated challenge.
+     *
+     * @param string $challenge
+     * @return bool
+     */
+    public function verifyChallenge($challenge);
 }

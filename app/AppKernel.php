@@ -32,10 +32,10 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Nelmio\SecurityBundle\NelmioSecurityBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
-            new \Surfnet\StepupMiddlewareClientBundle\SurfnetStepupMiddlewareClientBundle(),
             new Surfnet\StepupSelfService\SelfServiceBundle\SurfnetStepupSelfServiceSelfServiceBundle(),
+            new Surfnet\StepupMiddlewareClientBundle\SurfnetStepupMiddlewareClientBundle(),
             new Surfnet\SamlBundle\SurfnetSamlBundle(),
-            new Surfnet\StepupBundle\SurfnetStepupBundle()
+            new Surfnet\StepupBundle\SurfnetStepupBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

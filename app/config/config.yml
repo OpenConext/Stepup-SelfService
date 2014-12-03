@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%default_locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -60,6 +60,21 @@ nelmio_security:
         names: ['*']
     encrypted_cookie:
         names: ['*']
+
+surfnet_stepup_self_service_self_service:
+    sms_originator: %sms_originator%
+    gateway_api:
+        url: %gateway_api_url%
+        credentials:
+            username: %gateway_api_username%
+            password: %gateway_api_password%
+
+mopa_bootstrap:
+    form:
+        show_legend: false
+        templating: SurfnetStepupSelfServiceSelfServiceBundle:Form:fields.html.twig
+    icons:
+        icon_set: fontawesome4
 
 services:
     twig.extension.text: # Required by JMSTranslationBundle

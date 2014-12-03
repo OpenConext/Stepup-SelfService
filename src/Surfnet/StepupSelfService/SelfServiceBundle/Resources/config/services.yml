@@ -1,4 +1,69 @@
 services:
+    surfnet_stepup_self_service_self_service.service.second_factor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService
+        arguments:
+            - @surfnet_stepup_middleware_client.identity.service.second_factor
+
+    surfnet_stepup_self_service_self_service.form.type.prove_yubikey_possession:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType
+        tags: [{ name: form.type, alias: ss_prove_yubikey_possession }]
+
+    surfnet_stepup_self_service_self_service.form.type.send_sms_challenge:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\SendSmsChallengeType
+        tags: [{ name: form.type, alias: ss_send_sms_challenge }]
+
+    surfnet_stepup_self_service_self_service.form.type.verify_sms_challenge:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifySmsChallengeType
+        tags: [{ name: form.type, alias: ss_verify_sms_challenge }]
+
+    surfnet_stepup_self_service_self_service.form.type.anchor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\AnchorType
+        tags: [{ name: form.type, alias: anchor }]
+
+    surfnet_stepup_self_service_self_service.form.type.verify_email:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifyEmailType
+        tags: [{ name: form.type, alias: ss_verify_email }]
+
+    surfnet_stepup_self_service_self_service.service.yubikey:
+        public: false
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
+        arguments:
+            - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
+            - @logger
+
+    surfnet_stepup_self_service_self_service.service.sms:
+        public: false
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsService
+        arguments:
+            - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
+            - @logger
+
+    surfnet_stepup_self_service_self_service.guzzle.gateway_api:
+        public: false
+        class: GuzzleHttp\Client
+        arguments:
+            - {} # Set from the extension
+
+    surfnet_stepup_self_service_self_service.service.yubikey_second_factor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
+        arguments:
+            - @surfnet_stepup_self_service_self_service.service.yubikey
+            - @surfnet_stepup_middleware_client.service.command
+
+    surfnet_stepup_self_service_self_service.service.sms_second_factor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
+        arguments:
+            - @surfnet_stepup_self_service_self_service.service.sms
+            - @surfnet_stepup_self_service_self_service.challenge_store
+            - @translator
+            - @surfnet_stepup_middleware_client.service.command
+            - '' # Originator set in extension
+
+    surfnet_stepup_self_service_self_service.challenge_store:
+        public: false
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\SessionChallengeStore
+        arguments: [ @session, 'Surfnet/SelfService/SecondFactor/Sms:challenge' ]
+
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
         arguments:
