@@ -27,7 +27,7 @@ class SendSmsCommand
      * @Assert\Type(type="string", message="ss.send_sms_command.recipient.must_be_string")
      * @Assert\Regex(pattern="~^\d+$~", message="ss.send_sms_command.recipient.must_consist_of_digits")
      *
-     * The recipient without +316.
+     * The recipient as a string of digits (31612345678 for +31 6 1234 5678).
      *
      * @var string
      */

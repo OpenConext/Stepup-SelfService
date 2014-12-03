@@ -56,7 +56,7 @@ class SmsService
             'requester' => ['institution' => $command->institution, 'identity' => $command->identity],
             'message' => [
                 'originator' => $command->originator,
-                'recipient'  => sprintf('316%s', $command->recipient),
+                'recipient'  => $command->recipient,
                 'body'       => $command->body
             ],
         ];

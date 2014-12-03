@@ -25,9 +25,12 @@ class SendSmsChallengeCommand
     /**
      * @Assert\NotBlank(message="ss.send_sms_challenge_command.recipient.may_not_be_empty")
      * @Assert\Type(type="string", message="ss.send_sms_challenge_command.recipient.must_be_string")
-     * @Assert\Regex(pattern="~^\d+$~", message="ss.send_sms_challenge_command.recipient.must_consist_of_digits")
+     * @Assert\Regex(
+     *     pattern="~^\d+$~",
+     *     message="ss.send_sms_challenge_command.recipient.must_be_full_number_with_country_code_no_plus"
+     * )
      *
-     * The recipient without +316.
+     * The recipient as a string of digits (31612345678 for +31 6 1234 5678).
      *
      * @var string
      */

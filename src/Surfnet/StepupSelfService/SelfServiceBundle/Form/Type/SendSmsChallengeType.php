@@ -30,11 +30,11 @@ class SendSmsChallengeType extends AbstractType
             'label' => /** @Ignore */ false,
             'required' => true,
             'widget_addon_prepend' => [
-                'text' => '+31 (0)6'
+                'text' => '+'
             ],
             'attr' => array(
                 'autofocus' => true,
-                'placeholder' => '12354678',
+                'placeholder' => '31612345678',
             )
         ]);
         $builder->add('send-challenge', 'submit', [

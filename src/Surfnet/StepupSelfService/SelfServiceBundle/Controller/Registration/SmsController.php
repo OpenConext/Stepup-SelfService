@@ -47,7 +47,7 @@ class SmsController extends Controller
 
             if ($service->sendChallenge($command)) {
                 return $this->redirect(
-                    $this->generateUrl('ss_registration_sms_prove_possession')
+                    $this->generateUrl('ss_registration_sms_prove_possession', ['phoneNumber' => $command->recipient])
                 );
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.send_sms_challenge_failed'));
@@ -60,12 +60,13 @@ class SmsController extends Controller
     /**
      * @Template
      */
-    public function provePossessionAction(Request $request)
+    public function provePossessionAction(Request $request, $phoneNumber)
     {
         $identity = $this->getIdentity();
 
         $command = new VerifySmsChallengeCommand();
         $command->identity = $identity->id;
+        $command->phoneNumber = $phoneNumber;
 
         $form = $this->createForm('ss_verify_sms_challenge', $command)->handleRequest($request);
 

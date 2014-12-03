@@ -124,7 +124,7 @@ class SmsSecondFactorService
         $command = new ProvePhonePossessionCommand();
         $command->identityId = $challengeCommand->identity;
         $command->secondFactorId = Uuid::generate();
-        $command->phoneNumber = '+31681819571';
+        $command->phoneNumber = $challengeCommand->phoneNumber;
 
         $result = $this->commandService->execute($command);
 
