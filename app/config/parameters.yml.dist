@@ -1,6 +1,6 @@
 parameters:
-    default_locale:    nl_NL
-    locales:           [nl_NL]
+    default_locale:    en_GB
+    locales:           [nl_NL, en_GB]
     secret:            NotSoSecretReplaceMe!
 
     debug_toolbar:          true
