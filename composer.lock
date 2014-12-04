@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "93a9c3e51303eaa5bf3389d3dd467f4e",
+    "hash": "51c756551b5af5667986d3531980b829",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1797,69 +1797,33 @@
             "time": "2014-11-12 13:49:13"
         },
         {
-            "name": "surfnet/stepup-middleware-client",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SURFnet/Stepup-Middleware-client.git",
-                "reference": "e19f0e108ab0682b92b7d8c67a78999a9611a008"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-client/zipball/e19f0e108ab0682b92b7d8c67a78999a9611a008",
-                "reference": "e19f0e108ab0682b92b7d8c67a78999a9611a008",
-                "shasum": ""
-            },
-            "require": {
-                "beberlei/assert": "~2.0",
-                "guzzlehttp/guzzle": "~4",
-                "php": "~5.4"
-            },
-            "require-dev": {
-                "ibuildings/qa-tools": "~1.1,>=1.1.27",
-                "liip/rmt": "1.1.*",
-                "mockery/mockery": "0.9.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Surfnet\\StepupMiddlewareClient\\": [
-                        "src",
-                        "tests"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "Library for consuming the Step-up Middleware API.",
-            "time": "2014-12-01 13:29:45"
-        },
-        {
             "name": "surfnet/stepup-middleware-client-bundle",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "291d51c8bfbfef878b33596c0f081a3e8c0a6043"
+                "reference": "76a590586e35b5d9f8213fb96f49c3b7b0e8080c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/291d51c8bfbfef878b33596c0f081a3e8c0a6043",
-                "reference": "291d51c8bfbfef878b33596c0f081a3e8c0a6043",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/76a590586e35b5d9f8213fb96f49c3b7b0e8080c",
+                "reference": "76a590586e35b5d9f8213fb96f49c3b7b0e8080c",
                 "shasum": ""
             },
             "require": {
+                "beberlei/assert": "~2.0",
+                "guzzlehttp/guzzle": "~4",
                 "moontoast/math": "~1.1",
                 "php": "~5.4",
                 "psr/log": "~1.0",
                 "rhumsaa/uuid": "~2.7",
-                "surfnet/stepup-middleware-client": "dev-develop",
                 "symfony/config": "~2",
                 "symfony/dependency-injection": "~2",
                 "symfony/http-kernel": "~2",
                 "symfony/validator": "~2"
+            },
+            "conflict": {
+                "surfnet/stepup-middleware-client": "*"
             },
             "require-dev": {
                 "ibuildings/qa-tools": "~1.1",
@@ -1870,7 +1834,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Surfnet\\StepupMiddlewareClientBundle\\": "src"
+                    "Surfnet\\StepupMiddlewareClientBundle\\": "src/Surfnet/StepupMiddlewareClientBundle/",
+                    "Surfnet\\StepupMiddlewareClient\\": "src/Surfnet/StepupMiddlewareClient/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1878,7 +1843,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2014-12-01 17:15:46"
+            "time": "2014-12-04 10:42:17"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -4061,7 +4026,6 @@
         "mopa/bootstrap-bundle": 10,
         "simplesamlphp/saml2": 20,
         "surfnet/stepup-middleware-client-bundle": 20,
-        "surfnet/stepup-middleware-client": 20,
         "surfnet/stepup-saml-bundle": 20,
         "surfnet/stepup-bundle": 20
     },
