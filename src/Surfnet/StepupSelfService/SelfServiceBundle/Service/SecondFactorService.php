@@ -18,6 +18,8 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuery;
+use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\SecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
@@ -47,8 +49,8 @@ class SecondFactorService
      */
     public function doSecondFactorsExistForIdentity($identityId)
     {
-        $unverifiedSecondFactors = $this->secondFactors->findUnverifiedByIdentity($identityId);
-        $verifiedSecondFactors = $this->secondFactors->findVerifiedByIdentity($identityId);
+        $unverifiedSecondFactors = $this->findUnverifiedByIdentity($identityId);
+        $verifiedSecondFactors = $this->findVerifiedByIdentity($identityId);
 
         return $unverifiedSecondFactors->getTotalItems() + $verifiedSecondFactors->getTotalItems() > 0;
     }
@@ -61,7 +63,9 @@ class SecondFactorService
      */
     public function findUnverifiedByIdentity($identityId)
     {
-        return $this->secondFactors->findUnverifiedByIdentity($identityId);
+        return $this->secondFactors->searchUnverified(
+            (new UnverifiedSecondFactorSearchQuery())->setIdentityId($identityId)
+        );
     }
 
     /**
@@ -72,6 +76,8 @@ class SecondFactorService
      */
     public function findVerifiedByIdentity($identityId)
     {
-        return $this->secondFactors->findVerifiedByIdentity($identityId);
+        return $this->secondFactors->searchVerified(
+            (new VerifiedSecondFactorSearchQuery())->setIdentityId($identityId)
+        );
     }
 }
