@@ -27,3 +27,4 @@ parameters:
     saml_remote_idp_entity_id:
     saml_remote_idp_sso_url:
     saml_remote_idp_certificate:
+    graylog_hostname: g2-dev.stepup.coin.surf.net
