@@ -1,34 +1,39 @@
 {% extends "::base.html.twig" %}
+{% import _self as macro %}
 
 {% block page_title %}{{ 'ss.second_factor.list.title'|trans }}{% endblock %}
 
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <h3>{{ 'ss.second_factor.list.unverified.title'|trans }}</h3>
-
-    {% if unverifiedSecondFactors.elements is empty %}
-        <p>{{ 'ss.second_factor.list.text.no_second_factors' }}</p>
-        <a href="{{ path('ss_registration_display_types') }}"
-           class="btn btn-primary">
-            {{ 'ss.second_factor.list.button.register_second_factor' }}
-        </a>
+    {% if unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty %}
+        <h3>{{ 'ss.second_factor.list.no_second_factors.title'|trans }}</h3>
     {% else %}
+        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.vetted.title') }}
+        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.verified.title') }}
+        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.unverified.title') }}
+    {% endif %}
+
+{% endblock %}
+
+{% macro secondFactorTable(secondFactorCollection, headerText) %}
+    {% if secondFactorCollection.elements is not empty %}
+        <h3>{{ headerText|trans }}</h3>
         <table class="table-striped">
             <thead>
-                <tr>
-                    <th>{{ 'ss.second_factor_list.header.type'|trans }}</th>
-                    <th>{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
-                </tr>
+            <tr>
+                <th>{{ 'ss.second_factor_list.header.type'|trans }}</th>
+                <th>{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
+            </tr>
             </thead>
             <tbody>
-                {% for unverifiedSecondFactor in unverifiedSecondFactors.elements %}
-                    <tr>
-                        <td>{{ 'ss.second_factor.type.'~unverifiedSecondFactor.type|trans }}</td>
-                        <td>{{ unverifiedSecondFactor.secondFactorIdentifier }}</td>
-                    </tr>
-                {% endfor %}
+            {% for secondFactor in secondFactorCollection.elements %}
+                <tr>
+                    <td>{{ 'ss.second_factor.type.'~secondFactor.type|trans }}</td>
+                    <td>{{ secondFactor.secondFactorIdentifier }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     {% endif %}
-{% endblock %}
+{% endmacro %}

@@ -20,9 +20,12 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorSearchQuery;
+use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\SecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 
 class SecondFactorService
@@ -51,8 +54,11 @@ class SecondFactorService
     {
         $unverifiedSecondFactors = $this->findUnverifiedByIdentity($identityId);
         $verifiedSecondFactors = $this->findVerifiedByIdentity($identityId);
+        $vettedSecondFactors = $this->findVettedByIdentity($identityId);
 
-        return $unverifiedSecondFactors->getTotalItems() + $verifiedSecondFactors->getTotalItems() > 0;
+        return $unverifiedSecondFactors->getTotalItems() +
+               $verifiedSecondFactors->getTotalItems() +
+               $vettedSecondFactors->getTotalItems() > 0;
     }
 
     /**
@@ -72,12 +78,25 @@ class SecondFactorService
      * Returns the given registrant's verified second factors.
      *
      * @param string $identityId
-     * @return SecondFactor[]
+     * @return VerifiedSecondFactorCollection
      */
     public function findVerifiedByIdentity($identityId)
     {
         return $this->secondFactors->searchVerified(
             (new VerifiedSecondFactorSearchQuery())->setIdentityId($identityId)
+        );
+    }
+
+    /**
+     * Returns the given registrant's verified second factors.
+     *
+     * @param string $identityId
+     * @return VettedSecondFactorCollection
+     */
+    public function findVettedByIdentity($identityId)
+    {
+        return $this->secondFactors->searchVetted(
+            (new VettedSecondFactorSearchQuery())->setIdentityId($identityId)
         );
     }
 }
