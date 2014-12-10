@@ -84,8 +84,6 @@ class SamlInteractionProvider
             $this->identityProvider
         );
 
-        $authnRequest->setAuthenticationContext(['http://gw-dev.stepup.coin.surf.net/assurance/loa2']);
-
         $this->sessionHandler->setRequestId($authnRequest->getRequestId());
 
         return $this->redirectBinding->createRedirectResponseFor($authnRequest);
