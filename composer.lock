@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "51c756551b5af5667986d3531980b829",
+    "hash": "ad4d36c3733cc3e59c95306608ea7782",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1646,12 +1646,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/saml2.git",
-                "reference": "360a2955688cd468c3fe3c502ab0f4250a5105a0"
+                "reference": "6c8a505a9c7002f1dd2320c608e95b1519d85874"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/saml2/zipball/360a2955688cd468c3fe3c502ab0f4250a5105a0",
-                "reference": "360a2955688cd468c3fe3c502ab0f4250a5105a0",
+                "url": "https://api.github.com/repos/SURFnet/saml2/zipball/6c8a505a9c7002f1dd2320c608e95b1519d85874",
+                "reference": "6c8a505a9c7002f1dd2320c608e95b1519d85874",
                 "shasum": ""
             },
             "require": {
@@ -1659,14 +1659,13 @@
                 "ext-mcrypt": "*",
                 "ext-openssl": "*",
                 "php": ">=5.3.3",
-                "psr/log": "~1.0",
+                "psr/log": "1.0.0",
                 "simplesamlphp/xmlseclibs": "~1.3.1"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9",
                 "phpmd/phpmd": "~1.5",
                 "phpunit/phpunit": "~3.7",
-                "satooshi/php-coveralls": "~0.6.1",
                 "sebastian/phpcpd": "~1.4",
                 "sensiolabs/security-checker": "~1.1",
                 "squizlabs/php_codesniffer": "~1.4"
@@ -1695,7 +1694,7 @@
             "support": {
                 "source": "https://github.com/SURFnet/saml2/tree/master"
             },
-            "time": "2014-12-04 09:06:48"
+            "time": "2014-11-13 10:41:40"
         },
         {
             "name": "simplesamlphp/xmlseclibs",
@@ -1803,12 +1802,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "76a590586e35b5d9f8213fb96f49c3b7b0e8080c"
+                "reference": "770f2c7371fdc0b620292d8a48248b64678a317a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/76a590586e35b5d9f8213fb96f49c3b7b0e8080c",
-                "reference": "76a590586e35b5d9f8213fb96f49c3b7b0e8080c",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/770f2c7371fdc0b620292d8a48248b64678a317a",
+                "reference": "770f2c7371fdc0b620292d8a48248b64678a317a",
                 "shasum": ""
             },
             "require": {
@@ -1844,7 +1843,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2014-12-04 10:42:17"
+            "time": "2014-12-09 11:33:52"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -1852,12 +1851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-saml-bundle.git",
-                "reference": "ea366c5340c17cfa185649ce18c18a548db245cb"
+                "reference": "bf38c444f6a340aed5896fb53043f2828628e5d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/ea366c5340c17cfa185649ce18c18a548db245cb",
-                "reference": "ea366c5340c17cfa185649ce18c18a548db245cb",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/bf38c444f6a340aed5896fb53043f2828628e5d7",
+                "reference": "bf38c444f6a340aed5896fb53043f2828628e5d7",
                 "shasum": ""
             },
             "require": {
@@ -1890,7 +1889,59 @@
                 "stepup",
                 "surfnet"
             ],
-            "time": "2014-12-08 15:33:59"
+            "time": "2014-11-20 09:43:29"
+        },
+        {
+            "name": "swiftmailer/swiftmailer",
+            "version": "v5.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "c5f963e7f9d6f6438fda4f22d5cc2db296ec621a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/c5f963e7f9d6f6438fda4f22d5cc2db296ec621a",
+                "reference": "c5f963e7f9d6f6438fda4f22d5cc2db296ec621a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.3-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/swift_required.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Corbyn"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Swiftmailer, free feature-rich PHP mailer",
+            "homepage": "http://swiftmailer.org",
+            "keywords": [
+                "mail",
+                "mailer"
+            ],
+            "time": "2014-12-05 14:17:14"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -2014,6 +2065,63 @@
                 "logging"
             ],
             "time": "2014-07-21 00:36:06"
+        },
+        {
+            "name": "symfony/swiftmailer-bundle",
+            "version": "v2.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/SwiftmailerBundle.git",
+                "reference": "970b13d01871207e81d17b17ddda025e7e21e797"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
+                "reference": "970b13d01871207e81d17b17ddda025e7e21e797",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "swiftmailer/swiftmailer": ">=4.2.0,~5.0",
+                "symfony/swiftmailer-bridge": "~2.1"
+            },
+            "require-dev": {
+                "symfony/config": "~2.1",
+                "symfony/dependency-injection": "~2.1",
+                "symfony/http-kernel": "~2.1",
+                "symfony/yaml": "~2.1"
+            },
+            "suggest": {
+                "psr/log": "Allows logging"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bundle\\SwiftmailerBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony SwiftmailerBundle",
+            "homepage": "http://symfony.com",
+            "time": "2014-12-01 17:44:50"
         },
         {
             "name": "symfony/symfony",
