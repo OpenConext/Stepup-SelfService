@@ -8,6 +8,11 @@
 
     {% if unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty %}
         <h3>{{ 'ss.second_factor.list.no_second_factors.title'|trans }}</h3>
+        <p>{{ 'ss.second_factor.list.text.no_second_factors' }}</p>
+        <a href="{{ path('ss_registration_display_types') }}"
+           class="btn btn-primary">
+            {{ 'ss.second_factor.list.button.register_second_factor' }}
+        </a>
     {% else %}
         {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.vetted.title') }}
         {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.verified.title') }}
