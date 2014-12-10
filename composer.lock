@@ -1852,12 +1852,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-saml-bundle.git",
-                "reference": "bf38c444f6a340aed5896fb53043f2828628e5d7"
+                "reference": "ea366c5340c17cfa185649ce18c18a548db245cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/bf38c444f6a340aed5896fb53043f2828628e5d7",
-                "reference": "bf38c444f6a340aed5896fb53043f2828628e5d7",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/ea366c5340c17cfa185649ce18c18a548db245cb",
+                "reference": "ea366c5340c17cfa185649ce18c18a548db245cb",
                 "shasum": ""
             },
             "require": {
@@ -1890,7 +1890,7 @@
                 "stepup",
                 "surfnet"
             ],
-            "time": "2014-11-20 09:43:29"
+            "time": "2014-12-08 15:33:59"
         },
         {
             "name": "symfony/assetic-bundle",

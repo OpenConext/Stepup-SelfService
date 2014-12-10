@@ -58,7 +58,7 @@ class SamlProvider implements AuthenticationProviderInterface
         $nameId      = $translatedAssertion->getNameID();
         $institution = $translatedAssertion->getAttribute('schacHomeOrganization');
         $email       = $translatedAssertion->getAttribute('mail');
-        $commonName  = $translatedAssertion->getAttribute('displayName');
+        $commonName  = $translatedAssertion->getAttribute('commonName');
 
         $identity = $this->identityService->findByNameIdAndInstitution($nameId, $institution);
 
