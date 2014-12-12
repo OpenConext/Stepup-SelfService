@@ -139,3 +139,14 @@ surfnet_saml:
 surfnet_stepup:
     logging:
         application_name: self-service
+
+jms_translation:
+    locales: %locales%
+    configs:
+        default:
+            dirs: [%kernel.root_dir%/../src, %kernel.root_dir%, %kernel.root_dir%/../vendor/surfnet]
+            output_dir: %kernel.root_dir%/Resources/translations
+            ignored_domains: []
+            excluded_names: ['*TestCase.php', '*Test.php']
+            excluded_dirs: [cache, data, logs, Tests]
+            extractors: []
