@@ -1646,12 +1646,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/saml2.git",
-                "reference": "360a2955688cd468c3fe3c502ab0f4250a5105a0"
+                "reference": "6c8a505a9c7002f1dd2320c608e95b1519d85874"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/saml2/zipball/360a2955688cd468c3fe3c502ab0f4250a5105a0",
-                "reference": "360a2955688cd468c3fe3c502ab0f4250a5105a0",
+                "url": "https://api.github.com/repos/SURFnet/saml2/zipball/6c8a505a9c7002f1dd2320c608e95b1519d85874",
+                "reference": "6c8a505a9c7002f1dd2320c608e95b1519d85874",
                 "shasum": ""
             },
             "require": {
@@ -1659,14 +1659,13 @@
                 "ext-mcrypt": "*",
                 "ext-openssl": "*",
                 "php": ">=5.3.3",
-                "psr/log": "~1.0",
+                "psr/log": "1.0.0",
                 "simplesamlphp/xmlseclibs": "~1.3.1"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9",
                 "phpmd/phpmd": "~1.5",
                 "phpunit/phpunit": "~3.7",
-                "satooshi/php-coveralls": "~0.6.1",
                 "sebastian/phpcpd": "~1.4",
                 "sensiolabs/security-checker": "~1.1",
                 "squizlabs/php_codesniffer": "~1.4"
@@ -1695,7 +1694,7 @@
             "support": {
                 "source": "https://github.com/SURFnet/saml2/tree/master"
             },
-            "time": "2014-12-04 09:06:48"
+            "time": "2014-11-13 10:41:40"
         },
         {
             "name": "simplesamlphp/xmlseclibs",
@@ -1803,12 +1802,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "76a590586e35b5d9f8213fb96f49c3b7b0e8080c"
+                "reference": "b61420e0dec76843f9e75a08d87c4a68b97187d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/76a590586e35b5d9f8213fb96f49c3b7b0e8080c",
-                "reference": "76a590586e35b5d9f8213fb96f49c3b7b0e8080c",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/b61420e0dec76843f9e75a08d87c4a68b97187d4",
+                "reference": "b61420e0dec76843f9e75a08d87c4a68b97187d4",
                 "shasum": ""
             },
             "require": {
@@ -1844,7 +1843,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2014-12-04 10:42:17"
+            "time": "2014-12-11 16:30:57"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
