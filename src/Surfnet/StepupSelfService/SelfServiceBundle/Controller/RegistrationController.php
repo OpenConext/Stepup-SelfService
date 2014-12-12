@@ -20,8 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
-use Symfony\Component\Form\FormError;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationController extends Controller
@@ -55,8 +54,8 @@ class RegistrationController extends Controller
         $command->identityId = $identityId;
         $command->verificationNonce = $nonce;
 
-        /** @var SmsSecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+        /** @var SecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
         if ($service->verifyEmail($command)) {
             return $this->redirect($this->generateUrl('ss_registration_registration_email_sent'));

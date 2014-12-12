@@ -25,7 +25,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProvePhonePossessionCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ChallengeStore;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -129,16 +128,5 @@ class SmsSecondFactorService
         $result = $this->commandService->execute($command);
 
         return new ProofOfPossessionResult($result->isSuccessful() ? $command->secondFactorId : null, false);
-    }
-
-    /**
-     * @param VerifyEmailCommand $command
-     * @return bool
-     */
-    public function verifyEmail(VerifyEmailCommand $command)
-    {
-        $result = $this->commandService->execute($command);
-
-        return $result->isSuccessful();
     }
 }
