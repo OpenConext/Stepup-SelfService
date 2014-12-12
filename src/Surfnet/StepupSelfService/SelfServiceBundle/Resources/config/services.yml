@@ -3,6 +3,7 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService
         arguments:
             - @surfnet_stepup_middleware_client.identity.service.second_factor
+            - @surfnet_stepup_middleware_client.service.command
 
     surfnet_stepup_self_service_self_service.form.type.prove_yubikey_possession:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType

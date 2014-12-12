@@ -27,6 +27,8 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorColl
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
+use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 
 class SecondFactorService
 {
@@ -36,11 +38,29 @@ class SecondFactorService
     private $secondFactors;
 
     /**
-     * @param MiddlewareSecondFactorService $secondFactors
+     * @var CommandService
      */
-    public function __construct(MiddlewareSecondFactorService $secondFactors)
+    private $commandService;
+
+    /**
+     * @param MiddlewareSecondFactorService $secondFactors
+     * @param CommandService $commandService
+     */
+    public function __construct(MiddlewareSecondFactorService $secondFactors, CommandService $commandService)
     {
         $this->secondFactors = $secondFactors;
+        $this->commandService = $commandService;
+    }
+
+    /**
+     * @param VerifyEmailCommand $command
+     * @return bool
+     */
+    public function verifyEmail(VerifyEmailCommand $command)
+    {
+        $result = $this->commandService->execute($command);
+
+        return $result->isSuccessful();
     }
 
     /**
