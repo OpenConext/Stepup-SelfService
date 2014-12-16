@@ -24,6 +24,7 @@ use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\SecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
@@ -95,6 +96,31 @@ class SecondFactorService
     }
 
     /**
+     * @param string $identityId
+     * @param string $verificationNonce
+     * @return UnverifiedSecondFactor|null
+     */
+    public function findUnverifiedByVerificationNonce($identityId, $verificationNonce)
+    {
+        $secondFactors = $this->secondFactors->searchUnverified(
+            (new UnverifiedSecondFactorSearchQuery())
+                ->setIdentityId($identityId)
+                ->setVerificationNonce($verificationNonce)
+        );
+
+        $elements = $secondFactors->getElements();
+
+        switch (count($elements)) {
+            case 0:
+                return null;
+            case 1:
+                return reset($elements);
+            default:
+                throw new \LogicException('There cannot be more than one unverified second factor with the same nonce');
+        }
+    }
+
+    /**
      * Returns the given registrant's verified second factors.
      *
      * @param string $identityId
@@ -118,5 +144,29 @@ class SecondFactorService
         return $this->secondFactors->searchVetted(
             (new VettedSecondFactorSearchQuery())->setIdentityId($identityId)
         );
+    }
+
+    /**
+     * @param string $secondFactorId
+     * @param string $identityId
+     * @return null|string
+     */
+    public function getRegistrationCode($secondFactorId, $identityId)
+    {
+        $query = (new VerifiedSecondFactorSearchQuery())
+            ->setIdentityId($identityId)
+            ->setSecondFactorId($secondFactorId);
+
+        /** @var VerifiedSecondFactor[] $verifiedSecondFactors */
+        $verifiedSecondFactors = $this->secondFactors->searchVerified($query)->getElements();
+
+        switch (count($verifiedSecondFactors)) {
+            case 0:
+                return null;
+            case 1:
+                return reset($verifiedSecondFactors)->registrationCode;
+            default:
+                throw new \LogicException('Searching by second factor ID cannot result in multiple results.');
+        }
     }
 }

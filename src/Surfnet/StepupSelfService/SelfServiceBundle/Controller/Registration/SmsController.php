@@ -77,7 +77,10 @@ class SmsController extends Controller
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
-                return $this->redirect($this->generateUrl('ss_registration_email_verification_email_sent'));
+                return $this->redirectToRoute(
+                    'ss_registration_email_verification_email_sent',
+                    ['secondFactorId' => $result->getSecondFactorId()]
+                );
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.proof_of_possession_failed'));
             }

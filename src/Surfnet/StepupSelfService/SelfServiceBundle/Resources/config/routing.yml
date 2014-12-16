@@ -14,7 +14,7 @@ ss_registration_display_types:
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:displaySecondFactorTypes }
 
 ss_registration_email_verification_email_sent:
-    path:     /registration/email-verification-email-sent
+    path:     /registration/{secondFactorId}/email-verification-email-sent
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:emailVerificationEmailSent }
 
@@ -24,7 +24,7 @@ ss_registration_verify_email:
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:verifyEmail }
 
 ss_registration_registration_email_sent:
-    path:     /registration/registration-email-sent
+    path:     /registration/{secondFactorId}/registration-email-sent
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent }
 
