@@ -14,21 +14,22 @@
             {{ 'ss.second_factor.list.button.register_second_factor' }}
         </a>
     {% else %}
-        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.vetted.title') }}
-        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.verified.title') }}
-        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.unverified.title') }}
+        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.vetted.title', 'vetted') }}
+        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.verified.title', 'verified') }}
+        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.unverified.title', 'unverified') }}
     {% endif %}
 
 {% endblock %}
 
-{% macro secondFactorTable(secondFactorCollection, headerText) %}
+{% macro secondFactorTable(secondFactorCollection, headerText, state) %}
     {% if secondFactorCollection.elements is not empty %}
         <h3>{{ headerText|trans }}</h3>
         <table class="table-striped">
             <thead>
             <tr>
-                <th>{{ 'ss.second_factor_list.header.type'|trans }}</th>
-                <th>{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
+                <th scope="col">{{ 'ss.second_factor_list.header.type'|trans }}</th>
+                <th scope="col">{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
+                <th scope="col">{# Action button #}</th>
             </tr>
             </thead>
             <tbody>
@@ -36,6 +37,12 @@
                 <tr>
                     <td>{{ 'ss.second_factor.type.'~secondFactor.type|trans }}</td>
                     <td>{{ secondFactor.secondFactorIdentifier }}</td>
+                    <td>
+                        <a class="btn btn-mini btn-warning"
+                           href="{{ path('ss_second_factor_revoke', {'state': state, 'secondFactorId': secondFactor.id}) }}">
+                            {{ 'ss.second_factor.revoke.button.revoke'|trans }}
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

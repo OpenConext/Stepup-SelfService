@@ -19,7 +19,12 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SecondFactorController extends Controller
 {
@@ -32,10 +37,68 @@ class SecondFactorController extends Controller
 
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+
         return [
             'unverifiedSecondFactors' => $service->findUnverifiedByIdentity($identity->id),
             'verifiedSecondFactors' => $service->findVerifiedByIdentity($identity->id),
             'vettedSecondFactors' => $service->findVettedByIdentity($identity->id),
+        ];
+    }
+
+    /**
+     * @Template
+     * @param Request $request
+     * @param string $state
+     * @param string $secondFactorId
+     * @return array|Response
+     */
+    public function revokeAction(Request $request, $state, $secondFactorId)
+    {
+        $command = new RevokeOwnSecondFactorCommand();
+        $command->identityId = $this->getIdentity()->id;
+        $command->secondFactorId = $secondFactorId;
+
+        $form = $this->createForm('ss_revoke_second_factor', $command)->handleRequest($request);
+
+        /** @var SecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+
+        if ($form->isValid()) {
+            /** @var FlashBagInterface $flashBag */
+            $flashBag = $this->get('session')->getFlashBag();
+
+            if ($service->revoke($command)) {
+                $flashBag->add('success', 'ss.second_factor.revoke.alert.revocation_successful');
+            } else {
+                $flashBag->add('error', 'ss.second_factor.revoke.alert.revocation_failed');
+            }
+
+            return $this->redirectToRoute('ss_second_factor_list');
+        }
+
+        switch ($state) {
+            case 'unverified':
+                $secondFactor = $service->findOneUnverified($secondFactorId);
+                break;
+            case 'verified':
+                $secondFactor = $service->findOneVerified($secondFactorId);
+                break;
+            case 'vetted':
+                $secondFactor = $service->findOneVetted($secondFactorId);
+                break;
+            default:
+                throw new \LogicException('There are no other types of second factor.');
+        }
+
+        if ($secondFactor === null) {
+            throw new NotFoundHttpException(
+                sprintf("No %s second factor with id '%s' exists.", $state, $secondFactorId)
+            );
+        }
+
+        return [
+            'form'         => $form->createView(),
+            'secondFactor' => $secondFactor,
         ];
     }
 }

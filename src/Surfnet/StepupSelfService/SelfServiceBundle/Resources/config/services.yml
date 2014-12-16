@@ -25,6 +25,10 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifyEmailType
         tags: [{ name: form.type, alias: ss_verify_email }]
 
+    surfnet_stepup_self_service_self_service.form.type.revoke_second_factor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType
+        tags: [{ name: form.type, alias: ss_revoke_second_factor }]
+
     surfnet_stepup_self_service_self_service.service.yubikey:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService

@@ -24,10 +24,13 @@ use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\SecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 
 class SecondFactorService
@@ -57,6 +60,17 @@ class SecondFactorService
      * @return bool
      */
     public function verifyEmail(VerifyEmailCommand $command)
+    {
+        $result = $this->commandService->execute($command);
+
+        return $result->isSuccessful();
+    }
+
+    /**
+     * @param RevokeOwnSecondFactorCommand $command
+     * @return bool
+     */
+    public function revoke(RevokeOwnSecondFactorCommand $command)
     {
         $result = $this->commandService->execute($command);
 
@@ -118,5 +132,32 @@ class SecondFactorService
         return $this->secondFactors->searchVetted(
             (new VettedSecondFactorSearchQuery())->setIdentityId($identityId)
         );
+    }
+
+    /**
+     * @param string $secondFactorId
+     * @return null|UnverifiedSecondFactor
+     */
+    public function findOneUnverified($secondFactorId)
+    {
+        return $this->secondFactors->getUnverified($secondFactorId);
+    }
+
+    /**
+     * @param string $secondFactorId
+     * @return null|VerifiedSecondFactor
+     */
+    public function findOneVerified($secondFactorId)
+    {
+        return $this->secondFactors->getVerified($secondFactorId);
+    }
+
+    /**
+     * @param string $secondFactorId
+     * @return null|VettedSecondFactor
+     */
+    public function findOneVetted($secondFactorId)
+    {
+        return $this->secondFactors->getVetted($secondFactorId);
     }
 }
