@@ -35,6 +35,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailComm
 
 /**
  * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class SecondFactorService
 {
