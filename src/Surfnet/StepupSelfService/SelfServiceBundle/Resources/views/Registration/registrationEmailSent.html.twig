@@ -12,9 +12,38 @@
     <h2>{{ block('page_title') }}</h2>
 
     <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent'|trans({'%email%': email}) }}</p>
+
+    <table class="table table-bordered table-hover">
+        <tbody>
+        <tr>
+            <th scope="row">{{ 'ss.registration.registration_email_sent.label.registration_code'|trans }}</th>
+            <td>{{ registrationCode }}</td>
+        </tr>
+        </tbody>
+    </table>
+
     <p>
         <a class="btn btn-primary" href="{{ path('ss_second_factor_list') }}">
-            {{ 'ss.registration.registration_email-sent.button.to_overview' }}
+            {{ 'ss.registration.registration_email_sent.button.to_overview'|trans }}
         </a>
     </p>
+
+    <hr>
+
+    <h3>{{ 'ss.registration.registration_email_sent.title.list_of_ras'|trans }}</h3>
+    {% if ras.elements is empty %}
+        <p>{{ 'ss.registration.registration_email_sent.text.no_ras_for_your_institution'|trans }}</p>
+    {% else %}
+        <ul class="list-ras">
+            {% for ra in ras.elements %}
+                <li>
+                    <address>
+                        <strong>{{ ra.commonName }}</strong><br>
+                        {{ ra.location }}<br>
+                        {{ ra.contactInformation }}
+                    </address>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

@@ -33,6 +33,9 @@ use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ */
 class SecondFactorService
 {
     /**
@@ -159,5 +162,53 @@ class SecondFactorService
     public function findOneVetted($secondFactorId)
     {
         return $this->secondFactors->getVetted($secondFactorId);
+    }
+
+    /**
+     * @param string $identityId
+     * @param string $verificationNonce
+     * @return UnverifiedSecondFactor|null
+     */
+    public function findUnverifiedByVerificationNonce($identityId, $verificationNonce)
+    {
+        $secondFactors = $this->secondFactors->searchUnverified(
+            (new UnverifiedSecondFactorSearchQuery())
+                ->setIdentityId($identityId)
+                ->setVerificationNonce($verificationNonce)
+        );
+
+        $elements = $secondFactors->getElements();
+
+        switch (count($elements)) {
+            case 0:
+                return null;
+            case 1:
+                return reset($elements);
+            default:
+                throw new \LogicException('There cannot be more than one unverified second factor with the same nonce');
+        }
+    }
+
+    /**
+     * @param string $identityId
+     * @return null|string
+     */
+    public function getRegistrationCode($secondFactorId, $identityId)
+    {
+        $query = (new VerifiedSecondFactorSearchQuery())
+            ->setIdentityId($identityId)
+            ->setSecondFactorId($secondFactorId);
+
+        /** @var VerifiedSecondFactor[] $verifiedSecondFactors */
+        $verifiedSecondFactors = $this->secondFactors->searchVerified($query)->getElements();
+
+        switch (count($verifiedSecondFactors)) {
+            case 0:
+                return null;
+            case 1:
+                return reset($verifiedSecondFactors)->registrationCode;
+            default:
+                throw new \LogicException('Searching by second factor ID cannot result in multiple results.');
+        }
     }
 }

@@ -76,6 +76,11 @@ services:
             - @surfnet_stepup_middleware_client.service.command
             - @logger
 
+    self_service.service.ra:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService
+        arguments:
+            - @surfnet_stepup_middleware_client.identity.service.ra
+
     self_service.security.authentication.provider:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
         arguments:

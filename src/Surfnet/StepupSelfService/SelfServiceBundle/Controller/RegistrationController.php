@@ -22,6 +22,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RegistrationController extends Controller
 {
@@ -50,15 +52,24 @@ class RegistrationController extends Controller
 
         $identityId = $this->getIdentity()->id;
 
+        /** @var SecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+
+        $secondFactor = $service->findUnverifiedByVerificationNonce($identityId, $nonce);
+
+        if ($secondFactor === null) {
+            throw new NotFoundHttpException('No second factor can be verified using this URL.');
+        }
+
         $command = new VerifyEmailCommand();
         $command->identityId = $identityId;
         $command->verificationNonce = $nonce;
 
-        /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-
         if ($service->verifyEmail($command)) {
-            return $this->redirect($this->generateUrl('ss_registration_registration_email_sent'));
+            return $this->redirectToRoute(
+                'ss_registration_registration_email_sent',
+                ['secondFactorId' => $secondFactor->id]
+            );
         }
 
         return [];
@@ -66,9 +77,23 @@ class RegistrationController extends Controller
 
     /**
      * @Template
+     * @param $secondFactorId
+     * @return array|Response
      */
-    public function registrationEmailSentAction()
+    public function registrationEmailSentAction($secondFactorId)
     {
-        return ['email' => $this->getIdentity()->email];
+        $identity = $this->getIdentity();
+
+        /** @var SecondFactorService $secondFactorService */
+        $secondFactorService = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+
+        /** @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService $raService */
+        $raService = $this->get('self_service.service.ra');
+
+        return [
+            'email' => $this->getIdentity()->email,
+            'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
+            'ras' => $raService->listRas($identity->institution),
+        ];
     }
 }
