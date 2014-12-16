@@ -8,6 +8,13 @@ ss_second_factor_list:
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list }
 
+ss_second_factor_revoke:
+    path:     /second-factor/{state}/{secondFactorId}
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:revoke }
+    requirements:
+        state: '^(unverified|verified|vetted)$'
+
 ss_registration_display_types:
     path:     /registration/select-token
     methods:  [GET]

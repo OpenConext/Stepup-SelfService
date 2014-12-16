@@ -1,0 +1,29 @@
+{% extends "::base.html.twig" %}
+{% import _self as macro %}
+
+{% block page_title %}{{ 'ss.second_factor.revoke.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.second_factor.revoke.text.are_you_sure'|trans }}</p>
+
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th scope="row">{{ 'ss.second_factor.revoke.table_header.type'|trans }}</th>
+            <td>{{ ('ss.second_factor.revoke.second_factor_type.' ~ secondFactor.type)|trans }}</td>
+        </tr>
+        <tr>
+            <th scope="row">{{ 'ss.second_factor.revoke.table_header.second_factor.identifier'|trans }}</th>
+            {% if secondFactor.type == 'sms' %}
+                <td>+{{ secondFactor.secondFactorIdentifier }}</td>
+            {% else %}
+                <td>{{ secondFactor.secondFactorIdentifier }}</td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+
+    {{ form(form) }}
+{% endblock %}

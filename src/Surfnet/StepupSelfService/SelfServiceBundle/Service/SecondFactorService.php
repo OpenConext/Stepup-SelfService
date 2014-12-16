@@ -26,11 +26,17 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class SecondFactorService
 {
     /**
@@ -58,6 +64,17 @@ class SecondFactorService
      * @return bool
      */
     public function verifyEmail(VerifyEmailCommand $command)
+    {
+        $result = $this->commandService->execute($command);
+
+        return $result->isSuccessful();
+    }
+
+    /**
+     * @param RevokeOwnSecondFactorCommand $command
+     * @return bool
+     */
+    public function revoke(RevokeOwnSecondFactorCommand $command)
     {
         $result = $this->commandService->execute($command);
 
@@ -96,31 +113,6 @@ class SecondFactorService
     }
 
     /**
-     * @param string $identityId
-     * @param string $verificationNonce
-     * @return UnverifiedSecondFactor|null
-     */
-    public function findUnverifiedByVerificationNonce($identityId, $verificationNonce)
-    {
-        $secondFactors = $this->secondFactors->searchUnverified(
-            (new UnverifiedSecondFactorSearchQuery())
-                ->setIdentityId($identityId)
-                ->setVerificationNonce($verificationNonce)
-        );
-
-        $elements = $secondFactors->getElements();
-
-        switch (count($elements)) {
-            case 0:
-                return null;
-            case 1:
-                return reset($elements);
-            default:
-                throw new \LogicException('There cannot be more than one unverified second factor with the same nonce');
-        }
-    }
-
-    /**
      * Returns the given registrant's verified second factors.
      *
      * @param string $identityId
@@ -148,6 +140,57 @@ class SecondFactorService
 
     /**
      * @param string $secondFactorId
+     * @return null|UnverifiedSecondFactor
+     */
+    public function findOneUnverified($secondFactorId)
+    {
+        return $this->secondFactors->getUnverified($secondFactorId);
+    }
+
+    /**
+     * @param string $secondFactorId
+     * @return null|VerifiedSecondFactor
+     */
+    public function findOneVerified($secondFactorId)
+    {
+        return $this->secondFactors->getVerified($secondFactorId);
+    }
+
+    /**
+     * @param string $secondFactorId
+     * @return null|VettedSecondFactor
+     */
+    public function findOneVetted($secondFactorId)
+    {
+        return $this->secondFactors->getVetted($secondFactorId);
+    }
+
+    /**
+     * @param string $identityId
+     * @param string $verificationNonce
+     * @return UnverifiedSecondFactor|null
+     */
+    public function findUnverifiedByVerificationNonce($identityId, $verificationNonce)
+    {
+        $secondFactors = $this->secondFactors->searchUnverified(
+            (new UnverifiedSecondFactorSearchQuery())
+                ->setIdentityId($identityId)
+                ->setVerificationNonce($verificationNonce)
+        );
+
+        $elements = $secondFactors->getElements();
+
+        switch (count($elements)) {
+            case 0:
+                return null;
+            case 1:
+                return reset($elements);
+            default:
+                throw new \LogicException('There cannot be more than one unverified second factor with the same nonce');
+        }
+    }
+
+    /**
      * @param string $identityId
      * @return null|string
      */
