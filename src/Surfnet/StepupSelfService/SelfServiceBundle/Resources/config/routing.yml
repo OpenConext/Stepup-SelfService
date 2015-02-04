@@ -9,7 +9,7 @@ ss_second_factor_list:
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list }
 
 ss_second_factor_revoke:
-    path:     /second-factor/{state}/{secondFactorId}
+    path:     /second-factor/{state}/{secondFactorId}/revoke
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:revoke }
     requirements:
