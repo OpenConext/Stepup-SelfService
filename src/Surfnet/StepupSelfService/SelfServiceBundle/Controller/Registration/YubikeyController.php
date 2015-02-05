@@ -57,7 +57,7 @@ class YubikeyController extends Controller
             }
         }
 
-
+        // OTP field is rendered empty in the template.
         return ['form' => $form->createView()];
     }
 }
