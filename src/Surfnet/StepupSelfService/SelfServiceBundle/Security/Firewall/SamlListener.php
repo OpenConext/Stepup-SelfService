@@ -74,6 +74,17 @@ class SamlListener implements ListenerInterface
 
     public function handle(GetResponseEvent $event)
     {
+        try {
+            $this->handleEvent($event);
+        } catch (\Exception $e) {
+            $this->samlInteractionProvider->reset();
+
+            throw $e;
+        }
+    }
+
+    private function handleEvent(GetResponseEvent $event)
+    {
         // reinstate the token from the session. Could be expanded with logout check if needed
         if ($this->sessionHandler->hasBeenAuthenticated()) {
             $this->securityContext->setToken($this->sessionHandler->getToken());
