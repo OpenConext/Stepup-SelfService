@@ -118,4 +118,12 @@ class SessionHandler
 
         return $token;
     }
+
+    /**
+     * Clears any stored security token.
+     */
+    public function clearToken()
+    {
+        $this->session->remove(self::AUTH_SESSION_KEY . 'token');
+    }
 }
