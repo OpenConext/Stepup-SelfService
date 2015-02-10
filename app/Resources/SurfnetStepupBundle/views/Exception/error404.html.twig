@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block page_title %}{{ 'ss.error.page_not_found.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.error.text.page_not_found'|trans }}</p>
+    <a class="btn btn-primary" href="{{ path('ss_entry_point') }}">{{ 'ss.error.button.go_home'|trans }}</a>
+
+    <hr>
+    <p>{{ 'ss.error.text.your_art_code'|trans }}: <span class="art">#{{ art }}</span></p>
+    <p>{{ 'ss.error.text.if_you_think_this_is_incorrect_report'|trans }}</p>
+{% endblock %}
