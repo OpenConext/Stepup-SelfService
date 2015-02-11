@@ -42,7 +42,7 @@ class SessionChallengeStore implements ChallengeStore
         $this->sessionKey = $sessionKey;
     }
 
-    public function generateChallenge()
+    public function generateChallenge($phoneNumber)
     {
         $randomCharacters = function () {
             $chr = rand(50, 81);
@@ -52,18 +52,16 @@ class SessionChallengeStore implements ChallengeStore
         };
         $challenge = join('', array_map('chr', array_map($randomCharacters, range(1, 8))));
 
-        $this->session->set($this->sessionKey, $challenge);
+        $this->session->set($this->sessionKey . '/' . $challenge, $phoneNumber);
 
         return $challenge;
     }
 
-    public function verifyChallenge($challenge)
+    public function takePhoneNumberMatchingChallenge($challenge)
     {
         $challenge = strtoupper($challenge);
-        $expectedChallenge = $this->session->get($this->sessionKey);
+        $phoneNumber = $this->session->remove($this->sessionKey . '/' . $challenge);
 
-        $this->session->remove($this->sessionKey);
-
-        return $expectedChallenge !== null && $challenge === $expectedChallenge;
+        return $phoneNumber;
     }
 }
