@@ -21,17 +21,19 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 interface ChallengeStore
 {
     /**
-     * Generates a challenge, stores it and returns it.
+     * Generates a challenge for a specific phone number, stores it and returns it.
      *
+     * @param string $phoneNumber
      * @return string
      */
-    public function generateChallenge();
+    public function generateChallenge($phoneNumber);
 
     /**
-     * Verifies a previously generated challenge.
+     * Verifies a previously generated challenge and returns the phone number associated with it. After 'taking' it, it
+     * is no longer available.
      *
      * @param string $challenge
-     * @return bool
+     * @return string|null The phone number that matches the given challenge.
      */
-    public function verifyChallenge($challenge);
+    public function takePhoneNumberMatchingChallenge($challenge);
 }

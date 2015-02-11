@@ -96,7 +96,7 @@ class SmsSecondFactorService
      */
     public function sendChallenge(SendSmsChallengeCommand $command)
     {
-        $challenge = $this->challengeStore->generateChallenge();
+        $challenge = $this->challengeStore->generateChallenge($command->recipient);
 
         $body = $this->translator->trans('ss.registration.sms.challenge_body', ['%challenge%' => $challenge]);
 
@@ -116,14 +116,16 @@ class SmsSecondFactorService
      */
     public function provePossession(VerifySmsChallengeCommand $challengeCommand)
     {
-        if (!$this->challengeStore->verifyChallenge($challengeCommand->challenge)) {
+        $phoneNumber = $this->challengeStore->takePhoneNumberMatchingChallenge($challengeCommand->challenge);
+
+        if (!$phoneNumber) {
             return new ProofOfPossessionResult(null, true);
         }
 
         $command = new ProvePhonePossessionCommand();
         $command->identityId = $challengeCommand->identity;
         $command->secondFactorId = Uuid::generate();
-        $command->phoneNumber = $challengeCommand->phoneNumber;
+        $command->phoneNumber = $phoneNumber;
 
         $result = $this->commandService->execute($command);
 
