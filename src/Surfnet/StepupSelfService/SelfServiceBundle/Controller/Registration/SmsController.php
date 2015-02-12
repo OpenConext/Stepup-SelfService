@@ -81,6 +81,8 @@ class SmsController extends Controller
                     'ss_registration_email_verification_email_sent',
                     ['secondFactorId' => $result->getSecondFactorId()]
                 );
+            } elseif ($result->wasIncorrectChallengeResponseGiven()) {
+                $form->addError(new FormError('ss.prove_phone_possession.challenge_response_incorrect'));
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.proof_of_possession_failed'));
             }
