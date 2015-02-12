@@ -9,12 +9,14 @@
 {{ 'ss.registration.selector.yubikey.button.use'|trans }}
 
 {# SmsController form errors #}
-{{ 'ss.prove_phone_possession.send_sms_challenge_failed'|trans }}
-{{ 'ss.prove_phone_possession.proof_of_possession_failed'|trans }}
+{{ 'ss.prove_phone_possession.send_sms_challenge_failed'|trans({}, 'validators') }}
+{{ 'ss.prove_phone_possession.proof_of_possession_failed'|trans({}, 'validators') }}
 
 {# YubikeyController from errors #}
-{{ 'ss.verify_yubikey_command.otp.verification_error'|trans }}
-{{ 'ss.prove_yubikey_possession.proof_of_possession_failed'|trans }}
+{{ 'ss.verify_yubikey_command.otp.otp_invalid'|trans({}, 'validators') }}
+{{ 'ss.verify_yubikey_command.otp.verification_error'|trans({}, 'validators') }}
+{{ 'ss.prove_phone_possession.challenge_response_incorrect'|trans({}, 'validators') }}
+{{ 'ss.prove_yubikey_possession.proof_of_possession_failed'|trans({}, 'validators') }}
 
 {# SecondFactorController list #}
 {{ 'ss.second_factor.list.vetted.title'|trans }}

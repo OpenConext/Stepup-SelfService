@@ -46,7 +46,7 @@ class YubikeyService
 
     /**
      * @param VerifyYubikeyOtpCommand $command
-     * @return bool
+     * @return YubikeyVerificationResult
      */
     public function verify(VerifyYubikeyOtpCommand $command)
     {
@@ -63,7 +63,7 @@ class YubikeyService
             $type = $statusCode >= 400 && $statusCode < 500 ? 'client' : 'server';
             $this->logger->info(sprintf('Yubikey OTP verification failed; %s error', $type));
 
-            return false;
+            return new YubikeyVerificationResult(true, false);
         }
 
         try {
@@ -71,21 +71,21 @@ class YubikeyService
         } catch (\RuntimeException $e) {
             $this->logger->error('Yubikey OTP verification failed; server responded with malformed JSON.');
 
-            return false;
+            return new YubikeyVerificationResult(false, true);
         }
 
         if (!isset($result['status'])) {
             $this->logger->error('Yubikey OTP verification failed; server responded without status report.');
 
-            return false;
+            return new YubikeyVerificationResult(false, true);
         }
 
         if ($result['status'] !== 'OK') {
             $this->logger->error('Yubikey OTP verification failed; server responded with non-OK status report.');
 
-            return false;
+            return new YubikeyVerificationResult(false, true);
         }
 
-        return true;
+        return new YubikeyVerificationResult(false, false);
     }
 }

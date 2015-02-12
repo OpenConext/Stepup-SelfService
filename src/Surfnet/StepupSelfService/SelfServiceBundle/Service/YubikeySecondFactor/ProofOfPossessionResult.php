@@ -30,6 +30,11 @@ class ProofOfPossessionResult
     /**
      * @var bool
      */
+    private $otpInvalid;
+
+    /**
+     * @var bool
+     */
     private $otpVerificationFailed;
 
     /**
@@ -39,12 +44,14 @@ class ProofOfPossessionResult
 
     /**
      * @param string|null $secondFactorId
+     * @param bool $otpInvalid OTP format is wrong, OTP was replayed, user error.
      * @param bool $otpVerificationFailed
      * @param bool $proofOfPossessionFailed
      */
-    public function __construct($secondFactorId, $otpVerificationFailed, $proofOfPossessionFailed)
+    public function __construct($secondFactorId, $otpInvalid, $otpVerificationFailed, $proofOfPossessionFailed)
     {
         $this->secondFactorId = $secondFactorId;
+        $this->otpInvalid = $otpInvalid;
         $this->otpVerificationFailed = $otpVerificationFailed;
         $this->proofOfPossessionFailed = $proofOfPossessionFailed;
     }
@@ -63,6 +70,14 @@ class ProofOfPossessionResult
     public function getSecondFactorId()
     {
         return $this->secondFactorId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOtpInvalid()
+    {
+        return $this->otpInvalid;
     }
 
     /**
