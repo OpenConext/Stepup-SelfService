@@ -52,8 +52,15 @@ class YubikeySecondFactorService
      */
     public function provePossession(VerifyYubikeyOtpCommand $command)
     {
-        if (!$this->yubikeyService->verify($command)) {
-            return new ProofOfPossessionResult(null, true, false);
+        $verificationResult = $this->yubikeyService->verify($command);
+
+        if (!$verificationResult->isSuccessful()) {
+            return new ProofOfPossessionResult(
+                null,
+                $verificationResult->isClientError(),
+                $verificationResult->isServerError(),
+                false
+            );
         }
 
         $secondFactorId = Uuid::generate();
@@ -66,9 +73,9 @@ class YubikeySecondFactorService
         $result = $this->commandService->execute($provePossessionCommand);
 
         if (!$result->isSuccessful()) {
-            return new ProofOfPossessionResult(null, false, true);
+            return new ProofOfPossessionResult(null, false, false, true);
         }
 
-        return new ProofOfPossessionResult($secondFactorId, false, false);
+        return new ProofOfPossessionResult($secondFactorId, false, false, false);
     }
 }

@@ -50,6 +50,8 @@ class YubikeyController extends Controller
                     'ss_registration_email_verification_email_sent',
                     ['secondFactorId' => $result->getSecondFactorId()]
                 );
+            } elseif ($result->isOtpInvalid()) {
+                $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.otp_invalid'));
             } elseif ($result->didOtpVerificationFail()) {
                 $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
             } else {

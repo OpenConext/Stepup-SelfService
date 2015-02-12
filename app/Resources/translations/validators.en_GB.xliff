@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2014-12-03T11:33:03Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2015-02-12T11:59:43Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -94,6 +94,26 @@
         <source>middleware_client.dto.verified_second_factor.type.must_not_be_blank</source>
         <target>Remote unverified second factor type may not be blank.</target>
       </trans-unit>
+      <trans-unit id="90d186f8499585cb62a368341bc3d5569f63a013" resname="ss.prove_phone_possession.challenge_response_incorrect">
+        <jms:reference-file line="18">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.challenge_response_incorrect</source>
+        <target>The code entered is not correct.</target>
+      </trans-unit>
+      <trans-unit id="e5bb393004217418ac3b2d08716c203b86ad8d1d" resname="ss.prove_phone_possession.proof_of_possession_failed">
+        <jms:reference-file line="13">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.proof_of_possession_failed</source>
+        <target>The token could not be created due to unknown reasons.</target>
+      </trans-unit>
+      <trans-unit id="9360cda7585c4052d19755cff12aa9b76a69abcc" resname="ss.prove_phone_possession.send_sms_challenge_failed">
+        <jms:reference-file line="12">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.send_sms_challenge_failed</source>
+        <target>Sending the code by text message failed.</target>
+      </trans-unit>
+      <trans-unit id="6d67afd47dd9bd70f19efaf10e19900bd5361386" resname="ss.prove_yubikey_possession.proof_of_possession_failed">
+        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_yubikey_possession.proof_of_possession_failed</source>
+        <target>The token could not be created due to unknown reasons.</target>
+      </trans-unit>
       <trans-unit id="d23ad73b357db56cd8de5ead80613a379e7fb7f9" resname="ss.send_sms_challenge_command.recipient.may_not_be_empty">
         <source>ss.send_sms_challenge_command.recipient.may_not_be_empty</source>
         <target>SMS challenge recipient may not be empty.</target>
@@ -133,6 +153,16 @@
       <trans-unit id="5bb2ccce54de9798253a1be8ae00560f2e219e7e" resname="ss.verify_yubikey_command.otp.must_be_string">
         <source>ss.verify_yubikey_command.otp.must_be_string</source>
         <target>Yubikey OTP must be string.</target>
+      </trans-unit>
+      <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
+        <jms:reference-file line="16">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.verify_yubikey_command.otp.otp_invalid</source>
+        <target>The Yubikey code was invalid. Try again.</target>
+      </trans-unit>
+      <trans-unit id="222ba32640d7ba4a87f2070d67125ccabf100de8" resname="ss.verify_yubikey_command.otp.verification_error">
+        <jms:reference-file line="17">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.verify_yubikey_command.otp.verification_error</source>
+        <target>The verification of the Yubikey code failed due to unknown reasons. Try again.</target>
       </trans-unit>
     </body>
   </file>
