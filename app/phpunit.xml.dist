@@ -9,7 +9,7 @@
 >
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/Tests</directory>
+            <directory>../src/Surfnet/StepupSelfService/SelfServiceBundle/Tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
