@@ -18,10 +18,12 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\DomainException;
+
 class ChallengeResponseResult
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $phoneNumber;
 
@@ -36,19 +38,27 @@ class ChallengeResponseResult
     private $hasChallengeExpired;
 
     /**
-     * @param string $phoneNumber
+     * @param string|null $phoneNumber
      * @param bool $didResponseMatch
      * @param bool $hasChallengeExpired
      */
     public function __construct($phoneNumber, $didResponseMatch, $hasChallengeExpired)
     {
+        if ($didResponseMatch && !$hasChallengeExpired && !is_string($phoneNumber)) {
+            throw new DomainException(
+                'Phone number must be present in result when challenge was responded to successfully'
+            );
+        }
+
         $this->phoneNumber = $phoneNumber;
         $this->didResponseMatch = $didResponseMatch;
         $this->hasChallengeExpired = $hasChallengeExpired;
     }
 
     /**
-     * @return string
+     * Only guaranteed to be available when response matched and challenge did not expire.
+     *
+     * @return string|null
      */
     public function getPhoneNumber()
     {

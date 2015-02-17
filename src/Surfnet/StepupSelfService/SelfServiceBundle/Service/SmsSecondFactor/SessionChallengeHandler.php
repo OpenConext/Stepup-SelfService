@@ -90,7 +90,7 @@ class SessionChallengeHandler implements ChallengeHandler
         $challenge = $this->session->get($this->sessionKey);
 
         if (!$challenge) {
-            return new ChallengeResponseResult($challenge->getPhoneNumber(), false, false);
+            return new ChallengeResponseResult(null, false, true);
         }
 
         $result = $challenge->respond($otp);
