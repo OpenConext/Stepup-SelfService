@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 use DateInterval;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class SessionChallengeHandler implements ChallengeHandler
+class SessionSmsVerificationStateHandler implements SmsVerificationStateHandler
 {
     /**
      * @var SessionInterface
@@ -61,44 +61,42 @@ class SessionChallengeHandler implements ChallengeHandler
         $this->otpRequestMaximum = $otpRequestMaximum;
     }
 
-    public function requestOtp($phoneNumber)
+    public function requestNewOtp($phoneNumber)
     {
-        $randomCharacters = function () {
-            $chr = rand(50, 81);
+        /** @var SmsVerificationState $state */
+        $state = $this->session->get($this->sessionKey);
 
-            // 9 is the gap between "7" (55) and "A" (65).
-            return $chr >= 56 ? $chr + 9 : $chr;
-        };
-        $otp = join('', array_map('chr', array_map($randomCharacters, range(1, 8))));
-
-        /** @var Challenge $challenge */
-        $challenge = $this->session->get($this->sessionKey);
-
-        if ($challenge) {
-            $challenge->requestNewOtp($otp, $phoneNumber);
-        } else {
-            $challenge = Challenge::create($otp, $phoneNumber, $this->otpExpiryInterval, $this->otpRequestMaximum);
-            $this->session->set($this->sessionKey, $challenge);
+        if (!$state) {
+            $state = new SmsVerificationState($this->otpExpiryInterval, $this->otpRequestMaximum);
+            $this->session->set($this->sessionKey, $state);
         }
 
-        return $challenge->getOtp();
+        return $state->requestNewOtp($phoneNumber);
     }
 
-    public function match($otp)
+    public function getOtpRequestsRemainingCount()
     {
-        /** @var Challenge|null $challenge */
-        $challenge = $this->session->get($this->sessionKey);
+        /** @var SmsVerificationState|null $state */
+        $state = $this->session->get($this->sessionKey);
 
-        if (!$challenge) {
-            return new ChallengeResponseResult(null, false, true);
+        return $state ? $state->getOtpRequestsRemainingCount() : $this->otpRequestMaximum;
+    }
+
+    public function verify($otp)
+    {
+        /** @var SmsVerificationState|null $state */
+        $state = $this->session->get($this->sessionKey);
+
+        if (!$state) {
+            return OtpVerification::matchExpired();
         }
 
-        $result = $challenge->respond($otp);
+        $verification = $state->verify($otp);
 
-        if ($result->didResponseMatch()) {
+        if ($verification->wasSuccessful()) {
             $this->session->remove($this->sessionKey);
         }
 
-        return $result;
+        return $verification;
     }
 }

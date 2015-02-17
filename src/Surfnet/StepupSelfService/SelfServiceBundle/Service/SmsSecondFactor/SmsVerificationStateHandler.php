@@ -20,7 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
 
-interface ChallengeHandler
+interface SmsVerificationStateHandler
 {
     /**
      * Generates a new OTP and returns it.
@@ -29,14 +29,19 @@ interface ChallengeHandler
      * @return string
      * @throws TooManyChallengesRequestedException
      */
-    public function requestOtp($phoneNumber);
+    public function requestNewOtp($phoneNumber);
 
     /**
-     * Matches the given OTP with the currently stored Challenge. If it matches, the Challenge is removed from storage.
-     * In all cases, the Challenge is returned if it was present.
+     * @return int
+     */
+    public function getOtpRequestsRemainingCount();
+
+    /**
+     * Matches the given OTP with the currently stored SmsVerificationState. If it matches, the SmsVerificationState is removed from storage.
+     * In all cases, the SmsVerificationState is returned if it was present.
      *
      * @param string $otp
-     * @return ChallengeResponseResult
+     * @return OtpVerification
      */
-    public function match($otp);
+    public function verify($otp);
 }

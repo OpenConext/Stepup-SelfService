@@ -26,7 +26,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeComman
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ChallengeHandler;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\SmsVerificationStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -41,9 +41,9 @@ class SmsSecondFactorService
     private $smsService;
 
     /**
-     * @var ChallengeHandler
+     * @var SmsVerificationStateHandler
      */
-    private $challengeHandler;
+    private $smsVerificationStateHandler;
 
     /**
      * @var TranslatorInterface
@@ -62,14 +62,14 @@ class SmsSecondFactorService
 
     /**
      * @param SmsService $smsService
-     * @param ChallengeHandler $challengeHandler
+     * @param SmsVerificationStateHandler $smsVerificationStateHandler
      * @param TranslatorInterface $translator
      * @param CommandService $commandService
      * @param string $originator
      */
     public function __construct(
         SmsService $smsService,
-        ChallengeHandler $challengeHandler,
+        SmsVerificationStateHandler $smsVerificationStateHandler,
         TranslatorInterface $translator,
         CommandService $commandService,
         $originator
@@ -85,7 +85,7 @@ class SmsSecondFactorService
         }
 
         $this->smsService = $smsService;
-        $this->challengeHandler = $challengeHandler;
+        $this->smsVerificationStateHandler = $smsVerificationStateHandler;
         $this->translator = $translator;
         $this->commandService = $commandService;
         $this->originator = $originator;
@@ -98,9 +98,9 @@ class SmsSecondFactorService
      */
     public function sendChallenge(SendSmsChallengeCommand $command)
     {
-        $challenge = $this->challengeHandler->requestOtp($command->recipient);
+        $otp = $this->smsVerificationStateHandler->requestNewOtp($command->recipient);
 
-        $body = $this->translator->trans('ss.registration.sms.challenge_body', ['%challenge%' => $challenge]);
+        $body = $this->translator->trans('ss.registration.sms.challenge_body', ['%challenge%' => $otp]);
 
         $smsCommand = new SendSmsCommand();
         $smsCommand->recipient = $command->recipient;
@@ -118,18 +118,18 @@ class SmsSecondFactorService
      */
     public function provePossession(VerifySmsChallengeCommand $challengeCommand)
     {
-        $respondResult = $this->challengeHandler->match($challengeCommand->challenge);
+        $verification = $this->smsVerificationStateHandler->verify($challengeCommand->challenge);
 
-        if ($respondResult->hasChallengeExpired()) {
+        if ($verification->didOtpExpire()) {
             return new ProofOfPossessionResult(ProofOfPossessionResult::STATUS_CHALLENGE_EXPIRED);
-        } elseif (!$respondResult->didResponseMatch()) {
+        } elseif (!$verification->wasSuccessful()) {
             return new ProofOfPossessionResult(ProofOfPossessionResult::STATUS_INCORRECT_CHALLENGE);
         }
 
         $command = new ProvePhonePossessionCommand();
         $command->identityId = $challengeCommand->identity;
         $command->secondFactorId = Uuid::generate();
-        $command->phoneNumber = $respondResult->getPhoneNumber();
+        $command->phoneNumber = $verification->getPhoneNumber();
 
         $result = $this->commandService->execute($command);
 
