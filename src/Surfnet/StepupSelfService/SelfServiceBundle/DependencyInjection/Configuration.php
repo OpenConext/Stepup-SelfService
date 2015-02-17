@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -36,7 +37,15 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('surfnet_stepup_self_service_self_service');
 
-        $rootNode
+        $this->createGatewayApiConfiguration($rootNode);
+        $this->createSmsConfiguration($rootNode);
+
+        return $treeBuilder;
+    }
+
+    private function createGatewayApiConfiguration(ArrayNodeDefinition $root)
+    {
+        $root
             ->children()
                 ->arrayNode('gateway_api')
                     ->info('Gateway API configuration')
@@ -84,6 +93,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+            ->end();
+    }
+
+    private function createSmsConfiguration(ArrayNodeDefinition $root)
+    {
+        $root
+            ->children()
                 ->arrayNode('sms')
                     ->info('SMS configuration')
                     ->isRequired()
@@ -96,7 +112,8 @@ class Configuration implements ConfigurationInterface
                                     return (!is_string($value) || !preg_match('~^[a-z0-9]{1,11}$~i', $value));
                                 })
                                 ->thenInvalid(
-                                    'Invalid SMS originator specified: "%s". Must be a string matching "~^[a-z0-9]{1,11}$~i".'
+                                    'Invalid SMS originator specified: "%s". Must be a string matching '
+                                    . '"~^[a-z0-9]{1,11}$~i".'
                                 )
                             ->end()
                         ->end()
@@ -127,7 +144,5 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-
-        return $treeBuilder;
     }
 }

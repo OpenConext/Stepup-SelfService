@@ -18,7 +18,6 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider;
 
-
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
