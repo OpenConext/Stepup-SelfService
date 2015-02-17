@@ -18,22 +18,25 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
-interface ChallengeStore
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
+
+interface ChallengeHandler
 {
     /**
-     * Generates a challenge for a specific phone number, stores it and returns it.
+     * Generates a new OTP and returns it.
      *
      * @param string $phoneNumber
      * @return string
+     * @throws TooManyChallengesRequestedException
      */
-    public function generateChallenge($phoneNumber);
+    public function requestOtp($phoneNumber);
 
     /**
-     * Verifies a previously generated challenge and returns the phone number associated with it. After 'taking' it, it
-     * is no longer available.
+     * Matches the given OTP with the currently stored Challenge. If it matches, the Challenge is removed from storage.
+     * In all cases, the Challenge is returned if it was present.
      *
-     * @param string $challenge
-     * @return string|null The phone number that matches the given challenge.
+     * @param string $otp
+     * @return ChallengeResponseResult
      */
-    public function takePhoneNumberMatchingChallenge($challenge);
+    public function match($otp);
 }

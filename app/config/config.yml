@@ -92,7 +92,10 @@ monolog:
             formatter: surfnet_stepup.monolog.full_message_exception_gelf_message_formatter
 
 surfnet_stepup_self_service_self_service:
-    sms_originator: %sms_originator%
+    sms:
+        originator: %sms_originator%
+        otp_expiry_interval: %sms_otp_expiry_interval%
+        maximum_otp_requests: %sms_maximum_otp_requests%
     gateway_api:
         url: %gateway_api_url%
         credentials:

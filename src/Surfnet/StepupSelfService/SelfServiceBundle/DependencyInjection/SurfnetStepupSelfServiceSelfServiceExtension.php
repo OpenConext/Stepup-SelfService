@@ -60,6 +60,11 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
 
         $smsSecondFactorService =
             $container->getDefinition('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-        $smsSecondFactorService->replaceArgument(4, $config['sms_originator']);
+        $smsSecondFactorService->replaceArgument(4, $config['sms']['originator']);
+
+        $container
+            ->getDefinition('surfnet_stepup_self_service_self_service.challenge_handler')
+            ->replaceArgument(2, $config['sms']['otp_expiry_interval'])
+            ->replaceArgument(3, $config['sms']['maximum_otp_requests']);
     }
 }

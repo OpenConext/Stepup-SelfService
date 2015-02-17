@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +46,15 @@ class SmsController extends Controller
             /** @var SmsSecondFactorService $service */
             $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
 
-            if ($service->sendChallenge($command)) {
+            try {
+                $smsSendingSucceeded = $service->sendChallenge($command);
+            } catch (TooManyChallengesRequestedException $e) {
+                $form->addError(new FormError('ss.prove_phone_possession.challenge_request_limit_reached'));
+
+                return ['form' => $form->createView()];
+            }
+
+            if ($smsSendingSucceeded) {
                 return $this->redirect(
                     $this->generateUrl('ss_registration_sms_prove_possession')
                 );
@@ -81,7 +90,9 @@ class SmsController extends Controller
                     ['secondFactorId' => $result->getSecondFactorId()]
                 );
             } elseif ($result->wasIncorrectChallengeResponseGiven()) {
-                $form->addError(new FormError('ss.prove_phone_possession.challenge_response_incorrect'));
+                $form->addError(new FormError('ss.prove_phone_possession.incorrect_challenge_response'));
+            } elseif ($result->hasChallengeExpired()) {
+                $form->addError(new FormError('ss.prove_phone_possession.challenge_expired'));
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.proof_of_possession_failed'));
             }

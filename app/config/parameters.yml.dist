@@ -24,6 +24,8 @@ parameters:
     middleware_url_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
 
     sms_originator: SURFStepup
+    sms_otp_expiry_interval: 900 # 15 minutes
+    sms_maximum_otp_requests: 3
 
     saml_sp_publickey:
     saml_sp_privatekey:

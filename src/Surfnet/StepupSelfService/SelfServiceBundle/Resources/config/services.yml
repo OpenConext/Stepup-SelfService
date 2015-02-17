@@ -59,15 +59,19 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
         arguments:
             - @surfnet_stepup_self_service_self_service.service.sms
-            - @surfnet_stepup_self_service_self_service.challenge_store
+            - @surfnet_stepup_self_service_self_service.challenge_handler
             - @translator
             - @surfnet_stepup_middleware_client.service.command
             - '' # Originator set in extension
 
-    surfnet_stepup_self_service_self_service.challenge_store:
+    surfnet_stepup_self_service_self_service.challenge_handler:
         public: false
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\SessionChallengeStore
-        arguments: [ @session, 'Surfnet/SelfService/SecondFactor/Sms:challenge' ]
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\SessionChallengeHandler
+        arguments:
+            - @session
+            - 'Surfnet/SelfService/SecondFactor/Sms:challenge'
+            - {} # OTP expiry interval
+            - 0  # Maximum OTP requests
 
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
