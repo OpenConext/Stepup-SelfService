@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-02-12T11:56:00Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2015-02-18T09:24:08Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -87,7 +87,7 @@
       <trans-unit id="1fd92b34e65dcbb10330e06d6079564e19252093" resname="ss.registration.email_verification_email_sent.text.email_verification_has_been_sent">
         <jms:reference-file line="14">views/Registration/emailVerificationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.email_verification_email_sent.text.email_verification_has_been_sent</source>
-        <target>A verification e-mail has been sent to your e-mail address.</target>
+        <target>A verification e-mail has been sent to the e-mail address %email%.</target>
       </trans-unit>
       <trans-unit id="081d879f1df81f9c54dd58b6f4105617e779c692" resname="ss.registration.email_verification_email_sent.title">
         <jms:reference-file line="3">views/Registration/emailVerificationEmailSent.html.twig</jms:reference-file>
@@ -117,7 +117,7 @@
       <trans-unit id="7c9ea58235246dd0f14a2d6aaed379ad0638d0e7" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent">
         <jms:reference-file line="14">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent</source>
-        <target>An e-mail with your registration code and instructions on how to proceed has been sent to your e-mail address.</target>
+        <target>An e-mail with your registration code and instructions on how to proceed has been sent to the e-mail address %email%.</target>
       </trans-unit>
       <trans-unit id="61c16d1cf1191b8bfb09d98779fbbf5cb748bd6b" resname="ss.registration.registration_email_sent.title">
         <jms:reference-file line="3">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
