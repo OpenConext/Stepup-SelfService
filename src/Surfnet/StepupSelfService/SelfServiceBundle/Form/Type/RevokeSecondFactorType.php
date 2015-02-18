@@ -29,7 +29,12 @@ class RevokeSecondFactorType extends AbstractType
         $builder->add('secondFactorId', 'hidden');
         $builder->add('revoke', 'submit', [
             'label' => 'ss.form.ss_revoke_second_factor.revoke',
-            'attr' => [ 'class' => 'btn btn-danger' ],
+            'attr' => [ 'class' => 'btn btn-danger pull-right' ],
+        ]);
+        $builder->add('cancel', 'anchor', [
+            'label' => 'ss.form.ss_revoke_second_factor.cancel',
+            'attr' => [ 'class' => 'btn pull-right' ],
+            'route' => 'ss_second_factor_list',
         ]);
     }
 
