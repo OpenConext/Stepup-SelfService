@@ -46,15 +46,13 @@ class SmsController extends Controller
             /** @var SmsSecondFactorService $service */
             $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
 
-            try {
-                $smsSendingSucceeded = $service->sendChallenge($command);
-            } catch (TooManyChallengesRequestedException $e) {
+            if ($service->getOtpRequestsRemainingCount() === 0) {
                 $form->addError(new FormError('ss.prove_phone_possession.challenge_request_limit_reached'));
 
                 return ['form' => $form->createView()];
             }
 
-            if ($smsSendingSucceeded) {
+            if ($service->sendChallenge($command)) {
                 return $this->redirect(
                     $this->generateUrl('ss_registration_sms_prove_possession')
                 );

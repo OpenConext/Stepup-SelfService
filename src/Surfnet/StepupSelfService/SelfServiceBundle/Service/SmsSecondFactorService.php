@@ -92,6 +92,14 @@ class SmsSecondFactorService
     }
 
     /**
+     * @return int
+     */
+    public function getOtpRequestsRemainingCount()
+    {
+        return $this->smsVerificationStateHandler->getOtpRequestsRemainingCount();
+    }
+
+    /**
      * @param SendSmsChallengeCommand $command
      * @return bool Whether SMS sending did not fail.
      * @throws TooManyChallengesRequestedException

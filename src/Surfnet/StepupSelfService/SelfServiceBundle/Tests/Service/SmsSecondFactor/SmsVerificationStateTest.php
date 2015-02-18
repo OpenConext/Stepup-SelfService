@@ -144,15 +144,26 @@ class SmsVerificationStateTest extends TestCase
      * @test
      * @group sms
      */
-    public function the_consumer_can_request_too_many_otps()
+    public function the_consumer_can_request_too_many_otps_but_can_keep_track_of_remaining_requests()
     {
-        $this->setExpectedException('Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException');
-
         $state = new SmsVerificationState(new DateInterval('PT10S'), 3);
+        $this->assertSame(3, $state->getOtpRequestsRemainingCount());
+
         $state->requestNewOtp('123');
+        $this->assertSame(2, $state->getOtpRequestsRemainingCount());
+
         $state->requestNewOtp('123');
+        $this->assertSame(1, $state->getOtpRequestsRemainingCount());
+
         $state->requestNewOtp('123');
+        $this->assertSame(0, $state->getOtpRequestsRemainingCount());
+        $this->assertSame(0, $state->getOtpRequestsRemainingCount());
+
+        $this->setExpectedException(
+            'Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException'
+        );
         $state->requestNewOtp('123');
+        $this->assertSame(0, $state->getOtpRequestsRemainingCount());
     }
 
     public function lteZeroMaximumTries()
