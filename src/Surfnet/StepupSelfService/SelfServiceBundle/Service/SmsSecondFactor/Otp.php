@@ -23,7 +23,7 @@ use DateTime as CoreDateTime;
 use Surfnet\StepupSelfService\SelfServiceBundle\DateTime\DateTime;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
-class Otp
+final class Otp
 {
     /**
      * @var string

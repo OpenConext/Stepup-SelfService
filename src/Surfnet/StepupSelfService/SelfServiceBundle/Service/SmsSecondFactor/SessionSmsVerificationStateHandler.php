@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 use DateInterval;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class SessionSmsVerificationStateHandler implements SmsVerificationStateHandler
+final class SessionSmsVerificationStateHandler implements SmsVerificationStateHandler
 {
     /**
      * @var SessionInterface

@@ -18,7 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
-class ProofOfPossessionResult
+final class ProofOfPossessionResult
 {
     const STATUS_CHALLENGE_OK = 0;
     const STATUS_INCORRECT_CHALLENGE = 1;

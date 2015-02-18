@@ -113,8 +113,8 @@ class SmsVerificationStateTest extends TestCase
         $verification = $state->verify($otp);
 
         $this->assertFalse($verification->wasSuccessful(), "Verification shouldn't be successful");
-        $this->assertTrue($verification->didOtpExpire(), "OTP should have expired");
-        $this->assertTrue($verification->didOtpMatch(), "OTP should have matched");
+        $this->assertTrue($verification->didOtpExpire(), 'OTP should have expired');
+        $this->assertTrue($verification->didOtpMatch(), 'OTP should have matched');
     }
 
     /**

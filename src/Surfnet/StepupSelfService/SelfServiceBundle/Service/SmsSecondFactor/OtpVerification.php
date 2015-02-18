@@ -18,7 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
-class OtpVerification
+final class OtpVerification
 {
     const STATUS_NO_MATCH = 0;
     const STATUS_MATCH_EXPIRED = 1;

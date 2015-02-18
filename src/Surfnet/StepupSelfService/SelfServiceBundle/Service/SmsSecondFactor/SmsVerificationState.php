@@ -24,7 +24,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\DateTime\DateTime;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
 
-class SmsVerificationState
+final class SmsVerificationState
 {
     /**
      * @var DateInterval

@@ -42,8 +42,8 @@ interface SmsVerificationStateHandler
     public function getMaximumOtpRequestsCount();
 
     /**
-     * Matches the given OTP with the currently stored SmsVerificationState. If it matches, the SmsVerificationState is removed from storage.
-     * In all cases, the SmsVerificationState is returned if it was present.
+     * Matches the given OTP with the currently stored SmsVerificationState. If it matches, the SmsVerificationState is
+     * removed from storage. In all cases, the SmsVerificationState is returned if it was present.
      *
      * @param string $otp
      * @return OtpVerification
