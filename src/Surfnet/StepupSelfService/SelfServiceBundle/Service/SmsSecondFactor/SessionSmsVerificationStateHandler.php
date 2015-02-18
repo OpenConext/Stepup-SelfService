@@ -82,6 +82,11 @@ class SessionSmsVerificationStateHandler implements SmsVerificationStateHandler
         return $state ? $state->getOtpRequestsRemainingCount() : $this->otpRequestMaximum;
     }
 
+    public function getMaximumOtpRequestsCount()
+    {
+        return $this->otpRequestMaximum;
+    }
+
     public function verify($otp)
     {
         /** @var SmsVerificationState|null $state */

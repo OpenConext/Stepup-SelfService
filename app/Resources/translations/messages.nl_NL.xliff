@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-02-18T09:23:25Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2015-02-18T09:57:22Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -223,6 +223,11 @@
         <jms:reference-file line="14">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.help_user_enter_phone_number</source>
         <target>Voer de stappen hieronder uit om het bezit van uw telefoon aan te tonen.</target>
+      </trans-unit>
+      <trans-unit id="88ad34f02420fb8e202b105ef43e417f0480c53f" resname="ss.registration.sms.text.otp_requests_remaining">
+        <jms:reference-file line="25">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <source>ss.registration.sms.text.otp_requests_remaining</source>
+        <target>U heeft nog %count% pogingen.</target>
       </trans-unit>
       <trans-unit id="66bcc644c0a26ef762954fc544a03885175587c8" resname="ss.registration.sms.text.retry_if_not_received">
         <jms:reference-file line="18">Registration/Sms/provePossession.html.twig</jms:reference-file>

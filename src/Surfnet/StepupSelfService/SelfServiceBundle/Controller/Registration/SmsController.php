@@ -39,17 +39,20 @@ class SmsController extends Controller
         $command = new SendSmsChallengeCommand();
         $form = $this->createForm('ss_send_sms_challenge', $command)->handleRequest($request);
 
+        /** @var SmsSecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+        $otpRequestsRemaining = $service->getOtpRequestsRemainingCount();
+        $maximumOtpRequests = $service->getMaximumOtpRequestsCount();
+        $viewVariables = ['otpRequestsRemaining' => $otpRequestsRemaining, 'maximumOtpRequests' => $maximumOtpRequests];
+
         if ($form->isValid()) {
             $command->identity = $identity->id;
             $command->institution = $identity->institution;
 
-            /** @var SmsSecondFactorService $service */
-            $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-
-            if ($service->getOtpRequestsRemainingCount() === 0) {
+            if ($otpRequestsRemaining === 0) {
                 $form->addError(new FormError('ss.prove_phone_possession.challenge_request_limit_reached'));
 
-                return ['form' => $form->createView()];
+                return array_merge(['form' => $form->createView()], $viewVariables);
             }
 
             if ($service->sendChallenge($command)) {
@@ -61,7 +64,7 @@ class SmsController extends Controller
             }
         }
 
-        return ['form' => $form->createView()];
+        return array_merge(['form' => $form->createView()], $viewVariables);
     }
 
     /**
