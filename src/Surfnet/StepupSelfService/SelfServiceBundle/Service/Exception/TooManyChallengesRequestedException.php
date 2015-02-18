@@ -16,24 +16,10 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\DomainException;
 
-class VerifySmsChallengeCommand
+class TooManyChallengesRequestedException extends DomainException
 {
-    /**
-     * @Assert\NotBlank(message="ss.verify_sms_challenge_command.challenge.may_not_be_empty")
-     * @Assert\Type(type="string", message="ss.verify_sms_challenge_command.challenge.must_be_string")
-     *
-     * @var string
-     */
-    public $challenge;
-
-    /**
-     * The requesting identity's ID (not name ID).
-     *
-     * @var string
-     */
-    public $identity;
 }

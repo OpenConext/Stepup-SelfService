@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,42 +39,56 @@ class SmsController extends Controller
         $command = new SendSmsChallengeCommand();
         $form = $this->createForm('ss_send_sms_challenge', $command)->handleRequest($request);
 
+        /** @var SmsSecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+        $otpRequestsRemaining = $service->getOtpRequestsRemainingCount();
+        $maximumOtpRequests = $service->getMaximumOtpRequestsCount();
+        $viewVariables = ['otpRequestsRemaining' => $otpRequestsRemaining, 'maximumOtpRequests' => $maximumOtpRequests];
+
         if ($form->isValid()) {
             $command->identity = $identity->id;
             $command->institution = $identity->institution;
 
-            /** @var SmsSecondFactorService $service */
-            $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+            if ($otpRequestsRemaining === 0) {
+                $form->addError(new FormError('ss.prove_phone_possession.challenge_request_limit_reached'));
+
+                return array_merge(['form' => $form->createView()], $viewVariables);
+            }
 
             if ($service->sendChallenge($command)) {
                 return $this->redirect(
-                    $this->generateUrl('ss_registration_sms_prove_possession', ['phoneNumber' => $command->recipient])
+                    $this->generateUrl('ss_registration_sms_prove_possession')
                 );
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.send_sms_challenge_failed'));
             }
         }
 
-        return ['form' => $form->createView()];
+        return array_merge(['form' => $form->createView()], $viewVariables);
     }
 
     /**
      * @Template
      */
-    public function provePossessionAction(Request $request, $phoneNumber)
+    public function provePossessionAction(Request $request)
     {
+        /** @var SmsSecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+
+        if (!$service->hasSmsVerificationState()) {
+            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
+
+            return $this->redirectToRoute('ss_registration_sms_send_challenge');
+        }
+
         $identity = $this->getIdentity();
 
         $command = new VerifySmsChallengeCommand();
         $command->identity = $identity->id;
-        $command->phoneNumber = $phoneNumber;
 
         $form = $this->createForm('ss_verify_sms_challenge', $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            /** @var SmsSecondFactorService $service */
-            $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
@@ -82,7 +97,9 @@ class SmsController extends Controller
                     ['secondFactorId' => $result->getSecondFactorId()]
                 );
             } elseif ($result->wasIncorrectChallengeResponseGiven()) {
-                $form->addError(new FormError('ss.prove_phone_possession.challenge_response_incorrect'));
+                $form->addError(new FormError('ss.prove_phone_possession.incorrect_challenge_response'));
+            } elseif ($result->hasChallengeExpired()) {
+                $form->addError(new FormError('ss.prove_phone_possession.challenge_expired'));
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.proof_of_possession_failed'));
             }

@@ -16,24 +16,22 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\DateTime;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use DateTime as CoreDateTime;
 
-class VerifySmsChallengeCommand
+class DateTime
 {
     /**
-     * @Assert\NotBlank(message="ss.verify_sms_challenge_command.challenge.may_not_be_empty")
-     * @Assert\Type(type="string", message="ss.verify_sms_challenge_command.challenge.must_be_string")
-     *
-     * @var string
+     * @var CoreDateTime|null
      */
-    public $challenge;
+    private static $now;
 
     /**
-     * The requesting identity's ID (not name ID).
-     *
-     * @var string
+     * @return CoreDateTime
      */
-    public $identity;
+    public static function now()
+    {
+        return self::$now ?: new CoreDateTime;
+    }
 }

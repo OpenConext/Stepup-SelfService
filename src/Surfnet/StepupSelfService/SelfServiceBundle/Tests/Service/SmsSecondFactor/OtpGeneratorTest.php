@@ -16,24 +16,20 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\SmsSecondFactor;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use PHPUnit_Framework_TestCase as TestCase;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\OtpGenerator;
 
-class VerifySmsChallengeCommand
+final class OtpGeneratorTest extends TestCase
 {
     /**
-     * @Assert\NotBlank(message="ss.verify_sms_challenge_command.challenge.may_not_be_empty")
-     * @Assert\Type(type="string", message="ss.verify_sms_challenge_command.challenge.must_be_string")
-     *
-     * @var string
+     * @test
+     * @group sms
      */
-    public $challenge;
-
-    /**
-     * The requesting identity's ID (not name ID).
-     *
-     * @var string
-     */
-    public $identity;
+    public function it_generates_otp_strings()
+    {
+        $this->assertNotEmpty(OtpGenerator::generate());
+        $this->assertInternalType('string', OtpGenerator::generate());
+    }
 }

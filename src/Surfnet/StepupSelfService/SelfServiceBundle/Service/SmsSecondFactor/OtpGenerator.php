@@ -16,24 +16,22 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
-class VerifySmsChallengeCommand
+final class OtpGenerator
 {
     /**
-     * @Assert\NotBlank(message="ss.verify_sms_challenge_command.challenge.may_not_be_empty")
-     * @Assert\Type(type="string", message="ss.verify_sms_challenge_command.challenge.must_be_string")
-     *
-     * @var string
+     * @return string
      */
-    public $challenge;
+    public static function generate()
+    {
+        $randomCharacters = function () {
+            $chr = rand(50, 81);
 
-    /**
-     * The requesting identity's ID (not name ID).
-     *
-     * @var string
-     */
-    public $identity;
+            // 9 is the gap between "7" (55) and "A" (65).
+            return chr($chr >= 56 ? $chr + 9 : $chr);
+        };
+
+        return join('', array_map($randomCharacters, range(1, 8)));
+    }
 }

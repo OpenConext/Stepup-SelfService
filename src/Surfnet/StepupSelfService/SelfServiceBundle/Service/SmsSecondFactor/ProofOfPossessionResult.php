@@ -18,26 +18,30 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
-class ProofOfPossessionResult
+final class ProofOfPossessionResult
 {
+    const STATUS_CHALLENGE_OK = 0;
+    const STATUS_INCORRECT_CHALLENGE = 1;
+    const STATUS_CHALLENGE_EXPIRED = 2;
+
+    /**
+     * @var int
+     */
+    private $status;
+
     /**
      * @var string|null
      */
     private $secondFactorId;
 
     /**
-     * @var bool
-     */
-    private $incorrectChallengeResponse;
-
-    /**
+     * @param int $status One of
      * @param string|null $secondFactorId
-     * @param bool $incorrectChallengeResponse
      */
-    public function __construct($secondFactorId, $incorrectChallengeResponse)
+    public function __construct($status, $secondFactorId = null)
     {
         $this->secondFactorId = $secondFactorId;
-        $this->incorrectChallengeResponse = $incorrectChallengeResponse;
+        $this->status = $status;
     }
 
     /**
@@ -45,7 +49,7 @@ class ProofOfPossessionResult
      */
     public function isSuccessful()
     {
-        return $this->secondFactorId !== null;
+        return $this->status === self::STATUS_CHALLENGE_OK && $this->secondFactorId !== null;
     }
 
     /**
@@ -56,11 +60,24 @@ class ProofOfPossessionResult
         return $this->secondFactorId;
     }
 
+    public function didProofOfPossessionFail()
+    {
+        return $this->status === self::STATUS_CHALLENGE_OK && $this->secondFactorId === null;
+    }
+
     /**
      * @return boolean
      */
     public function wasIncorrectChallengeResponseGiven()
     {
-        return $this->incorrectChallengeResponse;
+        return $this->status === self::STATUS_INCORRECT_CHALLENGE;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasChallengeExpired()
+    {
+        return $this->status === self::STATUS_CHALLENGE_EXPIRED;
     }
 }
