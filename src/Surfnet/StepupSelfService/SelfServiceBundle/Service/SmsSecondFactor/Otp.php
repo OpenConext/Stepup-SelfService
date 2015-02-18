@@ -46,21 +46,6 @@ final class Otp
     private $issuedAt;
 
     /**
-     * @return string
-     */
-    public static function generate()
-    {
-        $randomCharacters = function () {
-            $chr = rand(50, 81);
-
-            // 9 is the gap between "7" (55) and "A" (65).
-            return chr($chr >= 56 ? $chr + 9 : $chr);
-        };
-
-        return join('', array_map($randomCharacters, range(1, 8)));
-    }
-
-    /**
      * @param string $otpString
      * @param string $phoneNumber
      * @param DateInterval $expiryInterval

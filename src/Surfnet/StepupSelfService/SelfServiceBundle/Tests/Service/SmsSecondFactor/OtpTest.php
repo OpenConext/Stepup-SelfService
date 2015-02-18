@@ -103,10 +103,4 @@ class OtpTest extends TestCase
         $otp = Otp::create($nonString, '123', new DateInterval('PT5M'));
         $otp->verify($nonString);
     }
-
-    public function it_generates_otp_strings()
-    {
-        $this->assertNotEmpty(Otp::generate());
-        $this->assertInternalType('string', Otp::generate());
-    }
 }

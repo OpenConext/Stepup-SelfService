@@ -19,8 +19,6 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
 use DateInterval;
-use DateTime as CoreDateTime;
-use Surfnet\StepupSelfService\SelfServiceBundle\DateTime\DateTime;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
 
@@ -76,7 +74,7 @@ final class SmsVerificationState
             );
         }
 
-        $otp = Otp::generate();
+        $otp = OtpGenerator::generate();
         $this->otps[] = Otp::create($otp, $phoneNumber, $this->expiryInterval);
 
         return $otp;
