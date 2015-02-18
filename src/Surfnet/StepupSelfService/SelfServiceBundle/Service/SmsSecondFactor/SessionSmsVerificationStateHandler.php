@@ -61,9 +61,14 @@ final class SessionSmsVerificationStateHandler implements SmsVerificationStateHa
         $this->otpRequestMaximum = $otpRequestMaximum;
     }
 
+    public function hasState()
+    {
+        return $this->session->has($this->sessionKey);
+    }
+
     public function requestNewOtp($phoneNumber)
     {
-        /** @var SmsVerificationState $state */
+        /** @var SmsVerificationState|null $state */
         $state = $this->session->get($this->sessionKey);
 
         if (!$state) {

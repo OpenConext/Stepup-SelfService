@@ -23,6 +23,11 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallen
 interface SmsVerificationStateHandler
 {
     /**
+     * @return bool
+     */
+    public function hasState();
+
+    /**
      * Generates a new OTP and returns it.
      *
      * @param string $phoneNumber

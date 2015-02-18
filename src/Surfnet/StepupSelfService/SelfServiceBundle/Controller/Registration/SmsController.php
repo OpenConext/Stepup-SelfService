@@ -72,6 +72,15 @@ class SmsController extends Controller
      */
     public function provePossessionAction(Request $request)
     {
+        /** @var SmsSecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
+
+        if (!$service->hasSmsVerificationState()) {
+            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
+
+            return $this->redirectToRoute('ss_registration_sms_send_challenge');
+        }
+
         $identity = $this->getIdentity();
 
         $command = new VerifySmsChallengeCommand();
@@ -80,9 +89,6 @@ class SmsController extends Controller
         $form = $this->createForm('ss_verify_sms_challenge', $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            /** @var SmsSecondFactorService $service */
-            $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-02-18T09:57:47Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2015-02-18T16:07:24Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -126,6 +126,11 @@
       </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.alert.no_second_factors_yet</source>
+        <target>You don't have any security tokens yet.</target>
+      </trans-unit>
+      <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
+        <jms:reference-file line="5">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.sms.alt</source>
         <target>SMS security token</target>
       </trans-unit>
@@ -178,6 +183,11 @@
         <jms:reference-file line="7">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.yubikey.title</source>
         <target>Yubikey</target>
+      </trans-unit>
+      <trans-unit id="cb8f1be659847e3d5566890256517229aade2389" resname="ss.registration.sms.alert.no_verification_state">
+        <jms:reference-file line="21">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.sms.alert.no_verification_state</source>
+        <target>Your session has expired. Please request a new code.</target>
       </trans-unit>
       <trans-unit id="c50571e9afcd050cbd75609b1334730df8dae3f0" resname="ss.registration.sms.challenge_body">
         <jms:reference-file line="102">SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
