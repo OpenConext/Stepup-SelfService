@@ -13,14 +13,18 @@
 
     <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent'|trans({'%email%': email}) }}</p>
 
-    <table class="table table-bordered table-hover">
-        <tbody>
-        <tr>
-            <th scope="row">{{ 'ss.registration.registration_email_sent.label.registration_code'|trans }}</th>
-            <td>{{ registrationCode }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <table class="table table-bordered table-hover table-responsive">
+                <tbody>
+                <tr>
+                    <th scope="row">{{ 'ss.registration.registration_email_sent.label.registration_code'|trans }}</th>
+                    <td>{{ registrationCode }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <p>
         <a class="btn btn-primary" href="{{ path('ss_second_factor_list') }}">
