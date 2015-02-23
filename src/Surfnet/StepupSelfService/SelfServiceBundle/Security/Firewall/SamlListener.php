@@ -20,6 +20,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Firewall;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use SAML2_Response_Exception_PreconditionNotMetException as PreconditionNotMetException;
+use Surfnet\SamlBundle\Http\Exception\AuthnFailedSamlResponseException;
+use Surfnet\SamlBundle\Http\Exception\NoAuthnContextSamlResponseException;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SessionHandler;
@@ -31,7 +34,11 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterfac
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
+use Twig_Environment as Twig;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class SamlListener implements ListenerInterface
 {
     /**
@@ -59,18 +66,25 @@ class SamlListener implements ListenerInterface
      */
     private $sessionHandler;
 
+    /**
+     * @var \Twig_Environment
+     */
+    private $twig;
+
     public function __construct(
         SecurityContextInterface $securityContext,
         AuthenticationManagerInterface $authenticationManager,
         SamlInteractionProvider $samlInteractionProvider,
         SessionHandler $sessionHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Twig $twig
     ) {
         $this->securityContext          = $securityContext;
         $this->authenticationManager    = $authenticationManager;
         $this->samlInteractionProvider  = $samlInteractionProvider;
         $this->sessionHandler           = $sessionHandler;
         $this->logger                   = $logger;
+        $this->twig                     = $twig;
     }
 
     public function handle(GetResponseEvent $event)
@@ -102,6 +116,9 @@ class SamlListener implements ListenerInterface
         $expectedInResponseTo = $this->sessionHandler->getRequestId();
         try {
             $assertion = $this->samlInteractionProvider->processSamlResponse($event->getRequest());
+        } catch (PreconditionNotMetException $e) {
+            $this->logger->notice(sprintf('SAML response precondition not met: "%s"', $e->getMessage()));
+            return $this->setPreconditionExceptionResponse($e, $event);
         } catch (Exception $e) {
             $this->logger->error(sprintf('Failed SAMLResponse Parsing: "%s"', $e->getMessage()));
             throw new AuthenticationException('Failed SAMLResponse parsing', 0, $e);
@@ -131,5 +148,19 @@ class SamlListener implements ListenerInterface
             $response->setStatusCode(Response::HTTP_FORBIDDEN);
             $event->setResponse($response);
         }
+    }
+
+    private function setPreconditionExceptionResponse(PreconditionNotMetException $exception, GetResponseEvent $event)
+    {
+        $template = null;
+
+        if ($exception instanceof AuthnFailedSamlResponseException) {
+            $template = 'SurfnetStepupSelfServiceSelfServiceBundle:Saml/Exception:authnFailed.html.twig';
+        } else {
+            $template = 'SurfnetStepupSelfServiceSelfServiceBundle:Saml/Exception:preconditionNotMet.html.twig';
+        }
+
+        $html = $this->twig->render($template, ['exception' => $exception]);
+        $event->setResponse(new Response($html, Response::HTTP_UNAUTHORIZED));
     }
 }
