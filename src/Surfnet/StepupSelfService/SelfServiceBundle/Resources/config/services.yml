@@ -99,6 +99,7 @@ services:
             - @self_service.security.authentication.saml
             - @self_service.security.authentication.session_handler
             - @logger
+            - @twig
 
     self_service.security.authentication.saml:
         public: false

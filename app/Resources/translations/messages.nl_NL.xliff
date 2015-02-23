@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-02-18T16:07:41Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2015-02-23T14:52:03Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -22,6 +22,31 @@
         <jms:reference-file line="3">views/Exception/error404.html.twig</jms:reference-file>
         <source>ss.error.page_not_found.title</source>
         <target>Pagina niet gevonden</target>
+      </trans-unit>
+      <trans-unit id="865517641b0d0da94788635ac950e5cbbded97a1" resname="ss.error.saml_authn_failed.button.try_again">
+        <jms:reference-file line="10">Saml/Exception/authnFailed.html.twig</jms:reference-file>
+        <source>ss.error.saml_authn_failed.button.try_again</source>
+        <target>Opnieuw inloggen</target>
+      </trans-unit>
+      <trans-unit id="39ad001351f2f524be4a7136f8facdb65097ce59" resname="ss.error.saml_authn_failed.text.authn_failed">
+        <jms:reference-file line="8">Saml/Exception/authnFailed.html.twig</jms:reference-file>
+        <source>ss.error.saml_authn_failed.text.authn_failed</source>
+        <target>U heeft niet in kunnen loggen.</target>
+      </trans-unit>
+      <trans-unit id="e437d473b6267a6996aa245eb7d1a711c5a395c4" resname="ss.error.saml_authn_failed.title">
+        <jms:reference-file line="3">Saml/Exception/authnFailed.html.twig</jms:reference-file>
+        <source>ss.error.saml_authn_failed.title</source>
+        <target>Inloggen</target>
+      </trans-unit>
+      <trans-unit id="9bdaf74a75cfffab8e0de6c6258c9ddfaf7cb025" resname="ss.error.saml_precondition_not_met.text.precondition_not_met">
+        <jms:reference-file line="8">Saml/Exception/preconditionNotMet.html.twig</jms:reference-file>
+        <source>ss.error.saml_precondition_not_met.text.precondition_not_met</source>
+        <target>U voldoet niet aan alle voorwaarden om in te mogen loggen bij de Self-Service-applicatie.</target>
+      </trans-unit>
+      <trans-unit id="6fc7fed55f78c4586ff617bd890dd35c3f63b338" resname="ss.error.saml_precondition_not_met.title">
+        <jms:reference-file line="3">Saml/Exception/preconditionNotMet.html.twig</jms:reference-file>
+        <source>ss.error.saml_precondition_not_met.title</source>
+        <target>Inloggen</target>
       </trans-unit>
       <trans-unit id="0187a2e37be4b12710d8b3a3c4e2d5a8dc30e18e" resname="ss.error.text.an_error_occurred">
         <jms:reference-file line="8">views/Exception/error.html.twig</jms:reference-file>
