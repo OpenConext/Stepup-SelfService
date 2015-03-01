@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "32d598fdf1c5aa57760010979caf0e76",
+    "hash": "56179f763e9e19d4e87f1b06202498f2",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1642,16 +1642,16 @@
         },
         {
             "name": "simplesamlphp/saml2",
-            "version": "v1.5.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/simplesamlphp/saml2.git",
-                "reference": "32fb4d416d065aa5c84505e274055de331ef286e"
+                "url": "https://github.com/SURFnet/saml2.git",
+                "reference": "fb22b707c7a4705d2d54401715c8f6d229e88a74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplesamlphp/saml2/zipball/32fb4d416d065aa5c84505e274055de331ef286e",
-                "reference": "32fb4d416d065aa5c84505e274055de331ef286e",
+                "url": "https://api.github.com/repos/SURFnet/saml2/zipball/fb22b707c7a4705d2d54401715c8f6d229e88a74",
+                "reference": "fb22b707c7a4705d2d54401715c8f6d229e88a74",
                 "shasum": ""
             },
             "require": {
@@ -1677,7 +1677,11 @@
                     "SAML2_": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-0": {
+                    "SAML2_": "tests/"
+                }
+            },
             "license": [
                 "LGPL-2.1"
             ],
@@ -1688,7 +1692,10 @@
                 }
             ],
             "description": "SAML2 PHP library from SimpleSAMLphp",
-            "time": "2014-12-22 09:42:36"
+            "support": {
+                "source": "https://github.com/SURFnet/saml2/tree/master"
+            },
+            "time": "2015-02-24 08:29:44"
         },
         {
             "name": "simplesamlphp/xmlseclibs",
@@ -1845,18 +1852,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-saml-bundle.git",
-                "reference": "f3be91f57c802ead44307ca94ace3774f1e8b090"
+                "reference": "b62b06fdde54086ffd68cbe056dd25e32ee88c67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/f3be91f57c802ead44307ca94ace3774f1e8b090",
-                "reference": "f3be91f57c802ead44307ca94ace3774f1e8b090",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/b62b06fdde54086ffd68cbe056dd25e32ee88c67",
+                "reference": "b62b06fdde54086ffd68cbe056dd25e32ee88c67",
                 "shasum": ""
             },
             "require": {
                 "ext-openssl": "*",
                 "php": "~5.4",
-                "simplesamlphp/saml2": "~1.5",
+                "simplesamlphp/saml2": "dev-master",
                 "symfony/framework-bundle": "~2.5"
             },
             "require-dev": {
@@ -1883,7 +1890,7 @@
                 "stepup",
                 "surfnet"
             ],
-            "time": "2015-02-23 13:01:51"
+            "time": "2015-02-27 08:08:36"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4137,6 +4144,7 @@
     "stability-flags": {
         "mopa/bootstrap-bundle": 10,
         "surfnet/stepup-middleware-client-bundle": 20,
+        "simplesamlphp/saml2": 20,
         "surfnet/stepup-saml-bundle": 20,
         "surfnet/stepup-bundle": 20
     },
