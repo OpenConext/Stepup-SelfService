@@ -34,7 +34,7 @@
             <tbody>
             {% for secondFactor in secondFactorCollection.elements %}
                 <tr>
-                    <td>{{ 'ss.second_factor.type.'~secondFactor.type|trans }}</td>
+                    <td>{{ ('ss.second_factor.type.'~secondFactor.type)|trans }}</td>
                     <td>{{ secondFactor.secondFactorIdentifier }}</td>
                     <td>
                         <a class="btn btn-mini btn-warning"
