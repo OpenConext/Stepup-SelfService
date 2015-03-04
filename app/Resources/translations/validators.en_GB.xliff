@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-02-17T10:15:01Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2015-03-04T14:00:02Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -46,6 +46,38 @@
         <source>middleware_client.dto.identity.name_id.must_not_be_blank</source>
         <target>Remote identity's NameID may not be blank.</target>
       </trans-unit>
+      <trans-unit id="92fbc58313ab0a848a53c1f0c6f0e282b44ab7d1" resname="middleware_client.dto.ra_credentials.common_name.must_be_null_or_string">
+        <source>middleware_client.dto.ra_credentials.common_name.must_be_null_or_string</source>
+        <target state="new">middleware_client.dto.ra_credentials.common_name.must_be_null_or_string</target>
+      </trans-unit>
+      <trans-unit id="6682caeda2a849d079878cb5072b58b591f68403" resname="middleware_client.dto.ra_credentials.contact_information.must_be_null_or_string">
+        <source>middleware_client.dto.ra_credentials.contact_information.must_be_null_or_string</source>
+        <target state="new">middleware_client.dto.ra_credentials.contact_information.must_be_null_or_string</target>
+      </trans-unit>
+      <trans-unit id="7bc7078f20d42d7f9835e4d11ed0a7ff7e52f053" resname="middleware_client.dto.ra_credentials.identity_id.must_be_string">
+        <source>middleware_client.dto.ra_credentials.identity_id.must_be_string</source>
+        <target state="new">middleware_client.dto.ra_credentials.identity_id.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="efed8250c4798118be0e411fbdcee59837be20e8" resname="middleware_client.dto.ra_credentials.identity_id.must_not_be_blank">
+        <source>middleware_client.dto.ra_credentials.identity_id.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.ra_credentials.identity_id.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="fc2150764b2d8878d21b39626b9bf69cdfc13b67" resname="middleware_client.dto.ra_credentials.institution.must_be_null_or_string">
+        <source>middleware_client.dto.ra_credentials.institution.must_be_null_or_string</source>
+        <target state="new">middleware_client.dto.ra_credentials.institution.must_be_null_or_string</target>
+      </trans-unit>
+      <trans-unit id="99ded2b5b732331dc01d9e771fa1db31fe2cfe92" resname="middleware_client.dto.ra_credentials.is_raa.must_be_boolean">
+        <source>middleware_client.dto.ra_credentials.is_raa.must_be_boolean</source>
+        <target state="new">middleware_client.dto.ra_credentials.is_raa.must_be_boolean</target>
+      </trans-unit>
+      <trans-unit id="31d31f5529ef0c9d51b6249bfb583f10024c3336" resname="middleware_client.dto.ra_credentials.is_sraa.must_be_boolean">
+        <source>middleware_client.dto.ra_credentials.is_sraa.must_be_boolean</source>
+        <target state="new">middleware_client.dto.ra_credentials.is_sraa.must_be_boolean</target>
+      </trans-unit>
+      <trans-unit id="f115ed3f04af646e2cbd2f0a1ad74f1cf47bd817" resname="middleware_client.dto.ra_credentials.location.must_be_null_or_string">
+        <source>middleware_client.dto.ra_credentials.location.must_be_null_or_string</source>
+        <target state="new">middleware_client.dto.ra_credentials.location.must_be_null_or_string</target>
+      </trans-unit>
       <trans-unit id="4f314988de33fb4e4a1700e530247565d7d2a65b" resname="middleware_client.dto.unverified_second_factor.id.must_be_string">
         <source>middleware_client.dto.unverified_second_factor.id.must_be_string</source>
         <target>Remote unverified second factor ID must be string.</target>
@@ -70,6 +102,14 @@
         <source>middleware_client.dto.unverified_second_factor.type.must_not_be_blank</source>
         <target>Remote unverified second factor type may not be blank.</target>
       </trans-unit>
+      <trans-unit id="fdb8ca7d662676edf76b28ef862c6ca417993585" resname="middleware_client.dto.verified_second_factor.common_name.must_be_string">
+        <source>middleware_client.dto.verified_second_factor.common_name.must_be_string</source>
+        <target state="new">middleware_client.dto.verified_second_factor.common_name.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="b7d75d62447f50a9cd17804a27e2294b1845805c" resname="middleware_client.dto.verified_second_factor.common_name.must_not_be_blank">
+        <source>middleware_client.dto.verified_second_factor.common_name.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.verified_second_factor.common_name.must_not_be_blank</target>
+      </trans-unit>
       <trans-unit id="f698eaa978e06a006719be57650566e044f6438d" resname="middleware_client.dto.verified_second_factor.id.must_be_string">
         <source>middleware_client.dto.verified_second_factor.id.must_be_string</source>
         <target>Remote unverified second factor ID must be string.</target>
@@ -77,6 +117,30 @@
       <trans-unit id="89cd06f61965837c0b36e3c041f1c3212c85aca2" resname="middleware_client.dto.verified_second_factor.id.must_not_be_blank">
         <source>middleware_client.dto.verified_second_factor.id.must_not_be_blank</source>
         <target>Remote unverified second factor ID may not be blank.</target>
+      </trans-unit>
+      <trans-unit id="18696186e0b2662157baf33fdd3e2c64ee369874" resname="middleware_client.dto.verified_second_factor.identity_id.must_be_string">
+        <source>middleware_client.dto.verified_second_factor.identity_id.must_be_string</source>
+        <target state="new">middleware_client.dto.verified_second_factor.identity_id.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="d8b523d943ed459013a199aad977ad34815179d0" resname="middleware_client.dto.verified_second_factor.identity_id.must_not_be_blank">
+        <source>middleware_client.dto.verified_second_factor.identity_id.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.verified_second_factor.identity_id.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="e599ec801e28a54b7c1d0efe3c95e01c11496b41" resname="middleware_client.dto.verified_second_factor.institution.must_be_string">
+        <source>middleware_client.dto.verified_second_factor.institution.must_be_string</source>
+        <target state="new">middleware_client.dto.verified_second_factor.institution.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="0d1058689e86b8179b680b3c1a7eeb1636878446" resname="middleware_client.dto.verified_second_factor.institution.must_not_be_blank">
+        <source>middleware_client.dto.verified_second_factor.institution.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.verified_second_factor.institution.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="4e1143bb261ac170bc1f826bc7a1c4a0f9e85f11" resname="middleware_client.dto.verified_second_factor.registration_code.must_be_string">
+        <source>middleware_client.dto.verified_second_factor.registration_code.must_be_string</source>
+        <target state="new">middleware_client.dto.verified_second_factor.registration_code.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="b8a440b9c7aa00c8838d0bfa93bab53460b3674f" resname="middleware_client.dto.verified_second_factor.registration_code.must_not_be_blank">
+        <source>middleware_client.dto.verified_second_factor.registration_code.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.verified_second_factor.registration_code.must_not_be_blank</target>
       </trans-unit>
       <trans-unit id="81d066f7f22e6fbe8e97f68b51b49caf338c3dbb" resname="middleware_client.dto.verified_second_factor.second_factor_identifier.must_be_string">
         <source>middleware_client.dto.verified_second_factor.second_factor_identifier.must_be_string</source>
@@ -94,35 +158,72 @@
         <source>middleware_client.dto.verified_second_factor.type.must_not_be_blank</source>
         <target>Remote unverified second factor type may not be blank.</target>
       </trans-unit>
+      <trans-unit id="d1ecd88e1e39a0507b0d8ee1a5466d70fcc2b8e8" resname="middleware_client.dto.vetted_second_factor.id.must_be_string">
+        <source>middleware_client.dto.vetted_second_factor.id.must_be_string</source>
+        <target state="new">middleware_client.dto.vetted_second_factor.id.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="9ea24fcb2243fd557b270b340845fab58b0f70c8" resname="middleware_client.dto.vetted_second_factor.id.must_not_be_blank">
+        <source>middleware_client.dto.vetted_second_factor.id.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.vetted_second_factor.id.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="9f19fa447253b54a9b47d83a967722d3a8e86337" resname="middleware_client.dto.vetted_second_factor.second_factor_identifier.must_be_string">
+        <source>middleware_client.dto.vetted_second_factor.second_factor_identifier.must_be_string</source>
+        <target state="new">middleware_client.dto.vetted_second_factor.second_factor_identifier.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="cad456ae7a681d2149d057073caf64adbf33c808" resname="middleware_client.dto.vetted_second_factor.second_factor_identifier.must_not_be_blank">
+        <source>middleware_client.dto.vetted_second_factor.second_factor_identifier.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.vetted_second_factor.second_factor_identifier.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="1ac81ca811e4a71e9918a70cbe8d9c8d20c57abb" resname="middleware_client.dto.vetted_second_factor.type.must_be_string">
+        <source>middleware_client.dto.vetted_second_factor.type.must_be_string</source>
+        <target state="new">middleware_client.dto.vetted_second_factor.type.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="e79eeb815d177674e3eb22c7b0f58c27154f55ec" resname="middleware_client.dto.vetted_second_factor.type.must_not_be_blank">
+        <source>middleware_client.dto.vetted_second_factor.type.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.vetted_second_factor.type.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="e3554b07567999b6bd90ee405bf4e60db4d5d727" resname="ss.prove_phone_possession.challenge_expired">
+        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.challenge_expired</source>
+        <target>Your code has expired. Please request a new code.</target>
+      </trans-unit>
+      <trans-unit id="ebe4091038cf74f7ebcfd0a3256985fdcf21e7dd" resname="ss.prove_phone_possession.challenge_request_limit_reached">
+        <jms:reference-file line="18">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.challenge_request_limit_reached</source>
+        <target>You have exceeded the limit of three codes; you can no longer request any more codes. Contact your helpdesk or try again later.</target>
+      </trans-unit>
+      <trans-unit id="90d186f8499585cb62a368341bc3d5569f63a013" resname="ss.prove_phone_possession.challenge_response_incorrect">
+        <jms:reference-file line="26">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.challenge_response_incorrect</source>
+        <target state="new">ss.prove_phone_possession.challenge_response_incorrect</target>
+      </trans-unit>
+      <trans-unit id="e50a93e13b47c2995aefee1dd550f3dedfdf0080" resname="ss.prove_phone_possession.incorrect_challenge_response">
+        <jms:reference-file line="17">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.incorrect_challenge_response</source>
+        <target>The code you entered does not match. Please try again or request a new code.</target>
+      </trans-unit>
       <trans-unit id="e5bb393004217418ac3b2d08716c203b86ad8d1d" resname="ss.prove_phone_possession.proof_of_possession_failed">
-        <jms:reference-file line="13">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="16">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.proof_of_possession_failed</source>
         <target>The token could not be created due to unknown reasons.</target>
       </trans-unit>
       <trans-unit id="9360cda7585c4052d19755cff12aa9b76a69abcc" resname="ss.prove_phone_possession.send_sms_challenge_failed">
-        <jms:reference-file line="12">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="15">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.send_sms_challenge_failed</source>
         <target>Sending the code by text message failed.</target>
       </trans-unit>
       <trans-unit id="6d67afd47dd9bd70f19efaf10e19900bd5361386" resname="ss.prove_yubikey_possession.proof_of_possession_failed">
-        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="27">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_yubikey_possession.proof_of_possession_failed</source>
         <target>The token could not be created due to unknown reasons.</target>
       </trans-unit>
-      <trans-unit id="e3554b07567999b6bd90ee405bf4e60db4d5d727" resname="ss.prove_phone_possession.challenge_expired">
-        <jms:reference-file line="16">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.challenge_expired</source>
-        <target>Your code has expired. Request a new one.</target>
+      <trans-unit id="64327d0cfa154721029978c67ef52df2fd18cacb" resname="ss.revoke_own_second_factor_command.identity_id.must_be_string">
+        <source>ss.revoke_own_second_factor_command.identity_id.must_be_string</source>
+        <target state="new">ss.revoke_own_second_factor_command.identity_id.must_be_string</target>
       </trans-unit>
-      <trans-unit id="ebe4091038cf74f7ebcfd0a3256985fdcf21e7dd" resname="ss.prove_phone_possession.challenge_request_limit_reached">
-        <jms:reference-file line="15">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.challenge_request_limit_reached</source>
-        <target>You can no longer request any more codes; you have exceeded the limit of three codes.</target>
-      </trans-unit>
-      <trans-unit id="e50a93e13b47c2995aefee1dd550f3dedfdf0080" resname="ss.prove_phone_possession.incorrect_challenge_response">
-        <jms:reference-file line="14">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.incorrect_challenge_response</source>
-        <target>The code you entered doesn't match. Try again or request a new code.</target>
+      <trans-unit id="590d26b3eb954c44862a6cf2bf4cf7a382b7119c" resname="ss.revoke_own_second_factor_command.second_factor_id.must_be_string">
+        <source>ss.revoke_own_second_factor_command.second_factor_id.must_be_string</source>
+        <target state="new">ss.revoke_own_second_factor_command.second_factor_id.must_be_string</target>
       </trans-unit>
       <trans-unit id="d23ad73b357db56cd8de5ead80613a379e7fb7f9" resname="ss.send_sms_challenge_command.recipient.may_not_be_empty">
         <source>ss.send_sms_challenge_command.recipient.may_not_be_empty</source>
@@ -165,12 +266,12 @@
         <target>Yubikey OTP must be string.</target>
       </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
-        <jms:reference-file line="16">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="24">Resources/views/translations.twig</jms:reference-file>
         <source>ss.verify_yubikey_command.otp.otp_invalid</source>
-        <target>The Yubikey code was invalid. Try again.</target>
+        <target>This Yubikey code was invalid. Please try again.</target>
       </trans-unit>
       <trans-unit id="222ba32640d7ba4a87f2070d67125ccabf100de8" resname="ss.verify_yubikey_command.otp.verification_error">
-        <jms:reference-file line="17">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="25">Resources/views/translations.twig</jms:reference-file>
         <source>ss.verify_yubikey_command.otp.verification_error</source>
         <target>The verification of the Yubikey code failed due to unknown reasons. Try again.</target>
       </trans-unit>

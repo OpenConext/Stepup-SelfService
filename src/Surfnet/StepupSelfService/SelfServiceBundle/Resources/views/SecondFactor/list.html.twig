@@ -7,23 +7,22 @@
     <h2>{{ block('page_title') }}</h2>
 
     {% if unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty %}
-        <h3>{{ 'ss.second_factor.list.no_second_factors.title'|trans }}</h3>
-        <p>{{ 'ss.second_factor.list.text.no_second_factors' }}</p>
+        <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
         <a href="{{ path('ss_registration_display_types') }}"
            class="btn btn-primary">
-            {{ 'ss.second_factor.list.button.register_second_factor' }}
+            {{ 'ss.second_factor.list.button.register_second_factor'|trans }}
         </a>
     {% else %}
-        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.vetted.title', 'vetted') }}
-        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.verified.title', 'verified') }}
-        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.unverified.title', 'unverified') }}
+        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted') }}
+        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified') }}
+        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified') }}
     {% endif %}
 
 {% endblock %}
 
-{% macro secondFactorTable(secondFactorCollection, headerText, state) %}
+{% macro secondFactorTable(secondFactorCollection, text, state) %}
     {% if secondFactorCollection.elements is not empty %}
-        <h3>{{ headerText|trans }}</h3>
+        <p>{{ text|trans }}</p>
         <table class="table-striped">
             <thead>
             <tr>

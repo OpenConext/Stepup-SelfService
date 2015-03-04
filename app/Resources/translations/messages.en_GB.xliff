@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-02-23T14:52:19Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2015-03-04T14:05:15Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -16,7 +16,7 @@
         <jms:reference-file line="9">views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="9">views/Exception/error404.html.twig</jms:reference-file>
         <source>ss.error.button.go_home</source>
-        <target>Back to the home screen</target>
+        <target>Back to Home</target>
       </trans-unit>
       <trans-unit id="2ce4a9321744be25a28ba83dad88923ee6905728" resname="ss.error.page_not_found.title">
         <jms:reference-file line="3">views/Exception/error404.html.twig</jms:reference-file>
@@ -51,7 +51,7 @@
       <trans-unit id="0187a2e37be4b12710d8b3a3c4e2d5a8dc30e18e" resname="ss.error.text.an_error_occurred">
         <jms:reference-file line="8">views/Exception/error.html.twig</jms:reference-file>
         <source>ss.error.text.an_error_occurred</source>
-        <target>A error occurred due to an unknown cause. Go back and try again or go to the home screen</target>
+        <target>Oops! Something went wrong. Go back and try again or go to the home screen.</target>
       </trans-unit>
       <trans-unit id="4c4fb9b24a25bdd45d83562a4d71ecde8d527a77" resname="ss.error.text.if_you_think_this_is_incorrect_report">
         <jms:reference-file line="13">views/Exception/error404.html.twig</jms:reference-file>
@@ -78,6 +78,16 @@
         <jms:reference-file line="3">views/Exception/error.html.twig</jms:reference-file>
         <source>ss.error.title</source>
         <target>Error</target>
+      </trans-unit>
+      <trans-unit id="b3d573081dd44232cfd0fc03a04fe1b523715271" resname="ss.form.ss_revoke_second_factor.cancel">
+        <jms:reference-file line="35">Form/Type/RevokeSecondFactorType.php</jms:reference-file>
+        <source>ss.form.ss_revoke_second_factor.cancel</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="ab87a286bf3aa3ccb30880d84c1a0605345338cc" resname="ss.form.ss_revoke_second_factor.revoke">
+        <jms:reference-file line="31">Form/Type/RevokeSecondFactorType.php</jms:reference-file>
+        <source>ss.form.ss_revoke_second_factor.revoke</source>
+        <target>Remove</target>
       </trans-unit>
       <trans-unit id="e81e43e3bee8ede5bc43425f96030ec09f268e7e" resname="ss.form.ss_send_sms_challenge.button.send_challenge">
         <jms:reference-file line="41">Form/Type/SendSmsChallengeType.php</jms:reference-file>
@@ -112,7 +122,7 @@
       <trans-unit id="1fd92b34e65dcbb10330e06d6079564e19252093" resname="ss.registration.email_verification_email_sent.text.email_verification_has_been_sent">
         <jms:reference-file line="14">views/Registration/emailVerificationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.email_verification_email_sent.text.email_verification_has_been_sent</source>
-        <target>A verification e-mail has been sent to the e-mail address %email%.</target>
+        <target>Check your inbox. A verification e-mail has been sent to the e-mail address %email%.</target>
       </trans-unit>
       <trans-unit id="081d879f1df81f9c54dd58b6f4105617e779c692" resname="ss.registration.email_verification_email_sent.title">
         <jms:reference-file line="3">views/Registration/emailVerificationEmailSent.html.twig</jms:reference-file>
@@ -122,34 +132,54 @@
       <trans-unit id="3d9422c99d74fc7a2dee4d8a9d6faa9c46d929ec" resname="ss.registration.progress_bar.confirm_second_factor">
         <jms:reference-file line="4">Registration/partial/progressBar.html.twig</jms:reference-file>
         <source>ss.registration.progress_bar.confirm_second_factor</source>
-        <target>Confirm security token</target>
+        <target>Confirm</target>
       </trans-unit>
       <trans-unit id="9a3c965947c1bf3aa872007ffb234307e48238a8" resname="ss.registration.progress_bar.link_second_factor">
         <jms:reference-file line="3">Registration/partial/progressBar.html.twig</jms:reference-file>
         <source>ss.registration.progress_bar.link_second_factor</source>
-        <target>Link security token</target>
+        <target>Link token</target>
       </trans-unit>
       <trans-unit id="e935c8330461a6bc4e9a59ac919ffa376ef5c00b" resname="ss.registration.progress_bar.register_second_factor">
         <jms:reference-file line="5">Registration/partial/progressBar.html.twig</jms:reference-file>
         <source>ss.registration.progress_bar.register_second_factor</source>
-        <target>Register security token</target>
+        <target>Activate token</target>
       </trans-unit>
       <trans-unit id="2ca10f36a20c14c466645750646de2a51b9d7bd0" resname="ss.registration.progress_bar.select_second_factor">
         <jms:reference-file line="2">Registration/partial/progressBar.html.twig</jms:reference-file>
         <source>ss.registration.progress_bar.select_second_factor</source>
-        <target>Select security token</target>
+        <target>Select token</target>
+      </trans-unit>
+      <trans-unit id="5d3dd696751fdc057a65962d51b091120801fc32" resname="ss.registration.registration_email_sent.button.to_overview">
+        <jms:reference-file line="31">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <source>ss.registration.registration_email_sent.button.to_overview</source>
+        <target>Overview tokens</target>
+      </trans-unit>
+      <trans-unit id="d38c5271077c89a3b39e6ee655e21059dcb1da94" resname="ss.registration.registration_email_sent.label.registration_code">
+        <jms:reference-file line="21">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <source>ss.registration.registration_email_sent.label.registration_code</source>
+        <target>Activation code</target>
+      </trans-unit>
+      <trans-unit id="8388ff05103a22d0917788a48ccdc9716a353ac8" resname="ss.registration.registration_email_sent.text.no_ras_for_your_institution">
+        <jms:reference-file line="39">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <source>ss.registration.registration_email_sent.text.no_ras_for_your_institution</source>
+        <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
       </trans-unit>
       <trans-unit id="7c9ea58235246dd0f14a2d6aaed379ad0638d0e7" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent">
         <jms:reference-file line="14">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent</source>
-        <target>An e-mail with your registration code and instructions on how to proceed has been sent to the e-mail address %email%.</target>
+        <target>An e-mail with your activation code has been sent to the e-mail address %email%. Please follow the instructions in the e-mail on how to proceed.</target>
       </trans-unit>
       <trans-unit id="61c16d1cf1191b8bfb09d98779fbbf5cb748bd6b" resname="ss.registration.registration_email_sent.title">
         <jms:reference-file line="3">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.title</source>
         <target>Registration</target>
       </trans-unit>
-      <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.alert.no_second_factors_yet">
+      <trans-unit id="fad1d50cfe9eadd2b8c3dd3e10456e70a5c927f0" resname="ss.registration.registration_email_sent.title.list_of_ras">
+        <jms:reference-file line="37">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <source>ss.registration.registration_email_sent.title.list_of_ras</source>
+        <target>Location to activate your token</target>
+      </trans-unit>
+      <trans-unit id="20cd158dac14a9a2fcb66557ab4eb983a30ea439" resname="ss.registration.selector.alert.no_second_factors_yet">
         <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.alert.no_second_factors_yet</source>
         <target>You don't have any security tokens yet.</target>
@@ -160,29 +190,24 @@
         <target>SMS security token</target>
       </trans-unit>
       <trans-unit id="767cc318db2d93e96d8531b2b8d2cba23e72ca6e" resname="ss.registration.selector.sms.button.use">
-        <jms:reference-file line="5">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="8">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.sms.button.use</source>
-        <target>Use SMS</target>
+        <target>Select</target>
       </trans-unit>
       <trans-unit id="b4a6128a0fcbe8b09081c249a17c2e98469628ab" resname="ss.registration.selector.sms.description">
-        <jms:reference-file line="4">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="7">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.sms.description</source>
-        <target>Use text messages to link your phone to your account to further safeguard your identity.</target>
+        <target>SMS: use a One Time Password (OTP) that is sent to your mobile phone via text message.</target>
       </trans-unit>
       <trans-unit id="fc0176e73f8cd51f1a4520e4b7297b5e2d7693c3" resname="ss.registration.selector.sms.title">
-        <jms:reference-file line="3">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="6">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.sms.title</source>
         <target>SMS</target>
       </trans-unit>
-      <trans-unit id="38dcce9bee21e4005e1609868dbe48d08c63507e" resname="ss.registration.selector.text.explain_wizard">
-        <jms:reference-file line="14">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
-        <source>ss.registration.selector.text.explain_wizard</source>
-        <target>This wizard will guide you through the user self registration process and allows you to link a new security token to your identity.</target>
-      </trans-unit>
       <trans-unit id="cd82a900fa62708fd26a61a0b95221a41b070945" resname="ss.registration.selector.text.please_select_second_factor">
-        <jms:reference-file line="15">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
+        <jms:reference-file line="14">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
         <source>ss.registration.selector.text.please_select_second_factor</source>
-        <target>Please select the token you wish to register from the options shown below:</target>
+        <target>Please select the token you wish to register:</target>
       </trans-unit>
       <trans-unit id="2e0728618c2f9b97d4b5e52a55782b3babe62dbb" resname="ss.registration.selector.title.welcome">
         <jms:reference-file line="3">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
@@ -190,22 +215,22 @@
         <target>Welcome %name%</target>
       </trans-unit>
       <trans-unit id="cded89875fcd3c83b35117d461b1475f917437fe" resname="ss.registration.selector.yubikey.alt">
-        <jms:reference-file line="6">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="9">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.yubikey.alt</source>
         <target>Yubikey security token</target>
       </trans-unit>
       <trans-unit id="1df60ffb307234adc52345af66060a5976401edd" resname="ss.registration.selector.yubikey.button.use">
-        <jms:reference-file line="9">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="12">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.yubikey.button.use</source>
-        <target>Use Yubikey</target>
+        <target>Select</target>
       </trans-unit>
       <trans-unit id="a1f47d6dbbe7ef58a52ee675decc2846b6496c64" resname="ss.registration.selector.yubikey.description">
-        <jms:reference-file line="8">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="11">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.yubikey.description</source>
-        <target>Use your personal Yubikey to further safeguard your identity.</target>
+        <target>YubiKey: a hardware "two factor authentication" key that looks like a small USB stick</target>
       </trans-unit>
       <trans-unit id="ecae068b2caf318fa823d8b351eb67709e01ae61" resname="ss.registration.selector.yubikey.title">
-        <jms:reference-file line="7">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="10">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.yubikey.title</source>
         <target>Yubikey</target>
       </trans-unit>
@@ -215,7 +240,7 @@
         <target>Your session has expired. Please request a new code.</target>
       </trans-unit>
       <trans-unit id="c50571e9afcd050cbd75609b1334730df8dae3f0" resname="ss.registration.sms.challenge_body">
-        <jms:reference-file line="102">SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
+        <jms:reference-file line="127">SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
         <source>ss.registration.sms.challenge_body</source>
         <target>Your code: %challenge%</target>
       </trans-unit>
@@ -229,45 +254,35 @@
         <source>ss.registration.sms.send_challenge.title.page</source>
         <target>Send code to your phone</target>
       </trans-unit>
-      <trans-unit id="68f41985771eac9a0faeb0dfa58256154c9df4c8" resname="ss.registration.sms.text.after_pressing_proceed">
-        <jms:reference-file line="19">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
-        <source>ss.registration.sms.text.after_pressing_proceed</source>
-        <target>When you click “Send code”, you will receive a text message with a code. On the next page, please enter the code.</target>
-      </trans-unit>
       <trans-unit id="5cac3b52eed8f48770d80fb00b871e3dc3ae565a" resname="ss.registration.sms.text.ensure_phone_has_signal">
-        <jms:reference-file line="17">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <jms:reference-file line="15">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.ensure_phone_has_signal</source>
         <target>Please ensure your mobile phone has a signal and can receive text messages.</target>
       </trans-unit>
       <trans-unit id="61e00906a71f4cde92328a327aaa55e55061186e" resname="ss.registration.sms.text.enter_challenge_below">
         <jms:reference-file line="17">Registration/Sms/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.enter_challenge_below</source>
-        <target>Please enter the code sent to your phone below:</target>
+        <target>Enter the code that was sent to your phone and click 'Verify code'</target>
       </trans-unit>
       <trans-unit id="7a3ffc345262052d848b83714296cd342950ec0a" resname="ss.registration.sms.text.enter_phone_number_below">
-        <jms:reference-file line="18">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <jms:reference-file line="16">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.enter_phone_number_below</source>
-        <target>To link the text message based one-time-password, please follow the next steps:</target>
+        <target>Please enter your mobile phone number below:</target>
       </trans-unit>
       <trans-unit id="1c6c4046436965583c51f835f122786636d3bf57" resname="ss.registration.sms.text.help_user_enter_challenge">
         <jms:reference-file line="14">Registration/Sms/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.help_user_enter_challenge</source>
-        <target>To prove you possess given phone number, follow the instructions below:</target>
-      </trans-unit>
-      <trans-unit id="78dff419254d1597b04d675eed021d333f86a87e" resname="ss.registration.sms.text.help_user_enter_phone_number">
-        <jms:reference-file line="14">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
-        <source>ss.registration.sms.text.help_user_enter_phone_number</source>
-        <target>To link the text message based security token, please follow the next steps:</target>
+        <target>Please follow the instructions below to prove that you possess the given phone number:</target>
       </trans-unit>
       <trans-unit id="88ad34f02420fb8e202b105ef43e417f0480c53f" resname="ss.registration.sms.text.otp_requests_remaining">
-        <jms:reference-file line="25">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <jms:reference-file line="23">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.otp_requests_remaining</source>
-        <target>You have %count% tries left.</target>
+        <target>Attempts remaining: %count%</target>
       </trans-unit>
       <trans-unit id="66bcc644c0a26ef762954fc544a03885175587c8" resname="ss.registration.sms.text.retry_if_not_received">
         <jms:reference-file line="18">Registration/Sms/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.retry_if_not_received</source>
-        <target>Click “Send another code” if you didn't receive a code or didn't enter it in time.</target>
+        <target>Click “Send another code” if you did not receive a code or did not enter it in time.</target>
       </trans-unit>
       <trans-unit id="c0b7cacbe163182d07eadf53926718aad310c6a5" resname="ss.registration.verify_email.text.verification_failed">
         <jms:reference-file line="14">views/Registration/verifyEmail.html.twig</jms:reference-file>
@@ -282,7 +297,7 @@
       <trans-unit id="51b48a932a70ae43f768348cb7631f248fffd1b1" resname="ss.registration.yubikey.text.connect_yubikey_to_pc">
         <jms:reference-file line="17">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.yubikey.text.connect_yubikey_to_pc</source>
-        <target>Connect your personal Yubikey with the computer.</target>
+        <target>Connect your Yubikey with the USB drive of your computer.</target>
       </trans-unit>
       <trans-unit id="f5adfdb9d55ddc728cc5a406e88dbd9b562dfd36" resname="ss.registration.yubikey.text.ensure_form_field_focus">
         <jms:reference-file line="18">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
@@ -297,32 +312,110 @@
       <trans-unit id="a640511e7b860eb4e56b71c4137b8960f04b3d0e" resname="ss.registration.yubikey.text.press_once_form_auto_submitted">
         <jms:reference-file line="19">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.yubikey.text.press_once_form_auto_submitted</source>
-        <target>Press the button on your personal Yubikey once to enter an OTP in the field below.</target>
+        <target>Press and hold the button on your Yubikey. A One Time Password will be entered in the field below automatically  once to enter an OTP in the field below.</target>
       </trans-unit>
       <trans-unit id="96ca4e93bee3c9288f14fd9bb4e700819155d7f4" resname="ss.registration.yubikey.title.enter_challenge">
         <jms:reference-file line="3">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.yubikey.title.enter_challenge</source>
-        <target>Link your personal Yubikey</target>
+        <target>Link your Yubikey</target>
+      </trans-unit>
+      <trans-unit id="c954ee253d560c6f6d5baf1811ca34988a9029d8" resname="ss.second_factor.list.button.register_second_factor">
+        <jms:reference-file line="13">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor.list.button.register_second_factor</source>
+        <target>Register token</target>
+      </trans-unit>
+      <trans-unit id="474737f264f9527e93a9f4f4c4c380331b52e759" resname="ss.second_factor.list.text.no_second_factors">
+        <jms:reference-file line="10">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor.list.text.no_second_factors</source>
+        <target>There are no tokens registered for your account. Click on 'Register token' to register a new token.
+</target>
+      </trans-unit>
+      <trans-unit id="a1a1aa0e1c0a720bc6144c5a5a03d89ad6fdcc87" resname="ss.second_factor.list.text.unverified">
+        <jms:reference-file line="32">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.list.text.unverified</source>
+        <target>ss.second_factor.list.text.unverified</target>
+      </trans-unit>
+      <trans-unit id="da0c3086f8d5dc181e074f24d12e8ccc27429dcf" resname="ss.second_factor.list.text.verified">
+        <jms:reference-file line="31">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.list.text.verified</source>
+        <target>The following token(s) is registered for your account, but not yet activated.
+
+An e-mail with your activation code has been sent to the e-mail address %email%. Please follow the instructions in the e-mail on how to proceed.</target>
+      </trans-unit>
+      <trans-unit id="15bc6a0b6f49cc0b44bd30ed7290e347e1267117" resname="ss.second_factor.list.text.vetted">
+        <jms:reference-file line="30">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.list.text.vetted</source>
+        <target>The following token(s) is registered for your account.</target>
       </trans-unit>
       <trans-unit id="59ae5f416e832eeec457e8f73d11d196bcf9c6e5" resname="ss.second_factor.list.title">
-        <jms:reference-file line="3">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="4">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor.list.title</source>
         <target>Your security tokens</target>
       </trans-unit>
-      <trans-unit id="dd988cd2bcd7da3e41b2ec6abae092e67c562827" resname="ss.second_factor.list.unverified.title">
-        <jms:reference-file line="8">views/SecondFactor/list.html.twig</jms:reference-file>
-        <source>ss.second_factor.list.unverified.title</source>
-        <target>Unverified security tokens</target>
+      <trans-unit id="6ddd63626b39582e37d8f3012d893e9d4eac14db" resname="ss.second_factor.revoke.alert.revocation_failed">
+        <jms:reference-file line="40">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.alert.revocation_failed</source>
+        <target state="new">ss.second_factor.revoke.alert.revocation_failed</target>
+      </trans-unit>
+      <trans-unit id="f990ac6c55a5585b8c3cde21f4c63bb66b055892" resname="ss.second_factor.revoke.alert.revocation_successful">
+        <jms:reference-file line="39">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.alert.revocation_successful</source>
+        <target>Your token has been removed.</target>
+      </trans-unit>
+      <trans-unit id="39bf5f5849cef0ac9b176c769c79169676fc7b96" resname="ss.second_factor.revoke.button.revoke">
+        <jms:reference-file line="42">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.button.revoke</source>
+        <target>Remove</target>
+      </trans-unit>
+      <trans-unit id="8cb0dc5d3faca805d69dce7496307078d2234dfb" resname="ss.second_factor.revoke.second_factor_type.sms">
+        <jms:reference-file line="37">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.second_factor_type.sms</source>
+        <target>SMS</target>
+      </trans-unit>
+      <trans-unit id="41ef2c1782e52dabce59e7be54aef6fa07829959" resname="ss.second_factor.revoke.second_factor_type.yubikey">
+        <jms:reference-file line="38">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.second_factor_type.yubikey</source>
+        <target>YubiKey</target>
+      </trans-unit>
+      <trans-unit id="aff5bdb50adaae6a777fd46f760f426e6c847867" resname="ss.second_factor.revoke.table_header.second_factor.identifier">
+        <jms:reference-file line="18">views/SecondFactor/revoke.html.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.table_header.second_factor.identifier</source>
+        <target>ID</target>
+      </trans-unit>
+      <trans-unit id="9cafb5ba1cb90702e38319e06a54c769632bd5f7" resname="ss.second_factor.revoke.table_header.type">
+        <jms:reference-file line="14">views/SecondFactor/revoke.html.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.table_header.type</source>
+        <target>Token</target>
+      </trans-unit>
+      <trans-unit id="f128a2c75461adb88ef8dee0af0aeed951248e89" resname="ss.second_factor.revoke.text.are_you_sure">
+        <jms:reference-file line="9">views/SecondFactor/revoke.html.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.text.are_you_sure</source>
+        <target>You are about to remove the following token. Are you sure?</target>
+      </trans-unit>
+      <trans-unit id="184ec164f27d3f9bffd41469e34843a4c99d2fdc" resname="ss.second_factor.revoke.title">
+        <jms:reference-file line="4">views/SecondFactor/revoke.html.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.title</source>
+        <target>Remove token</target>
+      </trans-unit>
+      <trans-unit id="46d5571724a558b0ad7e823e35a35021d78ed209" resname="ss.second_factor.type.sms">
+        <jms:reference-file line="33">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.type.sms</source>
+        <target>SMS</target>
+      </trans-unit>
+      <trans-unit id="81b817f201c14a06e97251089f38fec70163ef3f" resname="ss.second_factor.type.yubikey">
+        <jms:reference-file line="34">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.type.yubikey</source>
+        <target>YubiKey</target>
       </trans-unit>
       <trans-unit id="fedd12f3e661692730a3650ef6db64e71c9d8441" resname="ss.second_factor_list.header.second_factor_identifier">
-        <jms:reference-file line="21">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="30">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor_list.header.second_factor_identifier</source>
-        <target>Token value</target>
+        <target>ID</target>
       </trans-unit>
       <trans-unit id="e4d199fd46ed7fa1c78a8fde6faef80f034cd662" resname="ss.second_factor_list.header.type">
-        <jms:reference-file line="20">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="29">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor_list.header.type</source>
-        <target>Type</target>
+        <target>Token</target>
       </trans-unit>
     </body>
   </file>
