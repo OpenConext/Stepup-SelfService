@@ -10,6 +10,10 @@
 {{ 'ss.registration.selector.yubikey.title'|trans }}
 {{ 'ss.registration.selector.yubikey.description'|trans }}
 {{ 'ss.registration.selector.yubikey.button.use'|trans }}
+{{ 'ss.registration.selector.tiqr.alt'|trans }}
+{{ 'ss.registration.selector.tiqr.title'|trans }}
+{{ 'ss.registration.selector.tiqr.description'|trans }}
+{{ 'ss.registration.selector.tiqr.button.use'|trans }}
 
 {# SmsController form errors #}
 {{ 'ss.prove_phone_possession.send_sms_challenge_failed'|trans({}, 'validators') }}
@@ -32,9 +36,18 @@
 {{ 'ss.second_factor.list.text.unverified'|trans }}
 {{ 'ss.second_factor.type.sms'|trans }}
 {{ 'ss.second_factor.type.yubikey'|trans }}
+{{ 'ss.second_factor.type.tiqr'|trans }}
 
 {# SecondFactorController revoke #}
 {{ 'ss.second_factor.revoke.second_factor_type.sms'|trans }}
 {{ 'ss.second_factor.revoke.second_factor_type.yubikey'|trans }}
+{{ 'ss.second_factor.revoke.second_factor_type.tiqr'|trans }}
 {{ 'ss.second_factor.revoke.alert.revocation_successful'|trans }}
 {{ 'ss.second_factor.revoke.alert.revocation_failed'|trans }}
+
+{# GssfController #}
+{{ ('ss.registration.gssf.initiate.tiqr.title.page')|trans }}
+{{ ('ss.registration.gssf.initiate.tiqr.text.explanation')|trans }}
+{{ ('ss.registration.gssf.initiate.tiqr.button.initiate')|trans }}
+{{ ('ss.registration.gssf.initiate.tiqr.error.authn_failed')|trans }}
+{{ ('ss.registration.gssf.initiate.tiqr.error.proof_of_possession_failed')|trans }}

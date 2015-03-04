@@ -50,6 +50,21 @@ ss_registration_sms_prove_possession:
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:provePossession }
 
+ss_registration_gssf_initiate:
+    path:     /registration/gssp/{provider}
+    methods:  [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate }
+
+ss_registration_gssf_saml_metadata:
+    path:     /registration/gssp/{provider}/metadata
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:metadata }
+
+ss_registration_gssf_consume_assertion:
+    path:     /registration/gssp/{provider}/consume-assertion
+    methods:  [POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:consumeAssertion }
+
 selfservice_saml_metadata:
     path: /authentication/metadata
     methods: [GET]

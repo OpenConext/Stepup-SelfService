@@ -1,0 +1,29 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.title.page')|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 25, 'step': 2} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.text.explanation')|trans }}</p>
+
+    <hr>
+
+    <form action="{{ path('ss_registration_gssf_initiate', {'provider': provider}) }}" method="post">
+        {% if authenticationFailed is defined %}
+            <div class="alert alert-danger">{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.error.authn_failed')|trans }}</div>
+        {% endif %}
+        {% if proofOfPossessionFailed is defined %}
+            <div class="alert alert-danger">{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.error.proof_of_possession_failed')|trans }}</div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.button.initiate')|trans }}</button>
+    </form>
+
+{% endblock %}
