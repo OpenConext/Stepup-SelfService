@@ -149,7 +149,7 @@
         <source>ss.registration.registration_email_sent.title</source>
         <target>Registration</target>
       </trans-unit>
-      <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
+      <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.alert.no_second_factors_yet">
         <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.alert.no_second_factors_yet</source>
         <target>You don't have any security tokens yet.</target>
