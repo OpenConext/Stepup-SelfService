@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
 use Surfnet\StepupMiddlewareClientBundle\Command\AbstractCommand;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class RevokeOwnSecondFactorCommand extends AbstractCommand
+class RevokeCommand extends AbstractCommand
 {
     /**
      * @Assert\Type(type="string", message="ss.revoke_own_second_factor_command.identity_id.must_be_string")
@@ -43,7 +43,7 @@ class RevokeOwnSecondFactorCommand extends AbstractCommand
     public function serialise()
     {
         return [
-            'identity_id' => $this->identityId,
+            'identity_id'      => $this->identityId,
             'second_factor_id' => $this->secondFactorId,
         ];
     }

@@ -41,7 +41,7 @@ class RevokeSecondFactorType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\RevokeOwnSecondFactorCommand',
+            'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand',
         ]);
     }
 

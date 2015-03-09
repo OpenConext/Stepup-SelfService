@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\SecondFactor;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
@@ -30,7 +30,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\RevokeOwnSecondFactorCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 
 /**
@@ -71,12 +71,16 @@ class SecondFactorService
     }
 
     /**
-     * @param RevokeOwnSecondFactorCommand $command
+     * @param RevokeCommand $command
      * @return bool
      */
-    public function revoke(RevokeOwnSecondFactorCommand $command)
+    public function revoke(RevokeCommand $command)
     {
-        $result = $this->commandService->execute($command);
+        $apiCommand = new RevokeOwnSecondFactorCommand();
+        $apiCommand->identityId = $command->identityId;
+        $apiCommand->secondFactorId = $command->secondFactorId;
+
+        $result = $this->commandService->execute($apiCommand);
 
         return $result->isSuccessful();
     }

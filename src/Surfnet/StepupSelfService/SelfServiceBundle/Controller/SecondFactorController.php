@@ -19,7 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\RevokeOwnSecondFactorCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,7 +54,7 @@ class SecondFactorController extends Controller
      */
     public function revokeAction(Request $request, $state, $secondFactorId)
     {
-        $command = new RevokeOwnSecondFactorCommand();
+        $command = new RevokeCommand();
         $command->identityId = $this->getIdentity()->id;
         $command->secondFactorId = $secondFactorId;
 
