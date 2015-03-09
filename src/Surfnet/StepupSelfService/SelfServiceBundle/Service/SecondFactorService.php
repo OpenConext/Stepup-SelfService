@@ -22,6 +22,7 @@ use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuer
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RevokeOwnSecondFactorCommand;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\VerifyEmailCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
@@ -31,7 +32,6 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollecti
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyMethods)
@@ -60,11 +60,16 @@ class SecondFactorService
     }
 
     /**
-     * @param VerifyEmailCommand $command
+     * @param string $identityId
+     * @param string $nonce
      * @return bool
      */
-    public function verifyEmail(VerifyEmailCommand $command)
+    public function verifyEmail($identityId, $nonce)
     {
+        $command                    = new VerifyEmailCommand();
+        $command->identityId        = $identityId;
+        $command->verificationNonce = $nonce;
+
         $result = $this->commandService->execute($command);
 
         return $result->isSuccessful();
