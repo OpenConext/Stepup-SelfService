@@ -16,39 +16,35 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
 use Surfnet\StepupMiddlewareClientBundle\Command\AbstractCommand;
+use Symfony\Component\Validator\Constraints as Assert;
 
-class ProveYubikeyPossessionCommand extends AbstractCommand
+class RevokeCommand extends AbstractCommand
 {
     /**
-     * The ID of an existing identity.
+     * @Assert\Type(type="string", message="ss.revoke_own_second_factor_command.identity_id.must_be_string")
      *
      * @var string
      */
     public $identityId;
 
     /**
-     * The ID of the second factor to create.
+     * @Assert\Type(type="string", message="ss.revoke_own_second_factor_command.second_factor_id.must_be_string")
      *
      * @var string
      */
     public $secondFactorId;
 
     /**
-     * The Yubikey's public ID.
-     *
-     * @var string
+     * @return array
      */
-    public $yubikeyPublicId;
-
     public function serialise()
     {
         return [
-            'identity_id' => $this->identityId,
+            'identity_id'      => $this->identityId,
             'second_factor_id' => $this->secondFactorId,
-            'yubikey_public_id' => $this->yubikeyPublicId,
         ];
     }
 }

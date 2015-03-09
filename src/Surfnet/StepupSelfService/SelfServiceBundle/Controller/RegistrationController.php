@@ -19,7 +19,6 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,11 +44,13 @@ class RegistrationController extends Controller
 
     /**
      * @Template
+     *
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function verifyEmailAction(Request $request)
     {
         $nonce = $request->query->get('n', '');
-
         $identityId = $this->getIdentity()->id;
 
         /** @var SecondFactorService $service */
@@ -61,11 +62,7 @@ class RegistrationController extends Controller
             throw new NotFoundHttpException('No second factor can be verified using this URL.');
         }
 
-        $command = new VerifyEmailCommand();
-        $command->identityId = $identityId;
-        $command->verificationNonce = $nonce;
-
-        if ($service->verifyEmail($command)) {
+        if ($service->verifyEmail($identityId, $nonce)) {
             return $this->redirectToRoute(
                 'ss_registration_registration_email_sent',
                 ['secondFactorId' => $secondFactor->id]

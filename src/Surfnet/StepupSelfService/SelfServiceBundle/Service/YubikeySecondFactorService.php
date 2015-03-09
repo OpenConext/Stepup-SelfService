@@ -18,10 +18,11 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProveYubikeyPossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProveYubikeyPossessionCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor\ProofOfPossessionResult;
 
 class YubikeySecondFactorService
@@ -55,11 +56,14 @@ class YubikeySecondFactorService
         $verificationResult = $this->yubikeyService->verify($command);
 
         if (!$verificationResult->isSuccessful()) {
-            return new ProofOfPossessionResult(
-                null,
-                $verificationResult->isClientError(),
-                $verificationResult->isServerError(),
-                false
+            if ($verificationResult->isClientError()) {
+                return ProofOfPossessionResult::invalidOtp();
+            } elseif ($verificationResult->isServerError()) {
+                return ProofOfPossessionResult::otpVerificationFailed();
+            }
+
+            throw new RuntimeException(
+                'Unexpected Verification result, result is not successful but has neither client nor server error'
             );
         }
 
@@ -73,9 +77,9 @@ class YubikeySecondFactorService
         $result = $this->commandService->execute($provePossessionCommand);
 
         if (!$result->isSuccessful()) {
-            return new ProofOfPossessionResult(null, false, false, true);
+            return ProofOfPossessionResult::proofOfPossessionCommandFailed();
         }
 
-        return new ProofOfPossessionResult($secondFactorId, false, false, false);
+        return ProofOfPossessionResult::secondFactorCreated($secondFactorId);
     }
 }

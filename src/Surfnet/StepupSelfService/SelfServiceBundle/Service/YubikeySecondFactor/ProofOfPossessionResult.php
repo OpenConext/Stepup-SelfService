@@ -18,42 +18,83 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor;
 
-class ProofOfPossessionResult
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
+
+final class ProofOfPossessionResult
 {
     /**
      * The ID of the second factor that has been proven to be in possession of the registrant.
      *
      * @var string|null A UUID or null.
      */
-    private $secondFactorId;
+    private $secondFactorId = null;
 
     /**
      * @var bool
      */
-    private $otpInvalid;
+    private $otpInvalid = false;
 
     /**
      * @var bool
      */
-    private $otpVerificationFailed;
+    private $otpVerificationFailed = false;
 
     /**
      * @var bool
      */
-    private $proofOfPossessionFailed;
+    private $proofOfPossessionFailed = false;
 
-    /**
-     * @param string|null $secondFactorId
-     * @param bool $otpInvalid OTP format is wrong, OTP was replayed, user error.
-     * @param bool $otpVerificationFailed
-     * @param bool $proofOfPossessionFailed
-     */
-    public function __construct($secondFactorId, $otpInvalid, $otpVerificationFailed, $proofOfPossessionFailed)
+    private function __construct()
     {
-        $this->secondFactorId = $secondFactorId;
-        $this->otpInvalid = $otpInvalid;
-        $this->otpVerificationFailed = $otpVerificationFailed;
-        $this->proofOfPossessionFailed = $proofOfPossessionFailed;
+    }
+
+    /**
+     * @return ProofOfPossessionResult
+     */
+    public static function invalidOtp()
+    {
+        $result = new self();
+        $result->otpInvalid = true;
+
+        return $result;
+    }
+
+    /**
+     * @return ProofOfPossessionResult
+     */
+    public static function otpVerificationFailed()
+    {
+        $result = new self();
+        $result->otpVerificationFailed = true;
+
+        return $result;
+    }
+
+    /**
+     * @return ProofOfPossessionResult
+     */
+    public static function proofOfPossessionCommandFailed()
+    {
+        $result = new self();
+        $result->proofOfPossessionFailed = true;
+
+        return $result;
+    }
+
+    /**
+     * @param string $secondFactorId
+     * @return ProofOfPossessionResult
+     */
+    public static function secondFactorCreated($secondFactorId)
+    {
+        if (!is_string($secondFactorId)) {
+            throw InvalidArgumentException::invalidType('string', 'secondFactorId', $secondFactorId);
+        }
+
+        $result = new self();
+        $result->secondFactorId = $secondFactorId;
+
+        return $result;
     }
 
     /**
@@ -91,7 +132,7 @@ class ProofOfPossessionResult
     /**
      * @return boolean
      */
-    public function didProofOfPossessionFail()
+    public function didProofOfPossessionCommandFail()
     {
         return $this->proofOfPossessionFailed;
     }

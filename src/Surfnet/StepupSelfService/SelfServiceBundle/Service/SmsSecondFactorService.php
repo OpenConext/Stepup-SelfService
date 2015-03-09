@@ -18,13 +18,13 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
-use Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\SmsVerificationStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
@@ -145,9 +145,9 @@ class SmsSecondFactorService
         $verification = $this->smsVerificationStateHandler->verify($challengeCommand->challenge);
 
         if ($verification->didOtpExpire()) {
-            return new ProofOfPossessionResult(ProofOfPossessionResult::STATUS_CHALLENGE_EXPIRED);
+            return ProofOfPossessionResult::challengeExpired();
         } elseif (!$verification->wasSuccessful()) {
-            return new ProofOfPossessionResult(ProofOfPossessionResult::STATUS_INCORRECT_CHALLENGE);
+            return ProofOfPossessionResult::incorrectChallenge();
         }
 
         $command = new ProvePhonePossessionCommand();
@@ -157,9 +157,10 @@ class SmsSecondFactorService
 
         $result = $this->commandService->execute($command);
 
-        return new ProofOfPossessionResult(
-            ProofOfPossessionResult::STATUS_CHALLENGE_OK,
-            $result->isSuccessful() ? $command->secondFactorId : null
-        );
+        if (!$result->isSuccessful()) {
+            return ProofOfPossessionResult::proofOfPossessionCommandFailed();
+        }
+
+        return ProofOfPossessionResult::secondFactorCreated($command->secondFactorId);
     }
 }
