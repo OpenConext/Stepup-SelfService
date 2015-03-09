@@ -145,9 +145,9 @@ class SmsSecondFactorService
         $verification = $this->smsVerificationStateHandler->verify($challengeCommand->challenge);
 
         if ($verification->didOtpExpire()) {
-            return new ProofOfPossessionResult(ProofOfPossessionResult::STATUS_CHALLENGE_EXPIRED);
+            return ProofOfPossessionResult::challengeExpired();
         } elseif (!$verification->wasSuccessful()) {
-            return new ProofOfPossessionResult(ProofOfPossessionResult::STATUS_INCORRECT_CHALLENGE);
+            return ProofOfPossessionResult::incorrectChallenge();
         }
 
         $command = new ProvePhonePossessionCommand();
@@ -157,9 +157,10 @@ class SmsSecondFactorService
 
         $result = $this->commandService->execute($command);
 
-        return new ProofOfPossessionResult(
-            ProofOfPossessionResult::STATUS_CHALLENGE_OK,
-            $result->isSuccessful() ? $command->secondFactorId : null
-        );
+        if (!$result->isSuccessful()) {
+            return ProofOfPossessionResult::proofOfPossessionCommandFailed();
+        }
+
+        return ProofOfPossessionResult::secondFactorCreated($command->secondFactorId);
     }
 }

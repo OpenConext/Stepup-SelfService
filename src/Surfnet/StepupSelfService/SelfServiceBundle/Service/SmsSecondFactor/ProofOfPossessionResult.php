@@ -18,6 +18,8 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
+
 final class ProofOfPossessionResult
 {
     const STATUS_CHALLENGE_OK = 0;
@@ -38,10 +40,47 @@ final class ProofOfPossessionResult
      * @param int $status One of
      * @param string|null $secondFactorId
      */
-    public function __construct($status, $secondFactorId = null)
+    private function __construct($status, $secondFactorId = null)
     {
         $this->secondFactorId = $secondFactorId;
         $this->status = $status;
+    }
+
+    /**
+     * @return ProofOfPossessionResult
+     */
+    public static function challengeExpired()
+    {
+        return new self(self::STATUS_CHALLENGE_EXPIRED);
+    }
+
+    /**
+     * @return ProofOfPossessionResult
+     */
+    public static function incorrectChallenge()
+    {
+        return new self(self::STATUS_INCORRECT_CHALLENGE);
+    }
+
+    /**
+     * @return ProofOfPossessionResult
+     */
+    public static function proofOfPossessionCommandFailed()
+    {
+        return new self(self::STATUS_CHALLENGE_OK);
+    }
+
+    /**
+     * @param string $secondFactorId
+     * @return ProofOfPossessionResult
+     */
+    public static function secondFactorCreated($secondFactorId)
+    {
+        if (!is_string($secondFactorId)) {
+            throw InvalidArgumentException::invalidType('string', 'secondFactorId', $secondFactorId);
+        }
+
+        return new self(self::STATUS_CHALLENGE_OK, $secondFactorId);
     }
 
     /**
