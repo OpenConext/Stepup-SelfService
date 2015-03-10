@@ -39,6 +39,7 @@ class SecondFactorController extends Controller
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
         return [
+            'email' => $identity->email,
             'unverifiedSecondFactors' => $service->findUnverifiedByIdentity($identity->id),
             'verifiedSecondFactors' => $service->findVerifiedByIdentity($identity->id),
             'vettedSecondFactors' => $service->findVettedByIdentity($identity->id),
