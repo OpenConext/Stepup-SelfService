@@ -108,6 +108,11 @@ final class GssfController extends Controller
                 $adaptedAssertion->getInResponseTo(),
                 ($expectedResponseTo ? 'expected "' . $expectedResponseTo . '"' : ' no response expected')
             ));
+
+            return $this->render(
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
+                ['provider' => $provider->getName(), 'authenticationFailed' => true]
+            );
         }
 
         $this->get('logger')->notice(
