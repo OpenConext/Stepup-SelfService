@@ -36,36 +36,41 @@ final class GssfController extends Controller
     /**
      * @Template
      * @param Request $request
-     * @param string provider
+     * @param string $provider
      * @return array|Response
      */
     public function initiateAction(Request $request, $provider)
     {
+        return ['provider' => $this->getProvider($provider)->getName()];
+    }
+
+    /**
+     * @param string $provider
+     * @return array|Response
+     */
+    public function authenticateAction($provider)
+    {
         $provider = $this->getProvider($provider);
 
-        if ($request->isMethod('post')) {
-            $request = AuthnRequestFactory::createNewRequest(
-                $provider->getServiceProvider(),
-                $provider->getRemoteIdentityProvider()
-            );
+        $authnRequest = AuthnRequestFactory::createNewRequest(
+            $provider->getServiceProvider(),
+            $provider->getRemoteIdentityProvider()
+        );
 
-            $stateHandler = $provider->getStateHandler();
-            $stateHandler->setRequestId($request->getRequestId());
+        $stateHandler = $provider->getStateHandler();
+        $stateHandler->setRequestId($authnRequest->getRequestId());
 
-            /** @var \Surfnet\SamlBundle\Http\RedirectBinding $redirectBinding */
-            $redirectBinding = $this->get('surfnet_saml.http.redirect_binding');
+        /** @var \Surfnet\SamlBundle\Http\RedirectBinding $redirectBinding */
+        $redirectBinding = $this->get('surfnet_saml.http.redirect_binding');
 
-            $this->getLogger()->notice(sprintf(
-                'Sending AuthnRequest with request ID: "%s" to GSSP "%s" at "%s"',
-                $request->getRequestId(),
-                $provider->getName(),
-                $provider->getRemoteIdentityProvider()->getSsoUrl()
-            ));
+        $this->getLogger()->notice(sprintf(
+            'Sending AuthnRequest with request ID: "%s" to GSSP "%s" at "%s"',
+            $authnRequest->getRequestId(),
+            $provider->getName(),
+            $provider->getRemoteIdentityProvider()->getSsoUrl()
+        ));
 
-            return $redirectBinding->createRedirectResponseFor($request);
-        }
-
-        return ['provider' => $provider->getName()];
+        return $redirectBinding->createRedirectResponseFor($authnRequest);
     }
 
     /**

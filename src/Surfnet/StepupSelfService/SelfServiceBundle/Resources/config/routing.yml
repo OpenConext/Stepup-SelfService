@@ -51,9 +51,14 @@ ss_registration_sms_prove_possession:
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:provePossession }
 
 ss_registration_gssf_initiate:
-    path:     /registration/gssp/{provider}
-    methods:  [GET, POST]
+    path:     /registration/gssp/{provider}/initiate
+    methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate }
+
+ss_registration_gssf_authenticate:
+    path:     /registration/gssp/{provider}/authenticate
+    methods:  [POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:authenticate }
 
 ss_registration_gssf_saml_metadata:
     path:     /registration/gssp/{provider}/metadata
