@@ -22,9 +22,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Exception\InvalidConfigurationException;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Exception\UnknownProviderException;
 
-/**
- * @todo discuss (im)mutability
- */
 final class ProviderRepository
 {
     /**
