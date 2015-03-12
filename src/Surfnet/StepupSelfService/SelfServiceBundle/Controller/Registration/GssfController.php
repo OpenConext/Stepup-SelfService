@@ -94,7 +94,6 @@ final class GssfController extends Controller
                 $provider->getRemoteIdentityProvider(),
                 $provider->getServiceProvider()
             );
-            $provider->getStateHandler()->clear();
         } catch (Exception $exception) {
             $provider->getStateHandler()->clear();
 
@@ -109,6 +108,7 @@ final class GssfController extends Controller
         }
 
         $expectedResponseTo = $provider->getStateHandler()->getRequestId();
+        $provider->getStateHandler()->clear();
 
         if (!InResponseTo::assertEquals($assertion, $expectedResponseTo)) {
             $this->getLogger()->critical(sprintf(
