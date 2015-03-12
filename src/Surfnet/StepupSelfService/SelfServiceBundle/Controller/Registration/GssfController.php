@@ -135,11 +135,15 @@ final class GssfController extends Controller
         $secondFactorId = $service->provePossession($this->getIdentity()->id, $provider->getName(), $gssfId);
 
         if ($secondFactorId) {
+            $this->getLogger()->notice('GSSF possession has been proven successfully');
+
             return $this->redirectToRoute(
                 'ss_registration_email_verification_email_sent',
                 ['secondFactorId' => $secondFactorId]
             );
         }
+
+        $this->getLogger()->error('Unable to prove GSSF possession');
 
         return $this->render(
             'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
