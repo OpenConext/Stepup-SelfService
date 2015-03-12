@@ -20,6 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
