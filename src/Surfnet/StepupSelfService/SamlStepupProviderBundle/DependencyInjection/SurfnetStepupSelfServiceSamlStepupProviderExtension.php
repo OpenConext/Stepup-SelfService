@@ -197,6 +197,8 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
 
     private function createRouteConfig($provider, $routeName)
     {
+        // In the future, we ought to wrap this in an object.
+        // https://www.pivotaltracker.com/story/show/90095392
         return [
             'route'      => $routeName,
             'parameters' => ['provider' => $provider]
