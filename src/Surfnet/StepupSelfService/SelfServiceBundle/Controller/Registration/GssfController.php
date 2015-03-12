@@ -94,7 +94,10 @@ final class GssfController extends Controller
                 $provider->getRemoteIdentityProvider(),
                 $provider->getServiceProvider()
             );
+            $provider->getStateHandler()->clear();
         } catch (Exception $exception) {
+            $provider->getStateHandler()->clear();
+
             $this->getLogger()->error(
                 sprintf('Could not process received Response, error: "%s"', $exception->getMessage())
             );
