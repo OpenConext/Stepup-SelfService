@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\AssertionAdapter;
+use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,13 +99,11 @@ final class GssfController extends Controller
             );
         }
 
-        $adaptedAssertion = new AssertionAdapter($assertion);
         $expectedResponseTo = $provider->getStateHandler()->getRequestId();
 
-        if (!$adaptedAssertion->inResponseToMatches($expectedResponseTo)) {
+        if (!InResponseTo::assertEquals($assertion, $expectedResponseTo)) {
             $this->getLogger()->critical(sprintf(
-                'Received Response with unexpected InResponseTo: "%s", %s',
-                $adaptedAssertion->getInResponseTo(),
+                'Received Response with unexpected InResponseTo, %s',
                 ($expectedResponseTo ? 'expected "' . $expectedResponseTo . '"' : ' no response expected')
             ));
 
