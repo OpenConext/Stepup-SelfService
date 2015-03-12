@@ -83,7 +83,7 @@ final class GssfController extends Controller
         $provider = $this->getProvider($provider);
 
         $this->get('logger')->notice(
-            sprintf('Received SAMLResponse from GSSP "%s", attempting to process', $provider->getName())
+            sprintf('Received GSSP "%s" SAMLResponse through Gateway, attempting to process', $provider->getName())
         );
 
         try {
@@ -120,7 +120,7 @@ final class GssfController extends Controller
         }
 
         $this->get('logger')->notice(
-            sprintf('Processed SAMLResponse from GSSP "%s" successfully', $provider->getName())
+            sprintf('Processed GSSP "%s" SAMLResponse received through Gateway successfully', $provider->getName())
         );
 
         /** @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService $service */
