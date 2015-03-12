@@ -178,7 +178,6 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             'isSp'                   => true,
             'assertionConsumerRoute' => $this->createRouteConfig($provider, $routes['consume_assertion']),
             'isIdP'                  => false,
-//            'ssoRoute'               => $this->createRouteConfig($provider, $routes['sso']),
             'publicKey'              => $configuration['metadata']['public_key'],
             'privateKey'             => $configuration['metadata']['private_key'],
         ];
