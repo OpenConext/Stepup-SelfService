@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Nelmio\SecurityBundle\NelmioSecurityBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Surfnet\StepupSelfService\SelfServiceBundle\SurfnetStepupSelfServiceSelfServiceBundle(),
+            new Surfnet\StepupSelfService\SamlStepupProviderBundle\SurfnetStepupSelfServiceSamlStepupProviderBundle(),
             new Surfnet\StepupMiddlewareClientBundle\SurfnetStepupMiddlewareClientBundle(),
             new Surfnet\SamlBundle\SurfnetSamlBundle(),
             new Surfnet\StepupBundle\SurfnetStepupBundle(),

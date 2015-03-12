@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-03-04T14:00:08Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2015-03-10T14:42:21Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -183,37 +183,37 @@
         <target state="new">middleware_client.dto.vetted_second_factor.type.must_not_be_blank</target>
       </trans-unit>
       <trans-unit id="e3554b07567999b6bd90ee405bf4e60db4d5d727" resname="ss.prove_phone_possession.challenge_expired">
-        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="23">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_expired</source>
         <target>Uw code is verlopen. Vraag een nieuwe code aan.</target>
       </trans-unit>
       <trans-unit id="ebe4091038cf74f7ebcfd0a3256985fdcf21e7dd" resname="ss.prove_phone_possession.challenge_request_limit_reached">
-        <jms:reference-file line="18">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="22">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_request_limit_reached</source>
         <target>U heeft de limiet van drie codes bereikt; u kunt geen codes meer aanvragen. Neem contact op met uw helpdesk of probeer het later nog eens.</target>
       </trans-unit>
       <trans-unit id="90d186f8499585cb62a368341bc3d5569f63a013" resname="ss.prove_phone_possession.challenge_response_incorrect">
-        <jms:reference-file line="26">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="30">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_response_incorrect</source>
         <target state="new">ss.prove_phone_possession.challenge_response_incorrect</target>
       </trans-unit>
       <trans-unit id="e50a93e13b47c2995aefee1dd550f3dedfdf0080" resname="ss.prove_phone_possession.incorrect_challenge_response">
-        <jms:reference-file line="17">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="21">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.incorrect_challenge_response</source>
         <target>De ingevoerde code is onjuist. Probeer het nog eens, of vraag een nieuwe code op.</target>
       </trans-unit>
       <trans-unit id="e5bb393004217418ac3b2d08716c203b86ad8d1d" resname="ss.prove_phone_possession.proof_of_possession_failed">
-        <jms:reference-file line="16">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="20">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.proof_of_possession_failed</source>
         <target>Het token kon wegens een onbekende reden niet aangemaakt worden.</target>
       </trans-unit>
       <trans-unit id="9360cda7585c4052d19755cff12aa9b76a69abcc" resname="ss.prove_phone_possession.send_sms_challenge_failed">
-        <jms:reference-file line="15">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.send_sms_challenge_failed</source>
         <target>Het versturen van de code per SMS is mislukt.</target>
       </trans-unit>
       <trans-unit id="6d67afd47dd9bd70f19efaf10e19900bd5361386" resname="ss.prove_yubikey_possession.proof_of_possession_failed">
-        <jms:reference-file line="27">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="31">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_yubikey_possession.proof_of_possession_failed</source>
         <target>Het token kon wegens een onbekende reden niet aangemaakt worden.</target>
       </trans-unit>
@@ -266,12 +266,12 @@
         <target>Yubikey OTP must be string.</target>
       </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
-        <jms:reference-file line="24">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="28">Resources/views/translations.twig</jms:reference-file>
         <source>ss.verify_yubikey_command.otp.otp_invalid</source>
         <target>Deze Yubikey code was ongeldig. Probeer het nog eens.</target>
       </trans-unit>
       <trans-unit id="222ba32640d7ba4a87f2070d67125ccabf100de8" resname="ss.verify_yubikey_command.otp.verification_error">
-        <jms:reference-file line="25">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="29">Resources/views/translations.twig</jms:reference-file>
         <source>ss.verify_yubikey_command.otp.verification_error</source>
         <target>Het verifiëren van de Yubikey-code is wegens een onbekende reden niet gelukt. Probeer het opnieuw.</target>
       </trans-unit>

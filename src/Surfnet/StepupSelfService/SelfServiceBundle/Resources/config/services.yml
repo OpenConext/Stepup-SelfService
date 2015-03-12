@@ -29,6 +29,10 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType
         tags: [{ name: form.type, alias: ss_revoke_second_factor }]
 
+    surfnet_stepup_self_service_self_service.form.type.initiate_registration_with_gssp:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\InitiateRegistrationWithGsspType
+        tags: [{ name: form.type, alias: ss_initiate_registration_with_gssp }]
+
     surfnet_stepup_self_service_self_service.service.yubikey:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
@@ -63,6 +67,11 @@ services:
             - @translator
             - @surfnet_stepup_middleware_client.service.command
             - '' # Originator set in extension
+
+    surfnet_stepup_self_service_self_service.service.gssf:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
+        arguments:
+            - @surfnet_stepup_middleware_client.service.command
 
     surfnet_stepup_self_service_self_service.challenge_handler:
         public: false

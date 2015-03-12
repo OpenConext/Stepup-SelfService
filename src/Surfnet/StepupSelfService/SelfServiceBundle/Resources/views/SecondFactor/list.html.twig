@@ -13,16 +13,16 @@
             {{ 'ss.second_factor.list.button.register_second_factor'|trans }}
         </a>
     {% else %}
-        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted') }}
-        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified') }}
-        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified') }}
+        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted', email) }}
+        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email) }}
+        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email) }}
     {% endif %}
 
 {% endblock %}
 
-{% macro secondFactorTable(secondFactorCollection, text, state) %}
+{% macro secondFactorTable(secondFactorCollection, text, state, email) %}
     {% if secondFactorCollection.elements is not empty %}
-        <p>{{ text|trans }}</p>
+        <p>{{ text|trans({'%email%': email}) }}</p>
         <table class="table-striped">
             <thead>
             <tr>
