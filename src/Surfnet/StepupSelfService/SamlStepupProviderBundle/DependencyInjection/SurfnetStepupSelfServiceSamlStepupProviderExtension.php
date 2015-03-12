@@ -65,7 +65,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $this->createRemoteDefinition($provider, $configuration['remote'], $container);
 
         $stateHandlerDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler', [
-            new Reference('gssp.session'),
+            new Reference('gssp.sessionbag'),
             $provider
         ]);
         $container->setDefinition('gssp.provider.' . $provider . '.statehandler', $stateHandlerDefinition);

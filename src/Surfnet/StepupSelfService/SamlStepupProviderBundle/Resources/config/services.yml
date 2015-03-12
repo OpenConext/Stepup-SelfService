@@ -2,7 +2,7 @@ services:
     gssp.provider_repository:
         class: Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository
 
-    gssp.session:
+    gssp.sessionbag:
         class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
         factory: ['@session', 'getBag']
         arguments: ['gssp']
