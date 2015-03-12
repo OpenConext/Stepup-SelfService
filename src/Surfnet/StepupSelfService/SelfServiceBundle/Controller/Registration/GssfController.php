@@ -132,7 +132,9 @@ final class GssfController extends Controller
         $attributeDictionary = $this->get('surfnet_saml.saml.attribute_dictionary');
         $gssfId = $attributeDictionary->translate($assertion)->getNameID();
 
-        if ($secondFactorId = $service->provePossession($this->getIdentity()->id, $provider->getName(), $gssfId)) {
+        $secondFactorId = $service->provePossession($this->getIdentity()->id, $provider->getName(), $gssfId);
+
+        if ($secondFactorId) {
             return $this->redirectToRoute(
                 'ss_registration_email_verification_email_sent',
                 ['secondFactorId' => $secondFactorId]
