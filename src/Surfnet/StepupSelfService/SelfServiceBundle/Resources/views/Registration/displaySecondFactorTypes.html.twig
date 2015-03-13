@@ -15,11 +15,6 @@
 
     <div class="row">
         {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-            'type': 'yubikey',
-            'security': 3,
-            'url': path('ss_registration_yubikey_prove_possession')
-        } only %}
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
             'type': 'sms',
             'security': 2,
             'url': path('ss_registration_sms_send_challenge')
@@ -28,6 +23,11 @@
             'type': 'tiqr',
             'security': 2,
             'url': path('ss_registration_gssf_initiate', {'provider': 'tiqr'})
+        } only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+        'type': 'yubikey',
+        'security': 3,
+        'url': path('ss_registration_yubikey_prove_possession')
         } only %}
     </div>
 {% endblock %}
