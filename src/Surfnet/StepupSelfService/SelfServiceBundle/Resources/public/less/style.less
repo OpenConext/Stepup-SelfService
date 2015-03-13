@@ -50,3 +50,12 @@ form[name="ss_verify_email"] {
         text-transform: uppercase;
     }
 }
+
+.generate-progress(100);
+
+.generate-progress(@n, @i: 0) when (@i =< @n) {
+    .progress-@{i} {
+        width: (@i * 1%);
+    }
+    .generate-progress(@n, (@i + 5));
+}
