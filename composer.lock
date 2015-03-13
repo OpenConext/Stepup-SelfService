@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "56179f763e9e19d4e87f1b06202498f2",
+    "hash": "78c35d8072070ce6e8769db4a985cfc7",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1754,12 +1754,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "8bcadae4f4da17157ad0eec99525d6600c3aace2"
+                "reference": "6925b078772a8364655206299164e3d336c4d469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/8bcadae4f4da17157ad0eec99525d6600c3aace2",
-                "reference": "8bcadae4f4da17157ad0eec99525d6600c3aace2",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/6925b078772a8364655206299164e3d336c4d469",
+                "reference": "6925b078772a8364655206299164e3d336c4d469",
                 "shasum": ""
             },
             "require": {
@@ -1795,7 +1795,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-02-10 10:10:30"
+            "time": "2015-03-13 10:49:44"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
