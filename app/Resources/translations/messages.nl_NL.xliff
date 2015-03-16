@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-03-10T15:25:09Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2015-03-13T15:50:10Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -394,7 +394,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       <trans-unit id="6ddd63626b39582e37d8f3012d893e9d4eac14db" resname="ss.second_factor.revoke.alert.revocation_failed">
         <jms:reference-file line="46">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.revoke.alert.revocation_failed</source>
-        <target state="new">ss.second_factor.revoke.alert.revocation_failed</target>
+        <target>Token intrekken is mislukt</target>
       </trans-unit>
       <trans-unit id="f990ac6c55a5585b8c3cde21f4c63bb66b055892" resname="ss.second_factor.revoke.alert.revocation_successful">
         <jms:reference-file line="45">Resources/views/translations.twig</jms:reference-file>
