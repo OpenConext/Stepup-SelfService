@@ -38,3 +38,7 @@ parameters:
     saml_remote_idp_certificate:
     graylog_hostname: g2-dev.stepup.coin.surf.net
     asset_version: 1
+
+    stepup_loa_loa1: https://gateway.tld/authentication/loa1
+    stepup_loa_loa2: https://gateway.tld/authentication/loa2
+    stepup_loa_loa3: https://gateway.tld/authentication/loa3

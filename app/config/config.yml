@@ -144,6 +144,10 @@ surfnet_saml:
 surfnet_stepup:
     logging:
         application_name: self-service
+    loa_definition:
+        loa1: %stepup_loa_loa1%
+        loa2: %stepup_loa_loa2%
+        loa3: %stepup_loa_loa3%
 
 jms_translation:
     locales: %locales%
