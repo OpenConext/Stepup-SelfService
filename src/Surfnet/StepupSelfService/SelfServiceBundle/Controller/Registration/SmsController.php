@@ -22,7 +22,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,9 +55,7 @@ class SmsController extends Controller
             }
 
             if ($service->sendChallenge($command)) {
-                return $this->redirect(
-                    $this->generateUrl('ss_registration_sms_prove_possession')
-                );
+                return $this->redirect($this->generateUrl('ss_registration_sms_prove_possession'));
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.send_sms_challenge_failed'));
             }
@@ -69,6 +66,8 @@ class SmsController extends Controller
 
     /**
      * @Template
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function provePossessionAction(Request $request)
     {

@@ -18,6 +18,9 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupBundle\Value\PhoneNumber\CountryCode;
+use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
+use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
@@ -122,15 +125,19 @@ class SmsSecondFactorService
      */
     public function sendChallenge(SendSmsChallengeCommand $command)
     {
-        $otp = $this->smsVerificationStateHandler->requestNewOtp($command->recipient);
+        $phoneNumber = new InternationalPhoneNumber(
+            new CountryCode($command->countryCode),
+            new PhoneNumber($command->subscriber)
+        );
+        $otp = $this->smsVerificationStateHandler->requestNewOtp((string) $phoneNumber);
 
         $body = $this->translator->trans('ss.registration.sms.challenge_body', ['%challenge%' => $otp]);
 
-        $smsCommand = new SendSmsCommand();
-        $smsCommand->recipient = $command->recipient;
-        $smsCommand->originator = $this->originator;
-        $smsCommand->body = $body;
-        $smsCommand->identity = $command->identity;
+        $smsCommand              = new SendSmsCommand();
+        $smsCommand->recipient   = $phoneNumber->toMSISDN();
+        $smsCommand->originator  = $this->originator;
+        $smsCommand->body        = $body;
+        $smsCommand->identity    = $command->identity;
         $smsCommand->institution = $command->institution;
 
         return $this->smsService->sendSms($smsCommand);

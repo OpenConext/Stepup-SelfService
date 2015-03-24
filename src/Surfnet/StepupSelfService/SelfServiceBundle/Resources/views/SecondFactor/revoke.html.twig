@@ -16,11 +16,7 @@
         </tr>
         <tr>
             <th scope="row">{{ 'ss.second_factor.revoke.table_header.second_factor.identifier'|trans }}</th>
-            {% if secondFactor.type == 'sms' %}
-                <td>+{{ secondFactor.secondFactorIdentifier }}</td>
-            {% else %}
-                <td>{{ secondFactor.secondFactorIdentifier }}</td>
-            {% endif %}
+            <td>{{ secondFactor.secondFactorIdentifier }}</td>
         </tr>
         </tbody>
     </table>

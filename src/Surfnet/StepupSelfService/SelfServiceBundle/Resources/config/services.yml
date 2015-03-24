@@ -29,6 +29,10 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType
         tags: [{ name: form.type, alias: ss_revoke_second_factor }]
 
+    surfnet_stepup_self_service_self_serivce.form.type.phone_number:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\PhoneNumberType
+        tags: [{ name: form.type, alias: ss_phone_number }]
+
     surfnet_stepup_self_service_self_service.form.type.initiate_registration_with_gssp:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\InitiateRegistrationWithGsspType
         tags: [{ name: form.type, alias: ss_initiate_registration_with_gssp }]
