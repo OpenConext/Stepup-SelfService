@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bbd4bd9128f565933f32fd2e1695042a",
+    "hash": "78c35d8072070ce6e8769db4a985cfc7",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1750,16 +1750,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "dev-feature/telephone-numbers-vo",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "f970fefb7551b02d4f51f514b973583c7473290f"
+                "reference": "0ee5031946a9108ddcdb124263a0ed0cdcf4c809"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/f970fefb7551b02d4f51f514b973583c7473290f",
-                "reference": "f970fefb7551b02d4f51f514b973583c7473290f",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/0ee5031946a9108ddcdb124263a0ed0cdcf4c809",
+                "reference": "0ee5031946a9108ddcdb124263a0ed0cdcf4c809",
                 "shasum": ""
             },
             "require": {
@@ -1796,7 +1796,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-03-17 14:53:07"
+            "time": "2015-03-24 10:40:33"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
