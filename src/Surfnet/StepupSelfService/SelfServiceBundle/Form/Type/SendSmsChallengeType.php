@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
+use Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -26,26 +27,34 @@ class SendSmsChallengeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('recipient', 'text', [
-            'label' => /** @Ignore */ false,
-            'required' => true,
-            'widget_addon_prepend' => [
-                'text' => '+'
-            ],
-            'attr' => array(
-                'autofocus' => true,
-                'placeholder' => '31612345678',
-            )
-        ]);
-        $builder->add('send-challenge', 'submit', [
-            'label' => 'ss.form.ss_send_sms_challenge.button.send_challenge',
-            'attr' => [ 'class' => 'btn btn-primary' ],
-        ]);
+        $builder
+            ->add('countryCode', 'choice', [
+                'label'                          => /** @Ignore */ 'country code',
+                'horizontal_label_class'         => 'sr-only',
+                'required'                       => true,
+                'choice_list'                    => CountryCodeListing::asChoiceList(),
+                'horizontal_input_wrapper_class' => 'foo',
+            ])
+            ->add('subscriber', 'text', [
+                'label'                          => /** @Ignore */ 'subscriberNumber',
+                'horizontal_label_class' => 'sr-only',
+                'required'                       => true,
+                'horizontal_input_wrapper_class' => 'foo',
+                'attr'                           => [
+                    'autofocus' => true,
+                    'placeholder' => '612345678',
+                ]
+            ])
+            ->add('sendChallenge', 'submit', [
+                'label' => 'ss.form.ss_send_sms_challenge.button.send_challenge',
+                'attr' => [ 'class' => 'btn btn-primary pull-right' ],
+            ]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
+            'attr' => ['class' => 'form-inline'],
             'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand',
         ]);
     }

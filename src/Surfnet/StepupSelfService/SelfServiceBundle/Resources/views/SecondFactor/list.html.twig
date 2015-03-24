@@ -23,28 +23,32 @@
 {% macro secondFactorTable(secondFactorCollection, text, state, email) %}
     {% if secondFactorCollection.elements is not empty %}
         <p>{{ text|trans({'%email%': email}) }}</p>
-        <table class="table-striped">
-            <thead>
-            <tr>
-                <th scope="col">{{ 'ss.second_factor_list.header.type'|trans }}</th>
-                <th scope="col">{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
-                <th scope="col">{# Action button #}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for secondFactor in secondFactorCollection.elements %}
-                <tr>
-                    <td>{{ ('ss.second_factor.type.'~secondFactor.type)|trans }}</td>
-                    <td>{{ secondFactor.secondFactorIdentifier }}</td>
-                    <td>
-                        <a class="btn btn-mini btn-warning"
-                           href="{{ path('ss_second_factor_revoke', {'state': state, 'secondFactorId': secondFactor.id}) }}">
-                            {{ 'ss.second_factor.revoke.button.revoke'|trans }}
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-xs-6">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ 'ss.second_factor_list.header.type'|trans }}</th>
+                        <th scope="col">{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
+                        <th scope="col">{# Action button #}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for secondFactor in secondFactorCollection.elements %}
+                        <tr>
+                            <td>{{ ('ss.second_factor.type.'~secondFactor.type)|trans }}</td>
+                            <td>{{ secondFactor.secondFactorIdentifier }}</td>
+                            <td>
+                                <a class="btn btn-mini btn-warning pull-right"
+                                   href="{{ path('ss_second_factor_revoke', {'state': state, 'secondFactorId': secondFactor.id}) }}">
+                                    {{ 'ss.second_factor.revoke.button.revoke'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     {% endif %}
 {% endmacro %}

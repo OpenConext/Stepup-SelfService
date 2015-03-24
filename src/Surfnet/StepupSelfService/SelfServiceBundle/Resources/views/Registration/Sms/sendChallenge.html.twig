@@ -24,6 +24,20 @@
         </div>
     {% endif %}
 
-    {{ form(form) }}
-
+    {{ form_start(form)|replace({'form-horizontal': ''})|raw }}
+    <div class="row">
+        {{ form_errors(form) }}
+        <div class="col-xs-8">
+            {{ form_widget(form.countryCode) }}
+        </div>
+        <div class="col-xs-4">
+            {{ form_widget(form.subscriber) }}
+        </div>
+    </div>
+    <div class="row offset-top">
+        <div class="col-xs-12">
+            {{ form_row(form.sendChallenge) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
 {% endblock %}
