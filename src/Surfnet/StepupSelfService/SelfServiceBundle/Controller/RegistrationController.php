@@ -51,18 +51,18 @@ class RegistrationController extends Controller
     public function verifyEmailAction(Request $request)
     {
         $nonce = $request->query->get('n', '');
-        $identityId = $this->getIdentity()->id;
+        $identity = $this->getIdentity();
 
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
-        $secondFactor = $service->findUnverifiedByVerificationNonce($identityId, $nonce);
+        $secondFactor = $service->findUnverifiedByVerificationNonce($identity->id, $nonce);
 
         if ($secondFactor === null) {
             throw new NotFoundHttpException('No second factor can be verified using this URL.');
         }
 
-        if ($service->verifyEmail($identityId, $nonce)) {
+        if ($service->verifyEmail($identity->id, $identity->institution, $nonce)) {
             return $this->redirectToRoute(
                 'ss_registration_registration_email_sent',
                 ['secondFactorId' => $secondFactor->id]

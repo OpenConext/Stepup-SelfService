@@ -83,7 +83,8 @@ class SmsController extends Controller
         $identity = $this->getIdentity();
 
         $command = new VerifySmsChallengeCommand();
-        $command->identity = $identity->id;
+        $command->identityId = $identity->id;
+        $command->identityInstitution = $identity->institution;
 
         $form = $this->createForm('ss_verify_sms_challenge', $command)->handleRequest($request);
 

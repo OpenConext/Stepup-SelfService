@@ -35,5 +35,12 @@ class VerifySmsChallengeCommand
      *
      * @var string
      */
-    public $identity;
+    public $identityId;
+
+    /**
+     * The requesting identity's institution.
+     *
+     * @var string
+     */
+    public $identityInstitution;
 }
