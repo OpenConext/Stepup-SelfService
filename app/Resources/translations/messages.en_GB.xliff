@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-03-13T15:50:22Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2015-03-25T10:57:46Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -31,7 +31,7 @@
       <trans-unit id="39ad001351f2f524be4a7136f8facdb65097ce59" resname="ss.error.saml_authn_failed.text.authn_failed">
         <jms:reference-file line="8">Saml/Exception/authnFailed.html.twig</jms:reference-file>
         <source>ss.error.saml_authn_failed.text.authn_failed</source>
-        <target>You were unable to sign in.</target>
+        <target>Sign in unsuccessful. Please try again.</target>
       </trans-unit>
       <trans-unit id="e437d473b6267a6996aa245eb7d1a711c5a395c4" resname="ss.error.saml_authn_failed.title">
         <jms:reference-file line="3">Saml/Exception/authnFailed.html.twig</jms:reference-file>
@@ -41,7 +41,7 @@
       <trans-unit id="9bdaf74a75cfffab8e0de6c6258c9ddfaf7cb025" resname="ss.error.saml_precondition_not_met.text.precondition_not_met">
         <jms:reference-file line="8">Saml/Exception/preconditionNotMet.html.twig</jms:reference-file>
         <source>ss.error.saml_precondition_not_met.text.precondition_not_met</source>
-        <target>You don't meet all the requirements to be able to sign into the Self-Service application.</target>
+        <target>You are not authorised to log in.</target>
       </trans-unit>
       <trans-unit id="6fc7fed55f78c4586ff617bd890dd35c3f63b338" resname="ss.error.saml_precondition_not_met.title">
         <jms:reference-file line="3">Saml/Exception/preconditionNotMet.html.twig</jms:reference-file>
@@ -56,23 +56,23 @@
       <trans-unit id="4c4fb9b24a25bdd45d83562a4d71ecde8d527a77" resname="ss.error.text.if_you_think_this_is_incorrect_report">
         <jms:reference-file line="13">views/Exception/error404.html.twig</jms:reference-file>
         <source>ss.error.text.if_you_think_this_is_incorrect_report</source>
-        <target>If you think this error is a mistake, please report it to SURFnet, along with the above error code.</target>
+        <target>Please report this error + error code to the helpdesk via support@surfconext.nl</target>
       </trans-unit>
       <trans-unit id="da93d249a639d3abd2f513dbd2c07b9119d16694" resname="ss.error.text.page_not_found">
         <jms:reference-file line="8">views/Exception/error404.html.twig</jms:reference-file>
         <source>ss.error.text.page_not_found</source>
-        <target>The page you requested was not found. Go back to try again or go to the home screen</target>
+        <target>The page you requested was not found. Please try again or go back to Home.</target>
       </trans-unit>
       <trans-unit id="0e5b48b8a8746f624978afe69448cd9bdb31687c" resname="ss.error.text.what_were_you_doing_well_fix_it">
         <jms:reference-file line="13">views/Exception/error.html.twig</jms:reference-file>
         <source>ss.error.text.what_were_you_doing_well_fix_it</source>
-        <target>If you think this error is a mistake, please report it to SURFnet, along with the above error code.</target>
+        <target>Please report this error + error code to the helpdesk via support@surfconext.nl</target>
       </trans-unit>
       <trans-unit id="e0d3557591582d18755db2529a49f88400670167" resname="ss.error.text.your_art_code">
         <jms:reference-file line="12">views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="12">views/Exception/error404.html.twig</jms:reference-file>
         <source>ss.error.text.your_art_code</source>
-        <target>The error code for the error is</target>
+        <target>The error code is:</target>
       </trans-unit>
       <trans-unit id="ad9824f6caa954891a11b7db631468f24b9194ac" resname="ss.error.title">
         <jms:reference-file line="3">views/Exception/error.html.twig</jms:reference-file>
@@ -207,7 +207,7 @@
       <trans-unit id="20cd158dac14a9a2fcb66557ab4eb983a30ea439" resname="ss.registration.selector.alert.no_second_factors_yet">
         <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.alert.no_second_factors_yet</source>
-        <target>You don't have any security tokens yet.</target>
+        <target>You do not have any security tokens yet.</target>
       </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <jms:reference-file line="5">Resources/views/translations.twig</jms:reference-file>
