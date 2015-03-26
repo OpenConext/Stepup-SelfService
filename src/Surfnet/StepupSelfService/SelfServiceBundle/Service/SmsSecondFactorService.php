@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Surfnet\StepupBundle\Value\PhoneNumber\CountryCode;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
+use Surfnet\StepupMiddlewareClientBundle\Command\Metadata;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
@@ -158,11 +159,14 @@ class SmsSecondFactorService
         }
 
         $command = new ProvePhonePossessionCommand();
-        $command->identityId = $challengeCommand->identity;
+        $command->identityId = $challengeCommand->identityId;
         $command->secondFactorId = Uuid::generate();
         $command->phoneNumber = $verification->getPhoneNumber();
 
-        $result = $this->commandService->execute($command);
+        $result = $this->commandService->execute(
+            $command,
+            new Metadata($challengeCommand->identityId, $challengeCommand->identityInstitution)
+        );
 
         if (!$result->isSuccessful()) {
             return ProofOfPossessionResult::proofOfPossessionCommandFailed();

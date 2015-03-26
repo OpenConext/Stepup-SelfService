@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
+use Surfnet\StepupMiddlewareClientBundle\Command\Metadata;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\VerifyEmailCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
@@ -61,16 +62,17 @@ class SecondFactorService
 
     /**
      * @param string $identityId
+     * @param string $identityInstitution
      * @param string $nonce
      * @return bool
      */
-    public function verifyEmail($identityId, $nonce)
+    public function verifyEmail($identityId, $identityInstitution, $nonce)
     {
         $command                    = new VerifyEmailCommand();
         $command->identityId        = $identityId;
         $command->verificationNonce = $nonce;
 
-        $result = $this->commandService->execute($command);
+        $result = $this->commandService->execute($command, new Metadata($identityId, $identityInstitution));
 
         return $result->isSuccessful();
     }
@@ -85,7 +87,10 @@ class SecondFactorService
         $apiCommand->identityId = $command->identityId;
         $apiCommand->secondFactorId = $command->secondFactorId;
 
-        $result = $this->commandService->execute($apiCommand);
+        $result = $this->commandService->execute(
+            $apiCommand,
+            new Metadata($command->identityId, $command->identityInstitution)
+        );
 
         return $result->isSuccessful();
     }

@@ -132,7 +132,13 @@ final class GssfController extends Controller
         $attributeDictionary = $this->get('surfnet_saml.saml.attribute_dictionary');
         $gssfId = $attributeDictionary->translate($assertion)->getNameID();
 
-        $secondFactorId = $service->provePossession($this->getIdentity()->id, $provider->getName(), $gssfId);
+        $identity = $this->getIdentity();
+        $secondFactorId = $service->provePossession(
+            $identity->id,
+            $identity->institution,
+            $provider->getName(),
+            $gssfId
+        );
 
         if ($secondFactorId) {
             $this->getLogger()->notice('GSSF possession has been proven successfully');

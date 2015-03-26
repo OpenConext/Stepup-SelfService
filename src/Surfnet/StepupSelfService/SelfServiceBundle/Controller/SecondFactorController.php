@@ -55,8 +55,11 @@ class SecondFactorController extends Controller
      */
     public function revokeAction(Request $request, $state, $secondFactorId)
     {
+        $identity = $this->getIdentity();
+
         $command = new RevokeCommand();
-        $command->identityId = $this->getIdentity()->id;
+        $command->identityId = $identity->id;
+        $command->identityInstitution = $identity->institution;
         $command->secondFactorId = $secondFactorId;
 
         $form = $this->createForm('ss_revoke_second_factor', $command)->handleRequest($request);

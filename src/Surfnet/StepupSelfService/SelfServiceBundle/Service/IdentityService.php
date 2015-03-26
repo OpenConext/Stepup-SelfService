@@ -21,6 +21,8 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\IdentitySearchQuery;
+use Surfnet\StepupMiddlewareClientBundle\Command\Command;
+use Surfnet\StepupMiddlewareClientBundle\Command\Metadata;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\CreateIdentityCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\UpdateIdentityCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
@@ -135,7 +137,7 @@ class IdentityService implements UserProviderInterface
         $command->email       = $identity->email;
         $command->commonName  = $identity->commonName;
 
-        $this->processCommand($command);
+        $this->processCommand($command, new Metadata($identity->id, $identity->institution));
     }
 
     /**
@@ -147,18 +149,19 @@ class IdentityService implements UserProviderInterface
         $command->email      = $identity->email;
         $command->commonName = $identity->commonName;
 
-        $this->processCommand($command);
+        $this->processCommand($command, new Metadata($identity->id, $identity->institution));
     }
 
     /**
-     * @param $command
+     * @param Command  $command
+     * @param Metadata $metadata
      */
-    public function processCommand($command)
+    public function processCommand(Command $command, Metadata $metadata)
     {
         $messageTemplate = 'Exception when saving Identity[%s]: with command "%s", error: "%s"';
 
         try {
-            $result = $this->commandService->execute($command);
+            $result = $this->commandService->execute($command, $metadata);
         } catch (Exception $e) {
             $message = sprintf($messageTemplate, $command->id, get_class($command), $e->getMessage());
             $this->logger->critical($message);

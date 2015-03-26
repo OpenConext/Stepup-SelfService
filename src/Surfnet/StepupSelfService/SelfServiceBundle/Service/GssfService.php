@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClientBundle\Command\Metadata;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProveGssfPossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
@@ -36,11 +37,12 @@ final class GssfService
 
     /**
      * @param string $identityId
+     * @param string $identityInstitution
      * @param string $stepupProvider
      * @param string $gssfId
      * @return string|null
      */
-    public function provePossession($identityId, $stepupProvider, $gssfId)
+    public function provePossession($identityId, $identityInstitution, $stepupProvider, $gssfId)
     {
         $command = new ProveGssfPossessionCommand();
         $command->identityId = $identityId;
@@ -48,7 +50,7 @@ final class GssfService
         $command->stepupProvider = $stepupProvider;
         $command->gssfId = $gssfId;
 
-        $result = $this->commandService->execute($command);
+        $result = $this->commandService->execute($command, new Metadata($identityId, $identityInstitution));
 
         return $result->isSuccessful() ? $command->secondFactorId : null;
     }

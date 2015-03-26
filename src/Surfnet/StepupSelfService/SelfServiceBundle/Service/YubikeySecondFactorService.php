@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClientBundle\Command\Metadata;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProveYubikeyPossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
@@ -74,7 +75,10 @@ class YubikeySecondFactorService
         $provePossessionCommand->secondFactorId = $secondFactorId;
         $provePossessionCommand->yubikeyPublicId = substr($command->otp, 0, 12);
 
-        $result = $this->commandService->execute($provePossessionCommand);
+        $result = $this->commandService->execute(
+            $provePossessionCommand,
+            new Metadata($command->identity, $command->institution)
+        );
 
         if (!$result->isSuccessful()) {
             return ProofOfPossessionResult::proofOfPossessionCommandFailed();
