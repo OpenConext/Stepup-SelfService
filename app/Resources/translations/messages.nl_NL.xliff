@@ -342,7 +342,7 @@
       <trans-unit id="51b48a932a70ae43f768348cb7631f248fffd1b1" resname="ss.registration.yubikey.text.connect_yubikey_to_pc">
         <jms:reference-file line="15">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.yubikey.text.connect_yubikey_to_pc</source>
-        <target>Stop je Yubikey in de USB drive van je computer.</target>
+        <target>Stop je Yubikey in de USB poort van je computer.</target>
       </trans-unit>
       <trans-unit id="f5adfdb9d55ddc728cc5a406e88dbd9b562dfd36" resname="ss.registration.yubikey.text.ensure_form_field_focus">
         <jms:reference-file line="16">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
