@@ -1,9 +1,15 @@
 services:
+    surfnet_stepup_self_service_self_service.service.command:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
+        arguments:
+            - @surfnet_stepup_middleware_client.service.command
+            - @security.token_storage
+
     surfnet_stepup_self_service_self_service.service.second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService
         arguments:
             - @surfnet_stepup_middleware_client.identity.service.second_factor
-            - @surfnet_stepup_middleware_client.service.command
+            - @surfnet_stepup_self_service_self_service.service.command
 
     surfnet_stepup_self_service_self_service.form.type.prove_yubikey_possession:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType
@@ -61,7 +67,7 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
         arguments:
             - @surfnet_stepup_self_service_self_service.service.yubikey
-            - @surfnet_stepup_middleware_client.service.command
+            - @surfnet_stepup_self_service_self_service.service.command
 
     surfnet_stepup_self_service_self_service.service.sms_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
@@ -69,13 +75,13 @@ services:
             - @surfnet_stepup_self_service_self_service.service.sms
             - @surfnet_stepup_self_service_self_service.challenge_handler
             - @translator
-            - @surfnet_stepup_middleware_client.service.command
+            - @surfnet_stepup_self_service_self_service.service.command
             - '' # Originator set in extension
 
     surfnet_stepup_self_service_self_service.service.gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
         arguments:
-            - @surfnet_stepup_middleware_client.service.command
+            - @surfnet_stepup_self_service_self_service.service.command
 
     surfnet_stepup_self_service_self_service.challenge_handler:
         public: false
@@ -90,7 +96,7 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
         arguments:
             - @surfnet_stepup_middleware_client.identity.service.identity
-            - @surfnet_stepup_middleware_client.service.command
+            - @surfnet_stepup_self_service_self_service.service.command
             - @logger
 
     self_service.service.ra:

@@ -22,7 +22,6 @@ use Surfnet\StepupBundle\Value\PhoneNumber\CountryCode;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
-use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsCommand;
