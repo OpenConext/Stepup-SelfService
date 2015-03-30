@@ -199,6 +199,7 @@ class SecondFactorService
     }
 
     /**
+     * @param string $secondFactorId
      * @param string $identityId
      * @return null|string
      */
