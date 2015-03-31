@@ -215,4 +215,55 @@ class SmsVerificationStateTest extends TestCase
         $this->assertTrue($state->verify(strtolower($otp))->wasSuccessful(), "OTP should've matched");
         $this->assertTrue($state->verify(strtoupper($otp))->wasSuccessful(), "OTP should've matched");
     }
+
+    /**
+     * @test
+     * @group sms
+     */
+    public function no_more_than_10_attempts_can_be_made_overall()
+    {
+        $state = new SmsVerificationState(new DateInterval('PT5S'), 3);
+        $state->requestNewOtp('237894');
+
+        for ($i = 0; $i < SmsVerificationState::MAXIMUM_VERIFICATION_ATTEMPTS; $i++) {
+            $this->assertFalse($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts not yet achieved');
+        }
+
+        $this->assertTrue($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts achieved');
+        $this->assertTrue($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts achieved');
+    }
+
+    /**
+     * @test
+     * @group sms
+     */
+    public function no_more_than_10_attempts_can_be_made_overall_even_when_multiple_otps_requested()
+    {
+        $state = new SmsVerificationState(new DateInterval('PT5S'), 99999);
+        $state->requestNewOtp('237894');
+
+        for ($i = 0; $i < SmsVerificationState::MAXIMUM_VERIFICATION_ATTEMPTS; $i++) {
+            $this->assertFalse($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts not yet achieved');
+            $state->requestNewOtp('38942');
+        }
+
+        $this->assertTrue($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts achieved');
+        $this->assertTrue($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts achieved');
+    }
+
+    /**
+     * @test
+     * @group sms
+     */
+    public function no_more_than_10_attempts_can_be_made_overall_even_when_no_otp_requested()
+    {
+        $state = new SmsVerificationState(new DateInterval('PT5S'), 3);
+
+        for ($i = 0; $i < SmsVerificationState::MAXIMUM_VERIFICATION_ATTEMPTS; $i++) {
+            $this->assertFalse($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts not yet achieved');
+        }
+
+        $this->assertTrue($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts achieved');
+        $this->assertTrue($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts achieved');
+    }
 }

@@ -26,6 +26,11 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallen
 final class SmsVerificationState
 {
     /**
+     * The maximum amount of attempts can be made, per OTP, to verify the OTP.
+     */
+    const MAXIMUM_VERIFICATION_ATTEMPTS = 10;
+
+    /**
      * @var DateInterval
      */
     private $expiryInterval;
@@ -41,6 +46,11 @@ final class SmsVerificationState
     private $otps;
 
     /**
+     * @var int
+     */
+    private $verificationAttemptsMade;
+
+    /**
      * @param DateInterval $expiryInterval
      * @param int $maximumOtpRequests
      */
@@ -53,6 +63,7 @@ final class SmsVerificationState
         $this->expiryInterval = $expiryInterval;
         $this->maximumOtpRequests= $maximumOtpRequests;
         $this->otps = [];
+        $this->verificationAttemptsMade = 0;
     }
 
     /**
@@ -87,6 +98,12 @@ final class SmsVerificationState
      */
     public function verify($userOtp)
     {
+        if ($this->verificationAttemptsMade >= self::MAXIMUM_VERIFICATION_ATTEMPTS) {
+            return OtpVerification::tooManyAttempts();
+        }
+
+        $this->verificationAttemptsMade++;
+
         if (!is_string($userOtp)) {
             throw InvalidArgumentException::invalidType('string', 'userOtp', $userOtp);
         }
