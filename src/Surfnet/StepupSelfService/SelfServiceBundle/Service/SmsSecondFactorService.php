@@ -153,6 +153,8 @@ class SmsSecondFactorService
 
         if ($verification->didOtpExpire()) {
             return ProofOfPossessionResult::challengeExpired();
+        } elseif ($verification->wasAttemptedTooManyTimes()) {
+            return ProofOfPossessionResult::tooManyAttempts();
         } elseif (!$verification->wasSuccessful()) {
             return ProofOfPossessionResult::incorrectChallenge();
         }

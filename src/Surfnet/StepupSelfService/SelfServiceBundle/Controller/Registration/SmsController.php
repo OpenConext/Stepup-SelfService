@@ -99,6 +99,8 @@ class SmsController extends Controller
                 $form->addError(new FormError('ss.prove_phone_possession.incorrect_challenge_response'));
             } elseif ($result->hasChallengeExpired()) {
                 $form->addError(new FormError('ss.prove_phone_possession.challenge_expired'));
+            } elseif ($result->wereTooManyAttemptsMade()) {
+                $form->addError(new FormError('ss.prove_phone_possession.too_many_attempts'));
             } else {
                 $form->addError(new FormError('ss.prove_phone_possession.proof_of_possession_failed'));
             }
