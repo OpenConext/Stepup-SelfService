@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1189d4f29e30bbe28b91c7f457859a25",
+    "hash": "3323af43e35a22a7b85bf2f5e5e61fb4",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1751,16 +1751,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "0.1.0",
+            "version": "dev-bugfix/secure-otps",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "5d91dc357c9ba0cbc7749b2d2ac5bc940bda665e"
+                "reference": "42fd6e301f062059e2d9d8bcd9a8e67d93b1244e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/5d91dc357c9ba0cbc7749b2d2ac5bc940bda665e",
-                "reference": "5d91dc357c9ba0cbc7749b2d2ac5bc940bda665e",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/42fd6e301f062059e2d9d8bcd9a8e67d93b1244e",
+                "reference": "42fd6e301f062059e2d9d8bcd9a8e67d93b1244e",
                 "shasum": ""
             },
             "require": {
@@ -1797,7 +1797,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-03-26 12:46:11"
+            "time": "2015-04-01 08:37:54"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -4145,7 +4145,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "mopa/bootstrap-bundle": 10,
-        "simplesamlphp/saml2": 20
+        "simplesamlphp/saml2": 20,
+        "surfnet/stepup-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
