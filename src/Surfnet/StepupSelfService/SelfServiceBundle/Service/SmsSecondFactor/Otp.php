@@ -93,4 +93,13 @@ final class Otp
 
         return OtpVerification::foundMatch($this->phoneNumber);
     }
+
+    /**
+     * @param string $phoneNumber
+     * @return bool
+     */
+    public function hasPhoneNumber($phoneNumber)
+    {
+        return $this->phoneNumber === $phoneNumber;
+    }
 }

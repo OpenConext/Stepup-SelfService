@@ -23,6 +23,7 @@ final class OtpVerification
     const STATUS_NO_MATCH = 0;
     const STATUS_MATCH_EXPIRED = 1;
     const STATUS_FOUND_MATCH = 2;
+    const STATUS_TOO_MANY_ATTEMPTS = 3;
 
     /**
      * @var int
@@ -47,6 +48,11 @@ final class OtpVerification
     public static function foundMatch($phoneNumber)
     {
         return new self(self::STATUS_FOUND_MATCH, $phoneNumber);
+    }
+
+    public static function tooManyAttempts()
+    {
+        return new self(self::STATUS_TOO_MANY_ATTEMPTS);
     }
 
     /**
@@ -80,6 +86,14 @@ final class OtpVerification
     public function didOtpExpire()
     {
         return $this->status === self::STATUS_MATCH_EXPIRED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function wasAttemptedTooManyTimes()
+    {
+        return $this->status === self::STATUS_TOO_MANY_ATTEMPTS;
     }
 
     /**

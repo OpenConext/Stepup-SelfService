@@ -28,6 +28,11 @@ interface SmsVerificationStateHandler
     public function hasState();
 
     /**
+     * @return void
+     */
+    public function clearState();
+
+    /**
      * Generates a new OTP and returns it.
      *
      * @param string $phoneNumber
