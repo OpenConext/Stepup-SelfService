@@ -91,6 +91,8 @@ class SmsController extends Controller
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
+                $service->clearSmsVerificationState();
+
                 return $this->redirectToRoute(
                     'ss_registration_email_verification_email_sent',
                     ['secondFactorId' => $result->getSecondFactorId()]

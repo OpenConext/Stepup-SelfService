@@ -85,6 +85,10 @@ final class SmsVerificationState
             );
         }
 
+        $this->otps = array_filter($this->otps, function (Otp $otp) use ($phoneNumber) {
+            return $otp->hasPhoneNumber($phoneNumber);
+        });
+
         $otp = OtpGenerator::generate();
         $this->otps[] = Otp::create($otp, $phoneNumber, $this->expiryInterval);
 

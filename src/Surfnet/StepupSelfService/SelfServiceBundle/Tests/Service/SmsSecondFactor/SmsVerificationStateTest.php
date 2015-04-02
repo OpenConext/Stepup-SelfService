@@ -266,4 +266,23 @@ class SmsVerificationStateTest extends TestCase
         $this->assertTrue($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts achieved');
         $this->assertTrue($state->verify('3')->wasAttemptedTooManyTimes(), 'Failed to assert maximum attempts achieved');
     }
+
+    /**
+     * @test
+     * @group sms
+     */
+    public function requesting_an_otp_with_a_different_phone_number_clears_otps_for_other_phone_numbers()
+    {
+        $state = new SmsVerificationState(new DateInterval('PT5S'), 3);
+
+        $otpForPhone1 = $state->requestNewOtp('1');
+        $otpForPhone2 = $state->requestNewOtp('2');
+
+        $verificationForPhone1 = $state->verify($otpForPhone1);
+        $this->assertFalse($verificationForPhone1->wasSuccessful(), 'Verification for phone 1 should not be successful');
+
+        $verificationForPhone2 = $state->verify($otpForPhone2);
+        $this->assertTrue($verificationForPhone2->wasSuccessful(), 'Verification for phone 2 should be successful');
+        $this->assertSame('2', $verificationForPhone2->getPhoneNumber(), 'Verification for phone 2 should return phone 2');
+    }
 }
