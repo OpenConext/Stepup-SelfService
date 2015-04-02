@@ -66,6 +66,11 @@ final class SessionSmsVerificationStateHandler implements SmsVerificationStateHa
         return $this->session->has($this->sessionKey);
     }
 
+    public function clearState()
+    {
+        $this->session->remove($this->sessionKey);
+    }
+
     public function requestNewOtp($phoneNumber)
     {
         /** @var SmsVerificationState|null $state */

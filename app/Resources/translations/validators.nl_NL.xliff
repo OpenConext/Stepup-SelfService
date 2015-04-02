@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-03-10T14:42:21Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2015-03-31T16:12:19Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -211,6 +211,11 @@
         <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.send_sms_challenge_failed</source>
         <target>Het versturen van de code per SMS is mislukt.</target>
+      </trans-unit>
+      <trans-unit id="f355c0b1302e6ed1a9301637306cb312b6feb4eb" resname="ss.prove_phone_possession.too_many_attempts">
+        <jms:reference-file line="24">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.too_many_attempts</source>
+        <target>U heeft de limiet van tien pogingen bereikt; u kunt geen codes meer verifiëren. Neem contact op met uw helpdesk of probeer het later nog eens.</target>
       </trans-unit>
       <trans-unit id="6d67afd47dd9bd70f19efaf10e19900bd5361386" resname="ss.prove_yubikey_possession.proof_of_possession_failed">
         <jms:reference-file line="31">Resources/views/translations.twig</jms:reference-file>
