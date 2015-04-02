@@ -20,11 +20,15 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ */
 final class ProofOfPossessionResult
 {
     const STATUS_CHALLENGE_OK = 0;
     const STATUS_INCORRECT_CHALLENGE = 1;
     const STATUS_CHALLENGE_EXPIRED = 2;
+    const STATUS_TOO_MANY_ATTEMPTS = 3;
 
     /**
      * @var int
@@ -84,6 +88,14 @@ final class ProofOfPossessionResult
     }
 
     /**
+     * @return ProofOfPossessionResult
+     */
+    public static function tooManyAttempts()
+    {
+        return new self(self::STATUS_TOO_MANY_ATTEMPTS);
+    }
+
+    /**
      * @return bool
      */
     public function isSuccessful()
@@ -118,5 +130,13 @@ final class ProofOfPossessionResult
     public function hasChallengeExpired()
     {
         return $this->status === self::STATUS_CHALLENGE_EXPIRED;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function wereTooManyAttemptsMade()
+    {
+        return $this->status === self::STATUS_TOO_MANY_ATTEMPTS;
     }
 }

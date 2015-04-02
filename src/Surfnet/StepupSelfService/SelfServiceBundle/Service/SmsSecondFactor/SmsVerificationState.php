@@ -19,11 +19,17 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 
 use DateInterval;
+use Surfnet\StepupBundle\Security\OtpGenerator;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
 
 final class SmsVerificationState
 {
+    /**
+     * The maximum amount of attempts can be made, per OTP, to verify the OTP.
+     */
+    const MAXIMUM_VERIFICATION_ATTEMPTS = 10;
+
     /**
      * @var DateInterval
      */
@@ -40,6 +46,11 @@ final class SmsVerificationState
     private $otps;
 
     /**
+     * @var int
+     */
+    private $verificationAttemptsMade;
+
+    /**
      * @param DateInterval $expiryInterval
      * @param int $maximumOtpRequests
      */
@@ -52,6 +63,7 @@ final class SmsVerificationState
         $this->expiryInterval = $expiryInterval;
         $this->maximumOtpRequests= $maximumOtpRequests;
         $this->otps = [];
+        $this->verificationAttemptsMade = 0;
     }
 
     /**
@@ -74,7 +86,11 @@ final class SmsVerificationState
             );
         }
 
-        $otp = OtpGenerator::generate();
+        $this->otps = array_filter($this->otps, function (Otp $otp) use ($phoneNumber) {
+            return $otp->hasPhoneNumber($phoneNumber);
+        });
+
+        $otp = OtpGenerator::generate(8);
         $this->otps[] = Otp::create($otp, $phoneNumber, $this->expiryInterval);
 
         return $otp;
@@ -86,6 +102,12 @@ final class SmsVerificationState
      */
     public function verify($userOtp)
     {
+        if ($this->verificationAttemptsMade >= self::MAXIMUM_VERIFICATION_ATTEMPTS) {
+            return OtpVerification::tooManyAttempts();
+        }
+
+        $this->verificationAttemptsMade++;
+
         if (!is_string($userOtp)) {
             throw InvalidArgumentException::invalidType('string', 'userOtp', $userOtp);
         }

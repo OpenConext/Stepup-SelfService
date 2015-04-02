@@ -27,7 +27,7 @@
         "guzzlehttp/guzzle": "~4",
         "simplesamlphp/saml2": "dev-master",
         "surfnet/stepup-saml-bundle": "0.3.*",
-        "surfnet/stepup-bundle": "0.1.*",
+        "surfnet/stepup-bundle": "0.2.*",
         "symfony/swiftmailer-bundle": "~2.3"
     },
     "require-dev": {
