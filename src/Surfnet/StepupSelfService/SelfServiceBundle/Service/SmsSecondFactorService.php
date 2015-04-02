@@ -118,6 +118,11 @@ class SmsSecondFactorService
         return $this->smsVerificationStateHandler->hasState();
     }
 
+    public function clearSmsVerificationState()
+    {
+        $this->smsVerificationStateHandler->clearState();
+    }
+
     /**
      * @param SendSmsChallengeCommand $command
      * @return bool Whether SMS sending did not fail.
