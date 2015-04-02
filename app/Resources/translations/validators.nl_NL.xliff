@@ -215,7 +215,7 @@
       <trans-unit id="f355c0b1302e6ed1a9301637306cb312b6feb4eb" resname="ss.prove_phone_possession.too_many_attempts">
         <jms:reference-file line="24">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.too_many_attempts</source>
-        <target>U heeft de limiet van drie pogingen bereikt; u kunt geen codes meer verifiëren. Neem contact op met uw helpdesk of probeer het later nog eens.</target>
+        <target>U heeft de limiet van tien pogingen bereikt; u kunt geen codes meer verifiëren. Neem contact op met uw helpdesk of probeer het later nog eens.</target>
       </trans-unit>
       <trans-unit id="6d67afd47dd9bd70f19efaf10e19900bd5361386" resname="ss.prove_yubikey_possession.proof_of_possession_failed">
         <jms:reference-file line="31">Resources/views/translations.twig</jms:reference-file>
