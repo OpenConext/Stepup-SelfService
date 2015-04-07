@@ -1805,12 +1805,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "0cd331b498021492272dda14b57cd5aa6990eb32"
+                "reference": "c9c64643062c16452d9e3075850eee8436a82ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/0cd331b498021492272dda14b57cd5aa6990eb32",
-                "reference": "0cd331b498021492272dda14b57cd5aa6990eb32",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/c9c64643062c16452d9e3075850eee8436a82ec5",
+                "reference": "c9c64643062c16452d9e3075850eee8436a82ec5",
                 "shasum": ""
             },
             "require": {
@@ -1846,7 +1846,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2015-03-26 14:06:31"
+            "time": "2015-04-07 13:57:30"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
