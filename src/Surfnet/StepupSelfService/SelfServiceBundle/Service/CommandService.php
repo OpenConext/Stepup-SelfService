@@ -20,6 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupMiddlewareClientBundle\Command\Command;
 use Surfnet\StepupMiddlewareClientBundle\Command\Metadata;
+use Surfnet\StepupMiddlewareClientBundle\Service\CommandService as MiddlewareCommandService;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 final class CommandService
@@ -35,7 +36,7 @@ final class CommandService
     private $tokenStorage;
 
     public function __construct(
-        \Surfnet\StepupMiddlewareClientBundle\Service\CommandService $commandService,
+        MiddlewareCommandService $commandService,
         TokenStorageInterface $tokenStorage
     ) {
         $this->commandService = $commandService;
