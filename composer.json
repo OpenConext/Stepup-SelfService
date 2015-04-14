@@ -18,7 +18,7 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "nelmio/security-bundle": "~1.4",
-        "mopa/bootstrap-bundle": "~3|3.0.0@beta",
+        "mopa/bootstrap-bundle": "dev-master",
         "twbs/bootstrap": "~3.2.0",
         "fortawesome/font-awesome": "~4.2.0",
         "jms/translation-bundle": "~1.1.0",
