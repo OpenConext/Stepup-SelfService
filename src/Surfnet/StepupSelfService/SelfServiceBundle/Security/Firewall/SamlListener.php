@@ -22,7 +22,6 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use SAML2_Response_Exception_PreconditionNotMetException as PreconditionNotMetException;
 use Surfnet\SamlBundle\Http\Exception\AuthnFailedSamlResponseException;
-use Surfnet\SamlBundle\Http\Exception\NoAuthnContextSamlResponseException;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SessionHandler;
