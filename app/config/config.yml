@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: samlstepupproviders.yml }
+    - { resource: logging.yml }
 
 framework:
     #esi:             ~
