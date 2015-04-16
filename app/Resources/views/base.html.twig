@@ -21,6 +21,16 @@
     {% endblock header %}
 
         {% block page_header %}
+            {% if app.user %}
+            <div class="nav-header clearfix">
+                <form method="post" action="{{ path('logout') }}" class="pull-right">
+                    <button type="submit" class="btn btn-link">
+                        <i class="fa fa-sign-out"></i>
+                        {{ 'button.logout'|trans }}
+                    </button>
+                </form>
+            </div>
+            {% endif %}
             <div class="page-header clearfix">
                 <img src="/images/surfnet.jpg" class="pull-right" alt="SURFnet">
                 <h1>{{ 'app.name'|trans }}</h1>
