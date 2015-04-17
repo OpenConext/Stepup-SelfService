@@ -16,7 +16,8 @@ security:
             saml: true
             logout:
                 path: /logout
-                success_handler: self_service.security.logout.saml_logout_success_handler
+                target: /
+                invalidate_session: true
 
     access_control:
         - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel:https }
