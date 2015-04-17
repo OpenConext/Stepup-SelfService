@@ -1297,32 +1297,31 @@
         },
         {
             "name": "nelmio/security-bundle",
-            "version": "1.4.0",
-            "target-dir": "Nelmio/SecurityBundle",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioSecurityBundle.git",
-                "reference": "c7d77d0250bd92635e0b4168e6d703daf2145280"
+                "reference": "a3ee5be287b8586e46f082504044b62343a6a3c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioSecurityBundle/zipball/c7d77d0250bd92635e0b4168e6d703daf2145280",
-                "reference": "c7d77d0250bd92635e0b4168e6d703daf2145280",
+                "url": "https://api.github.com/repos/nelmio/NelmioSecurityBundle/zipball/a3ee5be287b8586e46f082504044b62343a6a3c0",
+                "reference": "a3ee5be287b8586e46f082504044b62343a6a3c0",
                 "shasum": ""
             },
             "require": {
-                "symfony/framework-bundle": "~2.1",
-                "symfony/security": "~2.1"
+                "symfony/framework-bundle": "~2.3",
+                "symfony/security": "~2.3"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "1.5.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Nelmio\\SecurityBundle": ""
+                "psr-4": {
+                    "Nelmio\\SecurityBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1343,7 +1342,7 @@
             "keywords": [
                 "security"
             ],
-            "time": "2014-02-13 14:40:27"
+            "time": "2015-02-01 11:00:05"
         },
         {
             "name": "nikic/php-parser",
