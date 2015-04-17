@@ -16,7 +16,7 @@ security:
             saml: true
             logout:
                 path: /logout
-                target: /
+                target: %logout_redirect_url%
                 invalidate_session: true
 
     access_control:
