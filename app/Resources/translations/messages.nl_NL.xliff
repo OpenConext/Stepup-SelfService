@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-03-25T10:49:38Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2015-04-16T13:52:07Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -11,6 +11,11 @@
         <jms:reference-file line="26">Resources/views/base.html.twig</jms:reference-file>
         <source>app.name</source>
         <target>Step-up Self-Service</target>
+      </trans-unit>
+      <trans-unit id="ff6230b38fe127145d864f4d4920ceb4d857af18" resname="button.logout">
+        <jms:reference-file line="28">Resources/views/base.html.twig</jms:reference-file>
+        <source>button.logout</source>
+        <target>Uitloggen</target>
       </trans-unit>
       <trans-unit id="a31c84959103cbd5fb6f899025d9787c25d62bbe" resname="ss.error.button.go_home">
         <jms:reference-file line="9">views/Exception/error.html.twig</jms:reference-file>

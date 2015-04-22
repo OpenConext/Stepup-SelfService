@@ -113,7 +113,7 @@ services:
     self_service.security.authentication.listener:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Firewall\SamlListener
         arguments:
-            - @security.context
+            - @security.token_storage
             - @security.authentication.manager
             - @self_service.security.authentication.saml
             - @self_service.security.authentication.session_handler

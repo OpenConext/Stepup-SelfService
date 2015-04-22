@@ -30,8 +30,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Twig_Environment as Twig;
 
@@ -41,9 +41,9 @@ use Twig_Environment as Twig;
 class SamlListener implements ListenerInterface
 {
     /**
-     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
-    private $securityContext;
+    private $tokenStorage;
 
     /**
      * @var \Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface
@@ -71,14 +71,14 @@ class SamlListener implements ListenerInterface
     private $twig;
 
     public function __construct(
-        SecurityContextInterface $securityContext,
+        TokenStorageInterface $tokenStorage,
         AuthenticationManagerInterface $authenticationManager,
         SamlInteractionProvider $samlInteractionProvider,
         SessionHandler $sessionHandler,
         SamlAuthenticationLogger $logger,
         Twig $twig
     ) {
-        $this->securityContext          = $securityContext;
+        $this->tokenStorage             = $tokenStorage;
         $this->authenticationManager    = $authenticationManager;
         $this->samlInteractionProvider  = $samlInteractionProvider;
         $this->sessionHandler           = $sessionHandler;
@@ -99,9 +99,7 @@ class SamlListener implements ListenerInterface
 
     private function handleEvent(GetResponseEvent $event)
     {
-        // reinstate the token from the session. Could be expanded with logout check if needed
-        if ($this->sessionHandler->hasBeenAuthenticated()) {
-            $this->securityContext->setToken($this->sessionHandler->getToken());
+        if ($this->tokenStorage->getToken()) {
             return;
         }
 
@@ -147,19 +145,16 @@ class SamlListener implements ListenerInterface
             $response = new Response();
             $response->setStatusCode(Response::HTTP_FORBIDDEN);
             $event->setResponse($response);
+
             return;
         }
 
-        // for the current request
-        $this->securityContext->setToken($authToken);
-        // for future requests
-        $this->sessionHandler->setToken($authToken);
+        $this->tokenStorage->setToken($authToken);
 
         $event->setResponse(new RedirectResponse($this->sessionHandler->getCurrentRequestUri()));
 
         $logger->notice('Authentication succeeded, redirecting to original location');
     }
-
     private function setPreconditionExceptionResponse(PreconditionNotMetException $exception, GetResponseEvent $event)
     {
         $template = null;
