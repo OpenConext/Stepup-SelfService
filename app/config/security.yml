@@ -14,6 +14,10 @@ security:
 
         saml_based:
             saml: true
+            logout:
+                path: /logout
+                target: %logout_redirect_url%
+                invalidate_session: true
 
     access_control:
         - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel:https }

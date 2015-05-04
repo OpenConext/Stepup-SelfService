@@ -113,6 +113,5 @@ class SamlInteractionProvider
     public function reset()
     {
         $this->sessionHandler->clearRequestId();
-        $this->sessionHandler->clearToken();
     }
 }

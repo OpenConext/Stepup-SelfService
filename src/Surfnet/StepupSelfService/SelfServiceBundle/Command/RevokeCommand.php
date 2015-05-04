@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 use Surfnet\StepupMiddlewareClientBundle\Command\AbstractCommand;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class RevokeCommand extends AbstractCommand
+class RevokeCommand
 {
     /**
      * @Assert\Type(type="string", message="ss.revoke_own_second_factor_command.identity_id.must_be_string")
@@ -36,15 +36,4 @@ class RevokeCommand extends AbstractCommand
      * @var string
      */
     public $secondFactorId;
-
-    /**
-     * @return array
-     */
-    public function serialise()
-    {
-        return [
-            'identity_id'      => $this->identityId,
-            'second_factor_id' => $this->secondFactorId,
-        ];
-    }
 }
