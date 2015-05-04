@@ -11,7 +11,24 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <p>{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.text.explanation')|trans }}</p>
+    <p>
+        <ul><!-- TODO translate using translations.twig and messages.LANG.xliff -->
+        <li>
+            Download de tiqr app op je smartphone:
+            <ul><li><a href="http://itunes.apple.com/us/app/tiqr/id430838214?mt=8&ls=1">iOS</a></li>
+                <li><a href="https://play.google.com/store/apps/details?id=org.tiqr.authenticator&hl=nl">Android</a></li></ul>
+        </li>
+        <li>
+            Sta push notificaties van de tiqr app toe zodat het inloggen in het vervolg makkelijker wordt.
+        </li>
+        <li>
+            Klik vervolgens op ‘{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.button.initiate')|trans }}’ om verder te gaan.
+        </li>
+        </ul>
+    Na het registreren van je tiqr account keer je hier terug.
+    </p>
+
+    <!-- p>{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.text.explanation')|trans }}</p -->
 
     <hr>
 
