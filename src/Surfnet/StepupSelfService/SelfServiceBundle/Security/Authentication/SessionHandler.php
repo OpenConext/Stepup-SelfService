@@ -92,38 +92,4 @@ class SessionHandler
     {
         $this->session->remove(self::SAML_SESSION_KEY . 'request_id');
     }
-
-    /**
-     * @return bool
-     */
-    public function hasBeenAuthenticated()
-    {
-        return $this->session->has(self::AUTH_SESSION_KEY . 'token');
-    }
-
-    /**
-     * @param TokenInterface $token
-     */
-    public function setToken(TokenInterface $token)
-    {
-        $this->session->set(self::AUTH_SESSION_KEY . 'token', serialize($token));
-    }
-
-    /**
-     * @return TokenInterface
-     */
-    public function getToken()
-    {
-        $token = unserialize($this->session->get(self::AUTH_SESSION_KEY . 'token'));
-
-        return $token;
-    }
-
-    /**
-     * Clears any stored security token.
-     */
-    public function clearToken()
-    {
-        $this->session->remove(self::AUTH_SESSION_KEY . 'token');
-    }
 }

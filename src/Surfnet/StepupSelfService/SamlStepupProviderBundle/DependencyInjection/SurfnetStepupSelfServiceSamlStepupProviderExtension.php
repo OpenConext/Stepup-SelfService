@@ -102,8 +102,10 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
 
         $hostedSpDefinition  = (new Definition())
             ->setClass('Surfnet\SamlBundle\Entity\ServiceProvider')
-            ->setFactoryService(new Reference('gssp.provider.' . $provider . '.hosted_entities'))
-            ->setFactoryMethod('getServiceProvider')
+            ->setFactory([
+                new Reference('gssp.provider.' . $provider . '.hosted_entities'),
+                'getServiceProvider'
+            ])
             ->setPublic(false);
         $container->setDefinition('gssp.provider.' . $provider . '.hosted.sp', $hostedSpDefinition);
     }

@@ -30,7 +30,6 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollec
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
-use Surfnet\StepupMiddlewareClientBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 
 /**
@@ -200,6 +199,7 @@ class SecondFactorService
     }
 
     /**
+     * @param string $secondFactorId
      * @param string $identityId
      * @return null|string
      */
