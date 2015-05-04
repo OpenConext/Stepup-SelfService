@@ -137,7 +137,7 @@
       <trans-unit id="6d670d08e109198803dff1f72ef9b68d2e86edb4" resname="ss.registration.gssf.initiate.tiqr.button.initiate">
         <jms:reference-file line="51">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.gssf.initiate.tiqr.button.initiate</source>
-        <target>Registreren bij Tiqr</target>
+        <target>Registreer een tiqr account</target>
       </trans-unit>
       <trans-unit id="15e31720c64b827d5fae810e95e63278984e02d8" resname="ss.registration.gssf.initiate.tiqr.error.authn_failed">
         <jms:reference-file line="52">Resources/views/translations.twig</jms:reference-file>
@@ -157,7 +157,7 @@
       <trans-unit id="e15d6747ec3b6168013bd27b31217f224d228fb0" resname="ss.registration.gssf.initiate.tiqr.title.page">
         <jms:reference-file line="49">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.gssf.initiate.tiqr.title.page</source>
-        <target>Registreren bij Tiqr</target>
+        <target>Registreer een tiqr account</target>
       </trans-unit>
       <trans-unit id="3d9422c99d74fc7a2dee4d8a9d6faa9c46d929ec" resname="ss.registration.progress_bar.confirm_second_factor">
         <jms:reference-file line="4">Registration/partial/progressBar.html.twig</jms:reference-file>
