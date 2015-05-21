@@ -47,21 +47,8 @@ services:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
         arguments:
-            - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
+            - @surfnet_stepup.guzzle.gateway_api
             - @logger
-
-    surfnet_stepup_self_service_self_service.service.sms:
-        public: false
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsService
-        arguments:
-            - @surfnet_stepup_self_service_self_service.guzzle.gateway_api
-            - @logger
-
-    surfnet_stepup_self_service_self_service.guzzle.gateway_api:
-        public: false
-        class: GuzzleHttp\Client
-        arguments:
-            - {} # Set from the extension
 
     surfnet_stepup_self_service_self_service.service.yubikey_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
@@ -72,25 +59,14 @@ services:
     surfnet_stepup_self_service_self_service.service.sms_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
         arguments:
-            - @surfnet_stepup_self_service_self_service.service.sms
-            - @surfnet_stepup_self_service_self_service.challenge_handler
+            - @surfnet_stepup.service.sms_second_factor
             - @translator
             - @surfnet_stepup_self_service_self_service.service.command
-            - '' # Originator set in extension
 
     surfnet_stepup_self_service_self_service.service.gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
         arguments:
             - @surfnet_stepup_self_service_self_service.service.command
-
-    surfnet_stepup_self_service_self_service.challenge_handler:
-        public: false
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\SessionSmsVerificationStateHandler
-        arguments:
-            - @session
-            - 'Surfnet/SelfService/SecondFactor/Sms:challenge'
-            - {} # OTP expiry interval
-            - 0  # Maximum OTP requests
 
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService

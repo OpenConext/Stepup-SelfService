@@ -19,7 +19,6 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class SessionHandler
 {

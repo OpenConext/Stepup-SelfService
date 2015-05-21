@@ -18,34 +18,26 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupBundle\Command\SendSmsChallengeCommand as StepupSendSmsChallengeCommand;
+use Surfnet\StepupBundle\Command\VerifyPossessionOfPhoneCommand;
+use Surfnet\StepupBundle\Service\Exception\TooManyChallengesRequestedException;
+use Surfnet\StepupBundle\Service\SmsSecondFactorService as StepupSmsSecondFactorService;
 use Surfnet\StepupBundle\Value\PhoneNumber\CountryCode;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\Exception\TooManyChallengesRequestedException;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\SmsVerificationStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
 use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class SmsSecondFactorService
 {
     /**
-     * @var SmsService
+     * @var \Surfnet\StepupBundle\Service\SmsSecondFactorService
      */
-    private $smsService;
-
-    /**
-     * @var SmsVerificationStateHandler
-     */
-    private $smsVerificationStateHandler;
+    private $smsSecondFactorService;
 
     /**
      * @var TranslatorInterface
@@ -58,39 +50,18 @@ class SmsSecondFactorService
     private $commandService;
 
     /**
-     * @var string
-     */
-    private $originator;
-
-    /**
-     * @param SmsService $smsService
-     * @param SmsVerificationStateHandler $smsVerificationStateHandler
+     * @param StepupSmsSecondFactorService $smsSecondFactorService
      * @param TranslatorInterface $translator
      * @param CommandService $commandService
-     * @param string $originator
      */
     public function __construct(
-        SmsService $smsService,
-        SmsVerificationStateHandler $smsVerificationStateHandler,
+        StepupSmsSecondFactorService $smsSecondFactorService,
         TranslatorInterface $translator,
-        CommandService $commandService,
-        $originator
+        CommandService $commandService
     ) {
-        if (!is_string($originator)) {
-            throw InvalidArgumentException::invalidType('string', 'originator', $originator);
-        }
-
-        if (!preg_match('~^[a-z0-9]{1,11}$~i', $originator)) {
-            throw new InvalidArgumentException(
-                'Invalid SMS originator given: may only contain alphanumerical characters.'
-            );
-        }
-
-        $this->smsService = $smsService;
-        $this->smsVerificationStateHandler = $smsVerificationStateHandler;
+        $this->smsSecondFactorService = $smsSecondFactorService;
         $this->translator = $translator;
         $this->commandService = $commandService;
-        $this->originator = $originator;
     }
 
     /**
@@ -98,7 +69,7 @@ class SmsSecondFactorService
      */
     public function getOtpRequestsRemainingCount()
     {
-        return $this->smsVerificationStateHandler->getOtpRequestsRemainingCount();
+        return $this->smsSecondFactorService->getOtpRequestsRemainingCount();
     }
 
     /**
@@ -106,7 +77,7 @@ class SmsSecondFactorService
      */
     public function getMaximumOtpRequestsCount()
     {
-        return $this->smsVerificationStateHandler->getMaximumOtpRequestsCount();
+        return $this->smsSecondFactorService->getMaximumOtpRequestsCount();
     }
 
     /**
@@ -114,12 +85,12 @@ class SmsSecondFactorService
      */
     public function hasSmsVerificationState()
     {
-        return $this->smsVerificationStateHandler->hasState();
+        return $this->smsSecondFactorService->hasSmsVerificationState();
     }
 
     public function clearSmsVerificationState()
     {
-        $this->smsVerificationStateHandler->clearState();
+        $this->smsSecondFactorService->clearSmsVerificationState();
     }
 
     /**
@@ -133,18 +104,14 @@ class SmsSecondFactorService
             new CountryCode($command->countryCode),
             new PhoneNumber($command->subscriber)
         );
-        $otp = $this->smsVerificationStateHandler->requestNewOtp((string) $phoneNumber);
 
-        $body = $this->translator->trans('ss.registration.sms.challenge_body', ['%challenge%' => $otp]);
+        $stepupCommand = new StepupSendSmsChallengeCommand();
+        $stepupCommand->phoneNumber = $phoneNumber;
+        $stepupCommand->body = $this->translator->trans('ss.registration.sms.challenge_body');
+        $stepupCommand->identity = $command->identity;
+        $stepupCommand->institution = $command->institution;
 
-        $smsCommand              = new SendSmsCommand();
-        $smsCommand->recipient   = $phoneNumber->toMSISDN();
-        $smsCommand->originator  = $this->originator;
-        $smsCommand->body        = $body;
-        $smsCommand->identity    = $command->identity;
-        $smsCommand->institution = $command->institution;
-
-        return $this->smsService->sendSms($smsCommand);
+        return $this->smsSecondFactorService->sendChallenge($stepupCommand);
     }
 
     /**
@@ -153,7 +120,10 @@ class SmsSecondFactorService
      */
     public function provePossession(VerifySmsChallengeCommand $challengeCommand)
     {
-        $verification = $this->smsVerificationStateHandler->verify($challengeCommand->challenge);
+        $stepupCommand = new VerifyPossessionOfPhoneCommand();
+        $stepupCommand->challenge = $challengeCommand->challenge;
+
+        $verification = $this->smsSecondFactorService->verifyPossession($stepupCommand);
 
         if ($verification->didOtpExpire()) {
             return ProofOfPossessionResult::challengeExpired();
