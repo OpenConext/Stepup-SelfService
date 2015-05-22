@@ -32,6 +32,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeComman
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) - Quite some commands and VOs are used here.
+ */
 class SmsSecondFactorService
 {
     /**
@@ -40,12 +43,12 @@ class SmsSecondFactorService
     private $smsSecondFactorService;
 
     /**
-     * @var TranslatorInterface
+     * @var \Symfony\Component\Translation\TranslatorInterface
      */
     private $translator;
 
     /**
-     * @var CommandService
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
      */
     private $commandService;
 
