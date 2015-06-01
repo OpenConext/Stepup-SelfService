@@ -73,6 +73,7 @@ services:
         arguments:
             - @surfnet_stepup_middleware_client.identity.service.identity
             - @surfnet_stepup_self_service_self_service.service.command
+            - @security.token_storage
             - @logger
 
     self_service.service.ra:
@@ -111,3 +112,9 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SessionHandler
         arguments:
             - @session
+
+    # Listeners
+    ra.event_listener.locale:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\EventListener\LocaleListener
+        arguments: [ @security.token_storage, @translator ]
+        tags: [{ name: kernel.event_subscriber }]

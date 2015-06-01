@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "87de26c67c058c2058f8ada4bbdb78ee",
+    "hash": "47e88ab167ef626f6d5a065f5bbe3386",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1190,7 +1190,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/a5573423b7d029d65bf85e3eba336d5d85d695f1",
+                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/6df7486cd7181be4e4649e1c7303fc3041a37ae5",
                 "reference": "818b0f47ebd352559950e9a64431ff9472e8a9dd",
                 "shasum": ""
             },
@@ -1750,16 +1750,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "dev-maintenance/sms-verification",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "246dd36743fc263762f7c53ec0e9f986693baa5f"
+                "reference": "f0d4419e8be9a8738809ae35b0e2f4c30ac683df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/246dd36743fc263762f7c53ec0e9f986693baa5f",
-                "reference": "246dd36743fc263762f7c53ec0e9f986693baa5f",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/f0d4419e8be9a8738809ae35b0e2f4c30ac683df",
+                "reference": "f0d4419e8be9a8738809ae35b0e2f4c30ac683df",
                 "shasum": ""
             },
             "require": {
@@ -1772,7 +1772,9 @@
                 "symfony/config": "~2",
                 "symfony/dependency-injection": "~2",
                 "symfony/form": "~2",
+                "symfony/framework-bundle": "~2",
                 "symfony/http-kernel": "~2",
+                "symfony/twig-bridge": "~2",
                 "symfony/validator": "~2"
             },
             "require-dev": {
@@ -1796,7 +1798,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-05-22 11:47:24"
+            "time": "2015-06-01 15:00:25"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -1804,12 +1806,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "c9c64643062c16452d9e3075850eee8436a82ec5"
+                "reference": "929b8a75042ac129d91eb691d773f4cf41081ec1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/4eafa9f46ec0e79acd0104b49e316bbbb6c128ba",
-                "reference": "c9c64643062c16452d9e3075850eee8436a82ec5",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/929b8a75042ac129d91eb691d773f4cf41081ec1",
+                "reference": "929b8a75042ac129d91eb691d773f4cf41081ec1",
                 "shasum": ""
             },
             "require": {
@@ -1845,7 +1847,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2015-04-07 13:57:30"
+            "time": "2015-06-01 15:00:06"
         },
         {
             "name": "surfnet/stepup-saml-bundle",

@@ -17,6 +17,21 @@
         <source>button.logout</source>
         <target>Uitloggen</target>
       </trans-unit>
+      <trans-unit id="a91ec2021294ddfceb930e47ee05536b0f85193b" resname="country code">
+        <jms:reference-file line="32">Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <source>country code</source>
+        <target state="new">country code</target>
+      </trans-unit>
+      <trans-unit id="a08764057e3607049e3495943676b29f7baefba9" resname="locale.en_GB">
+        <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
+        <source>locale.en_GB</source>
+        <target>English</target>
+      </trans-unit>
+      <trans-unit id="169792c2b812adec2ddf0b47e7be0a56c1b892ae" resname="locale.nl_NL">
+        <jms:reference-file line="3">Resources/views/translations.twig</jms:reference-file>
+        <source>locale.nl_NL</source>
+        <target>Nederlands</target>
+      </trans-unit>
       <trans-unit id="a31c84959103cbd5fb6f899025d9787c25d62bbe" resname="ss.error.button.go_home">
         <jms:reference-file line="9">views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="9">views/Exception/error404.html.twig</jms:reference-file>
@@ -83,6 +98,16 @@
         <jms:reference-file line="3">views/Exception/error.html.twig</jms:reference-file>
         <source>ss.error.title</source>
         <target>Foutmelding</target>
+      </trans-unit>
+      <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
+        <jms:reference-file line="60">SelfServiceBundle/Controller/LocaleControl.php</jms:reference-file>
+        <source>ss.flash.error_while_switching_locale</source>
+        <target>Due to an unknown reason, switching locales failed.</target>
+      </trans-unit>
+      <trans-unit id="600028302c7b3a43ae0e30ab3b015f505c2b7f1f" resname="ss.flash.invalid_switch_locale_form">
+        <jms:reference-file line="53">SelfServiceBundle/Controller/LocaleControl.php</jms:reference-file>
+        <source>ss.flash.invalid_switch_locale_form</source>
+        <target>Due to an unknown reason, switching locales failed.</target>
       </trans-unit>
       <trans-unit id="b3d573081dd44232cfd0fc03a04fe1b523715271" resname="ss.form.ss_revoke_second_factor.cancel">
         <jms:reference-file line="35">Form/Type/RevokeSecondFactorType.php</jms:reference-file>
@@ -470,6 +495,11 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <jms:reference-file line="29">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor_list.header.type</source>
         <target>Token</target>
+      </trans-unit>
+      <trans-unit id="fcbfd9e643bb8d8f3fcf3ca0380a73bb9dffee2b" resname="stepup_middleware_client.form.switch_locale.switch">
+        <jms:reference-file line="58">Form/Type/SwitchLocaleType.php</jms:reference-file>
+        <source>stepup_middleware_client.form.switch_locale.switch</source>
+        <target>Vertalen</target>
       </trans-unit>
     </body>
   </file>
