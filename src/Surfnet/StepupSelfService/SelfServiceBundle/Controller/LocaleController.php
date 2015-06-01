@@ -20,7 +20,6 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Command\SwitchLocaleCommand;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -65,13 +64,5 @@ final class LocaleController extends Controller
         $logger->info('Successfully switched locale');
 
         return $this->redirect($returnUrl);
-    }
-
-    /**
-     * @return \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity
-     */
-    private function getIdentity()
-    {
-        return $this->get('security.token_storage')->getToken()->getUser();
     }
 }
