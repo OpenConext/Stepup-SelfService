@@ -18,7 +18,6 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
-use Surfnet\StepupMiddlewareClientBundle\Command\AbstractCommand;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RevokeCommand

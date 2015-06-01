@@ -89,17 +89,6 @@ monolog:
             publisher: { hostname: %graylog_hostname% }
             formatter: surfnet_stepup.monolog.full_message_exception_gelf_message_formatter
 
-surfnet_stepup_self_service_self_service:
-    sms:
-        originator: %sms_originator%
-        otp_expiry_interval: %sms_otp_expiry_interval%
-        maximum_otp_requests: %sms_maximum_otp_requests%
-    gateway_api:
-        url: %gateway_api_url%
-        credentials:
-            username: %gateway_api_username%
-            password: %gateway_api_password%
-
 mopa_bootstrap:
     form:
         show_legend: false
@@ -145,6 +134,15 @@ surfnet_stepup:
         loa1: %stepup_loa_loa1%
         loa2: %stepup_loa_loa2%
         loa3: %stepup_loa_loa3%
+    sms:
+        originator: %sms_originator%
+        otp_expiry_interval: %sms_otp_expiry_interval%
+        maximum_otp_requests: %sms_maximum_otp_requests%
+    gateway_api:
+        url: %gateway_api_url%
+        credentials:
+            username: %gateway_api_username%
+            password: %gateway_api_password%
 
 jms_translation:
     locales: %locales%
