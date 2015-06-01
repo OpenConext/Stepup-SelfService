@@ -23,11 +23,11 @@
         "fortawesome/font-awesome": "~4.2.0",
         "jms/translation-bundle": "~1.1.0",
         "jms/di-extra-bundle": "~1.4.0",
-        "surfnet/stepup-middleware-client-bundle": "dev-feature/preferred-locale",
+        "surfnet/stepup-middleware-client-bundle": "dev-develop",
         "guzzlehttp/guzzle": "~4",
         "simplesamlphp/saml2": "dev-master",
         "surfnet/stepup-saml-bundle": "dev-develop",
-        "surfnet/stepup-bundle": "dev-feature/preferred-locale",
+        "surfnet/stepup-bundle": "dev-develop",
         "symfony/swiftmailer-bundle": "~2.3"
     },
     "require-dev": {
