@@ -63,11 +63,12 @@ class SamlProvider implements AuthenticationProviderInterface
 
         if ($identity === null) {
             $identity = new Identity();
-            $identity->id           = Uuid::generate();
-            $identity->nameId       = $nameId;
-            $identity->institution  = $institution;
-            $identity->email        = $email;
-            $identity->commonName   = $commonName;
+            $identity->id              = Uuid::generate();
+            $identity->nameId          = $nameId;
+            $identity->institution     = $institution;
+            $identity->email           = $email;
+            $identity->commonName      = $commonName;
+            $identity->preferredLocale = 'en_GB';
 
             $this->identityService->createIdentity($identity);
         } elseif ($identity->email !== $email || $identity->commonName !== $commonName) {
