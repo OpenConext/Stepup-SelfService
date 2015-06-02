@@ -114,8 +114,7 @@ services:
         arguments:
             - @session
 
-    # Listeners
-    ra.event_listener.locale:
+    self_service.event_listener.locale:
         class: Surfnet\StepupSelfService\SelfServiceBundle\EventListener\LocaleListener
         arguments: [ @security.token_storage, @translator ]
         tags: [{ name: kernel.event_subscriber }]
