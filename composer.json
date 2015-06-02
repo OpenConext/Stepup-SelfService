@@ -31,6 +31,7 @@
         "symfony/swiftmailer-bundle": "~2.3"
     },
     "require-dev": {
+        "mockery/mockery": "~0.9.0",
         "sensio/generator-bundle": "~2.3",
         "ibuildings/qa-tools": "~1.1,>=1.1.27",
         "liip/rmt": "1.1.*"

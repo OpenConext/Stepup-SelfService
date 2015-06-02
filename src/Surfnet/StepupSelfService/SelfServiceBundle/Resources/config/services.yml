@@ -86,6 +86,7 @@ services:
         arguments:
             - @self_service.service.identity
             - @surfnet_saml.saml.attribute_dictionary
+            - @self_service.locale.request_stack_locale_provider
 
     self_service.security.authentication.listener:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Firewall\SamlListener
@@ -118,3 +119,10 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\EventListener\LocaleListener
         arguments: [ @security.token_storage, @translator ]
         tags: [{ name: kernel.event_subscriber }]
+
+    self_service.locale.request_stack_locale_provider:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Locale\RequestStackLocaleProvider
+        arguments:
+            - @request_stack
+            - '' # See extension
+            - [] # See extension
