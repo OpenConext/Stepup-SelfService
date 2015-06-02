@@ -142,11 +142,12 @@ class IdentityService implements UserProviderInterface
     public function createIdentity(Identity $identity)
     {
         $command = new CreateIdentityCommand();
-        $command->id          = $identity->id;
-        $command->nameId      = $identity->nameId;
-        $command->institution = $identity->institution;
-        $command->email       = $identity->email;
-        $command->commonName  = $identity->commonName;
+        $command->id              = $identity->id;
+        $command->nameId          = $identity->nameId;
+        $command->institution     = $identity->institution;
+        $command->email           = $identity->email;
+        $command->commonName      = $identity->commonName;
+        $command->preferredLocale = $identity->preferredLocale;
 
         $this->processCommand($command);
     }

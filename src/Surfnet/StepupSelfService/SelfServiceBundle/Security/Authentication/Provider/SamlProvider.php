@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Pr
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
+use Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
@@ -38,12 +39,19 @@ class SamlProvider implements AuthenticationProviderInterface
      */
     private $attributeDictionary;
 
+    /**
+     * @var \Symfony\Component\HttpFoundation\PreferredLocaleProvider
+     */
+    private $preferredLocaleProvider;
+
     public function __construct(
         IdentityService $identityService,
-        AttributeDictionary $attributeDictionary
+        AttributeDictionary $attributeDictionary,
+        PreferredLocaleProvider $preferredLocaleProvider
     ) {
         $this->identityService = $identityService;
         $this->attributeDictionary = $attributeDictionary;
+        $this->preferredLocaleProvider = $preferredLocaleProvider;
     }
 
     /**
@@ -63,11 +71,12 @@ class SamlProvider implements AuthenticationProviderInterface
 
         if ($identity === null) {
             $identity = new Identity();
-            $identity->id           = Uuid::generate();
-            $identity->nameId       = $nameId;
-            $identity->institution  = $institution;
-            $identity->email        = $email;
-            $identity->commonName   = $commonName;
+            $identity->id              = Uuid::generate();
+            $identity->nameId          = $nameId;
+            $identity->institution     = $institution;
+            $identity->email           = $email;
+            $identity->commonName      = $commonName;
+            $identity->preferredLocale = $this->preferredLocaleProvider->providePreferredLocale();
 
             $this->identityService->createIdentity($identity);
         } elseif ($identity->email !== $email || $identity->commonName !== $commonName) {

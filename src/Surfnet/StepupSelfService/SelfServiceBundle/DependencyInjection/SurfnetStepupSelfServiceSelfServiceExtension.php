@@ -37,5 +37,9 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->getDefinition('self_service.locale.request_stack_locale_provider')
+            ->replaceArgument(1, $container->getParameter('default_locale'))
+            ->replaceArgument(2, $container->getParameter('locales'));
     }
 }
