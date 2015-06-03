@@ -28,12 +28,13 @@ class SendSmsChallengeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('countryCode', 'choice', [
+            ->add('country', 'choice', [
                 'label'                          => /** @Ignore */ 'country code',
                 'horizontal_label_class'         => 'sr-only',
                 'required'                       => true,
                 'choice_list'                    => CountryCodeListing::asChoiceList(),
-                'preferred_choices'              => [CountryCodeListing::PREFERRED_CHOICE],
+                'preferred_choices'              =>
+                    ['Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing', 'isPreferredChoice'],
                 'horizontal_input_wrapper_class' => 'foo',
             ])
             ->add('subscriber', 'text', [
