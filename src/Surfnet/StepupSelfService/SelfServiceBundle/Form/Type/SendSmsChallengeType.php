@@ -33,6 +33,7 @@ class SendSmsChallengeType extends AbstractType
                 'horizontal_label_class'         => 'sr-only',
                 'required'                       => true,
                 'choice_list'                    => CountryCodeListing::asChoiceList(),
+                'preferred_choices'              => [CountryCodeListing::PREFERRED_CHOICE],
                 'horizontal_input_wrapper_class' => 'foo',
             ])
             ->add('subscriber', 'text', [

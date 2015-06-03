@@ -33,7 +33,7 @@
                         {{ 'button.logout'|trans }}
                     </button>
                 </form>
-                {% set locale_switcher = stepup_locale_switcher('ss_switch_locale', {'return-url': app.request.uri}) %}
+                {% set locale_switcher = stepup_locale_switcher(app.request.locale, 'ss_switch_locale', {'return-url': app.request.uri}) %}
                 {{ form_start(locale_switcher, { attr: { class: 'form-inline' }}) }}
                 {{ form_widget(locale_switcher.locale) }}
                 {{ form_widget(locale_switcher.switch) }}

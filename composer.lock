@@ -1754,12 +1754,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "c1f4fd18712aed612fb908f53cea6fe7ef2a0831"
+                "reference": "5cce1b8bb5bc74955bdb8901dc93cd1fe41a2280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/c1f4fd18712aed612fb908f53cea6fe7ef2a0831",
-                "reference": "c1f4fd18712aed612fb908f53cea6fe7ef2a0831",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/5cce1b8bb5bc74955bdb8901dc93cd1fe41a2280",
+                "reference": "5cce1b8bb5bc74955bdb8901dc93cd1fe41a2280",
                 "shasum": ""
             },
             "require": {
@@ -1798,7 +1798,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-06-02 13:04:33"
+            "time": "2015-06-03 10:21:18"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -1810,7 +1810,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/929b8a75042ac129d91eb691d773f4cf41081ec1",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/28d2bef9b51c4eb89b02d6850cff564b2764b5b5",
                 "reference": "929b8a75042ac129d91eb691d773f4cf41081ec1",
                 "shasum": ""
             },
