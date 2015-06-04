@@ -104,7 +104,7 @@ class SmsSecondFactorService
     public function sendChallenge(SendSmsChallengeCommand $command)
     {
         $phoneNumber = new InternationalPhoneNumber(
-            new CountryCode($command->countryCode),
+            $command->country->getCountryCode(),
             new PhoneNumber($command->subscriber)
         );
 

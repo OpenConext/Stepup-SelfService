@@ -20,7 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VerifyEmailType extends AbstractType
 {
@@ -40,7 +40,7 @@ class VerifyEmailType extends AbstractType
         ]);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand',

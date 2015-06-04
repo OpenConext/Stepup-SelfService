@@ -18,14 +18,15 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
+use Surfnet\StepupBundle\Value\PhoneNumber\Country;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class SendSmsChallengeCommand
 {
     /**
-     * @var string
+     * @var Country
      */
-    public $countryCode;
+    public $country;
 
     /**
      * @Assert\NotBlank(message="ss.send_sms_challenge_command.recipient.may_not_be_empty")
