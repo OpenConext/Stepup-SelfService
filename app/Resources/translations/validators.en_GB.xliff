@@ -182,53 +182,13 @@
         <source>middleware_client.dto.vetted_second_factor.type.must_not_be_blank</source>
         <target state="new">middleware_client.dto.vetted_second_factor.type.must_not_be_blank</target>
       </trans-unit>
-      <trans-unit id="e3554b07567999b6bd90ee405bf4e60db4d5d727" resname="ss.prove_phone_possession.challenge_expired">
-        <jms:reference-file line="23">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.challenge_expired</source>
-        <target>Your code has expired. Please request a new code.</target>
-      </trans-unit>
-      <trans-unit id="ebe4091038cf74f7ebcfd0a3256985fdcf21e7dd" resname="ss.prove_phone_possession.challenge_request_limit_reached">
-        <jms:reference-file line="22">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.challenge_request_limit_reached</source>
-        <target>You have exceeded the limit of three codes; you can no longer request any more codes. Contact your helpdesk or try again later.</target>
-      </trans-unit>
-      <trans-unit id="90d186f8499585cb62a368341bc3d5569f63a013" resname="ss.prove_phone_possession.challenge_response_incorrect">
-        <jms:reference-file line="30">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.challenge_response_incorrect</source>
-        <target state="new">ss.prove_phone_possession.challenge_response_incorrect</target>
-      </trans-unit>
-      <trans-unit id="e50a93e13b47c2995aefee1dd550f3dedfdf0080" resname="ss.prove_phone_possession.incorrect_challenge_response">
-        <jms:reference-file line="21">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.incorrect_challenge_response</source>
-        <target>The code you entered does not match. Please try again or request a new code.</target>
-      </trans-unit>
-      <trans-unit id="e5bb393004217418ac3b2d08716c203b86ad8d1d" resname="ss.prove_phone_possession.proof_of_possession_failed">
-        <jms:reference-file line="20">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.proof_of_possession_failed</source>
-        <target>The token could not be created due to unknown reasons.</target>
-      </trans-unit>
-      <trans-unit id="9360cda7585c4052d19755cff12aa9b76a69abcc" resname="ss.prove_phone_possession.send_sms_challenge_failed">
-        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.send_sms_challenge_failed</source>
-        <target>Sending the code by text message failed.</target>
-      </trans-unit>
-      <trans-unit id="f355c0b1302e6ed1a9301637306cb312b6feb4eb" resname="ss.prove_phone_possession.too_many_attempts">
-        <jms:reference-file line="24">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_phone_possession.too_many_attempts</source>
-        <target>You have exceeded the limit of ten attempts; you can no longer attempt verification of any more codes. Contact your helpdesk or try again later.</target>
-      </trans-unit>
-      <trans-unit id="6d67afd47dd9bd70f19efaf10e19900bd5361386" resname="ss.prove_yubikey_possession.proof_of_possession_failed">
-        <jms:reference-file line="31">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.prove_yubikey_possession.proof_of_possession_failed</source>
-        <target>The token could not be created due to unknown reasons.</target>
-      </trans-unit>
       <trans-unit id="64327d0cfa154721029978c67ef52df2fd18cacb" resname="ss.revoke_own_second_factor_command.identity_id.must_be_string">
         <source>ss.revoke_own_second_factor_command.identity_id.must_be_string</source>
-        <target state="new">ss.revoke_own_second_factor_command.identity_id.must_be_string</target>
+        <target>Identity ID must be a string</target>
       </trans-unit>
       <trans-unit id="590d26b3eb954c44862a6cf2bf4cf7a382b7119c" resname="ss.revoke_own_second_factor_command.second_factor_id.must_be_string">
         <source>ss.revoke_own_second_factor_command.second_factor_id.must_be_string</source>
-        <target state="new">ss.revoke_own_second_factor_command.second_factor_id.must_be_string</target>
+        <target>Second factor ID must be a string</target>
       </trans-unit>
       <trans-unit id="d23ad73b357db56cd8de5ead80613a379e7fb7f9" resname="ss.send_sms_challenge_command.recipient.may_not_be_empty">
         <source>ss.send_sms_challenge_command.recipient.may_not_be_empty</source>
@@ -241,18 +201,6 @@
       <trans-unit id="5f39ae7a72c57c188064a17deddd98d4e7ff5397" resname="ss.send_sms_challenge_command.recipient.must_be_string">
         <source>ss.send_sms_challenge_command.recipient.must_be_string</source>
         <target>SMS challenge recipient must be string.</target>
-      </trans-unit>
-      <trans-unit id="5445b7554bf403272afdbd8df0235e7b271bcd7f" resname="ss.send_sms_command.recipient.may_not_be_empty">
-        <source>ss.send_sms_command.recipient.may_not_be_empty</source>
-        <target>SMS recipient may not be empty.</target>
-      </trans-unit>
-      <trans-unit id="a0c7b3a25ab6f042b6cd6c6b628a025179d496f4" resname="ss.send_sms_command.recipient.must_be_string">
-        <source>ss.send_sms_command.recipient.must_be_string</source>
-        <target>SMS recipient must be string.</target>
-      </trans-unit>
-      <trans-unit id="38db36f5d3beb6d0138a9cf91486e5f6c029506c" resname="ss.send_sms_command.recipient.must_consist_of_digits">
-        <source>ss.send_sms_command.recipient.must_consist_of_digits</source>
-        <target>SMS recipient may consist of digits only.</target>
       </trans-unit>
       <trans-unit id="67ba1e3d487524fe3b3d1d3658569992ff551798" resname="ss.verify_sms_challenge_command.challenge.may_not_be_empty">
         <source>ss.verify_sms_challenge_command.challenge.may_not_be_empty</source>
@@ -270,15 +218,25 @@
         <source>ss.verify_yubikey_command.otp.must_be_string</source>
         <target>Yubikey OTP must be string.</target>
       </trans-unit>
-      <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
-        <jms:reference-file line="28">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.verify_yubikey_command.otp.otp_invalid</source>
-        <target>This Yubikey code was invalid. Please try again.</target>
+      <trans-unit id="049f2b52bc9cf777280bbfc8b787f6e69a701beb" resname="stepup.send_sms_command.recipient.may_not_be_empty">
+        <source>stepup.send_sms_command.recipient.may_not_be_empty</source>
+        <target>Please enter your phone number</target>
       </trans-unit>
-      <trans-unit id="222ba32640d7ba4a87f2070d67125ccabf100de8" resname="ss.verify_yubikey_command.otp.verification_error">
-        <jms:reference-file line="29">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.verify_yubikey_command.otp.verification_error</source>
-        <target>The verification of the Yubikey code failed due to unknown reasons. Try again.</target>
+      <trans-unit id="9e988968acb8506939fa9b6c5d15b6e65cdcdb9f" resname="stepup.send_sms_command.recipient.must_be_string">
+        <source>stepup.send_sms_command.recipient.must_be_string</source>
+        <target>SMS recipient must be a string</target>
+      </trans-unit>
+      <trans-unit id="f40a78148c674a1d7961ef7ca5d048664caf70b7" resname="stepup.send_sms_command.recipient.must_consist_of_digits">
+        <source>stepup.send_sms_command.recipient.must_consist_of_digits</source>
+        <target>Your phone number may only consist of digits</target>
+      </trans-unit>
+      <trans-unit id="b7bcb89ad4b6ed61daa138541702c67ce7dd63c9" resname="stepup.verify_possession_of_phone_command.challenge.may_not_be_empty">
+        <source>stepup.verify_possession_of_phone_command.challenge.may_not_be_empty</source>
+        <target>Please enter the code you received</target>
+      </trans-unit>
+      <trans-unit id="8b87f20ba80c487ed07070e32d031343571d34b9" resname="stepup.verify_possession_of_phone_command.challenge.must_be_string">
+        <source>stepup.verify_possession_of_phone_command.challenge.must_be_string</source>
+        <target>SMS challenge must be a string</target>
       </trans-unit>
     </body>
   </file>
