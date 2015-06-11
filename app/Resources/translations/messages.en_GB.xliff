@@ -162,7 +162,7 @@
       <trans-unit id="90d186f8499585cb62a368341bc3d5569f63a013" resname="ss.prove_phone_possession.challenge_response_incorrect">
         <jms:reference-file line="31">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_response_incorrect</source>
-        <target state="new">ss.prove_phone_possession.challenge_response_incorrect</target>
+        <target>The code you entered does not match the code you received.</target>
       </trans-unit>
       <trans-unit id="e50a93e13b47c2995aefee1dd550f3dedfdf0080" resname="ss.prove_phone_possession.incorrect_challenge_response">
         <jms:reference-file line="21">Resources/views/translations.twig</jms:reference-file>
@@ -443,7 +443,7 @@
       <trans-unit id="a1a1aa0e1c0a720bc6144c5a5a03d89ad6fdcc87" resname="ss.second_factor.list.text.unverified">
         <jms:reference-file line="36">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.unverified</source>
-        <target>ss.second_factor.list.text.unverified</target>
+        <target>You are still to prove your possession of the following token.</target>
       </trans-unit>
       <trans-unit id="da0c3086f8d5dc181e074f24d12e8ccc27429dcf" resname="ss.second_factor.list.text.verified">
         <jms:reference-file line="35">Resources/views/translations.twig</jms:reference-file>

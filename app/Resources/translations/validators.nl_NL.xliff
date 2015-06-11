@@ -184,11 +184,11 @@
       </trans-unit>
       <trans-unit id="64327d0cfa154721029978c67ef52df2fd18cacb" resname="ss.revoke_own_second_factor_command.identity_id.must_be_string">
         <source>ss.revoke_own_second_factor_command.identity_id.must_be_string</source>
-        <target state="new">ss.revoke_own_second_factor_command.identity_id.must_be_string</target>
+        <target>Identity ID must be a string</target>
       </trans-unit>
       <trans-unit id="590d26b3eb954c44862a6cf2bf4cf7a382b7119c" resname="ss.revoke_own_second_factor_command.second_factor_id.must_be_string">
         <source>ss.revoke_own_second_factor_command.second_factor_id.must_be_string</source>
-        <target state="new">ss.revoke_own_second_factor_command.second_factor_id.must_be_string</target>
+        <target>Second factor ID must be a string</target>
       </trans-unit>
       <trans-unit id="d23ad73b357db56cd8de5ead80613a379e7fb7f9" resname="ss.send_sms_challenge_command.recipient.may_not_be_empty">
         <source>ss.send_sms_challenge_command.recipient.may_not_be_empty</source>
@@ -217,6 +217,26 @@
       <trans-unit id="5bb2ccce54de9798253a1be8ae00560f2e219e7e" resname="ss.verify_yubikey_command.otp.must_be_string">
         <source>ss.verify_yubikey_command.otp.must_be_string</source>
         <target>Yubikey OTP must be string.</target>
+      </trans-unit>
+      <trans-unit id="049f2b52bc9cf777280bbfc8b787f6e69a701beb" resname="stepup.send_sms_command.recipient.may_not_be_empty">
+        <source>stepup.send_sms_command.recipient.may_not_be_empty</source>
+        <target>Vul alstublieft het telefoonnummer in</target>
+      </trans-unit>
+      <trans-unit id="9e988968acb8506939fa9b6c5d15b6e65cdcdb9f" resname="stepup.send_sms_command.recipient.must_be_string">
+        <source>stepup.send_sms_command.recipient.must_be_string</source>
+        <target>SMS recipient must be a string</target>
+      </trans-unit>
+      <trans-unit id="f40a78148c674a1d7961ef7ca5d048664caf70b7" resname="stepup.send_sms_command.recipient.must_consist_of_digits">
+        <source>stepup.send_sms_command.recipient.must_consist_of_digits</source>
+        <target>Het telefoonnummer mag enkel uit cijfers bestaan</target>
+      </trans-unit>
+      <trans-unit id="b7bcb89ad4b6ed61daa138541702c67ce7dd63c9" resname="stepup.verify_possession_of_phone_command.challenge.may_not_be_empty">
+        <source>stepup.verify_possession_of_phone_command.challenge.may_not_be_empty</source>
+        <target>Vul alstublieft de code in die u heeft ontvangen</target>
+      </trans-unit>
+      <trans-unit id="8b87f20ba80c487ed07070e32d031343571d34b9" resname="stepup.verify_possession_of_phone_command.challenge.must_be_string">
+        <source>stepup.verify_possession_of_phone_command.challenge.must_be_string</source>
+        <target>SMS challenge must be a string</target>
       </trans-unit>
     </body>
   </file>
