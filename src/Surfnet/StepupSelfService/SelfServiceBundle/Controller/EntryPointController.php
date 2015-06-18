@@ -32,8 +32,6 @@ class EntryPointController extends Controller
         if ($service->doSecondFactorsExistForIdentity($identity->id)) {
             return $this->redirect($this->generateUrl('ss_second_factor_list'));
         } else {
-            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.selector.alert.no_second_factors_yet');
-
             return $this->redirect(
                 $this->generateUrl('ss_registration_display_types')
             );
