@@ -274,11 +274,6 @@
         <source>ss.registration.registration_email_sent.title.list_of_ras</source>
         <target>Locatie om je token te activeren</target>
       </trans-unit>
-      <trans-unit id="20cd158dac14a9a2fcb66557ab4eb983a30ea439" resname="ss.registration.selector.alert.no_second_factors_yet">
-        <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.registration.selector.alert.no_second_factors_yet</source>
-        <target>Je hebt nog geen token geregistreerd.</target>
-      </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <jms:reference-file line="5">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.sms.alt</source>
@@ -447,7 +442,7 @@
       <trans-unit id="da0c3086f8d5dc181e074f24d12e8ccc27429dcf" resname="ss.second_factor.list.text.verified">
         <jms:reference-file line="35">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.verified</source>
-        <target>Het volgende token is geregistreerd voor jouw account, maar nog niet geactiveerd. 
+        <target>Het volgende token is geregistreerd voor jouw account, maar nog niet geactiveerd.
 
 Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg de instructies uit de e-mail om je token te activeren.</target>
       </trans-unit>
