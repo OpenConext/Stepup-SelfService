@@ -274,11 +274,6 @@
         <source>ss.registration.registration_email_sent.title.list_of_ras</source>
         <target>Location to activate your token</target>
       </trans-unit>
-      <trans-unit id="20cd158dac14a9a2fcb66557ab4eb983a30ea439" resname="ss.registration.selector.alert.no_second_factors_yet">
-        <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.registration.selector.alert.no_second_factors_yet</source>
-        <target>You do not have any security tokens yet.</target>
-      </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <jms:reference-file line="5">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.sms.alt</source>
