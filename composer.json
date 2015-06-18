@@ -27,7 +27,7 @@
         "guzzlehttp/guzzle": "~4",
         "simplesamlphp/saml2": "dev-master",
         "surfnet/stepup-saml-bundle": "dev-develop",
-        "surfnet/stepup-bundle": "dev-develop",
+        "surfnet/stepup-bundle": "dev-feature/numeric-yubikey-ids",
         "symfony/swiftmailer-bundle": "~2.3"
     },
     "require-dev": {
