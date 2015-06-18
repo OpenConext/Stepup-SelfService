@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "71535f2296cfa353cccb1163f2ec97c8",
+    "hash": "517ae233c2509d6b0879849721942bd8",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1765,7 +1765,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/b11ce75c7f00b64b8b000846db6ef1d56dcd490c",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/10a75d6bafb65fa233e64236047d67aa37850b3b",
                 "reference": "b11ce75c7f00b64b8b000846db6ef1d56dcd490c",
                 "shasum": ""
             },
@@ -1809,16 +1809,16 @@
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "dev-develop",
+            "version": "dev-feature/send-institution-with-update-identity-command",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "929b8a75042ac129d91eb691d773f4cf41081ec1"
+                "reference": "31f0e00c536aa186514f5bdfc1ebad88e90b4131"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/541df9564a8680b6001b0c18a8b01b74f6013158",
-                "reference": "929b8a75042ac129d91eb691d773f4cf41081ec1",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/31f0e00c536aa186514f5bdfc1ebad88e90b4131",
+                "reference": "31f0e00c536aa186514f5bdfc1ebad88e90b4131",
                 "shasum": ""
             },
             "require": {
@@ -1854,7 +1854,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2015-06-01 15:00:06"
+            "time": "2015-06-18 11:24:53"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
