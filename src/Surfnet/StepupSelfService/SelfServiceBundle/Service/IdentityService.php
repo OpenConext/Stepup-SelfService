@@ -157,7 +157,7 @@ class IdentityService implements UserProviderInterface
      */
     public function updateIdentity(Identity $identity)
     {
-        $command = new UpdateIdentityCommand($identity->id);
+        $command = new UpdateIdentityCommand($identity->id, $identity->institution);
         $command->email      = $identity->email;
         $command->commonName = $identity->commonName;
 
