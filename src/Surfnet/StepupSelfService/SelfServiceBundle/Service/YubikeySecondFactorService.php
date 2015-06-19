@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupBundle\Value\YubikeyOtp;
 use Surfnet\StepupBundle\Value\YubikeyPublicId;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProveYubikeyPossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
@@ -68,12 +69,14 @@ class YubikeySecondFactorService
         }
 
         $secondFactorId = Uuid::generate();
-        $yubikeyPublicId = YubikeyPublicId::fromModHex(substr($command->otp, 0, -32))->getYubikeyPublicId();
+
+        $otp = YubikeyOtp::fromString($command->otp);
+        $publicId = YubikeyPublicId::fromOtp($otp);
 
         $provePossessionCommand = new ProveYubikeyPossessionCommand();
         $provePossessionCommand->identityId = $command->identity;
         $provePossessionCommand->secondFactorId = $secondFactorId;
-        $provePossessionCommand->yubikeyPublicId = $yubikeyPublicId;
+        $provePossessionCommand->yubikeyPublicId = $publicId->getYubikeyPublicId();
 
         $result = $this->commandService->execute($provePossessionCommand);
 
