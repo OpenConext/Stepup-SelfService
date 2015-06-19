@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "71535f2296cfa353cccb1163f2ec97c8",
+    "hash": "6eb470b6b29c044302244eb5bd458886",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1757,16 +1757,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "dev-develop",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "38e51b79287948932774ce44942a0877b1aeb23e"
+                "reference": "7e201ac7f5b870a142a85d3a44f1e2ebb8b31933"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/38e51b79287948932774ce44942a0877b1aeb23e",
-                "reference": "38e51b79287948932774ce44942a0877b1aeb23e",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/7e201ac7f5b870a142a85d3a44f1e2ebb8b31933",
+                "reference": "7e201ac7f5b870a142a85d3a44f1e2ebb8b31933",
                 "shasum": ""
             },
             "require": {
@@ -1806,20 +1806,20 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-06-19 11:32:32"
+            "time": "2015-06-19 11:44:48"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "dev-develop",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "1cd3513f26a6df7dbce83188e6aa92fcba51bcc7"
+                "reference": "c4c35c790acb4be964980e64b461c03a034e2066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/1cd3513f26a6df7dbce83188e6aa92fcba51bcc7",
-                "reference": "1cd3513f26a6df7dbce83188e6aa92fcba51bcc7",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/c4c35c790acb4be964980e64b461c03a034e2066",
+                "reference": "c4c35c790acb4be964980e64b461c03a034e2066",
                 "shasum": ""
             },
             "require": {
@@ -1855,20 +1855,20 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2015-06-18 12:00:16"
+            "time": "2015-06-19 09:21:37"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
-            "version": "dev-develop",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-saml-bundle.git",
-                "reference": "410f74d707053162ff043f57fbc114ddfdb65cab"
+                "reference": "8f336c442d3dc9d045bff498c4b27de65213565a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/cdad0d6597f2577ec7c0c69bb3099a6d2ddc45ad",
-                "reference": "410f74d707053162ff043f57fbc114ddfdb65cab",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/8f336c442d3dc9d045bff498c4b27de65213565a",
+                "reference": "8f336c442d3dc9d045bff498c4b27de65213565a",
                 "shasum": ""
             },
             "require": {
@@ -1902,7 +1902,7 @@
                 "stepup",
                 "surfnet"
             ],
-            "time": "2015-06-03 15:15:11"
+            "time": "2015-06-19 10:11:01"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4271,10 +4271,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "mopa/bootstrap-bundle": 20,
-        "surfnet/stepup-middleware-client-bundle": 20,
-        "simplesamlphp/saml2": 20,
-        "surfnet/stepup-saml-bundle": 20,
-        "surfnet/stepup-bundle": 20
+        "simplesamlphp/saml2": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
