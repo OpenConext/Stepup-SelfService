@@ -16,22 +16,12 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Locale;
 
-use DateTime;
-use ReflectionProperty;
-
-class DateTimeHelper
+interface PreferredLocaleProvider
 {
     /**
-     * Fixes the `DateTime` returned by `DateTime::now()`.
-     *
-     * @param DateTime|null $now
+     * @return string
      */
-    public static function setCurrentTime(DateTime $now = null)
-    {
-        $nowProperty = new ReflectionProperty('Surfnet\StepupSelfService\SelfServiceBundle\DateTime\DateTime', 'now');
-        $nowProperty->setAccessible(true);
-        $nowProperty->setValue($now);
-    }
+    public function providePreferredLocale();
 }

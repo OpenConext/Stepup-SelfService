@@ -20,15 +20,22 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupBundle\Command\SwitchLocaleCommand;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\IdentitySearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\CreateIdentityCommand;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ExpressLocalePreferenceCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\UpdateIdentityCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\IdentityService as ApiIdentityService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
+ */
 class IdentityService implements UserProviderInterface
 {
     /**
@@ -42,6 +49,11 @@ class IdentityService implements UserProviderInterface
     private $commandService;
 
     /**
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    /**
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
@@ -49,10 +61,12 @@ class IdentityService implements UserProviderInterface
     public function __construct(
         ApiIdentityService $apiIdentityService,
         CommandService $commandService,
+        TokenStorageInterface $tokenStorage,
         LoggerInterface $logger
     ) {
         $this->apiIdentityService = $apiIdentityService;
         $this->commandService = $commandService;
+        $this->tokenStorage = $tokenStorage;
         $this->logger = $logger;
     }
 
@@ -128,11 +142,12 @@ class IdentityService implements UserProviderInterface
     public function createIdentity(Identity $identity)
     {
         $command = new CreateIdentityCommand();
-        $command->id          = $identity->id;
-        $command->nameId      = $identity->nameId;
-        $command->institution = $identity->institution;
-        $command->email       = $identity->email;
-        $command->commonName  = $identity->commonName;
+        $command->id              = $identity->id;
+        $command->nameId          = $identity->nameId;
+        $command->institution     = $identity->institution;
+        $command->email           = $identity->email;
+        $command->commonName      = $identity->commonName;
+        $command->preferredLocale = $identity->preferredLocale;
 
         $this->processCommand($command);
     }
@@ -142,11 +157,41 @@ class IdentityService implements UserProviderInterface
      */
     public function updateIdentity(Identity $identity)
     {
-        $command = new UpdateIdentityCommand($identity->id);
+        $command = new UpdateIdentityCommand($identity->id, $identity->institution);
         $command->email      = $identity->email;
         $command->commonName = $identity->commonName;
 
         $this->processCommand($command);
+    }
+
+
+    /**
+     * @param SwitchLocaleCommand $command
+     * @return bool
+     */
+    public function switchLocale(SwitchLocaleCommand $command)
+    {
+        /** @var TokenInterface|null */
+        $token = $this->tokenStorage->getToken();
+
+        if (!$token) {
+            throw new RuntimeException('Cannot switch locales when unauthenticated');
+        }
+
+        /** @var Identity $identity */
+        $identity = $token->getUser();
+
+        $expressLocalePreferenceCommand = new ExpressLocalePreferenceCommand();
+        $expressLocalePreferenceCommand->identityId = $command->identityId;
+        $expressLocalePreferenceCommand->preferredLocale = $command->locale;
+
+        $result = $this->commandService->execute($expressLocalePreferenceCommand);
+
+        if ($result->isSuccessful()) {
+            $identity->preferredLocale = $command->locale;
+        }
+
+        return $result->isSuccessful();
     }
 
     /**

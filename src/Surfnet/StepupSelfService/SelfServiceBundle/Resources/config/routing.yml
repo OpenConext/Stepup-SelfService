@@ -79,3 +79,10 @@ selfservice_serviceprovider_consume_assertion:
     path: /authentication/consume-assertion
     methods: [POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Saml:consumeAssertion }
+
+ss_switch_locale:
+    path:     /switch-locale
+    methods:  [POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Locale:switchLocale }
+    requirements:
+        'return-url': '.+'

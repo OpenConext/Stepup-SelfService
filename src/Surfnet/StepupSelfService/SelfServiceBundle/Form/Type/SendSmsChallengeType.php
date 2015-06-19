@@ -21,18 +21,20 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 use Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SendSmsChallengeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('countryCode', 'choice', [
+            ->add('country', 'choice', [
                 'label'                          => /** @Ignore */ 'country code',
                 'horizontal_label_class'         => 'sr-only',
                 'required'                       => true,
                 'choice_list'                    => CountryCodeListing::asChoiceList(),
+                'preferred_choices'              =>
+                    ['Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing', 'isPreferredChoice'],
                 'horizontal_input_wrapper_class' => 'foo',
             ])
             ->add('subscriber', 'text', [
@@ -51,7 +53,7 @@ class SendSmsChallengeType extends AbstractType
             ]);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'attr' => ['class' => 'form-inline'],

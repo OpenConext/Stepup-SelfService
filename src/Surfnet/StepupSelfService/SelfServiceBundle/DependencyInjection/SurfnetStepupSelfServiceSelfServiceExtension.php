@@ -35,36 +35,11 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $gatewayGuzzleOptions = [
-            'base_url' => $config['gateway_api']['url'],
-            'defaults' => [
-                'auth' => [
-                    $config['gateway_api']['credentials']['username'],
-                    $config['gateway_api']['credentials']['password'],
-                    'basic'
-                ],
-                'headers' => [
-                    'Accept' => 'application/json'
-                ]
-            ]
-        ];
-
-        $gatewayGuzzle = $container->getDefinition('surfnet_stepup_self_service_self_service.guzzle.gateway_api');
-        $gatewayGuzzle->replaceArgument(0, $gatewayGuzzleOptions);
-
-        $smsSecondFactorService =
-            $container->getDefinition('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-        $smsSecondFactorService->replaceArgument(4, $config['sms']['originator']);
-
-        $container
-            ->getDefinition('surfnet_stepup_self_service_self_service.challenge_handler')
-            ->replaceArgument(2, $config['sms']['otp_expiry_interval'])
-            ->replaceArgument(3, $config['sms']['maximum_otp_requests']);
+        $container->getDefinition('self_service.locale.request_stack_locale_provider')
+            ->replaceArgument(1, $container->getParameter('default_locale'))
+            ->replaceArgument(2, $container->getParameter('locales'));
     }
 }

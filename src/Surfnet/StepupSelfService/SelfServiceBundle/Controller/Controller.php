@@ -19,7 +19,6 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as FrameworkController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;

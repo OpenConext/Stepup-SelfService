@@ -10,11 +10,11 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4",
-        "symfony/symfony": "~2.6,>=2.6.6",
+        "symfony/symfony": "^2.7",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~3.0",
+        "sensio/distribution-bundle": "^3.0.21",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "nelmio/security-bundle": "~1.4",
@@ -23,14 +23,15 @@
         "fortawesome/font-awesome": "~4.2.0",
         "jms/translation-bundle": "~1.1.0",
         "jms/di-extra-bundle": "~1.4.0",
-        "surfnet/stepup-middleware-client-bundle": "0.3.*",
+        "surfnet/stepup-middleware-client-bundle": "^1.0",
         "guzzlehttp/guzzle": "~4",
         "simplesamlphp/saml2": "dev-master",
-        "surfnet/stepup-saml-bundle": "0.4.*",
-        "surfnet/stepup-bundle": "0.2.*",
+        "surfnet/stepup-saml-bundle": "^1.0",
+        "surfnet/stepup-bundle": "^1.0",
         "symfony/swiftmailer-bundle": "~2.3"
     },
     "require-dev": {
+        "mockery/mockery": "~0.9.0",
         "sensio/generator-bundle": "~2.3",
         "ibuildings/qa-tools": "~1.1,>=1.1.27",
         "liip/rmt": "1.1.*"

@@ -63,6 +63,13 @@ form[name="ss_verify_email"] {
     }
 }
 
+form[name="stepup_switch_locale"] {
+    .pull-right();
+}
+select[name="stepup_switch_locale[locale]"] {
+    min-width: 150px;
+}
+
 .generate-progress(100);
 
 .generate-progress(@n, @i: 0) when (@i =< @n) {

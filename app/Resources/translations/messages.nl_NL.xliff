@@ -17,6 +17,21 @@
         <source>button.logout</source>
         <target>Uitloggen</target>
       </trans-unit>
+      <trans-unit id="a91ec2021294ddfceb930e47ee05536b0f85193b" resname="country code">
+        <jms:reference-file line="32">Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <source>country code</source>
+        <target state="new">country code</target>
+      </trans-unit>
+      <trans-unit id="a08764057e3607049e3495943676b29f7baefba9" resname="locale.en_GB">
+        <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
+        <source>locale.en_GB</source>
+        <target>English</target>
+      </trans-unit>
+      <trans-unit id="169792c2b812adec2ddf0b47e7be0a56c1b892ae" resname="locale.nl_NL">
+        <jms:reference-file line="3">Resources/views/translations.twig</jms:reference-file>
+        <source>locale.nl_NL</source>
+        <target>Nederlands</target>
+      </trans-unit>
       <trans-unit id="a31c84959103cbd5fb6f899025d9787c25d62bbe" resname="ss.error.button.go_home">
         <jms:reference-file line="9">views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="9">views/Exception/error404.html.twig</jms:reference-file>
@@ -84,6 +99,16 @@
         <source>ss.error.title</source>
         <target>Foutmelding</target>
       </trans-unit>
+      <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
+        <jms:reference-file line="60">SelfServiceBundle/Controller/LocaleControl.php</jms:reference-file>
+        <source>ss.flash.error_while_switching_locale</source>
+        <target>Due to an unknown reason, switching locales failed.</target>
+      </trans-unit>
+      <trans-unit id="600028302c7b3a43ae0e30ab3b015f505c2b7f1f" resname="ss.flash.invalid_switch_locale_form">
+        <jms:reference-file line="53">SelfServiceBundle/Controller/LocaleControl.php</jms:reference-file>
+        <source>ss.flash.invalid_switch_locale_form</source>
+        <target>Due to an unknown reason, switching locales failed.</target>
+      </trans-unit>
       <trans-unit id="b3d573081dd44232cfd0fc03a04fe1b523715271" resname="ss.form.ss_revoke_second_factor.cancel">
         <jms:reference-file line="35">Form/Type/RevokeSecondFactorType.php</jms:reference-file>
         <source>ss.form.ss_revoke_second_factor.cancel</source>
@@ -123,6 +148,46 @@
         <jms:reference-file line="30">Form/Type/VerifySmsChallengeType.php</jms:reference-file>
         <source>ss.form.ss_verify_sms_challenge.text.challenge</source>
         <target>Code</target>
+      </trans-unit>
+      <trans-unit id="e3554b07567999b6bd90ee405bf4e60db4d5d727" resname="ss.prove_phone_possession.challenge_expired">
+        <jms:reference-file line="23">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.challenge_expired</source>
+        <target>Uw code is verlopen. Vraag een nieuwe code aan.</target>
+      </trans-unit>
+      <trans-unit id="ebe4091038cf74f7ebcfd0a3256985fdcf21e7dd" resname="ss.prove_phone_possession.challenge_request_limit_reached">
+        <jms:reference-file line="22">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.challenge_request_limit_reached</source>
+        <target>U heeft de limiet van drie codes bereikt; u kunt geen codes meer aanvragen. Neem contact op met uw helpdesk of probeer het later nog eens.</target>
+      </trans-unit>
+      <trans-unit id="90d186f8499585cb62a368341bc3d5569f63a013" resname="ss.prove_phone_possession.challenge_response_incorrect">
+        <jms:reference-file line="31">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.challenge_response_incorrect</source>
+        <target>De code die je ingevoerd hebt komt niet overeen met de code die je hebt ontvangen.</target>
+      </trans-unit>
+      <trans-unit id="e50a93e13b47c2995aefee1dd550f3dedfdf0080" resname="ss.prove_phone_possession.incorrect_challenge_response">
+        <jms:reference-file line="21">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.incorrect_challenge_response</source>
+        <target>De ingevoerde code is onjuist. Probeer het nog eens, of vraag een nieuwe code op.</target>
+      </trans-unit>
+      <trans-unit id="e5bb393004217418ac3b2d08716c203b86ad8d1d" resname="ss.prove_phone_possession.proof_of_possession_failed">
+        <jms:reference-file line="20">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.proof_of_possession_failed</source>
+        <target>Het token kon wegens een onbekende reden niet aangemaakt worden.</target>
+      </trans-unit>
+      <trans-unit id="9360cda7585c4052d19755cff12aa9b76a69abcc" resname="ss.prove_phone_possession.send_sms_challenge_failed">
+        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.send_sms_challenge_failed</source>
+        <target>Het versturen van de code per SMS is mislukt.</target>
+      </trans-unit>
+      <trans-unit id="f355c0b1302e6ed1a9301637306cb312b6feb4eb" resname="ss.prove_phone_possession.too_many_attempts">
+        <jms:reference-file line="24">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_phone_possession.too_many_attempts</source>
+        <target>U heeft de limiet van tien pogingen bereikt; u kunt geen codes meer verifiëren. Neem contact op met uw helpdesk of probeer het later nog eens.</target>
+      </trans-unit>
+      <trans-unit id="6d67afd47dd9bd70f19efaf10e19900bd5361386" resname="ss.prove_yubikey_possession.proof_of_possession_failed">
+        <jms:reference-file line="32">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.prove_yubikey_possession.proof_of_possession_failed</source>
+        <target>Het token kon wegens een onbekende reden niet aangemaakt worden.</target>
       </trans-unit>
       <trans-unit id="1fd92b34e65dcbb10330e06d6079564e19252093" resname="ss.registration.email_verification_email_sent.text.email_verification_has_been_sent">
         <jms:reference-file line="14">views/Registration/emailVerificationEmailSent.html.twig</jms:reference-file>
@@ -208,11 +273,6 @@
         <jms:reference-file line="37">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.title.list_of_ras</source>
         <target>Locatie om je token te activeren</target>
-      </trans-unit>
-      <trans-unit id="20cd158dac14a9a2fcb66557ab4eb983a30ea439" resname="ss.registration.selector.alert.no_second_factors_yet">
-        <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
-        <source>ss.registration.selector.alert.no_second_factors_yet</source>
-        <target>Je hebt nog geen token geregistreerd.</target>
       </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <jms:reference-file line="5">Resources/views/translations.twig</jms:reference-file>
@@ -377,12 +437,12 @@
       <trans-unit id="a1a1aa0e1c0a720bc6144c5a5a03d89ad6fdcc87" resname="ss.second_factor.list.text.unverified">
         <jms:reference-file line="36">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.unverified</source>
-        <target>ss.second_factor.list.text.unverified</target>
+        <target>Van het volgende token moet het bezit nog bewezen worden.</target>
       </trans-unit>
       <trans-unit id="da0c3086f8d5dc181e074f24d12e8ccc27429dcf" resname="ss.second_factor.list.text.verified">
         <jms:reference-file line="35">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.verified</source>
-        <target>Het volgende token is geregistreerd voor jouw account, maar nog niet geactiveerd. 
+        <target>Het volgende token is geregistreerd voor jouw account, maar nog niet geactiveerd.
 
 Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg de instructies uit de e-mail om je token te activeren.</target>
       </trans-unit>
@@ -470,6 +530,21 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <jms:reference-file line="29">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor_list.header.type</source>
         <target>Token</target>
+      </trans-unit>
+      <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
+        <jms:reference-file line="29">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.verify_yubikey_command.otp.otp_invalid</source>
+        <target>Deze Yubikey code was ongeldig. Probeer het nog eens.</target>
+      </trans-unit>
+      <trans-unit id="222ba32640d7ba4a87f2070d67125ccabf100de8" resname="ss.verify_yubikey_command.otp.verification_error">
+        <jms:reference-file line="30">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.verify_yubikey_command.otp.verification_error</source>
+        <target>Het verifiëren van de Yubikey-code is wegens een onbekende reden niet gelukt. Probeer het opnieuw.</target>
+      </trans-unit>
+      <trans-unit id="fcbfd9e643bb8d8f3fcf3ca0380a73bb9dffee2b" resname="stepup_middleware_client.form.switch_locale.switch">
+        <jms:reference-file line="58">Form/Type/SwitchLocaleType.php</jms:reference-file>
+        <source>stepup_middleware_client.form.switch_locale.switch</source>
+        <target>Vertalen</target>
       </trans-unit>
     </body>
   </file>
