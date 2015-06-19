@@ -1867,7 +1867,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/05e7adbb0ae123b8b433948aa564a187486b1c64",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/cdad0d6597f2577ec7c0c69bb3099a6d2ddc45ad",
                 "reference": "410f74d707053162ff043f57fbc114ddfdb65cab",
                 "shasum": ""
             },
