@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6eb470b6b29c044302244eb5bd458886",
+    "hash": "dde1874086fc44d0301b0c1fead90c0b",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1652,13 +1652,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/SURFnet/saml2.git",
-                "reference": "fb22b707c7a4705d2d54401715c8f6d229e88a74"
+                "url": "https://github.com/simplesamlphp/saml2.git",
+                "reference": "fd11ea8c7d8de2537b1b8e06033e0db2664bb373"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/saml2/zipball/b2d96e911d8e9348edd75bcd980f60a251fa5c28",
-                "reference": "fb22b707c7a4705d2d54401715c8f6d229e88a74",
+                "url": "https://api.github.com/repos/simplesamlphp/saml2/zipball/fd11ea8c7d8de2537b1b8e06033e0db2664bb373",
+                "reference": "fd11ea8c7d8de2537b1b8e06033e0db2664bb373",
                 "shasum": ""
             },
             "require": {
@@ -1667,7 +1667,7 @@
                 "ext-openssl": "*",
                 "php": ">=5.3.3",
                 "psr/log": "~1.0",
-                "simplesamlphp/xmlseclibs": "~1.3.1"
+                "robrichards/xmlseclibs": "^1.3"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9",
@@ -1684,11 +1684,7 @@
                     "SAML2_": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-0": {
-                    "SAML2_": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-2.1"
             ],
@@ -1699,10 +1695,7 @@
                 }
             ],
             "description": "SAML2 PHP library from SimpleSAMLphp",
-            "support": {
-                "source": "https://github.com/SURFnet/saml2/tree/master"
-            },
-            "time": "2015-02-24 08:29:44"
+            "time": "2015-06-22 14:31:51"
         },
         {
             "name": "simplesamlphp/xmlseclibs",
