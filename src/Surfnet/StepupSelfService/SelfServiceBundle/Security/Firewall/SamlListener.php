@@ -28,6 +28,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SessionH
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -150,6 +151,9 @@ class SamlListener implements ListenerInterface
         }
 
         $this->tokenStorage->setToken($authToken);
+
+        // migrate the session to prevent session hijacking
+        $this->sessionHandler->migrate();
 
         $event->setResponse(new RedirectResponse($this->sessionHandler->getCurrentRequestUri()));
 
