@@ -20,5 +20,5 @@ security:
                 invalidate_session: true
 
     access_control:
-        - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel:https }
+        - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/, roles: ROLE_USER, requires_channel: https }
