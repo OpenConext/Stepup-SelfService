@@ -18,6 +18,9 @@ security:
                 path: /logout
                 target: %logout_redirect_url%
                 invalidate_session: true
+                csrf_token_generator: form.csrf_provider
+                csrf_parameter: 't'
+                csrf_token_id: 'self_service_logout_token'
 
     access_control:
         - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

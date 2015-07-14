@@ -27,7 +27,7 @@
             </div>
         {% if app.user %}
             <div class="clearfix">
-                <form method="post" action="{{ path('logout') }}" class="pull-right">
+                <form method="post" action="{{ logout_url('saml_based') }}" class="pull-right">
                     <button type="submit" class="btn btn-link">
                         <i class="fa fa-sign-out"></i>
                         {{ 'button.logout'|trans }}
