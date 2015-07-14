@@ -22,12 +22,23 @@ use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Command\SwitchLocaleCommand;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class LocaleController extends Controller
 {
     public function switchLocaleAction(Request $request)
     {
         $returnUrl = $request->query->get('return-url');
+
+        $domain = $request->getSchemeAndHttpHost();
+        if (strpos($returnUrl, $domain) !== 0) {
+            $this->get('logger')->error(sprintf(
+                'Identity "%s" used illegal return-url for redirection after changing locale, aborting request',
+                $this->getIdentity()->id
+            ));
+
+            throw new BadRequestHttpException('Invalid return-url given');
+        }
 
         /** @var LoggerInterface $logger */
         $logger = $this->get('logger');
