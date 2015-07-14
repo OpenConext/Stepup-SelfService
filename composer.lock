@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b92753df8af9c7022a90afc7e9e7bc94",
+    "hash": "db58f82f70cfd4430ec8dfc43e96b065",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1842,16 +1842,16 @@
         },
         {
             "name": "surfnet/stepup-saml-bundle",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-saml-bundle.git",
-                "reference": "abc48cd40ed5abebf74d12467c439db54d0aa5f5"
+                "reference": "e5417e683a47377177135d788199b8be072b6de1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/abc48cd40ed5abebf74d12467c439db54d0aa5f5",
-                "reference": "abc48cd40ed5abebf74d12467c439db54d0aa5f5",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/e5417e683a47377177135d788199b8be072b6de1",
+                "reference": "e5417e683a47377177135d788199b8be072b6de1",
                 "shasum": ""
             },
             "require": {
@@ -1886,7 +1886,7 @@
                 "stepup",
                 "surfnet"
             ],
-            "time": "2015-07-13 12:44:50"
+            "time": "2015-07-13 13:45:47"
         },
         {
             "name": "swiftmailer/swiftmailer",
