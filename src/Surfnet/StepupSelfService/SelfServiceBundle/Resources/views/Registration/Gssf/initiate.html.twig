@@ -32,15 +32,12 @@
 
     <hr>
 
-    <form action="{{ path('ss_registration_gssf_authenticate', {'provider': provider}) }}" method="post">
-        {% if authenticationFailed is defined %}
-            <div class="alert alert-danger">{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.error.authn_failed')|trans }}</div>
-        {% endif %}
-        {% if proofOfPossessionFailed is defined %}
-            <div class="alert alert-danger">{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.error.proof_of_possession_failed')|trans }}</div>
-        {% endif %}
-
-        <button type="submit" class="btn btn-primary">{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.button.initiate')|trans }}</button>
-    </form>
+    {% if authenticationFailed is defined %}
+        <div class="alert alert-danger">{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.error.authn_failed')|trans }}</div>
+    {% endif %}
+    {% if proofOfPossessionFailed is defined %}
+        <div class="alert alert-danger">{{ ('ss.registration.gssf.initiate.' ~ provider ~ '.error.proof_of_possession_failed')|trans }}</div>
+    {% endif %}
+    {{ form(form) }}
 
 {% endblock %}
