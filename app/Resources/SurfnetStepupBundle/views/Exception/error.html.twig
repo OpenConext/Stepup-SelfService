@@ -9,6 +9,7 @@
     <a class="btn btn-primary" href="{{ path('ss_entry_point') }}">{{ 'ss.error.button.go_home'|trans }}</a>
 
     <hr>
+    <p><i class="fa fa-clock-o"></i> {{ "now"|date('Y-m-d H:i:s') }}</p>
     <p>{{ 'ss.error.text.your_art_code'|trans }}: <span class="art">#{{ art }}</span></p>
     <p>{{ 'ss.error.text.what_were_you_doing_well_fix_it'|trans }}</p>
 {% endblock %}

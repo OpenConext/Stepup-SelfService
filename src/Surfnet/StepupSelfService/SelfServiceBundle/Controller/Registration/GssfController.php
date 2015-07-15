@@ -19,7 +19,6 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
@@ -34,14 +33,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 final class GssfController extends Controller
 {
     /**
-     * @Template
-     * @param Request $request
      * @param string $provider
      * @return array|Response
      */
-    public function initiateAction(Request $request, $provider)
+    public function initiateAction($provider)
     {
-        return ['provider' => $this->getProvider($provider)->getName()];
+        return $this->renderInitiateForm($provider);
     }
 
     /**
@@ -101,10 +98,7 @@ final class GssfController extends Controller
                 sprintf('Could not process received Response, error: "%s"', $exception->getMessage())
             );
 
-            return $this->render(
-                'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
-                ['provider' => $provider->getName(), 'authenticationFailed' => true]
-            );
+            return $this->renderInitiateForm($provider->getName(), ['authenticationFailed' => true]);
         }
 
         $expectedResponseTo = $provider->getStateHandler()->getRequestId();
@@ -116,10 +110,7 @@ final class GssfController extends Controller
                 ($expectedResponseTo ? 'expected "' . $expectedResponseTo . '"' : ' no response expected')
             ));
 
-            return $this->render(
-                'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
-                ['provider' => $provider->getName(), 'authenticationFailed' => true]
-            );
+            return $this->renderInitiateForm($provider->getName(), ['authenticationFailed' => true]);
         }
 
         $this->get('logger')->notice(
@@ -145,10 +136,7 @@ final class GssfController extends Controller
 
         $this->getLogger()->error('Unable to prove GSSF possession');
 
-        return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
-            ['provider' => $provider->getName(), 'proofOfPossessionFailed' => true]
-        );
+        return $this->renderInitiateForm($provider->getName(), ['proofOfPossessionFailed' => true]);
     }
 
     /**
@@ -190,5 +178,16 @@ final class GssfController extends Controller
     private function getLogger()
     {
         return $this->get('logger');
+    }
+
+    private function renderInitiateForm($provider, array $parameters = [])
+    {
+        $form               = $this->createForm('ss_initiate_gssf', null, ['provider' => $provider]);
+        $templateParameters = array_merge($parameters, ['form' => $form->createView(), 'provider' => $provider]);
+
+        return $this->render(
+            'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
+            $templateParameters
+        );
     }
 }

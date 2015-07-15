@@ -25,9 +25,8 @@
         "jms/di-extra-bundle": "~1.4.0",
         "surfnet/stepup-middleware-client-bundle": "^1.0",
         "guzzlehttp/guzzle": "~4",
-        "simplesamlphp/saml2": "dev-master",
-        "surfnet/stepup-saml-bundle": "^1.0",
-        "surfnet/stepup-bundle": "^1.0",
+        "surfnet/stepup-saml-bundle": "^1.3.0",
+        "surfnet/stepup-bundle": "^1.1.0",
         "symfony/swiftmailer-bundle": "~2.3"
     },
     "require-dev": {
