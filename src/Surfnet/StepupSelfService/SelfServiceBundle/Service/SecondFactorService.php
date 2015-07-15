@@ -107,6 +107,35 @@ class SecondFactorService
                $vettedSecondFactors->getTotalItems() > 0;
     }
 
+    public function identityHasSecondFactorOfStateWithId($identityId, $state, $secondFactorId)
+    {
+        switch ($state) {
+            case 'unverified':
+                $secondFactors = $this->findUnverifiedByIdentity($identityId);
+                break;
+            case 'verified':
+                $secondFactors = $this->findVerifiedByIdentity($identityId);
+                break;
+            case 'vetted':
+                $secondFactors = $this->findVettedByIdentity($identityId);
+                break;
+            default:
+                throw new \LogicException(sprintf('Invalid second factor state "%s" given.', $state));
+        }
+
+        if (count($secondFactors->getElements()) === 0) {
+            return false;
+        }
+
+        foreach ($secondFactors->getElements() as $secondFactor) {
+            if ($secondFactor->id === $secondFactorId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Returns the given registrant's unverified second factors.
      *

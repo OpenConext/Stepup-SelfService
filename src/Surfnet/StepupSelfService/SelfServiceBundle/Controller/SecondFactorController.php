@@ -63,6 +63,15 @@ class SecondFactorController extends Controller
 
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+        if (!$service->identityHasSecondFactorOfStateWithId($this->getIdentity()->id, $state, $secondFactorId)) {
+            $this->get('logger')->error(sprintf(
+                'Identity "%s" tried to revoke "%s" second factor "%s", but does not own that second factor',
+                $this->getIdentity()->id,
+                $state,
+                $secondFactorId
+            ));
+            throw new NotFoundHttpException();
+        }
 
         if ($form->isValid()) {
             /** @var FlashBagInterface $flashBag */

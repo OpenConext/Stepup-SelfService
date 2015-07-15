@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as FrameworkController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use UnexpectedValueException;
 
 class Controller extends FrameworkController
 {
@@ -31,16 +31,13 @@ class Controller extends FrameworkController
      */
     protected function getIdentity()
     {
-        /** @var SecurityContextInterface $tokenStorage */
-        $tokenStorage = $this->get('security.context');
-        $token = $tokenStorage->getToken();
-
-        $user = $token->getUser();
+        $token = $this->get('security.token_storage')->getToken();
+        $user  = $token->getUser();
 
         if (!$user instanceof Identity) {
             $actualType = is_object($token) ? get_class($token) : gettype($token);
 
-            throw new \UnexpectedValueException(
+            throw new UnexpectedValueException(
                 sprintf(
                     "Token did not contain user of type '%s', but one of type '%s'",
                     'Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity',

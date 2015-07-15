@@ -91,4 +91,13 @@ class SessionHandler
     {
         $this->session->remove(self::SAML_SESSION_KEY . 'request_id');
     }
+
+    /**
+     * Migrates the current session to a new session id while maintaining all
+     * session attributes.
+     */
+    public function migrate()
+    {
+        $this->session->migrate();
+    }
 }
