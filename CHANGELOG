@@ -2,6 +2,9 @@
 VERSION 1  RELEASE 1.0
 ======================
 
+   Version 1.1 - Security improvements and bugfixes
+      15/07/2015 13:44  1.1.0  initial release
+
    Version 1.0 - Release 1.0
       23/06/2015 10:26  1.0.2  Switch back to original SAML2 library
       22/06/2015 10:06  1.0.1  Fixing missing dependency
