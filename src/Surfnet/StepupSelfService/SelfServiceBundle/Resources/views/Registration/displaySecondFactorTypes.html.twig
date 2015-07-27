@@ -11,8 +11,6 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <p>{{ 'ss.registration.selector.text.please_select_second_factor'|trans }}</p>
-
     <div class="row">
         {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
             'type': 'sms',

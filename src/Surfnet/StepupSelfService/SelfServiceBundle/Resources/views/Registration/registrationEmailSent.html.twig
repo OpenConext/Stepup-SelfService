@@ -11,7 +11,17 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent'|trans({'%email%': email}) }}</p>
+    <p>{{ 'ss.registration.registration_email_sent.text.thank_you_for_registration'|trans }}</p>
+
+    <p>{{ 'ss.registration.registration_email_sent.text.activation_instructions'|trans }}</p>
+
+    <ul>
+        <li>{{ 'ss.registration.registration_email_sent.text.activation_instructions_item_1'|trans }}</li>
+        <li>{{ 'ss.registration.registration_email_sent.text.activation_instructions_item_2'|trans }}</li>
+        <li>{{ 'ss.registration.registration_email_sent.text.activation_instructions_item_3'|trans }}</li>
+    </ul>
+
+    <br />
 
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
@@ -26,11 +36,9 @@
         </div>
     </div>
 
-    <p>
-        <a class="btn btn-primary" href="{{ path('ss_second_factor_list') }}">
-            {{ 'ss.registration.registration_email_sent.button.to_overview'|trans }}
-        </a>
-    </p>
+    <br />
+
+    <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent'|trans({'%email%': email}) }}</p>
 
     <hr>
 
