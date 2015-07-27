@@ -10,7 +10,12 @@
         <jms:reference-file line="6">Resources/views/base.html.twig</jms:reference-file>
         <jms:reference-file line="26">Resources/views/base.html.twig</jms:reference-file>
         <source>app.name</source>
-        <target>Step-up Self-Service</target>
+        <target>Registratieportal</target>
+      </trans-unit>
+      <trans-unit id="d5f9b7260670ee26f330c74f911d56591a563154" resname="app.subname">
+        <jms:reference-file line="27">Resources/views/base.html.twig</jms:reference-file>
+        <source>app.subname</source>
+        <target>Inloggen in twee stappen</target>
       </trans-unit>
       <trans-unit id="ff6230b38fe127145d864f4d4920ceb4d857af18" resname="button.logout">
         <jms:reference-file line="28">Resources/views/base.html.twig</jms:reference-file>
