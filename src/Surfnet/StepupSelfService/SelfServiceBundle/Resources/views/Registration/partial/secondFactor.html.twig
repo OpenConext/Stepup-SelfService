@@ -5,10 +5,10 @@
         <h3>{{ ('ss.registration.selector.'~type~'.title')|trans }}</h3>
         <p class="ranking">
             {% for i in 1 .. security %}
-            <i class="fa fa-lock text-warning"></i>
+            <i class="fa fa-lock fa-lg text-warning"></i>
             {% endfor %}
             {% for i in security+1 .. 4 %}
-            <i class="fa fa-unlock-alt text-muted"></i>
+            <i class="fa fa-unlock-alt fa-lg text-extra-muted"></i>
             {% endfor %}
         </p>
         <hr>
