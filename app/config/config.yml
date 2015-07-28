@@ -147,6 +147,10 @@ surfnet_stepup:
         credentials:
             username: %gateway_api_username%
             password: %gateway_api_password%
+    attach_request_id_injector_to:
+        - surfnet_stepup.guzzle.gateway_api
+        - surfnet_stepup_middleware_client.guzzle.api
+        - surfnet_stepup_middleware_client.guzzle.commands
 
 jms_translation:
     locales: %locales%

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "51d6418f9f2d66e3080217706d490010",
+    "hash": "caa2c36aa199bf211ee8b45187371eb2",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1190,7 +1190,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/ee161a9c8ebc41358466076ff065d2df7a852ab7",
+                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/c34671a55b2585e20a35ab5c6e1ad13a7e220b01",
                 "reference": "818b0f47ebd352559950e9a64431ff9472e8a9dd",
                 "shasum": ""
             },
@@ -1740,16 +1740,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "1.1.0",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "5282a745516ba34cdd164c8d09b0add9fb859615"
+                "reference": "68c62eb13e121fb4cb8124dbc69a3628a04fe1c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/5282a745516ba34cdd164c8d09b0add9fb859615",
-                "reference": "5282a745516ba34cdd164c8d09b0add9fb859615",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/68c62eb13e121fb4cb8124dbc69a3628a04fe1c1",
+                "reference": "68c62eb13e121fb4cb8124dbc69a3628a04fe1c1",
                 "shasum": ""
             },
             "require": {
@@ -1789,7 +1789,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-07-14 11:33:20"
+            "time": "2015-07-28 11:35:26"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -4254,7 +4254,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mopa/bootstrap-bundle": 20
+        "mopa/bootstrap-bundle": 20,
+        "surfnet/stepup-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
