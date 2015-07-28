@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-07-27T17:04:54Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2015-07-28T12:24:05Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -312,7 +312,8 @@
       <trans-unit id="b4a6128a0fcbe8b09081c249a17c2e98469628ab" resname="ss.registration.selector.sms.description">
         <jms:reference-file line="4">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.sms.description</source>
-        <target>SMS: gebruik een eenmalig wachtwoord dat via SMS naar je mobiele telefoon wordt gestuurd.</target>
+        <target>Log in met een eenmalige SMS-code.
+Geschikt voor alle mobiele telefoons.</target>
       </trans-unit>
       <trans-unit id="fc0176e73f8cd51f1a4520e4b7297b5e2d7693c3" resname="ss.registration.selector.sms.title">
         <jms:reference-file line="3">Resources/views/translations.twig</jms:reference-file>
@@ -337,7 +338,8 @@
       <trans-unit id="01f92e77a793e359179f8664af4dc16597d0c0c3" resname="ss.registration.selector.tiqr.description">
         <jms:reference-file line="12">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.tiqr.description</source>
-        <target>Gebruik de mobiele applicatie Tiqr om in te loggen.</target>
+        <target>Log in met een app op je smartphone. 
+Geschikt voor smartphones met Apple iOS of Android.</target>
       </trans-unit>
       <trans-unit id="dd724c0f4759a5dc04d29ab36e611d16da4ad8ba" resname="ss.registration.selector.tiqr.title">
         <jms:reference-file line="11">Resources/views/translations.twig</jms:reference-file>
@@ -362,7 +364,8 @@
       <trans-unit id="a1f47d6dbbe7ef58a52ee675decc2846b6496c64" resname="ss.registration.selector.yubikey.description">
         <jms:reference-file line="8">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.yubikey.description</source>
-        <target>YubiKey: een hardware "twee factor authenticatie" sleutel die eruit ziet als een kleine USB stick</target>
+        <target>Log in met een USB hardware token. 
+Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="ecae068b2caf318fa823d8b351eb67709e01ae61" resname="ss.registration.selector.yubikey.title">
         <jms:reference-file line="7">Resources/views/translations.twig</jms:reference-file>
