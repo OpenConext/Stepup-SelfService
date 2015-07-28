@@ -320,11 +320,6 @@ Geschikt voor alle mobiele telefoons.</target>
         <source>ss.registration.selector.sms.title</source>
         <target>SMS</target>
       </trans-unit>
-      <trans-unit id="cd82a900fa62708fd26a61a0b95221a41b070945" resname="ss.registration.selector.text.please_select_second_factor">
-        <jms:reference-file line="14">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
-        <source>ss.registration.selector.text.please_select_second_factor</source>
-        <target>ss.registration.selector.text.please_select_second_factor</target>
-      </trans-unit>
       <trans-unit id="72009f8b64b4be051b95324a49a893d6a32a5832" resname="ss.registration.selector.tiqr.alt">
         <jms:reference-file line="10">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.tiqr.alt</source>

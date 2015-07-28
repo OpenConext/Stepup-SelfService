@@ -51,7 +51,7 @@
       <trans-unit id="865517641b0d0da94788635ac950e5cbbded97a1" resname="ss.error.saml_authn_failed.button.try_again">
         <jms:reference-file line="10">Saml/Exception/authnFailed.html.twig</jms:reference-file>
         <source>ss.error.saml_authn_failed.button.try_again</source>
-        <target>Please retry to sign in again</target>
+        <target>Retry to sign-in</target>
       </trans-unit>
       <trans-unit id="39ad001351f2f524be4a7136f8facdb65097ce59" resname="ss.error.saml_authn_failed.text.authn_failed">
         <jms:reference-file line="8">Saml/Exception/authnFailed.html.twig</jms:reference-file>
@@ -272,7 +272,7 @@
       <trans-unit id="d608041873dea3059d34724b9a24e4e751ebdffe" resname="ss.registration.registration_email_sent.text.activation_instructions_item_3">
         <jms:reference-file line="21">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_3</source>
-        <target>You activation code</target>
+        <target>Your activation code</target>
       </trans-unit>
       <trans-unit id="8388ff05103a22d0917788a48ccdc9716a353ac8" resname="ss.registration.registration_email_sent.text.no_ras_for_your_institution">
         <jms:reference-file line="47">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
@@ -319,11 +319,6 @@ For all mobile phones.</target>
         <jms:reference-file line="3">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.sms.title</source>
         <target>SMS</target>
-      </trans-unit>
-      <trans-unit id="cd82a900fa62708fd26a61a0b95221a41b070945" resname="ss.registration.selector.text.please_select_second_factor">
-        <jms:reference-file line="14">views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
-        <source>ss.registration.selector.text.please_select_second_factor</source>
-        <target>ss.registration.selector.text.please_select_second_factor</target>
       </trans-unit>
       <trans-unit id="72009f8b64b4be051b95324a49a893d6a32a5832" resname="ss.registration.selector.tiqr.alt">
         <jms:reference-file line="10">Resources/views/translations.twig</jms:reference-file>
