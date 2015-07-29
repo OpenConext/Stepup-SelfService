@@ -51,7 +51,7 @@
       <trans-unit id="865517641b0d0da94788635ac950e5cbbded97a1" resname="ss.error.saml_authn_failed.button.try_again">
         <jms:reference-file line="10">Saml/Exception/authnFailed.html.twig</jms:reference-file>
         <source>ss.error.saml_authn_failed.button.try_again</source>
-        <target>Probeer nogmaals in te loggen</target>
+        <target>Inloggen</target>
       </trans-unit>
       <trans-unit id="39ad001351f2f524be4a7136f8facdb65097ce59" resname="ss.error.saml_authn_failed.text.authn_failed">
         <jms:reference-file line="8">Saml/Exception/authnFailed.html.twig</jms:reference-file>
@@ -157,12 +157,12 @@
       <trans-unit id="e3554b07567999b6bd90ee405bf4e60db4d5d727" resname="ss.prove_phone_possession.challenge_expired">
         <jms:reference-file line="20">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_expired</source>
-        <target>Uw code is verlopen. Vraag een nieuwe code aan.</target>
+        <target>Deze code is verlopen. Vraag een nieuwe code aan.</target>
       </trans-unit>
       <trans-unit id="ebe4091038cf74f7ebcfd0a3256985fdcf21e7dd" resname="ss.prove_phone_possession.challenge_request_limit_reached">
         <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_request_limit_reached</source>
-        <target>U heeft de limiet van drie codes bereikt; u kunt geen codes meer aanvragen. Neem contact op met uw helpdesk of probeer het later nog eens.</target>
+        <target>Je hebt de limiet van drie codes bereikt; je kunt geen codes meer aanvragen. Neem contact op met de helpdesk van je instelling of probeer het later nog eens.</target>
       </trans-unit>
       <trans-unit id="90d186f8499585cb62a368341bc3d5569f63a013" resname="ss.prove_phone_possession.challenge_response_incorrect">
         <jms:reference-file line="28">Resources/views/translations.twig</jms:reference-file>
@@ -400,7 +400,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       <trans-unit id="7a3ffc345262052d848b83714296cd342950ec0a" resname="ss.registration.sms.text.enter_phone_number_below">
         <jms:reference-file line="16">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.enter_phone_number_below</source>
-        <target>Vul hieronder je mobiele nummer in:</target>
+        <target>Vul hieronder je mobiele nummer in en klik op 'Verstuur code'</target>
       </trans-unit>
       <trans-unit id="1c6c4046436965583c51f835f122786636d3bf57" resname="ss.registration.sms.text.help_user_enter_challenge">
         <jms:reference-file line="14">Registration/Sms/provePossession.html.twig</jms:reference-file>
