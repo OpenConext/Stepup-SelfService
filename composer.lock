@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "caa2c36aa199bf211ee8b45187371eb2",
+    "hash": "d8f3c728f4eded24e73ba510570e9435",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1740,16 +1740,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "dev-develop",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "68c62eb13e121fb4cb8124dbc69a3628a04fe1c1"
+                "reference": "144492c6c29a81d39178d8ab9876d81ae3b0cb63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/68c62eb13e121fb4cb8124dbc69a3628a04fe1c1",
-                "reference": "68c62eb13e121fb4cb8124dbc69a3628a04fe1c1",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/144492c6c29a81d39178d8ab9876d81ae3b0cb63",
+                "reference": "144492c6c29a81d39178d8ab9876d81ae3b0cb63",
                 "shasum": ""
             },
             "require": {
@@ -1789,7 +1789,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-07-28 11:35:26"
+            "time": "2015-07-29 15:18:35"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -4254,8 +4254,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mopa/bootstrap-bundle": 20,
-        "surfnet/stepup-bundle": 20
+        "mopa/bootstrap-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
