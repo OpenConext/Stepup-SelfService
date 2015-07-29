@@ -42,6 +42,7 @@ class InitiateGssfType extends AbstractType
         $builder
             ->add('submit', 'submit', [
                 'attr'  => ['class' => 'btn btn-primary'],
+                /** @Ignore string for translation message extrantion */
                 'label' => 'ss.registration.gssf.initiate.' . $options['provider'] . '.button.initiate'
             ])
             ->setAction($action);

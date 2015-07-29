@@ -12,10 +12,18 @@
     margin-top: 0;
 }
 
+.page-header {
+    img.logo {
+        max-width: 180px;
+        max-height: 90px;
+    }
+}
+
 .second-factor-selector {
     text-align: center;
 
     img {
+        margin-top: 1em;
         max-width: 200px;
         max-height: 90px;
     }
@@ -77,4 +85,8 @@ select[name="stepup_switch_locale[locale]"] {
         width: (@i * 1%);
     }
     .generate-progress(@n, (@i + 5));
+}
+
+.text-extra-muted {
+    color: #cccccc;
 }
