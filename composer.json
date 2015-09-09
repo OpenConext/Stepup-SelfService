@@ -23,11 +23,12 @@
         "fortawesome/font-awesome": "~4.2.0",
         "jms/translation-bundle": "~1.1.0",
         "jms/di-extra-bundle": "~1.4.0",
-        "surfnet/stepup-middleware-client-bundle": "dev-develop",
+        "surfnet/stepup-middleware-client-bundle": "dev-feature/u2f",
         "guzzlehttp/guzzle": "~4",
         "surfnet/stepup-saml-bundle": "dev-develop",
         "surfnet/stepup-bundle": "dev-develop",
-        "symfony/swiftmailer-bundle": "~2.3"
+        "symfony/swiftmailer-bundle": "~2.3",
+        "surfnet/stepup-u2f-bundle": "dev-maintenance/merge-reg-auth-service"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^1.2.0",

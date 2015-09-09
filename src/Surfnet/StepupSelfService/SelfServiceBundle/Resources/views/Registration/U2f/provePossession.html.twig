@@ -1,0 +1,40 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.u2f.prove_possession.title.page'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 35, 'step': 2} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.registration.u2f.text.help_user_enter_challenge'|trans }}</p>
+
+    <ul>
+        <li>{{ 'ss.registration.u2f.text.activate_u2f_device'|trans }}</li>
+        <li>{{ 'ss.registration.u2f.text.retry_if_device_error'|trans }}</li>
+    </ul>
+
+    <hr>
+
+    {% if form is defined %}
+        {{ form(form) }}
+    {% elseif registrationFailed is defined and registrationFailed %}
+        <a href="{{ path('ss_registration_u2f_prove_possession') }}" class="btn btn-primary">
+            {{ 'ss.registration.u2f.button.retry' }}
+        </a>
+    {% endif %}
+
+{% endblock %}
+
+{% block body_end %}
+    {% javascripts
+    '@SurfnetStepupU2fBundle/Resources/public/u2f-api.js'
+    '@SurfnetStepupU2fBundle/Resources/public/u2f.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock body_end %}

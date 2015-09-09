@@ -33,5 +33,12 @@
                 'url': path('ss_registration_yubikey_prove_possession')
             } only %}
         {% endif %}
+        {% if enabledSecondFactors.u2f is defined %}
+            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+                'type': 'u2f',
+                'security': 3,
+                'url': path('ss_registration_u2f_prove_possession')
+            } only %}
+        {% endif %}
     </div>
 {% endblock %}
