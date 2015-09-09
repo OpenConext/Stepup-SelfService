@@ -34,6 +34,8 @@ class U2fController extends Controller
      */
     public function provePossessionAction(Request $request)
     {
+        $this->assertSecondFactorEnabled('u2f');
+
         $identity = $this->getIdentity();
 
         $service = $this->get('surfnet_stepup_u2f.service.u2f');
