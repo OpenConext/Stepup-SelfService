@@ -31,7 +31,12 @@ class RegistrationController extends Controller
      */
     public function displaySecondFactorTypesAction()
     {
-        return ['commonName' => $this->getIdentity()->commonName];
+        $enabledSecondFactors = $this->getParameter('ss.enabled_second_factors');
+
+        return [
+            'commonName' => $this->getIdentity()->commonName,
+            'enabledSecondFactors' => array_combine($enabledSecondFactors, $enabledSecondFactors),
+        ];
     }
 
     /**

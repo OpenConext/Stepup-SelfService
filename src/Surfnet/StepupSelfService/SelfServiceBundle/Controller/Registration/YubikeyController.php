@@ -32,6 +32,8 @@ class YubikeyController extends Controller
      */
     public function provePossessionAction(Request $request)
     {
+        $this->assertSecondFactorEnabled('yubikey');
+
         $identity = $this->getIdentity();
 
         $command = new VerifyYubikeyOtpCommand();

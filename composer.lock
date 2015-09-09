@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "08e429320ee0805b6367ec25809f582a",
+    "hash": "b1feb8d102ba3368c0586eac4127644c",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1190,7 +1190,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/c34671a55b2585e20a35ab5c6e1ad13a7e220b01",
+                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/cc093b4f10f5598f9c5d77acd365c0e61283e8e7",
                 "reference": "818b0f47ebd352559950e9a64431ff9472e8a9dd",
                 "shasum": ""
             },
@@ -1744,12 +1744,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-bundle.git",
-                "reference": "ac1513d9ddfde02849896e10f4c517a81642bcda"
+                "reference": "1e15e4adf96144f470ec7660b02c2faf2b5cc9d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/ac1513d9ddfde02849896e10f4c517a81642bcda",
-                "reference": "ac1513d9ddfde02849896e10f4c517a81642bcda",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-bundle/zipball/1e15e4adf96144f470ec7660b02c2faf2b5cc9d0",
+                "reference": "1e15e4adf96144f470ec7660b02c2faf2b5cc9d0",
                 "shasum": ""
             },
             "require": {
@@ -1758,7 +1758,7 @@
                 "graylog2/gelf-php": "~1.1",
                 "guzzlehttp/guzzle": "~4",
                 "monolog/monolog": "~1.11",
-                "php": "~5.4|^7",
+                "php": ">=5.4,<8.0-dev",
                 "sensio/framework-extra-bundle": "~3",
                 "symfony/config": "^2.7",
                 "symfony/dependency-injection": "^2.7",
@@ -1789,7 +1789,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2015-08-26 09:22:28"
+            "time": "2015-09-09 09:07:14"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -1801,7 +1801,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/f10eaa326cbc2d04e61ff4e34f03c6ebe180230b",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/2230cbd536b8c7912b7850f5516d99b028ad0ee4",
                 "reference": "f10eaa326cbc2d04e61ff4e34f03c6ebe180230b",
                 "shasum": ""
             },
@@ -1850,7 +1850,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/53b7fd0198a1e9de2504a3762af499f744ad222d",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/62ac63e0f7bd15257aa919d0d6885f76cdcaea43",
                 "reference": "53b7fd0198a1e9de2504a3762af499f744ad222d",
                 "shasum": ""
             },
@@ -3156,6 +3156,54 @@
                 "version"
             ],
             "time": "2014-10-28 10:33:21"
+        },
+        {
+            "name": "matthiasnoback/symfony-config-test",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasnoback/SymfonyConfigTest.git",
+                "reference": "9e1d553cc5b3900b48e8d4074d84cc7a02c958d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasnoback/SymfonyConfigTest/zipball/9e1d553cc5b3900b48e8d4074d84cc7a02c958d1",
+                "reference": "9e1d553cc5b3900b48e8d4074d84cc7a02c958d1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "symfony/config": "2.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=3.7",
+                "sebastian/exporter": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Matthias\\SymfonyConfigTest\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Noback",
+                    "email": "matthiasnoback@gmail.com",
+                    "homepage": "http://php-and-symfony.matthiasnoback.nl"
+                }
+            ],
+            "description": "Library for testing user classes related to the Symfony Config Component",
+            "homepage": "https://github.com/matthiasnoback/SymfonyConfigTest",
+            "keywords": [
+                "config",
+                "phpunit",
+                "symfony"
+            ],
+            "time": "2015-04-20 08:58:05"
         },
         {
             "name": "mockery/mockery",

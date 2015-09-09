@@ -38,6 +38,8 @@ final class GssfController extends Controller
      */
     public function initiateAction($provider)
     {
+        $this->assertSecondFactorEnabled('gssf');
+
         return $this->renderInitiateForm($provider);
     }
 
@@ -47,6 +49,8 @@ final class GssfController extends Controller
      */
     public function authenticateAction($provider)
     {
+        $this->assertSecondFactorEnabled('gssf');
+
         $provider = $this->getProvider($provider);
 
         $authnRequest = AuthnRequestFactory::createNewRequest(
@@ -77,6 +81,8 @@ final class GssfController extends Controller
      */
     public function consumeAssertionAction(Request $httpRequest, $provider)
     {
+        $this->assertSecondFactorEnabled('gssf');
+
         $provider = $this->getProvider($provider);
 
         $this->get('logger')->notice(
@@ -145,6 +151,8 @@ final class GssfController extends Controller
      */
     public function metadataAction($provider)
     {
+        $this->assertSecondFactorEnabled('gssf');
+
         $provider = $this->getProvider($provider);
 
         /** @var \Surfnet\SamlBundle\Metadata\MetadataFactory $factory */
