@@ -11,11 +11,9 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <p>{{ 'ss.registration.u2f.text.help_user_enter_challenge'|trans }}</p>
-
     <ul>
+        <li>{{ 'ss.registration.u2f.text.ensure_device_connected_to_pc'|trans }}</li>
         <li>{{ 'ss.registration.u2f.text.activate_u2f_device'|trans }}</li>
-        <li>{{ 'ss.registration.u2f.text.retry_if_device_error'|trans }}</li>
     </ul>
 
     <hr>
