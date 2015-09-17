@@ -49,7 +49,7 @@ class U2fSecondFactorService
      */
     public function requestRegistration()
     {
-        return $this->u2fService->requestRegistration();
+        return $this->u2fService->createRegistrationRequest();
     }
 
     /**
