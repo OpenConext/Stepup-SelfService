@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "256653b3825dd5d52bf54e45f2ea1531",
+    "hash": "f1c6e6644eb18e503f1c568f40604d1e",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1890,16 +1890,16 @@
         },
         {
             "name": "surfnet/stepup-u2f-bundle",
-            "version": "dev-maintenance/merge-reg-auth-service",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-u2f-bundle.git",
-                "reference": "e951b7a5955d288c77b488401d5a15a64eb99145"
+                "reference": "fccdaaf85e7ebbbfa05b608e69170da9539992d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-u2f-bundle/zipball/e951b7a5955d288c77b488401d5a15a64eb99145",
-                "reference": "e951b7a5955d288c77b488401d5a15a64eb99145",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-u2f-bundle/zipball/fccdaaf85e7ebbbfa05b608e69170da9539992d6",
+                "reference": "fccdaaf85e7ebbbfa05b608e69170da9539992d6",
                 "shasum": ""
             },
             "require": {
@@ -1928,7 +1928,7 @@
                 "Apache-2.0"
             ],
             "description": "The SURFnet Step-up U2F bundle contains server-side device verification, and the necessary forms and resources to enable client-side U2F interaction with Step-up Identities",
-            "time": "2015-09-09 10:05:50"
+            "time": "2015-09-16 07:37:16"
         },
         {
             "name": "swiftmailer/swiftmailer",
