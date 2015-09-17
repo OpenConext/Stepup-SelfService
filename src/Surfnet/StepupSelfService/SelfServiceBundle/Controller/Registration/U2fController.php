@@ -23,6 +23,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\ProveU2fDevicePossession
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
+use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
 use Surfnet\StepupU2fBundle\Dto\RegisterResponse;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,12 +60,9 @@ class U2fController extends Controller
         /** @var U2fSecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.u2f_second_factor');
 
-        $command = new ProveU2fDevicePossessionCommand();
-        $command->identityId = $identity->id;
-        $command->registerRequest = $session->get('request');
-        $command->registerResponse = $registerResponse;
-
-        $result = $service->provePossession($command);
+        /** @var RegisterRequest $registerRequest */
+        $registerRequest = $session->get('request');
+        $result = $service->provePossession($identity, $registerRequest, $registerResponse);
 
         if ($result->wasSuccessful()) {
             return $this->redirectToRoute(

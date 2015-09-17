@@ -20,10 +20,11 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProveU2fDevicePossessionCommand
     as MiddlewareProveU2fDevicePossessionCommand;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\ProveU2fDevicePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactor\ProofOfPossessionResult;
 use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
+use Surfnet\StepupU2fBundle\Dto\RegisterResponse;
 use Surfnet\StepupU2fBundle\Service\U2fService;
 
 class U2fSecondFactorService
@@ -53,12 +54,14 @@ class U2fSecondFactorService
     }
 
     /**
-     * @param ProveU2fDevicePossessionCommand $command
+     * @param Identity         $identity
+     * @param RegisterRequest  $registerRequest
+     * @param RegisterResponse $registerResponse
      * @return ProofOfPossessionResult
      */
-    public function provePossession(ProveU2fDevicePossessionCommand $command)
+    public function provePossession(Identity $identity, RegisterRequest $registerRequest, RegisterResponse $registerResponse)
     {
-        $result = $this->u2fService->verifyRegistration($command->registerRequest, $command->registerResponse);
+        $result = $this->u2fService->verifyRegistration($registerRequest, $registerResponse);
 
         if (!$result->wasSuccessful()) {
             return ProofOfPossessionResult::fromRegistrationVerificationResult($result);
@@ -67,7 +70,7 @@ class U2fSecondFactorService
         $secondFactorId = Uuid::generate();
 
         $provePossessionCommand = new MiddlewareProveU2fDevicePossessionCommand();
-        $provePossessionCommand->identityId = $command->identityId;
+        $provePossessionCommand->identityId = $identity->id;
         $provePossessionCommand->secondFactorId = $secondFactorId;
         $provePossessionCommand->keyHandle = $result->getRegistration()->keyHandle;
 
