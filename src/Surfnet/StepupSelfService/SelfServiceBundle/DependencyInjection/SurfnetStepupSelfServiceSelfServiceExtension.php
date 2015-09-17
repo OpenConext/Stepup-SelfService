@@ -35,11 +35,16 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
         $container->getDefinition('self_service.locale.request_stack_locale_provider')
             ->replaceArgument(1, $container->getParameter('default_locale'))
             ->replaceArgument(2, $container->getParameter('locales'));
+
+        $container->setParameter('ss.enabled_second_factors', $config['enabled_second_factors']);
     }
 }

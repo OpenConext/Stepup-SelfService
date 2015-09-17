@@ -44,3 +44,7 @@ parameters:
     stepup_loa_loa3: https://gateway.tld/authentication/loa3
 
     logout_redirect_url: https://www.surf.nl/over-surf/werkmaatschappijen/surfnet
+
+    enabled_second_factors:
+        - sms
+        - yubikey

@@ -162,3 +162,6 @@ jms_translation:
             excluded_names: ['*TestCase.php', '*Test.php']
             excluded_dirs: [cache, data, logs, Tests]
             extractors: []
+
+surfnet_stepup_self_service_self_service:
+    enabled_second_factors: %enabled_second_factors%
