@@ -18,12 +18,13 @@
 
     <hr>
 
-    {% if form is defined %}
-        {{ form(form) }}
-    {% elseif registrationFailed is defined and registrationFailed %}
-        <a href="{{ path('ss_registration_u2f_prove_possession') }}" class="btn btn-primary">
+    {% if registrationFailed is defined and registrationFailed %}
+        {# We don't render the form in case of an error to prevent potential continuous resubmission of device errors #}
+        <a href="{{ path('ss_registration_u2f_registration') }}" class="btn btn-primary">
             {{ 'ss.registration.u2f.button.retry' }}
         </a>
+    {% else %}
+        {{ form(form) }}
     {% endif %}
 
 {% endblock %}

@@ -19,13 +19,10 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\ProveU2fDevicePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
 use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
 use Surfnet\StepupU2fBundle\Dto\RegisterResponse;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 class U2fController extends Controller
@@ -33,36 +30,65 @@ class U2fController extends Controller
     /**
      * @Template
      */
-    public function provePossessionAction(Request $request)
+    public function registrationAction()
     {
         $this->assertSecondFactorEnabled('u2f');
 
-        $identity = $this->getIdentity();
-
-        $service = $this->get('surfnet_stepup_u2f.service.u2f');
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.u2f_second_factor');
         $session = $this->get('self_service.session.u2f_registration');
 
-        $registerRequest = $service->requestRegistration();
+        $registerRequest = $service->createRegistrationRequest();
         $registerResponse = new RegisterResponse();
+
         $form = $this
             ->createForm(
                 'surfnet_stepup_u2f_register_device',
                 $registerResponse,
-                ['register_request' => $registerRequest]
+                [
+                    'register_request' => $registerRequest,
+                    'action'           => $this->generateUrl('ss_registration_u2f_prove_possession'),
+                ]
+            );
+
+        $session->set('request', $registerRequest);
+
+        return ['form' => $form->createView()];
+    }
+
+    /**
+     * @Template
+     */
+    public function provePossessionAction(Request $request)
+    {
+        $this->assertSecondFactorEnabled('u2f');
+
+        $session = $this->get('self_service.session.u2f_registration');
+
+        /** @var RegisterRequest $registerRequest */
+        $registerRequest = $session->get('request');
+        $registerResponse = new RegisterResponse();
+
+        $form = $this
+            ->createForm(
+                'surfnet_stepup_u2f_register_device',
+                $registerResponse,
+                [
+                    'register_request' => $registerRequest,
+                    'action'           => $this->generateUrl('ss_registration_u2f_prove_possession'),
+                ]
             )
             ->handleRequest($request);
 
         if (!$form->isValid()) {
-            $session->set('request', $registerRequest);
-            return ['form' => $form->createView()];
+            return $this->render('SurfnetStepupSelfServiceSelfServiceBundle:Registration/U2f:registration.html.twig', [
+                'registrationFailed' => true
+            ]);
         }
 
         /** @var U2fSecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.u2f_second_factor');
 
-        /** @var RegisterRequest $registerRequest */
-        $registerRequest = $session->get('request');
-        $result = $service->provePossession($identity, $registerRequest, $registerResponse);
+        $result = $service->provePossession($this->getIdentity(), $registerRequest, $registerResponse);
 
         if ($result->wasSuccessful()) {
             return $this->redirectToRoute(
@@ -76,7 +102,5 @@ class U2fController extends Controller
             $this->addFlash('error', 'ss.registration.u2f.alert.error');
             return ['registrationFailed' => true];
         }
-
-        return ['form' => $form->createView()];
     }
 }

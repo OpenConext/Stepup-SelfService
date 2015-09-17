@@ -37,7 +37,7 @@
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'u2f',
                 'security': 3,
-                'url': path('ss_registration_u2f_prove_possession')
+                'url': path('ss_registration_u2f_registration')
             } only %}
         {% endif %}
     </div>

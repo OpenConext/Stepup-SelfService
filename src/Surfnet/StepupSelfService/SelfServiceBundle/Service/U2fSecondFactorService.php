@@ -48,7 +48,7 @@ class U2fSecondFactorService
     /**
      * @return RegisterRequest
      */
-    public function requestRegistration()
+    public function createRegistrationRequest()
     {
         return $this->u2fService->createRegistrationRequest();
     }

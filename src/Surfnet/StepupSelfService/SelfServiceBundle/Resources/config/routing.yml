@@ -70,9 +70,14 @@ ss_registration_gssf_consume_assertion:
     methods:  [POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:consumeAssertion }
 
+ss_registration_u2f_registration:
+    path:     /registration/u2f/registration
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/U2f:registration }
+
 ss_registration_u2f_prove_possession:
     path:     /registration/u2f/prove-possession
-    methods:  [GET,POST]
+    methods:  [POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/U2f:provePossession }
 
 selfservice_saml_metadata:
