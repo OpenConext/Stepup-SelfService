@@ -35,12 +35,7 @@ final class ProofOfPossessionResult
     /**
      * @var \Surfnet\StepupU2fBundle\Service\RegistrationVerificationResult|null
      */
-    private $wrappedResult;
-
-    /**
-     * @var bool
-     */
-    private $proofOfPossessionCommandFailed = false;
+    private $registrationVerificationResult;
 
     /**
      * @var bool
@@ -54,24 +49,21 @@ final class ProofOfPossessionResult
     public static function fromRegistrationVerificationResult(RegistrationVerificationResult $u2fResult)
     {
         $result = new self;
-        $result->wrappedResult = $u2fResult;
+        $result->registrationVerificationResult = $u2fResult;
 
         return $result;
     }
 
     public static function proofOfPossessionCommandFailed()
     {
-        $result = new self;
-        $result->proofOfPossessionCommandFailed = true;
-
-        return $result;
+        return new self;
     }
 
     public static function secondFactorCreated($secondFactorId, RegistrationVerificationResult $u2fResult)
     {
         $result = new self;
         $result->secondFactorId = $secondFactorId;
-        $result->wrappedResult = $u2fResult;
+        $result->registrationVerificationResult = $u2fResult;
         $result->secondFactorCreated = true;
 
         return $result;
@@ -105,113 +97,6 @@ final class ProofOfPossessionResult
      */
     public function getRegistration()
     {
-        return $this->wrappedResult->getRegistration();
-    }
-
-    /**
-     * @return bool
-     */
-    public function didProofOfPossessionCommandFail()
-    {
-        return $this->proofOfPossessionCommandFailed;
-    }
-
-    /**
-     * @return bool
-     */
-    public function didDeviceReportABadRequest()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->didDeviceReportABadRequest();
-    }
-
-    /**
-     * @return bool
-     */
-    public function wasClientConfigurationUnsupported()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->wasClientConfigurationUnsupported();
-    }
-
-    /**
-     * @return bool
-     */
-    public function wasDeviceAlreadyRegistered()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->wasDeviceAlreadyRegistered();
-    }
-
-    /**
-     * @return bool
-     */
-    public function didDeviceTimeOut()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->didDeviceTimeOut();
-    }
-
-    /**
-     * @return bool
-     */
-    public function didDeviceReportAnUnknownError()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->didDeviceReportAnUnknownError();
-    }
-
-    /**
-     * @return bool
-     */
-    public function didDeviceReportAnyError()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->didDeviceReportAnyError();
-    }
-
-    /**
-     * @return bool
-     */
-    public function didResponseChallengeNotMatchRequestChallenge()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->didResponseChallengeNotMatchRequestChallenge();
-    }
-
-    /**
-     * @return bool
-     */
-    public function wasResponseNotSignedByDevice()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->wasResponseNotSignedByDevice();
-    }
-
-    /**
-     * @return bool
-     */
-    public function canDeviceNotBeTrusted()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->canDeviceNotBeTrusted();
-    }
-
-    /**
-     * @return bool
-     */
-    public function didPublicKeyDecodingFail()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->didPublicKeyDecodingFail();
-    }
-
-    /**
-     * @return bool
-     */
-    public function didntAppIdsMatch()
-    {
-        return !$this->proofOfPossessionCommandFailed
-            && $this->wrappedResult->didntAppIdsMatch();
+        return $this->registrationVerificationResult->getRegistration();
     }
 }
