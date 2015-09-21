@@ -59,8 +59,11 @@ class U2fSecondFactorService
      * @param RegisterResponse $registerResponse
      * @return ProofOfPossessionResult
      */
-    public function provePossession(Identity $identity, RegisterRequest $registerRequest, RegisterResponse $registerResponse)
-    {
+    public function provePossession(
+        Identity $identity,
+        RegisterRequest $registerRequest,
+        RegisterResponse $registerResponse
+    ) {
         $result = $this->u2fService->verifyRegistration($registerRequest, $registerResponse);
 
         if (!$result->wasSuccessful()) {
