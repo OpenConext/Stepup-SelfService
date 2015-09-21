@@ -346,6 +346,26 @@ Geschikt voor smartphones met Apple iOS of Android.</target>
         <source>ss.registration.selector.title.welcome</source>
         <target>Selecteer token</target>
       </trans-unit>
+      <trans-unit id="617159e8920200945a579d2ff3eabbbdef0b5153" resname="ss.registration.selector.u2f.alt">
+        <jms:reference-file line="14">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.u2f.alt</source>
+        <target>U2F-token</target>
+      </trans-unit>
+      <trans-unit id="2427989d4bc2b0fbfee8bdcd518e974287528304" resname="ss.registration.selector.u2f.button.use">
+        <jms:reference-file line="17">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.u2f.button.use</source>
+        <target>Selecteer</target>
+      </trans-unit>
+      <trans-unit id="8f22b87213c855c710e65b6df3c9f3fb88f9320c" resname="ss.registration.selector.u2f.description">
+        <jms:reference-file line="16">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.u2f.description</source>
+        <target>Log in met een U2F-apparaat.</target>
+      </trans-unit>
+      <trans-unit id="84d4719b180b18de2e8498cdb9f93cd8d29ddf17" resname="ss.registration.selector.u2f.title">
+        <jms:reference-file line="15">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.u2f.title</source>
+        <target>U2F</target>
+      </trans-unit>
       <trans-unit id="cded89875fcd3c83b35117d461b1475f917437fe" resname="ss.registration.selector.yubikey.alt">
         <jms:reference-file line="6">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.yubikey.alt</source>
@@ -416,6 +436,31 @@ Geschikt voor alle devices met een USB-poort.</target>
         <jms:reference-file line="18">Registration/Sms/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.retry_if_not_received</source>
         <target>Geen code ontvangen? Klik dan op 'Stuur een nieuwe code'</target>
+      </trans-unit>
+      <trans-unit id="a9291ad7b24d9af72187ad2c3a47ef70a8ddb049" resname="ss.registration.u2f.alert.device_reported_an_error">
+        <jms:reference-file line="60">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.u2f.alert.device_reported_an_error</source>
+        <target>Het U2F-apparaat heeft een foutmelding gerapporteerd. Probeer het opnieuw of neem contact op met de IT-helpdesk.</target>
+      </trans-unit>
+      <trans-unit id="10942aeeff49e9078c3388325521ec7745d9e4d7" resname="ss.registration.u2f.alert.error">
+        <jms:reference-file line="61">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.u2f.alert.error</source>
+        <target>De registratie van het U2F-apparaat is mislukt. Probeer het opnieuw of neem contact op met de IT-helpdesk.</target>
+      </trans-unit>
+      <trans-unit id="4f5b229b9de7809577b58b29e6ca42b9ea3e7f17" resname="ss.registration.u2f.prove_possession.title.page">
+        <jms:reference-file line="3">Registration/U2f/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.u2f.prove_possession.title.page</source>
+        <target>Koppel je U2F-apparaat</target>
+      </trans-unit>
+      <trans-unit id="aa1066996eb91288ee305d75ae37b40043a5900b" resname="ss.registration.u2f.text.activate_u2f_device">
+        <jms:reference-file line="16">Registration/U2f/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.u2f.text.activate_u2f_device</source>
+        <target>Activeer het U2F-apparaat. Dit gebeurt meestal met behulp van een knop.</target>
+      </trans-unit>
+      <trans-unit id="63215bcefb16179e093adf30b4adf7d67ba27a43" resname="ss.registration.u2f.text.ensure_device_connected_to_pc">
+        <jms:reference-file line="15">Registration/U2f/provePossession.html.twig</jms:reference-file>
+        <source>ss.registration.u2f.text.ensure_device_connected_to_pc</source>
+        <target>Zorg dat je U2F-apparaat gekoppeld is aan uw computer.</target>
       </trans-unit>
       <trans-unit id="c0b7cacbe163182d07eadf53926718aad310c6a5" resname="ss.registration.verify_email.text.verification_failed">
         <jms:reference-file line="14">views/Registration/verifyEmail.html.twig</jms:reference-file>
@@ -504,6 +549,11 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <source>ss.second_factor.revoke.second_factor_type.tiqr</source>
         <target>Tiqr</target>
       </trans-unit>
+      <trans-unit id="05f193ed2a057ba345519da22753939ba8aef925" resname="ss.second_factor.revoke.second_factor_type.u2f">
+        <jms:reference-file line="48">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.second_factor_type.u2f</source>
+        <target>U2F</target>
+      </trans-unit>
       <trans-unit id="41ef2c1782e52dabce59e7be54aef6fa07829959" resname="ss.second_factor.revoke.second_factor_type.yubikey">
         <jms:reference-file line="41">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.revoke.second_factor_type.yubikey</source>
@@ -538,6 +588,11 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <jms:reference-file line="37">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.type.tiqr</source>
         <target>Tiqr</target>
+      </trans-unit>
+      <trans-unit id="e6a4121e1e5da569eb89ea885f61ea68033650eb" resname="ss.second_factor.type.u2f">
+        <jms:reference-file line="42">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.type.u2f</source>
+        <target>U2F</target>
       </trans-unit>
       <trans-unit id="81b817f201c14a06e97251089f38fec70163ef3f" resname="ss.second_factor.type.yubikey">
         <jms:reference-file line="36">Resources/views/translations.twig</jms:reference-file>

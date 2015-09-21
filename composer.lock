@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b1feb8d102ba3368c0586eac4127644c",
+    "hash": "f1c6e6644eb18e503f1c568f40604d1e",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1797,19 +1797,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "f10eaa326cbc2d04e61ff4e34f03c6ebe180230b"
+                "reference": "2230cbd536b8c7912b7850f5516d99b028ad0ee4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/2230cbd536b8c7912b7850f5516d99b028ad0ee4",
-                "reference": "f10eaa326cbc2d04e61ff4e34f03c6ebe180230b",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/1544e4922670b7bf21157a7888e57adf2588da56",
+                "reference": "2230cbd536b8c7912b7850f5516d99b028ad0ee4",
                 "shasum": ""
             },
             "require": {
                 "beberlei/assert": "~2.0",
                 "guzzlehttp/guzzle": "~4",
                 "moontoast/math": "~1.1",
-                "php": "~5.4|^7",
+                "php": ">=5.4,<8.0-dev",
                 "psr/log": "~1.0",
                 "rhumsaa/uuid": "~2.7",
                 "symfony/config": "^2.7",
@@ -1838,7 +1838,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2015-08-26 09:22:48"
+            "time": "2015-09-10 09:07:25"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -1850,7 +1850,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/62ac63e0f7bd15257aa919d0d6885f76cdcaea43",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-saml-bundle/zipball/4dde80135a11844ab4e5ba8eec3602194c49a67d",
                 "reference": "53b7fd0198a1e9de2504a3762af499f744ad222d",
                 "shasum": ""
             },
@@ -1887,6 +1887,48 @@
                 "surfnet"
             ],
             "time": "2015-08-26 09:24:49"
+        },
+        {
+            "name": "surfnet/stepup-u2f-bundle",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SURFnet/Stepup-u2f-bundle.git",
+                "reference": "b28737d7b8df5ecbdf7a1e952ecfb530a2951c05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-u2f-bundle/zipball/b28737d7b8df5ecbdf7a1e952ecfb530a2951c05",
+                "reference": "b28737d7b8df5ecbdf7a1e952ecfb530a2951c05",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4|^7",
+                "symfony/config": "^2.7",
+                "symfony/dependency-injection": "^2.7",
+                "symfony/form": "^2.7",
+                "symfony/http-kernel": "^2.7",
+                "symfony/validator": "^2.7",
+                "yubico/u2flib-server": "^0.1.0"
+            },
+            "require-dev": {
+                "ibuildings/qa-tools": "~1.1,>=1.1.27",
+                "liip/rmt": "1.1.*",
+                "matthiasnoback/symfony-config-test": "^1.2",
+                "mockery/mockery": "~0.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Surfnet\\StepupU2fBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "The SURFnet Step-up U2F bundle contains server-side device verification, and the necessary forms and resources to enable client-side U2F interaction with Step-up Identities",
+            "time": "2015-09-17 15:02:04"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2402,6 +2444,37 @@
                 "templating"
             ],
             "time": "2015-04-19 08:30:27"
+        },
+        {
+            "name": "yubico/u2flib-server",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Yubico/php-u2flib-server.git",
+                "reference": "71ad5f0b7c796966da356eecd5b583ac852e92a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Yubico/php-u2flib-server/zipball/71ad5f0b7c796966da356eecd5b583ac852e92a1",
+                "reference": "71ad5f0b7c796966da356eecd5b583ac852e92a1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "Library for U2F implementation",
+            "homepage": "https://developers.yubico.com/php-u2flib-server",
+            "time": "2015-03-03 08:05:16"
         }
     ],
     "packages-dev": [
@@ -4305,7 +4378,8 @@
         "mopa/bootstrap-bundle": 20,
         "surfnet/stepup-middleware-client-bundle": 20,
         "surfnet/stepup-saml-bundle": 20,
-        "surfnet/stepup-bundle": 20
+        "surfnet/stepup-bundle": 20,
+        "surfnet/stepup-u2f-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
