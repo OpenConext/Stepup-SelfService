@@ -447,6 +447,11 @@ For all devices with a USB port.</target>
         <source>ss.registration.u2f.alert.error</source>
         <target>The registration of the U2F device failed. Try again or visit your IT helpdesk.</target>
       </trans-unit>
+      <trans-unit id="8c0ebdb3c75c5ba291acea30db4475b037706e33" resname="ss.registration.u2f.button.retry">
+        <jms:reference-file line="24">Registration/U2f/registration.html.twig</jms:reference-file>
+        <source>ss.registration.u2f.button.retry</source>
+        <target>Retry</target>
+      </trans-unit>
       <trans-unit id="4f5b229b9de7809577b58b29e6ca42b9ea3e7f17" resname="ss.registration.u2f.prove_possession.title.page">
         <jms:reference-file line="3">Registration/U2f/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.u2f.prove_possession.title.page</source>
