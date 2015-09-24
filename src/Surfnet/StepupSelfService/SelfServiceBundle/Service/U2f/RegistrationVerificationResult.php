@@ -121,6 +121,9 @@ final class RegistrationVerificationResult
         return $this->keyHandle;
     }
 
+    /**
+     * @return bool
+     */
     public function didDeviceReportAnyError()
     {
         return $this->status === self::STATUS_DEVICE_ERROR;

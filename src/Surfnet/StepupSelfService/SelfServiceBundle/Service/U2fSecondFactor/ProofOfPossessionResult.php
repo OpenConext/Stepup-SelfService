@@ -106,6 +106,9 @@ final class ProofOfPossessionResult
         return $this->registrationVerificationResult->getKeyHandle();
     }
 
+    /**
+     * @return bool
+     */
     public function didDeviceReportAnyError()
     {
         return $this->registrationVerificationResult->didDeviceReportAnyError();
