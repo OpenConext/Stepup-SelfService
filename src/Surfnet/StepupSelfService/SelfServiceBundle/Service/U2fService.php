@@ -104,7 +104,9 @@ final class U2fService
             return RegisterRequestCreationResult::apiError();
         }
 
-        if ($statusCode != 200 || array_keys($result) !== ['app_id', 'challenge', 'version']) {
+        $actualKeys = array_keys($result);
+        $expectedKeys = ['app_id', 'challenge', 'version'];
+        if ($statusCode != 200 || array_diff($actualKeys, $expectedKeys) !== array_diff($expectedKeys, $actualKeys)) {
             $this->logger->critical(
                 sprintf(
                     'U2F API behaving nonconformingly, returned response or status code (%d) unexpected',
