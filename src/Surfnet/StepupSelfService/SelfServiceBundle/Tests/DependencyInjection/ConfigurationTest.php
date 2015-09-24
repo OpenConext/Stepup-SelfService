@@ -47,7 +47,11 @@ final class ConfigurationTest extends TestCase
             'enabled_second_factors' => ['sms'],
         ];
 
-        $this->assertProcessedConfigurationEquals([$configuration], $expectedProcessedConfiguration);
+        $this->assertProcessedConfigurationEquals(
+            [$configuration],
+            $expectedProcessedConfiguration,
+            'enabled_second_factors'
+        );
     }
 
     /**
@@ -61,7 +65,11 @@ final class ConfigurationTest extends TestCase
             'enabled_second_factors' => ['sms', 'yubikey'],
         ];
 
-        $this->assertProcessedConfigurationEquals([$configuration], $expectedProcessedConfiguration);
+        $this->assertProcessedConfigurationEquals(
+            [$configuration],
+            $expectedProcessedConfiguration,
+            'enabled_second_factors'
+        );
     }
 
     /**

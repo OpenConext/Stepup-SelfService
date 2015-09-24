@@ -64,8 +64,15 @@ services:
     surfnet_stepup_self_service_self_service.service.u2f_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService
         arguments:
-            - @surfnet_stepup_u2f.service.u2f
+            - @surfnet_stepup_self_service_self_service.service.u2f
             - @surfnet_stepup_self_service_self_service.service.command
+
+    surfnet_stepup_self_service_self_service.service.u2f:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fService
+        arguments:
+            - @surfnet_stepup.guzzle.gateway_api
+            - @validator
+            - @logger
 
     surfnet_stepup_self_service_self_service.service.gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService

@@ -37,7 +37,15 @@ class U2fController extends Controller
         $service = $this->get('surfnet_stepup_self_service_self_service.service.u2f_second_factor');
         $session = $this->get('self_service.session.u2f_registration');
 
-        $registerRequest = $service->createRegistrationRequest();
+        $registerRequestCreationResult = $service->createRegisterRequest($this->getIdentity());
+
+        if (!$registerRequestCreationResult->wasSuccessful()) {
+            $this->addFlash('error', 'ss.registration.u2f.alert.error');
+
+            return ['registrationFailed' => true];
+        }
+
+        $registerRequest = $registerRequestCreationResult->getRegisterRequest();
         $registerResponse = new RegisterResponse();
 
         $form = $this
@@ -97,10 +105,13 @@ class U2fController extends Controller
             );
         } elseif ($result->didDeviceReportAnyError()) {
             $this->addFlash('error', 'ss.registration.u2f.alert.device_reported_an_error');
-            return ['registrationFailed' => true];
         } else {
             $this->addFlash('error', 'ss.registration.u2f.alert.error');
-            return ['registrationFailed' => true];
         }
+
+        return $this->render(
+            'SurfnetStepupSelfServiceSelfServiceBundle:Registration/U2f:registration.html.twig',
+            ['registrationFailed' => true]
+        );
     }
 }

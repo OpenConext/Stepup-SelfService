@@ -19,8 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactor;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
-use Surfnet\StepupU2fBundle\Dto\Registration;
-use Surfnet\StepupU2fBundle\Service\RegistrationVerificationResult;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2f\RegistrationVerificationResult;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyMethods)
@@ -33,7 +32,7 @@ final class ProofOfPossessionResult
     private $secondFactorId;
 
     /**
-     * @var \Surfnet\StepupU2fBundle\Service\RegistrationVerificationResult|null
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\U2f\RegistrationVerificationResult|null
      */
     private $registrationVerificationResult;
 
@@ -78,14 +77,14 @@ final class ProofOfPossessionResult
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getSecondFactorId()
     {
         if (!$this->wasSuccessful()) {
             throw new LogicException(
                 'The registration was unsuccessful or the proof of possession command failed, and as such the ' .
-                'registration data is not available'
+                'second factor id is not available'
             );
         }
 
@@ -93,10 +92,25 @@ final class ProofOfPossessionResult
     }
 
     /**
-     * @return Registration|null
+     * @return string
      */
-    public function getRegistration()
+    public function getKeyHandle()
     {
-        return $this->registrationVerificationResult->getRegistration();
+        if (!$this->wasSuccessful()) {
+            throw new LogicException(
+                'The registration was unsuccessful or the proof of possession command failed, and as such the ' .
+                'registration key handle is not available'
+            );
+        }
+
+        return $this->registrationVerificationResult->getKeyHandle();
+    }
+
+    /**
+     * @return bool
+     */
+    public function didDeviceReportAnyError()
+    {
+        return $this->registrationVerificationResult->didDeviceReportAnyError();
     }
 }

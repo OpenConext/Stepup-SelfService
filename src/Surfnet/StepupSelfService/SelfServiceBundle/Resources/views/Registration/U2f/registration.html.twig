@@ -21,7 +21,7 @@
     {% if registrationFailed is defined and registrationFailed %}
         {# We don't render the form in case of an error to prevent potential continuous resubmission of device errors #}
         <a href="{{ path('ss_registration_u2f_registration') }}" class="btn btn-primary">
-            {{ 'ss.registration.u2f.button.retry' }}
+            {{ 'ss.registration.u2f.button.retry'|trans }}
         </a>
     {% else %}
         {{ form(form) }}

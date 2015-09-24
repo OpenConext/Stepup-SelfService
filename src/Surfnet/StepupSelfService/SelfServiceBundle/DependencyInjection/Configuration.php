@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\DependencyInjection;
 use Surfnet\StepupBundle\Exception\DomainException;
 use Surfnet\StepupBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupBundle\Value\SecondFactorType;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -29,9 +30,9 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('surfnet_stepup_self_service_self_service');
 
-        $treeBuilder
-            ->root('surfnet_stepup_self_service_self_service')
+        $rootNode
             ->children()
                 ->arrayNode('enabled_second_factors')
                     ->isRequired()
