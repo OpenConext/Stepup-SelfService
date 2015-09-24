@@ -174,17 +174,13 @@ final class U2fService
         $hasErrors = isset($result['errors']) && is_array($result['errors'])
             && $result['errors'] === array_filter($result['errors'], 'is_string');
 
-        if ($hasErrors && $statusCode >= 400 && $statusCode < 500) {
+        if ($hasErrors && $statusCode >= 400 && $statusCode < 600) {
             $this->logger->notice(
-                sprintf('U2F registration verification failed; client errors "%s"', join(', ', $result['errors']))
-            );
-
-            return RegistrationVerificationResult::apiError();
-        }
-
-        if ($hasErrors && $statusCode >= 500 && $statusCode < 600) {
-            $this->logger->notice(
-                sprintf('U2F registration verification failed; server errors "%s"', join(', ', $result['errors']))
+                sprintf(
+                    'U2F registration verification failed; HTTP %d with errors "%s"',
+                    $statusCode,
+                    join(', ', $result['errors'])
+                )
             );
 
             return RegistrationVerificationResult::apiError();
