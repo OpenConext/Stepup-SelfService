@@ -80,7 +80,7 @@ final class U2fService
         try {
             $result = $response->json();
         } catch (\RuntimeException $e) {
-            $this->logger->error(
+            $this->logger->critical(
                 'U2F register request creation failed; server responded with malformed JSON',
                 ['exception' => $e]
             );
@@ -168,7 +168,7 @@ final class U2fService
         try {
             $result = $response->json();
         } catch (\RuntimeException $e) {
-            $this->logger->error('U2F registration verification failed; JSON decoding failed.');
+            $this->logger->critical('U2F registration verification failed; JSON decoding failed.');
 
             return RegistrationVerificationResult::apiError();
         }
@@ -177,7 +177,7 @@ final class U2fService
             && $result['errors'] === array_filter($result['errors'], 'is_string');
 
         if ($hasErrors && $statusCode >= 400 && $statusCode < 600) {
-            $this->logger->notice(
+            $this->logger->critical(
                 sprintf(
                     'U2F registration verification failed; HTTP %d with errors "%s"',
                     $statusCode,
