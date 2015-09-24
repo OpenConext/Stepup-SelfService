@@ -92,17 +92,13 @@ final class U2fService
             && is_array($result['errors'])
             && $result['errors'] === array_filter($result['errors'], 'is_string');
 
-        if ($hasErrors && $statusCode >= 400 && $statusCode < 500) {
-            $this->logger->notice(
-                sprintf('U2F register request creation failed; client errors "%s"', join(', ', $result['errors']))
-            );
-
-            return RegisterRequestCreationResult::apiError();
-        }
-
-        if ($hasErrors && $statusCode >= 500 && $statusCode < 600) {
-            $this->logger->notice(
-                sprintf('U2F register request creation failed; server errors "%s"', join(', ', $result['errors']))
+        if ($hasErrors && $statusCode >= 400 && $statusCode < 600) {
+            $this->logger->critical(
+                sprintf(
+                    'U2F register request creation failed; HTTP %d with errors "%s"',
+                    $statusCode,
+                    join(', ', $result['errors'])
+                )
             );
 
             return RegisterRequestCreationResult::apiError();
