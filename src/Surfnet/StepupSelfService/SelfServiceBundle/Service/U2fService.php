@@ -73,7 +73,10 @@ final class U2fService
             'requester' => ['institution' => $command->institution, 'identity' => $command->identityId],
         ];
 
-        $response = $this->guzzleClient->post('create-register-request', ['json' => $body, 'exceptions' => false]);
+        $response = $this->guzzleClient->post(
+            'api/u2f/create-register-request',
+            ['json' => $body, 'exceptions' => false]
+        );
         $statusCode = $response->getStatusCode();
 
         try {
@@ -158,7 +161,7 @@ final class U2fService
             ],
         ];
 
-        $response = $this->guzzleClient->post('register', ['json' => $body, 'exceptions' => false]);
+        $response = $this->guzzleClient->post('api/u2f/register', ['json' => $body, 'exceptions' => false]);
         $statusCode = $response->getStatusCode();
 
         try {
