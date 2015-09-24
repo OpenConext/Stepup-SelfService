@@ -127,7 +127,7 @@ final class U2fService
                     'U2F API behaving nonconformingly, returned register request does not validate',
                     $statusCode
                 ),
-                ['errors' => $this->mapViolationsToErrorStrings($violations)]
+                ['errors' => $this->mapViolationsToErrorStrings($violations, 'register_request')]
             );
 
             return RegisterRequestCreationResult::apiError();
