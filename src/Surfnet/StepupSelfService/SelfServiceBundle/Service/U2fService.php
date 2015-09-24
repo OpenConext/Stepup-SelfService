@@ -88,7 +88,8 @@ final class U2fService
             return RegisterRequestCreationResult::apiError();
         }
 
-        $hasErrors = isset($result['errors']) && is_array($result['errors'])
+        $hasErrors = isset($result['errors'])
+            && is_array($result['errors'])
             && $result['errors'] === array_filter($result['errors'], 'is_string');
 
         if ($hasErrors && $statusCode >= 400 && $statusCode < 500) {
