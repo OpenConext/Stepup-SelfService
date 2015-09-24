@@ -22,15 +22,17 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProveU2fDevicePossessi
     as MiddlewareProveU2fDevicePossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\CreateU2fRegisterRequestCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyU2fRegistrationCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2f\RegisterRequestCreationResult;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactor\ProofOfPossessionResult;
 use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
 use Surfnet\StepupU2fBundle\Dto\RegisterResponse;
-use Surfnet\StepupU2fBundle\Service\U2fService;
 
 class U2fSecondFactorService
 {
     /**
-     * @var \Surfnet\StepupU2fBundle\Service\U2fService
+     * @var U2fService
      */
     private $u2fService;
 
@@ -46,11 +48,16 @@ class U2fSecondFactorService
     }
 
     /**
-     * @return RegisterRequest
+     * @param Identity $identity
+     * @return RegisterRequestCreationResult
      */
-    public function createRegistrationRequest()
+    public function createRegisterRequest(Identity $identity)
     {
-        return $this->u2fService->createRegistrationRequest();
+        $command = new CreateU2fRegisterRequestCommand();
+        $command->identityId       = $identity->id;
+        $command->institution      = $identity->institution;
+
+        return $this->u2fService->createRegisterRequest($command);
     }
 
     /**
@@ -64,7 +71,13 @@ class U2fSecondFactorService
         RegisterRequest $registerRequest,
         RegisterResponse $registerResponse
     ) {
-        $result = $this->u2fService->verifyRegistration($registerRequest, $registerResponse);
+        $command = new VerifyU2fRegistrationCommand();
+        $command->identityId       = $identity->id;
+        $command->institution      = $identity->institution;
+        $command->registerRequest  = $registerRequest;
+        $command->registerResponse = $registerResponse;
+
+        $result = $this->u2fService->verifyRegistration($command);
 
         if (!$result->wasSuccessful()) {
             return ProofOfPossessionResult::fromRegistrationVerificationResult($result);
@@ -75,7 +88,7 @@ class U2fSecondFactorService
         $provePossessionCommand = new MiddlewareProveU2fDevicePossessionCommand();
         $provePossessionCommand->identityId = $identity->id;
         $provePossessionCommand->secondFactorId = $secondFactorId;
-        $provePossessionCommand->keyHandle = $result->getRegistration()->keyHandle;
+        $provePossessionCommand->keyHandle = $result->getKeyHandle();
 
         $commandResult = $this->commandService->execute($provePossessionCommand);
 

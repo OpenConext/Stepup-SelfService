@@ -46,5 +46,29 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
             ->replaceArgument(2, $container->getParameter('locales'));
 
         $container->setParameter('ss.enabled_second_factors', $config['enabled_second_factors']);
+
+        if ($config['u2f_api']['enabled']) {
+            # Configure the U2F API service's Guzzle client.
+            $u2fGuzzleOptions = [
+                'base_url' => $config['u2f_api']['url'],
+                'defaults' => [
+                    'auth'    => [
+                        $config['u2f_api']['credentials']['username'],
+                        $config['u2f_api']['credentials']['password'],
+                        'basic'
+                    ],
+                    'headers' => [
+                        'Accept' => 'application/json'
+                    ]
+                ]
+            ];
+
+            $u2fGuzzle = $container->getDefinition('surfnet_stepup_self_service_self_service.guzzle.u2f');
+            $u2fGuzzle->replaceArgument(0, $u2fGuzzleOptions);
+        } else {
+            $container->removeDefinition('surfnet_stepup_self_service_self_service.service.u2f_second_factor');
+            $container->removeDefinition('surfnet_stepup_self_service_self_service.service.u2f');
+            $container->removeDefinition('surfnet_stepup_self_service_self_service.guzzle.u2f');
+        }
     }
 }

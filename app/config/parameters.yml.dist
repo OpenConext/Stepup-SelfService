@@ -18,6 +18,10 @@ parameters:
     gateway_api_username: ss
     gateway_api_password: ss
 
+    u2f_api_url: https://gw-dev.stepup.coin.surf.net/api/u2f/
+    u2f_api_username: ss
+    u2f_api_password: ss
+
     middleware_credentials_username: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
     middleware_credentials_password: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
     middleware_url_command_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
