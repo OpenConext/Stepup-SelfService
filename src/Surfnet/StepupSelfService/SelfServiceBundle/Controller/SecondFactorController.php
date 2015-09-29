@@ -97,7 +97,7 @@ class SecondFactorController extends Controller
                 $secondFactor = $service->findOneVetted($secondFactorId);
                 break;
             default:
-                throw new \LogicException('There are no other types of second factor.');
+                throw new LogicException('There are no other types of second factor.');
         }
 
         if ($secondFactor === null) {

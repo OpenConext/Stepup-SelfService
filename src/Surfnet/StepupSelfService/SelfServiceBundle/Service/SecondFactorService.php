@@ -31,6 +31,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyMethods)
@@ -120,7 +121,7 @@ class SecondFactorService
                 $secondFactors = $this->findVettedByIdentity($identityId);
                 break;
             default:
-                throw new \LogicException(sprintf('Invalid second factor state "%s" given.', $state));
+                throw new LogicException(sprintf('Invalid second factor state "%s" given.', $state));
         }
 
         if (count($secondFactors->getElements()) === 0) {
@@ -223,7 +224,7 @@ class SecondFactorService
             case 1:
                 return reset($elements);
             default:
-                throw new \LogicException('There cannot be more than one unverified second factor with the same nonce');
+                throw new LogicException('There cannot be more than one unverified second factor with the same nonce');
         }
     }
 
@@ -247,7 +248,7 @@ class SecondFactorService
             case 1:
                 return reset($verifiedSecondFactors)->registrationCode;
             default:
-                throw new \LogicException('Searching by second factor ID cannot result in multiple results.');
+                throw new LogicException('Searching by second factor ID cannot result in multiple results.');
         }
     }
 }
