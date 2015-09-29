@@ -31,6 +31,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactor\ProofOfP
 use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
 use Surfnet\StepupU2fBundle\Dto\RegisterResponse;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Mainly due to use of commands and DTOs
+ */
 class U2fSecondFactorService
 {
     /**
