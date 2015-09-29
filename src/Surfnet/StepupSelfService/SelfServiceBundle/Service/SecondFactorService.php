@@ -39,12 +39,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 class SecondFactorService
 {
     /**
-     * @var MiddlewareSecondFactorService
+     * @var \Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService
      */
     private $secondFactors;
 
     /**
-     * @var CommandService
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
      */
     private $commandService;
 
