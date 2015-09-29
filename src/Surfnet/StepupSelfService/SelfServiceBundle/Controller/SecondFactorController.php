@@ -55,35 +55,18 @@ class SecondFactorController extends Controller
      */
     public function revokeAction(Request $request, $state, $secondFactorId)
     {
-        $command = new RevokeCommand();
-        $command->identityId = $this->getIdentity()->id;
-        $command->secondFactorId = $secondFactorId;
-
-        $form = $this->createForm('ss_revoke_second_factor', $command)->handleRequest($request);
+        $identity = $this->getIdentity();
 
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-        if (!$service->identityHasSecondFactorOfStateWithId($this->getIdentity()->id, $state, $secondFactorId)) {
+        if (!$service->identityHasSecondFactorOfStateWithId($identity->id, $state, $secondFactorId)) {
             $this->get('logger')->error(sprintf(
                 'Identity "%s" tried to revoke "%s" second factor "%s", but does not own that second factor',
-                $this->getIdentity()->id,
+                $identity->id,
                 $state,
                 $secondFactorId
             ));
             throw new NotFoundHttpException();
-        }
-
-        if ($form->isValid()) {
-            /** @var FlashBagInterface $flashBag */
-            $flashBag = $this->get('session')->getFlashBag();
-
-            if ($service->revoke($command)) {
-                $flashBag->add('success', 'ss.second_factor.revoke.alert.revocation_successful');
-            } else {
-                $flashBag->add('error', 'ss.second_factor.revoke.alert.revocation_failed');
-            }
-
-            return $this->redirectToRoute('ss_second_factor_list');
         }
 
         switch ($state) {
@@ -104,6 +87,25 @@ class SecondFactorController extends Controller
             throw new NotFoundHttpException(
                 sprintf("No %s second factor with id '%s' exists.", $state, $secondFactorId)
             );
+        }
+
+        $command = new RevokeCommand();
+        $command->identity = $identity;
+        $command->secondFactor = $secondFactor;
+
+        $form = $this->createForm('ss_revoke_second_factor', $command)->handleRequest($request);
+
+        if ($form->isValid()) {
+            /** @var FlashBagInterface $flashBag */
+            $flashBag = $this->get('session')->getFlashBag();
+
+            if ($service->revoke($command)) {
+                $flashBag->add('success', 'ss.second_factor.revoke.alert.revocation_successful');
+            } else {
+                $flashBag->add('error', 'ss.second_factor.revoke.alert.revocation_failed');
+            }
+
+            return $this->redirectToRoute('ss_second_factor_list');
         }
 
         return [

@@ -50,13 +50,23 @@ class SecondFactorService
     private $commandService;
 
     /**
-     * @param MiddlewareSecondFactorService $secondFactors
-     * @param CommandService $commandService
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService
      */
-    public function __construct(MiddlewareSecondFactorService $secondFactors, CommandService $commandService)
-    {
+    private $u2fSecondFactorService;
+
+    /**
+     * @param MiddlewareSecondFactorService $secondFactors
+     * @param CommandService                $commandService
+     * @param U2fSecondFactorService        $u2fSecondFactorService
+     */
+    public function __construct(
+        MiddlewareSecondFactorService $secondFactors,
+        CommandService $commandService,
+        U2fSecondFactorService $u2fSecondFactorService
+    ) {
         $this->secondFactors = $secondFactors;
         $this->commandService = $commandService;
+        $this->u2fSecondFactorService = $u2fSecondFactorService;
     }
 
     /**
@@ -81,11 +91,21 @@ class SecondFactorService
      */
     public function revoke(RevokeCommand $command)
     {
+        /** @var UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor $secondFactor */
+        $secondFactor = $command->secondFactor;
+
         $apiCommand = new RevokeOwnSecondFactorCommand();
-        $apiCommand->identityId = $command->identityId;
-        $apiCommand->secondFactorId = $command->secondFactorId;
+        $apiCommand->identityId = $command->identity->id;
+        $apiCommand->secondFactorId = $secondFactor->id;
 
         $result = $this->commandService->execute($apiCommand);
+
+        if ($secondFactor->type === 'u2f') {
+            $this->u2fSecondFactorService->revokeRegistration(
+                $command->identity,
+                $secondFactor->secondFactorIdentifier
+            );
+        }
 
         return $result->isSuccessful();
     }
