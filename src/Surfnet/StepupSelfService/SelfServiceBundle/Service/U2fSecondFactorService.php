@@ -23,12 +23,17 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProveU2fDevicePossessi
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\CreateU2fRegisterRequestCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeU2fRegistrationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyU2fRegistrationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2f\RegisterRequestCreationResult;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2f\RegistrationRevocationResult;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactor\ProofOfPossessionResult;
 use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
 use Surfnet\StepupU2fBundle\Dto\RegisterResponse;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Mainly due to use of commands and DTOs
+ */
 class U2fSecondFactorService
 {
     /**
@@ -97,5 +102,20 @@ class U2fSecondFactorService
         }
 
         return ProofOfPossessionResult::secondFactorCreated($secondFactorId, $result);
+    }
+
+    /**
+     * @param Identity $identity
+     * @param string   $keyHandle
+     * @return RegistrationRevocationResult
+     */
+    public function revokeRegistration(Identity $identity, $keyHandle)
+    {
+        $command = new RevokeU2fRegistrationCommand();
+        $command->identityId  = $identity->id;
+        $command->institution = $identity->institution;
+        $command->keyHandle   = $keyHandle;
+
+        return $this->u2fService->revokeRegistration($command);
     }
 }

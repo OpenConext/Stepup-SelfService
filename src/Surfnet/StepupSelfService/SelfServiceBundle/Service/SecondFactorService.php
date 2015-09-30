@@ -31,6 +31,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyMethods)
@@ -39,23 +40,33 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 class SecondFactorService
 {
     /**
-     * @var MiddlewareSecondFactorService
+     * @var \Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService
      */
     private $secondFactors;
 
     /**
-     * @var CommandService
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
      */
     private $commandService;
 
     /**
-     * @param MiddlewareSecondFactorService $secondFactors
-     * @param CommandService $commandService
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService
      */
-    public function __construct(MiddlewareSecondFactorService $secondFactors, CommandService $commandService)
-    {
+    private $u2fSecondFactorService;
+
+    /**
+     * @param MiddlewareSecondFactorService $secondFactors
+     * @param CommandService                $commandService
+     * @param U2fSecondFactorService        $u2fSecondFactorService
+     */
+    public function __construct(
+        MiddlewareSecondFactorService $secondFactors,
+        CommandService $commandService,
+        U2fSecondFactorService $u2fSecondFactorService
+    ) {
         $this->secondFactors = $secondFactors;
         $this->commandService = $commandService;
+        $this->u2fSecondFactorService = $u2fSecondFactorService;
     }
 
     /**
@@ -80,11 +91,21 @@ class SecondFactorService
      */
     public function revoke(RevokeCommand $command)
     {
+        /** @var UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor $secondFactor */
+        $secondFactor = $command->secondFactor;
+
         $apiCommand = new RevokeOwnSecondFactorCommand();
-        $apiCommand->identityId = $command->identityId;
-        $apiCommand->secondFactorId = $command->secondFactorId;
+        $apiCommand->identityId = $command->identity->id;
+        $apiCommand->secondFactorId = $secondFactor->id;
 
         $result = $this->commandService->execute($apiCommand);
+
+        if ($secondFactor->type === 'u2f') {
+            $this->u2fSecondFactorService->revokeRegistration(
+                $command->identity,
+                $secondFactor->secondFactorIdentifier
+            );
+        }
 
         return $result->isSuccessful();
     }
@@ -120,7 +141,7 @@ class SecondFactorService
                 $secondFactors = $this->findVettedByIdentity($identityId);
                 break;
             default:
-                throw new \LogicException(sprintf('Invalid second factor state "%s" given.', $state));
+                throw new LogicException(sprintf('Invalid second factor state "%s" given.', $state));
         }
 
         if (count($secondFactors->getElements()) === 0) {
@@ -223,7 +244,7 @@ class SecondFactorService
             case 1:
                 return reset($elements);
             default:
-                throw new \LogicException('There cannot be more than one unverified second factor with the same nonce');
+                throw new LogicException('There cannot be more than one unverified second factor with the same nonce');
         }
     }
 
@@ -247,7 +268,7 @@ class SecondFactorService
             case 1:
                 return reset($verifiedSecondFactors)->registrationCode;
             default:
-                throw new \LogicException('Searching by second factor ID cannot result in multiple results.');
+                throw new LogicException('Searching by second factor ID cannot result in multiple results.');
         }
     }
 }

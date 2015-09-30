@@ -21,10 +21,13 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use GuzzleHttp\ClientInterface as GuzzleClient;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\CreateU2fRegisterRequestCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeU2fRegistrationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyU2fRegistrationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2f\RegisterRequestCreationResult;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2f\RegistrationRevocationResult;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2f\RegistrationVerificationResult;
 use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -203,6 +206,69 @@ final class U2fService
         }
 
         return RegistrationVerificationResult::success($result['status'], $result['key_handle']);
+    }
+
+    public function revokeRegistration(RevokeU2fRegistrationCommand $command)
+    {
+        $this->logger->notice('Revoking U2F registration from U2F verification server');
+
+        $body = [
+            'requester' => ['institution' => $command->institution, 'identity' => $command->identityId],
+            'key_handle' => ['value' => $command->keyHandle],
+        ];
+
+        $response = $this->guzzleClient->post('api/u2f/revoke-registration', ['json' => $body, 'exceptions' => false]);
+        $statusCode = $response->getStatusCode();
+
+        try {
+            $result = $response->json();
+        } catch (\RuntimeException $e) {
+            $this->logger->critical('U2F registration revocation failed; JSON decoding failed.');
+
+            return RegistrationRevocationResult::apiError();
+        }
+
+        $hasErrors = isset($result['errors']) && is_array($result['errors'])
+            && $result['errors'] === array_filter($result['errors'], 'is_string');
+
+        if ($hasErrors && $statusCode >= 400 && $statusCode < 600) {
+            $this->logger->critical(
+                sprintf(
+                    'U2F registration revocation failed; HTTP %d with errors "%s"',
+                    $statusCode,
+                    join(', ', $result['errors'])
+                )
+            );
+
+            return RegistrationRevocationResult::apiError();
+        }
+
+        if ($statusCode != 200 || !isset($result['status']) || !is_string($result['status'])) {
+            $this->logger->critical(
+                sprintf(
+                    'U2F API behaving nonconformingly, returned response or status code (%d) unexpected',
+                    $statusCode
+                )
+            );
+
+            return RegistrationRevocationResult::apiError();
+        }
+
+        switch ($result['status']) {
+            case RegistrationRevocationResult::STATUS_SUCCESS:
+                return RegistrationRevocationResult::success();
+            case RegistrationRevocationResult::STATUS_UNKNOWN_KEY_HANDLE:
+                return RegistrationRevocationResult::unknownKeyHandle();
+            default:
+                $this->logger->critical(
+                    sprintf(
+                        'U2F API behaving nonconformingly, illegal status code "%s" received',
+                        $result['status']
+                    )
+                );
+
+                return RegistrationRevocationResult::apiError();
+        }
     }
 
     /**
