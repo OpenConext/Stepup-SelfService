@@ -16,23 +16,10 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Exception;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
-use Symfony\Component\Validator\Constraints as Assert;
+use LogicException as CoreLogicException;
 
-class RevokeCommand
+class LogicException extends CoreLogicException
 {
-    /**
-     * @var Identity
-     */
-    public $identity;
-
-    /**
-     * @var UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor
-     */
-    public $secondFactor;
 }
