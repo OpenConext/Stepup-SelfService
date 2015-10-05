@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\DependencyInjection\CompilerPass\U2fRegistrationSessionBagCompilerPass;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Factory\SamlFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -27,6 +28,8 @@ class SurfnetStepupSelfServiceSelfServiceBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
+
+        $container->addCompilerPass(new U2fRegistrationSessionBagCompilerPass());
 
         /** @var \Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension $extension */
         $extension = $container->getExtension('security');

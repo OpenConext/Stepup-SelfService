@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2015 SURFnet B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,28 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
-use Symfony\Component\Validator\Constraints as Assert;
+use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
+use Surfnet\StepupU2fBundle\Dto\RegisterResponse;
 
-class RevokeCommand
+final class VerifyU2fRegistrationCommand
 {
     /**
-     * @var Identity
+     * @var string
      */
-    public $identity;
+    public $institution;
 
     /**
-     * @var UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor
+     * @var string
      */
-    public $secondFactor;
+    public $identityId;
+
+    /**
+     * @var RegisterRequest
+     */
+    public $registerRequest;
+
+    /**
+     * @var RegisterResponse
+     */
+    public $registerResponse;
 }

@@ -26,7 +26,6 @@ class RevokeSecondFactorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('secondFactorId', 'hidden');
         $builder->add('revoke', 'submit', [
             'label' => 'ss.form.ss_revoke_second_factor.revoke',
             'attr' => [ 'class' => 'btn btn-danger pull-right' ],

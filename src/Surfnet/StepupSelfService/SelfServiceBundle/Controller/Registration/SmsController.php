@@ -33,6 +33,8 @@ class SmsController extends Controller
      */
     public function sendChallengeAction(Request $request)
     {
+        $this->assertSecondFactorEnabled('sms');
+
         $identity = $this->getIdentity();
 
         $command = new SendSmsChallengeCommand();
@@ -71,6 +73,8 @@ class SmsController extends Controller
      */
     public function provePossessionAction(Request $request)
     {
+        $this->assertSecondFactorEnabled('sms');
+
         /** @var SmsSecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
 

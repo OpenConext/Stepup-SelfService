@@ -48,4 +48,16 @@ class Controller extends FrameworkController
 
         return $user;
     }
+
+    /**
+     * @param string $type
+     */
+    protected function assertSecondFactorEnabled($type)
+    {
+        if (!in_array($type, $this->getParameter('ss.enabled_second_factors'))) {
+            $this->get('logger')->warning('A controller action was called for a disabled second factor');
+
+            throw $this->createNotFoundException();
+        }
+    }
 }

@@ -12,22 +12,33 @@
     <h2>{{ block('page_title') }}</h2>
 
     <div class="row">
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-            'type': 'sms',
-            'security': 2,
-            'url': path('ss_registration_sms_send_challenge')
-        } only %}
-        {#
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-            'type': 'tiqr',
-            'security': 2,
-            'url': path('ss_registration_gssf_initiate', {'provider': 'tiqr'})
-        } only %}
-        #}
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-        'type': 'yubikey',
-        'security': 3,
-        'url': path('ss_registration_yubikey_prove_possession')
-        } only %}
+        {% if enabledSecondFactors.sms is defined %}
+            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+                'type': 'sms',
+                'security': 2,
+                'url': path('ss_registration_sms_send_challenge')
+            } only %}
+        {% endif %}
+        {% if enabledSecondFactors.tiqr is defined %}
+            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+                'type': 'tiqr',
+                'security': 2,
+                'url': path('ss_registration_gssf_initiate', {'provider': 'tiqr'})
+            } only %}
+        {% endif %}
+        {% if enabledSecondFactors.yubikey is defined %}
+            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+                'type': 'yubikey',
+                'security': 3,
+                'url': path('ss_registration_yubikey_prove_possession')
+            } only %}
+        {% endif %}
+        {% if enabledSecondFactors.u2f is defined %}
+            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+                'type': 'u2f',
+                'security': 3,
+                'url': path('ss_registration_u2f_registration')
+            } only %}
+        {% endif %}
     </div>
 {% endblock %}

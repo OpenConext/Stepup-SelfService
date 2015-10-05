@@ -10,6 +10,7 @@ services:
         arguments:
             - @surfnet_stepup_middleware_client.identity.service.second_factor
             - @surfnet_stepup_self_service_self_service.service.command
+            - @surfnet_stepup_self_service_self_service.service.u2f_second_factor
 
     surfnet_stepup_self_service_self_service.form.type.prove_yubikey_possession:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType
@@ -61,10 +62,35 @@ services:
             - @translator
             - @surfnet_stepup_self_service_self_service.service.command
 
+    surfnet_stepup_self_service_self_service.service.u2f_second_factor:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService
+        arguments:
+            - @surfnet_stepup_self_service_self_service.service.u2f
+            - @surfnet_stepup_self_service_self_service.service.command
+
+    surfnet_stepup_self_service_self_service.service.u2f:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fService
+        arguments:
+            - @surfnet_stepup.guzzle.gateway_api
+            - @validator
+            - @logger
+
     surfnet_stepup_self_service_self_service.service.gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
         arguments:
             - @surfnet_stepup_self_service_self_service.service.command
+
+    self_service.session.u2f_registration:
+        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+        factory: ['@session', 'getBag']
+        arguments: ['self_service.session.u2f_registration']
+
+    # The bag itself that is returned from the factory of the service above
+    self_service.session.u2f_registration.bag:
+        public: false
+        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+        arguments: ['self_service.session.u2f_registration']
+        calls: [ [setName, ['self_service.session.u2f_registration']] ]
 
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
