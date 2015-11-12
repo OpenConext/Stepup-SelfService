@@ -28,7 +28,8 @@
         "surfnet/stepup-saml-bundle": "dev-develop",
         "surfnet/stepup-bundle": "dev-develop",
         "symfony/swiftmailer-bundle": "~2.3",
-        "surfnet/stepup-u2f-bundle": "dev-develop"
+        "surfnet/stepup-u2f-bundle": "dev-develop",
+        "mopa/composer-bridge": "dev-master as v1.5.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^1.2.0",
