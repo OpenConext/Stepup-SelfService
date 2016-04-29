@@ -366,14 +366,6 @@
         <source>middleware_client.dto.vetted_second_factor.type.must_not_be_blank</source>
         <target state="new">middleware_client.dto.vetted_second_factor.type.must_not_be_blank</target>
       </trans-unit>
-      <trans-unit id="64327d0cfa154721029978c67ef52df2fd18cacb" resname="ss.revoke_own_second_factor_command.identity_id.must_be_string">
-        <source>ss.revoke_own_second_factor_command.identity_id.must_be_string</source>
-        <target>Identity ID must be a string</target>
-      </trans-unit>
-      <trans-unit id="590d26b3eb954c44862a6cf2bf4cf7a382b7119c" resname="ss.revoke_own_second_factor_command.second_factor_id.must_be_string">
-        <source>ss.revoke_own_second_factor_command.second_factor_id.must_be_string</source>
-        <target>Second factor ID must be a string</target>
-      </trans-unit>
       <trans-unit id="d23ad73b357db56cd8de5ead80613a379e7fb7f9" resname="ss.send_sms_challenge_command.recipient.may_not_be_empty">
         <source>ss.send_sms_challenge_command.recipient.may_not_be_empty</source>
         <target>SMS challenge recipient may not be empty.</target>
