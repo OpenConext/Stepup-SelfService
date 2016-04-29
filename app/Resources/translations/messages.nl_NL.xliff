@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2015-07-28T12:24:05Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2016-04-29T10:22:48Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -105,22 +105,22 @@
         <target>Foutmelding</target>
       </trans-unit>
       <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
-        <jms:reference-file line="70">SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
+        <jms:reference-file line="72">SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
         <source>ss.flash.error_while_switching_locale</source>
         <target>Due to an unknown reason, switching locales failed.</target>
       </trans-unit>
       <trans-unit id="600028302c7b3a43ae0e30ab3b015f505c2b7f1f" resname="ss.flash.invalid_switch_locale_form">
-        <jms:reference-file line="63">SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
+        <jms:reference-file line="65">SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
         <source>ss.flash.invalid_switch_locale_form</source>
         <target>Door een onbekende oorzaak is het wisselen van taal mislukt.</target>
       </trans-unit>
       <trans-unit id="b3d573081dd44232cfd0fc03a04fe1b523715271" resname="ss.form.ss_revoke_second_factor.cancel">
-        <jms:reference-file line="35">Form/Type/RevokeSecondFactorType.php</jms:reference-file>
+        <jms:reference-file line="34">Form/Type/RevokeSecondFactorType.php</jms:reference-file>
         <source>ss.form.ss_revoke_second_factor.cancel</source>
         <target>Annuleren</target>
       </trans-unit>
       <trans-unit id="ab87a286bf3aa3ccb30880d84c1a0605345338cc" resname="ss.form.ss_revoke_second_factor.revoke">
-        <jms:reference-file line="31">Form/Type/RevokeSecondFactorType.php</jms:reference-file>
+        <jms:reference-file line="30">Form/Type/RevokeSecondFactorType.php</jms:reference-file>
         <source>ss.form.ss_revoke_second_factor.revoke</source>
         <target>Verwijderen</target>
       </trans-unit>
@@ -155,42 +155,42 @@
         <target>Code</target>
       </trans-unit>
       <trans-unit id="e3554b07567999b6bd90ee405bf4e60db4d5d727" resname="ss.prove_phone_possession.challenge_expired">
-        <jms:reference-file line="20">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="28">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_expired</source>
         <target>Deze code is verlopen. Vraag een nieuwe code aan.</target>
       </trans-unit>
       <trans-unit id="ebe4091038cf74f7ebcfd0a3256985fdcf21e7dd" resname="ss.prove_phone_possession.challenge_request_limit_reached">
-        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="27">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_request_limit_reached</source>
         <target>Je hebt de limiet van drie codes bereikt; je kunt geen codes meer aanvragen. Neem contact op met de helpdesk van je instelling of probeer het later nog eens.</target>
       </trans-unit>
       <trans-unit id="90d186f8499585cb62a368341bc3d5569f63a013" resname="ss.prove_phone_possession.challenge_response_incorrect">
-        <jms:reference-file line="28">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="36">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.challenge_response_incorrect</source>
         <target>De code die je ingevoerd hebt komt niet overeen met de code die je hebt ontvangen.</target>
       </trans-unit>
       <trans-unit id="e50a93e13b47c2995aefee1dd550f3dedfdf0080" resname="ss.prove_phone_possession.incorrect_challenge_response">
-        <jms:reference-file line="18">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="26">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.incorrect_challenge_response</source>
         <target>De ingevoerde code is onjuist. Probeer het nog eens, of vraag een nieuwe code op.</target>
       </trans-unit>
       <trans-unit id="e5bb393004217418ac3b2d08716c203b86ad8d1d" resname="ss.prove_phone_possession.proof_of_possession_failed">
-        <jms:reference-file line="17">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="25">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.proof_of_possession_failed</source>
         <target>Het token kon wegens een onbekende reden niet aangemaakt worden.</target>
       </trans-unit>
       <trans-unit id="9360cda7585c4052d19755cff12aa9b76a69abcc" resname="ss.prove_phone_possession.send_sms_challenge_failed">
-        <jms:reference-file line="16">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="24">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.send_sms_challenge_failed</source>
         <target>Het versturen van de code per SMS is mislukt.</target>
       </trans-unit>
       <trans-unit id="f355c0b1302e6ed1a9301637306cb312b6feb4eb" resname="ss.prove_phone_possession.too_many_attempts">
-        <jms:reference-file line="21">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="29">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_phone_possession.too_many_attempts</source>
         <target>U heeft de limiet van tien pogingen bereikt; u kunt geen codes meer verifiëren. Neem contact op met uw helpdesk of probeer het later nog eens.</target>
       </trans-unit>
       <trans-unit id="6d67afd47dd9bd70f19efaf10e19900bd5361386" resname="ss.prove_yubikey_possession.proof_of_possession_failed">
-        <jms:reference-file line="29">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="37">Resources/views/translations.twig</jms:reference-file>
         <source>ss.prove_yubikey_possession.proof_of_possession_failed</source>
         <target>Het token kon wegens een onbekende reden niet aangemaakt worden.</target>
       </trans-unit>
@@ -204,28 +204,53 @@
         <source>ss.registration.email_verification_email_sent.title</source>
         <target>Bevestig je e-mailadres</target>
       </trans-unit>
+      <trans-unit id="b668f7414d7487c253799f8c30a183bf9207c62c" resname="ss.registration.gssf.initiate.biometric.button.initiate">
+        <jms:reference-file line="66">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.gssf.initiate.biometric.button.initiate</source>
+        <target>Registreer biometrisch apparaat</target>
+      </trans-unit>
+      <trans-unit id="f014ff8b288264c62ddbec5e4a121a801d9176d4" resname="ss.registration.gssf.initiate.biometric.error.authn_failed">
+        <jms:reference-file line="67">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.gssf.initiate.biometric.error.authn_failed</source>
+        <target>Registratie biometrisch apparaat is mislukt. Probeer het nogmaals.</target>
+      </trans-unit>
+      <trans-unit id="5ecc689c426bddecc29a9a4de210c5023a4d333e" resname="ss.registration.gssf.initiate.biometric.error.proof_of_possession_failed">
+        <jms:reference-file line="68">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.gssf.initiate.biometric.error.proof_of_possession_failed</source>
+        <target>De registratie van uw token is mislukt. Probeer het nogmaals.</target>
+      </trans-unit>
+      <trans-unit id="39b2f7a87803de392ac4303de3eb579c872b2803" resname="ss.registration.gssf.initiate.biometric.text.explanation">
+        <jms:reference-file line="65">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.gssf.initiate.biometric.text.explanation</source>
+        <target>Klik op de knop hieronder om je biometrisch apparaat te registreren.</target>
+      </trans-unit>
+      <trans-unit id="bbd5844ce902521f35922640f8e13862c72f4bd8" resname="ss.registration.gssf.initiate.biometric.title.page">
+        <jms:reference-file line="64">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.gssf.initiate.biometric.title.page</source>
+        <target>Registratie biometrisch apparaat</target>
+      </trans-unit>
       <trans-unit id="6d670d08e109198803dff1f72ef9b68d2e86edb4" resname="ss.registration.gssf.initiate.tiqr.button.initiate">
-        <jms:reference-file line="49">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="61">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.gssf.initiate.tiqr.button.initiate</source>
         <target>Registreren bij Tiqr</target>
       </trans-unit>
       <trans-unit id="15e31720c64b827d5fae810e95e63278984e02d8" resname="ss.registration.gssf.initiate.tiqr.error.authn_failed">
-        <jms:reference-file line="50">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="62">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.gssf.initiate.tiqr.error.authn_failed</source>
         <target>Registratie bij Tiqr is mislukt. Probeer het nogmaals.</target>
       </trans-unit>
       <trans-unit id="71ec57b283d391eb4c003792cc1b5651d3dffd15" resname="ss.registration.gssf.initiate.tiqr.error.proof_of_possession_failed">
-        <jms:reference-file line="51">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="63">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.gssf.initiate.tiqr.error.proof_of_possession_failed</source>
         <target>De registratie van uw token is mislukt. Probeer het nogmaals.</target>
       </trans-unit>
       <trans-unit id="271bf16edb1421d5fa1867aee0432126c1bb7ba0" resname="ss.registration.gssf.initiate.tiqr.text.explanation">
-        <jms:reference-file line="48">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="60">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.gssf.initiate.tiqr.text.explanation</source>
         <target>Klik op de knop hieronder om je bij Tiqr te registreren.</target>
       </trans-unit>
       <trans-unit id="e15d6747ec3b6168013bd27b31217f224d228fb0" resname="ss.registration.gssf.initiate.tiqr.title.page">
-        <jms:reference-file line="47">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="59">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.gssf.initiate.tiqr.title.page</source>
         <target>Registreren bij Tiqr</target>
       </trans-unit>
@@ -298,6 +323,26 @@
         <jms:reference-file line="45">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.title.list_of_ras</source>
         <target>Locatie(s) om je token te activeren</target>
+      </trans-unit>
+      <trans-unit id="8e0785d5fdca610cfd1fea916055990f8a11f342" resname="ss.registration.selector.biometric.alt">
+        <jms:reference-file line="18">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.biometric.alt</source>
+        <target>Biometrisch apparaat</target>
+      </trans-unit>
+      <trans-unit id="d8cd1fc6988268f1fe0f2ced42eab52ea7fda2c1" resname="ss.registration.selector.biometric.button.use">
+        <jms:reference-file line="21">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.biometric.button.use</source>
+        <target>Selecteer</target>
+      </trans-unit>
+      <trans-unit id="60b8ea5759f00010cd165c85f4774050e605f9c8" resname="ss.registration.selector.biometric.description">
+        <jms:reference-file line="20">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.biometric.description</source>
+        <target>Log in met een biometrisch apparaat.</target>
+      </trans-unit>
+      <trans-unit id="271a647c0cc1d942c027ba7c1d22ea71f21c67aa" resname="ss.registration.selector.biometric.title">
+        <jms:reference-file line="19">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.registration.selector.biometric.title</source>
+        <target>Biometrisch apparaat</target>
       </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <jms:reference-file line="2">Resources/views/translations.twig</jms:reference-file>
@@ -388,7 +433,7 @@ Geschikt voor alle devices met een USB-poort.</target>
         <target>YubiKey</target>
       </trans-unit>
       <trans-unit id="cb8f1be659847e3d5566890256517229aade2389" resname="ss.registration.sms.alert.no_verification_state">
-        <jms:reference-file line="23">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="31">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.sms.alert.no_verification_state</source>
         <target>Uw sessie is verlopen. Vraag een nieuwe code aan.</target>
       </trans-unit>
@@ -438,12 +483,12 @@ Geschikt voor alle devices met een USB-poort.</target>
         <target>Geen code ontvangen? Klik dan op 'Stuur een nieuwe code'</target>
       </trans-unit>
       <trans-unit id="a9291ad7b24d9af72187ad2c3a47ef70a8ddb049" resname="ss.registration.u2f.alert.device_reported_an_error">
-        <jms:reference-file line="60">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="71">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.u2f.alert.device_reported_an_error</source>
         <target>Het U2F-apparaat heeft een foutmelding gerapporteerd. Probeer het opnieuw of neem contact op met de IT-helpdesk.</target>
       </trans-unit>
       <trans-unit id="10942aeeff49e9078c3388325521ec7745d9e4d7" resname="ss.registration.u2f.alert.error">
-        <jms:reference-file line="61">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="72">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.u2f.alert.error</source>
         <target>De registratie van het U2F-apparaat is mislukt. Probeer het opnieuw of neem contact op met de IT-helpdesk.</target>
       </trans-unit>
@@ -453,17 +498,17 @@ Geschikt voor alle devices met een USB-poort.</target>
         <target>Nieuwe poging</target>
       </trans-unit>
       <trans-unit id="4f5b229b9de7809577b58b29e6ca42b9ea3e7f17" resname="ss.registration.u2f.prove_possession.title.page">
-        <jms:reference-file line="3">Registration/U2f/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="3">Registration/U2f/registration.html.twig</jms:reference-file>
         <source>ss.registration.u2f.prove_possession.title.page</source>
         <target>Koppel je U2F-apparaat</target>
       </trans-unit>
       <trans-unit id="aa1066996eb91288ee305d75ae37b40043a5900b" resname="ss.registration.u2f.text.activate_u2f_device">
-        <jms:reference-file line="16">Registration/U2f/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="16">Registration/U2f/registration.html.twig</jms:reference-file>
         <source>ss.registration.u2f.text.activate_u2f_device</source>
         <target>Activeer het U2F-apparaat. Dit gebeurt meestal met behulp van een knop.</target>
       </trans-unit>
       <trans-unit id="63215bcefb16179e093adf30b4adf7d67ba27a43" resname="ss.registration.u2f.text.ensure_device_connected_to_pc">
-        <jms:reference-file line="15">Registration/U2f/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="15">Registration/U2f/registration.html.twig</jms:reference-file>
         <source>ss.registration.u2f.text.ensure_device_connected_to_pc</source>
         <target>Zorg dat je U2F-apparaat gekoppeld is aan uw computer.</target>
       </trans-unit>
@@ -508,19 +553,19 @@ Geschikt voor alle devices met een USB-poort.</target>
         <target>Er zijn geen tokens geregistreerd voor jouw account. Klik op 'Registreer token' om een nieuw token te registreren.</target>
       </trans-unit>
       <trans-unit id="a1a1aa0e1c0a720bc6144c5a5a03d89ad6fdcc87" resname="ss.second_factor.list.text.unverified">
-        <jms:reference-file line="34">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="42">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.unverified</source>
         <target>Voor het onderstaande token moet het e-mailadres nog bevestigd worden. Er is een e-mail verstuurd naar '%email%'. Volg de instructies in deze e-mail om verder te gaan met de registratie. Geen e-mail ontvangen? Verwijder het token om het opnieuw te proberen.</target>
       </trans-unit>
       <trans-unit id="da0c3086f8d5dc181e074f24d12e8ccc27429dcf" resname="ss.second_factor.list.text.verified">
-        <jms:reference-file line="33">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="41">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.verified</source>
         <target>Het volgende token is geregistreerd voor jouw account, maar nog niet geactiveerd.
 
 Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg de instructies uit de e-mail om je token te activeren.</target>
       </trans-unit>
       <trans-unit id="15bc6a0b6f49cc0b44bd30ed7290e347e1267117" resname="ss.second_factor.list.text.vetted">
-        <jms:reference-file line="32">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="40">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.vetted</source>
         <target>Het volgende token is geregistreerd voor jouw account.</target>
       </trans-unit>
@@ -530,12 +575,12 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <target>Overzicht tokens</target>
       </trans-unit>
       <trans-unit id="6ddd63626b39582e37d8f3012d893e9d4eac14db" resname="ss.second_factor.revoke.alert.revocation_failed">
-        <jms:reference-file line="44">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="56">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.revoke.alert.revocation_failed</source>
         <target>Token intrekken is mislukt</target>
       </trans-unit>
       <trans-unit id="f990ac6c55a5585b8c3cde21f4c63bb66b055892" resname="ss.second_factor.revoke.alert.revocation_successful">
-        <jms:reference-file line="43">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="55">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.revoke.alert.revocation_successful</source>
         <target>Je token is verwijderd.</target>
       </trans-unit>
@@ -544,23 +589,28 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <source>ss.second_factor.revoke.button.revoke</source>
         <target>Verwijderen</target>
       </trans-unit>
+      <trans-unit id="6fb0acf21df652aef6e8da27aefff89ad52b6e1a" resname="ss.second_factor.revoke.second_factor_type.biometric">
+        <jms:reference-file line="54">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.revoke.second_factor_type.biometric</source>
+        <target>Biometrie</target>
+      </trans-unit>
       <trans-unit id="8cb0dc5d3faca805d69dce7496307078d2234dfb" resname="ss.second_factor.revoke.second_factor_type.sms">
-        <jms:reference-file line="40">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="50">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.revoke.second_factor_type.sms</source>
         <target>SMS</target>
       </trans-unit>
       <trans-unit id="ddaf3dc5c270fff8b10c72c1385407f79b7fbd0b" resname="ss.second_factor.revoke.second_factor_type.tiqr">
-        <jms:reference-file line="42">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="52">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.revoke.second_factor_type.tiqr</source>
         <target>Tiqr</target>
       </trans-unit>
       <trans-unit id="05f193ed2a057ba345519da22753939ba8aef925" resname="ss.second_factor.revoke.second_factor_type.u2f">
-        <jms:reference-file line="48">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="53">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.revoke.second_factor_type.u2f</source>
         <target>U2F</target>
       </trans-unit>
       <trans-unit id="41ef2c1782e52dabce59e7be54aef6fa07829959" resname="ss.second_factor.revoke.second_factor_type.yubikey">
-        <jms:reference-file line="41">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="51">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.revoke.second_factor_type.yubikey</source>
         <target>YubiKey</target>
       </trans-unit>
@@ -584,23 +634,28 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <source>ss.second_factor.revoke.title</source>
         <target>Verwijder token</target>
       </trans-unit>
+      <trans-unit id="58c4d4601f77fde80d101525a27c16d0c35ae651" resname="ss.second_factor.type.biometric">
+        <jms:reference-file line="47">Resources/views/translations.twig</jms:reference-file>
+        <source>ss.second_factor.type.biometric</source>
+        <target>Biometrie</target>
+      </trans-unit>
       <trans-unit id="46d5571724a558b0ad7e823e35a35021d78ed209" resname="ss.second_factor.type.sms">
-        <jms:reference-file line="35">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="43">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.type.sms</source>
         <target>SMS</target>
       </trans-unit>
       <trans-unit id="84f85f9b2badc618045be40abbd82d1a1acc3e3f" resname="ss.second_factor.type.tiqr">
-        <jms:reference-file line="37">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="45">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.type.tiqr</source>
         <target>Tiqr</target>
       </trans-unit>
       <trans-unit id="e6a4121e1e5da569eb89ea885f61ea68033650eb" resname="ss.second_factor.type.u2f">
-        <jms:reference-file line="42">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="46">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.type.u2f</source>
         <target>U2F</target>
       </trans-unit>
       <trans-unit id="81b817f201c14a06e97251089f38fec70163ef3f" resname="ss.second_factor.type.yubikey">
-        <jms:reference-file line="36">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="44">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.type.yubikey</source>
         <target>YubiKey</target>
       </trans-unit>
@@ -615,12 +670,12 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <target>Token</target>
       </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
-        <jms:reference-file line="26">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="34">Resources/views/translations.twig</jms:reference-file>
         <source>ss.verify_yubikey_command.otp.otp_invalid</source>
         <target>Deze YubiKey code was ongeldig. Probeer het nog eens.</target>
       </trans-unit>
       <trans-unit id="222ba32640d7ba4a87f2070d67125ccabf100de8" resname="ss.verify_yubikey_command.otp.verification_error">
-        <jms:reference-file line="27">Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="35">Resources/views/translations.twig</jms:reference-file>
         <source>ss.verify_yubikey_command.otp.verification_error</source>
         <target>Het verifiëren van de YubiKey-code is wegens een onbekende reden niet gelukt. Probeer het opnieuw.</target>
       </trans-unit>
