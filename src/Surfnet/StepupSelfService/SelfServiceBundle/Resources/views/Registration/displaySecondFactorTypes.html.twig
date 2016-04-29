@@ -40,5 +40,12 @@
                 'url': path('ss_registration_u2f_registration')
             } only %}
         {% endif %}
+        {% if enabledSecondFactors.biometric is defined %}
+            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+                'type': 'biometric',
+                'security': 3,
+                'url': path('ss_registration_gssf_initiate', {'provider': 'biometric'})
+            } only %}
+        {% endif %}
     </div>
 {% endblock %}
