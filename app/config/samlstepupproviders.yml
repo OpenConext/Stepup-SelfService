@@ -3,8 +3,8 @@ imports:
 
 surfnet_stepup_self_service_saml_stepup_provider:
     routes:
-        consume_assertion: %gssp_routes_consume_assertion%
-        metadata: %gssp_routes_metadata%
+        consume_assertion: ss_registration_gssf_consume_assertion
+        metadata: ss_registration_gssf_saml_metadata
     providers:
         tiqr:
             hosted:
