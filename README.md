@@ -15,3 +15,5 @@ Step-up Self-Service
 ## Installation
 
 Clone the repository or download the archive to a directory. Install the dependencies by running `composer install`.
+
+Run `app/console mopa:bootstrap:symlink:less` to configure Bootstrap symlinks.
