@@ -36,6 +36,8 @@ class RegistrationController extends Controller
         return [
             'commonName' => $this->getIdentity()->commonName,
             'enabledSecondFactors' => array_combine($enabledSecondFactors, $enabledSecondFactors),
+            'tiqrAppAndroidUrl' => $this->getParameter('tiqr_app_android_url'),
+            'tiqrAppIosUrl'     => $this->getParameter('tiqr_app_ios_url'),
         ];
     }
 

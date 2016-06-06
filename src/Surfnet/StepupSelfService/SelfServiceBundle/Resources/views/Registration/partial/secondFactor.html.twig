@@ -13,7 +13,16 @@
         </p>
         <hr>
         <p>
-            {{ ('ss.registration.selector.'~type~'.description')|trans }}
+            {{
+                ('ss.registration.selector.'~type~'.description')|trans(
+                    {
+                        '%tiqr_android_link_start%': '<a href="'~tiqrAppAndroidUrl~'">',
+                        '%tiqr_android_link_end%': '</a>',
+                        '%tiqr_ios_link_start%': '<a href="'~tiqrAppIosUrl~'">',
+                        '%tiqr_ios_link_end%': '</a>',
+                    }
+                )|raw
+            }}
         </p>
         <p>
             <a href="{{ url }}" class="btn btn-primary">

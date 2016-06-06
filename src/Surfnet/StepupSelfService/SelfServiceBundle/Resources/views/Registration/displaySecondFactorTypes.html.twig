@@ -16,35 +16,45 @@
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'sms',
                 'security': 2,
-                'url': path('ss_registration_sms_send_challenge')
+                'url': path('ss_registration_sms_send_challenge'),
+                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
+                'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
         {% if enabledSecondFactors.tiqr is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'tiqr',
                 'security': 2,
-                'url': path('ss_registration_gssf_initiate', {'provider': 'tiqr'})
+                'url': path('ss_registration_gssf_initiate', {'provider': 'tiqr'}),
+                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
+                'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
         {% if enabledSecondFactors.yubikey is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'yubikey',
                 'security': 3,
-                'url': path('ss_registration_yubikey_prove_possession')
+                'url': path('ss_registration_yubikey_prove_possession'),
+                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
+                'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
         {% if enabledSecondFactors.u2f is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'u2f',
                 'security': 3,
-                'url': path('ss_registration_u2f_registration')
+                'url': path('ss_registration_u2f_registration'),
+                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
+                'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
         {% if enabledSecondFactors.biometric is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'biometric',
                 'security': 3,
-                'url': path('ss_registration_gssf_initiate', {'provider': 'biometric'})
+                'url': path('ss_registration_gssf_initiate', {'provider': 'biometric'}),
+                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
+                'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
     </div>

@@ -379,7 +379,7 @@ Geschikt voor alle mobiele telefoons.</target>
         <jms:reference-file line="12">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.tiqr.description</source>
         <target>Log in met een app op je smartphone. 
-Geschikt voor smartphones met Apple iOS of Android.</target>
+Geschikt voor smartphones met %tiqr_ios_link_start%Apple iOS%tiqr_ios_link_end% of %tiqr_android_link_start%Android%tiqr_android_link_end%.</target>
       </trans-unit>
       <trans-unit id="dd724c0f4759a5dc04d29ab36e611d16da4ad8ba" resname="ss.registration.selector.tiqr.title">
         <jms:reference-file line="11">Resources/views/translations.twig</jms:reference-file>
