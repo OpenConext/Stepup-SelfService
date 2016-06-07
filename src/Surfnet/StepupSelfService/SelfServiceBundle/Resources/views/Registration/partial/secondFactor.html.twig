@@ -14,7 +14,7 @@
         <hr>
         <p>
             {{
-                ('ss.registration.selector.'~type~'.description')|trans(
+                ('ss.registration.selector.'~type~'.description')|trans|e|replace(
                     {
                         '%tiqr_android_link_start%': '<a href="'~tiqrAppAndroidUrl~'">',
                         '%tiqr_android_link_end%': '</a>',
