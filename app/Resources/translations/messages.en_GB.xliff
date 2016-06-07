@@ -379,7 +379,7 @@ For all mobile phones.</target>
         <jms:reference-file line="12">Resources/views/translations.twig</jms:reference-file>
         <source>ss.registration.selector.tiqr.description</source>
         <target>Log in with a smartphone app.
-For all smartphones with Apple iOS or Android.</target>
+For all smartphones with %tiqr_ios_link_start%Apple iOS%tiqr_ios_link_end% or %tiqr_android_link_start%Android%tiqr_android_link_end%.</target>
       </trans-unit>
       <trans-unit id="dd724c0f4759a5dc04d29ab36e611d16da4ad8ba" resname="ss.registration.selector.tiqr.title">
         <jms:reference-file line="11">Resources/views/translations.twig</jms:reference-file>
