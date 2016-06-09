@@ -23,7 +23,7 @@
         "fortawesome/font-awesome": "~4.2.0",
         "jms/translation-bundle": "~1.1.0",
         "jms/di-extra-bundle": "~1.4.0",
-        "surfnet/stepup-middleware-client-bundle": "dev-develop",
+        "surfnet/stepup-middleware-client-bundle": "~1.1",
         "guzzlehttp/guzzle": "~4",
         "surfnet/stepup-saml-bundle": "dev-develop",
         "surfnet/stepup-bundle": "^1.3.0",
