@@ -111,6 +111,7 @@ services:
             - @self_service.service.identity
             - @surfnet_saml.saml.attribute_dictionary
             - @self_service.locale.request_stack_locale_provider
+            - @logger
 
     self_service.security.authentication.listener:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Firewall\SamlListener
