@@ -124,13 +124,13 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         if (count($commonNames) > 1) {
-            $this->logger->notice('Multiple commonNames provided, picking first one', ['commonNames' => $commonNames]);
+            $this->logger->notice('Multiple commonNames provided, picking first one', ['commonNamesCount' => count($commonNames)]);
         }
 
         $commonName = $commonNames[0];
 
         if (!is_string($commonName)) {
-            $this->logger->notice('Received invalid commonName', ['commonName' => $commonName]);
+            $this->logger->notice('Received invalid commonName', ['commonNameCount' => count($commonName)]);
             throw new BadCredentialsException(
                 'commonName is not a string'
             );
@@ -154,15 +154,15 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         if (count($emails) > 1) {
-            $this->logger->notice('Multiple emails provided, picking first one', ['emails' => $emails]);
+            $this->logger->notice('Multiple emails provided, picking first one', ['emailsCount' => count($emails)]);
         }
 
         $email = $emails[0];
 
         if (!is_string($email)) {
-            $this->logger->notice('Received invalid commonName', ['email' => $email]);
+            $this->logger->notice('Received invalid email');
             throw new BadCredentialsException(
-                'commonName is not a string'
+                'email is not a string'
             );
         }
 
@@ -192,9 +192,9 @@ class SamlProvider implements AuthenticationProviderInterface
         $institution = $institutions[0];
 
         if (!is_string($institution)) {
-            $this->logger->notice('Received invalid commonName', ['institution' => $institution]);
+            $this->logger->notice('Received invalid schacHomeOrganization', ['schacHomeOrganization' => $institution]);
             throw new BadCredentialsException(
-                'commonName is not a string'
+                'schacHomeOrganization is not a string'
             );
         }
 
