@@ -113,30 +113,32 @@ class SamlProvider implements AuthenticationProviderInterface
      * @param AssertionAdapter $translatedAssertion
      * @return string
      */
-    private function getCommonName(AssertionAdapter $translatedAssertion)
+    private function getInstitution(AssertionAdapter $translatedAssertion)
     {
-        $commonNames = $translatedAssertion->getAttributeValue('commonName');
+        $institutions = $translatedAssertion->getAttributeValue('schacHomeOrganization');
 
-        if (empty($commonNames)) {
+        if (empty($institutions)) {
             throw new BadCredentialsException(
-                'No commonName provided'
+                'No schacHomeOrganization provided'
             );
         }
 
-        if (count($commonNames) > 1) {
-            $this->logger->warning('Multiple commonNames provided, picking first one', ['commonNamesCount' => count($commonNames)]);
-        }
-
-        $commonName = $commonNames[0];
-
-        if (!is_string($commonName)) {
-            $this->logger->warning('Received invalid commonName', ['commonNameCount' => count($commonName)]);
+        if (count($institutions) > 1) {
             throw new BadCredentialsException(
-                'commonName is not a string'
+                'Multiple schacHomeOrganizations provided in SAML Assertion'
             );
         }
 
-        return $commonName;
+        $institution = $institutions[0];
+
+        if (!is_string($institution)) {
+            $this->logger->warning('Received invalid schacHomeOrganization', ['schacHomeOrganization' => $institution]);
+            throw new BadCredentialsException(
+                'schacHomeOrganization is not a string'
+            );
+        }
+
+        return $institution;
     }
 
     /**
@@ -154,7 +156,9 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         if (count($emails) > 1) {
-            $this->logger->warning('Multiple emails provided, picking first one', ['emailsCount' => count($emails)]);
+            throw new BadCredentialsException(
+                'Multiple email values provided in SAML Assertion'
+            );
         }
 
         $email = $emails[0];
@@ -173,31 +177,31 @@ class SamlProvider implements AuthenticationProviderInterface
      * @param AssertionAdapter $translatedAssertion
      * @return string
      */
-    private function getInstitution(AssertionAdapter $translatedAssertion)
+    private function getCommonName(AssertionAdapter $translatedAssertion)
     {
-        $institutions = $translatedAssertion->getAttributeValue('schacHomeOrganization');
+        $commonNames = $translatedAssertion->getAttributeValue('commonName');
 
-        if (empty($institutions)) {
+        if (empty($commonNames)) {
             throw new BadCredentialsException(
-                'No schacHomeOrganization provided'
+                'No commonName provided'
             );
         }
 
-        if (count($institutions) > 1) {
+        if (count($commonNames) > 1) {
             throw new BadCredentialsException(
-                'Multiple schacHomeOrganizations provided'
+                'Multiple commonName values provided in SAML Assertion'
             );
         }
 
-        $institution = $institutions[0];
+        $commonName = $commonNames[0];
 
-        if (!is_string($institution)) {
-            $this->logger->warning('Received invalid schacHomeOrganization', ['schacHomeOrganization' => $institution]);
+        if (!is_string($commonName)) {
+            $this->logger->warning('Received invalid commonName', ['commonNameCount' => count($commonName)]);
             throw new BadCredentialsException(
-                'schacHomeOrganization is not a string'
+                'commonName is not a string'
             );
         }
 
-        return $institution;
+        return $commonName;
     }
 }
