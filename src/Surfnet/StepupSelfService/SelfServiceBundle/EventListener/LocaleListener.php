@@ -51,8 +51,12 @@ final class LocaleListener implements EventSubscriberInterface
             return;
         }
 
-        /** @var Identity $identity */
         $identity = $token->getUser();
+
+        // Anonymous usage like /authentication/metadata has just "anonymous" as identity.
+        if (!$identity instanceof Identity) {
+            return;
+        }
 
         $request = $event->getRequest();
         $request->setLocale($identity->preferredLocale);
