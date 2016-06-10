@@ -124,13 +124,13 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         if (count($commonNames) > 1) {
-            $this->logger->notice('Multiple commonNames provided, picking first one', ['commonNamesCount' => count($commonNames)]);
+            $this->logger->warning('Multiple commonNames provided, picking first one', ['commonNamesCount' => count($commonNames)]);
         }
 
         $commonName = $commonNames[0];
 
         if (!is_string($commonName)) {
-            $this->logger->notice('Received invalid commonName', ['commonNameCount' => count($commonName)]);
+            $this->logger->warning('Received invalid commonName', ['commonNameCount' => count($commonName)]);
             throw new BadCredentialsException(
                 'commonName is not a string'
             );
@@ -154,13 +154,13 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         if (count($emails) > 1) {
-            $this->logger->notice('Multiple emails provided, picking first one', ['emailsCount' => count($emails)]);
+            $this->logger->warning('Multiple emails provided, picking first one', ['emailsCount' => count($emails)]);
         }
 
         $email = $emails[0];
 
         if (!is_string($email)) {
-            $this->logger->notice('Received invalid email');
+            $this->logger->warning('Received invalid email');
             throw new BadCredentialsException(
                 'email is not a string'
             );
@@ -192,7 +192,7 @@ class SamlProvider implements AuthenticationProviderInterface
         $institution = $institutions[0];
 
         if (!is_string($institution)) {
-            $this->logger->notice('Received invalid schacHomeOrganization', ['schacHomeOrganization' => $institution]);
+            $this->logger->warning('Received invalid schacHomeOrganization', ['schacHomeOrganization' => $institution]);
             throw new BadCredentialsException(
                 'schacHomeOrganization is not a string'
             );
