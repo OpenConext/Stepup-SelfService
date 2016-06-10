@@ -132,7 +132,7 @@ class SamlProvider implements AuthenticationProviderInterface
         $institution = $institutions[0];
 
         if (!is_string($institution)) {
-            $this->logger->warning('Received invalid schacHomeOrganization', ['schacHomeOrganization' => $institution]);
+            $this->logger->warning('Received invalid schacHomeOrganization', ['schacHomeOrganizationType' => gettype($institution)]);
             throw new BadCredentialsException(
                 'schacHomeOrganization is not a string'
             );
@@ -164,7 +164,7 @@ class SamlProvider implements AuthenticationProviderInterface
         $email = $emails[0];
 
         if (!is_string($email)) {
-            $this->logger->warning('Received invalid email');
+            $this->logger->warning('Received invalid email', ['emailType' => gettype($email)]);
             throw new BadCredentialsException(
                 'email is not a string'
             );
@@ -196,7 +196,7 @@ class SamlProvider implements AuthenticationProviderInterface
         $commonName = $commonNames[0];
 
         if (!is_string($commonName)) {
-            $this->logger->warning('Received invalid commonName', ['commonNameCount' => count($commonName)]);
+            $this->logger->warning('Received invalid commonName', ['commonNameType' => gettype($commonName)]);
             throw new BadCredentialsException(
                 'commonName is not a string'
             );
