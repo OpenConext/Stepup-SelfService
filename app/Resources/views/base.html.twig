@@ -74,7 +74,9 @@
     {% javascripts
     '@SurfnetStepupBundle/Resources/public/js/jquery-1.11.2.min.js'
     '@SurfnetStepupBundle/Resources/public/js/stepup.js'
+    '@SurfnetStepupSelfServiceSelfServiceBundle/Resources/public/js/validator.min.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <script>$('form').validator()</script>
 {% endblock foot_script %}
