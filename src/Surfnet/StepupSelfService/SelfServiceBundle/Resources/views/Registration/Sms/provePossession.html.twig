@@ -20,6 +20,26 @@
 
     <hr>
 
-    {{ form(form) }}
+    {{ form_start(form)|replace({'form-horizontal': ''})|raw }}
+    <div class="row">
+        {{ form_errors(form) }}
+        <div class="col-xs-4">
+            {{ form_label(form.challenge) }}
+        </div>
+        <div class="col-xs-8">
+            {{ form_widget(form.challenge) }}
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row offset-top">
+        <div class="col-xs-4">&nbsp;</div>
+        <div class="col-xs-4">
+            {{ form_row(form.resendChallenge) }}
+        </div>
+        <div class="col-xs-4">
+            {{ form_row(form.verifyChallenge) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
 
 {% endblock %}
