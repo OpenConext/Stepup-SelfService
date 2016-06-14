@@ -25,17 +25,29 @@
     {% endif %}
 
     {{ form_start(form)|replace({'form-horizontal': ''})|raw }}
+    {{ form_errors(form) }}
     <div class="row">
-        {{ form_errors(form) }}
-        <div class="col-xs-8">
+        <div class="col-md-8">
+            {% if form.country.vars.errors|length %}
+                <div class="alert alert-danger">{{ form_errors(form.country) }}</div>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            {% if form.subscriber.vars.errors|length %}
+                <div class="alert alert-danger">{{ form_errors(form.subscriber) }}</div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
             {{ form_widget(form.country) }}
         </div>
-        <div class="col-xs-4">
-            {{ form_widget(form.subscriber) }}
+        <div class="col-md-4">
+            {{ form_widget(form.subscriber, {'required': false}) }}
         </div>
     </div>
     <div class="row offset-top">
-        <div class="col-xs-12">
+        <div class="col-md-12">
             {{ form_row(form.sendChallenge) }}
         </div>
     </div>
