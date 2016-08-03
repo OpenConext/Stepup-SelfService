@@ -5,7 +5,7 @@ Step-up Self-Service
 
 ## Requirements
 
- * PHP 5.6 (Note that we test on 7.0 but do not run or support it officially)
+ * PHP 5.6+ or PHP7
  * [Composer](https://getcomposer.org/)
  * A web server (Apache, Nginx)
  * Graylog2 (or disable this Monolog handler)
