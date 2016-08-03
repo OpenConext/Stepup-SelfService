@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "edcf77c44a23c94256a93e010bb6297b",
-    "content-hash": "14c642f348e03454ebfc4cba844f08e9",
+    "hash": "2896c17eaf43c91ecafc86a14d76c030",
+    "content-hash": "e2210f8630c3c3023347d2fa6648add1",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1898,16 +1898,16 @@
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "dev-develop",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SURFnet/Stepup-Middleware-clientbundle.git",
-                "reference": "620f0b20135ce1a080e4316667bc2841b3a3ce9b"
+                "reference": "ee1dbf1664ca959500609793ec8c185a367cb9ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/620f0b20135ce1a080e4316667bc2841b3a3ce9b",
-                "reference": "620f0b20135ce1a080e4316667bc2841b3a3ce9b",
+                "url": "https://api.github.com/repos/SURFnet/Stepup-Middleware-clientbundle/zipball/ee1dbf1664ca959500609793ec8c185a367cb9ca",
+                "reference": "ee1dbf1664ca959500609793ec8c185a367cb9ca",
                 "shasum": ""
             },
             "require": {
@@ -1943,7 +1943,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2016-08-02 09:40:37"
+            "time": "2016-08-03 08:56:12"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -5003,7 +5003,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "mopa/bootstrap-bundle": 20,
-        "surfnet/stepup-middleware-client-bundle": 20,
         "surfnet/stepup-u2f-bundle": 20
     },
     "prefer-stable": false,
