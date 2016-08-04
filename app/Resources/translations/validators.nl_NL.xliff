@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-04-29T10:22:48Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2016-08-04T12:10:18Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -77,6 +77,14 @@
       <trans-unit id="04ee7b5ea8d828fb35d8e2dee4cdb236aede6d0a" resname="Sign request version must be a string">
         <source>Sign request version must be a string</source>
         <target>Sign request version must be a string</target>
+      </trans-unit>
+      <trans-unit id="e921db3beb8170142aa4dcd8c364595343b6fc64" resname="middleware_client.dto.configuration.show_raa_contact_information.must_be_boolean">
+        <source>middleware_client.dto.configuration.show_raa_contact_information.must_be_boolean</source>
+        <target state="new">middleware_client.dto.configuration.show_raa_contact_information.must_be_boolean</target>
+      </trans-unit>
+      <trans-unit id="53ef4f54259698cee5e0aaba2d7f20417cd8e9fb" resname="middleware_client.dto.configuration.use_ra_locations.must_be_boolean">
+        <source>middleware_client.dto.configuration.use_ra_locations.must_be_boolean</source>
+        <target state="new">middleware_client.dto.configuration.use_ra_locations.must_be_boolean</target>
       </trans-unit>
       <trans-unit id="f033a6177f4f371fbc302f07a6b8c67ec8b46549" resname="middleware_client.dto.identity.common_name.must_be_string">
         <source>middleware_client.dto.identity.common_name.must_be_string</source>
@@ -261,6 +269,42 @@
       <trans-unit id="57bebc32449d51a6f948b7a55dfde7574d081c9e" resname="middleware_client.dto.ra_listing.role.must_not_be_blank">
         <source>middleware_client.dto.ra_listing.role.must_not_be_blank</source>
         <target state="new">middleware_client.dto.ra_listing.role.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="19651dd2288d557c78a5730d58c3bddc9c6d50e2" resname="middleware_client.dto.ra_location.contact_information.must_be_string">
+        <source>middleware_client.dto.ra_location.contact_information.must_be_string</source>
+        <target state="new">middleware_client.dto.ra_location.contact_information.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="2730a590ecb510221b05295c8bd934374ce3daf0" resname="middleware_client.dto.ra_location.id.must_be_string">
+        <source>middleware_client.dto.ra_location.id.must_be_string</source>
+        <target state="new">middleware_client.dto.ra_location.id.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="e9266cda90925d97d2cf65b6b496db0aa6c17dd1" resname="middleware_client.dto.ra_location.id.must_not_be_blank">
+        <source>middleware_client.dto.ra_location.id.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.ra_location.id.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="cef486e563918733de56e3727d0a8139a4464405" resname="middleware_client.dto.ra_location.institution.must_be_string">
+        <source>middleware_client.dto.ra_location.institution.must_be_string</source>
+        <target state="new">middleware_client.dto.ra_location.institution.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="8f41119d418608dad1097e5d8c0f0f6d2acb72d0" resname="middleware_client.dto.ra_location.institution.must_not_be_blank">
+        <source>middleware_client.dto.ra_location.institution.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.ra_location.institution.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="1af222917a056b6fbe7ee8855170ae1ffc5d94ca" resname="middleware_client.dto.ra_location.location.must_be_string">
+        <source>middleware_client.dto.ra_location.location.must_be_string</source>
+        <target state="new">middleware_client.dto.ra_location.location.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="839cc774a4a67bae3d10d47259b1e7a231d51d2d" resname="middleware_client.dto.ra_location.location.must_not_be_blank">
+        <source>middleware_client.dto.ra_location.location.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.ra_location.location.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="16131eec80a70d3277b1100306d68f2000d33f6a" resname="middleware_client.dto.ra_location.name.must_be_string">
+        <source>middleware_client.dto.ra_location.name.must_be_string</source>
+        <target state="new">middleware_client.dto.ra_location.name.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="e59a8b26e6d95185cfd726b2fb050605a570aab1" resname="middleware_client.dto.ra_location.name.must_not_be_blank">
+        <source>middleware_client.dto.ra_location.name.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.ra_location.name.must_not_be_blank</target>
       </trans-unit>
       <trans-unit id="4f314988de33fb4e4a1700e530247565d7d2a65b" resname="middleware_client.dto.unverified_second_factor.id.must_be_string">
         <source>middleware_client.dto.unverified_second_factor.id.must_be_string</source>

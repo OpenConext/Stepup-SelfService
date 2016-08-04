@@ -19,6 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,24 +82,32 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Template
      * @param $secondFactorId
-     * @return array|Response
+     * @return Response
      */
     public function registrationEmailSentAction($secondFactorId)
     {
         $identity = $this->getIdentity();
 
-        /** @var SecondFactorService $secondFactorService */
-        $secondFactorService = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-
-        /** @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService $raService */
-        $raService = $this->get('self_service.service.ra');
-
-        return [
-            'email' => $this->getIdentity()->email,
-            'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
-            'ras' => $raService->listRas($identity->institution),
+        $parameters = [
+            'email'            => $identity->email,
+            'registrationCode' => $this->get('surfnet_stepup_self_service_self_service.service.second_factor')
+                ->getRegistrationCode($secondFactorId, $identity->id),
         ];
+
+        $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
+            ->getInstitutionConfigurationOptionsFor($identity->institution);
+
+        if ($institutionConfigurationOptions->useRaLocations) {
+            $parameters['raLocations'] = $this->get('self_service.service.ra_location')
+                ->listRaLocationsFor($identity->institution);
+        } else {
+            $parameters['ras'] = $this->get('self_service.service.ra')->listRas($identity->institution);
+        }
+
+        return $this->render(
+            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
+            $parameters
+        );
     }
 }

@@ -42,20 +42,41 @@
 
     <hr>
 
-    <h3>{{ 'ss.registration.registration_email_sent.title.list_of_ras'|trans }}</h3>
-    {% if ras.elements is empty %}
-        <p>{{ 'ss.registration.registration_email_sent.text.no_ras_for_your_institution'|trans }}</p>
+    {% if raLocations is defined %}
+        <h3>{{ 'ss.registration.registration_email_sent.title.list_of_ra_locations'|trans }}</h3>
+
+        {% if raLocations.elements is empty %}
+            <p>{{ 'ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution'|trans }}</p>
+        {% else %}
+            <ul class="list-ras">
+                {% for raLocation in raLocations.elements %}
+                    <li>
+                        <address>
+                            <strong>{{ raLocation.name }}</strong><br>
+                            {{ raLocation.location }}<br>
+                            {{ raLocation.contactInformation }}
+                        </address>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% else %}
-        <ul class="list-ras">
-            {% for ra in ras.elements %}
-                <li>
-                    <address>
-                        <strong>{{ ra.commonName }}</strong><br>
-                        {{ ra.location }}<br>
-                        {{ ra.contactInformation }}
-                    </address>
-                </li>
-            {% endfor %}
-        </ul>
+        <h3>{{ 'ss.registration.registration_email_sent.title.list_of_ras'|trans }}</h3>
+
+        {% if ras.elements is empty %}
+            <p>{{ 'ss.registration.registration_email_sent.text.no_ras_for_your_institution'|trans }}</p>
+        {% else %}
+            <ul class="list-ras">
+                {% for ra in ras.elements %}
+                    <li>
+                        <address>
+                            <strong>{{ ra.commonName }}</strong><br>
+                            {{ ra.location }}<br>
+                            {{ ra.contactInformation }}
+                        </address>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% endif %}
 {% endblock %}
