@@ -101,7 +101,6 @@ class RegistrationController extends Controller
         /** @var RaLocationService $raLocationService */
         $raLocationService = $this->get('self_service.service.ra_location');
 
-        /** @var  $templatingEngine */
         $templatingEngine = $this->get('templating');
 
         $institutionConfigurationOptions = $institutionConfigurationOptionsService
@@ -110,7 +109,7 @@ class RegistrationController extends Controller
         if ($institutionConfigurationOptions->useRaLocations) {
             return new Response(
                 $templatingEngine->render(
-                    '@SurfnetStepupSelfServiceSelfService/Registration/registrationEmailSentWithRaLocations.html.twig',
+                    'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSentWithRaLocations.html.twig',
                     [
                         'email'            => $this->getIdentity()->email,
                         'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
@@ -122,11 +121,11 @@ class RegistrationController extends Controller
 
         return new Response(
             $templatingEngine->render(
-                '@SurfnetStepupSelfServiceSelfService/Registration/registrationEmailSentWithRas.html.twig',
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSentWithRas.html.twig',
                 [
                     'email'            => $this->getIdentity()->email,
                     'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
-                    'raLocations'      => $raLocationService->listRaLocationsFor($identity->institution),
+                    'ras'              => $raService->listRas($identity->institution),
                 ]
             )
         );
