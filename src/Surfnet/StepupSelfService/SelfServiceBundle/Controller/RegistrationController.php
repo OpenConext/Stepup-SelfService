@@ -83,7 +83,7 @@ class RegistrationController extends Controller
 
     /**
      * @param $secondFactorId
-     * @return array|Response
+     * @return Response
      */
     public function registrationEmailSentAction($secondFactorId)
     {
