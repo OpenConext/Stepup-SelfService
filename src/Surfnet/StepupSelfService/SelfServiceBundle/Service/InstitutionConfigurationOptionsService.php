@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClientBundle\Configuration\Dto\InstitutionConfigurationOptions;
 use Surfnet\StepupMiddlewareClientBundle\Configuration\Service\InstitutionConfigurationOptionsService as ApiInstitutionConfigurationOptionsService;
 
 final class InstitutionConfigurationOptionsService
@@ -32,6 +33,10 @@ final class InstitutionConfigurationOptionsService
         $this->apiInstitutionConfigurationOptionsService = $apiInstitutionConfigurationOptionsService;
     }
 
+    /**
+     * @param string $institution
+     * @return null|InstitutionConfigurationOptions
+     */
     public function getInstitutionConfigurationOptionsFor($institution)
     {
         return $this->apiInstitutionConfigurationOptionsService->getInstitutionConfigurationOptionsFor($institution);
