@@ -89,45 +89,25 @@ class RegistrationController extends Controller
     {
         $identity = $this->getIdentity();
 
-        /** @var SecondFactorService $secondFactorService */
-        $secondFactorService = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+        $parameters = [
+            'email'            => $identity->email,
+            'registrationCode' => $this->get('surfnet_stepup_self_service_self_service.service.second_factor')
+                ->getRegistrationCode($secondFactorId, $identity->id),
+        ];
 
-        /** @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService $raService */
-        $raService = $this->get('self_service.service.ra');
-
-        /** @var InstitutionConfigurationOptionsService $institutionConfigurationOptionsService */
-        $institutionConfigurationOptionsService = $this->get('self_service.service.institution_configuration_options');
-
-        /** @var RaLocationService $raLocationService */
-        $raLocationService = $this->get('self_service.service.ra_location');
-
-        $templatingEngine = $this->get('templating');
-
-        $institutionConfigurationOptions = $institutionConfigurationOptionsService
+        $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($identity->institution);
 
         if ($institutionConfigurationOptions->useRaLocations) {
-            return new Response(
-                $templatingEngine->render(
-                    'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSentWithRaLocations.html.twig',
-                    [
-                        'email'            => $this->getIdentity()->email,
-                        'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
-                        'raLocations'      => $raLocationService->listRaLocationsFor($identity->institution),
-                    ]
-                )
-            );
+            $parameters['raLocations'] = $this->get('self_service.service.ra_location')
+                ->listRaLocationsFor($identity->institution);
+        } else {
+            $parameters['ras'] = $this->get('self_service.service.ra')->listRas($identity->institution);
         }
 
-        return new Response(
-            $templatingEngine->render(
-                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSentWithRas.html.twig',
-                [
-                    'email'            => $this->getIdentity()->email,
-                    'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
-                    'ras'              => $raService->listRas($identity->institution),
-                ]
-            )
+        return $this->render(
+            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
+            $parameters
         );
     }
 }
