@@ -19,6 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,7 +82,6 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Template
      * @param $secondFactorId
      * @return array|Response
      */
@@ -94,10 +95,40 @@ class RegistrationController extends Controller
         /** @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService $raService */
         $raService = $this->get('self_service.service.ra');
 
-        return [
-            'email' => $this->getIdentity()->email,
-            'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
-            'ras' => $raService->listRas($identity->institution),
-        ];
+        /** @var InstitutionConfigurationOptionsService $institutionConfigurationOptionsService */
+        $institutionConfigurationOptionsService = $this->get('self_service.service.institution_configuration_options');
+
+        /** @var RaLocationService $raLocationService */
+        $raLocationService = $this->get('self_service.service.ra_location');
+
+        /** @var  $templatingEngine */
+        $templatingEngine = $this->get('templating');
+
+        $institutionConfigurationOptions = $institutionConfigurationOptionsService
+            ->getInstitutionConfigurationOptionsFor($identity->institution);
+
+        if ($institutionConfigurationOptions->useRaLocations) {
+            return new Response(
+                $templatingEngine->render(
+                    '@SurfnetStepupSelfServiceSelfService/Registration/registrationEmailSentWithRaLocations.html.twig',
+                    [
+                        'email'            => $this->getIdentity()->email,
+                        'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
+                        'raLocations'      => $raLocationService->listRaLocationsFor($identity->institution),
+                    ]
+                )
+            );
+        }
+
+        return new Response(
+            $templatingEngine->render(
+                '@SurfnetStepupSelfServiceSelfService/Registration/registrationEmailSentWithRas.html.twig',
+                [
+                    'email'            => $this->getIdentity()->email,
+                    'registrationCode' => $secondFactorService->getRegistrationCode($secondFactorId, $identity->id),
+                    'raLocations'      => $raLocationService->listRaLocationsFor($identity->institution),
+                ]
+            )
+        );
     }
 }

@@ -1,0 +1,61 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.registration_email_sent.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress':75, 'step': 4} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.registration.registration_email_sent.text.thank_you_for_registration'|trans }}</p>
+
+    <p>{{ 'ss.registration.registration_email_sent.text.activation_instructions'|trans }}</p>
+
+    <ul>
+        <li>{{ 'ss.registration.registration_email_sent.text.activation_instructions_item_1'|trans }}</li>
+        <li>{{ 'ss.registration.registration_email_sent.text.activation_instructions_item_2'|trans }}</li>
+        <li>{{ 'ss.registration.registration_email_sent.text.activation_instructions_item_3'|trans }}</li>
+    </ul>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <table class="table table-bordered table-hover table-responsive">
+                <tbody>
+                <tr>
+                    <th scope="row">{{ 'ss.registration.registration_email_sent.label.registration_code'|trans }}</th>
+                    <td>{{ registrationCode }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br />
+
+    <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent'|trans({'%email%': email}) }}</p>
+
+    <hr>
+
+    <h3>{{ 'ss.registration.registration_email_sent.title.list_of_ra_locations'|trans }}</h3>
+    {% if raLocations.elements is empty %}
+        <p>{{ 'ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution'|trans }}</p>
+    {% else %}
+        <ul class="list-ras">
+            {% for raLocation in raLocations.elements %}
+                <li>
+                    <address>
+                        <strong>{{ raLocation.name }}</strong><br>
+                        {{ raLocation.location }}<br>
+                        {{ raLocation.contactInformation }}
+                    </address>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
