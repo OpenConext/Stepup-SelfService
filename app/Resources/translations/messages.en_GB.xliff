@@ -707,7 +707,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="d3810fbfb6254169454c8c68850947acce991691" resname="subscriberNumber">
         <jms:reference-file line="41">Form/Type/SendSmsChallengeType.php</jms:reference-file>
         <source>subscriberNumber</source>
-        <target>subscriberNumber</target>
+        <target state="new">subscriberNumber</target>
       </trans-unit>
     </body>
   </file>
