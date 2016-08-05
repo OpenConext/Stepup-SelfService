@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\RegistrationAuthorityCredentials;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
@@ -101,9 +102,29 @@ class RegistrationController extends Controller
         if ($institutionConfigurationOptions->useRaLocations) {
             $parameters['raLocations'] = $this->get('self_service.service.ra_location')
                 ->listRaLocationsFor($identity->institution);
-        } else {
-            $parameters['ras'] = $this->get('self_service.service.ra')->listRas($identity->institution);
+
+            return $this->render(
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
+                $parameters
+            );
         }
+
+        $ras = $this->get('self_service.service.ra')->listRas($identity->institution);
+
+        if ($institutionConfigurationOptions->showRaaContactInformation) {
+            $parameters['ras'] = $ras;
+
+            return $this->render(
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
+                $parameters
+            );
+        }
+
+         $rasWithoutRaas = array_filter($ras, function (RegistrationAuthorityCredentials $ra) {
+            return !$ra->isRaa;
+         });
+
+        $parameters['ras'] = $rasWithoutRaas;
 
         return $this->render(
             'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
