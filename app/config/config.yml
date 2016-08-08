@@ -151,6 +151,9 @@ surfnet_stepup:
         - surfnet_stepup.guzzle.gateway_api
         - surfnet_stepup_middleware_client.guzzle.api
         - surfnet_stepup_middleware_client.guzzle.commands
+    locale_cookie:
+        domain: %locale_cookie_domain%
+
 
 jms_translation:
     locales: %locales%

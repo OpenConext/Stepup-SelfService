@@ -5,7 +5,7 @@ Step-up Self-Service
 
 ## Requirements
 
- * PHP 5.4+
+ * PHP 5.6+ or PHP7
  * [Composer](https://getcomposer.org/)
  * A web server (Apache, Nginx)
  * Graylog2 (or disable this Monolog handler)
@@ -15,3 +15,5 @@ Step-up Self-Service
 ## Installation
 
 Clone the repository or download the archive to a directory. Install the dependencies by running `composer install`.
+
+Run `app/console mopa:bootstrap:symlink:less` to configure Bootstrap symlinks.

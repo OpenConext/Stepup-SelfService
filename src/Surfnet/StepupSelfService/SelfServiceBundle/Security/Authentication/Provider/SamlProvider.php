@@ -18,7 +18,9 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider;
 
+use Psr\Log\LoggerInterface;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
+use Surfnet\SamlBundle\SAML2\Response\AssertionAdapter;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider;
@@ -26,6 +28,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\Sa
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class SamlProvider implements AuthenticationProviderInterface
 {
@@ -40,18 +43,25 @@ class SamlProvider implements AuthenticationProviderInterface
     private $attributeDictionary;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\PreferredLocaleProvider
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider
      */
     private $preferredLocaleProvider;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     public function __construct(
         IdentityService $identityService,
         AttributeDictionary $attributeDictionary,
-        PreferredLocaleProvider $preferredLocaleProvider
+        PreferredLocaleProvider $preferredLocaleProvider,
+        LoggerInterface $logger
     ) {
         $this->identityService = $identityService;
         $this->attributeDictionary = $attributeDictionary;
         $this->preferredLocaleProvider = $preferredLocaleProvider;
+        $this->logger = $logger;
     }
 
     /**
@@ -62,10 +72,11 @@ class SamlProvider implements AuthenticationProviderInterface
     {
         $translatedAssertion = $this->attributeDictionary->translate($token->assertion);
 
-        $nameId      = $translatedAssertion->getNameID();
-        $institution = $translatedAssertion->getAttribute('schacHomeOrganization');
-        $email       = $translatedAssertion->getAttribute('mail');
-        $commonName  = $translatedAssertion->getAttribute('commonName');
+        $nameId         = $translatedAssertion->getNameID();
+        $institution    = $this->getInstitution($translatedAssertion);
+        $email          = $this->getEmail($translatedAssertion);
+        $commonName     = $this->getCommonName($translatedAssertion);
+
 
         $identity = $this->identityService->findByNameIdAndInstitution($nameId, $institution);
 
@@ -96,5 +107,101 @@ class SamlProvider implements AuthenticationProviderInterface
     public function supports(TokenInterface $token)
     {
         return $token instanceof SamlToken;
+    }
+
+    /**
+     * @param AssertionAdapter $translatedAssertion
+     * @return string
+     */
+    private function getInstitution(AssertionAdapter $translatedAssertion)
+    {
+        $institutions = $translatedAssertion->getAttributeValue('schacHomeOrganization');
+
+        if (empty($institutions)) {
+            throw new BadCredentialsException(
+                'No schacHomeOrganization provided'
+            );
+        }
+
+        if (count($institutions) > 1) {
+            throw new BadCredentialsException(
+                'Multiple schacHomeOrganizations provided in SAML Assertion'
+            );
+        }
+
+        $institution = $institutions[0];
+
+        if (!is_string($institution)) {
+            $this->logger->warning('Received invalid schacHomeOrganization', ['schacHomeOrganizationType' => gettype($institution)]);
+            throw new BadCredentialsException(
+                'schacHomeOrganization is not a string'
+            );
+        }
+
+        return $institution;
+    }
+
+    /**
+     * @param AssertionAdapter $translatedAssertion
+     * @return string
+     */
+    private function getEmail(AssertionAdapter $translatedAssertion)
+    {
+        $emails = $translatedAssertion->getAttributeValue('mail');
+
+        if (empty($emails)) {
+            throw new BadCredentialsException(
+                'No schacHomeOrganization provided'
+            );
+        }
+
+        if (count($emails) > 1) {
+            throw new BadCredentialsException(
+                'Multiple email values provided in SAML Assertion'
+            );
+        }
+
+        $email = $emails[0];
+
+        if (!is_string($email)) {
+            $this->logger->warning('Received invalid email', ['emailType' => gettype($email)]);
+            throw new BadCredentialsException(
+                'email is not a string'
+            );
+        }
+
+        return $email;
+    }
+
+    /**
+     * @param AssertionAdapter $translatedAssertion
+     * @return string
+     */
+    private function getCommonName(AssertionAdapter $translatedAssertion)
+    {
+        $commonNames = $translatedAssertion->getAttributeValue('commonName');
+
+        if (empty($commonNames)) {
+            throw new BadCredentialsException(
+                'No commonName provided'
+            );
+        }
+
+        if (count($commonNames) > 1) {
+            throw new BadCredentialsException(
+                'Multiple commonName values provided in SAML Assertion'
+            );
+        }
+
+        $commonName = $commonNames[0];
+
+        if (!is_string($commonName)) {
+            $this->logger->warning('Received invalid commonName', ['commonNameType' => gettype($commonName)]);
+            throw new BadCredentialsException(
+                'commonName is not a string'
+            );
+        }
+
+        return $commonName;
     }
 }

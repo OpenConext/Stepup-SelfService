@@ -44,6 +44,7 @@ class SendSmsChallengeType extends AbstractType
                 'horizontal_input_wrapper_class' => 'foo',
                 'attr'                           => [
                     'autofocus' => true,
+                    'class' => 'pull-right',
                     'placeholder' => '612345678',
                 ]
             ])

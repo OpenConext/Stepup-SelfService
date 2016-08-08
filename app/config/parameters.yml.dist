@@ -6,9 +6,10 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    default_locale:    en_GB
-    locales:           [nl_NL, en_GB]
-    secret:            NotSoSecretReplaceMe!
+    default_locale:         en_GB
+    locales:                [nl_NL, en_GB]
+    locale_cookie_domain:   surfconext.nl
+    secret:                 NotSoSecretReplaceMe!
 
     debug_toolbar:          true
     debug_redirects:        false
@@ -35,7 +36,7 @@ parameters:
 
     saml_remote_idp_entity_id:
     saml_remote_idp_sso_url:
-    saml_remote_idp_certificate:
+    saml_remote_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
     graylog_hostname: g2-dev.stepup.coin.surf.net
     asset_version: 1
 
@@ -50,3 +51,6 @@ parameters:
         - yubikey
 
     u2f_app_id: https://gateway.tld/u2f/app-id
+
+    tiqr_app_android_url: https://play.google.com/store/apps/details?id=org.tiqr.authenticator&hl=en
+    tiqr_app_ios_url: https://itunes.apple.com/us/app/tiqr/id430838214?mt=8&ls=1

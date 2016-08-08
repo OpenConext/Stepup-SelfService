@@ -29,18 +29,17 @@ class VerifySmsChallengeType extends AbstractType
         $builder->add('challenge', 'text', [
             'label' => 'ss.form.ss_verify_sms_challenge.text.challenge',
             'required' => true,
-            'attr' => array(
-                'autofocus' => true,
-            )
+            'attr' => ['autofocus' => true],
+            'label_attr' => ['class' => 'pull-right'],
         ]);
-        $builder->add('verify-challenge', 'submit', [
-            'label' => 'ss.form.ss_verify_sms_challenge.button.verify_challenge',
-            'attr' => [ 'class' => 'btn btn-primary pull-right' ],
-        ]);
-        $builder->add('resend-challenge', 'anchor', [
+        $builder->add('resendChallenge', 'anchor', [
             'label' => 'ss.form.ss_verify_sms_challenge.button.resend_challenge',
             'attr' => [ 'class' => 'btn btn-default' ],
             'route' => 'ss_registration_sms_send_challenge',
+        ]);
+        $builder->add('verifyChallenge', 'submit', [
+            'label' => 'ss.form.ss_verify_sms_challenge.button.verify_challenge',
+            'attr' => [ 'class' => 'btn btn-primary pull-right' ],
         ]);
     }
 
