@@ -41,4 +41,24 @@ class RaService
     {
         return $this->api->listRas($institution);
     }
+
+    public function listRasWithoutRaas($institution)
+    {
+        $allRas = $this->api->listRas($institution);
+
+        $rasWithoutRaas = [];
+        foreach ($allRas->getElements() as $ra) {
+            if (!$ra->isRaa) {
+                $rasWithoutRaas[] = $ra;
+            }
+        }
+
+        // All RAs and RAAs are fetched, so this can safely be returned (no pagination is used here)
+        return new RegistrationAuthorityCredentialsCollection(
+            $rasWithoutRaas,
+            count($rasWithoutRaas),
+            $allRas->getItemsPerPage(),
+            $allRas->getCurrentPage()
+        );
+    }
 }
