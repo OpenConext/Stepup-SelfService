@@ -19,8 +19,6 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,14 +93,18 @@ class RegistrationController extends Controller
                 ->getRegistrationCode($secondFactorId, $identity->id),
         ];
 
+        $raService         = $this->get('self_service.service.ra');
+        $raLocationService = $this->get('self_service.service.ra_location');
+
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($identity->institution);
 
         if ($institutionConfigurationOptions->useRaLocations) {
-            $parameters['raLocations'] = $this->get('self_service.service.ra_location')
-                ->listRaLocationsFor($identity->institution);
+            $parameters['raLocations'] = $raLocationService->listRaLocationsFor($identity->institution);
+        } elseif (!$institutionConfigurationOptions->showRaaContactInformation) {
+            $parameters['ras'] = $raService->listRasWithoutRaas($identity->institution);
         } else {
-            $parameters['ras'] = $this->get('self_service.service.ra')->listRas($identity->institution);
+            $parameters['ras'] = $raService->listRas($identity->institution);
         }
 
         return $this->render(
