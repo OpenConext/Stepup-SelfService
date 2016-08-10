@@ -48,22 +48,22 @@ class SamlInteractionProvider
     private $postBinding;
 
     /**
-     * @var SessionHandler
+     * @var SamlAuthenticationStateHandler
      */
-    private $sessionHandler;
+    private $samlAuthenticationStateHandler;
 
     public function __construct(
         ServiceProvider $serviceProvider,
         IdentityProvider $identityProvider,
         RedirectBinding $redirectBinding,
         PostBinding $postBinding,
-        SessionHandler $sessionHandler
+        SamlAuthenticationStateHandler $samlAuthenticationStateHandler
     ) {
-        $this->serviceProvider = $serviceProvider;
-        $this->identityProvider = $identityProvider;
-        $this->redirectBinding = $redirectBinding;
-        $this->postBinding = $postBinding;
-        $this->sessionHandler = $sessionHandler;
+        $this->serviceProvider                = $serviceProvider;
+        $this->identityProvider               = $identityProvider;
+        $this->redirectBinding                = $redirectBinding;
+        $this->postBinding                    = $postBinding;
+        $this->samlAuthenticationStateHandler = $samlAuthenticationStateHandler;
     }
 
     /**
@@ -71,7 +71,7 @@ class SamlInteractionProvider
      */
     public function isSamlAuthenticationInitiated()
     {
-        return $this->sessionHandler->hasRequestId();
+        return $this->samlAuthenticationStateHandler->hasRequestId();
     }
 
     /**
@@ -84,7 +84,7 @@ class SamlInteractionProvider
             $this->identityProvider
         );
 
-        $this->sessionHandler->setRequestId($authnRequest->getRequestId());
+        $this->samlAuthenticationStateHandler->setRequestId($authnRequest->getRequestId());
 
         return $this->redirectBinding->createRedirectResponseFor($authnRequest);
     }
@@ -102,7 +102,7 @@ class SamlInteractionProvider
             $this->serviceProvider
         );
 
-        $this->sessionHandler->clearRequestId();
+        $this->samlAuthenticationStateHandler->clearRequestId();
 
         return $assertion;
     }
@@ -112,6 +112,6 @@ class SamlInteractionProvider
      */
     public function reset()
     {
-        $this->sessionHandler->clearRequestId();
+        $this->samlAuthenticationStateHandler->clearRequestId();
     }
 }

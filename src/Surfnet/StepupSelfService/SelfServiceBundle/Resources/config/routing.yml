@@ -90,6 +90,12 @@ selfservice_serviceprovider_consume_assertion:
     methods: [POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Saml:consumeAssertion }
 
+selfservice_security_session_expired:
+    path: /authentication/session-expired
+    methods: [GET]
+    defaults:
+        _controller: SurfnetStepupSelfServiceSelfServiceBundle:Security:sessionExpired
+
 ss_switch_locale:
     path:     /switch-locale
     methods:  [POST]
