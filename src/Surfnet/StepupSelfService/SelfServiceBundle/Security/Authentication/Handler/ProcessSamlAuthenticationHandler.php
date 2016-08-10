@@ -36,8 +36,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweeObjects) SamlResponse parsing, validation authentication and error handling
- *                                                requires quite a few classes as it is fairly complex.
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) SamlResponse parsing, validation authentication and error handling
+ *                                                 requires quite a few classes as it is fairly complex.
  */
 class ProcessSamlAuthenticationHandler implements AuthenticationHandler
 {
