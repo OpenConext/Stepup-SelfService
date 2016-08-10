@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-08-04T12:26:07Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2016-08-10T17:14:21Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -275,70 +275,62 @@
         <target>Select token</target>
       </trans-unit>
       <trans-unit id="d38c5271077c89a3b39e6ee655e21059dcb1da94" resname="ss.registration.registration_email_sent.label.registration_code">
-        <jms:reference-file line="31">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
-        <jms:reference-file line="31">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="31">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.label.registration_code</source>
         <target>Activation code</target>
       </trans-unit>
       <trans-unit id="8324fbb0b4fe0b88092294e3a1f958f0bc02d6da" resname="ss.registration.registration_email_sent.text.activation_instructions">
-        <jms:reference-file line="16">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
-        <jms:reference-file line="16">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="16">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions</source>
         <target>Visit the location below to get your token activated. Please bring the following:</target>
       </trans-unit>
       <trans-unit id="a83fee04452531e7eba20178cf820677f88db4cf" resname="ss.registration.registration_email_sent.text.activation_instructions_item_1">
-        <jms:reference-file line="19">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
-        <jms:reference-file line="19">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="19">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_1</source>
         <target>Your token</target>
       </trans-unit>
       <trans-unit id="ebdd61f271ba18583ca0a18fbe9b675c88375b98" resname="ss.registration.registration_email_sent.text.activation_instructions_item_2">
-        <jms:reference-file line="20">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
-        <jms:reference-file line="20">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="20">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_2</source>
         <target>A valid proof of identity (passport, driver's license or national ID-card)</target>
       </trans-unit>
       <trans-unit id="d608041873dea3059d34724b9a24e4e751ebdffe" resname="ss.registration.registration_email_sent.text.activation_instructions_item_3">
-        <jms:reference-file line="21">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
-        <jms:reference-file line="21">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="21">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_3</source>
         <target>Your activation code</target>
       </trans-unit>
       <trans-unit id="63974b83ce6262c68656a606d22f6538742e22c5" resname="ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution">
-        <jms:reference-file line="47">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
+        <jms:reference-file line="49">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution</source>
         <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
       </trans-unit>
       <trans-unit id="8388ff05103a22d0917788a48ccdc9716a353ac8" resname="ss.registration.registration_email_sent.text.no_ras_for_your_institution">
-        <jms:reference-file line="47">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="67">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.no_ras_for_your_institution</source>
         <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
       </trans-unit>
       <trans-unit id="7c9ea58235246dd0f14a2d6aaed379ad0638d0e7" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent">
-        <jms:reference-file line="41">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
-        <jms:reference-file line="41">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="41">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent</source>
         <target>An e-mail containing these instructions and your activation code has also been sent to the e-mail address %email%.</target>
       </trans-unit>
       <trans-unit id="9ef48b4bbb1cef4ef12eb3e5146beb743e648752" resname="ss.registration.registration_email_sent.text.thank_you_for_registration">
-        <jms:reference-file line="14">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
-        <jms:reference-file line="14">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="14">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.thank_you_for_registration</source>
         <target>Thank you for registering your token. Your token is almost ready to use.</target>
       </trans-unit>
       <trans-unit id="61c16d1cf1191b8bfb09d98779fbbf5cb748bd6b" resname="ss.registration.registration_email_sent.title">
-        <jms:reference-file line="3">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
-        <jms:reference-file line="3">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="3">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.title</source>
         <target>Activation code</target>
       </trans-unit>
       <trans-unit id="536255f00c5e95be847f318b9a692596a9d927a2" resname="ss.registration.registration_email_sent.title.list_of_ra_locations">
-        <jms:reference-file line="45">views/Registration/registrationEmailSentWithRaLocations.html.twig</jms:reference-file>
+        <jms:reference-file line="46">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.title.list_of_ra_locations</source>
         <target>Location(s) to activate your token</target>
       </trans-unit>
       <trans-unit id="fad1d50cfe9eadd2b8c3dd3e10456e70a5c927f0" resname="ss.registration.registration_email_sent.title.list_of_ras">
-        <jms:reference-file line="45">views/Registration/registrationEmailSentWithRas.html.twig</jms:reference-file>
+        <jms:reference-file line="64">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.title.list_of_ras</source>
         <target>Location(s) to activate your token</target>
       </trans-unit>
@@ -689,6 +681,21 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <source>ss.second_factor_list.header.type</source>
         <target>Token</target>
       </trans-unit>
+      <trans-unit id="fb5cac733dfdfe5c5e6818dee7d71aea02e95aa4" resname="ss.security.session_expired.click_to_login">
+        <jms:reference-file line="11">views/Security/sessionExpired.html.twig</jms:reference-file>
+        <source>ss.security.session_expired.click_to_login</source>
+        <target>Click here to log in again</target>
+      </trans-unit>
+      <trans-unit id="2a9d0ff2fe09ddfe0760180c8918dec4f77f0614" resname="ss.security.session_expired.explanation">
+        <jms:reference-file line="8">views/Security/sessionExpired.html.twig</jms:reference-file>
+        <source>ss.security.session_expired.explanation</source>
+        <target>Your session has expired due to either prolonged inactivity or being logged in for too long. You have been automatically logged out and are required to log in again to be able to continue.</target>
+      </trans-unit>
+      <trans-unit id="8b64a8296939c371f3d7e1b461e5e816c6892b63" resname="ss.security.session_expired.page_title">
+        <jms:reference-file line="3">views/Security/sessionExpired.html.twig</jms:reference-file>
+        <source>ss.security.session_expired.page_title</source>
+        <target>Session Expired</target>
+      </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
         <jms:reference-file line="34">Resources/views/translations.twig</jms:reference-file>
         <source>ss.verify_yubikey_command.otp.otp_invalid</source>
@@ -707,7 +714,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="d3810fbfb6254169454c8c68850947acce991691" resname="subscriberNumber">
         <jms:reference-file line="41">Form/Type/SendSmsChallengeType.php</jms:reference-file>
         <source>subscriberNumber</source>
-        <target state="new">subscriberNumber</target>
+        <target>Number</target>
       </trans-unit>
     </body>
   </file>
