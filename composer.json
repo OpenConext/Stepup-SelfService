@@ -54,9 +54,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
-        ],
-        "symlink-assets": "(vagrant ssh -c \"cd /var/www/ss-dev.stepup.coin.surf.net/ && app/console assets:install --symlink --ansi\")",
-        "extract-translations": "(vagrant ssh -c \"cd /var/www/ss-dev.stepup.coin.surf.net/ && app/console translation:extract --config=default --env=dev --ansi\")"
+        ]
     },
     "extra": {
         "symfony-app-dir": "app",
