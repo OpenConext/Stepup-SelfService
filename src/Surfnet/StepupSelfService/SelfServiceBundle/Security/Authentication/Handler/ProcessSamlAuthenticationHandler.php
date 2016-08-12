@@ -159,6 +159,7 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
                 return;
             }
 
+            $this->authenticatedSession->logAuthenticationMoment();
             $this->tokenStorage->setToken($authToken);
 
             // migrate the session to prevent session hijacking
