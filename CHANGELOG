@@ -2,6 +2,9 @@
 VERSION 2  RELEASE 2.0
 ======================
 
+   Version 2.1 - Added configurable explicit absolute and relative session timeouts
+      12/08/2016 17:07  2.1.0  initial release
+
    Version 2.0 - Release 2.0
       08/08/2016 17:43  2.0.0  initial release
 
