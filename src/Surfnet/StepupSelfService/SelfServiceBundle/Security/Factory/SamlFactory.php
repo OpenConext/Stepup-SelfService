@@ -30,7 +30,7 @@ class SamlFactory implements SecurityFactoryInterface
         $providerId = 'security.authentication.provider.saml.' . $id;
         $container->setDefinition(
             $providerId,
-            new DefinitionDecorator('self_service.security.authentication.provider')
+            new DefinitionDecorator('self_service.security.authentication.provider.saml')
         );
 
         $listenerId = 'security.authentication.listener.saml.' . $id;
@@ -38,6 +38,13 @@ class SamlFactory implements SecurityFactoryInterface
             $listenerId,
             new DefinitionDecorator('self_service.security.authentication.listener')
         );
+
+        $cookieHandlerId = 'security.logout.handler.cookie_clearing.' . $id;
+        $cookieHandler   = $container->setDefinition(
+            $cookieHandlerId,
+            new DefinitionDecorator('security.logout.handler.cookie_clearing')
+        );
+        $cookieHandler->addArgument([]);
 
         return array($providerId, $listenerId, $defaultEntryPoint);
     }

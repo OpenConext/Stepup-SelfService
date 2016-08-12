@@ -2,15 +2,15 @@ services:
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
         arguments:
-            - @surfnet_stepup_middleware_client.service.command
-            - @security.token_storage
+            - "@surfnet_stepup_middleware_client.service.command"
+            - "@security.token_storage"
 
     surfnet_stepup_self_service_self_service.service.second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService
         arguments:
-            - @surfnet_stepup_middleware_client.identity.service.second_factor
-            - @surfnet_stepup_self_service_self_service.service.command
-            - @surfnet_stepup_self_service_self_service.service.u2f_second_factor
+            - "@surfnet_stepup_middleware_client.identity.service.second_factor"
+            - "@surfnet_stepup_self_service_self_service.service.command"
+            - "@surfnet_stepup_self_service_self_service.service.u2f_second_factor"
 
     surfnet_stepup_self_service_self_service.form.type.prove_yubikey_possession:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType
@@ -39,46 +39,46 @@ services:
     surfnet_stepup_self_service_self_service.form.type.initiate_gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\InitiateGssfType
         arguments:
-            - @router
+            - "@router"
         tags: [{ name: form.type, alias: ss_initiate_gssf }]
 
     surfnet_stepup_self_service_self_service.service.yubikey:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
         arguments:
-            - @surfnet_stepup.guzzle.gateway_api
-            - @logger
+            - "@surfnet_stepup.guzzle.gateway_api"
+            - "@logger"
 
     surfnet_stepup_self_service_self_service.service.yubikey_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
         arguments:
-            - @surfnet_stepup_self_service_self_service.service.yubikey
-            - @surfnet_stepup_self_service_self_service.service.command
+            - "@surfnet_stepup_self_service_self_service.service.yubikey"
+            - "@surfnet_stepup_self_service_self_service.service.command"
 
     surfnet_stepup_self_service_self_service.service.sms_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
         arguments:
-            - @surfnet_stepup.service.sms_second_factor
-            - @translator
-            - @surfnet_stepup_self_service_self_service.service.command
+            - "@surfnet_stepup.service.sms_second_factor"
+            - "@translator"
+            - "@surfnet_stepup_self_service_self_service.service.command"
 
     surfnet_stepup_self_service_self_service.service.u2f_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService
         arguments:
-            - @surfnet_stepup_self_service_self_service.service.u2f
-            - @surfnet_stepup_self_service_self_service.service.command
+            - "@surfnet_stepup_self_service_self_service.service.u2f"
+            - "@surfnet_stepup_self_service_self_service.service.command"
 
     surfnet_stepup_self_service_self_service.service.u2f:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fService
         arguments:
-            - @surfnet_stepup.guzzle.gateway_api
-            - @validator
-            - @logger
+            - "@surfnet_stepup.guzzle.gateway_api"
+            - "@validator"
+            - "@logger"
 
     surfnet_stepup_self_service_self_service.service.gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
         arguments:
-            - @surfnet_stepup_self_service_self_service.service.command
+            - "@surfnet_stepup_self_service_self_service.service.command"
 
     self_service.session.u2f_registration:
         class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
@@ -95,68 +95,34 @@ services:
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
         arguments:
-            - @surfnet_stepup_middleware_client.identity.service.identity
-            - @surfnet_stepup_self_service_self_service.service.command
-            - @security.token_storage
-            - @logger
+            - "@surfnet_stepup_middleware_client.identity.service.identity"
+            - "@surfnet_stepup_self_service_self_service.service.command"
+            - "@security.token_storage"
+            - "@logger"
 
     self_service.service.ra:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService
         arguments:
-            - @surfnet_stepup_middleware_client.identity.service.ra
+            - "@surfnet_stepup_middleware_client.identity.service.ra"
 
     self_service.service.ra_location:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService
         arguments:
-            - @surfnet_stepup_middleware_client.configuration.service.ra_location
+            - "@surfnet_stepup_middleware_client.configuration.service.ra_location"
 
     self_service.service.institution_configuration_options:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService
         arguments:
-            - @surfnet_stepup_middleware_client.configuration.service.institution_configuration_options
-
-    self_service.security.authentication.provider:
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
-        arguments:
-            - @self_service.service.identity
-            - @surfnet_saml.saml.attribute_dictionary
-            - @self_service.locale.request_stack_locale_provider
-            - @logger
-
-    self_service.security.authentication.listener:
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Firewall\SamlListener
-        arguments:
-            - @security.token_storage
-            - @security.authentication.manager
-            - @self_service.security.authentication.saml
-            - @self_service.security.authentication.session_handler
-            - @surfnet_saml.logger
-            - @twig
-
-    self_service.security.authentication.saml:
-        public: false
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider
-        arguments:
-            - @surfnet_saml.hosted.service_provider
-            - @surfnet_saml.remote.idp
-            - @surfnet_saml.http.redirect_binding
-            - @surfnet_saml.http.post_binding
-            - @self_service.security.authentication.session_handler
-
-    self_service.security.authentication.session_handler:
-        public: false
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SessionHandler
-        arguments:
-            - @session
+            - "@surfnet_stepup_middleware_client.configuration.service.institution_configuration_options"
 
     self_service.event_listener.locale:
         class: Surfnet\StepupSelfService\SelfServiceBundle\EventListener\LocaleListener
-        arguments: [ @security.token_storage, @translator ]
+        arguments: [ "@security.token_storage", "@translator" ]
         tags: [{ name: kernel.event_subscriber }]
 
     self_service.locale.request_stack_locale_provider:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Locale\RequestStackLocaleProvider
         arguments:
-            - @request_stack
+            - "@request_stack"
             - '' # See extension
             - [] # See extension
