@@ -73,15 +73,14 @@ class SamlProvider implements AuthenticationProviderInterface
         $translatedAssertion = $this->attributeDictionary->translate($token->assertion);
 
         $nameId         = $translatedAssertion->getNameID();
-        $institution    = $this->getInstitution($translatedAssertion);
-        $email          = $this->getEmail($translatedAssertion);
-        $commonName     = $this->getCommonName($translatedAssertion);
-
+        $institution    = $this->getSingleStringValue('schacHomeOrganization', $translatedAssertion);
+        $email          = $this->getSingleStringValue('mail', $translatedAssertion);
+        $commonName     = $this->getSingleStringValue('commonName', $translatedAssertion);
 
         $identity = $this->identityService->findByNameIdAndInstitution($nameId, $institution);
 
         if ($identity === null) {
-            $identity = new Identity();
+            $identity                  = new Identity();
             $identity->id              = Uuid::generate();
             $identity->nameId          = $nameId;
             $identity->institution     = $institution;
@@ -110,98 +109,41 @@ class SamlProvider implements AuthenticationProviderInterface
     }
 
     /**
+     * @param string           $attribute
      * @param AssertionAdapter $translatedAssertion
      * @return string
      */
-    private function getInstitution(AssertionAdapter $translatedAssertion)
+    private function getSingleStringValue($attribute, AssertionAdapter $translatedAssertion)
     {
-        $institutions = $translatedAssertion->getAttributeValue('schacHomeOrganization');
+        $values = $translatedAssertion->getAttributeValue($attribute);
 
-        if (empty($institutions)) {
-            throw new BadCredentialsException(
-                'No schacHomeOrganization provided'
-            );
+        if (empty($values)) {
+            throw new BadCredentialsException(sprintf('Missing value for required attribute "%s"', $attribute));
         }
 
-        if (count($institutions) > 1) {
-            throw new BadCredentialsException(
-                'Multiple schacHomeOrganizations provided in SAML Assertion'
-            );
+        // see https://www.pivotaltracker.com/story/show/121296389
+        if (count($values) > 1) {
+            $this->logger->warning(sprintf(
+                'Found "%d" values for attribute "%s", using first value',
+                count($values),
+                $attribute
+            ));
         }
 
-        $institution = $institutions[0];
+        $value = reset($values);
 
-        if (!is_string($institution)) {
-            $this->logger->warning('Received invalid schacHomeOrganization', ['schacHomeOrganizationType' => gettype($institution)]);
-            throw new BadCredentialsException(
-                'schacHomeOrganization is not a string'
+        if (!is_string($value)) {
+            $message = sprintf(
+                'First value of attribute "%s" must be a string, "%s" given',
+                $attribute,
+                is_object($value) ? get_class($value) : gettype($value)
             );
+
+            $this->logger->warning($message);
+
+            throw new BadCredentialsException($message);
         }
 
-        return $institution;
-    }
-
-    /**
-     * @param AssertionAdapter $translatedAssertion
-     * @return string
-     */
-    private function getEmail(AssertionAdapter $translatedAssertion)
-    {
-        $emails = $translatedAssertion->getAttributeValue('mail');
-
-        if (empty($emails)) {
-            throw new BadCredentialsException(
-                'No schacHomeOrganization provided'
-            );
-        }
-
-        if (count($emails) > 1) {
-            throw new BadCredentialsException(
-                'Multiple email values provided in SAML Assertion'
-            );
-        }
-
-        $email = $emails[0];
-
-        if (!is_string($email)) {
-            $this->logger->warning('Received invalid email', ['emailType' => gettype($email)]);
-            throw new BadCredentialsException(
-                'email is not a string'
-            );
-        }
-
-        return $email;
-    }
-
-    /**
-     * @param AssertionAdapter $translatedAssertion
-     * @return string
-     */
-    private function getCommonName(AssertionAdapter $translatedAssertion)
-    {
-        $commonNames = $translatedAssertion->getAttributeValue('commonName');
-
-        if (empty($commonNames)) {
-            throw new BadCredentialsException(
-                'No commonName provided'
-            );
-        }
-
-        if (count($commonNames) > 1) {
-            throw new BadCredentialsException(
-                'Multiple commonName values provided in SAML Assertion'
-            );
-        }
-
-        $commonName = $commonNames[0];
-
-        if (!is_string($commonName)) {
-            $this->logger->warning('Received invalid commonName', ['commonNameType' => gettype($commonName)]);
-            throw new BadCredentialsException(
-                'commonName is not a string'
-            );
-        }
-
-        return $commonName;
+        return $value;
     }
 }

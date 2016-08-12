@@ -9,7 +9,7 @@ security:
             security: false
 
         default:
-            pattern: ^/authentication/metadata$
+            pattern: ^/authentication/(metadata|session-expired)$
             anonymous: ~
 
         saml_based:
