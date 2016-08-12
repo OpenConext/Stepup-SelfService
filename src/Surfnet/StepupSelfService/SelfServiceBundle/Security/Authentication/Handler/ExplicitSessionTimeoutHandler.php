@@ -93,11 +93,11 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
             && !$this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->authenticatedSession)
         ) {
             $invalidatedBy = [];
-            if ($this->sessionLifetimeGuard->sessionLifetimeWithinAbsoluteLimit($this->authenticatedSession)) {
+            if (!$this->sessionLifetimeGuard->sessionLifetimeWithinAbsoluteLimit($this->authenticatedSession)) {
                 $invalidatedBy[] = 'absolute';
             }
 
-            if ($this->sessionLifetimeGuard->sessionLifetimeWithinRelativeLimit($this->authenticatedSession)) {
+            if (!$this->sessionLifetimeGuard->sessionLifetimeWithinRelativeLimit($this->authenticatedSession)) {
                 $invalidatedBy[] = 'relative';
             }
 
