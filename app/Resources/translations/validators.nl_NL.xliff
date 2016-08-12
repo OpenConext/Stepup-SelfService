@@ -412,7 +412,7 @@
       </trans-unit>
       <trans-unit id="d23ad73b357db56cd8de5ead80613a379e7fb7f9" resname="ss.send_sms_challenge_command.recipient.may_not_be_empty">
         <source>ss.send_sms_challenge_command.recipient.may_not_be_empty</source>
-        <target>SMS challenge recipient may not be empty.</target>
+        <target>SMS ontvanger mag niet leeg zijn.</target>
       </trans-unit>
       <trans-unit id="84180da4a52125c173dd3718fc680f619c43d334" resname="ss.send_sms_challenge_command.recipient.must_be_full_number_with_country_code_no_plus">
         <source>ss.send_sms_challenge_command.recipient.must_be_full_number_with_country_code_no_plus</source>
