@@ -100,6 +100,11 @@ services:
             - "@security.token_storage"
             - "@logger"
 
+    self_service.service.locale_provider:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\LocaleProviderService
+        arguments:
+            - "@security.token_storage"
+
     self_service.service.ra:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService
         arguments:
