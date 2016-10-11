@@ -18,48 +18,36 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\EventListener;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\LocaleProviderService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 final class LocaleListener implements EventSubscriberInterface
 {
     /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     * @var LocaleProviderService
      */
-    private $tokenStorage;
+    private $localeProviderService;
 
     /**
      * @var TranslatorInterface
      */
     private $translator;
 
-    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator)
+    public function __construct(LocaleProviderService $localeProviderService, TranslatorInterface $translator)
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->localeProviderService = $localeProviderService;
         $this->translator = $translator;
     }
 
     public function setRequestLocale(GetResponseEvent $event)
     {
-        $token = $this->tokenStorage->getToken();
-
-        if (!$token) {
-            return;
-        }
-
-        $identity = $token->getUser();
-
-        // Anonymous usage like /authentication/metadata has just "anonymous" as identity.
-        if (!$identity instanceof Identity) {
-            return;
-        }
+        $preferredLocale = $this->localeProviderService->determinePreferredLocale();
 
         $request = $event->getRequest();
-        $request->setLocale($identity->preferredLocale);
+        $request->setLocale($preferredLocale);
 
         // As per \Symfony\Component\HttpKernel\EventListener\TranslatorListener::setLocale()
         try {

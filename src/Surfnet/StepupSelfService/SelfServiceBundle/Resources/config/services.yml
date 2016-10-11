@@ -122,7 +122,7 @@ services:
 
     self_service.event_listener.locale:
         class: Surfnet\StepupSelfService\SelfServiceBundle\EventListener\LocaleListener
-        arguments: [ "@security.token_storage", "@translator" ]
+        arguments: [ "@self_service.service.locale_provider", "@translator" ]
         tags: [{ name: kernel.event_subscriber }]
 
     self_service.event_listener.locale_cookie:
