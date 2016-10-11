@@ -125,6 +125,15 @@ services:
         arguments: [ "@security.token_storage", "@translator" ]
         tags: [{ name: kernel.event_subscriber }]
 
+    self_service.event_listener.locale_cookie:
+        class: Surfnet\StepupBundle\EventListener\LocaleCookieListener
+        arguments:
+            - "@surfnet_stepup.locale_cookie_helper"
+            - "@self_service.service.locale_provider"
+            - "@logger"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 6 }
+
     self_service.locale.request_stack_locale_provider:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Locale\RequestStackLocaleProvider
         arguments:
