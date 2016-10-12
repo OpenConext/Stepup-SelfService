@@ -18,36 +18,48 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\EventListener;
 
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\LocaleProviderService;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 final class LocaleListener implements EventSubscriberInterface
 {
     /**
-     * @var LocaleProviderService
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
-    private $localeProviderService;
+    private $tokenStorage;
 
     /**
      * @var TranslatorInterface
      */
     private $translator;
 
-    public function __construct(LocaleProviderService $localeProviderService, TranslatorInterface $translator)
+    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator)
     {
-        $this->localeProviderService = $localeProviderService;
+        $this->tokenStorage = $tokenStorage;
         $this->translator = $translator;
     }
 
     public function setRequestLocale(GetResponseEvent $event)
     {
-        $preferredLocale = $this->localeProviderService->determinePreferredLocale();
+        $token = $this->tokenStorage->getToken();
+
+        if (!$token) {
+            return;
+        }
+
+        $identity = $token->getUser();
+
+        // Anonymous usage like /authentication/metadata has just "anonymous" as identity.
+        if (!$identity instanceof Identity) {
+            return;
+        }
 
         $request = $event->getRequest();
-        $request->setLocale($preferredLocale);
+        $request->setLocale($identity->preferredLocale);
 
         // As per \Symfony\Component\HttpKernel\EventListener\TranslatorListener::setLocale()
         try {
