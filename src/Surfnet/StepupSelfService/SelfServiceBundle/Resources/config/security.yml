@@ -77,6 +77,13 @@ services:
             - "@surfnet_saml.logger"
             - "@templating"
 
+    self_service.security.authentication.handler.logout_success:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\LogoutSuccessHandler
+        arguments:
+            - "@security.token_storage"
+            - "%locales%"
+            - "%logout_redirect_url%"
+
     # Session
     self_service.security.authentication.session.session_storage:
         public: false
