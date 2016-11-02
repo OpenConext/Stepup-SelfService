@@ -42,7 +42,9 @@ parameters:
     stepup_loa_loa2: https://gateway.tld/authentication/loa2
     stepup_loa_loa3: https://gateway.tld/authentication/loa3
 
-    logout_redirect_url: https://www.surf.nl/over-surf/werkmaatschappijen/surfnet
+    logout_redirect_url:
+        nl_NL: https://www.surf.nl/over-surf/werkmaatschappijen/surfnet
+        en_GB: https://www.surf.nl/en/about-surf/subsidiaries/surfnet
 
     enabled_second_factors:
         - sms
