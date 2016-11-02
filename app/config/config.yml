@@ -36,6 +36,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     exception_controller:  SurfnetStepupBundle:Exception:show
+    globals:
+        global_view_parameters: "@self_service.service.global_view_parameters"
 
 # Assetic Configuration
 assetic:
