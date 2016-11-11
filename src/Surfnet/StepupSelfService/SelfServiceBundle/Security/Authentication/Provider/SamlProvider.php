@@ -29,7 +29,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\UnexpectedIssuerException;
+use Assert\Assertion;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class SamlProvider implements AuthenticationProviderInterface
 {
     /**
@@ -52,24 +57,41 @@ class SamlProvider implements AuthenticationProviderInterface
      */
     private $logger;
 
+    /**
+     * @var string
+     */
+    private $remoteIdp;
+
     public function __construct(
         IdentityService $identityService,
         AttributeDictionary $attributeDictionary,
         PreferredLocaleProvider $preferredLocaleProvider,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        $remoteIdp
     ) {
+        Assertion::string($remoteIdp);
+
         $this->identityService = $identityService;
         $this->attributeDictionary = $attributeDictionary;
         $this->preferredLocaleProvider = $preferredLocaleProvider;
         $this->logger = $logger;
+        $this->remoteIdp = $remoteIdp;
     }
 
     /**
-     * @param  SamlToken $token
+     * @param  SamlToken|TokenInterface $token
      * @return TokenInterface|void
      */
     public function authenticate(TokenInterface $token)
     {
+        if ($token->assertion->getIssuer() !== $this->remoteIdp) {
+            throw new UnexpectedIssuerException(sprintf(
+                'Expected issuer to be remote IdP "%s", got "%s"',
+                $this->remoteIdp,
+                $token->assertion->getIssuer()
+            ));
+        }
+
         $translatedAssertion = $this->attributeDictionary->translate($token->assertion);
 
         $nameId         = $translatedAssertion->getNameID();
