@@ -35,6 +35,7 @@ class Configuration implements ConfigurationInterface
         $childNodes = $rootNode->children();
         $this->appendEnabledSecondFactorTypesConfiguration($childNodes);
         $this->appendSessionConfiguration($childNodes);
+        $this->appendRemoteIdpConfiguration($childNodes);
 
         return $treeBuilder;
     }
@@ -109,6 +110,14 @@ class Configuration implements ConfigurationInterface
                         )
                     ->end()
                 ->end()
+            ->end();
+    }
+
+    private function appendRemoteIdpConfiguration(NodeBuilder $childNodes)
+    {
+        $childNodes
+            ->scalarNode('remote_idp')
+            ->info('The EntityID of the remote Idp that act as an issuer (Gateway)')
             ->end();
     }
 }
