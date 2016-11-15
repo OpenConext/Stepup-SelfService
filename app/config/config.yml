@@ -157,7 +157,6 @@ surfnet_stepup:
     locale_cookie:
         domain: %locale_cookie_domain%
 
-
 jms_translation:
     locales: %locales%
     configs:

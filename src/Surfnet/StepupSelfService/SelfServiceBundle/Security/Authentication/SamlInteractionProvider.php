@@ -23,6 +23,7 @@ use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
 use Surfnet\SamlBundle\Http\RedirectBinding;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\UnexpectedIssuerException;
 use Symfony\Component\HttpFoundation\Request;
 
 class SamlInteractionProvider
@@ -101,6 +102,14 @@ class SamlInteractionProvider
             $this->identityProvider,
             $this->serviceProvider
         );
+
+        if ($assertion->getIssuer() !== $this->identityProvider->getEntityId()) {
+            throw new UnexpectedIssuerException(sprintf(
+                'Expected issuer to be configured remote IdP "%s", got "%s"',
+                $this->identityProvider->getEntityId(),
+                $assertion->getIssuer()
+            ));
+        }
 
         $this->samlAuthenticationStateHandler->clearRequestId();
 
