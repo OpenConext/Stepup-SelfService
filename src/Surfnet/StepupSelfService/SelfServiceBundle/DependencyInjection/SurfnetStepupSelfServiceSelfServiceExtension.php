@@ -56,7 +56,5 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
             'self_service.security.authentication.session.maximum_relative_lifetime_in_seconds',
             $config['session_lifetimes']['max_relative_lifetime']
         );
-
-        $container->setParameter('self_service.remote_idp', $config['remote_idp']);
     }
 }

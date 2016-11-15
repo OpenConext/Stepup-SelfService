@@ -14,7 +14,6 @@ services:
             - "@surfnet_saml.saml.attribute_dictionary"
             - "@self_service.locale.request_stack_locale_provider"
             - "@logger"
-            - "%self_service.remote_idp%"
 
     self_service.security.authentication.saml_interaction:
         public: false
