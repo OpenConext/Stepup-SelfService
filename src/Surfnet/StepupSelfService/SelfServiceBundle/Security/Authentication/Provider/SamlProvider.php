@@ -65,7 +65,7 @@ class SamlProvider implements AuthenticationProviderInterface
     }
 
     /**
-     * @param  SamlToken $token
+     * @param  SamlToken|TokenInterface $token
      * @return TokenInterface|void
      */
     public function authenticate(TokenInterface $token)
