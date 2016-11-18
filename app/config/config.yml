@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: samlstepupproviders.yml }
+    - { resource: global_view_parameters.yml }
     - { resource: logging.yml }
 
 framework:
@@ -35,6 +36,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     exception_controller:  SurfnetStepupBundle:Exception:show
+    globals:
+        global_view_parameters: "@self_service.service.global_view_parameters"
 
 # Assetic Configuration
 assetic:
@@ -153,7 +156,6 @@ surfnet_stepup:
         - surfnet_stepup_middleware_client.guzzle.commands
     locale_cookie:
         domain: %locale_cookie_domain%
-
 
 jms_translation:
     locales: %locales%
