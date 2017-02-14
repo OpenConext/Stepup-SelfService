@@ -34,14 +34,17 @@ class RegistrationController extends Controller
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
 
-        $allowedSecondFactors = array_intersect(
-            $institutionConfigurationOptions->allowedSecondFactors,
-            $this->getParameter('ss.enabled_second_factors')
-        );
+        $availableSecondFactors = $this->getParameter('ss.enabled_second_factors');
+        if (!empty($institutionConfigurationOptions->allowedSecondFactors)) {
+            $availableSecondFactors = array_intersect(
+                $availableSecondFactors,
+                $institutionConfigurationOptions->allowedSecondFactors
+            );
+        }
 
         return [
             'commonName' => $this->getIdentity()->commonName,
-            'allowedSecondFactors' => array_combine($allowedSecondFactors, $allowedSecondFactors),
+            'availableSecondFactors' => array_combine($availableSecondFactors, $availableSecondFactors),
             'tiqrAppAndroidUrl' => $this->getParameter('tiqr_app_android_url'),
             'tiqrAppIosUrl'     => $this->getParameter('tiqr_app_ios_url'),
         ];

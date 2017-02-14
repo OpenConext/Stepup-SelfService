@@ -12,7 +12,7 @@
     <h2>{{ block('page_title') }}</h2>
 
     <div class="row">
-        {% if allowedSecondFactors.sms is defined %}
+        {% if availableSecondFactors.sms is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'sms',
                 'security': 2,
@@ -21,7 +21,7 @@
                 'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
-        {% if allowedSecondFactors.tiqr is defined %}
+        {% if availableSecondFactors.tiqr is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'tiqr',
                 'security': 2,
@@ -30,7 +30,7 @@
                 'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
-        {% if allowedSecondFactors.yubikey is defined %}
+        {% if availableSecondFactors.yubikey is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'yubikey',
                 'security': 3,
@@ -39,7 +39,7 @@
                 'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
-        {% if allowedSecondFactors.u2f is defined %}
+        {% if availableSecondFactors.u2f is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'u2f',
                 'security': 3,
@@ -48,7 +48,7 @@
                 'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
-        {% if allowedSecondFactors.biometric is defined %}
+        {% if availableSecondFactors.biometric is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'biometric',
                 'security': 3,
