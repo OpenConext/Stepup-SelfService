@@ -31,11 +31,20 @@ class RegistrationController extends Controller
      */
     public function displaySecondFactorTypesAction()
     {
-        $enabledSecondFactors = $this->getParameter('ss.enabled_second_factors');
+        $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
+            ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
+
+        $availableSecondFactors = $this->getParameter('ss.enabled_second_factors');
+        if (!empty($institutionConfigurationOptions->allowedSecondFactors)) {
+            $availableSecondFactors = array_intersect(
+                $availableSecondFactors,
+                $institutionConfigurationOptions->allowedSecondFactors
+            );
+        }
 
         return [
             'commonName' => $this->getIdentity()->commonName,
-            'enabledSecondFactors' => array_combine($enabledSecondFactors, $enabledSecondFactors),
+            'availableSecondFactors' => array_combine($availableSecondFactors, $availableSecondFactors),
             'tiqrAppAndroidUrl' => $this->getParameter('tiqr_app_android_url'),
             'tiqrAppIosUrl'     => $this->getParameter('tiqr_app_ios_url'),
         ];
