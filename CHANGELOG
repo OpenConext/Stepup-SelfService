@@ -2,6 +2,9 @@
 VERSION 2  RELEASE 2.0
 ======================
 
+   Version 2.5 - Added AllowedSecondFactorList.
+      21/02/2017 16:46  2.5.0  initial release
+
    Version 2.4 - Updated SAML2 version in Composer lock-file, containing changes related to EPTI handling and security fixes
       13/12/2016 11:16  2.4.0  initial release
 
