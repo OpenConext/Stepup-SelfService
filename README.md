@@ -19,3 +19,15 @@ This component is part of "Step-up Authentication as-a Service" and requires oth
 Clone the repository or download the archive to a directory. Install the dependencies by running `composer install`.
 
 Run `app/console mopa:bootstrap:symlink:less` to configure Bootstrap symlinks.
+
+## Updating translations
+
+Run the following command to extract translation strings from templates, form labels, etc:
+
+```bash
+app/console translation:extract en_GB nl_NL --config=default
+```
+
+Then, translate the strings using the web interface available at: https://ss-dev.stepup.coin.surf.net/app_dev.php/_trans/
+
+For more information about the JMSTranslationBundle, see http://jmsyst.com/bundles/JMSTranslationBundle
