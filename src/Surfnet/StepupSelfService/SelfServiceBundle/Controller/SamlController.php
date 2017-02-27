@@ -34,6 +34,10 @@ class SamlController extends Controller
      */
     public function testSecondFactorAction($secondFactorId)
     {
+        $this->get('logger')->notice(
+            'Starting second factor test'
+        );
+
         $secondFactorService = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
         $identity            = $this->getIdentity();
 
@@ -61,6 +65,13 @@ class SamlController extends Controller
         );
 
         $this->get('session')->set('second_factor_test_mode', true);
+
+        $this->get('logger')->notice(
+            sprintf(
+                'Sending authentication request with ID "%s" to the second factor test IDP',
+                $authenticationRequest->getRequestId()
+            )
+        );
 
         return $this->get('surfnet_saml.http.redirect_binding')->createRedirectResponseFor($authenticationRequest);
     }
