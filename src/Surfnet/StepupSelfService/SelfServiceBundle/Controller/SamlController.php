@@ -18,7 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Exception;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\StepupBundle\Value\SecondFactorType;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,22 +76,42 @@ class SamlController extends Controller
         return $this->get('surfnet_saml.http.redirect_binding')->createRedirectResponseFor($authenticationRequest);
     }
 
-    /**
-     * @Template
-     */
     public function consumeAssertionAction(Request $httpRequest)
     {
-        /** @var \Surfnet\SamlBundle\Http\PostBinding $postBinding */
+        $this->get('logger')->notice('Received an authentication response for testing a second factor');
+
+        $session = $this->get('session');
+
+        if (!$session->has('second_factor_test_mode')) {
+            $this->get('logger')->error(
+                'Received an authentication response for testing a second factor, but no second factor test response was expected'
+            );
+
+            throw $this->createAccessDeniedException('Did not expect an authentication response');
+        }
+
+        $session->remove('second_factor_test_mode');
+
         $postBinding = $this->get('surfnet_saml.http.post_binding');
 
-        /** @var \SAML2_Assertion $assertion */
-        $assertion = $postBinding->processResponse(
-            $httpRequest,
-            $this->get('surfnet_saml.remote.idp'),
-            $this->get('surfnet_saml.hosted.service_provider')
-        );
+        $translator = $this->get('translator');
 
-        return $assertion->getAttributes();
+        try {
+            $postBinding->processResponse(
+                $httpRequest,
+                $this->get('self_service.second_factor_test_idp'),
+                $this->get('surfnet_saml.hosted.service_provider')
+            );
+
+            $session->getFlashBag()->add(
+                'success',
+                $translator->trans('ss.test_second_factor.verification_successful')
+            );
+        } catch (Exception $exception) {
+            $session->getFlashBag()->add('error', $translator->trans('ss.test_second_factor.verification_failed'));
+        }
+
+        return $this->redirectToRoute('ss_second_factor_list');
     }
 
     public function metadataAction()
