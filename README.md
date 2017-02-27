@@ -25,7 +25,7 @@ Run `app/console mopa:bootstrap:symlink:less` to configure Bootstrap symlinks.
 Run the following command to extract translation strings from templates, form labels, etc:
 
 ```bash
-app/console translation:extract en_GB nl_NL --config=default
+bin/extract-translations.sh
 ```
 
 Then, translate the strings using the web interface available at: https://ss-dev.stepup.coin.surf.net/app_dev.php/_trans/
