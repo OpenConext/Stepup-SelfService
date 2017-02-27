@@ -86,7 +86,8 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
             $configuration['certificateData'] = $identityProvider['certificate'];
         } else {
             throw new InvalidConfigurationException(
-                'Either surfnet_stepup_self_service_self_service.second_factor_test_identity_provider.certificate_file or surfnet_stepup_self_service_self_service.second_factor_test_identity_provider.certificate must be set.'
+                'Either "certificate_file" or "certificate" must be set in the ' .
+                'surfnet_stepup_self_service_self_service.second_factor_test_identity_provider configuration.'
             );
         }
 
