@@ -20,11 +20,51 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\SamlBundle\Http\XMLResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller as FrameworkController;
+use Surfnet\StepupBundle\Value\SecondFactorType;
 use Symfony\Component\HttpFoundation\Request;
 
-class SamlController extends FrameworkController
+class SamlController extends Controller
 {
+    /**
+     * @param string $secondFactorId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function testSecondFactorAction($secondFactorId)
+    {
+        $secondFactorService = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+        $identity            = $this->getIdentity();
+
+        if (!$secondFactorService->identityHasSecondFactorOfStateWithId($identity->id, 'vetted', $secondFactorId)) {
+            $this->get('logger')->error(
+                sprintf(
+                    'Identity "%s" tried to test second factor "%s", but does not own that second factor or it is not vetted',
+                    $identity->id,
+                    $secondFactorId
+                )
+            );
+
+            throw $this->createNotFoundException();
+        }
+
+        $loaResolutionService         = $this->get('surfnet_stepup.service.loa_resolution');
+        $authenticationRequestFactory = $this->get('self_service.test_second_factor_authentication_request_factory');
+
+        $secondFactor     = $secondFactorService->findOneVetted($secondFactorId);
+        $secondFactorType = new SecondFactorType($secondFactor->type);
+
+        $authenticationRequest = $authenticationRequestFactory->createSecondFactorTestRequest(
+            $identity->nameId,
+            $loaResolutionService->getLoaByLevel($secondFactorType->getLevel())
+        );
+
+        $this->get('session')->set('second_factor_test_mode', true);
+
+        return $this->get('surfnet_saml.http.redirect_binding')->createRedirectResponseFor($authenticationRequest);
+    }
+
     /**
      * @Template
      */

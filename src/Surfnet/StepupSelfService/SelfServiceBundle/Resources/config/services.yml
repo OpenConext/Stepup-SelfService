@@ -127,6 +127,12 @@ services:
             - "%locales%"
             - "%support_url%"
 
+    self_service.test_second_factor_authentication_request_factory:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor\TestAuthenticationRequestFactory
+        arguments:
+            - '@surfnet_saml.hosted.service_provider'
+            - '@surfnet_saml.remote.idp'
+
     self_service.event_listener.locale:
         class: Surfnet\StepupSelfService\SelfServiceBundle\EventListener\LocaleListener
         arguments: [ "@security.token_storage", "@translator" ]
