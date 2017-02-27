@@ -97,7 +97,7 @@
         <jms:reference-file line="13">views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="13">views/Exception/error404.html.twig</jms:reference-file>
         <source>ss.error.text.your_art_code</source>
-        <target>The error code is:</target>
+        <target>The error code is</target>
       </trans-unit>
       <trans-unit id="ad9824f6caa954891a11b7db631468f24b9194ac" resname="ss.error.title">
         <jms:reference-file line="3">views/Exception/error.html.twig</jms:reference-file>
