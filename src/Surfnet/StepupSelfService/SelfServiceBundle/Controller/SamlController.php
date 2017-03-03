@@ -96,8 +96,6 @@ class SamlController extends Controller
 
         $postBinding = $this->get('surfnet_saml.http.post_binding');
 
-        $translator = $this->get('translator');
-
         try {
             $postBinding->processResponse(
                 $httpRequest,
@@ -105,12 +103,9 @@ class SamlController extends Controller
                 $this->get('surfnet_saml.hosted.service_provider')
             );
 
-            $session->getFlashBag()->add(
-                'success',
-                $translator->trans('ss.test_second_factor.verification_successful')
-            );
+            $session->getFlashBag()->add('success', 'ss.test_second_factor.verification_successful');
         } catch (Exception $exception) {
-            $session->getFlashBag()->add('error', $translator->trans('ss.test_second_factor.verification_failed'));
+            $session->getFlashBag()->add('error', 'ss.test_second_factor.verification_failed');
         }
 
         return $this->redirectToRoute('ss_second_factor_list');
