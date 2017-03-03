@@ -74,7 +74,7 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
         array $identityProvider,
         ContainerBuilder $container
     ) {
-        $definition = new Definition(IdentityProvider::class);
+        $definition = new Definition('Surfnet\SamlBundle\Entity\IdentityProvider');
         $configuration = [
             'entityId' => $identityProvider['entity_id'],
             'ssoUrl' => $identityProvider['sso_url'],
