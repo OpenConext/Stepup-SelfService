@@ -64,7 +64,7 @@ class SamlController extends Controller
             $loaResolutionService->getLoaByLevel($secondFactorType->getLevel())
         );
 
-        $this->get('session')->set('second_factor_test_mode', true);
+        $this->get('session')->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
 
         $this->get('logger')->notice(
             sprintf(
@@ -82,7 +82,7 @@ class SamlController extends Controller
 
         $session = $this->get('session');
 
-        if (!$session->has('second_factor_test_mode')) {
+        if (!$session->has('second_factor_test_request_id')) {
             $this->get('logger')->error(
                 'Received an authentication response for testing a second factor, but no second factor test response was expected'
             );
@@ -90,7 +90,7 @@ class SamlController extends Controller
             throw $this->createAccessDeniedException('Did not expect an authentication response');
         }
 
-        $session->remove('second_factor_test_mode');
+        $session->remove('second_factor_test_request_id');
 
         $postBinding = $this->get('surfnet_saml.http.post_binding');
 
