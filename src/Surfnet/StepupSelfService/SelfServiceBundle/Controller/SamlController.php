@@ -67,13 +67,7 @@ class SamlController extends Controller
         $this->get('session')->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
 
         $logger = $this->get('surfnet_saml.logger')->forAuthentication($authenticationRequest->getRequestId());
-
-        $logger->notice(
-            sprintf(
-                'Sending authentication request with ID "%s" to the second factor test IDP',
-                $authenticationRequest->getRequestId()
-            )
-        );
+        $logger->notice('Sending authentication request to the second factor test IDP');
 
         return $this->get('surfnet_saml.http.redirect_binding')->createRedirectResponseFor($authenticationRequest);
     }
