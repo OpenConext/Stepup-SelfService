@@ -67,8 +67,8 @@ class SamlController extends Controller
 
         $this->get('session')->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
 
-        $logger = $this->get('surfnet_saml.logger')->forAuthentication($authenticationRequest->getRequestId());
-        $logger->notice('Sending authentication request to the second factor test IDP');
+        $samlLogger = $this->get('surfnet_saml.logger')->forAuthentication($authenticationRequest->getRequestId());
+        $samlLogger->notice('Sending authentication request to the second factor test IDP');
 
         return $this->get('surfnet_saml.http.redirect_binding')->createRedirectResponseFor($authenticationRequest);
     }
@@ -91,7 +91,7 @@ class SamlController extends Controller
 
         $initiatedRequestId = $session->get('second_factor_test_request_id');
 
-        $logger = $this->get('surfnet_saml.logger')->forAuthentication($initiatedRequestId);
+        $samlLogger = $this->get('surfnet_saml.logger')->forAuthentication($initiatedRequestId);
 
         $session->remove('second_factor_test_request_id');
 
@@ -105,7 +105,7 @@ class SamlController extends Controller
             );
 
             if (!InResponseTo::assertEquals($assertion, $initiatedRequestId)) {
-                $logger->error(
+                $samlLogger->error(
                     sprintf(
                         'Expected a response to the request with ID "%s", but the SAMLResponse was a response to a different request',
                         $initiatedRequestId
