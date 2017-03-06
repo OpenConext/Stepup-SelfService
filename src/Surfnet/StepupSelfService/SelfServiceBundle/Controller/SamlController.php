@@ -20,8 +20,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Exception;
 use Surfnet\SamlBundle\Http\XMLResponse;
+use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Value\SecondFactorType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class SamlController extends Controller
 {
@@ -74,28 +76,45 @@ class SamlController extends Controller
 
     public function consumeAssertionAction(Request $httpRequest)
     {
-        $this->get('logger')->notice('Received an authentication response for testing a second factor');
+        $logger = $this->get('logger');
+
+        $logger->notice('Received an authentication response for testing a second factor');
 
         $session = $this->get('session');
 
         if (!$session->has('second_factor_test_request_id')) {
-            $this->get('logger')->error(
+            $logger->error(
                 'Received an authentication response for testing a second factor, but no second factor test response was expected'
             );
 
             throw $this->createAccessDeniedException('Did not expect an authentication response');
         }
 
+        $initiatedRequestId = $session->get('second_factor_test_request_id');
+
+        $logger = $this->get('surfnet_saml.logger')->forAuthentication($initiatedRequestId);
+
         $session->remove('second_factor_test_request_id');
 
         $postBinding = $this->get('surfnet_saml.http.post_binding');
 
         try {
-            $postBinding->processResponse(
+            $assertion = $postBinding->processResponse(
                 $httpRequest,
                 $this->get('self_service.second_factor_test_idp'),
                 $this->get('surfnet_saml.hosted.service_provider')
             );
+
+            if (!InResponseTo::assertEquals($assertion, $initiatedRequestId)) {
+                $logger->error(
+                    sprintf(
+                        'Expected a response to the request with ID "%s", but the SAMLResponse was a response to a different request',
+                        $initiatedRequestId
+                    )
+                );
+
+                throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
+            }
 
             $session->getFlashBag()->add('success', 'ss.test_second_factor.verification_successful');
         } catch (Exception $exception) {
