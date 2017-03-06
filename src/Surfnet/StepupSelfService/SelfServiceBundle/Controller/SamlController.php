@@ -36,15 +36,14 @@ class SamlController extends Controller
      */
     public function testSecondFactorAction($secondFactorId)
     {
-        $this->get('logger')->notice(
-            'Starting second factor test'
-        );
+        $logger = $this->get('logger');
+        $logger->notice('Starting second factor test');
 
         $secondFactorService = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
         $identity            = $this->getIdentity();
 
         if (!$secondFactorService->identityHasSecondFactorOfStateWithId($identity->id, 'vetted', $secondFactorId)) {
-            $this->get('logger')->error(
+            $logger->error(
                 sprintf(
                     'Identity "%s" tried to test second factor "%s", but does not own that second factor or it is not vetted',
                     $identity->id,
