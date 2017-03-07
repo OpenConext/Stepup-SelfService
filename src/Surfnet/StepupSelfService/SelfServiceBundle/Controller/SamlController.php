@@ -23,6 +23,8 @@ use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Value\SecondFactorType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class SamlController extends Controller
@@ -51,7 +53,7 @@ class SamlController extends Controller
                 )
             );
 
-            throw $this->createNotFoundException();
+            throw new NotFoundHttpException();
         }
 
         $loaResolutionService         = $this->get('surfnet_stepup.service.loa_resolution');
@@ -86,7 +88,7 @@ class SamlController extends Controller
                 'Received an authentication response for testing a second factor, but no second factor test response was expected'
             );
 
-            throw $this->createAccessDeniedException('Did not expect an authentication response');
+            throw new AccessDeniedHttpException('Did not expect an authentication response');
         }
 
         $initiatedRequestId = $session->get('second_factor_test_request_id');
