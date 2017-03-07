@@ -40,6 +40,10 @@ parameters:
     graylog_hostname: g2-dev.stepup.coin.surf.net
     asset_version: 1
 
+    second_factor_test_idp_entity_id: ~
+    second_factor_test_idp_sso_url: ~
+    second_factor_test_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+
     stepup_loa_loa1: https://gateway.tld/authentication/loa1
     stepup_loa_loa2: https://gateway.tld/authentication/loa2
     stepup_loa_loa3: https://gateway.tld/authentication/loa3
