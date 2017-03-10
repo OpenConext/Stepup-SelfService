@@ -34,6 +34,7 @@ class Configuration implements ConfigurationInterface
 
         $childNodes = $rootNode->children();
         $this->appendEnabledSecondFactorTypesConfiguration($childNodes);
+        $this->appendSecondFactorTestIdentityProvider($childNodes);
         $this->appendSessionConfiguration($childNodes);
 
         return $treeBuilder;
@@ -78,6 +79,30 @@ class Configuration implements ConfigurationInterface
                             )
                             ->thenInvalid('max_relative_lifetime must be an integer')
                         ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function appendSecondFactorTestIdentityProvider(NodeBuilder $childNodes)
+    {
+        $childNodes
+            ->arrayNode('second_factor_test_identity_provider')
+                ->isRequired()
+                ->children()
+                    ->scalarNode('entity_id')
+                        ->isRequired()
+                        ->info('The EntityID of the remote identity provider')
+                    ->end()
+                    ->scalarNode('sso_url')
+                        ->isRequired()
+                        ->info('The name of the route to generate the SSO URL')
+                    ->end()
+                    ->scalarNode('certificate')
+                        ->info('The contents of the certificate used to sign the AuthnResponse with')
+                    ->end()
+                    ->scalarNode('certificate_file')
+                        ->info('A file containing the certificate used to sign the AuthnResponse with')
                     ->end()
                 ->end()
             ->end();
