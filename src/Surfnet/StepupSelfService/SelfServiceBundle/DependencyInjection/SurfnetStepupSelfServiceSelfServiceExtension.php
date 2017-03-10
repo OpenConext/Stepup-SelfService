@@ -18,8 +18,11 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\DependencyInjection;
 
+use Surfnet\SamlBundle\Entity\IdentityProvider;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -56,5 +59,39 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
             'self_service.security.authentication.session.maximum_relative_lifetime_in_seconds',
             $config['session_lifetimes']['max_relative_lifetime']
         );
+
+        $this->parseSecondFactorTestIdentityProviderConfiguration(
+            $config['second_factor_test_identity_provider'],
+            $container
+        );
+    }
+
+    /**
+     * @param array            $identityProvider
+     * @param ContainerBuilder $container
+     */
+    private function parseSecondFactorTestIdentityProviderConfiguration(
+        array $identityProvider,
+        ContainerBuilder $container
+    ) {
+        $definition = new Definition('Surfnet\SamlBundle\Entity\IdentityProvider');
+        $configuration = [
+            'entityId' => $identityProvider['entity_id'],
+            'ssoUrl' => $identityProvider['sso_url'],
+        ];
+
+        if (isset($identityProvider['certificate_file']) && !isset($identityProvider['certificate'])) {
+            $configuration['certificateFile'] = $identityProvider['certificate_file'];
+        } elseif (isset($identityProvider['certificate'])) {
+            $configuration['certificateData'] = $identityProvider['certificate'];
+        } else {
+            throw new InvalidConfigurationException(
+                'Either "certificate_file" or "certificate" must be set in the ' .
+                'surfnet_stepup_self_service_self_service.second_factor_test_identity_provider configuration.'
+            );
+        }
+
+        $definition->setArguments([$configuration]);
+        $container->setDefinition('self_service.second_factor_test_idp', $definition);
     }
 }

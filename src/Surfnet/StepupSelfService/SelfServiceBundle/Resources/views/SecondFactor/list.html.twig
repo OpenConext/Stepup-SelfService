@@ -39,10 +39,17 @@
                             <td>{{ ('ss.second_factor.type.'~secondFactor.type)|trans }}</td>
                             <td>{{ secondFactor.secondFactorIdentifier }}</td>
                             <td>
-                                <a class="btn btn-mini btn-warning pull-right"
-                                   href="{{ path('ss_second_factor_revoke', {'state': state, 'secondFactorId': secondFactor.id}) }}">
-                                    {{ 'ss.second_factor.revoke.button.revoke'|trans }}
-                                </a>
+                                <div class="btn-group pull-right" role="group">
+                                    {% if state == 'vetted' %}
+                                        <a class="btn btn-mini btn-default"
+                                            href="{{ path('ss_second_factor_test', {'secondFactorId': secondFactor.id}) }}">
+                                            {{ 'ss.second_factor.revoke.button.test'|trans }}</a>
+                                    {% endif %}
+                                    <a class="btn btn-mini btn-warning"
+                                        href="{{ path('ss_second_factor_revoke', {'state': state, 'secondFactorId': secondFactor.id}) }}">
+                                        {{ 'ss.second_factor.revoke.button.revoke'|trans }}
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
