@@ -18,14 +18,15 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupBundle\Http\JsonHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
 
 class YubikeyService
 {
     /**
-     * @var ClientInterface
+     * @var Client
      */
     private $guzzleClient;
 
@@ -35,10 +36,10 @@ class YubikeyService
     private $logger;
 
     /**
-     * @param ClientInterface $guzzleClient A Guzzle client configured with the Yubikey API base URL and authentication.
+     * @param Client $guzzleClient A Guzzle client configured with the Yubikey API base URL and authentication.
      * @param LoggerInterface $logger
      */
-    public function __construct(ClientInterface $guzzleClient, LoggerInterface $logger)
+    public function __construct(Client $guzzleClient, LoggerInterface $logger)
     {
         $this->guzzleClient = $guzzleClient;
         $this->logger = $logger;
@@ -56,7 +57,7 @@ class YubikeyService
             'requester' => ['institution' => $command->institution, 'identity' => $command->identity],
             'otp' => ['value' => $command->otp],
         ];
-        $response = $this->guzzleClient->post('api/verify-yubikey', ['json' => $body, 'exceptions' => false]);
+        $response = $this->guzzleClient->post('api/verify-yubikey', ['json' => $body, 'http_errors' => false]);
         $statusCode = $response->getStatusCode();
 
         if ($statusCode != 200) {
@@ -67,7 +68,7 @@ class YubikeyService
         }
 
         try {
-            $result = $response->json();
+            $result = JsonHelper::decode((string) $response->getBody());
         } catch (\RuntimeException $e) {
             $this->logger->error('Yubikey OTP verification failed; server responded with malformed JSON.');
 
