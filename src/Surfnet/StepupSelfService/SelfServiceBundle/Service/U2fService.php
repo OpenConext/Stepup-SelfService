@@ -18,8 +18,9 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
-use GuzzleHttp\ClientInterface as GuzzleClient;
+use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupBundle\Http\JsonHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\CreateU2fRegisterRequestCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeU2fRegistrationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyU2fRegistrationCommand;
@@ -34,11 +35,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @SuppressWarnings(PHPMD.CyclomaticComplexity) -- We're verifying a JSON format. Not much to do towards reducing the
  *     complexity.
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- JSON verification, helper classes and DTOs introduce coupling
  */
 final class U2fService
 {
     /**
-     * @var \GuzzleHttp\ClientInterface
+     * @var \GuzzleHttp\Client
      */
     private $guzzleClient;
 
@@ -53,11 +55,11 @@ final class U2fService
     private $logger;
 
     /**
-     * @param GuzzleClient       $guzzleClient
+     * @param Client       $guzzleClient
      * @param ValidatorInterface $validator
      * @param LoggerInterface    $logger
      */
-    public function __construct(GuzzleClient $guzzleClient, ValidatorInterface $validator, LoggerInterface $logger)
+    public function __construct(Client $guzzleClient, ValidatorInterface $validator, LoggerInterface $logger)
     {
         $this->guzzleClient = $guzzleClient;
         $this->validator    = $validator;
@@ -76,12 +78,12 @@ final class U2fService
 
         $response = $this->guzzleClient->post(
             'api/u2f/create-register-request',
-            ['json' => $body, 'exceptions' => false]
+            ['json' => $body, 'http_errors' => false]
         );
         $statusCode = $response->getStatusCode();
 
         try {
-            $result = $response->json();
+            $result = JsonHelper::decode((string) $response->getBody());
         } catch (\RuntimeException $e) {
             $this->logger->critical(
                 'U2F register request creation failed; server responded with malformed JSON',
@@ -165,11 +167,11 @@ final class U2fService
             ],
         ];
 
-        $response = $this->guzzleClient->post('api/u2f/register', ['json' => $body, 'exceptions' => false]);
+        $response = $this->guzzleClient->post('api/u2f/register', ['json' => $body, 'http_errors' => false]);
         $statusCode = $response->getStatusCode();
 
         try {
-            $result = $response->json();
+            $result = JsonHelper::decode((string) $response->getBody());
         } catch (\RuntimeException $e) {
             $this->logger->critical('U2F registration verification failed; JSON decoding failed.');
 
@@ -217,11 +219,11 @@ final class U2fService
             'key_handle' => ['value' => $command->keyHandle],
         ];
 
-        $response = $this->guzzleClient->post('api/u2f/revoke-registration', ['json' => $body, 'exceptions' => false]);
+        $response = $this->guzzleClient->post('api/u2f/revoke-registration', ['json' => $body, 'http_errors' => false]);
         $statusCode = $response->getStatusCode();
 
         try {
-            $result = $response->json();
+            $result = JsonHelper::decode((string) $response->getBody());
         } catch (\RuntimeException $e) {
             $this->logger->critical('U2F registration revocation failed; JSON decoding failed.');
 
