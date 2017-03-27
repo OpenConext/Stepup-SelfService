@@ -78,7 +78,7 @@ final class U2fService
 
         $response = $this->guzzleClient->post(
             'api/u2f/create-register-request',
-            ['json' => $body, 'exceptions' => false]
+            ['json' => $body, 'http_errors' => false]
         );
         $statusCode = $response->getStatusCode();
 
