@@ -20,7 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
-use Surfnet\StepupMiddlewareClient\Helper\JsonHelper;
+use Surfnet\StepupBundle\Http\JsonHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\CreateU2fRegisterRequestCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeU2fRegistrationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyU2fRegistrationCommand;
