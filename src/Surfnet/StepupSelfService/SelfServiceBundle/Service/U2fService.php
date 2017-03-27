@@ -35,6 +35,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @SuppressWarnings(PHPMD.CyclomaticComplexity) -- We're verifying a JSON format. Not much to do towards reducing the
  *     complexity.
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- JSON verification, helper classes and DTOs introduce coupling
  */
 final class U2fService
 {
