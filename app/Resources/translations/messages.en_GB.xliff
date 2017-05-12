@@ -709,12 +709,12 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="cbdf2c4bacdae4b97285b0201968c2d3a9de1be1" resname="ss.test_second_factor.verification_failed">
         <jms:reference-file line="76">Resources/views/translations.twig</jms:reference-file>
         <source>ss.test_second_factor.verification_failed</source>
-        <target>The second factor test failed.</target>
+        <target>The test with your token failed.</target>
       </trans-unit>
       <trans-unit id="7c0f4f14de1d3c98032305d9af18fad28ec67456" resname="ss.test_second_factor.verification_successful">
         <jms:reference-file line="75">Resources/views/translations.twig</jms:reference-file>
         <source>ss.test_second_factor.verification_successful</source>
-        <target>The second factor test was successful.</target>
+        <target>The test with your token was successful. You can login with Strong Authentication.</target>
       </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
         <jms:reference-file line="34">Resources/views/translations.twig</jms:reference-file>
