@@ -16,7 +16,7 @@ security:
             saml: true
             logout:
                 path: /logout
-                target: %logout_redirect_url%
+                success_handler: "self_service.security.authentication.handler.logout_success"
                 invalidate_session: true
                 csrf_token_generator: form.csrf_provider
                 csrf_parameter: 't'
