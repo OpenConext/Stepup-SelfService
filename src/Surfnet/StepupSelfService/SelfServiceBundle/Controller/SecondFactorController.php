@@ -38,11 +38,20 @@ class SecondFactorController extends Controller
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
+        // Get all available second factors from the config.
+        $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
+        $unverified = $service->findUnverifiedByIdentity($identity->id);
+        $verified = $service->findVerifiedByIdentity($identity->id);
+        $vetted = $service->findVettedByIdentity($identity->id);
+        // Determine which Second Factors are still available for registration.
+        $available = $service->determineAvailable($allSecondFactors, $unverified, $verified, $vetted);
+
         return [
             'email' => $identity->email,
-            'unverifiedSecondFactors' => $service->findUnverifiedByIdentity($identity->id),
-            'verifiedSecondFactors' => $service->findVerifiedByIdentity($identity->id),
-            'vettedSecondFactors' => $service->findVettedByIdentity($identity->id),
+            'unverifiedSecondFactors' => $unverified,
+            'verifiedSecondFactors' => $verified,
+            'vettedSecondFactors' => $vetted,
+            'availableSecondFactors' => $available,
         ];
     }
 
