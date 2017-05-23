@@ -30,12 +30,16 @@ class RegistrationController extends Controller
 {
     /**
      * @Template
-     * @return array
      */
     public function displaySecondFactorTypesAction()
     {
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
+
+        $identity = $this->getIdentity();
+
+        /** @var SecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
         $availableSecondFactors = $this->getParameter('ss.enabled_second_factors');
         if (!empty($institutionConfigurationOptions->allowedSecondFactors)) {
@@ -59,9 +63,18 @@ class RegistrationController extends Controller
             }
         }
 
+
+        // Get all available second factors from the config.
+        $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
+        $unverified = $service->findUnverifiedByIdentity($identity->id);
+        $verified = $service->findVerifiedByIdentity($identity->id);
+        $vetted = $service->findVettedByIdentity($identity->id);
+        // Determine which Second Factors are still available for registration.
+        $available = $service->determineAvailable($allSecondFactors, $unverified, $verified, $vetted);
+
         return [
             'commonName' => $this->getIdentity()->commonName,
-            'availableSecondFactors' => $availableSecondFactors,
+            'availableSecondFactors' => array_combine($available, $available),
             'availableGsspSecondFactors' => $availableGsspSecondFactors,
             'tiqrAppAndroidUrl' => $this->getParameter('tiqr_app_android_url'),
             'tiqrAppIosUrl'     => $this->getParameter('tiqr_app_ios_url'),
