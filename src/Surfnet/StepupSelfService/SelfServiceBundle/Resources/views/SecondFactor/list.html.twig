@@ -7,7 +7,11 @@
     <h2>{{ block('page_title') }}</h2>
 
     {% if (unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty) or availableSecondFacotrs.elements is not empty %}
-        <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
+        {% if availableSecondFacotrs.elements|length > 0  %}
+            <p>{{ 'ss.second_factor.list.text.add_second_factor'|trans }}</p>
+        {% else %}
+            <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
+        {% endif %}
         <a href="{{ path('ss_registration_display_types') }}"
            class="btn btn-primary">
             {{ 'ss.second_factor.list.button.register_second_factor'|trans }}
