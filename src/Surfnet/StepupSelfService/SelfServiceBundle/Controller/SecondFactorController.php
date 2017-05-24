@@ -44,15 +44,18 @@ class SecondFactorController extends Controller
         $secondFactors = $service->getSecondFactorsForIdentity(
             $identity,
             $allSecondFactors,
-            $institutionConfigurationOptions->allowedSecondFactors
+            $institutionConfigurationOptions->allowedSecondFactors,
+            $this->getParameter('self_service.second_factor.max_tokens_per_identity')
         );
 
         return [
             'email' => $identity->email,
-            'unverifiedSecondFactors' => $secondFactors['unverified'],
-            'verifiedSecondFactors' => $verified,
-            'vettedSecondFactors' => $vetted,
-            'availableSecondFactors' => $available,
+            'maxNumberOfTokens' => $secondFactors->getMaximumNumberOfRegistrations(),
+            'registrationsLeft' => $secondFactors->getRegistrationsLeft(),
+            'unverifiedSecondFactors' => $secondFactors->unverified,
+            'verifiedSecondFactors' => $secondFactors->verified,
+            'vettedSecondFactors' => $secondFactors->vetted,
+            'availableSecondFactors' => $secondFactors->available,
         ];
     }
 

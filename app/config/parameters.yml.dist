@@ -61,3 +61,6 @@ parameters:
 
     session_max_absolute_lifetime: 3600 # 1 hours * 60 minutes * 60 seconds
     session_max_relative_lifetime: 600  # 10 minutes * 60 seconds
+
+    # The maximum number of tokens each identity (person) can register.
+    number_of_tokens_per_identity: 2

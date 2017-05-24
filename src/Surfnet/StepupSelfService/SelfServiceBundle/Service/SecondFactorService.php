@@ -280,7 +280,7 @@ class SecondFactorService
      * @param VettedSecondFactorCollection $vettedCollection
      * @return array
      */
-    public function determineAvailable(
+    private function determineAvailable(
         array $allSecondFactors,
         UnverifiedSecondFactorCollection $unverifiedCollection,
         VerifiedSecondFactorCollection $verifiedCollection,
@@ -299,7 +299,7 @@ class SecondFactorService
      */
     private function filterAvailableSecondFactors(array $allSecondFactors, CollectionDto $collection)
     {
-        foreach ($collection as $secondFactor) {
+        foreach ($collection->getElements() as $secondFactor) {
             $keyFound = array_search($secondFactor->type, $allSecondFactors);
             if ($keyFound) {
                 unset($allSecondFactors[$keyFound]);
@@ -312,10 +312,15 @@ class SecondFactorService
      * @param $identity
      * @param $allSecondFactors
      * @param $allowedSecondFactors
-     * @return array
+     * @param $maximumNumberOfRegistrations
+     * @return SecondFactorTypeCollection
      */
-    public function getSecondFactorsForIdentity($identity, $allSecondFactors, $allowedSecondFactors)
-    {
+    public function getSecondFactorsForIdentity(
+        $identity,
+        $allSecondFactors,
+        $allowedSecondFactors,
+        $maximumNumberOfRegistrations
+    ) {
         $unverified = $this->findUnverifiedByIdentity($identity->id);
         $verified = $this->findVerifiedByIdentity($identity->id);
         $vetted = $this->findVettedByIdentity($identity->id);
@@ -329,11 +334,13 @@ class SecondFactorService
             );
         }
 
-        return [
-            'unverified' => $unverified,
-            'verified' => $verified,
-            'vetted' => $vetted,
-            'available' => $available,
-        ];
+        $collection = new SecondFactorTypeCollection();
+        $collection->unverified = $unverified;
+        $collection->verified   = $verified;
+        $collection->vetted     = $vetted;
+        $collection->available  = array_combine($available, $available);
+        $collection->maxNumberOfRegistrations = $maximumNumberOfRegistrations;
+
+        return $collection;
     }
 }

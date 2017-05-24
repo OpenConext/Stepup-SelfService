@@ -63,6 +63,10 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
             'self_service.security.authentication.session.maximum_relative_lifetime_in_seconds',
             $config['session_lifetimes']['max_relative_lifetime']
         );
+        $container->setParameter(
+            'self_service.second_factor.max_tokens_per_identity',
+            $config['max_number_of_tokens']
+        );
 
         $this->parseSecondFactorTestIdentityProviderConfiguration(
             $config['second_factor_test_identity_provider'],
