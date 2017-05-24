@@ -307,4 +307,33 @@ class SecondFactorService
         }
         return $allSecondFactors;
     }
+
+    /**
+     * @param $identity
+     * @param $allSecondFactors
+     * @param $allowedSecondFactors
+     * @return array
+     */
+    public function getSecondFactorsForIdentity($identity, $allSecondFactors, $allowedSecondFactors)
+    {
+        $unverified = $this->findUnverifiedByIdentity($identity->id);
+        $verified = $this->findVerifiedByIdentity($identity->id);
+        $vetted = $this->findVettedByIdentity($identity->id);
+        // Determine which Second Factors are still available for registration.
+        $available = $this->determineAvailable($allSecondFactors, $unverified, $verified, $vetted);
+
+        if (!empty($allowedSecondFactors)) {
+            $available = array_intersect(
+                $available,
+                $allowedSecondFactors
+            );
+        }
+
+        return [
+            'unverified' => $unverified,
+            'verified' => $verified,
+            'vetted' => $vetted,
+            'available' => $available,
+        ];
+    }
 }

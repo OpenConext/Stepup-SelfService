@@ -34,21 +34,22 @@ class SecondFactorController extends Controller
     public function listAction()
     {
         $identity = $this->getIdentity();
-
+        $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
+            ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-
         // Get all available second factors from the config.
         $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
-        $unverified = $service->findUnverifiedByIdentity($identity->id);
-        $verified = $service->findVerifiedByIdentity($identity->id);
-        $vetted = $service->findVettedByIdentity($identity->id);
-        // Determine which Second Factors are still available for registration.
-        $available = $service->determineAvailable($allSecondFactors, $unverified, $verified, $vetted);
+
+        $secondFactors = $service->getSecondFactorsForIdentity(
+            $identity,
+            $allSecondFactors,
+            $institutionConfigurationOptions->allowedSecondFactors
+        );
 
         return [
             'email' => $identity->email,
-            'unverifiedSecondFactors' => $unverified,
+            'unverifiedSecondFactors' => $secondFactors['unverified'],
             'verifiedSecondFactors' => $verified,
             'vettedSecondFactors' => $vetted,
             'availableSecondFactors' => $available,
