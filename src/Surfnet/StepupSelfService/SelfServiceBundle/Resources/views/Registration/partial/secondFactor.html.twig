@@ -1,6 +1,10 @@
 <div class="col-xs-12 col-md-4">
     <div class="thumbnail second-factor-selector">
+        {% if logo is defined %}
+        <img src="{{ logo }}"
+        {% else %}
         <img src="/images/second-factor/{{ type }}.png"
+        {% endif %}
              alt="{{ ('ss.registration.selector.'~type~'.alt')|trans }}">
         <h3>{{ ('ss.registration.selector.'~type~'.title')|trans }}</h3>
         <p class="ranking">
