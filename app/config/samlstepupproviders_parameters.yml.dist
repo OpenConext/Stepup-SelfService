@@ -7,6 +7,12 @@ parameters:
     gssp_tiqr_remote_entity_id: 'https://actual-gssp.entity-id.tld'
     gssp_tiqr_remote_sso_url: 'https://actual-gssp.entity-id.tld/single-sign-on/url'
     gssp_tiqr_remote_certificate: 'The contents of the certificate published by the gssp'
+    gssp_tiqr_loa: 3
+    gssp_tiqr_logo: '/images/second-factor/tiqr.png'
+    gssp_tiqr_alt: 'ss.registration.selector.tiqr.alt'
+    gssp_tiqr_title: 'ss.registration.selector.tiqr.title'
+    gssp_tiqr_description: 'ss.registration.selector.tiqr.description'
+    gssp_tiqr_button_use: 'ss.registration.selector.tiqr.button.use'
 
     gssp_biometric_sp_publickey: '/full/path/to/the/gateway-as-sp/public-key-file.cer'
     gssp_biometric_sp_privatekey: '/full/path/to/the/gateway-as-sp/private-key-file.pem'
@@ -15,3 +21,9 @@ parameters:
     gssp_biometric_remote_entity_id: 'https://actual-gssp.entity-id.tld'
     gssp_biometric_remote_sso_url: 'https://actual-gssp.entity-id.tld/single-sign-on/url'
     gssp_biometric_remote_certificate: 'The contents of the certificate published by the gssp'
+    gssp_biometric_loa: 3
+    gssp_biometric_logo: '/images/second-factor/biometric.png'
+    gssp_biometric_alt: 'ss.registration.selector.biometric.alt'
+    gssp_biometric_title: 'ss.registration.selector.biometric.title'
+    gssp_biometric_description: 'ss.registration.selector.biometric.description'
+    gssp_biometric_button_use: 'ss.registration.selector.biometric.button.use'
