@@ -41,13 +41,13 @@
         {% endif %}
 
         {% for type, secondFactor in availableGsspSecondFactors %}
-            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/genericSecondFactor.html.twig' with {
             'type': type,
             'security': secondFactor.loa,
             'url': path('ss_registration_gssf_initiate', {'provider': type}),
             'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
             'tiqrAppIosUrl': tiqrAppIosUrl,
-            'logo': secondFactor.logo
+            'secondFactor': secondFactor
             } only %}
         {% endfor %}
     </div>

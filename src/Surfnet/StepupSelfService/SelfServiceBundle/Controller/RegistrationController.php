@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,8 +30,10 @@ class RegistrationController extends Controller
 {
     /**
      * @Template
+     * @param Request $request
+     * @return array
      */
-    public function displaySecondFactorTypesAction()
+    public function displaySecondFactorTypesAction(Request $request)
     {
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
@@ -47,7 +50,10 @@ class RegistrationController extends Controller
 
         foreach ($availableSecondFactors as $index => $secondFactor) {
             try {
-                $availableGsspSecondFactors[$index] = $this->get("gssp.view_config.{$secondFactor}");
+                /** @var ViewConfig $secondFactorConfig */
+                $secondFactorConfig = $this->get("gssp.view_config.{$secondFactor}");
+                $secondFactorConfig->currentLanguage = $request->getLocale();
+                $availableGsspSecondFactors[$index] = $secondFactorConfig;
                 // Remove the gssp second factors from the regular second factors.
                 unset($availableSecondFactors[$index]);
             } catch (ServiceNotFoundException $e) {
