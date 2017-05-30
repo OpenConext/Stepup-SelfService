@@ -87,6 +87,11 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             $configuration['view_config']['title'],
             $configuration['view_config']['description'],
             $configuration['view_config']['button_use'],
+            $configuration['view_config']['initiate_title'],
+            $configuration['view_config']['initiate_button'],
+            $configuration['view_config']['explanation'],
+            $configuration['view_config']['authn_failed'],
+            $configuration['view_config']['pop_failed'],
         ]);
 
         $container->setDefinition('gssp.view_config.' . $provider, $viewConfigDefinition);

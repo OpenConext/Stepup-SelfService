@@ -21,6 +21,21 @@ parameters:
     gssp_tiqr_button_use:
         en_GB: 'Select'
         nl_NL: 'Selecteer'
+    gssp_tiqr_initiate_title:
+        en_GB: 'Register with Tiqr'
+        nl_NL: 'Registreren bij Tiqr'
+    gssp_tiqr_initiate_button:
+        en_GB: 'Register with Tiqr'
+        nl_NL: 'Registreren bij Tiqr'
+    gssp_tiqr_explanation:
+        en_GB: 'Click the button below to register with Tiqr.'
+        nl_NL: 'Klik op de knop hieronder om je bij Tiqr te registreren.'
+    gssp_tiqr_authn_failed:
+        en_GB: 'Registration with Tiqr has failed. Please try again.'
+        nl_NL: 'Registratie bij Tiqr is mislukt. Probeer het nogmaals.'
+    gssp_tiqr_pop_failed:
+        en_GB: 'Registration of your token failed. Please try again.'
+        nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
 
     gssp_biometric_sp_publickey: /full/path/to/the/gateway-as-sp/public-key-file.cer
     gssp_biometric_sp_privatekey: /full/path/to/the/gateway-as-sp/private-key-file.pem
@@ -43,3 +58,18 @@ parameters:
     gssp_biometric_button_use:
         en_GB: 'Select'
         nl_NL: 'Selecteer'
+    gssp_biometric_initiate_title:
+        en_GB: 'Register a biometric device'
+        nl_NL: 'Registratie biometrisch apparaat'
+    gssp_biometric_initiate_button:
+        en_GB: 'Register biometric device'
+        nl_NL: 'Registreer biometrisch apparaat'
+    gssp_biometric_explanation:
+        en_GB: 'Click the button below to register a biometric device.'
+        nl_NL: 'Klik op de knop hieronder om je biometrisch apparaat te registreren.'
+    gssp_biometric_authn_failed:
+        en_GB: 'Registration of biometric device has failed. Please try again.'
+        nl_NL: 'Registratie biometrisch apparaat is mislukt. Probeer het nogmaals.'
+    gssp_biometric_pop_failed:
+        en_GB: 'Registration of your token failed. Please try again.'
+        nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
