@@ -18,6 +18,8 @@
 
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
+
 class ViewConfig
 {
     /**
@@ -31,34 +33,41 @@ class ViewConfig
     public $logo;
 
     /**
-     * @var string
+     * @var array
      */
     public $alt;
 
     /**
-     * @var string
+     * @var array
      */
     public $title;
 
     /**
-     * @var string
+     * @var array
      */
     public $description;
 
     /**
-     * @var string
+     * @var array
      */
     public $buttonUse;
 
     /**
+     * @var null
+     */
+    public $currentLanguage = null;
+
+    /**
+     * The alt, title, description and buttonUse are arrays of translated text.
+     *
      * @param string $loa
      * @param string $logo
-     * @param string $alt
-     * @param string $title
-     * @param string $description
-     * @param string $buttonUse
+     * @param array $alt
+     * @param array $title
+     * @param array $description
+     * @param array $buttonUse
      */
-    public function __construct($loa, $logo, $alt, $title, $description, $buttonUse)
+    public function __construct($loa, $logo, array $alt, array $title, array $description, array $buttonUse)
     {
         $this->loa = $loa;
         $this->logo = $logo;
@@ -66,6 +75,60 @@ class ViewConfig
         $this->title = $title;
         $this->description = $description;
         $this->buttonUse = $buttonUse;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTitle()
+    {
+        return $this->getTranslation($this->title);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAlt()
+    {
+        return $this->getTranslation($this->alt);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDescription()
+    {
+        return $this->getTranslation($this->description);
+    }
+
+    /**
+     * @return array
+     */
+    public function getButtonUse()
+    {
+        return $this->getTranslation($this->buttonUse);
+    }
+
+    /**
+     * @param array $translations
+     * @return mixed
+     * @throws LogicException
+     */
+    private function getTranslation(array $translations)
+    {
+        if (is_null($this->currentLanguage)) {
+            throw new LogicException('The current language is not set');
+        }
+        if (isset($translations[$this->currentLanguage])) {
+            return $translations[$this->currentLanguage];
+        }
+        throw new LogicException(
+            sprintf(
+                'The requested translation is not available in this language: %s. Available languages: %s',
+                $this->currentLanguage,
+                implode(', ', array_keys($translations))
+            )
+        );
     }
 }
 
