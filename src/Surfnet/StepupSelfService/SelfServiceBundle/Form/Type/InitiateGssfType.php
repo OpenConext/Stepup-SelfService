@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -38,12 +39,13 @@ class InitiateGssfType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $action = $this->router->generate('ss_registration_gssf_authenticate', ['provider' => $options['provider']]);
-
+        /** @var ViewConfig $secondFactorConfig */
+        $buttonLabelValue = $options['label'];
         $builder
             ->add('submit', 'submit', [
                 'attr'  => ['class' => 'btn btn-primary'],
-                /** @Ignore string for translation message extrantion */
-                'label' => 'ss.registration.gssf.initiate.' . $options['provider'] . '.button.initiate'
+                /** @Ignore from translation message extraction */
+                'label' => $buttonLabelValue
             ])
             ->setAction($action);
     }
