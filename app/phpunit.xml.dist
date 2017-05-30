@@ -10,6 +10,7 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>../src/Surfnet/StepupSelfService/SelfServiceBundle/Tests</directory>
+            <directory>../src/Surfnet/StepupSelfService/SamlStepupProviderBundle/Tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
