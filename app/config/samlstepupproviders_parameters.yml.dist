@@ -73,3 +73,9 @@ parameters:
     gssp_biometric_pop_failed:
         en_GB: 'Registration of your token failed. Please try again.'
         nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
+
+    surfnet_stepup_gssf:
+        biometric:
+            loa: 3
+        tiqr:
+            loa: 3
