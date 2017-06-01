@@ -117,23 +117,6 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('enabled_second_factors')
                 ->isRequired()
                 ->prototype('scalar')
-                    ->validate()
-                        ->ifTrue(
-                            function ($type) {
-                                try {
-                                    new SecondFactorType($type);
-                                } catch (InvalidArgumentException $e) {
-                                    return true;
-                                } catch (DomainException $e) {
-                                    return true;
-                                }
-                            }
-                        )
-                        ->thenInvalid(
-                            'Enabled second factor type "%s" is not one of the valid types. See SecondFactorType'
-                        )
-                    ->end()
-                ->end()
             ->end();
     }
 }
