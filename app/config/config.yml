@@ -170,6 +170,7 @@ jms_translation:
 
 surfnet_stepup_self_service_self_service:
     enabled_second_factors: %enabled_second_factors%
+    enabled_generic_second_factors: %enabled_generic_second_factors%
     second_factor_test_identity_provider:
         entity_id: '%second_factor_test_idp_entity_id%'
         sso_url: '%second_factor_test_idp_sso_url%'
