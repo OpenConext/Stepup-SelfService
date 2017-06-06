@@ -53,6 +53,11 @@ parameters:
     enabled_second_factors:
         - sms
         - yubikey
+    enabled_generic_second_factors:
+        biometric:
+            loa: 3
+        tiqr:
+            loa: 3
 
     u2f_app_id: https://gateway.tld/u2f/app-id
 

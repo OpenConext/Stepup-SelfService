@@ -58,13 +58,13 @@ class SamlController extends Controller
 
         $loaResolutionService         = $this->get('surfnet_stepup.service.loa_resolution');
         $authenticationRequestFactory = $this->get('self_service.test_second_factor_authentication_request_factory');
-        $secondFactorTypeFactory      = $this->get('surfnet_stepup.service.second_factor_type_factory');
+        $secondFactorTypeService      = $this->get('surfnet_stepup.service.second_factor_type');
         $secondFactor     = $secondFactorService->findOneVetted($secondFactorId);
-        $secondFactorType = $secondFactorTypeFactory->build($secondFactor->type);
+        $secondFactorType = new SecondFactorType($secondFactor->type);
 
         $authenticationRequest = $authenticationRequestFactory->createSecondFactorTestRequest(
             $identity->nameId,
-            $loaResolutionService->getLoaByLevel($secondFactorType->getLevel())
+            $loaResolutionService->getLoaByLevel($secondFactorTypeService->getLevel($secondFactorType))
         );
 
         $this->get('session')->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
