@@ -35,14 +35,13 @@ final class GssfController extends Controller
 {
     /**
      * @param string $provider
-     * @param Request $request
      * @return array|Response
      */
-    public function initiateAction($provider, Request $request)
+    public function initiateAction($provider)
     {
         $this->assertSecondFactorEnabled($provider);
 
-        return $this->renderInitiateForm($provider, $request->getLocale(), []);
+        return $this->renderInitiateForm($provider, []);
     }
 
     /**
@@ -108,7 +107,6 @@ final class GssfController extends Controller
 
             return $this->renderInitiateForm(
                 $provider->getName(),
-                $httpRequest->getLocale(),
                 ['authenticationFailed' => true]
             );
         }
@@ -124,7 +122,6 @@ final class GssfController extends Controller
 
             return $this->renderInitiateForm(
                 $provider->getName(),
-                $httpRequest->getLocale(),
                 ['authenticationFailed' => true]
             );
         }
@@ -154,7 +151,6 @@ final class GssfController extends Controller
 
         return $this->renderInitiateForm(
             $provider->getName(),
-            $httpRequest->getLocale(),
             ['proofOfPossessionFailed' => true]
         );
     }
@@ -204,15 +200,13 @@ final class GssfController extends Controller
 
     /**
      * @param string $provider
-     * @param string $locale
      * @param array $parameters
      * @return Response
      */
-    private function renderInitiateForm($provider, $locale, array $parameters = [])
+    private function renderInitiateForm($provider, array $parameters = [])
     {
         /** @var ViewConfig $secondFactorConfig */
         $secondFactorConfig = $this->get("gssp.view_config.{$provider}");
-        $secondFactorConfig->currentLanguage = $locale;
 
         $form = $this->createForm(
             'ss_initiate_gssf',

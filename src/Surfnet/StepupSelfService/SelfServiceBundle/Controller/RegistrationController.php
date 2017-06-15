@@ -30,10 +30,9 @@ class RegistrationController extends Controller
 {
     /**
      * @Template
-     * @param Request $request
      * @return array
      */
-    public function displaySecondFactorTypesAction(Request $request)
+    public function displaySecondFactorTypesAction()
     {
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
@@ -52,7 +51,6 @@ class RegistrationController extends Controller
             try {
                 /** @var ViewConfig $secondFactorConfig */
                 $secondFactorConfig = $this->get("gssp.view_config.{$secondFactor}");
-                $secondFactorConfig->currentLanguage = $request->getLocale();
                 $availableGsspSecondFactors[$index] = $secondFactorConfig;
                 // Remove the gssp second factors from the regular second factors.
                 unset($availableSecondFactors[$index]);
