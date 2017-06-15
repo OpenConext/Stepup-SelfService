@@ -40,12 +40,11 @@ class InitiateGssfType extends AbstractType
     {
         $action = $this->router->generate('ss_registration_gssf_authenticate', ['provider' => $options['provider']]);
         /** @var ViewConfig $secondFactorConfig */
-        $buttonLabelValue = $options['label'];
         $builder
             ->add('submit', 'submit', [
                 'attr'  => ['class' => 'btn btn-primary'],
                 /** @Ignore from translation message extraction */
-                'label' => $buttonLabelValue
+                'label' => $options['label']
             ])
             ->setAction($action);
     }
