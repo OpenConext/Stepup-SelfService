@@ -81,6 +81,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $container->setDefinition('gssp.provider.' . $provider, $providerDefinition);
 
         $viewConfigDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig', [
+            new Reference('request'),
             $configuration['view_config']['loa'],
             $configuration['view_config']['logo'],
             $configuration['view_config']['alt'],
@@ -93,6 +94,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             $configuration['view_config']['authn_failed'],
             $configuration['view_config']['pop_failed'],
         ]);
+        $viewConfigDefinition->setScope('request');
 
         $container->setDefinition('gssp.view_config.' . $provider, $viewConfigDefinition);
 

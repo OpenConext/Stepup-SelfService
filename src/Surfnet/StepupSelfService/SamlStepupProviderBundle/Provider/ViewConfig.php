@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
+use Symfony\Component\HttpFoundation\Request;
 
 class ViewConfig
 {
@@ -78,13 +79,14 @@ class ViewConfig
     private $popFailed;
 
     /**
-     * @var null
+     * @var Request
      */
-    public $currentLanguage = null;
+    private $request;
 
     /**
      * The arrays are arrays of translated text, indexed on locale.
      *
+     * @param Request $request
      * @param string $loa
      * @param string $logo
      * @param array $alt
@@ -99,6 +101,7 @@ class ViewConfig
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
+        Request $request,
         $loa,
         $logo,
         array $alt,
@@ -122,6 +125,7 @@ class ViewConfig
         $this->explanation = $explanation;
         $this->authnFailed = $authnFailed;
         $this->popFailed = $popFailed;
+        $this->request = $request;
     }
 
     /**
@@ -219,16 +223,17 @@ class ViewConfig
      */
     private function getTranslation(array $translations)
     {
-        if (is_null($this->currentLanguage)) {
+        $currentLocale = $this->request->getLocale();
+        if (is_null($currentLocale)) {
             throw new LogicException('The current language is not set');
         }
-        if (isset($translations[$this->currentLanguage])) {
-            return $translations[$this->currentLanguage];
+        if (isset($translations[$currentLocale])) {
+            return $translations[$currentLocale];
         }
         throw new LogicException(
             sprintf(
                 'The requested translation is not available in this language: %s. Available languages: %s',
-                $this->currentLanguage,
+                $currentLocale,
                 implode(', ', array_keys($translations))
             )
         );

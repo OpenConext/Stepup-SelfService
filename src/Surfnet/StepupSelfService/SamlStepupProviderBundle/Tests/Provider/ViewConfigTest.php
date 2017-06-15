@@ -18,8 +18,10 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\DependencyInjection;
 
+use Mockery as m;
 use PHPUnit_Framework_TestCase as TestCase;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Tests the ViewConfig class
@@ -33,9 +35,8 @@ final class ViewConfigTest extends TestCase
      */
     public function view_config_translates_correctly()
     {
-        $viewConfig = $this->buildViewConfig();
+        $viewConfig = $this->buildViewConfig('nl_NL');
 
-        $viewConfig->currentLanguage = 'nl_NL';
         $this->assertEquals('NL alt', $viewConfig->getAlt());
         $this->assertEquals('NL title', $viewConfig->getTitle());
         $this->assertEquals('NL description', $viewConfig->getDescription());
@@ -46,7 +47,7 @@ final class ViewConfigTest extends TestCase
         $this->assertEquals('NL popFailed', $viewConfig->getPopFailed());
         $this->assertEquals('NL initiateButton', $viewConfig->getInitiateButton());
 
-        $viewConfig->currentLanguage = 'en_GB';
+        $viewConfig = $this->buildViewConfig('en_GB');
         $this->assertEquals('EN alt', $viewConfig->getAlt());
         $this->assertEquals('EN title', $viewConfig->getTitle());
         $this->assertEquals('EN description', $viewConfig->getDescription());
@@ -67,7 +68,7 @@ final class ViewConfigTest extends TestCase
      */
     public function translation_fails_when_no_current_language_set()
     {
-        $viewConfig = $this->buildViewConfig();
+        $viewConfig = $this->buildViewConfig(null);
         $viewConfig->getTitle();
     }
 
@@ -80,17 +81,20 @@ final class ViewConfigTest extends TestCase
      */
     public function view_config_cannot_serve_french_translations()
     {
-        $viewConfig = $this->buildViewConfig();
-        $viewConfig->currentLanguage = "fr_FR";
+        $viewConfig = $this->buildViewConfig('fr_FR');
         $viewConfig->getTitle();
     }
 
     /**
+     * @param string $locale
      * @return ViewConfig
      */
-    private function buildViewConfig()
+    private function buildViewConfig($locale = '')
     {
+        $request = m::mock(Request::class);
+        $request->shouldReceive('getLocale')->andReturn($locale)->byDefault();
         return new ViewConfig(
+            $request,
             3,
             '/path/to/logo.png',
             $this->getTranslationsArray('alt'),
