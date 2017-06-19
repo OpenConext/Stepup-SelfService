@@ -19,13 +19,22 @@
     }
 }
 
-.second-factor-selector {
-    text-align: center;
+.second-factors {
 
-    img {
-        margin-top: 1em;
-        max-width: 200px;
-        max-height: 90px;
+    @media (min-width: 992px) {
+        > div:nth-child(3n+4) {
+            clear: left;
+        }
+    }
+
+    .second-factor-selector {
+        text-align: center;
+
+        img {
+            margin-top: 1em;
+            max-width: 200px;
+            max-height: 90px;
+        }
     }
 }
 
