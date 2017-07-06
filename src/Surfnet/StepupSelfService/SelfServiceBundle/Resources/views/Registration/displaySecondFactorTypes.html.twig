@@ -11,7 +11,7 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <div class="row">
+    <div class="row second-factors">
         {% if availableSecondFactors.sms is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'sms',
