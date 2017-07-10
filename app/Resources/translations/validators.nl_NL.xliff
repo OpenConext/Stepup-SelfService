@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-08-10T17:11:02Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2017-05-30T16:11:31Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -77,6 +77,10 @@
       <trans-unit id="04ee7b5ea8d828fb35d8e2dee4cdb236aede6d0a" resname="Sign request version must be a string">
         <source>Sign request version must be a string</source>
         <target>Sign request version must be a string</target>
+      </trans-unit>
+      <trans-unit id="9fe9614ee06100ffa9474b193d1aec7a4c1d1334" resname="middleware_client.dto.configuration.allowed_second_factors.must_be_array">
+        <source>middleware_client.dto.configuration.allowed_second_factors.must_be_array</source>
+        <target state="new">middleware_client.dto.configuration.allowed_second_factors.must_be_array</target>
       </trans-unit>
       <trans-unit id="e921db3beb8170142aa4dcd8c364595343b6fc64" resname="middleware_client.dto.configuration.show_raa_contact_information.must_be_boolean">
         <source>middleware_client.dto.configuration.show_raa_contact_information.must_be_boolean</source>

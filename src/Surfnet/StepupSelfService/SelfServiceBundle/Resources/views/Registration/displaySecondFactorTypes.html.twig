@@ -21,15 +21,6 @@
                 'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
-        {% if availableSecondFactors.tiqr is defined %}
-            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-                'type': 'tiqr',
-                'security': 2,
-                'url': path('ss_registration_gssf_initiate', {'provider': 'tiqr'}),
-                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
-                'tiqrAppIosUrl': tiqrAppIosUrl,
-            } only %}
-        {% endif %}
         {% if availableSecondFactors.yubikey is defined %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
                 'type': 'yubikey',
@@ -48,14 +39,16 @@
                 'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
-        {% if availableSecondFactors.biometric is defined %}
-            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-                'type': 'biometric',
-                'security': 3,
-                'url': path('ss_registration_gssf_initiate', {'provider': 'biometric'}),
-                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
-                'tiqrAppIosUrl': tiqrAppIosUrl,
+
+        {% for type, secondFactor in availableGsspSecondFactors %}
+            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/genericSecondFactor.html.twig' with {
+            'type': type,
+            'security': secondFactor.loa,
+            'url': path('ss_registration_gssf_initiate', {'provider': type}),
+            'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
+            'tiqrAppIosUrl': tiqrAppIosUrl,
+            'secondFactor': secondFactor
             } only %}
-        {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}

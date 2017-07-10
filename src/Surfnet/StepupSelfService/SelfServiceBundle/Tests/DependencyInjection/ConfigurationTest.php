@@ -121,17 +121,6 @@ final class ConfigurationTest extends TestCase
      * @test
      * @group configuration
      */
-    public function it_rejects_invalid_second_factor_types()
-    {
-        $configuration = ['enabled_second_factors' => ['passport']];
-
-        $this->assertConfigurationIsInvalid([$configuration], 'not one of the valid types');
-    }
-
-    /**
-     * @test
-     * @group configuration
-     */
     public function session_lifetimes_max_absolute_lifetime_must_be_an_integer()
     {
         $configuration = [

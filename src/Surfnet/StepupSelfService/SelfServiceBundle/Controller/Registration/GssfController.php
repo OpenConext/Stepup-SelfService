@@ -22,6 +22,7 @@ use Exception;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,7 @@ final class GssfController extends Controller
     {
         $this->assertSecondFactorEnabled($provider);
 
-        return $this->renderInitiateForm($provider);
+        return $this->renderInitiateForm($provider, []);
     }
 
     /**
@@ -104,7 +105,10 @@ final class GssfController extends Controller
                 sprintf('Could not process received Response, error: "%s"', $exception->getMessage())
             );
 
-            return $this->renderInitiateForm($provider->getName(), ['authenticationFailed' => true]);
+            return $this->renderInitiateForm(
+                $provider->getName(),
+                ['authenticationFailed' => true]
+            );
         }
 
         $expectedResponseTo = $provider->getStateHandler()->getRequestId();
@@ -116,7 +120,10 @@ final class GssfController extends Controller
                 ($expectedResponseTo ? 'expected "' . $expectedResponseTo . '"' : ' no response expected')
             ));
 
-            return $this->renderInitiateForm($provider->getName(), ['authenticationFailed' => true]);
+            return $this->renderInitiateForm(
+                $provider->getName(),
+                ['authenticationFailed' => true]
+            );
         }
 
         $this->get('logger')->notice(
@@ -142,7 +149,10 @@ final class GssfController extends Controller
 
         $this->getLogger()->error('Unable to prove GSSF possession');
 
-        return $this->renderInitiateForm($provider->getName(), ['proofOfPossessionFailed' => true]);
+        return $this->renderInitiateForm(
+            $provider->getName(),
+            ['proofOfPossessionFailed' => true]
+        );
     }
 
     /**
@@ -188,11 +198,30 @@ final class GssfController extends Controller
         return $this->get('logger');
     }
 
+    /**
+     * @param string $provider
+     * @param array $parameters
+     * @return Response
+     */
     private function renderInitiateForm($provider, array $parameters = [])
     {
-        $form               = $this->createForm('ss_initiate_gssf', null, ['provider' => $provider]);
-        $templateParameters = array_merge($parameters, ['form' => $form->createView(), 'provider' => $provider]);
+        /** @var ViewConfig $secondFactorConfig */
+        $secondFactorConfig = $this->get("gssp.view_config.{$provider}");
 
+        $form = $this->createForm(
+            'ss_initiate_gssf',
+            null,
+            [
+                'provider' => $provider,
+                /** @Ignore from translation message extraction */
+                'label' => $secondFactorConfig->getInitiateButton()
+            ]
+        );
+        /** @var ViewConfig $secondFactorConfig */
+        $templateParameters = array_merge(
+            $parameters,
+            ['form' => $form->createView(), 'provider' => $provider, 'secondFactorConfig' => $secondFactorConfig]
+        );
         return $this->render(
             'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
             $templateParameters

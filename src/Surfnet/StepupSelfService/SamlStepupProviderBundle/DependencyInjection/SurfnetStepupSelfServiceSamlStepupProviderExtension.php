@@ -35,7 +35,6 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
@@ -56,6 +55,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         array $routes,
         ContainerBuilder $container
     ) {
+
         if ($container->has('gssp.provider.' . $provider)) {
             throw new InvalidConfigurationException(sprintf('Cannot create the same provider "%s" twice', $provider));
         }
@@ -79,6 +79,24 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
 
         $providerDefinition->setPublic(false);
         $container->setDefinition('gssp.provider.' . $provider, $providerDefinition);
+
+        $viewConfigDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig', [
+            new Reference('request'),
+            $configuration['view_config']['loa'],
+            $configuration['view_config']['logo'],
+            $configuration['view_config']['alt'],
+            $configuration['view_config']['title'],
+            $configuration['view_config']['description'],
+            $configuration['view_config']['button_use'],
+            $configuration['view_config']['initiate_title'],
+            $configuration['view_config']['initiate_button'],
+            $configuration['view_config']['explanation'],
+            $configuration['view_config']['authn_failed'],
+            $configuration['view_config']['pop_failed'],
+        ]);
+        $viewConfigDefinition->setScope('request');
+
+        $container->setDefinition('gssp.view_config.' . $provider, $viewConfigDefinition);
 
         $container
             ->getDefinition('gssp.provider_repository')
