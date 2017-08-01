@@ -54,9 +54,6 @@ monolog:
 assetic:
     use_controller: "%use_assetic_controller%"
 
-swiftmailer:
-    port: 1025
-
 nelmio_security:
     csp:
         img: [ self, 'data:' ]

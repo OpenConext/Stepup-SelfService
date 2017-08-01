@@ -19,7 +19,9 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -28,6 +30,7 @@ class RegistrationController extends Controller
 {
     /**
      * @Template
+     * @return array
      */
     public function displaySecondFactorTypesAction()
     {
@@ -41,10 +44,25 @@ class RegistrationController extends Controller
                 $institutionConfigurationOptions->allowedSecondFactors
             );
         }
+        $availableSecondFactors = array_combine($availableSecondFactors, $availableSecondFactors);
+        $availableGsspSecondFactors = [];
+
+        foreach ($availableSecondFactors as $index => $secondFactor) {
+            try {
+                /** @var ViewConfig $secondFactorConfig */
+                $secondFactorConfig = $this->get("gssp.view_config.{$secondFactor}");
+                $availableGsspSecondFactors[$index] = $secondFactorConfig;
+                // Remove the gssp second factors from the regular second factors.
+                unset($availableSecondFactors[$index]);
+            } catch (ServiceNotFoundException $e) {
+                continue;
+            }
+        }
 
         return [
             'commonName' => $this->getIdentity()->commonName,
-            'availableSecondFactors' => array_combine($availableSecondFactors, $availableSecondFactors),
+            'availableSecondFactors' => $availableSecondFactors,
+            'availableGsspSecondFactors' => $availableGsspSecondFactors,
             'tiqrAppAndroidUrl' => $this->getParameter('tiqr_app_android_url'),
             'tiqrAppIosUrl'     => $this->getParameter('tiqr_app_ios_url'),
         ];

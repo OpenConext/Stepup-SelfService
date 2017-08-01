@@ -48,8 +48,12 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
         $container->getDefinition('self_service.locale.request_stack_locale_provider')
             ->replaceArgument(1, $container->getParameter('default_locale'))
             ->replaceArgument(2, $container->getParameter('locales'));
-
-        $container->setParameter('ss.enabled_second_factors', $config['enabled_second_factors']);
+        // Enabled second factor types (specific and generic) are merged into 'ss.enabled_second_factors'
+        $gssfSecondFactors = array_keys($config['enabled_generic_second_factors']);
+        $container->setParameter(
+            'ss.enabled_second_factors',
+            array_merge($config['enabled_second_factors'], $gssfSecondFactors)
+        );
 
         $container->setParameter(
             'self_service.security.authentication.session.maximum_absolute_lifetime_in_seconds',
