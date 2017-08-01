@@ -1,0 +1,61 @@
+
+VERSION 2  RELEASE 2.0
+======================
+
+   Version 2.6 - Updated Guzzle and added second factor test mode
+      17/05/2017 14:12  2.6.2  Updated translations
+      27/03/2017 13:31  2.6.1  Fixed use of wrong Guzzle interface
+      10/03/2017 10:27  2.6.0  initial release
+
+   Version 2.5 - Added AllowedSecondFactorList.
+      21/02/2017 16:46  2.5.0  initial release
+
+   Version 2.4 - Updated SAML2 version in Composer lock-file, containing changes related to EPTI handling and security fixes
+      13/12/2016 11:16  2.4.0  initial release
+
+   Version 2.3 - Added issuer check and multi locale URLs.
+      18/11/2016 11:57  2.3.0  initial release
+
+   Version 2.2 - Improves the way locale cookies are set.
+      18/10/2016 11:28  2.2.0  initial release
+
+   Version 2.1 - Added configurable explicit absolute and relative session timeouts
+      12/08/2016 17:07  2.1.0  initial release
+
+   Version 2.0 - Release 2.0
+      08/08/2016 17:43  2.0.0  initial release
+
+VERSION 1  RELEASE 1.0
+======================
+
+   Version 1.4 - New second factor type "biometric"
+      29/04/2016 11:35  1.4.0  initial release
+
+   Version 1.3 - U2F
+      12/11/2015 12:06  1.3.1  Update mopa/composer-bridge to address deployment issue
+      05/10/2015 11:41  1.3.0  initial release
+
+   Version 1.2 - Text and layout updates, disable Tiqr choice
+      29/07/2015 19:47  1.2.0  initial release
+
+   Version 1.1 - Security improvements and bugfixes
+      15/07/2015 13:44  1.1.0  initial release
+
+   Version 1.0 - Release 1.0
+      23/06/2015 10:26  1.0.2  Switch back to original SAML2 library
+      22/06/2015 10:06  1.0.1  Fixing missing dependency
+      19/06/2015 15:27  1.0.0  initial release
+
+VERSION 0  FIRST PILOT RELEASE
+==============================
+
+   Version 0.3 - Second release for the Pilot
+      04/05/2015 16:04  0.3.1  Implementing pilot only changes
+      04/05/2015 15:57  0.3.0  initial release
+
+   Version 0.2 - SMS brute-force protection, secure OTPs
+      02/04/2015 17:55  0.2.0  initial release
+
+   Version 0.1 - First pilot release
+      26/03/2015 16:42  0.1.1  Update USB port translation
+      26/03/2015 14:48  0.1.0  initial release
