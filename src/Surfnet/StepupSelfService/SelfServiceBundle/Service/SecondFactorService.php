@@ -301,7 +301,7 @@ class SecondFactorService
     {
         foreach ($collection->getElements() as $secondFactor) {
             $keyFound = array_search($secondFactor->type, $allSecondFactors);
-            if ($keyFound) {
+            if (is_numeric($keyFound)) {
                 unset($allSecondFactors[$keyFound]);
             }
         }
