@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-05-30T16:11:35Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2017-11-07T16:16:53Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -462,12 +462,27 @@ For all devices with a USB port.</target>
         <target>Link your YubiKey</target>
       </trans-unit>
       <trans-unit id="c954ee253d560c6f6d5baf1811ca34988a9029d8" resname="ss.second_factor.list.button.register_second_factor">
-        <jms:reference-file line="13">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="29">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor.list.button.register_second_factor</source>
         <target>Register token</target>
       </trans-unit>
+      <trans-unit id="5a6f59c486a9cc18c46c9147eb55a76424815f62" resname="ss.second_factor.list.max_number_of_tokens_reached_text">
+        <jms:reference-file line="11">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor.list.max_number_of_tokens_reached_text</source>
+        <target>The maximum number of token registrations has been reached.</target>
+      </trans-unit>
+      <trans-unit id="b78987cb5a9d442fe9272812a1ea5cf8afc39523" resname="ss.second_factor.list.max_number_of_tokens_text">
+        <jms:reference-file line="9">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor.list.max_number_of_tokens_text</source>
+        <target>This is an overview of your registered tokens. You can register a maximum of %max_number% tokens.</target>
+      </trans-unit>
+      <trans-unit id="efa2d0485dc634ae0f039634541529dce393e36c" resname="ss.second_factor.list.text.add_second_factor">
+        <jms:reference-file line="25">views/SecondFactor/list.html.twig</jms:reference-file>
+        <source>ss.second_factor.list.text.add_second_factor</source>
+        <target state="new">Add new token</target>
+      </trans-unit>
       <trans-unit id="474737f264f9527e93a9f4f4c4c380331b52e759" resname="ss.second_factor.list.text.no_second_factors">
-        <jms:reference-file line="10">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="23">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor.list.text.no_second_factors</source>
         <target>There are no tokens registered for your account. Click on 'Register token' to register a new token.
 </target>
@@ -475,20 +490,20 @@ For all devices with a USB port.</target>
       <trans-unit id="a1a1aa0e1c0a720bc6144c5a5a03d89ad6fdcc87" resname="ss.second_factor.list.text.unverified">
         <jms:reference-file line="34">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.unverified</source>
-        <target>For the token below the e-mail address must be verified. An e-mail was sent to '%email%'. Please follow the instructions in this e-mail to continue with the registration. Didn't receive an e-mail? Remove the token to try again.
+        <target>For the token(s) below the e-mail address must be verified. An e-mail was sent to '%email%'. Please follow the instructions in this e-mail to continue with the registration. Didn't receive an e-mail? Remove the token to try again.
 </target>
       </trans-unit>
       <trans-unit id="da0c3086f8d5dc181e074f24d12e8ccc27429dcf" resname="ss.second_factor.list.text.verified">
         <jms:reference-file line="33">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.verified</source>
-        <target>The following token is registered for your account, but not yet activated.
+        <target>The following tokens are registered for your account, but not yet activated.
 
 An e-mail with your activation code has been sent to the e-mail address %email%. Please follow the instructions in the e-mail on how to proceed.</target>
       </trans-unit>
       <trans-unit id="15bc6a0b6f49cc0b44bd30ed7290e347e1267117" resname="ss.second_factor.list.text.vetted">
         <jms:reference-file line="32">Resources/views/translations.twig</jms:reference-file>
         <source>ss.second_factor.list.text.vetted</source>
-        <target>The following token is registered for your account.</target>
+        <target>The following tokens are registered for your account.</target>
       </trans-unit>
       <trans-unit id="59ae5f416e832eeec457e8f73d11d196bcf9c6e5" resname="ss.second_factor.list.title">
         <jms:reference-file line="4">views/SecondFactor/list.html.twig</jms:reference-file>
@@ -506,12 +521,12 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target>Your token has been removed.</target>
       </trans-unit>
       <trans-unit id="39bf5f5849cef0ac9b176c769c79169676fc7b96" resname="ss.second_factor.revoke.button.revoke">
-        <jms:reference-file line="50">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="62">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor.revoke.button.revoke</source>
         <target>Remove</target>
       </trans-unit>
       <trans-unit id="17d18b6bcd8642fedf8e5371cb722efc604e8281" resname="ss.second_factor.revoke.button.test">
-        <jms:reference-file line="46">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="58">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor.revoke.button.test</source>
         <target>Test</target>
       </trans-unit>
@@ -586,12 +601,12 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target>YubiKey</target>
       </trans-unit>
       <trans-unit id="fedd12f3e661692730a3650ef6db64e71c9d8441" resname="ss.second_factor_list.header.second_factor_identifier">
-        <jms:reference-file line="32">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="44">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor_list.header.second_factor_identifier</source>
         <target>ID</target>
       </trans-unit>
       <trans-unit id="e4d199fd46ed7fa1c78a8fde6faef80f034cd662" resname="ss.second_factor_list.header.type">
-        <jms:reference-file line="31">views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="43">views/SecondFactor/list.html.twig</jms:reference-file>
         <source>ss.second_factor_list.header.type</source>
         <target>Token</target>
       </trans-unit>

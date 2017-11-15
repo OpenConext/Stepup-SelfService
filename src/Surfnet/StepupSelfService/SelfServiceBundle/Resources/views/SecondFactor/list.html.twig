@@ -5,17 +5,29 @@
 
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
+    {% if registrationsLeft > 0 %}
+        <p>{{ 'ss.second_factor.list.max_number_of_tokens_text'|trans({'%max_number%': maxNumberOfTokens}) }}</p>
+    {% else %}
+        <p>{{ 'ss.second_factor.list.max_number_of_tokens_reached_text'|trans({'%max_number%': maxNumberOfTokens}) }}</p>
+    {% endif %}
 
-    {% if unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty %}
-        <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
+    {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted', email) }}
+    {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email) }}
+    {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email) }}
+
+    {% if registrationsLeft > 0
+            and ((unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty)
+            or availableSecondFactors is not empty)
+    %}
+        {% if (unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty) %}
+            <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
+        {% else %}
+            <p>{{ 'ss.second_factor.list.text.add_second_factor'|trans }}</p>
+        {% endif %}
         <a href="{{ path('ss_registration_display_types') }}"
            class="btn btn-primary">
             {{ 'ss.second_factor.list.button.register_second_factor'|trans }}
         </a>
-    {% else %}
-        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted', email) }}
-        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email) }}
-        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email) }}
     {% endif %}
 
 {% endblock %}
