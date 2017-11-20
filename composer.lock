@@ -1335,7 +1335,7 @@
                 "form",
                 "template"
             ],
-            "time": "2015-04-10 09:34:23"
+            "time": "2015-04-10T09:34:23+00:00"
         },
         {
             "name": "mopa/composer-bridge",
@@ -2020,16 +2020,16 @@
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "2cd5c2532cb99c370cfc7aea992450a83d14a9c9"
+                "reference": "c0d6721efa82ad9b52235c5a2b8e7947e56e3fe2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/2cd5c2532cb99c370cfc7aea992450a83d14a9c9",
-                "reference": "2cd5c2532cb99c370cfc7aea992450a83d14a9c9",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/c0d6721efa82ad9b52235c5a2b8e7947e56e3fe2",
+                "reference": "c0d6721efa82ad9b52235c5a2b8e7947e56e3fe2",
                 "shasum": ""
             },
             "require": {
@@ -2069,7 +2069,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2017-03-07T14:10:57+00:00"
+            "time": "2017-11-16T08:28:13+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -2159,7 +2159,7 @@
                 "Apache-2.0"
             ],
             "description": "The SURFnet Step-up U2F bundle contains server-side device verification, and the necessary forms and resources to enable client-side U2F interaction with Step-up Identities",
-            "time": "2015-09-17 15:02:04"
+            "time": "2015-09-17T15:02:04+00:00"
         },
         {
             "name": "symfony/assetic-bundle",

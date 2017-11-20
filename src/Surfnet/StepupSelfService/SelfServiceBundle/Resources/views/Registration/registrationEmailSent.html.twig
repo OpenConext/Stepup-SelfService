@@ -23,6 +23,11 @@
 
     <br />
 
+    <p>
+        {{ 'ss.registration.registration_email_sent.label.expiration_date'
+            |trans({'%expirationDate%': expirationDate|localizeddate('full', 'none', locale)}) }}
+    </p>
+
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
             <table class="table table-bordered table-hover table-responsive">

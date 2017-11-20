@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use DateInterval;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
@@ -123,10 +124,17 @@ class RegistrationController extends Controller
     {
         $identity = $this->getIdentity();
 
+        /** @var \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor $secondFactor */
+        $secondFactor = $this->get('surfnet_stepup_self_service_self_service.service.second_factor')
+            ->findOneVerified($secondFactorId);
+
         $parameters = [
             'email'            => $identity->email,
-            'registrationCode' => $this->get('surfnet_stepup_self_service_self_service.service.second_factor')
-                ->getRegistrationCode($secondFactorId, $identity->id),
+            'registrationCode' => $secondFactor->registrationCode,
+            'expirationDate'   => $secondFactor->registrationRequestedAt->add(
+                new DateInterval('P14D')
+            ),
+            'locale'           => $identity->preferredLocale
         ];
 
         $raService         = $this->get('self_service.service.ra');
