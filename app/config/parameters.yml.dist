@@ -59,6 +59,9 @@ parameters:
     tiqr_app_android_url: https://play.google.com/store/apps/details?id=org.tiqr.authenticator&hl=en
     tiqr_app_ios_url: https://itunes.apple.com/us/app/tiqr/id430838214?mt=8&ls=1
 
+    irma_app_android_url: https://play.google.com/store/apps/details?id=org.irmacard.cardemu&hl=en
+    irma_app_ios_url: https://itunes.apple.com/us/app/irma-authentication/id1294092994?mt=8
+
     session_max_absolute_lifetime: 3600 # 1 hours * 60 minutes * 60 seconds
     session_max_relative_lifetime: 600  # 10 minutes * 60 seconds
 
