@@ -2,6 +2,10 @@ surfnet_stepup_self_service_self_service:
     resource: "@SurfnetStepupSelfServiceSelfServiceBundle/Resources/config/routing.yml"
     prefix:   /
 
+openconext_monitor:
+    resource: "@OpenConextMonitorBundle/Resources/config/routing.yml"
+    prefix: /
+
 nelmio_security_report:
     path: /csp/report
     defaults: { _controller: nelmio_security.csp_reporter_controller:indexAction }

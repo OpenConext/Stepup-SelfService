@@ -12,6 +12,10 @@ security:
             pattern: ^/authentication/(metadata|session-expired)$
             anonymous: ~
 
+        monitor:
+            pattern: ^/(info|health)$
+            security: false
+
         saml_based:
             saml: true
             logout:
