@@ -97,6 +97,8 @@ final class ViewConfigTest extends TestCase
             $request,
             3,
             '/path/to/logo.png',
+            'http://droid-url',
+            'http://ios-url',
             $this->getTranslationsArray('alt'),
             $this->getTranslationsArray('title'),
             $this->getTranslationsArray('description'),
