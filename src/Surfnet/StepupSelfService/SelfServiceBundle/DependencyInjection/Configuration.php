@@ -125,7 +125,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('loa')
                     ->isRequired()
-                    ->info('The lao level of the Gssf')
+                    ->info('The LOA level of the Gssp')
                 ->end()
             ->end();
     }
