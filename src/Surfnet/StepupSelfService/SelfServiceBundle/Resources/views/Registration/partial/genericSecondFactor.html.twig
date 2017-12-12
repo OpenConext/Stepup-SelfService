@@ -15,12 +15,12 @@
         <p>
             {{
                 (secondFactor.getDescription())|e|replace(
-                    {
-                        '%tiqr_android_link_start%': '<a href="'~tiqrAppAndroidUrl~'">',
-                        '%tiqr_android_link_end%': '</a>',
-                        '%tiqr_ios_link_start%': '<a href="'~tiqrAppIosUrl~'">',
-                        '%tiqr_ios_link_end%': '</a>',
-                    }
+                {
+                    '%android_link_start%': '<a href="'~appAndroidUrl~'">',
+                    '%android_link_end%': '</a>',
+                    '%ios_link_start%': '<a href="'~appIosUrl~'">',
+                    '%ios_link_end%': '</a>',
+                }
                 )|raw
             }}
         </p>
