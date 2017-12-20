@@ -28,7 +28,8 @@
         "surfnet/stepup-saml-bundle": "^2.5",
         "surfnet/stepup-bundle": "^2.0",
         "surfnet/stepup-u2f-bundle": "dev-develop",
-        "mopa/composer-bridge": "~1.5"
+        "mopa/composer-bridge": "~1.5",
+        "openconext/monitor-bundle": "^1.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^1.2.0",
