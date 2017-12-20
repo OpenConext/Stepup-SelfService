@@ -68,13 +68,10 @@ class RegistrationController extends Controller
                 unset($secondFactors->available[$index]);
             }
         }
-
         return [
             'commonName' => $this->getIdentity()->commonName,
             'availableSecondFactors' => $secondFactors->available,
             'availableGsspSecondFactors' => $availableGsspSecondFactors,
-            'tiqrAppAndroidUrl' => $this->getParameter('tiqr_app_android_url'),
-            'tiqrAppIosUrl'     => $this->getParameter('tiqr_app_ios_url'),
         ];
     }
 

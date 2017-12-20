@@ -64,10 +64,13 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $this->createMetadataDefinition($provider, $configuration['hosted'], $routes, $container);
         $this->createRemoteDefinition($provider, $configuration['remote'], $container);
 
-        $stateHandlerDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler', [
-            new Reference('gssp.sessionbag'),
-            $provider
-        ]);
+        $stateHandlerDefinition = new Definition(
+            'Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler',
+            [
+                new Reference('gssp.sessionbag'),
+                $provider
+            ]
+        );
         $container->setDefinition('gssp.provider.' . $provider . '.statehandler', $stateHandlerDefinition);
 
         $providerDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider', [
@@ -80,10 +83,28 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $providerDefinition->setPublic(false);
         $container->setDefinition('gssp.provider.' . $provider, $providerDefinition);
 
+        // When the android url is set, the description should contain the android play store url parameter.
+        // The same goes for the iOs app url.
+        $this->validateDescriptions(
+            $configuration['view_config']['description'],
+            $configuration['view_config']['app_android_url'],
+            $provider,
+            'android'
+        );
+
+        $this->validateDescriptions(
+            $configuration['view_config']['description'],
+            $configuration['view_config']['app_ios_url'],
+            $provider,
+            'ios'
+        );
+
         $viewConfigDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig', [
             new Reference('request'),
             $configuration['view_config']['loa'],
             $configuration['view_config']['logo'],
+            $configuration['view_config']['app_android_url'],
+            $configuration['view_config']['app_ios_url'],
             $configuration['view_config']['alt'],
             $configuration['view_config']['title'],
             $configuration['view_config']['description'],
@@ -224,5 +245,25 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             'route'      => $routeName,
             'parameters' => ['provider' => $provider]
         ];
+    }
+
+    private function validateDescriptions($descriptions, $appUrl, $provider, $type)
+    {
+        $regex ="/%%{$type}_link_start%%[a-zA-Z0-9 ]+%%{$type}_link_end%%/";
+        foreach ($descriptions as $lang => $description) {
+            if ($appUrl !== false && preg_match($regex, $description) === 0) {
+                throw new InvalidConfigurationException(
+                    sprintf(
+                        'You have configured a GSSP provider with app URL\'s but the description is not ' .
+                        'configured correctly yet. Missing "%%%1$s_link_start%%" or "%%%1$s_link_end%%" in ' .
+                        'GSSP description for language "%2$s" in "providers.%3$s.view_config.description" of '.
+                        'samlstepupproviders.yml',
+                        $type,
+                        $lang,
+                        $provider
+                    )
+                );
+            }
+        }
     }
 }

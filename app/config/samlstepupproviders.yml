@@ -30,6 +30,8 @@ surfnet_stepup_self_service_saml_stepup_provider:
                 explanation: %gssp_tiqr_initiate_title%
                 authn_failed: %gssp_tiqr_authn_failed%
                 pop_failed: %gssp_tiqr_pop_failed%
+                app_android_url: %gssp_tiqr_app_android_url%
+                app_ios_url: %gssp_tiqr_app_ios_url%
         biometric:
             hosted:
                 service_provider:

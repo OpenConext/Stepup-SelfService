@@ -56,9 +56,6 @@ parameters:
 
     u2f_app_id: https://gateway.tld/u2f/app-id
 
-    tiqr_app_android_url: https://play.google.com/store/apps/details?id=org.tiqr.authenticator&hl=en
-    tiqr_app_ios_url: https://itunes.apple.com/us/app/tiqr/id430838214?mt=8&ls=1
-
     irma_app_android_url: https://play.google.com/store/apps/details?id=org.irmacard.cardemu&hl=en
     irma_app_ios_url: https://itunes.apple.com/us/app/irma-authentication/id1294092994?mt=8
 

@@ -84,11 +84,23 @@ class ViewConfig
     private $request;
 
     /**
+     * @var string
+     */
+    private $androidUrl;
+
+    /**
+     * @var string
+     */
+    private $iosUrl;
+
+    /**
      * The arrays are arrays of translated text, indexed on locale.
      *
      * @param Request $request
      * @param string $loa
      * @param string $logo
+     * @param string $androidUrl
+     * @param string $iosUrl
      * @param array $alt
      * @param array $title
      * @param array $description
@@ -104,6 +116,8 @@ class ViewConfig
         Request $request,
         $loa,
         $logo,
+        $androidUrl,
+        $iosUrl,
         array $alt,
         array $title,
         array $description,
@@ -116,6 +130,8 @@ class ViewConfig
     ) {
         $this->loa = $loa;
         $this->logo = $logo;
+        $this->androidUrl = $androidUrl;
+        $this->iosUrl = $iosUrl;
         $this->alt = $alt;
         $this->title = $title;
         $this->description = $description;
@@ -214,6 +230,22 @@ class ViewConfig
     public function getPopFailed()
     {
         return $this->getTranslation($this->popFailed);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAndroidUrl()
+    {
+        return $this->androidUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIosUrl()
+    {
+        return $this->iosUrl;
     }
 
     /**
