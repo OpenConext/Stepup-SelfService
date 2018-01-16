@@ -92,11 +92,11 @@ class SamlInteractionProvider
 
     /**
      * @param Request $request
-     * @return \SAML2_Assertion
+     * @return \SAML2\Assertion
      */
     public function processSamlResponse(Request $request)
     {
-        /** @var \SAML2_Assertion $assertion */
+        /** @var \SAML2\Assertion $assertion */
         $assertion = $this->postBinding->processResponse(
             $request,
             $this->identityProvider,
