@@ -1,8 +1,14 @@
 <div class="row progress-steps">
-    <div class="col-xs-12 col-md-3 {% if step != 1 %}hidden-xs text-muted{% endif %}">1. {{ 'ss.registration.progress_bar.select_second_factor'|trans }}</div>
-    <div class="col-xs-12 col-md-3 {% if step != 2 %}hidden-xs text-muted{% endif %}">2. {{ 'ss.registration.progress_bar.link_second_factor'|trans }}</div>
-    <div class="col-xs-12 col-md-3 {% if step != 3 %}hidden-xs text-muted{% endif %}">3. {{ 'ss.registration.progress_bar.confirm_second_factor'|trans }}</div>
-    <div class="col-xs-12 col-md-3 {% if step != 4 %}hidden-xs text-muted{% endif %}">4. {{ 'ss.registration.progress_bar.register_second_factor'|trans }}</div>
+    {% if verifyEmail %}
+        <div class="col-xs-12 col-md-3 {% if step != 1 %}hidden-xs text-muted{% endif %}">1. {{ 'ss.registration.progress_bar.select_second_factor'|trans }}</div>
+        <div class="col-xs-12 col-md-3 {% if step != 2 %}hidden-xs text-muted{% endif %}">2. {{ 'ss.registration.progress_bar.link_second_factor'|trans }}</div>
+        <div class="col-xs-12 col-md-3 {% if step != 3 %}hidden-xs text-muted{% endif %}">3. {{ 'ss.registration.progress_bar.confirm_second_factor'|trans }}</div>
+        <div class="col-xs-12 col-md-3 {% if step != 4 %}hidden-xs text-muted{% endif %}">4. {{ 'ss.registration.progress_bar.register_second_factor'|trans }}</div>
+    {% else %}
+        <div class="col-xs-12 col-md-4 {% if step != 1 %}hidden-xs text-muted{% endif %}">1. {{ 'ss.registration.progress_bar.select_second_factor'|trans }}</div>
+        <div class="col-xs-12 col-md-4 {% if step != 2 %}hidden-xs text-muted{% endif %}">2. {{ 'ss.registration.progress_bar.link_second_factor'|trans }}</div>
+        <div class="col-xs-12 col-md-4 {% if step != 3 %}hidden-xs text-muted{% endif %}">3. {{ 'ss.registration.progress_bar.register_second_factor'|trans }}</div>
+    {% endif %}
 </div>
 <div class="progress">
     <div class="progress-bar progress-{{ progress }}" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">

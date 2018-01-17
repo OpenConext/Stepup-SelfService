@@ -5,7 +5,11 @@
 {% block page_header %}
     {{ parent() }}
 
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress':75, 'step': 4} only %}
+    {% if verifyEmail %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress':75, 'step': 4, verifyEmail: true} only %}
+    {% else %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}

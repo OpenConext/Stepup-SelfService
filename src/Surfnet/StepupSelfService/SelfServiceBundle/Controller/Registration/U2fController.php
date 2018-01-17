@@ -60,7 +60,10 @@ class U2fController extends Controller
 
         $session->set('request', $registerRequest);
 
-        return ['form' => $form->createView()];
+        return [
+            'form' => $form->createView(),
+            'verifyEmail' => $this->emailVerificationIsRequired(),
+        ];
     }
 
     /**
@@ -99,10 +102,17 @@ class U2fController extends Controller
         $result = $service->provePossession($this->getIdentity(), $registerRequest, $registerResponse);
 
         if ($result->wasSuccessful()) {
-            return $this->redirectToRoute(
-                'ss_registration_email_verification_email_sent',
-                ['secondFactorId' => $result->getSecondFactorId()]
-            );
+            if ($this->emailVerificationIsRequired()) {
+                return $this->redirectToRoute(
+                    'ss_registration_email_verification_email_sent',
+                    ['secondFactorId' => $result->getSecondFactorId()]
+                );
+            } else {
+                return $this->redirectToRoute(
+                    'ss_registration_registration_email_sent',
+                    ['secondFactorId' => $result->getSecondFactorId()]
+                );
+            }
         } elseif ($result->didDeviceReportAnyError()) {
             $this->addFlash('error', 'ss.registration.u2f.alert.device_reported_an_error');
         } else {
