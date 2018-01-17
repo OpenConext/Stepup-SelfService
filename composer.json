@@ -25,7 +25,7 @@
         "jms/di-extra-bundle": "~1.4.0",
         "surfnet/stepup-middleware-client-bundle": "^2.0",
         "guzzlehttp/guzzle": "^6",
-        "surfnet/stepup-saml-bundle": "^2.5",
+        "surfnet/stepup-saml-bundle": "^3.0",
         "surfnet/stepup-bundle": "^2.0",
         "surfnet/stepup-u2f-bundle": "dev-develop",
         "mopa/composer-bridge": "~1.5",
