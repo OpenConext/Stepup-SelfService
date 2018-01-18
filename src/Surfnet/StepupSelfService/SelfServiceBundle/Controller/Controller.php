@@ -26,6 +26,11 @@ use UnexpectedValueException;
 class Controller extends FrameworkController
 {
     /**
+     * Default verify email option as defined by middleware.
+     */
+    const DEFAULT_VERIFY_EMAIL_OPTION = true;
+
+    /**
      * @return Identity
      * @throws AccessDeniedException When the registrant isn't registered using a SAML token.
      */
@@ -59,5 +64,20 @@ class Controller extends FrameworkController
 
             throw $this->createNotFoundException();
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function emailVerificationIsRequired()
+    {
+        $config = $this->get('self_service.service.institution_configuration_options')
+            ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
+
+        if ($config === null) {
+            return self::DEFAULT_VERIFY_EMAIL_OPTION;
+        }
+
+        return $config->verifyEmail;
     }
 }

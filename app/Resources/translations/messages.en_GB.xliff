@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-11-16T08:03:28Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2018-01-18T10:16:49Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -205,72 +205,75 @@
         <target>Verify your e-mail</target>
       </trans-unit>
       <trans-unit id="3d9422c99d74fc7a2dee4d8a9d6faa9c46d929ec" resname="ss.registration.progress_bar.confirm_second_factor">
-        <jms:reference-file line="4">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <jms:reference-file line="5">Registration/partial/progressBar.html.twig</jms:reference-file>
         <source>ss.registration.progress_bar.confirm_second_factor</source>
         <target>Confirm</target>
       </trans-unit>
       <trans-unit id="9a3c965947c1bf3aa872007ffb234307e48238a8" resname="ss.registration.progress_bar.link_second_factor">
-        <jms:reference-file line="3">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <jms:reference-file line="4">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <jms:reference-file line="9">Registration/partial/progressBar.html.twig</jms:reference-file>
         <source>ss.registration.progress_bar.link_second_factor</source>
         <target>Link token</target>
       </trans-unit>
       <trans-unit id="e935c8330461a6bc4e9a59ac919ffa376ef5c00b" resname="ss.registration.progress_bar.register_second_factor">
-        <jms:reference-file line="5">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <jms:reference-file line="6">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <jms:reference-file line="10">Registration/partial/progressBar.html.twig</jms:reference-file>
         <source>ss.registration.progress_bar.register_second_factor</source>
         <target>Activate token</target>
       </trans-unit>
       <trans-unit id="2ca10f36a20c14c466645750646de2a51b9d7bd0" resname="ss.registration.progress_bar.select_second_factor">
-        <jms:reference-file line="2">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <jms:reference-file line="3">Registration/partial/progressBar.html.twig</jms:reference-file>
+        <jms:reference-file line="8">Registration/partial/progressBar.html.twig</jms:reference-file>
         <source>ss.registration.progress_bar.select_second_factor</source>
         <target>Select token</target>
       </trans-unit>
       <trans-unit id="702bbd352dda1a6f1029201de2f40e9e87bbc6a4" resname="ss.registration.registration_email_sent.label.expiration_date">
-        <jms:reference-file line="35">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="32">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.label.expiration_date</source>
         <target state="new">The activation code is valid until and including %expirationDate%.</target>
       </trans-unit>
       <trans-unit id="d38c5271077c89a3b39e6ee655e21059dcb1da94" resname="ss.registration.registration_email_sent.label.registration_code">
-        <jms:reference-file line="31">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="40">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.label.registration_code</source>
         <target>Activation code</target>
       </trans-unit>
       <trans-unit id="8324fbb0b4fe0b88092294e3a1f958f0bc02d6da" resname="ss.registration.registration_email_sent.text.activation_instructions">
-        <jms:reference-file line="16">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="20">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions</source>
         <target>Visit the location below to get your token activated. Please bring the following:</target>
       </trans-unit>
       <trans-unit id="a83fee04452531e7eba20178cf820677f88db4cf" resname="ss.registration.registration_email_sent.text.activation_instructions_item_1">
-        <jms:reference-file line="19">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="23">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_1</source>
         <target>Your token</target>
       </trans-unit>
       <trans-unit id="ebdd61f271ba18583ca0a18fbe9b675c88375b98" resname="ss.registration.registration_email_sent.text.activation_instructions_item_2">
-        <jms:reference-file line="20">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="24">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_2</source>
         <target>A valid proof of identity (passport, driver's license or national ID-card)</target>
       </trans-unit>
       <trans-unit id="d608041873dea3059d34724b9a24e4e751ebdffe" resname="ss.registration.registration_email_sent.text.activation_instructions_item_3">
-        <jms:reference-file line="21">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="25">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_3</source>
         <target>Your activation code</target>
       </trans-unit>
       <trans-unit id="63974b83ce6262c68656a606d22f6538742e22c5" resname="ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution">
-        <jms:reference-file line="53">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="58">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution</source>
         <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
       </trans-unit>
       <trans-unit id="8388ff05103a22d0917788a48ccdc9716a353ac8" resname="ss.registration.registration_email_sent.text.no_ras_for_your_institution">
-        <jms:reference-file line="71">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="76">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.no_ras_for_your_institution</source>
         <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
       </trans-unit>
       <trans-unit id="7c9ea58235246dd0f14a2d6aaed379ad0638d0e7" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent">
-        <jms:reference-file line="45">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="50">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent</source>
         <target>An e-mail containing these instructions and your activation code has also been sent to the e-mail address %email%.</target>
       </trans-unit>
       <trans-unit id="9ef48b4bbb1cef4ef12eb3e5146beb743e648752" resname="ss.registration.registration_email_sent.text.thank_you_for_registration">
-        <jms:reference-file line="14">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="18">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.text.thank_you_for_registration</source>
         <target>Thank you for registering your token. Your token is almost ready to use.</target>
       </trans-unit>
@@ -280,12 +283,12 @@
         <target>Activation code</target>
       </trans-unit>
       <trans-unit id="536255f00c5e95be847f318b9a692596a9d927a2" resname="ss.registration.registration_email_sent.title.list_of_ra_locations">
-        <jms:reference-file line="50">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="55">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.title.list_of_ra_locations</source>
         <target>Location(s) to activate your token</target>
       </trans-unit>
       <trans-unit id="fad1d50cfe9eadd2b8c3dd3e10456e70a5c927f0" resname="ss.registration.registration_email_sent.title.list_of_ras">
-        <jms:reference-file line="68">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="73">views/Registration/registrationEmailSent.html.twig</jms:reference-file>
         <source>ss.registration.registration_email_sent.title.list_of_ras</source>
         <target>Location(s) to activate your token</target>
       </trans-unit>
@@ -377,32 +380,32 @@ For all devices with a USB port.</target>
         <target>Send SMS code</target>
       </trans-unit>
       <trans-unit id="5cac3b52eed8f48770d80fb00b871e3dc3ae565a" resname="ss.registration.sms.text.ensure_phone_has_signal">
-        <jms:reference-file line="15">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <jms:reference-file line="19">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.ensure_phone_has_signal</source>
         <target>Please ensure your mobile phone has a signal and can receive text messages.</target>
       </trans-unit>
       <trans-unit id="61e00906a71f4cde92328a327aaa55e55061186e" resname="ss.registration.sms.text.enter_challenge_below">
-        <jms:reference-file line="17">Registration/Sms/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="21">Registration/Sms/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.enter_challenge_below</source>
         <target>Enter the code that was sent to your phone and click 'Verify'</target>
       </trans-unit>
       <trans-unit id="7a3ffc345262052d848b83714296cd342950ec0a" resname="ss.registration.sms.text.enter_phone_number_below">
-        <jms:reference-file line="16">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <jms:reference-file line="20">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.enter_phone_number_below</source>
         <target>Please enter your mobile phone number below:</target>
       </trans-unit>
       <trans-unit id="1c6c4046436965583c51f835f122786636d3bf57" resname="ss.registration.sms.text.help_user_enter_challenge">
-        <jms:reference-file line="14">Registration/Sms/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="18">Registration/Sms/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.help_user_enter_challenge</source>
         <target>Please validate that you can receive SMS messages on this phone:</target>
       </trans-unit>
       <trans-unit id="88ad34f02420fb8e202b105ef43e417f0480c53f" resname="ss.registration.sms.text.otp_requests_remaining">
-        <jms:reference-file line="23">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
+        <jms:reference-file line="27">Registration/Sms/sendChallenge.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.otp_requests_remaining</source>
         <target>Attempts remaining: %count%</target>
       </trans-unit>
       <trans-unit id="66bcc644c0a26ef762954fc544a03885175587c8" resname="ss.registration.sms.text.retry_if_not_received">
-        <jms:reference-file line="18">Registration/Sms/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="22">Registration/Sms/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.sms.text.retry_if_not_received</source>
         <target>Click 'Send new code' if you did not receive a code.</target>
       </trans-unit>
@@ -417,7 +420,7 @@ For all devices with a USB port.</target>
         <target>The registration of the U2F device failed. Try again or visit your IT helpdesk.</target>
       </trans-unit>
       <trans-unit id="8c0ebdb3c75c5ba291acea30db4475b037706e33" resname="ss.registration.u2f.button.retry">
-        <jms:reference-file line="24">Registration/U2f/registration.html.twig</jms:reference-file>
+        <jms:reference-file line="28">Registration/U2f/registration.html.twig</jms:reference-file>
         <source>ss.registration.u2f.button.retry</source>
         <target>Retry</target>
       </trans-unit>
@@ -427,12 +430,12 @@ For all devices with a USB port.</target>
         <target>Link your U2F device</target>
       </trans-unit>
       <trans-unit id="aa1066996eb91288ee305d75ae37b40043a5900b" resname="ss.registration.u2f.text.activate_u2f_device">
-        <jms:reference-file line="16">Registration/U2f/registration.html.twig</jms:reference-file>
+        <jms:reference-file line="20">Registration/U2f/registration.html.twig</jms:reference-file>
         <source>ss.registration.u2f.text.activate_u2f_device</source>
         <target>Activate the U2F device. This is usually performed using a button.</target>
       </trans-unit>
       <trans-unit id="63215bcefb16179e093adf30b4adf7d67ba27a43" resname="ss.registration.u2f.text.ensure_device_connected_to_pc">
-        <jms:reference-file line="15">Registration/U2f/registration.html.twig</jms:reference-file>
+        <jms:reference-file line="19">Registration/U2f/registration.html.twig</jms:reference-file>
         <source>ss.registration.u2f.text.ensure_device_connected_to_pc</source>
         <target>Ensure your U2F device is linked to your computer.</target>
       </trans-unit>
@@ -447,17 +450,17 @@ For all devices with a USB port.</target>
         <target>Verify your e-mail address</target>
       </trans-unit>
       <trans-unit id="51b48a932a70ae43f768348cb7631f248fffd1b1" resname="ss.registration.yubikey.text.connect_yubikey_to_pc">
-        <jms:reference-file line="15">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="19">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.yubikey.text.connect_yubikey_to_pc</source>
         <target>Put your YubiKey in a USB port on your computer.</target>
       </trans-unit>
       <trans-unit id="f5adfdb9d55ddc728cc5a406e88dbd9b562dfd36" resname="ss.registration.yubikey.text.ensure_form_field_focus">
-        <jms:reference-file line="16">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="20">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.yubikey.text.ensure_form_field_focus</source>
         <target>Please ensure that the form field below has focus.</target>
       </trans-unit>
       <trans-unit id="a640511e7b860eb4e56b71c4137b8960f04b3d0e" resname="ss.registration.yubikey.text.press_once_form_auto_submitted">
-        <jms:reference-file line="17">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
+        <jms:reference-file line="21">Registration/Yubikey/provePossession.html.twig</jms:reference-file>
         <source>ss.registration.yubikey.text.press_once_form_auto_submitted</source>
         <target>Press and hold the button on your Yubikey. A One Time Password will be entered in the field below automatically.</target>
       </trans-unit>

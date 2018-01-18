@@ -141,10 +141,17 @@ final class GssfController extends Controller
         if ($secondFactorId) {
             $this->getLogger()->notice('GSSF possession has been proven successfully');
 
-            return $this->redirectToRoute(
-                'ss_registration_email_verification_email_sent',
-                ['secondFactorId' => $secondFactorId]
-            );
+            if ($this->emailVerificationIsRequired()) {
+                return $this->redirectToRoute(
+                    'ss_registration_email_verification_email_sent',
+                    ['secondFactorId' => $secondFactorId]
+                );
+            } else {
+                return $this->redirectToRoute(
+                    'ss_registration_registration_email_sent',
+                    ['secondFactorId' => $secondFactorId]
+                );
+            }
         }
 
         $this->getLogger()->error('Unable to prove GSSF possession');
@@ -220,7 +227,12 @@ final class GssfController extends Controller
         /** @var ViewConfig $secondFactorConfig */
         $templateParameters = array_merge(
             $parameters,
-            ['form' => $form->createView(), 'provider' => $provider, 'secondFactorConfig' => $secondFactorConfig]
+            [
+                'form' => $form->createView(),
+                'provider' => $provider,
+                'secondFactorConfig' => $secondFactorConfig,
+                'verifyEmail' => $this->emailVerificationIsRequired(),
+            ]
         );
         return $this->render(
             'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',

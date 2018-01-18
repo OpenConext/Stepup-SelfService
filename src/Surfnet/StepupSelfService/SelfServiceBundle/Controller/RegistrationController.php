@@ -72,6 +72,7 @@ class RegistrationController extends Controller
             'commonName' => $this->getIdentity()->commonName,
             'availableSecondFactors' => $secondFactors->available,
             'availableGsspSecondFactors' => $availableGsspSecondFactors,
+            'verifyEmail' => $this->emailVerificationIsRequired(),
         ];
     }
 
@@ -131,7 +132,8 @@ class RegistrationController extends Controller
             'expirationDate'   => $secondFactor->registrationRequestedAt->add(
                 new DateInterval('P14D')
             ),
-            'locale'           => $identity->preferredLocale
+            'locale'           => $identity->preferredLocale,
+            'verifyEmail'      => $this->emailVerificationIsRequired(),
         ];
 
         $raService         = $this->get('self_service.service.ra');

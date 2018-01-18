@@ -63,7 +63,13 @@ class SmsController extends Controller
             }
         }
 
-        return array_merge(['form' => $form->createView()], $viewVariables);
+        return array_merge(
+            [
+                'form' => $form->createView(),
+                'verifyEmail' => $this->emailVerificationIsRequired(),
+            ],
+            $viewVariables
+        );
     }
 
     /**
@@ -97,10 +103,17 @@ class SmsController extends Controller
             if ($result->isSuccessful()) {
                 $service->clearSmsVerificationState();
 
-                return $this->redirectToRoute(
-                    'ss_registration_email_verification_email_sent',
-                    ['secondFactorId' => $result->getSecondFactorId()]
-                );
+                if ($this->emailVerificationIsRequired()) {
+                    return $this->redirectToRoute(
+                        'ss_registration_email_verification_email_sent',
+                        ['secondFactorId' => $result->getSecondFactorId()]
+                    );
+                } else {
+                    return $this->redirectToRoute(
+                        'ss_registration_registration_email_sent',
+                        ['secondFactorId' => $result->getSecondFactorId()]
+                    );
+                }
             } elseif ($result->wasIncorrectChallengeResponseGiven()) {
                 $form->addError(new FormError('ss.prove_phone_possession.incorrect_challenge_response'));
             } elseif ($result->hasChallengeExpired()) {
@@ -112,6 +125,9 @@ class SmsController extends Controller
             }
         }
 
-        return ['form' => $form->createView()];
+        return [
+            'form' => $form->createView(),
+            'verifyEmail' => $this->emailVerificationIsRequired(),
+        ];
     }
 }
