@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2018-01-22T13:14:28Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2018-01-22T13:59:08Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -265,17 +265,32 @@
       <trans-unit id="63974b83ce6262c68656a606d22f6538742e22c5" resname="ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution">
         <source>ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution</source>
         <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
-        <jms:reference-file line="58">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="75">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8388ff05103a22d0917788a48ccdc9716a353ac8" resname="ss.registration.registration_email_sent.text.no_ras_for_your_institution">
         <source>ss.registration.registration_email_sent.text.no_ras_for_your_institution</source>
         <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
-        <jms:reference-file line="76">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="93">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7c9ea58235246dd0f14a2d6aaed379ad0638d0e7" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent">
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent</source>
         <target>An e-mail containing these instructions and your activation code has also been sent to the e-mail address %email%.</target>
         <jms:reference-file line="50">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="9cd651eed31a40300b9bdbe4eb6f43b47590ab13" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent_no_email">
+        <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent_no_email</source>
+        <target>If you do not have access (yet) to your e-mail address you can also print or download the instructions and your activation code.</target>
+        <jms:reference-file line="54">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="4cf581fa68d2c12db4d799554971856cbecc3e16" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent_pdf">
+        <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent_pdf</source>
+        <target>PDF</target>
+        <jms:reference-file line="65">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="da18b75fb1c21ae87ec2ec68d747518bd2f3659f" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent_print">
+        <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent_print</source>
+        <target>Print</target>
+        <jms:reference-file line="61">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9ef48b4bbb1cef4ef12eb3e5146beb743e648752" resname="ss.registration.registration_email_sent.text.thank_you_for_registration">
         <source>ss.registration.registration_email_sent.text.thank_you_for_registration</source>
@@ -290,12 +305,12 @@
       <trans-unit id="536255f00c5e95be847f318b9a692596a9d927a2" resname="ss.registration.registration_email_sent.title.list_of_ra_locations">
         <source>ss.registration.registration_email_sent.title.list_of_ra_locations</source>
         <target>Location(s) to activate your token</target>
-        <jms:reference-file line="55">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="72">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="fad1d50cfe9eadd2b8c3dd3e10456e70a5c927f0" resname="ss.registration.registration_email_sent.title.list_of_ras">
         <source>ss.registration.registration_email_sent.title.list_of_ras</source>
         <target>Location(s) to activate your token</target>
-        <jms:reference-file line="73">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="90">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <source>ss.registration.selector.sms.alt</source>

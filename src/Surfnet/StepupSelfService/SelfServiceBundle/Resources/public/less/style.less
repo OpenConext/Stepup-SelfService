@@ -100,11 +100,23 @@ select[name="stepup_switch_locale[locale]"] {
     color: #cccccc;
 }
 
+.registration-print-options a {
+    display: inline-flex;
+    line-height: 2em;
+    margin-right: 2em;
+    vertical-align: middle;
+
+    i.fa {
+        margin-right: 5px;
+    }
+}
+
 @media print {
     footer,
     .page-header-user,
     .progress-steps,
-    .progress {
+    .progress,
+    .registration-print-options {
         display: none !important;
     }
 

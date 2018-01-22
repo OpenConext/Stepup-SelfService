@@ -19,6 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use DateInterval;
+use Mpdf\Mpdf;
+use Mpdf\Output\Destination as MpdfDestination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
@@ -128,6 +130,7 @@ class RegistrationController extends Controller
 
         $parameters = [
             'email'            => $identity->email,
+            'secondFactorId'   => $secondFactor->id,
             'registrationCode' => $secondFactor->registrationCode,
             'expirationDate'   => $secondFactor->registrationRequestedAt->add(
                 new DateInterval('P14D')
@@ -154,5 +157,23 @@ class RegistrationController extends Controller
             'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
             $parameters
         );
+    }
+
+    /**
+     * @param $secondFactorId
+     * @return Response
+     *
+     * @SuppressWarnings(PHPMD.ExitExpression) MPDF requires bypassing Symfony, so we exit() when MPDF is done.
+     */
+    public function registrationPdfAction($secondFactorId)
+    {
+        $content = $this->registrationEmailSentAction($secondFactorId)
+            ->getContent();
+
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($content);
+        $mpdf->Output('registration-code.pdf', MpdfDestination::DOWNLOAD);
+
+        exit;
     }
 }
