@@ -99,3 +99,16 @@ select[name="stepup_switch_locale[locale]"] {
 .text-extra-muted {
     color: #cccccc;
 }
+
+@media print {
+    footer,
+    .page-header-user,
+    .progress-steps,
+    .progress {
+        display: none !important;
+    }
+
+    .page-header {
+        border-bottom: none;
+    }
+}
