@@ -21,7 +21,7 @@
         "mopa/bootstrap-bundle": "dev-master#818b0f47ebd352559950e9a64431ff9472e8a9dd as 3.0.0-beta5",
         "twbs/bootstrap": "~3.2.0",
         "fortawesome/font-awesome": "~4.2.0",
-        "jms/translation-bundle": "~1.1.0",
+        "jms/translation-bundle": "~1.3.0",
         "jms/di-extra-bundle": "~1.4.0",
         "surfnet/stepup-middleware-client-bundle": "^2.0",
         "guzzlehttp/guzzle": "^6",
