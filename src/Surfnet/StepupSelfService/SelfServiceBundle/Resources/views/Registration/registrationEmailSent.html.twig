@@ -49,6 +49,23 @@
 
     <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent'|trans({'%email%': email}) }}</p>
 
+    <div class="registration-print-options">
+        {% if not verifyEmail %}
+            <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent_no_email'|trans }}</p>
+        {% endif %}
+
+        <br />
+
+        <a href="#" class="registration-print">
+            <i class="fa fa-print fa-2x"></i>
+            {{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent_print'|trans }}
+        </a>
+        <a href="{{ path('ss_registration_registration_pdf', {'secondFactorId': secondFactorId}) }}" class="registration-pdf">
+            <i class="fa fa-download fa-2x"></i>
+            {{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent_pdf'|trans }}
+        </a>
+    </div>
+
     <hr>
 
     {% if raLocations is defined %}
@@ -89,3 +106,9 @@
         {% endif %}
     {% endif %}
 {% endblock %}
+
+{% block body_end %}
+    {% javascripts '@SurfnetStepupSelfServiceSelfServiceBundle/Resources/public/js/registration-print.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock body_end %}

@@ -40,6 +40,11 @@ ss_registration_registration_email_sent:
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent }
 
+ss_registration_registration_pdf:
+    path:     /registration/{secondFactorId}/registration-pdf
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationPdf }
+
 ss_registration_yubikey_prove_possession:
     path:     /registration/yubikey/prove-possession
     methods:  [GET,POST]
