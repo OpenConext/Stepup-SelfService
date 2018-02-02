@@ -170,7 +170,11 @@ class RegistrationController extends Controller
         $content = $this->registrationEmailSentAction($secondFactorId)
             ->getContent();
 
-        $mpdf = new Mpdf();
+        $mpdf = new Mpdf(
+            array(
+                'tempDir' => sys_get_temp_dir(),
+            )
+        );
         $mpdf->WriteHTML($content);
         $mpdf->Output('registration-code.pdf', MpdfDestination::DOWNLOAD);
 
