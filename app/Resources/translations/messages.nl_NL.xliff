@@ -494,16 +494,6 @@ Geschikt voor alle devices met een USB-poort.</target>
         <target>Registreer token</target>
         <jms:reference-file line="29">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5a6f59c486a9cc18c46c9147eb55a76424815f62" resname="ss.second_factor.list.max_number_of_tokens_reached_text">
-        <source>ss.second_factor.list.max_number_of_tokens_reached_text</source>
-        <target state="new">Het is niet meer mogelijk om nieuwe tokens te registreren.</target>
-        <jms:reference-file line="11">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="b78987cb5a9d442fe9272812a1ea5cf8afc39523" resname="ss.second_factor.list.max_number_of_tokens_text">
-        <source>ss.second_factor.list.max_number_of_tokens_text</source>
-        <target>Hieronder vind je een overzicht van je geregistreerde tokens. Je mag %max_number% tokens registreren.</target>
-        <jms:reference-file line="9">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
-      </trans-unit>
       <trans-unit id="efa2d0485dc634ae0f039634541529dce393e36c" resname="ss.second_factor.list.text.add_second_factor">
         <source>ss.second_factor.list.text.add_second_factor</source>
         <target state="new">Registreer nieuw token</target>
