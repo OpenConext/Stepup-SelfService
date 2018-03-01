@@ -4,6 +4,7 @@ VERSION 2  RELEASE 2.0
 
    Version 2.7 - Release of new version 2.7.0
       01/08/2017 16:10  2.7.0  initial release
+      01/08/2017 16:10  2.7.1  security update for https://simplesamlphp.org/security/201802-01
 
    Version 2.6 - Updated Guzzle and added second factor test mode
       17/05/2017 14:12  2.6.2  Updated translations
