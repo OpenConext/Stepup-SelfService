@@ -85,7 +85,7 @@
       </trans-unit>
       <trans-unit id="4c4fb9b24a25bdd45d83562a4d71ecde8d527a77" resname="ss.error.text.if_you_think_this_is_incorrect_report">
         <source>ss.error.text.if_you_think_this_is_incorrect_report</source>
-        <target>Please report this error, including the error code, to the helpdesk via help@surfconext.nl</target>
+        <target>Please report this error, including the error code, to the helpdesk via help@example.org</target>
         <jms:reference-file line="14">/Resources/SurfnetStepupBundle/views/Exception/error404.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="da93d249a639d3abd2f513dbd2c07b9119d16694" resname="ss.error.text.page_not_found">
@@ -95,7 +95,7 @@
       </trans-unit>
       <trans-unit id="0e5b48b8a8746f624978afe69448cd9bdb31687c" resname="ss.error.text.what_were_you_doing_well_fix_it">
         <source>ss.error.text.what_were_you_doing_well_fix_it</source>
-        <target>Please report this error, including the error code, to the helpdesk via help@surfconext.nl</target>
+        <target>Please report this error, including the error code, to the helpdesk via help@example.org</target>
         <jms:reference-file line="14">/Resources/SurfnetStepupBundle/views/Exception/error.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e0d3557591582d18755db2529a49f88400670167" resname="ss.error.text.your_art_code">
@@ -635,8 +635,8 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       </trans-unit>
       <trans-unit id="7c0f4f14de1d3c98032305d9af18fad28ec67456" resname="ss.test_second_factor.verification_successful">
         <source>ss.test_second_factor.verification_successful</source>
-        <target>The test with your token was successful. You can login with Strong Authentication.</target>
-        <jms:reference-file line="51">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <target>The test with your token was successful. You can login with OpenConext Stepup.</target>
+        <jms:reference-file line="55">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
         <source>ss.verify_yubikey_command.otp.otp_invalid</source>

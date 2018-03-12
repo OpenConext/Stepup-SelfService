@@ -3,5 +3,5 @@
 # Strings containing '%' should be escaped by prepending '%'
 parameters:
     support_url:
-        en_GB: "https://support.surfconext.nl/faq-strong-authentication"
-        nl_NL: "https://support.surfconext.nl/faq-sterke-authenticatie"
+        en_GB: "https://support.example.org/faq-strong-authentication"
+        nl_NL: "https://support.example.org/faq-sterke-authenticatie"
