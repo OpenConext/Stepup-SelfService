@@ -12,7 +12,7 @@
         <tbody>
         <tr>
             <th scope="row">{{ 'ss.second_factor.revoke.table_header.type'|trans }}</th>
-            <td>{{ ('ss.second_factor.revoke.second_factor_type.' ~ secondFactor.type)|trans }}</td>
+            <td>{{ secondFactor.type|trans_second_factor_type }}</td>
         </tr>
         <tr>
             <th scope="row">{{ 'ss.second_factor.revoke.table_header.second_factor.identifier'|trans }}</th>
