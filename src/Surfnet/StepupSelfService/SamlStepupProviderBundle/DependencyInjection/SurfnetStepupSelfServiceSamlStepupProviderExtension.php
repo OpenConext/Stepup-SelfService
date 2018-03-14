@@ -28,6 +28,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
 {
+    const VIEW_CONFIG_TAG_NAME = 'gssp.view_config';
+
     /**
      * {@inheritdoc}
      */
@@ -100,7 +102,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         );
 
         $viewConfigDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig', [
-            new Reference('request'),
+            new Reference('request_stack'),
             $configuration['view_config']['loa'],
             $configuration['view_config']['logo'],
             $configuration['view_config']['app_android_url'],
@@ -115,7 +117,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             $configuration['view_config']['authn_failed'],
             $configuration['view_config']['pop_failed'],
         ]);
-        $viewConfigDefinition->setScope('request');
+        $viewConfigDefinition->addTag(self::VIEW_CONFIG_TAG_NAME);
 
         $container->setDefinition('gssp.view_config.' . $provider, $viewConfigDefinition);
 

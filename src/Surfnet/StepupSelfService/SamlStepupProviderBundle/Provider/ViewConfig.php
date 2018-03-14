@@ -18,10 +18,11 @@
 
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider;
 
+use Surfnet\StepupBundle\Value\Provider\ViewConfigInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
-class ViewConfig
+class ViewConfig implements ViewConfigInterface
 {
     /**
      * @var string
@@ -79,9 +80,9 @@ class ViewConfig
     private $popFailed;
 
     /**
-     * @var Request
+     * @var RequestStack
      */
-    private $request;
+    private $requestStack;
 
     /**
      * @var string
@@ -96,7 +97,7 @@ class ViewConfig
     /**
      * The arrays are arrays of translated text, indexed on locale.
      *
-     * @param Request $request
+     * @param RequestStack $requestStack
      * @param string $loa
      * @param string $logo
      * @param string $androidUrl
@@ -113,7 +114,7 @@ class ViewConfig
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        Request $request,
+        RequestStack $requestStack,
         $loa,
         $logo,
         $androidUrl,
@@ -141,7 +142,7 @@ class ViewConfig
         $this->explanation = $explanation;
         $this->authnFailed = $authnFailed;
         $this->popFailed = $popFailed;
-        $this->request = $request;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -255,7 +256,7 @@ class ViewConfig
      */
     private function getTranslation(array $translations)
     {
-        $currentLocale = $this->request->getLocale();
+        $currentLocale = $this->requestStack->getCurrentRequest()->getLocale();
         if (is_null($currentLocale)) {
             throw new LogicException('The current language is not set');
         }
