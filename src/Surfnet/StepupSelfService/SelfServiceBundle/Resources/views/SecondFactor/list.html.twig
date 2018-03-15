@@ -6,16 +6,23 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    {% if unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty %}
-        <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
+    {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted', email) }}
+    {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email) }}
+    {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email) }}
+
+    {% if registrationsLeft > 0
+            and ((unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty)
+            or availableSecondFactors is not empty)
+    %}
+        {% if (unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty) %}
+            <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
+        {% else %}
+            <p>{{ 'ss.second_factor.list.text.add_second_factor'|trans }}</p>
+        {% endif %}
         <a href="{{ path('ss_registration_display_types') }}"
            class="btn btn-primary">
             {{ 'ss.second_factor.list.button.register_second_factor'|trans }}
         </a>
-    {% else %}
-        {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted', email) }}
-        {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email) }}
-        {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email) }}
     {% endif %}
 
 {% endblock %}
@@ -24,7 +31,7 @@
     {% if secondFactorCollection.elements is not empty %}
         <p>{{ text|trans({'%email%': email}) }}</p>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-12">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -36,7 +43,7 @@
                     <tbody>
                     {% for secondFactor in secondFactorCollection.elements %}
                         <tr>
-                            <td>{{ ('ss.second_factor.type.'~secondFactor.type)|trans }}</td>
+                            <td>{{ secondFactor.type|trans_second_factor_type }}</td>
                             <td>{{ secondFactor.secondFactorIdentifier }}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group">

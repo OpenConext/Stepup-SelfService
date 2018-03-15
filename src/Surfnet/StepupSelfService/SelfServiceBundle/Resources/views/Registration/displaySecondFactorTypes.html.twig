@@ -5,7 +5,7 @@
 {% block page_header %}
     {{ parent() }}
 
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 1, 'step': 1} only %}
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 1, 'step': 1, verifyEmail: verifyEmail} only %}
 {% endblock %}
 
 {% block content %}
@@ -17,8 +17,6 @@
                 'type': 'sms',
                 'security': 2,
                 'url': path('ss_registration_sms_send_challenge'),
-                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
-                'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
         {% if availableSecondFactors.yubikey is defined %}
@@ -26,8 +24,6 @@
                 'type': 'yubikey',
                 'security': 3,
                 'url': path('ss_registration_yubikey_prove_possession'),
-                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
-                'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
         {% if availableSecondFactors.u2f is defined %}
@@ -35,18 +31,15 @@
                 'type': 'u2f',
                 'security': 3,
                 'url': path('ss_registration_u2f_registration'),
-                'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
-                'tiqrAppIosUrl': tiqrAppIosUrl,
             } only %}
         {% endif %}
-
         {% for type, secondFactor in availableGsspSecondFactors %}
             {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/genericSecondFactor.html.twig' with {
             'type': type,
             'security': secondFactor.loa,
             'url': path('ss_registration_gssf_initiate', {'provider': type}),
-            'tiqrAppAndroidUrl': tiqrAppAndroidUrl,
-            'tiqrAppIosUrl': tiqrAppIosUrl,
+            'appAndroidUrl': secondFactor.androidUrl,
+            'appIosUrl': secondFactor.iosUrl,
             'secondFactor': secondFactor
             } only %}
         {% endfor %}

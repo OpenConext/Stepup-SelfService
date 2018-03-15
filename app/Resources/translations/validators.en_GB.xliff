@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-05-30T16:11:35Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2018-01-22T13:59:08Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -89,6 +89,10 @@
       <trans-unit id="53ef4f54259698cee5e0aaba2d7f20417cd8e9fb" resname="middleware_client.dto.configuration.use_ra_locations.must_be_boolean">
         <source>middleware_client.dto.configuration.use_ra_locations.must_be_boolean</source>
         <target state="new">middleware_client.dto.configuration.use_ra_locations.must_be_boolean</target>
+      </trans-unit>
+      <trans-unit id="77ed46e12521792cd4b8d2040443b43b6df3dc25" resname="middleware_client.dto.configuration.verify_email.must_be_boolean">
+        <source>middleware_client.dto.configuration.verify_email.must_be_boolean</source>
+        <target state="new">middleware_client.dto.configuration.verify_email.must_be_boolean</target>
       </trans-unit>
       <trans-unit id="f033a6177f4f371fbc302f07a6b8c67ec8b46549" resname="middleware_client.dto.identity.common_name.must_be_string">
         <source>middleware_client.dto.identity.common_name.must_be_string</source>

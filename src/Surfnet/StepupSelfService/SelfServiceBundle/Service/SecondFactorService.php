@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
+use Surfnet\StepupMiddlewareClientBundle\Dto\CollectionDto;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\VerifyEmailCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
@@ -270,5 +271,76 @@ class SecondFactorService
             default:
                 throw new LogicException('Searching by second factor ID cannot result in multiple results.');
         }
+    }
+
+    /**
+     * @param array $allSecondFactors
+     * @param UnverifiedSecondFactorCollection $unverifiedCollection
+     * @param VerifiedSecondFactorCollection $verifiedCollection
+     * @param VettedSecondFactorCollection $vettedCollection
+     * @return array
+     */
+    private function determineAvailable(
+        array $allSecondFactors,
+        UnverifiedSecondFactorCollection $unverifiedCollection,
+        VerifiedSecondFactorCollection $verifiedCollection,
+        VettedSecondFactorCollection $vettedCollection
+    ) {
+        $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $unverifiedCollection);
+        $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $verifiedCollection);
+        $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $vettedCollection);
+        return $allSecondFactors;
+    }
+
+    /**
+     * @param array $allSecondFactors
+     * @param CollectionDto $collection
+     * @return array
+     */
+    private function filterAvailableSecondFactors(array $allSecondFactors, CollectionDto $collection)
+    {
+        foreach ($collection->getElements() as $secondFactor) {
+            $keyFound = array_search($secondFactor->type, $allSecondFactors);
+            if (is_numeric($keyFound)) {
+                unset($allSecondFactors[$keyFound]);
+            }
+        }
+        return $allSecondFactors;
+    }
+
+    /**
+     * @param $identity
+     * @param $allSecondFactors
+     * @param $allowedSecondFactors
+     * @param $maximumNumberOfRegistrations
+     * @return SecondFactorTypeCollection
+     */
+    public function getSecondFactorsForIdentity(
+        $identity,
+        $allSecondFactors,
+        $allowedSecondFactors,
+        $maximumNumberOfRegistrations
+    ) {
+        $unverified = $this->findUnverifiedByIdentity($identity->id);
+        $verified = $this->findVerifiedByIdentity($identity->id);
+        $vetted = $this->findVettedByIdentity($identity->id);
+        // Determine which Second Factors are still available for registration.
+        $available = $this->determineAvailable($allSecondFactors, $unverified, $verified, $vetted);
+
+        if (!empty($allowedSecondFactors)) {
+            $available = array_intersect(
+                $available,
+                $allowedSecondFactors
+            );
+        }
+
+        $collection = new SecondFactorTypeCollection();
+        $collection->unverified = $unverified;
+        $collection->verified   = $verified;
+        $collection->vetted     = $vetted;
+        $collection->available  = array_combine($available, $available);
+        $collection->maxNumberOfRegistrations = $maximumNumberOfRegistrations;
+
+        return $collection;
     }
 }

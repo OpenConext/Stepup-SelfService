@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle;
 
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\DependencyInjection\Compiler\StateHandlerSessionPass;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\DependencyInjection\Compiler\ViewConfigCollectionPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -27,5 +28,6 @@ class SurfnetStepupSelfServiceSamlStepupProviderBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new StateHandlerSessionPass());
+        $container->addCompilerPass(new ViewConfigCollectionPass());
     }
 }

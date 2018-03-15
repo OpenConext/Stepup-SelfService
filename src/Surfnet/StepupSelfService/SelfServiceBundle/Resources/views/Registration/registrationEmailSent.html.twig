@@ -5,7 +5,11 @@
 {% block page_header %}
     {{ parent() }}
 
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress':75, 'step': 4} only %}
+    {% if verifyEmail %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress':75, 'step': 4, verifyEmail: true} only %}
+    {% else %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -23,6 +27,11 @@
 
     <br />
 
+    <p>
+        {{ 'ss.registration.registration_email_sent.label.expiration_date'
+            |trans({'%expirationDate%': expirationDate|localizeddate('full', 'none', locale)}) }}
+    </p>
+
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
             <table class="table table-bordered table-hover table-responsive">
@@ -39,6 +48,23 @@
     <br />
 
     <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent'|trans({'%email%': email}) }}</p>
+
+    <div class="registration-print-options">
+        {% if not verifyEmail %}
+            <p>{{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent_no_email'|trans }}</p>
+        {% endif %}
+
+        <br />
+
+        <a href="#" class="registration-print">
+            <i class="fa fa-print fa-2x"></i>
+            {{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent_print'|trans }}
+        </a>
+        <a href="{{ path('ss_registration_registration_pdf', {'secondFactorId': secondFactorId}) }}" class="registration-pdf">
+            <i class="fa fa-download fa-2x"></i>
+            {{ 'ss.registration.registration_email_sent.text.registration_code_has_been_sent_pdf'|trans }}
+        </a>
+    </div>
 
     <hr>
 
@@ -80,3 +106,9 @@
         {% endif %}
     {% endif %}
 {% endblock %}
+
+{% block body_end %}
+    {% javascripts '@SurfnetStepupSelfServiceSelfServiceBundle/Resources/public/js/registration-print.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock body_end %}

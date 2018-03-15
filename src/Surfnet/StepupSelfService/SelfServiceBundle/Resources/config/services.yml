@@ -153,3 +153,11 @@ services:
             - "@request_stack"
             - '' # See extension
             - [] # See extension
+
+    # Twig
+    ra.twig.second_factor_type:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Twig\Extensions\Extension\SecondFactorType
+        arguments:
+            - "@surfnet_stepup.service.second_factor_type_translator"
+        tags:
+            - { name : twig.extension }

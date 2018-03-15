@@ -10,7 +10,7 @@
     '@SurfnetStepupSelfServiceSelfServiceBundle/Resources/public/less/style.less'
     '@SurfnetStepupBundle/Resources/public/less/stepup.less'
     %}
-    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen, print" />
     {% endstylesheets %}
 {% endblock head_style %}
 
@@ -27,7 +27,7 @@
                 <h2>{{ 'app.subname'|trans }}</h2>
             </div>
         {% if app.user %}
-            <div class="clearfix">
+            <div class="clearfix page-header-user">
                 <form method="post" action="{{ logout_url('saml_based') }}" class="pull-right">
                     <button type="submit" class="btn btn-link">
                         <i class="fa fa-sign-out"></i>

@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 class SamlToken extends AbstractToken
 {
     /**
-     * @var \SAML2_Assertion
+     * @var \SAML2\Assertion
      */
     public $assertion;
 

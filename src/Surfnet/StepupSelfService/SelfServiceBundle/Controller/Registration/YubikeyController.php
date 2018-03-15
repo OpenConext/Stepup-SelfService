@@ -48,10 +48,17 @@ class YubikeyController extends Controller
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
-                return $this->redirectToRoute(
-                    'ss_registration_email_verification_email_sent',
-                    ['secondFactorId' => $result->getSecondFactorId()]
-                );
+                if ($this->emailVerificationIsRequired()) {
+                    return $this->redirectToRoute(
+                        'ss_registration_email_verification_email_sent',
+                        ['secondFactorId' => $result->getSecondFactorId()]
+                    );
+                } else {
+                    return $this->redirectToRoute(
+                        'ss_registration_registration_email_sent',
+                        ['secondFactorId' => $result->getSecondFactorId()]
+                    );
+                }
             } elseif ($result->isOtpInvalid()) {
                 $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.otp_invalid'));
             } elseif ($result->didOtpVerificationFail()) {
@@ -62,6 +69,9 @@ class YubikeyController extends Controller
         }
 
         // OTP field is rendered empty in the template.
-        return ['form' => $form->createView()];
+        return [
+            'form' => $form->createView(),
+            'verifyEmail' => $this->emailVerificationIsRequired(),
+        ];
     }
 }

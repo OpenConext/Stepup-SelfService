@@ -19,7 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler;
 
 use Exception;
-use SAML2_Response_Exception_PreconditionNotMetException as PreconditionNotMetException;
+use SAML2\Response\Exception\PreconditionNotMetException;
 use Surfnet\SamlBundle\Http\Exception\AuthnFailedSamlResponseException;
 use Surfnet\SamlBundle\Monolog\SamlAuthenticationLogger;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;

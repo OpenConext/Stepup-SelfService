@@ -18,10 +18,11 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use DateInterval;
+use Mpdf\Mpdf;
+use Mpdf\Output\Destination as MpdfDestination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -30,41 +31,50 @@ class RegistrationController extends Controller
 {
     /**
      * @Template
-     * @return array
      */
     public function displaySecondFactorTypesAction()
     {
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
 
-        $availableSecondFactors = $this->getParameter('ss.enabled_second_factors');
-        if (!empty($institutionConfigurationOptions->allowedSecondFactors)) {
-            $availableSecondFactors = array_intersect(
-                $availableSecondFactors,
-                $institutionConfigurationOptions->allowedSecondFactors
-            );
-        }
-        $availableSecondFactors = array_combine($availableSecondFactors, $availableSecondFactors);
-        $availableGsspSecondFactors = [];
+        $identity = $this->getIdentity();
 
-        foreach ($availableSecondFactors as $index => $secondFactor) {
-            try {
+        /** @var SecondFactorService $service */
+        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+
+        // Get all available second factors from the config.
+        $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
+
+        $secondFactors = $service->getSecondFactorsForIdentity(
+            $identity,
+            $allSecondFactors,
+            $institutionConfigurationOptions->allowedSecondFactors,
+            $this->getParameter('self_service.second_factor.max_tokens_per_identity')
+        );
+
+        if ($secondFactors->getRegistrationsLeft() <= 0) {
+            $this->get('logger')->notice(
+                'User tried to register a new token but maximum number of tokens is reached. Redirecting to overview'
+            );
+            return $this->forward('SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list');
+        }
+
+
+        $availableGsspSecondFactors = [];
+        foreach ($secondFactors->available as $index => $secondFactor) {
+            if ($this->has("gssp.view_config.{$secondFactor}")) {
                 /** @var ViewConfig $secondFactorConfig */
                 $secondFactorConfig = $this->get("gssp.view_config.{$secondFactor}");
                 $availableGsspSecondFactors[$index] = $secondFactorConfig;
                 // Remove the gssp second factors from the regular second factors.
-                unset($availableSecondFactors[$index]);
-            } catch (ServiceNotFoundException $e) {
-                continue;
+                unset($secondFactors->available[$index]);
             }
         }
-
         return [
             'commonName' => $this->getIdentity()->commonName,
-            'availableSecondFactors' => $availableSecondFactors,
+            'availableSecondFactors' => $secondFactors->available,
             'availableGsspSecondFactors' => $availableGsspSecondFactors,
-            'tiqrAppAndroidUrl' => $this->getParameter('tiqr_app_android_url'),
-            'tiqrAppIosUrl'     => $this->getParameter('tiqr_app_ios_url'),
+            'verifyEmail' => $this->emailVerificationIsRequired(),
         ];
     }
 
@@ -114,10 +124,19 @@ class RegistrationController extends Controller
     {
         $identity = $this->getIdentity();
 
+        /** @var \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor $secondFactor */
+        $secondFactor = $this->get('surfnet_stepup_self_service_self_service.service.second_factor')
+            ->findOneVerified($secondFactorId);
+
         $parameters = [
             'email'            => $identity->email,
-            'registrationCode' => $this->get('surfnet_stepup_self_service_self_service.service.second_factor')
-                ->getRegistrationCode($secondFactorId, $identity->id),
+            'secondFactorId'   => $secondFactor->id,
+            'registrationCode' => $secondFactor->registrationCode,
+            'expirationDate'   => $secondFactor->registrationRequestedAt->add(
+                new DateInterval('P14D')
+            ),
+            'locale'           => $identity->preferredLocale,
+            'verifyEmail'      => $this->emailVerificationIsRequired(),
         ];
 
         $raService         = $this->get('self_service.service.ra');
@@ -138,5 +157,27 @@ class RegistrationController extends Controller
             'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
             $parameters
         );
+    }
+
+    /**
+     * @param $secondFactorId
+     * @return Response
+     *
+     * @SuppressWarnings(PHPMD.ExitExpression) MPDF requires bypassing Symfony, so we exit() when MPDF is done.
+     */
+    public function registrationPdfAction($secondFactorId)
+    {
+        $content = $this->registrationEmailSentAction($secondFactorId)
+            ->getContent();
+
+        $mpdf = new Mpdf(
+            array(
+                'tempDir' => sys_get_temp_dir(),
+            )
+        );
+        $mpdf->WriteHTML($content);
+        $mpdf->Output('registration-code.pdf', MpdfDestination::DOWNLOAD);
+
+        exit;
     }
 }

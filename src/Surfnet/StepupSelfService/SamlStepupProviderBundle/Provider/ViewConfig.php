@@ -18,10 +18,11 @@
 
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider;
 
+use Surfnet\StepupBundle\Value\Provider\ViewConfigInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
-class ViewConfig
+class ViewConfig implements ViewConfigInterface
 {
     /**
      * @var string
@@ -79,16 +80,28 @@ class ViewConfig
     private $popFailed;
 
     /**
-     * @var Request
+     * @var RequestStack
      */
-    private $request;
+    private $requestStack;
+
+    /**
+     * @var string
+     */
+    private $androidUrl;
+
+    /**
+     * @var string
+     */
+    private $iosUrl;
 
     /**
      * The arrays are arrays of translated text, indexed on locale.
      *
-     * @param Request $request
+     * @param RequestStack $requestStack
      * @param string $loa
      * @param string $logo
+     * @param string $androidUrl
+     * @param string $iosUrl
      * @param array $alt
      * @param array $title
      * @param array $description
@@ -101,9 +114,11 @@ class ViewConfig
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        Request $request,
+        RequestStack $requestStack,
         $loa,
         $logo,
+        $androidUrl,
+        $iosUrl,
         array $alt,
         array $title,
         array $description,
@@ -116,6 +131,8 @@ class ViewConfig
     ) {
         $this->loa = $loa;
         $this->logo = $logo;
+        $this->androidUrl = $androidUrl;
+        $this->iosUrl = $iosUrl;
         $this->alt = $alt;
         $this->title = $title;
         $this->description = $description;
@@ -125,7 +142,7 @@ class ViewConfig
         $this->explanation = $explanation;
         $this->authnFailed = $authnFailed;
         $this->popFailed = $popFailed;
-        $this->request = $request;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -217,13 +234,29 @@ class ViewConfig
     }
 
     /**
+     * @return string
+     */
+    public function getAndroidUrl()
+    {
+        return $this->androidUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIosUrl()
+    {
+        return $this->iosUrl;
+    }
+
+    /**
      * @param array $translations
      * @return mixed
      * @throws LogicException
      */
     private function getTranslation(array $translations)
     {
-        $currentLocale = $this->request->getLocale();
+        $currentLocale = $this->requestStack->getCurrentRequest()->getLocale();
         if (is_null($currentLocale)) {
             throw new LogicException('The current language is not set');
         }
