@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2018-03-14T14:02:58Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2018-03-15T11:56:30Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -85,18 +85,14 @@
       </trans-unit>
       <trans-unit id="4c4fb9b24a25bdd45d83562a4d71ecde8d527a77" resname="ss.error.text.if_you_think_this_is_incorrect_report">
         <source>ss.error.text.if_you_think_this_is_incorrect_report</source>
-        <target>Please report this error, including the error code, to the helpdesk via help@surfconext.nl</target>
+        <target>Visit &lt;a href="%support_url%" target="_blank"&gt;the support page&lt;/a&gt; if this does not fix your problem. On this page you will find more information about possible causes of the error and how to contact the support team.</target>
+        <jms:reference-file line="14">/Resources/SurfnetStepupBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="14">/Resources/SurfnetStepupBundle/views/Exception/error404.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="da93d249a639d3abd2f513dbd2c07b9119d16694" resname="ss.error.text.page_not_found">
         <source>ss.error.text.page_not_found</source>
         <target>The page you requested was not found. Please try again or go back to 'Home'.</target>
         <jms:reference-file line="8">/Resources/SurfnetStepupBundle/views/Exception/error404.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="0e5b48b8a8746f624978afe69448cd9bdb31687c" resname="ss.error.text.what_were_you_doing_well_fix_it">
-        <source>ss.error.text.what_were_you_doing_well_fix_it</source>
-        <target>Please report this error, including the error code, to the helpdesk via help@surfconext.nl</target>
-        <jms:reference-file line="14">/Resources/SurfnetStepupBundle/views/Exception/error.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e0d3557591582d18755db2529a49f88400670167" resname="ss.error.text.your_art_code">
         <source>ss.error.text.your_art_code</source>
@@ -635,8 +631,8 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       </trans-unit>
       <trans-unit id="7c0f4f14de1d3c98032305d9af18fad28ec67456" resname="ss.test_second_factor.verification_successful">
         <source>ss.test_second_factor.verification_successful</source>
-        <target>The test with your token was successful. You can login with Strong Authentication.</target>
-        <jms:reference-file line="51">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <target>The test with your token was successful. You can login with your token.</target>
+        <jms:reference-file line="55">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
         <source>ss.verify_yubikey_command.otp.otp_invalid</source>
