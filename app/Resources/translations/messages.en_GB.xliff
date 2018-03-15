@@ -631,7 +631,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       </trans-unit>
       <trans-unit id="7c0f4f14de1d3c98032305d9af18fad28ec67456" resname="ss.test_second_factor.verification_successful">
         <source>ss.test_second_factor.verification_successful</source>
-        <target>The test with your token was successful. You can login with OpenConext Stepup.</target>
+        <target>The test with your token was successful. You can login with your token.</target>
         <jms:reference-file line="55">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
