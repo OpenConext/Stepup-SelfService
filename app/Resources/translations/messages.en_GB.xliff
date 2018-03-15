@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2018-01-22T13:59:08Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2018-03-14T14:02:58Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -432,12 +432,12 @@ For all devices with a USB port.</target>
       <trans-unit id="a9291ad7b24d9af72187ad2c3a47ef70a8ddb049" resname="ss.registration.u2f.alert.device_reported_an_error">
         <source>ss.registration.u2f.alert.device_reported_an_error</source>
         <target>The U2F device reported an error. Try again or visit your IT helpdesk.</target>
-        <jms:reference-file line="51">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="47">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="10942aeeff49e9078c3388325521ec7745d9e4d7" resname="ss.registration.u2f.alert.error">
         <source>ss.registration.u2f.alert.error</source>
         <target>The registration of the U2F device failed. Try again or visit your IT helpdesk.</target>
-        <jms:reference-file line="52">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="48">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8c0ebdb3c75c5ba291acea30db4475b037706e33" resname="ss.registration.u2f.button.retry">
         <source>ss.registration.u2f.button.retry</source>
@@ -531,12 +531,12 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="6ddd63626b39582e37d8f3012d893e9d4eac14db" resname="ss.second_factor.revoke.alert.revocation_failed">
         <source>ss.second_factor.revoke.alert.revocation_failed</source>
         <target>Token revocation failed</target>
-        <jms:reference-file line="48">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="44">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f990ac6c55a5585b8c3cde21f4c63bb66b055892" resname="ss.second_factor.revoke.alert.revocation_successful">
         <source>ss.second_factor.revoke.alert.revocation_successful</source>
         <target>Your token has been removed.</target>
-        <jms:reference-file line="47">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="43">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="39bf5f5849cef0ac9b176c769c79169676fc7b96" resname="ss.second_factor.revoke.button.revoke">
         <source>ss.second_factor.revoke.button.revoke</source>
@@ -548,30 +548,20 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target>Test</target>
         <jms:reference-file line="58">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6fb0acf21df652aef6e8da27aefff89ad52b6e1a" resname="ss.second_factor.revoke.second_factor_type.biometric">
-        <source>ss.second_factor.revoke.second_factor_type.biometric</source>
-        <target>Biometric</target>
-        <jms:reference-file line="46">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
       <trans-unit id="8cb0dc5d3faca805d69dce7496307078d2234dfb" resname="ss.second_factor.revoke.second_factor_type.sms">
         <source>ss.second_factor.revoke.second_factor_type.sms</source>
         <target>SMS</target>
-        <jms:reference-file line="42">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="ddaf3dc5c270fff8b10c72c1385407f79b7fbd0b" resname="ss.second_factor.revoke.second_factor_type.tiqr">
-        <source>ss.second_factor.revoke.second_factor_type.tiqr</source>
-        <target>Tiqr</target>
-        <jms:reference-file line="44">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="40">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="05f193ed2a057ba345519da22753939ba8aef925" resname="ss.second_factor.revoke.second_factor_type.u2f">
         <source>ss.second_factor.revoke.second_factor_type.u2f</source>
         <target>U2F</target>
-        <jms:reference-file line="45">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="42">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="41ef2c1782e52dabce59e7be54aef6fa07829959" resname="ss.second_factor.revoke.second_factor_type.yubikey">
         <source>ss.second_factor.revoke.second_factor_type.yubikey</source>
         <target>YubiKey</target>
-        <jms:reference-file line="43">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="41">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="aff5bdb50adaae6a777fd46f760f426e6c847867" resname="ss.second_factor.revoke.table_header.second_factor.identifier">
         <source>ss.second_factor.revoke.table_header.second_factor.identifier</source>
@@ -593,25 +583,15 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target>Remove token</target>
         <jms:reference-file line="4">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/revoke.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="58c4d4601f77fde80d101525a27c16d0c35ae651" resname="ss.second_factor.type.biometric">
-        <source>ss.second_factor.type.biometric</source>
-        <target>Biometric</target>
-        <jms:reference-file line="39">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
       <trans-unit id="46d5571724a558b0ad7e823e35a35021d78ed209" resname="ss.second_factor.type.sms">
         <source>ss.second_factor.type.sms</source>
         <target>SMS</target>
         <jms:reference-file line="35">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="84f85f9b2badc618045be40abbd82d1a1acc3e3f" resname="ss.second_factor.type.tiqr">
-        <source>ss.second_factor.type.tiqr</source>
-        <target>Tiqr</target>
-        <jms:reference-file line="37">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
       <trans-unit id="e6a4121e1e5da569eb89ea885f61ea68033650eb" resname="ss.second_factor.type.u2f">
         <source>ss.second_factor.type.u2f</source>
         <target>U2F</target>
-        <jms:reference-file line="38">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="37">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="81b817f201c14a06e97251089f38fec70163ef3f" resname="ss.second_factor.type.yubikey">
         <source>ss.second_factor.type.yubikey</source>
@@ -651,12 +631,12 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="cbdf2c4bacdae4b97285b0201968c2d3a9de1be1" resname="ss.test_second_factor.verification_failed">
         <source>ss.test_second_factor.verification_failed</source>
         <target>The test with your token failed.</target>
-        <jms:reference-file line="56">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="52">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7c0f4f14de1d3c98032305d9af18fad28ec67456" resname="ss.test_second_factor.verification_successful">
         <source>ss.test_second_factor.verification_successful</source>
         <target>The test with your token was successful. You can login with Strong Authentication.</target>
-        <jms:reference-file line="55">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="51">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="dc4478bd45a81c1a45020aac9d22d73abc5f1455" resname="ss.verify_yubikey_command.otp.otp_invalid">
         <source>ss.verify_yubikey_command.otp.otp_invalid</source>

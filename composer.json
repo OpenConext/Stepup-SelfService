@@ -26,7 +26,7 @@
         "surfnet/stepup-middleware-client-bundle": "^2.0",
         "guzzlehttp/guzzle": "^6",
         "surfnet/stepup-saml-bundle": "^3.0",
-        "surfnet/stepup-bundle": "^2.0",
+        "surfnet/stepup-bundle": "^3.2",
         "surfnet/stepup-u2f-bundle": "dev-develop",
         "mopa/composer-bridge": "~1.5",
         "openconext/monitor-bundle": "^1.0",

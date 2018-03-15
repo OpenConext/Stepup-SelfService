@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e78423bf85dc156669e61aa49d47daa",
+    "content-hash": "2c24ce64cd71da7aeed7ee158a23a40f",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2144,16 +2144,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "2.0.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-bundle.git",
-                "reference": "0766c91a6b391739d9fe4693f684ef1332342df4"
+                "reference": "547c5bcb8fe1841fa657bbf43c5ea4b8e575ec3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/0766c91a6b391739d9fe4693f684ef1332342df4",
-                "reference": "0766c91a6b391739d9fe4693f684ef1332342df4",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/547c5bcb8fe1841fa657bbf43c5ea4b8e575ec3a",
+                "reference": "547c5bcb8fe1841fa657bbf43c5ea4b8e575ec3a",
                 "shasum": ""
             },
             "require": {
@@ -2197,7 +2197,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2017-06-14T13:03:51+00:00"
+            "time": "2018-03-14T13:11:17+00:00"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
