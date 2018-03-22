@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
         <source>ss.flash.error_while_switching_locale</source>
-        <target>Due to an unknown reason, switching locales failed.</target>
+        <target>Door een onbekende oorzaak is het wisselen van taal mislukt.</target>
         <jms:reference-file line="72">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="600028302c7b3a43ae0e30ab3b015f505c2b7f1f" resname="ss.flash.invalid_switch_locale_form">
@@ -576,7 +576,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       </trans-unit>
       <trans-unit id="222ba32640d7ba4a87f2070d67125ccabf100de8" resname="ss.verify_yubikey_command.otp.verification_error">
         <source>ss.verify_yubikey_command.otp.verification_error</source>
-        <target>Het verifiëren van de YubiKey-code is wegens een onbekende reden niet gelukt. Probeer het opnieuw.</target>
+        <target>Het verifiëren van de YubiKey-code is wegens een onbekende reden nigelukt. Probeer het opnieuw.</target>
         <jms:reference-file line="27">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c50aaca50072a446eab71327c6bfc5e5de8698f5" resname="stepup.error.authentication_error.description">
@@ -613,7 +613,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       </trans-unit>
       <trans-unit id="91d524414db2193ad8462909ec5da4c9a732b595" resname="stepup.error.generic_error.description">
         <source>stepup.error.generic_error.description</source>
-        <target>Something went wrong. Please try again.</target>
+        <target>Er is iets mis gegaan, Probeer het opnieuw.</target>
         <jms:reference-file line="144">/../vendor/surfnet/stepup-bundle/src/Controller/ExceptionController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="5dac3939e990d8ad764c06634b14adf85517d4f1" resname="stepup.error.generic_error.title">
