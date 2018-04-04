@@ -167,6 +167,7 @@ class RegistrationController extends Controller
      */
     public function registrationPdfAction($secondFactorId)
     {
+        throw new NotFoundHttpException();
         $content = $this->registrationEmailSentAction($secondFactorId)
             ->getContent();
 
@@ -178,6 +179,5 @@ class RegistrationController extends Controller
         $mpdf->WriteHTML($content);
         $mpdf->Output('registration-code.pdf', MpdfDestination::DOWNLOAD);
 
-        exit;
     }
 }
