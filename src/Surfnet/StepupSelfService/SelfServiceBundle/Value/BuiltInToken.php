@@ -20,9 +20,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
-class HardcodedToken implements AvailableTokenInterface
+class BuiltInToken implements AvailableTokenInterface
 {
-    private static $supportedTypes = [
+    private $supportedTypes = [
         'sms' => [
             'loaLevel' => 2,
             'route' => 'ss_registration_sms_send_challenge'
@@ -41,18 +41,18 @@ class HardcodedToken implements AvailableTokenInterface
 
     /**
      * @param $type
-     * @return HardcodedToken
+     * @return BuiltInToken
      */
     public static function fromSecondFactorType($type)
     {
-        if (!isset(self::$supportedTypes[$type])) {
-            throw InvalidArgumentException::invalidType('valid second factor type', 'type', $type);
-        }
         return new self($type);
     }
 
     private function __construct($type)
     {
+        if (!isset($this->supportedTypes[$type])) {
+            throw InvalidArgumentException::invalidType('valid second factor type', 'type', $type);
+        }
         $this->type = $type;
     }
 
@@ -61,7 +61,7 @@ class HardcodedToken implements AvailableTokenInterface
      */
     public function getRoute()
     {
-        return self::$supportedTypes[$this->type]['route'];
+        return $this->supportedTypes[$this->type]['route'];
     }
 
     /**
@@ -77,7 +77,7 @@ class HardcodedToken implements AvailableTokenInterface
      */
     public function getLoaLevel()
     {
-        return self::$supportedTypes[$this->type]['loaLevel'];
+        return $this->supportedTypes[$this->type]['loaLevel'];
     }
 
     /**

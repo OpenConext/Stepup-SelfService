@@ -31,12 +31,13 @@ class AvailableTokenCollectionTest extends UnitTest
             'fatima' => $this->getViewConfig('fatima', 2),
             'tiqr' => $this->getViewConfig('tiqr', 3),
             'biometric' => $this->getViewConfig('biometric', 3),
+            'intrinsic' => $this->getViewConfig('intrinsic', 1),
         ];
         $collection = AvailableTokenCollection::from($nonGssp, $gssp);
 
-        $this->assertCount(5, $collection->getData());
+        $this->assertCount(6, $collection->getData());
 
-        $expextedSortOrder = ['fatima', 'sms', 'biometric', 'tiqr', 'yubikey'];
+        $expextedSortOrder = ['intrinsic', 'fatima', 'sms', 'biometric', 'tiqr', 'yubikey'];
         $this->assertEquals($expextedSortOrder, array_keys($collection->getData()));
     }
 

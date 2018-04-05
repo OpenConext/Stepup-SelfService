@@ -30,16 +30,16 @@ class AvailableTokenCollection
     private $collection = [];
 
     /**
-     * @param array $hardcodedTokens
+     * @param array $builtInTokens
      * @param array $gsspTokens
      * @return AvailableTokenCollection
      */
-    public static function from(array $hardcodedTokens, array $gsspTokens)
+    public static function from(array $builtInTokens, array $gsspTokens)
     {
         $collection = new self();
 
-        foreach ($hardcodedTokens as $token) {
-            $collection->collection[$token] = HardcodedToken::fromSecondFactorType($token);
+        foreach ($builtInTokens as $token) {
+            $collection->collection[$token] = BuiltInToken::fromSecondFactorType($token);
         }
 
         foreach ($gsspTokens as $type => $token) {
