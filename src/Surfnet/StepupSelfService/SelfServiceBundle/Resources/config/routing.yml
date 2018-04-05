@@ -9,7 +9,7 @@ ss_second_factor_list:
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list }
 
 ss_second_factor_test:
-    path:     /second-factor/{secondFactorId}/test
+    path:     /second-factor/test
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Saml:testSecondFactor }
 
