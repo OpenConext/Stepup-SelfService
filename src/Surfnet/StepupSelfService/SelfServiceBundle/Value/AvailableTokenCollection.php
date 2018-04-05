@@ -66,7 +66,7 @@ class AvailableTokenCollection
             if ($a->getLoaLevel() === $b->getLoaLevel()) {
                 return strcmp($a->getType(), $b->getType());
             }
-            return $a->getLoaLevel() > $b->getLoaLevel();
+            return $a->getLoaLevel() > $b->getLoaLevel() ? 1 : -1;
         });
     }
 }
