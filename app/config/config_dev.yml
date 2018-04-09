@@ -21,12 +21,17 @@ monolog:
             passthru_level: DEBUG # DEV setting: this means that all message of level DEBUG or higher are always logged
             #passthru_level: NOTICE # PROD setting this means that all message of level NOTICE or higher are always logged
             handler: main_syslog
-            bubble: false # if we handle it, nothing else should
+            bubble: true
         main_syslog:
             type: syslog
             ident: stepup-selfservice
             facility: user
             formatter: surfnet_stepup.monolog.json_formatter
+        main_logfile:
+            type: stream
+            handler: logfile
+            level: NOTICE
+            path: %kernel.logs_dir%/%kernel.environment%.log
 
 assetic:
     use_controller: "%use_assetic_controller%"
