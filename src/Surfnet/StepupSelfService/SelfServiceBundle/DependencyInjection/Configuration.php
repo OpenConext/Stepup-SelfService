@@ -34,9 +34,6 @@ class Configuration implements ConfigurationInterface
         $this->appendSecondFactorTestIdentityProvider($childNodes);
         $this->appendSessionConfiguration($childNodes);
 
-        $childNodes->integerNode('max_number_of_tokens')
-            ->isRequired();
-
         return $treeBuilder;
     }
 
