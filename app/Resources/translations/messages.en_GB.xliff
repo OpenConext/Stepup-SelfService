@@ -533,7 +533,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       </trans-unit>
       <trans-unit id="1d6751b490158de0a89683522c6ba1a8b957875c" resname="ss.second_factor_list.header.expired_warning">
         <source>ss.second_factor_list.header.expired_warning</source>
-        <target>Expired!</target>
+        <target>Expired</target>
         <jms:reference-file line="53">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="fedd12f3e661692730a3650ef6db64e71c9d8441" resname="ss.second_factor_list.header.second_factor_identifier">
