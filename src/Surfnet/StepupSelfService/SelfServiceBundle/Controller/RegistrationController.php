@@ -50,7 +50,7 @@ class RegistrationController extends Controller
             $identity,
             $allSecondFactors,
             $institutionConfigurationOptions->allowedSecondFactors,
-            $this->getParameter('self_service.second_factor.max_tokens_per_identity')
+            $institutionConfigurationOptions->numberOfTokensPerIdentity
         );
 
         if ($secondFactors->getRegistrationsLeft() <= 0) {
