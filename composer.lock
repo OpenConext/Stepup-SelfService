@@ -2091,16 +2091,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "3.4.0",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-bundle.git",
-                "reference": "e0afaa26ffd0a38bb89b55e95761fe9555b6670f"
+                "reference": "2542a5f0d3032bc8c995b995dcc029999007393f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/e0afaa26ffd0a38bb89b55e95761fe9555b6670f",
-                "reference": "e0afaa26ffd0a38bb89b55e95761fe9555b6670f",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/2542a5f0d3032bc8c995b995dcc029999007393f",
+                "reference": "2542a5f0d3032bc8c995b995dcc029999007393f",
                 "shasum": ""
             },
             "require": {
@@ -2143,7 +2143,7 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2018-04-09T11:13:53+00:00"
+            "time": "2018-04-12T14:02:19+00:00"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
