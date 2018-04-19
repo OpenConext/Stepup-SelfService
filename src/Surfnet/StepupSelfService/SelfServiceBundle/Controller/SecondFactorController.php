@@ -41,11 +41,13 @@ class SecondFactorController extends Controller
         // Get all available second factors from the config.
         $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
 
+        $expirationHelper = $this->get('surfnet_stepup.registration_expiration_helper');
+
         $secondFactors = $service->getSecondFactorsForIdentity(
             $identity,
             $allSecondFactors,
             $institutionConfigurationOptions->allowedSecondFactors,
-            $this->getParameter('self_service.second_factor.max_tokens_per_identity')
+            $institutionConfigurationOptions->numberOfTokensPerIdentity
         );
 
         return [
@@ -56,6 +58,7 @@ class SecondFactorController extends Controller
             'verifiedSecondFactors' => $secondFactors->verified,
             'vettedSecondFactors' => $secondFactors->vetted,
             'availableSecondFactors' => $secondFactors->available,
+            'expirationHelper' => $expirationHelper,
         ];
     }
 

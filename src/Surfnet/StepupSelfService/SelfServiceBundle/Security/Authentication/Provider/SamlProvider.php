@@ -23,6 +23,7 @@ use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
 use Surfnet\SamlBundle\SAML2\Response\AssertionAdapter;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\MissingRequiredAttributeException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
@@ -118,7 +119,7 @@ class SamlProvider implements AuthenticationProviderInterface
         $values = $translatedAssertion->getAttributeValue($attribute);
 
         if (empty($values)) {
-            throw new BadCredentialsException(sprintf('Missing value for required attribute "%s"', $attribute));
+            throw new MissingRequiredAttributeException(sprintf('Missing value for required attribute "%s"', $attribute));
         }
 
         // see https://www.pivotaltracker.com/story/show/121296389
@@ -141,7 +142,7 @@ class SamlProvider implements AuthenticationProviderInterface
 
             $this->logger->warning($message);
 
-            throw new BadCredentialsException($message);
+            throw new MissingRequiredAttributeException($message);
         }
 
         return $value;

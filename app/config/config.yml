@@ -35,7 +35,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    exception_controller:  SurfnetStepupBundle:Exception:show
+    exception_controller: SurfnetStepupSelfServiceSelfServiceBundle:Exception:show
     globals:
         global_view_parameters: "@self_service.service.global_view_parameters"
 
@@ -67,27 +67,6 @@ nelmio_security:
         # Content types: default, script, object, style, img, media, frame, font, connect
         default: [ self ]
 
-monolog:
-    handlers:
-        main:
-            type: group
-            members:
-                - main_graylog
-                - main_logfile
-        main_graylog:
-            type: buffer
-            handler: graylog
-            level: NOTICE
-        main_logfile:
-            type: stream
-            handler: logfile
-            level: NOTICE
-            path: %kernel.logs_dir%/%kernel.environment%.log
-        graylog:
-            type: gelf
-            publisher: { hostname: %graylog_hostname% }
-            formatter: surfnet_stepup.monolog.full_message_exception_gelf_message_formatter
-
 mopa_bootstrap:
     form:
         show_legend: false
@@ -114,6 +93,8 @@ surfnet_stepup_middleware_client:
 
 surfnet_saml:
     hosted:
+        attribute_dictionary:
+            ignore_unknown_attributes: true
         service_provider:
             enabled: true
             assertion_consumer_route: selfservice_serviceprovider_consume_assertion
@@ -165,7 +146,6 @@ jms_translation:
             extractors: []
 
 surfnet_stepup_self_service_self_service:
-    max_number_of_tokens: %number_of_tokens_per_identity%
     enabled_second_factors: %enabled_second_factors%
     enabled_generic_second_factors: %enabled_generic_second_factors%
     second_factor_test_identity_provider:

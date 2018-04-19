@@ -3,7 +3,7 @@ parameters:
 
     default_locale:         en_GB
     locales:                [nl_NL, en_GB]
-    locale_cookie_domain:   surfconext.nl
+    locale_cookie_domain:   example.org
     secret:                 NotSoSecretReplaceMe!
 
     debug_toolbar:          true
@@ -32,7 +32,6 @@ parameters:
     saml_remote_idp_entity_id:
     saml_remote_idp_sso_url:
     saml_remote_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
-    graylog_hostname: g2-dev.stepup.coin.surf.net
     asset_version: 1
 
     second_factor_test_idp_entity_id: ~
@@ -61,6 +60,3 @@ parameters:
 
     session_max_absolute_lifetime: 3600 # 1 hours * 60 minutes * 60 seconds
     session_max_relative_lifetime: 600  # 10 minutes * 60 seconds
-
-    # The maximum number of tokens each identity (person) can register.
-    number_of_tokens_per_identity: 2

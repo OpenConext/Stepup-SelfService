@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 use Exception;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
-use Surfnet\StepupBundle\Value\SecondFactorType;
+use Surfnet\StepupBundle\Value\Loa;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -30,41 +30,39 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 class SamlController extends Controller
 {
     /**
-     * @param string $secondFactorId
+     * A SelfService user is able to test it's token in this endpoint
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
-    public function testSecondFactorAction($secondFactorId)
+    public function testSecondFactorAction()
     {
         $logger = $this->get('logger');
         $logger->notice('Starting second factor test');
 
         $secondFactorService = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-        $identity            = $this->getIdentity();
+        $loaResolutionService = $this->get('surfnet_stepup.service.loa_resolution');
+        $identity = $this->getIdentity();
 
-        if (!$secondFactorService->identityHasSecondFactorOfStateWithId($identity->id, 'vetted', $secondFactorId)) {
+        $vettedSecondFactors = $secondFactorService->findVettedByIdentity($identity->id);
+        if (!$vettedSecondFactors || $vettedSecondFactors->getTotalItems() === 0) {
             $logger->error(
                 sprintf(
-                    'Identity "%s" tried to test second factor "%s", but does not own that second factor or it is not vetted',
-                    $identity->id,
-                    $secondFactorId
+                    'Identity "%s" tried to test a second factor, but does not own a suitable vetted token.',
+                    $identity->id
                 )
             );
 
             throw new NotFoundHttpException();
         }
 
-        $loaResolutionService         = $this->get('surfnet_stepup.service.loa_resolution');
         $authenticationRequestFactory = $this->get('self_service.test_second_factor_authentication_request_factory');
-        $secondFactorTypeService      = $this->get('surfnet_stepup.service.second_factor_type');
-        $secondFactor     = $secondFactorService->findOneVetted($secondFactorId);
-        $secondFactorType = new SecondFactorType($secondFactor->type);
 
+        // By requesting LoA 2 any relevant token can be tested (LoA 2 and 3)
         $authenticationRequest = $authenticationRequestFactory->createSecondFactorTestRequest(
             $identity->nameId,
-            $loaResolutionService->getLoaByLevel($secondFactorTypeService->getLevel($secondFactorType))
+            $loaResolutionService->getLoaByLevel(Loa::LOA_2)
         );
 
         $this->get('session')->set('second_factor_test_request_id', $authenticationRequest->getRequestId());

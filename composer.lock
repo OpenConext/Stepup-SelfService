@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ded687d1bc7a1d86d78d88c1c92baba",
+    "content-hash": "9fad25912e1c03a983366445cb4510f8",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -510,59 +510,6 @@
                 "icon"
             ],
             "time": "2014-08-26T16:36:44+00:00"
-        },
-        {
-            "name": "graylog2/gelf-php",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bzikarsky/gelf-php.git",
-                "reference": "bc1175a5b40f585e69a017647286d84211e82544"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bzikarsky/gelf-php/zipball/bc1175a5b40f585e69a017647286d84211e82544",
-                "reference": "bc1175a5b40f585e69a017647286d84211e82544",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9",
-                "psr/log": "~1.0"
-            },
-            "provide": {
-                "psr/log-implementation": "~1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.3",
-                "squizlabs/php_codesniffer": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Gelf\\": "src/Gelf"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Benjamin Zikarsky",
-                    "email": "benjamin@zikarsky.de"
-                },
-                {
-                    "name": "gelf-php contributors",
-                    "homepage": "https://github.com/bzikarsky/gelf-php/contributors"
-                }
-            ],
-            "description": "A php implementation to send log-messages to a GELF compatible backend like Graylog2.",
-            "time": "2016-06-02T06:04:56+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2144,26 +2091,26 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "3.2.0",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-bundle.git",
-                "reference": "547c5bcb8fe1841fa657bbf43c5ea4b8e575ec3a"
+                "reference": "2542a5f0d3032bc8c995b995dcc029999007393f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/547c5bcb8fe1841fa657bbf43c5ea4b8e575ec3a",
-                "reference": "547c5bcb8fe1841fa657bbf43c5ea4b8e575ec3a",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/2542a5f0d3032bc8c995b995dcc029999007393f",
+                "reference": "2542a5f0d3032bc8c995b995dcc029999007393f",
                 "shasum": ""
             },
             "require": {
                 "ext-gmp": "*",
                 "ext-openssl": "*",
-                "graylog2/gelf-php": "^1.5",
                 "guzzlehttp/guzzle": "^6.0",
                 "monolog/monolog": "~1.11",
                 "php": "^5.6|^7.0",
                 "sensio/framework-extra-bundle": "~3",
+                "surfnet/stepup-saml-bundle": "^4.0",
                 "symfony/config": "^2.7",
                 "symfony/dependency-injection": "^2.7",
                 "symfony/form": "^2.7",
@@ -2173,7 +2120,6 @@
                 "symfony/validator": "^2.7"
             },
             "require-dev": {
-                "liip/rmt": "1.1.*",
                 "mockery/mockery": "0.9.*",
                 "phpmd/phpmd": "^2.0",
                 "phpunit/phpunit": "^4.0",
@@ -2197,20 +2143,20 @@
                 "suaas",
                 "surfnet"
             ],
-            "time": "2018-03-14T13:11:17+00:00"
+            "time": "2018-04-12T14:02:19+00:00"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "2.3.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "ae0912254c4090de400a84a76db387e76e896c4d"
+                "reference": "83aa482f74d290167d8d4713484c6882fd4983c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/ae0912254c4090de400a84a76db387e76e896c4d",
-                "reference": "ae0912254c4090de400a84a76db387e76e896c4d",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/83aa482f74d290167d8d4713484c6882fd4983c0",
+                "reference": "83aa482f74d290167d8d4713484c6882fd4983c0",
                 "shasum": ""
             },
             "require": {
@@ -2220,6 +2166,7 @@
                 "php": "^5.6|^7.0",
                 "psr/log": "~1.0",
                 "ramsey/uuid": "^3.4",
+                "surfnet/stepup-bundle": "^3.0",
                 "symfony/config": "^2.7",
                 "symfony/dependency-injection": "^2.7",
                 "symfony/http-kernel": "^2.7",
@@ -2250,20 +2197,20 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2018-01-18T08:54:37+00:00"
+            "time": "2018-04-11T07:19:11+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
-            "version": "3.0.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-saml-bundle.git",
-                "reference": "67e24599a6402fdf602304851bfff915c0c4609c"
+                "reference": "9bb7098248c7b60c8b2cbc74d996b027de69e68a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-saml-bundle/zipball/67e24599a6402fdf602304851bfff915c0c4609c",
-                "reference": "67e24599a6402fdf602304851bfff915c0c4609c",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-saml-bundle/zipball/9bb7098248c7b60c8b2cbc74d996b027de69e68a",
+                "reference": "9bb7098248c7b60c8b2cbc74d996b027de69e68a",
                 "shasum": ""
             },
             "require": {
@@ -2298,7 +2245,7 @@
                 "stepup",
                 "surfnet"
             ],
-            "time": "2018-01-17T12:59:03+00:00"
+            "time": "2018-03-21T09:35:58+00:00"
         },
         {
             "name": "surfnet/stepup-u2f-bundle",
@@ -2306,12 +2253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-u2f-bundle.git",
-                "reference": "b28737d7b8df5ecbdf7a1e952ecfb530a2951c05"
+                "reference": "67d8400160c5c9048cdd4354303d59243edbb7bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-u2f-bundle/zipball/b28737d7b8df5ecbdf7a1e952ecfb530a2951c05",
-                "reference": "b28737d7b8df5ecbdf7a1e952ecfb530a2951c05",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-u2f-bundle/zipball/67d8400160c5c9048cdd4354303d59243edbb7bf",
+                "reference": "67d8400160c5c9048cdd4354303d59243edbb7bf",
                 "shasum": ""
             },
             "require": {
@@ -2340,7 +2287,7 @@
                 "Apache-2.0"
             ],
             "description": "The SURFnet Step-up U2F bundle contains server-side device verification, and the necessary forms and resources to enable client-side U2F interaction with Step-up Identities",
-            "time": "2015-09-17T15:02:04+00:00"
+            "time": "2017-01-27T08:45:00+00:00"
         },
         {
             "name": "symfony/assetic-bundle",

@@ -23,6 +23,7 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -49,7 +50,7 @@ class RegistrationController extends Controller
             $identity,
             $allSecondFactors,
             $institutionConfigurationOptions->allowedSecondFactors,
-            $this->getParameter('self_service.second_factor.max_tokens_per_identity')
+            $institutionConfigurationOptions->numberOfTokensPerIdentity
         );
 
         if ($secondFactors->getRegistrationsLeft() <= 0) {
@@ -70,10 +71,12 @@ class RegistrationController extends Controller
                 unset($secondFactors->available[$index]);
             }
         }
+
+        $availableTokens = AvailableTokenCollection::from($secondFactors->available, $availableGsspSecondFactors);
+
         return [
             'commonName' => $this->getIdentity()->commonName,
-            'availableSecondFactors' => $secondFactors->available,
-            'availableGsspSecondFactors' => $availableGsspSecondFactors,
+            'availableSecondFactors' => $availableTokens,
             'verifyEmail' => $this->emailVerificationIsRequired(),
         ];
     }

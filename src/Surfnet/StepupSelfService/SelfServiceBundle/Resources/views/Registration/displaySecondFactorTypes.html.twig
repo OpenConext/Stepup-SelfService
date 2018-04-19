@@ -12,36 +12,23 @@
     <h2>{{ block('page_title') }}</h2>
 
     <div class="row second-factors">
-        {% if availableSecondFactors.sms is defined %}
-            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-                'type': 'sms',
-                'security': 2,
-                'url': path('ss_registration_sms_send_challenge'),
-            } only %}
-        {% endif %}
-        {% if availableSecondFactors.yubikey is defined %}
-            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-                'type': 'yubikey',
-                'security': 3,
-                'url': path('ss_registration_yubikey_prove_possession'),
-            } only %}
-        {% endif %}
-        {% if availableSecondFactors.u2f is defined %}
-            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
-                'type': 'u2f',
-                'security': 3,
-                'url': path('ss_registration_u2f_registration'),
-            } only %}
-        {% endif %}
-        {% for type, secondFactor in availableGsspSecondFactors %}
-            {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/genericSecondFactor.html.twig' with {
-            'type': type,
-            'security': secondFactor.loa,
-            'url': path('ss_registration_gssf_initiate', {'provider': type}),
-            'appAndroidUrl': secondFactor.androidUrl,
-            'appIosUrl': secondFactor.iosUrl,
-            'secondFactor': secondFactor
-            } only %}
+        {% for type, secondFactor in availableSecondFactors.data %}
+            {% if secondFactor.isGssp %}
+                {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/genericSecondFactor.html.twig' with {
+                    'type': type,
+                    'security': secondFactor.loaLevel,
+                    'url': path(secondFactor.route, secondFactor.routeParams),
+                    'appAndroidUrl': secondFactor.viewConfig.androidUrl,
+                    'appIosUrl': secondFactor.viewConfig.iosUrl,
+                    'secondFactor': secondFactor.viewConfig
+                } only %}
+            {% else %}
+                {% include 'SurfnetStepupSelfServiceSelfServiceBundle::Registration/partial/secondFactor.html.twig' with {
+                    'type': type,
+                    'security': secondFactor.loaLevel,
+                    'url': path(secondFactor.route),
+                } only %}
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
