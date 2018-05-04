@@ -10,6 +10,13 @@
     {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email, expirationHelper) }}
     {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email, expirationHelper) }}
 
+    <div class="btn-toolbar token-button-group" role="toolbar">
+    {% if vettedSecondFactors.elements is not empty %}
+        <a class="btn btn-default pull-right" href="{{ path('ss_second_factor_test') }}">
+            {{ 'ss.second_factor.revoke.button.test'|trans }}
+        </a>
+    {% endif %}
+
     {% if registrationsLeft > 0
             and ((unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty)
             or availableSecondFactors is not empty)
@@ -17,11 +24,12 @@
         {% if (unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty) %}
             <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
         {% endif %}
-            <a href="{{ path('ss_registration_display_types') }}"
-               class="btn btn-primary m-t-2">
-                {{ 'ss.second_factor.list.button.register_second_factor'|trans }}
-            </a>
+        <a href="{{ path('ss_registration_display_types') }}"
+           class="btn btn-primary pull-right">
+            {{ 'ss.second_factor.list.button.register_second_factor'|trans }}
+        </a>
     {% endif %}
+    </div>
 
 {% endblock %}
 
@@ -67,17 +75,7 @@
                         </tr>
                     {% endfor %}
                     </tbody>
-                    {% if state == 'vetted' %}
-                    <tfoot>
-                        <tr>
-                            <td colspan="4">
-                                <a class="btn btn-mini btn-default pull-right" href="{{ path('ss_second_factor_test') }}">
-                                    {{ 'ss.second_factor.revoke.button.test'|trans }}
-                                </a>
-                            </td>
-                        </tr>
-                    </tfoot>
-                    {% endif %}
+
                 </table>
 
                 {% if hasExpired %}
