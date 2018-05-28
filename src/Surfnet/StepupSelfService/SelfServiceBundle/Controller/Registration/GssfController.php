@@ -22,6 +22,7 @@ use Exception;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,14 +35,32 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 final class GssfController extends Controller
 {
     /**
+     * Render the initiation form.
+     *
+     * This action has two parameters:
+     *
+     * - authenticationFailed (default false), will trigger an error message
+     *   and is used when a SAML failure response was received, for example
+     *   when the users cancelled the registration
+     *
+     * - proofOfPossessionFailed (default false), will trigger an error message
+     *   when possession was not proven, but the SAML response was successful
+     *
+     * @param Request $request
      * @param string $provider
      * @return array|Response
      */
-    public function initiateAction($provider)
+    public function initiateAction(Request $request, $provider)
     {
         $this->assertSecondFactorEnabled($provider);
 
-        return $this->renderInitiateForm($provider, []);
+        return $this->renderInitiateForm(
+            $provider,
+            [
+                'authenticationFailed' => (bool) $request->get('authenticationFailed'),
+                'proofOfPossessionFailed' => (bool) $request->get('proofOfPossessionFailed'),
+            ]
+        );
     }
 
     /**
@@ -105,8 +124,8 @@ final class GssfController extends Controller
                 sprintf('Could not process received Response, error: "%s"', $exception->getMessage())
             );
 
-            return $this->renderInitiateForm(
-                $provider->getName(),
+            return $this->redirectToInitiationForm(
+                $provider,
                 ['authenticationFailed' => true]
             );
         }
@@ -120,8 +139,8 @@ final class GssfController extends Controller
                 ($expectedResponseTo ? 'expected "' . $expectedResponseTo . '"' : ' no response expected')
             ));
 
-            return $this->renderInitiateForm(
-                $provider->getName(),
+            return $this->redirectToInitiationForm(
+                $provider,
                 ['authenticationFailed' => true]
             );
         }
@@ -156,9 +175,23 @@ final class GssfController extends Controller
 
         $this->getLogger()->error('Unable to prove GSSF possession');
 
-        return $this->renderInitiateForm(
-            $provider->getName(),
+        return $this->redirectToInitiationForm(
+            $provider,
             ['proofOfPossessionFailed' => true]
+        );
+    }
+
+    /**
+     * @param Provider $provider
+     * @param array $options
+     */
+    private function redirectToInitiationForm(Provider $provider, array $options)
+    {
+        return $this->redirectToRoute(
+            'ss_registration_gssf_initiate',
+            $options + [
+                'provider' => $provider->getName(),
+            ]
         );
     }
 
