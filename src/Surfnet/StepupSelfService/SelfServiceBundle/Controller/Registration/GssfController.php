@@ -35,6 +35,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 final class GssfController extends Controller
 {
     /**
+     * Render the initiation form.
+     *
+     * This action has two parameters:
+     *
+     * - authenticationFailed (default false), will trigger an error message
+     *   and is used when a SAML failure response was received, for example
+     *   when the users cancelled the registration
+     *
+     * - proofOfPossessionFailed (default false), will trigger an error message
+     *   when possession was not proven, but the SAML response was successful
+     *
      * @param Request $request
      * @param string $provider
      * @return array|Response
