@@ -19,10 +19,10 @@
 
     <hr>
 
-    {% if authenticationFailed is defined %}
+    {% if authenticationFailed == true %}
         <div class="alert alert-danger">{{ secondFactorConfig.getAuthnFailed() }}</div>
     {% endif %}
-    {% if proofOfPossessionFailed is defined %}
+    {% if proofOfPossessionFailed == true %}
         <div class="alert alert-danger">{{ secondFactorConfig.getPopFailed() }}</div>
     {% endif %}
     {{ form(form) }}
