@@ -16,6 +16,10 @@ security:
             pattern: ^/(info|health)$
             security: false
 
+        csp_report:
+            pattern: ^/csp/report$
+            security: false
+
         saml_based:
             saml: true
             logout:
