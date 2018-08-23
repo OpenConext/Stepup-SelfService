@@ -38,8 +38,6 @@ class AppKernel extends Kernel
             new Surfnet\SamlBundle\SurfnetSamlBundle(),
             new Surfnet\StepupBundle\SurfnetStepupBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
-            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-            new JMS\AopBundle\JMSAopBundle(),
             new Surfnet\StepupU2fBundle\SurfnetStepupU2fBundle(),
             new OpenConext\MonitorBundle\OpenConextMonitorBundle(),
         );
@@ -47,7 +45,6 @@ class AppKernel extends Kernel
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }
 
         return $bundles;
