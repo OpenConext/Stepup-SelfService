@@ -10,6 +10,7 @@ security:
 
         default:
             pattern: ^/authentication/(metadata|session-expired)$
+            logout_on_user_change: true
             anonymous: ~
 
         monitor:
@@ -22,9 +23,10 @@ security:
 
         saml_based:
             saml: true
+            logout_on_user_change: true
             logout:
                 path: /logout
-                target: %logout_redirect_url%
+                target: "%logout_redirect_url%"
                 invalidate_session: true
                 csrf_token_generator: security.csrf.token_manager
                 csrf_parameter: 't'
