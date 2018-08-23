@@ -118,6 +118,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             $configuration['view_config']['pop_failed'],
         ]);
         $viewConfigDefinition->addTag(self::VIEW_CONFIG_TAG_NAME);
+        $viewConfigDefinition->setPublic(true);
 
         $container->setDefinition('gssp.view_config.' . $provider, $viewConfigDefinition);
 
