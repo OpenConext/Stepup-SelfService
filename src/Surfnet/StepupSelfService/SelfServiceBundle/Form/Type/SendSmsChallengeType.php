@@ -20,6 +20,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
 use Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,7 +31,7 @@ class SendSmsChallengeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('country', 'choice', [
+            ->add('country', ChoiceType::class, [
                 'label'                          => /** @Ignore */ 'country code',
                 'horizontal_label_class'         => 'sr-only',
                 'required'                       => true,
@@ -37,7 +40,7 @@ class SendSmsChallengeType extends AbstractType
                     ['Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing', 'isPreferredChoice'],
                 'horizontal_input_wrapper_class' => 'foo',
             ])
-            ->add('subscriber', 'text', [
+            ->add('subscriber', TextType::class, [
                 'label'                          => /** @Ignore */ 'subscriberNumber',
                 'horizontal_label_class' => 'sr-only',
                 'required'                       => true,
@@ -48,7 +51,7 @@ class SendSmsChallengeType extends AbstractType
                     'placeholder' => '612345678',
                 ]
             ])
-            ->add('sendChallenge', 'submit', [
+            ->add('sendChallenge', SubmitType::class, [
                 'label' => 'ss.form.ss_send_sms_challenge.button.send_challenge',
                 'attr' => [ 'class' => 'btn btn-primary pull-right' ],
             ]);
@@ -62,7 +65,7 @@ class SendSmsChallengeType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'ss_send_sms_challenge';
     }

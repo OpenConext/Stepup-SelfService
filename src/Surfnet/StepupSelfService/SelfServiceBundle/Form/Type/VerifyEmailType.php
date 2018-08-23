@@ -19,6 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,7 +28,7 @@ class VerifyEmailType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('verificationCode', 'text', [
+        $builder->add('verificationCode', TextType::class, [
             'label' => 'ss.form.ss_verify_email.text.verification_code',
             'required' => true,
             'attr' => array(
@@ -34,7 +36,7 @@ class VerifyEmailType extends AbstractType
                 'autocomplete' => 'off',
             )
         ]);
-        $builder->add('verifyEmail', 'submit', [
+        $builder->add('verifyEmail', SubmitType::class, [
             'label' => 'ss.form.ss_verify_email.button.verify_email',
             'attr' => [ 'class' => 'btn btn-primary' ],
         ]);
@@ -47,7 +49,7 @@ class VerifyEmailType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'ss_verify_email';
     }

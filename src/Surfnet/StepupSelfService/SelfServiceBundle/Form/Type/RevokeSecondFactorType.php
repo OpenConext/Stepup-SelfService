@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,7 +27,7 @@ class RevokeSecondFactorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('revoke', 'submit', [
+        $builder->add('revoke', SubmitType::class, [
             'label' => 'ss.form.ss_revoke_second_factor.revoke',
             'attr' => [ 'class' => 'btn btn-danger pull-right' ],
         ]);
@@ -44,7 +45,7 @@ class RevokeSecondFactorType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'ss_revoke_second_factor';
     }
