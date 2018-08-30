@@ -1,4 +1,8 @@
 services:
+    # To be compatible with loading services from the container instead of using DI, TODO, Utilize DI throughout the
+    # application.
+    _defaults: { public: true }
+
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
         arguments:
