@@ -1,9 +1,22 @@
 @import "../../../../../../../vendor/mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Resources/public/less/bootstrap-fontawesome.less";
 
-
 // overriding the font path for correct loading.
 @FontAwesomePath: "/fonts";
 @fa-font-path: "/fonts";
+
+// This override of the mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Resources/public/less/font-awesome/path.less
+// prevents loading of the none existing woff2 file that resulted in four oh fours.
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('@{fa-font-path}/fontawesome-webfont.eot?v=@{fa-version}');
+    src: url('@{fa-font-path}/fontawesome-webfont.eot?#iefix&v=@{fa-version}') format('embedded-opentype'),
+    url('@{fa-font-path}/fontawesome-webfont.woff?v=@{fa-version}') format('woff'),
+    url('@{fa-font-path}/fontawesome-webfont.ttf?v=@{fa-version}') format('truetype'),
+    url('@{fa-font-path}/fontawesome-webfont.svg?v=@{fa-version}#fontawesomeregular') format('svg');
+    //  src: url('@{fa-font-path}/FontAwesome.otf') format('opentype'); // used when developing fonts
+    font-weight: normal;
+    font-style: normal;
+}
 
 .nav-header {
     padding-bottom: 9px;
