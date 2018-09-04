@@ -31,3 +31,6 @@ bin/extract-translations.sh
 Then, translate the strings using the web interface available at: https://ss-dev.stepup.coin.surf.net/app_dev.php/_trans/
 
 For more information about the JMSTranslationBundle, see http://jmsyst.com/bundles/JMSTranslationBundle
+
+## Release strategy
+Please read: https://github.com/OpenConext/Stepup-Deploy/wiki/Release-Management fro more information on the release strategy used in Stepup projects.
