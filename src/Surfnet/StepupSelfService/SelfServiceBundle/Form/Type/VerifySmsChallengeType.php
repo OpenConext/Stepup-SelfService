@@ -34,7 +34,7 @@ class VerifySmsChallengeType extends AbstractType
             'attr' => ['autofocus' => true],
             'label_attr' => ['class' => 'pull-right'],
         ]);
-        $builder->add('resendChallenge', 'anchor', [
+        $builder->add('resendChallenge', AnchorType::class, [
             'label' => 'ss.form.ss_verify_sms_challenge.button.resend_challenge',
             'attr' => [ 'class' => 'btn btn-default' ],
             'route' => 'ss_registration_sms_send_challenge',
