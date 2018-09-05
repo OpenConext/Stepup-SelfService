@@ -60,11 +60,11 @@ class YubikeyController extends Controller
                     );
                 }
             } elseif ($result->isOtpInvalid()) {
-                $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.otp_invalid'));
+                $this->addFlash('error', 'ss.verify_yubikey_command.otp.otp_invalid');
             } elseif ($result->didOtpVerificationFail()) {
-                $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
+                $this->addFlash('error', 'ss.verify_yubikey_command.otp.verification_error');
             } else {
-                $form->addError(new FormError('ss.prove_yubikey_possession.proof_of_possession_failed'));
+                $this->addFlash('error', 'ss.prove_yubikey_possession.proof_of_possession_failed');
             }
         }
 
