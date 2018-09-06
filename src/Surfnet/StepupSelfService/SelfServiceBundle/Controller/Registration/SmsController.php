@@ -51,15 +51,14 @@ class SmsController extends Controller
             $command->institution = $identity->institution;
 
             if ($otpRequestsRemaining === 0) {
-                $form->addError(new FormError('ss.prove_phone_possession.challenge_request_limit_reached'));
-
+                $this->addFlash('error', 'ss.prove_phone_possession.challenge_request_limit_reached');
                 return array_merge(['form' => $form->createView()], $viewVariables);
             }
 
             if ($service->sendChallenge($command)) {
                 return $this->redirect($this->generateUrl('ss_registration_sms_prove_possession'));
             } else {
-                $form->addError(new FormError('ss.prove_phone_possession.send_sms_challenge_failed'));
+                $this->addFlash('error', 'ss.prove_phone_possession.send_sms_challenge_failed');
             }
         }
 
@@ -115,13 +114,13 @@ class SmsController extends Controller
                     );
                 }
             } elseif ($result->wasIncorrectChallengeResponseGiven()) {
-                $form->addError(new FormError('ss.prove_phone_possession.incorrect_challenge_response'));
+                $this->addFlash('error', 'ss.prove_phone_possession.incorrect_challenge_response');
             } elseif ($result->hasChallengeExpired()) {
-                $form->addError(new FormError('ss.prove_phone_possession.challenge_expired'));
+                $this->addFlash('error', 'ss.prove_phone_possession.challenge_expired');
             } elseif ($result->wereTooManyAttemptsMade()) {
-                $form->addError(new FormError('ss.prove_phone_possession.too_many_attempts'));
+                $this->addFlash('error', 'ss.prove_phone_possession.too_many_attempts');
             } else {
-                $form->addError(new FormError('ss.prove_phone_possession.proof_of_possession_failed'));
+                $this->addFlash('error', 'ss.prove_phone_possession.proof_of_possession_failed');
             }
         }
 
