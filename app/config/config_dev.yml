@@ -31,7 +31,7 @@ monolog:
             type: stream
             handler: logfile
             level: NOTICE
-            path: %kernel.logs_dir%/%kernel.environment%.log
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
 
 assetic:
     use_controller: "%use_assetic_controller%"

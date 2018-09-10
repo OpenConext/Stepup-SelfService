@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,9 +41,9 @@ class YubikeyController extends Controller
         $command->identity = $identity->id;
         $command->institution = $identity->institution;
 
-        $form = $this->createForm('ss_prove_yubikey_possession', $command)->handleRequest($request);
+        $form = $this->createForm(ProveYubikeyPossessionType::class, $command)->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var YubikeySecondFactorService $service */
             $service = $this->get('surfnet_stepup_self_service_self_service.service.yubikey_second_factor');
             $result = $service->provePossession($command);
@@ -60,11 +61,11 @@ class YubikeyController extends Controller
                     );
                 }
             } elseif ($result->isOtpInvalid()) {
-                $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.otp_invalid'));
+                $this->addFlash('error', 'ss.verify_yubikey_command.otp.otp_invalid');
             } elseif ($result->didOtpVerificationFail()) {
-                $form->get('otp')->addError(new FormError('ss.verify_yubikey_command.otp.verification_error'));
+                $this->addFlash('error', 'ss.verify_yubikey_command.otp.verification_error');
             } else {
-                $form->addError(new FormError('ss.prove_yubikey_possession.proof_of_possession_failed'));
+                $this->addFlash('error', 'ss.prove_yubikey_possession.proof_of_possession_failed');
             }
         }
 

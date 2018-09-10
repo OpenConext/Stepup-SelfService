@@ -19,6 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,18 +28,18 @@ class VerifySmsChallengeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('challenge', 'text', [
+        $builder->add('challenge', TextType::class, [
             'label' => 'ss.form.ss_verify_sms_challenge.text.challenge',
             'required' => true,
             'attr' => ['autofocus' => true],
             'label_attr' => ['class' => 'pull-right'],
         ]);
-        $builder->add('resendChallenge', 'anchor', [
+        $builder->add('resendChallenge', AnchorType::class, [
             'label' => 'ss.form.ss_verify_sms_challenge.button.resend_challenge',
             'attr' => [ 'class' => 'btn btn-default' ],
             'route' => 'ss_registration_sms_send_challenge',
         ]);
-        $builder->add('verifyChallenge', 'submit', [
+        $builder->add('verifyChallenge', SubmitType::class, [
             'label' => 'ss.form.ss_verify_sms_challenge.button.verify_challenge',
             'attr' => [ 'class' => 'btn btn-primary pull-right' ],
         ]);
@@ -50,7 +52,7 @@ class VerifySmsChallengeType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'ss_verify_sms_challenge';
     }

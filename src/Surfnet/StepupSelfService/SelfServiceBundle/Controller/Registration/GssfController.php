@@ -25,6 +25,7 @@ use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\InitiateGssfType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -249,7 +250,7 @@ final class GssfController extends Controller
         $secondFactorConfig = $this->get("gssp.view_config.{$provider}");
 
         $form = $this->createForm(
-            'ss_initiate_gssf',
+            InitiateGssfType::class,
             null,
             [
                 'provider' => $provider,

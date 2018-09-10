@@ -23,6 +23,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService;
 use Surfnet\StepupU2fBundle\Dto\RegisterRequest;
 use Surfnet\StepupU2fBundle\Dto\RegisterResponse;
+use Surfnet\StepupU2fBundle\Form\Type\RegisterDeviceType;
 use Symfony\Component\HttpFoundation\Request;
 
 class U2fController extends Controller
@@ -50,7 +51,7 @@ class U2fController extends Controller
 
         $form = $this
             ->createForm(
-                'surfnet_stepup_u2f_register_device',
+                RegisterDeviceType::class,
                 $registerResponse,
                 [
                     'register_request' => $registerRequest,

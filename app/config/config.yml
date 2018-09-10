@@ -18,10 +18,9 @@ framework:
     templating:
         engines: ['twig']
     assets:
-        version: %asset_version%
+        version: "%asset_version%"
     default_locale:  "%default_locale%"
     trusted_hosts:   ~
-    trusted_proxies: %trusted_proxies%
     session:
         # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
@@ -85,11 +84,11 @@ services:
 
 surfnet_stepup_middleware_client:
     authorisation:
-        username: %middleware_credentials_username%
-        password: %middleware_credentials_password%
+        username: "%middleware_credentials_username%"
+        password: "%middleware_credentials_password%"
     url:
-        command_api: %middleware_url_command_api%
-        api: %middleware_url_api%
+        command_api: "%middleware_url_command_api%"
+        api: "%middleware_url_api%"
 
 surfnet_saml:
     hosted:
@@ -98,63 +97,63 @@ surfnet_saml:
         service_provider:
             enabled: true
             assertion_consumer_route: selfservice_serviceprovider_consume_assertion
-            public_key: %saml_sp_publickey%
-            private_key: %saml_sp_privatekey%
+            public_key: "%saml_sp_publickey%"
+            private_key: "%saml_sp_privatekey%"
         metadata:
             entity_id_route: selfservice_saml_metadata
-            public_key: %saml_metadata_publickey%
-            private_key: %saml_metadata_privatekey%
+            public_key: "%saml_metadata_publickey%"
+            private_key: "%saml_metadata_privatekey%"
     remote:
         identity_provider:
             enabled: true
-            entity_id: %saml_remote_idp_entity_id%
-            sso_url: %saml_remote_idp_sso_url%
-            certificate: %saml_remote_idp_certificate%
+            entity_id: "%saml_remote_idp_entity_id%"
+            sso_url: "%saml_remote_idp_sso_url%"
+            certificate: "%saml_remote_idp_certificate%"
 
 surfnet_stepup:
     logging:
         application_name: self-service
     loa_definition:
-        loa1: %stepup_loa_loa1%
-        loa2: %stepup_loa_loa2%
-        loa3: %stepup_loa_loa3%
+        loa1: "%stepup_loa_loa1%"
+        loa2: "%stepup_loa_loa2%"
+        loa3: "%stepup_loa_loa3%"
     sms:
-        originator: %sms_originator%
-        otp_expiry_interval: %sms_otp_expiry_interval%
-        maximum_otp_requests: %sms_maximum_otp_requests%
+        originator: "%sms_originator%"
+        otp_expiry_interval: "%sms_otp_expiry_interval%"
+        maximum_otp_requests: "%sms_maximum_otp_requests%"
     gateway_api:
-        url: %gateway_api_url%
+        url: "%gateway_api_url%"
         credentials:
-            username: %gateway_api_username%
-            password: %gateway_api_password%
+            username: "%gateway_api_username%"
+            password: "%gateway_api_password%"
     attach_request_id_injector_to:
         - surfnet_stepup.guzzle.gateway_api
         - surfnet_stepup_middleware_client.guzzle.api
         - surfnet_stepup_middleware_client.guzzle.commands
     locale_cookie:
-        domain: %locale_cookie_domain%
+        domain: "%locale_cookie_domain%"
 
 jms_translation:
-    locales: %locales%
+    locales: "%locales%"
     configs:
         default:
-            dirs: [%kernel.root_dir%/../src, %kernel.root_dir%, %kernel.root_dir%/../vendor/surfnet]
-            output_dir: %kernel.root_dir%/Resources/translations
+            dirs: ["%kernel.root_dir%/../src", "%kernel.root_dir%", "%kernel.root_dir%/../vendor/surfnet"]
+            output_dir: "%kernel.root_dir%/Resources/translations"
             ignored_domains: []
             excluded_names: ['*TestCase.php', '*Test.php']
             excluded_dirs: [cache, data, logs, Tests]
             extractors: []
 
 surfnet_stepup_self_service_self_service:
-    enabled_second_factors: %enabled_second_factors%
-    enabled_generic_second_factors: %enabled_generic_second_factors%
+    enabled_second_factors: "%enabled_second_factors%"
+    enabled_generic_second_factors: "%enabled_generic_second_factors%"
     second_factor_test_identity_provider:
-        entity_id: '%second_factor_test_idp_entity_id%'
-        sso_url: '%second_factor_test_idp_sso_url%'
-        certificate: '%second_factor_test_idp_certificate%'
+        entity_id: "%second_factor_test_idp_entity_id%"
+        sso_url: "%second_factor_test_idp_sso_url%"
+        certificate: "%second_factor_test_idp_certificate%"
     session_lifetimes:
         max_absolute_lifetime: "%session_max_absolute_lifetime%"
         max_relative_lifetime: "%session_max_relative_lifetime%"
 
 surfnet_stepup_u2f:
-    app_id: %u2f_app_id%
+    app_id: "%u2f_app_id%"
