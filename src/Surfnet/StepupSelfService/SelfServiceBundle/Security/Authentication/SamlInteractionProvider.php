@@ -87,7 +87,7 @@ class SamlInteractionProvider
 
         $this->samlAuthenticationStateHandler->setRequestId($authnRequest->getRequestId());
 
-        return $this->redirectBinding->createRedirectResponseFor($authnRequest);
+        return $this->redirectBinding->createResponseFor($authnRequest);
     }
 
     /**

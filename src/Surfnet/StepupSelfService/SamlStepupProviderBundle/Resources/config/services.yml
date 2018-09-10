@@ -1,4 +1,8 @@
 services:
+    # To be compatible with loading services from the container instead of using DI, TODO, Utilize DI throughout the
+    # application.
+    _defaults: { public: true }
+
     gssp.provider_repository:
         class: Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository
 

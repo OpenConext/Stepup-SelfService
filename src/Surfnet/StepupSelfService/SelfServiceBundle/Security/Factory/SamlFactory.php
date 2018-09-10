@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Factory;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 
 class SamlFactory implements SecurityFactoryInterface
 {
@@ -30,19 +30,19 @@ class SamlFactory implements SecurityFactoryInterface
         $providerId = 'security.authentication.provider.saml.' . $id;
         $container->setDefinition(
             $providerId,
-            new DefinitionDecorator('self_service.security.authentication.provider.saml')
+            new ChildDefinition('self_service.security.authentication.provider.saml')
         );
 
         $listenerId = 'security.authentication.listener.saml.' . $id;
         $container->setDefinition(
             $listenerId,
-            new DefinitionDecorator('self_service.security.authentication.listener')
+            new ChildDefinition('self_service.security.authentication.listener')
         );
 
         $cookieHandlerId = 'security.logout.handler.cookie_clearing.' . $id;
         $cookieHandler   = $container->setDefinition(
             $cookieHandlerId,
-            new DefinitionDecorator('security.logout.handler.cookie_clearing')
+            new ChildDefinition('security.logout.handler.cookie_clearing')
         );
         $cookieHandler->addArgument([]);
 

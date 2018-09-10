@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,7 +27,7 @@ class ProveYubikeyPossessionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('otp', 'text', [
+        $builder->add('otp', TextType::class, [
             'label' => /** @Ignore */ false,
             'required' => true,
             'widget_addon_prepend' => [
@@ -46,7 +47,7 @@ class ProveYubikeyPossessionType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'ss_prove_yubikey_possession';
     }

@@ -20,6 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Command\SwitchLocaleCommand;
+use Surfnet\StepupBundle\Form\Type\SwitchLocaleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -55,7 +56,7 @@ final class LocaleController extends Controller
         $command->identityId = $identity->id;
 
         $form = $this->createForm(
-            'stepup_switch_locale',
+            SwitchLocaleType::class,
             $command,
             ['route' => 'ss_switch_locale', 'route_parameters' => ['return_url' => $returnUrl]]
         );
