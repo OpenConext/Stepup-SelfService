@@ -19,9 +19,12 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\TestDouble\Service;
 
 use Surfnet\StepupBundle\Service\Exception\TooManyChallengesRequestedException;
+use Surfnet\StepupBundle\Service\SmsSecondFactor\OtpVerification;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 
@@ -33,10 +36,19 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceIn
  */
 class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 {
+    /**
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
+     */
+    private $commandService;
 
     private $maxOtpRequestCount = 3;
     private $maxOtpRequestRemaining = 3;
     private $verificationState = true;
+
+    public function __construct(CommandService $commandService)
+    {
+        $this->commandService = $commandService;
+    }
 
     /**
      * @return int
@@ -64,7 +76,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 
     public function clearSmsVerificationState()
     {
-        return $this->verificationState = false;
+        return $this->verificationState = true;
     }
 
     /**
@@ -88,6 +100,17 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
      */
     public function provePossession(VerifySmsChallengeCommand $challengeCommand)
     {
-        return ProofOfPossessionResult::secondFactorCreated(Uuid::generate());
+
+        OtpVerification::foundMatch($challengeCommand->identity);
+
+        $command = new ProvePhonePossessionCommand();
+        $command->identityId = $challengeCommand->identity;
+        $command->secondFactorId = Uuid::generate();
+        // Set an arbitrary international phone number to satisfy validation later on in the process
+        $command->phoneNumber = '+31 (0) 612345678';
+
+        $this->commandService->execute($command);
+
+        return ProofOfPossessionResult::secondFactorCreated($command->secondFactorId);
     }
 }
