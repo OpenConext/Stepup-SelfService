@@ -20,6 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,7 +110,7 @@ class SecondFactorController extends Controller
         $command->identity = $identity;
         $command->secondFactor = $secondFactor;
 
-        $form = $this->createForm('ss_revoke_second_factor', $command)->handleRequest($request);
+        $form = $this->createForm(RevokeSecondFactorType::class, $command)->handleRequest($request);
 
         if ($form->isValid()) {
             /** @var FlashBagInterface $flashBag */
