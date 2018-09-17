@@ -23,8 +23,8 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\SendSmsChallengeType;
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifySmsChallengeType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 class SmsController extends Controller
@@ -95,7 +95,7 @@ class SmsController extends Controller
         $command = new VerifySmsChallengeCommand();
         $command->identity = $identity->id;
 
-        $form = $this->createForm('ss_verify_sms_challenge', $command)->handleRequest($request);
+        $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
 
         if ($form->isValid()) {
             $result = $service->provePossession($command);
