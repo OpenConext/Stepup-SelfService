@@ -1,0 +1,6 @@
+
+# Use this service definition file to override services in the test environment. For example to mock certain services
+
+services:
+  surfnet_stepup_self_service_self_service.service.sms_second_factor:
+    class: Surfnet\StepupSelfService\SelfServiceBundle\Tests\TestDouble\Service\SmsSecondFactorService

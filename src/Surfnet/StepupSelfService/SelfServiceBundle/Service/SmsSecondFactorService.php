@@ -22,7 +22,6 @@ use Surfnet\StepupBundle\Command\SendSmsChallengeCommand as StepupSendSmsChallen
 use Surfnet\StepupBundle\Command\VerifyPossessionOfPhoneCommand;
 use Surfnet\StepupBundle\Service\Exception\TooManyChallengesRequestedException;
 use Surfnet\StepupBundle\Service\SmsSecondFactorService as StepupSmsSecondFactorService;
-use Surfnet\StepupBundle\Value\PhoneNumber\CountryCode;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
@@ -35,7 +34,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) - Quite some commands and VOs are used here.
  */
-class SmsSecondFactorService
+class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 {
     /**
      * @var \Surfnet\StepupBundle\Service\SmsSecondFactorService
