@@ -51,7 +51,7 @@ class BuiltInToken implements AvailableTokenInterface
     private function __construct($type)
     {
         if (!isset($this->supportedTypes[$type])) {
-            throw InvalidArgumentException::invalidType('valid second factor type', 'type', $type);
+            throw InvalidArgumentException::invalidType('Invalid second factor type', 'type', $type);
         }
         $this->type = $type;
     }
