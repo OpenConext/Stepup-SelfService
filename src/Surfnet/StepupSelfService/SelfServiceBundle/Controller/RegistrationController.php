@@ -36,8 +36,10 @@ class RegistrationController extends Controller
      */
     public function displaySecondFactorTypesAction()
     {
+        $institution = $this->getIdentity()->institution;
+
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
-            ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
+            ->getInstitutionConfigurationOptionsFor($institution);
 
         $identity = $this->getIdentity();
 
@@ -49,6 +51,7 @@ class RegistrationController extends Controller
 
         $secondFactors = $service->getSecondFactorsForIdentity(
             $identity,
+            $institution,
             $allSecondFactors,
             $institutionConfigurationOptions->allowedSecondFactors,
             $institutionConfigurationOptions->numberOfTokensPerIdentity
