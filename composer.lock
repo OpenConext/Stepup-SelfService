@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "110fd2e0a66b37370aaf7ad10df0e32c",
+    "content-hash": "bcd381864150dc6cc24839629a12a454",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -5043,6 +5043,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "surfnet/stepup-middleware-client-bundle": 20,
         "surfnet/stepup-u2f-bundle": 20
     },
     "prefer-stable": false,
