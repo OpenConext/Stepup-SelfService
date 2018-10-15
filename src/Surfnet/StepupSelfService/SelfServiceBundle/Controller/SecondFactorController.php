@@ -35,8 +35,9 @@ class SecondFactorController extends Controller
     public function listAction()
     {
         $identity = $this->getIdentity();
+        $institution = $this->getIdentity()->institution;
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
-            ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
+            ->getInstitutionConfigurationOptionsFor($institution);
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
         // Get all available second factors from the config.
@@ -46,6 +47,7 @@ class SecondFactorController extends Controller
 
         $secondFactors = $service->getSecondFactorsForIdentity(
             $identity,
+            $institution,
             $allSecondFactors,
             $institutionConfigurationOptions->allowedSecondFactors,
             $institutionConfigurationOptions->numberOfTokensPerIdentity
@@ -73,10 +75,11 @@ class SecondFactorController extends Controller
     public function revokeAction(Request $request, $state, $secondFactorId)
     {
         $identity = $this->getIdentity();
+        $institution = $identity->institution;
 
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-        if (!$service->identityHasSecondFactorOfStateWithId($identity->id, $state, $secondFactorId)) {
+        if (!$service->identityHasSecondFactorOfStateWithId($identity->id, $state, $secondFactorId, $institution)) {
             $this->get('logger')->error(sprintf(
                 'Identity "%s" tried to revoke "%s" second factor "%s", but does not own that second factor',
                 $identity->id,
