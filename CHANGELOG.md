@@ -1,5 +1,11 @@
 # Changelog
 
+## Develop
+
+**Improvments for testing**
+* Ensure middleware API is used in test mode #157
+* Use 'shared' certificates and private keys when in test mode #157
+
 ## 2.10.1
 **Bugfixes**
 * Prevent form loading issue #155
