@@ -25,11 +25,12 @@ class EntryPointController extends Controller
     public function decideSecondFactorFlowAction()
     {
         $identity = $this->getIdentity();
+        $institution = $identity->institution;
 
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
-        if ($service->doSecondFactorsExistForIdentity($identity->id)) {
+        if ($service->doSecondFactorsExistForIdentity($identity->id, $institution)) {
             return $this->redirect($this->generateUrl('ss_second_factor_list'));
         } else {
             return $this->redirect(
