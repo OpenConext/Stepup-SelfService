@@ -253,30 +253,6 @@ class SecondFactorService
     }
 
     /**
-     * @param string $secondFactorId
-     * @param string $identityId
-     * @return null|string
-     */
-    public function getRegistrationCode($secondFactorId, $identityId)
-    {
-        $query = (new VerifiedSecondFactorSearchQuery())
-            ->setIdentityId($identityId)
-            ->setSecondFactorId($secondFactorId);
-
-        /** @var VerifiedSecondFactor[] $verifiedSecondFactors */
-        $verifiedSecondFactors = $this->secondFactors->searchVerified($query)->getElements();
-
-        switch (count($verifiedSecondFactors)) {
-            case 0:
-                return null;
-            case 1:
-                return reset($verifiedSecondFactors)->registrationCode;
-            default:
-                throw new LogicException('Searching by second factor ID cannot result in multiple results.');
-        }
-    }
-
-    /**
      * @param array $allSecondFactors
      * @param UnverifiedSecondFactorCollection $unverifiedCollection
      * @param VerifiedSecondFactorCollection $verifiedCollection
