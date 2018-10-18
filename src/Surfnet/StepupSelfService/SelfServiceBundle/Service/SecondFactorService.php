@@ -176,14 +176,14 @@ class SecondFactorService
      * Returns the given registrant's verified second factors.
      *
      * @param string $identityId
-     * @param string $insitution
+     * @param string $actorInstitution
      * @return VerifiedSecondFactorCollection
      */
-    public function findVerifiedByIdentity($identityId, $insitution)
+    public function findVerifiedByIdentity($identityId, $actorInstitution)
     {
         $query = new VerifiedSecondFactorSearchQuery();
         $query->setIdentityId($identityId);
-        $query->setInstitution($insitution);
+        $query->setActorInstitution($actorInstitution);
         return $this->secondFactors->searchVerified($query);
     }
 
