@@ -183,6 +183,8 @@ class SecondFactorService
     {
         $query = new VerifiedSecondFactorSearchQuery();
         $query->setIdentityId($identityId);
+        // In self service the actor equals the identity of the user.
+        $query->setActorId($identityId);
         $query->setActorInstitution($actorInstitution);
         return $this->secondFactors->searchVerified($query);
     }
