@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bcd381864150dc6cc24839629a12a454",
+    "content-hash": "7f61bbd4f41ce298c17b691a8e897a0d",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2248,16 +2248,16 @@
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "2.4.4",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "d2aa7f06f9f56456d1b852b7ebca396686d0c51e"
+                "reference": "78f4d4d0d9875ca17f3c3087c2153db3e690f3e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/d2aa7f06f9f56456d1b852b7ebca396686d0c51e",
-                "reference": "d2aa7f06f9f56456d1b852b7ebca396686d0c51e",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/78f4d4d0d9875ca17f3c3087c2153db3e690f3e0",
+                "reference": "78f4d4d0d9875ca17f3c3087c2153db3e690f3e0",
                 "shasum": ""
             },
             "require": {
@@ -2278,12 +2278,12 @@
             },
             "require-dev": {
                 "matthiasnoback/symfony-config-test": "0.*",
-                "mockery/mockery": "0.9.*",
+                "mockery/mockery": "^1.2",
                 "phpmd/phpmd": "^2.0",
-                "phpunit/phpunit": "^4.0",
+                "phpunit/phpunit": "^4.0|^5.0|^6.0",
                 "sebastian/phpcpd": "^2.0",
-                "sensiolabs/security-checker": "^2.0",
-                "squizlabs/php_codesniffer": "^1.0"
+                "sensiolabs/security-checker": "^5.0",
+                "squizlabs/php_codesniffer": "^3.0"
             },
             "type": "library",
             "autoload": {
@@ -2297,7 +2297,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2018-09-04T10:01:29+00:00"
+            "time": "2019-01-21T10:46:44+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -5043,7 +5043,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "surfnet/stepup-middleware-client-bundle": 20,
         "surfnet/stepup-u2f-bundle": 20
     },
     "prefer-stable": false,
