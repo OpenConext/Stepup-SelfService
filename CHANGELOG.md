@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.0 FGA (fine grained authorization)
+
+The new fine grained authorization logic will allow Ra's from other institutions to accredidate RA's on behalf of another organisation. This is determined based on the institution configuration. https://github.com/OpenConext/Stepup-Deploy/wiki/rfc-fine-grained-authorization/b6852587baee698cccae7ebc922f29552420a296
+
+**Features & Bugfixes**
+The changes to SelfService in regards to the FGA changes only where to remain compatible with API changes made for Stepup-RA. No new features have been added.
+
 ## 2.10.4
 **Improvement**
 * Optimized the PSR-4 autoload configuration
