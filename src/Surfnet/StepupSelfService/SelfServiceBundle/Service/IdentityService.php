@@ -199,7 +199,7 @@ class IdentityService implements UserProviderInterface
      */
     public function processCommand($command)
     {
-        $messageTemplate = 'Exception when saving Identity[%s]: with command "%s", error: "%s"';
+        $messageTemplate = 'Exception when saving Identity "%s": with command "%s", error: "%s"';
 
         try {
             $result = $this->commandService->execute($command);
