@@ -13,6 +13,9 @@
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen, print" />
     {% endstylesheets %}
 {% endblock head_style %}
+{% block head_bottom %}
+    <base href="{{ app.request.schemeAndHttpHost ~ app.request.baseUrl }}">
+{% endblock head_bottom %}
 
 {% block navbar %}
     {#{{ mopa_bootstrap_navbar('frontendNavbar') }}#}
