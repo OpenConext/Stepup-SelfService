@@ -1,6 +1,7 @@
 /web/bundles/
 /web/app_dev.php
 /web/app_dev.php.dist
+/web/app_test.php
 /web/js
 /web/css
 /app/bootstrap.php.cache

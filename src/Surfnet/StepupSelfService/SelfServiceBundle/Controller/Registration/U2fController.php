@@ -82,7 +82,7 @@ class U2fController extends Controller
 
         $form = $this
             ->createForm(
-                'surfnet_stepup_u2f_register_device',
+                RegisterDeviceType::class,
                 $registerResponse,
                 [
                     'register_request' => $registerRequest,

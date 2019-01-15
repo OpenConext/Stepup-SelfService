@@ -13,6 +13,9 @@
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen, print" />
     {% endstylesheets %}
 {% endblock head_style %}
+{% block head_bottom %}
+    <base href="{{ app.request.schemeAndHttpHost ~ app.request.baseUrl }}">
+{% endblock head_bottom %}
 
 {% block navbar %}
     {#{{ mopa_bootstrap_navbar('frontendNavbar') }}#}
@@ -64,7 +67,7 @@
                     <hr>
                     <ul class="nav nav-pills">
                         <li><a href="{{ path("ss_entry_point") }}">Home</a></li>
-                        <li><a href="{{ global_view_parameters.supportUrl }}">{{ 'ss.support_url_text'|trans }}</a></li>
+                        <li><a href="{{ global_view_parameters.supportUrl }}" target="_blank">{{ 'ss.support_url_text'|trans }}</a></li>
                     </ul>
                 </div>
             </div>

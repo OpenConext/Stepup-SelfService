@@ -26,6 +26,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RegistrationController extends Controller
@@ -165,8 +166,6 @@ class RegistrationController extends Controller
     /**
      * @param $secondFactorId
      * @return Response
-     *
-     * @SuppressWarnings(PHPMD.ExitExpression) MPDF requires bypassing Symfony, so we exit() when MPDF is done.
      */
     public function registrationPdfAction($secondFactorId)
     {
@@ -178,9 +177,26 @@ class RegistrationController extends Controller
                 'tempDir' => sys_get_temp_dir(),
             )
         );
-        $mpdf->WriteHTML($content);
-        $mpdf->Output('registration-code.pdf', MpdfDestination::DOWNLOAD);
+        $mpdf->setLogger($this->get('logger'));
 
-        exit;
+        $mpdf->WriteHTML($content);
+        $output = $mpdf->Output('registration-code.pdf', MpdfDestination::STRING_RETURN);
+
+        $response = new Response($output);
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'registration-code.pdf'
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+        $response->headers->set('Content-Description', 'File Transfer');
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Cache-Control', 'public, must-revalidate, max-age=0');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
+        $response->headers->set('Last-Modified', '' . gmdate('D, d M Y H:i:s') . ' GMT');
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        return $response;
     }
 }
