@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.10.4
+**Improvement**
+* Optimized the PSR-4 autoload configuration
+
 ## 2.10.3
 **Bugfix**
 * Rebuilt the Composer lockfile
