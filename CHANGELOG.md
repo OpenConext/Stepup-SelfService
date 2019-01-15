@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.10.3
+**Bugfix**
+* Rebuilt the Composer lockfile
+
 ## 2.10.2
 **Improvements**
 * Open help in new tab #165
