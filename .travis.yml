@@ -21,11 +21,6 @@ cache:
 
 before_script:
   - phpenv config-add .travis.php.ini
-  # TODO: cleanup after FGA implementation!
-  # Use a travis composer.json version, that not uses the symlink solution for the middleware bundle, but an installation of a feature branch
-  - mv composer.json.travis composer.json
-  - mv composer.lock.travis composer.lock
-  # TODO: end of FGA specific build settings
   - composer self-update
   - composer install --prefer-dist
 
