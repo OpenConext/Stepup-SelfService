@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f61bbd4f41ce298c17b691a8e897a0d",
+    "content-hash": "d74b7c4729c1aff7b51607b41981524f",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2248,16 +2248,16 @@
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "3.0.0",
+            "version": "dev-feature/fine-grained-authorization",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "78f4d4d0d9875ca17f3c3087c2153db3e690f3e0"
+                "reference": "00f0ff925fabac085efe28fbe370d81876661d9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/78f4d4d0d9875ca17f3c3087c2153db3e690f3e0",
-                "reference": "78f4d4d0d9875ca17f3c3087c2153db3e690f3e0",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/00f0ff925fabac085efe28fbe370d81876661d9c",
+                "reference": "00f0ff925fabac085efe28fbe370d81876661d9c",
                 "shasum": ""
             },
             "require": {
@@ -2278,12 +2278,12 @@
             },
             "require-dev": {
                 "matthiasnoback/symfony-config-test": "0.*",
-                "mockery/mockery": "^1.2",
+                "mockery/mockery": "0.9.*",
                 "phpmd/phpmd": "^2.0",
-                "phpunit/phpunit": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^4.0",
                 "sebastian/phpcpd": "^2.0",
-                "sensiolabs/security-checker": "^5.0",
-                "squizlabs/php_codesniffer": "^3.0"
+                "sensiolabs/security-checker": "^2.0",
+                "squizlabs/php_codesniffer": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -2292,12 +2292,15 @@
                     "Surfnet\\StepupMiddlewareClient\\": "src/Surfnet/StepupMiddlewareClient/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2019-01-21T10:46:44+00:00"
+            "support": {
+                "source": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/tree/feature/fine-grained-authorization",
+                "issues": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/issues"
+            },
+            "time": "2018-10-16T07:19:05+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -5043,6 +5046,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "surfnet/stepup-middleware-client-bundle": 20,
         "surfnet/stepup-u2f-bundle": 20
     },
     "prefer-stable": false,
