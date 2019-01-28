@@ -37,6 +37,7 @@ twig:
     exception_controller: SurfnetStepupSelfServiceSelfServiceBundle:Exception:show
     globals:
         global_view_parameters: "@self_service.service.global_view_parameters"
+        root_path: "%kernel.root_dir%"
 
 # Assetic Configuration
 assetic:

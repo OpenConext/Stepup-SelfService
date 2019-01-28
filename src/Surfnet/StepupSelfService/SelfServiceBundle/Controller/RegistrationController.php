@@ -129,6 +129,60 @@ class RegistrationController extends Controller
      */
     public function registrationEmailSentAction($secondFactorId)
     {
+        $parameters = $this->buildRegistrationActionParameters($secondFactorId);
+
+        return $this->render(
+            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
+            $parameters
+        );
+    }
+
+    /**
+     * @param $secondFactorId
+     * @return Response
+     */
+    public function registrationPdfAction($secondFactorId)
+    {
+        $parameters = $this->buildRegistrationActionParameters($secondFactorId);
+
+        $response = $this->render(
+            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSentPdf.html.twig',
+            $parameters
+        );
+        $content = $response->getContent();
+
+
+        $mpdf = new Mpdf(
+            array(
+                'tempDir' => sys_get_temp_dir(),
+            )
+        );
+        $mpdf->setLogger($this->get('logger'));
+
+        $mpdf->WriteHTML($content);
+        $output = $mpdf->Output('registration-code.pdf', MpdfDestination::STRING_RETURN);
+
+        $response = new Response($output);
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'registration-code.pdf'
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+        $response->headers->set('Content-Description', 'File Transfer');
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Cache-Control', 'public, must-revalidate, max-age=0');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
+        $response->headers->set('Last-Modified', '' . gmdate('D, d M Y H:i:s') . ' GMT');
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        return $response;
+    }
+
+
+    private function buildRegistrationActionParameters($secondFactorId)
+    {
         $identity = $this->getIdentity();
 
         /** @var \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor $secondFactor */
@@ -160,46 +214,6 @@ class RegistrationController extends Controller
             $parameters['ras'] = $raService->listRas($identity->institution);
         }
 
-        return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
-            $parameters
-        );
-    }
-
-    /**
-     * @param $secondFactorId
-     * @return Response
-     */
-    public function registrationPdfAction($secondFactorId)
-    {
-        $content = $this->registrationEmailSentAction($secondFactorId)
-            ->getContent();
-
-        $mpdf = new Mpdf(
-            array(
-                'tempDir' => sys_get_temp_dir(),
-            )
-        );
-        $mpdf->setLogger($this->get('logger'));
-
-        $mpdf->WriteHTML($content);
-        $output = $mpdf->Output('registration-code.pdf', MpdfDestination::STRING_RETURN);
-
-        $response = new Response($output);
-        $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'registration-code.pdf'
-        );
-
-        $response->headers->set('Content-Disposition', $disposition);
-        $response->headers->set('Content-Description', 'File Transfer');
-        $response->headers->set('Content-Transfer-Encoding', 'binary');
-        $response->headers->set('Cache-Control', 'public, must-revalidate, max-age=0');
-        $response->headers->set('Pragma', 'public');
-        $response->headers->set('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
-        $response->headers->set('Last-Modified', '' . gmdate('D, d M Y H:i:s') . ' GMT');
-        $response->headers->set('Content-Type', 'application/pdf');
-
-        return $response;
+        return $parameters;
     }
 }
