@@ -7,6 +7,10 @@ The new fine grained authorization logic will allow Ra's from other institutions
 **Features & Bugfixes**
 The changes to SelfService in regards to the FGA changes only where to remain compatible with API changes made for Stepup-RA. No new features have been added.
 
+## 2.10.5
+**Bugfix**
+* Create a pdf base template to support local url's #168
+
 ## 2.10.4
 **Improvement**
 * Optimized the PSR-4 autoload configuration
