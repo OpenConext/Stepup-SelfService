@@ -32,3 +32,4 @@ branches:
   only:
     - master
     - develop
+    - feature/fine-grained-authorization

@@ -116,12 +116,13 @@ class SecondFactorService
      * is irrelevant.
      *
      * @param string $identityId
+     * @param string $institution
      * @return bool
      */
-    public function doSecondFactorsExistForIdentity($identityId)
+    public function doSecondFactorsExistForIdentity($identityId, $institution)
     {
         $unverifiedSecondFactors = $this->findUnverifiedByIdentity($identityId);
-        $verifiedSecondFactors = $this->findVerifiedByIdentity($identityId);
+        $verifiedSecondFactors = $this->findVerifiedByIdentity($identityId, $institution);
         $vettedSecondFactors = $this->findVettedByIdentity($identityId);
 
         return $unverifiedSecondFactors->getTotalItems() +
@@ -129,14 +130,14 @@ class SecondFactorService
                $vettedSecondFactors->getTotalItems() > 0;
     }
 
-    public function identityHasSecondFactorOfStateWithId($identityId, $state, $secondFactorId)
+    public function identityHasSecondFactorOfStateWithId($identityId, $state, $secondFactorId, $institution)
     {
         switch ($state) {
             case 'unverified':
                 $secondFactors = $this->findUnverifiedByIdentity($identityId);
                 break;
             case 'verified':
-                $secondFactors = $this->findVerifiedByIdentity($identityId);
+                $secondFactors = $this->findVerifiedByIdentity($identityId, $institution);
                 break;
             case 'vetted':
                 $secondFactors = $this->findVettedByIdentity($identityId);
@@ -175,13 +176,20 @@ class SecondFactorService
      * Returns the given registrant's verified second factors.
      *
      * @param string $identityId
+     * @param string $actorInstitution
      * @return VerifiedSecondFactorCollection
      */
-    public function findVerifiedByIdentity($identityId)
+    public function findVerifiedByIdentity($identityId, $actorInstitution)
     {
-        return $this->secondFactors->searchVerified(
-            (new VerifiedSecondFactorSearchQuery())->setIdentityId($identityId)
-        );
+        $query = new VerifiedSecondFactorSearchQuery();
+        $query->setIdentityId($identityId);
+        // In self service the actor equals the identity of the user.
+        $query->setActorId($identityId);
+        $query->setActorInstitution($actorInstitution);
+        $query->setInstitution($actorInstitution);
+        // Actor and identity are equal in SelfService.
+        $query->setActorId($identityId);
+        return $this->secondFactors->searchVerified($query);
     }
 
     /**
@@ -250,30 +258,6 @@ class SecondFactorService
     }
 
     /**
-     * @param string $secondFactorId
-     * @param string $identityId
-     * @return null|string
-     */
-    public function getRegistrationCode($secondFactorId, $identityId)
-    {
-        $query = (new VerifiedSecondFactorSearchQuery())
-            ->setIdentityId($identityId)
-            ->setSecondFactorId($secondFactorId);
-
-        /** @var VerifiedSecondFactor[] $verifiedSecondFactors */
-        $verifiedSecondFactors = $this->secondFactors->searchVerified($query)->getElements();
-
-        switch (count($verifiedSecondFactors)) {
-            case 0:
-                return null;
-            case 1:
-                return reset($verifiedSecondFactors)->registrationCode;
-            default:
-                throw new LogicException('Searching by second factor ID cannot result in multiple results.');
-        }
-    }
-
-    /**
      * @param array $allSecondFactors
      * @param UnverifiedSecondFactorCollection $unverifiedCollection
      * @param VerifiedSecondFactorCollection $verifiedCollection
@@ -310,6 +294,7 @@ class SecondFactorService
 
     /**
      * @param $identity
+     * @param string $institution
      * @param $allSecondFactors
      * @param $allowedSecondFactors
      * @param $maximumNumberOfRegistrations
@@ -317,12 +302,13 @@ class SecondFactorService
      */
     public function getSecondFactorsForIdentity(
         $identity,
+        $institution,
         $allSecondFactors,
         $allowedSecondFactors,
         $maximumNumberOfRegistrations
     ) {
         $unverified = $this->findUnverifiedByIdentity($identity->id);
-        $verified = $this->findVerifiedByIdentity($identity->id);
+        $verified = $this->findVerifiedByIdentity($identity->id, $institution);
         $vetted = $this->findVettedByIdentity($identity->id);
         // Determine which Second Factors are still available for registration.
         $available = $this->determineAvailable($allSecondFactors, $unverified, $verified, $vetted);
