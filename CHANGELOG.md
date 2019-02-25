@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.10.6
+**Bugfix**
+ * Create a pdf base template to support local url's #168
+
+## 2.10.5
+Do not use this release, it contains unreleased fine grained authorization changes.
+
 ## 2.10.4
 **Improvement**
 * Optimized the PSR-4 autoload configuration
