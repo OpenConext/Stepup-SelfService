@@ -1,4 +1,7 @@
 # Changelog
+## 2.10.7
+**Improvement**
+* Install security updates
 
 ## 2.10.6
 **Bugfix**
