@@ -19,7 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuery;
-use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorSearchQuery;
+use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorOfIdentitySearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Dto\CollectionDto;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RevokeOwnSecondFactorCommand;
@@ -181,7 +181,7 @@ class SecondFactorService
      */
     public function findVerifiedByIdentity($identityId, $actorInstitution)
     {
-        $query = new VerifiedSecondFactorSearchQuery();
+        $query = new VerifiedSecondFactorOfIdentitySearchQuery();
         $query->setIdentityId($identityId);
         return $this->secondFactors->searchOwnVerified($query);
     }
