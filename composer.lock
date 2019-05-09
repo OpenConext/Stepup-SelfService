@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "2bb70d27e1f4aa52aa09d6d53fd6ac05",
@@ -2346,16 +2346,16 @@
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "3.0.16",
+            "version": "3.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "ab6f166965fa6cc8467034275f28db621e84885a"
+                "reference": "2a3f609a90370bc68ae49e827270dcc6411709d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/ab6f166965fa6cc8467034275f28db621e84885a",
-                "reference": "ab6f166965fa6cc8467034275f28db621e84885a",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/2a3f609a90370bc68ae49e827270dcc6411709d6",
+                "reference": "2a3f609a90370bc68ae49e827270dcc6411709d6",
                 "shasum": ""
             },
             "require": {
@@ -2396,7 +2396,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2019-05-07T11:18:24+00:00"
+            "time": "2019-05-09T13:24:49+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
