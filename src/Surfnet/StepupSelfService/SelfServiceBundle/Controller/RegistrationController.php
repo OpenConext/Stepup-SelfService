@@ -22,6 +22,8 @@ use DateInterval;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +53,6 @@ class RegistrationController extends Controller
 
         $secondFactors = $service->getSecondFactorsForIdentity(
             $identity,
-            $institution,
             $allSecondFactors,
             $institutionConfigurationOptions->allowedSecondFactors,
             $institutionConfigurationOptions->numberOfTokensPerIdentity
@@ -200,7 +201,9 @@ class RegistrationController extends Controller
             'verifyEmail'      => $this->emailVerificationIsRequired(),
         ];
 
+        /** @var RaService $raService */
         $raService         = $this->get('self_service.service.ra');
+        /** @var RaLocationService $raLocationService */
         $raLocationService = $this->get('self_service.service.ra_location');
 
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
