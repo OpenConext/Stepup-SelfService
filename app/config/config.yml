@@ -155,6 +155,3 @@ surfnet_stepup_self_service_self_service:
     session_lifetimes:
         max_absolute_lifetime: "%session_max_absolute_lifetime%"
         max_relative_lifetime: "%session_max_relative_lifetime%"
-
-surfnet_stepup_u2f:
-    app_id: "%u2f_app_id%"

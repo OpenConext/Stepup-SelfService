@@ -51,23 +51,15 @@ class SecondFactorService
     private $commandService;
 
     /**
-     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService
-     */
-    private $u2fSecondFactorService;
-
-    /**
      * @param MiddlewareSecondFactorService $secondFactors
      * @param CommandService                $commandService
-     * @param U2fSecondFactorService        $u2fSecondFactorService
      */
     public function __construct(
         MiddlewareSecondFactorService $secondFactors,
-        CommandService $commandService,
-        U2fSecondFactorService $u2fSecondFactorService
+        CommandService $commandService
     ) {
         $this->secondFactors = $secondFactors;
         $this->commandService = $commandService;
-        $this->u2fSecondFactorService = $u2fSecondFactorService;
     }
 
     /**
@@ -100,13 +92,6 @@ class SecondFactorService
         $apiCommand->secondFactorId = $secondFactor->id;
 
         $result = $this->commandService->execute($apiCommand);
-
-        if ($secondFactor->type === 'u2f') {
-            $this->u2fSecondFactorService->revokeRegistration(
-                $command->identity,
-                $secondFactor->secondFactorIdentifier
-            );
-        }
 
         return $result->isSuccessful();
     }

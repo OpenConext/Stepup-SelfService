@@ -266,26 +266,6 @@ For all mobile phones.</target>
         <target>Select token</target>
         <jms:reference-file line="3">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/displaySecondFactorTypes.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="617159e8920200945a579d2ff3eabbbdef0b5153" resname="ss.registration.selector.u2f.alt">
-        <source>ss.registration.selector.u2f.alt</source>
-        <target>U2F token</target>
-        <jms:reference-file line="10">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="2427989d4bc2b0fbfee8bdcd518e974287528304" resname="ss.registration.selector.u2f.button.use">
-        <source>ss.registration.selector.u2f.button.use</source>
-        <target>Select</target>
-        <jms:reference-file line="13">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="8f22b87213c855c710e65b6df3c9f3fb88f9320c" resname="ss.registration.selector.u2f.description">
-        <source>ss.registration.selector.u2f.description</source>
-        <target>Sign in with a U2F device.</target>
-        <jms:reference-file line="12">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="84d4719b180b18de2e8498cdb9f93cd8d29ddf17" resname="ss.registration.selector.u2f.title">
-        <source>ss.registration.selector.u2f.title</source>
-        <target>U2F</target>
-        <jms:reference-file line="11">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
       <trans-unit id="cded89875fcd3c83b35117d461b1475f917437fe" resname="ss.registration.selector.yubikey.alt">
         <source>ss.registration.selector.yubikey.alt</source>
         <target>YubiKey token</target>
@@ -356,36 +336,6 @@ For all devices with a USB port.</target>
         <source>ss.registration.sms.text.retry_if_not_received</source>
         <target>Click 'Send new code' if you did not receive a code.</target>
         <jms:reference-file line="22">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/Sms/provePossession.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="a9291ad7b24d9af72187ad2c3a47ef70a8ddb049" resname="ss.registration.u2f.alert.device_reported_an_error">
-        <source>ss.registration.u2f.alert.device_reported_an_error</source>
-        <target>The U2F device reported an error. Try again or visit your IT helpdesk.</target>
-        <jms:reference-file line="47">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="10942aeeff49e9078c3388325521ec7745d9e4d7" resname="ss.registration.u2f.alert.error">
-        <source>ss.registration.u2f.alert.error</source>
-        <target>The registration of the U2F device failed. Try again or visit your IT helpdesk.</target>
-        <jms:reference-file line="48">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="8c0ebdb3c75c5ba291acea30db4475b037706e33" resname="ss.registration.u2f.button.retry">
-        <source>ss.registration.u2f.button.retry</source>
-        <target>Retry</target>
-        <jms:reference-file line="28">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/U2f/registration.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="4f5b229b9de7809577b58b29e6ca42b9ea3e7f17" resname="ss.registration.u2f.prove_possession.title.page">
-        <source>ss.registration.u2f.prove_possession.title.page</source>
-        <target>Link your U2F device</target>
-        <jms:reference-file line="3">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/U2f/registration.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="aa1066996eb91288ee305d75ae37b40043a5900b" resname="ss.registration.u2f.text.activate_u2f_device">
-        <source>ss.registration.u2f.text.activate_u2f_device</source>
-        <target>Activate the U2F device. This is usually performed using a button.</target>
-        <jms:reference-file line="20">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/U2f/registration.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="63215bcefb16179e093adf30b4adf7d67ba27a43" resname="ss.registration.u2f.text.ensure_device_connected_to_pc">
-        <source>ss.registration.u2f.text.ensure_device_connected_to_pc</source>
-        <target>Ensure your U2F device is linked to your computer.</target>
-        <jms:reference-file line="19">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/U2f/registration.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c0b7cacbe163182d07eadf53926718aad310c6a5" resname="ss.registration.verify_email.text.verification_failed">
         <source>ss.registration.verify_email.text.verification_failed</source>
@@ -476,11 +426,6 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target>SMS</target>
         <jms:reference-file line="40">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="05f193ed2a057ba345519da22753939ba8aef925" resname="ss.second_factor.revoke.second_factor_type.u2f">
-        <source>ss.second_factor.revoke.second_factor_type.u2f</source>
-        <target>U2F</target>
-        <jms:reference-file line="42">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
       <trans-unit id="41ef2c1782e52dabce59e7be54aef6fa07829959" resname="ss.second_factor.revoke.second_factor_type.yubikey">
         <source>ss.second_factor.revoke.second_factor_type.yubikey</source>
         <target>YubiKey</target>
@@ -510,11 +455,6 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <source>ss.second_factor.type.sms</source>
         <target>SMS</target>
         <jms:reference-file line="35">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="e6a4121e1e5da569eb89ea885f61ea68033650eb" resname="ss.second_factor.type.u2f">
-        <source>ss.second_factor.type.u2f</source>
-        <target>U2F</target>
-        <jms:reference-file line="37">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="81b817f201c14a06e97251089f38fec70163ef3f" resname="ss.second_factor.type.yubikey">
         <source>ss.second_factor.type.yubikey</source>
