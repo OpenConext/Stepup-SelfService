@@ -1,5 +1,8 @@
 # Changelog
-
+## 3.0.1 
+This is a security release that will harden the application against CVE 2019-346
+ * Upgrade Stepup-saml-bundle to version 4.1.8 #176
+ 
 ## 3.0.0 FGA (fine grained authorization)
 
 The new fine grained authorization logic will allow Ra's from other institutions to accredidate RA's on behalf of another organisation. This is determined based on the institution configuration. https://github.com/OpenConext/Stepup-Deploy/wiki/rfc-fine-grained-authorization/b6852587baee698cccae7ebc922f29552420a296
@@ -8,8 +11,8 @@ The new fine grained authorization logic will allow Ra's from other institutions
 The changes to SelfService in regards to the FGA changes only where to remain compatible with API changes made for Stepup-RA. No new features have been added.
 
 ## 2.10.7
-**Improvement**
-* Install security updates
+This is a security release that will harden the application against CVE 2019-346
+ * Upgrade Stepup-saml-bundle to version 4.1.8 #175
 
 ## 2.10.6
 **Bugfix**
