@@ -27,8 +27,13 @@ before_script:
 script:
   - ant
 
-
 branches:
   only:
     - master
     - develop
+    - release/2.10
+
+addons:
+  apt:
+    packages:
+      - ant
