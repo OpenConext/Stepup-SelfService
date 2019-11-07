@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.10.7
+This is a security release that will harden the application against CVE 2019-346
+ * Upgrade xmlseclibs to version 3.0.4 #175
+
+## 2.10.5 & 2.10.6
+No release notes provided
+
 ## 2.10.4
 **Improvement**
 * Optimized the PSR-4 autoload configuration
