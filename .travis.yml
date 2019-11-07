@@ -27,9 +27,12 @@ before_script:
 script:
   - ant
 
-
 branches:
   only:
     - master
     - develop
-    - feature/fine-grained-authorization
+
+addons:
+  apt:
+    packages:
+      - ant
