@@ -1,4 +1,11 @@
 # Changelog
+
+## 3.1.0
+A release with bugfixes after initial FGA tests
+ * Fix exception controller authentication exceptions #179
+ * Update MW-client-bundle #178
+ * Install various security updates #177
+
 ## 3.0.1 
 This is a security release that will harden the application against CVE 2019-346
  * Upgrade Stepup-saml-bundle to version 4.1.8 #176
