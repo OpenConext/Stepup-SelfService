@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "303dc2bfdf0748a1289ef19dac0403d6",
+    "content-hash": "99be5270a774fc2f054592c2b1ac4c60",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2518,16 +2518,16 @@
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "3.0.19",
+            "version": "dev-remote-vetting",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "5b54adc425875143a3cbb022332fbe686d819d68"
+                "reference": "71cf35c7712350a433f9f7ac341fbdea0839330a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/5b54adc425875143a3cbb022332fbe686d819d68",
-                "reference": "5b54adc425875143a3cbb022332fbe686d819d68",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/71cf35c7712350a433f9f7ac341fbdea0839330a",
+                "reference": "71cf35c7712350a433f9f7ac341fbdea0839330a",
                 "shasum": ""
             },
             "require": {
@@ -2568,7 +2568,7 @@
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
-            "time": "2020-01-14T14:01:36+00:00"
+            "time": "2020-02-03T13:46:19+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -5350,6 +5350,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "surfnet/stepup-middleware-client-bundle": 20,
         "surfnet/stepup-u2f-bundle": 20
     },
     "prefer-stable": false,
