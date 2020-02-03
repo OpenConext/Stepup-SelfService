@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}
+{% import _self as macro %}
+
+{% block page_title %}{{ 'ss.second_factor.remote_vet.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.second_factor.remote_vet.text.are_you_sure'|trans }}</p>
+
+    {{ form(form) }}
+{% endblock %}

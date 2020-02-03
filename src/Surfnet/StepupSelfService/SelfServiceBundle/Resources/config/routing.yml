@@ -20,6 +20,13 @@ ss_second_factor_revoke:
     requirements:
         state: '^(unverified|verified|vetted)$'
 
+ss_second_factor_remote_vet:
+    path:     /second-factor/{state}/{secondFactorId}/remote-vet
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting/RemoteVetting:remoteVet }
+    requirements:
+        state: '^(verified)$'
+
 ss_registration_display_types:
     path:     /registration/select-token
     methods:  [GET]

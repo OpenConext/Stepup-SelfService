@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2018-01-22T13:59:02Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2020-01-28T16:17:53Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -81,6 +81,10 @@
       <trans-unit id="9fe9614ee06100ffa9474b193d1aec7a4c1d1334" resname="middleware_client.dto.configuration.allowed_second_factors.must_be_array">
         <source>middleware_client.dto.configuration.allowed_second_factors.must_be_array</source>
         <target state="new">middleware_client.dto.configuration.allowed_second_factors.must_be_array</target>
+      </trans-unit>
+      <trans-unit id="52a2dab4b580fea4ff59fc6a51bc2c0ba0f3b728" resname="middleware_client.dto.configuration.number_of_tokens_per_identity.must_be_integer">
+        <source>middleware_client.dto.configuration.number_of_tokens_per_identity.must_be_integer</source>
+        <target state="new">middleware_client.dto.configuration.number_of_tokens_per_identity.must_be_integer</target>
       </trans-unit>
       <trans-unit id="e921db3beb8170142aa4dcd8c364595343b6fc64" resname="middleware_client.dto.configuration.show_raa_contact_information.must_be_boolean">
         <source>middleware_client.dto.configuration.show_raa_contact_information.must_be_boolean</source>
@@ -189,6 +193,14 @@
       <trans-unit id="3186e64abbdfdf7cf9d05f12eaa24c80ec39bb1b" resname="middleware_client.dto.ra_candidate.name_id.must_not_be_blank">
         <source>middleware_client.dto.ra_candidate.name_id.must_not_be_blank</source>
         <target state="new">middleware_client.dto.ra_candidate.name_id.must_not_be_blank</target>
+      </trans-unit>
+      <trans-unit id="c829d933c48f9cdda62e44e4d5c2a8060fb41754" resname="middleware_client.dto.ra_candidate_institution.institution.must_be_string">
+        <source>middleware_client.dto.ra_candidate_institution.institution.must_be_string</source>
+        <target state="new">middleware_client.dto.ra_candidate_institution.institution.must_be_string</target>
+      </trans-unit>
+      <trans-unit id="1851e161e8cc093cd7e9153d19ea931e629880e9" resname="middleware_client.dto.ra_candidate_institution.institution.must_not_be_blank">
+        <source>middleware_client.dto.ra_candidate_institution.institution.must_not_be_blank</source>
+        <target state="new">middleware_client.dto.ra_candidate_institution.institution.must_not_be_blank</target>
       </trans-unit>
       <trans-unit id="92fbc58313ab0a848a53c1f0c6f0e282b44ab7d1" resname="middleware_client.dto.ra_credentials.common_name.must_be_null_or_string">
         <source>middleware_client.dto.ra_credentials.common_name.must_be_null_or_string</source>
