@@ -27,7 +27,7 @@ class RemoteVetSecondFactorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('revoke', SubmitType::class, [
+        $builder->add('remote_vet', SubmitType::class, [
             'label' => 'ss.form.ss_remote_vet_second_factor.remote_vet',
             'attr' => [ 'class' => 'btn btn-primary pull-right' ],
         ]);
