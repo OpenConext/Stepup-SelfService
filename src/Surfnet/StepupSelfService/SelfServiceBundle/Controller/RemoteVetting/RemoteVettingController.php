@@ -17,6 +17,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVetting;
 
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\SamlBundle\Http\Exception\AuthnFailedSamlResponseException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetCommand;
@@ -98,7 +99,7 @@ class RemoteVettingController extends Controller
     public function acsAction(Request $request)
     {
         /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+//        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
         //$this->logger->info('Receiving response from the remote IdP');
 
@@ -116,26 +117,22 @@ class RemoteVettingController extends Controller
             // todo: record attributes
             // todo: vet token
             $flashBag->add('error', 'TODO: implement attribute validation');
-            throw new \Exception('Implement manual vetting');
+            throw new Exception('Implement manual vetting');
 
-            $command = new RemoteVetCommand();
-            $command->identity = $user->getIdentityId();
-            $command->secondFactor = $user->getSecondFactorId();
-
-            // todo: add flashbag translations?
-
-            if ($service->remoteVet($command)) {
-                $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
-            } else {
-                $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
-            }
-
+//            $command = new RemoteVetCommand();
+//            $command->identity = $user->getIdentityId();
+//            $command->secondFactor = $user->getSecondFactorId();
+//
+//            // todo: add flashbag translations?
+//
+//            if ($service->remoteVet($command)) {
+//                $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
+//            } else {
+//                $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
+//            }
         } catch (AuthnFailedSamlResponseException $e) {
-
             // todo: add flashbag translations?
-
             //$this->logger->error('The authentication failed. Rejecting the response.');
-
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
             return $this->redirectToRoute('ss_second_factor_list');
         }
