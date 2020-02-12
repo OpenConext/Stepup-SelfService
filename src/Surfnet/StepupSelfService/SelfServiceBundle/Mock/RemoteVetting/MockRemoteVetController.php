@@ -47,11 +47,6 @@ class MockRemoteVetController extends Controller
     /**
      * This is the sso action used to mock a RV IdP callout
      *
-     * @Route(
-     *     "/mock/sso",
-     *     name="mock_sso"
-     * )
-     *
      * @param Request $request
      * @return string|Response
      */

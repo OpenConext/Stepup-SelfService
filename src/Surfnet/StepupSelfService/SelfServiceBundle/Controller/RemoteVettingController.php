@@ -99,7 +99,7 @@ class RemoteVettingController extends Controller
     public function acsAction(Request $request)
     {
         /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+//        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
         //$this->logger->info('Receiving response from the remote IdP');
 
@@ -119,17 +119,18 @@ class RemoteVettingController extends Controller
             $flashBag->add('error', 'TODO: implement attribute validation');
             throw new Exception('Implement manual vetting');
 
-            $command = new RemoteVetCommand();
-            $command->identity = $user->getIdentityId();
-            $command->secondFactor = $user->getSecondFactorId();
-
-            // todo: add flashbag translations?
-
-            if ($service->remoteVet($command)) {
-                $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
-            } else {
-                $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
-            }
+            $user = null;
+//            $command = new RemoteVetCommand();
+//            $command->identity = $user->getIdentityId();
+//            $command->secondFactor = $user->getSecondFactorId();
+//
+//            // todo: add flashbag translations?
+//
+//            if ($service->remoteVet($command)) {
+//                $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
+//            } else {
+//                $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
+//            }
         } catch (AuthnFailedSamlResponseException $e) {
             // todo: add flashbag translations?
 
