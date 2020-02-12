@@ -23,17 +23,12 @@ ss_second_factor_revoke:
 ss_second_factor_remote_vet:
     path:     /second-factor/{secondFactorId}/remote-vet
     methods:  [GET,POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting/RemoteVetting:remoteVet }
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:remoteVet }
 
 ss_second_factor_remote_vet_acs:
     path:     /second-factor/acs
     methods:  [GET,POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting/RemoteVetting:acs }
-
-ss_second_factor_remote_vet_mock:
-    path:     /second-factor/mock/sso
-    methods:  [GET,POST]
-    defaults: { _controller: Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVetting\MockRemoteVetController::ssoAction }
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:acs }
 
 ss_registration_display_types:
     path:     /registration/select-token

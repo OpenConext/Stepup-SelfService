@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVetting;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

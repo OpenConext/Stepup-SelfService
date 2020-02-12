@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\Tests\Contrtoller\RemoteVetting;
+namespace Surfnet\Tests\Controller;
 
 use Exception;
 use RobRichards\XMLSecLibs\XMLSecurityKey;

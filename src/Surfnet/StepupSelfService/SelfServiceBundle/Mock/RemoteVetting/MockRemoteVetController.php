@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVetting;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting;
 
 use Exception;
 use SAML2\Constants;
