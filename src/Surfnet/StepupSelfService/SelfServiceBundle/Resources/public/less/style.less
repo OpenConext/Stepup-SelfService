@@ -1,8 +1,9 @@
-@import "../../../../../../../vendor/mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Resources/public/less/bootstrap-fontawesome.less";
+@import "../../../../../../../node_modules/bootstrap/less/bootstrap.less";
+@import "../../../../../../../node_modules/font-awesome/less/font-awesome";
 
 // overriding the font path for correct loading.
-@FontAwesomePath: "/fonts";
-@fa-font-path: "/fonts";
+@FontAwesomePath: "./fonts";
+@fa-font-path: "./fonts";
 
 // This override of the mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Resources/public/less/font-awesome/path.less
 // prevents loading of the none existing woff2 file that resulted in four oh fours.
