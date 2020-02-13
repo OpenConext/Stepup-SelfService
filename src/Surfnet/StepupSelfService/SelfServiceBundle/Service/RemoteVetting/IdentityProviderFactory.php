@@ -64,6 +64,6 @@ class IdentityProviderFactory
             return $this->identityProviders[$name];
         }
 
-        throw new InvalidRemoteVettingIdentityProviderException(sprintf("Invalid IdpP requested '%s'", $name));
+        throw new InvalidRemoteVettingIdentityProviderException(sprintf("Invalid IdP requested '%s'", $name));
     }
 }
