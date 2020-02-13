@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2018-04-06T13:30:38Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2020-01-28T16:17:57Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -9,23 +9,25 @@
       <trans-unit id="2f92022705bb464fd867cae9c37612c3ae0e995a" resname="612345678">
         <source>612345678</source>
         <target state="new">612345678</target>
-        <jms:reference-file line="48">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="51">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="0c3112826a8c897ac0b6a3d3a8432059b74dd996" resname="app.name">
         <source>app.name</source>
         <target>Registration Portal</target>
-        <jms:reference-file line="26">/Resources/views/base.html.twig</jms:reference-file>
+        <jms:reference-file line="29">/Resources/views/base.html.twig</jms:reference-file>
         <jms:reference-file line="6">/Resources/views/base.html.twig</jms:reference-file>
+        <jms:reference-file line="44">/Resources/views/pdf.html.twig</jms:reference-file>
+        <jms:reference-file line="5">/Resources/views/pdf.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ff6230b38fe127145d864f4d4920ceb4d857af18" resname="button.logout">
         <source>button.logout</source>
         <target>Sign out</target>
-        <jms:reference-file line="33">/Resources/views/base.html.twig</jms:reference-file>
+        <jms:reference-file line="36">/Resources/views/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a91ec2021294ddfceb930e47ee05536b0f85193b" resname="country code">
         <source>country code</source>
         <target>country code</target>
-        <jms:reference-file line="32">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="35">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a08764057e3607049e3495943676b29f7baefba9" resname="locale.en_GB">
         <source>locale.en_GB</source>
@@ -40,52 +42,62 @@
       <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
         <source>ss.flash.error_while_switching_locale</source>
         <target>Due to an unknown reason, switching locales failed.</target>
-        <jms:reference-file line="72">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
+        <jms:reference-file line="73">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="600028302c7b3a43ae0e30ab3b015f505c2b7f1f" resname="ss.flash.invalid_switch_locale_form">
         <source>ss.flash.invalid_switch_locale_form</source>
         <target>Due to an unknown reason, switching locales failed.</target>
-        <jms:reference-file line="65">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
+        <jms:reference-file line="66">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/LocaleController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0ba164e8499593f2b376e03b4fb3483a41696c7f" resname="ss.form.ss_remote_vet_second_factor.cancel">
+        <source>ss.form.ss_remote_vet_second_factor.cancel</source>
+        <target state="new">ss.form.ss_remote_vet_second_factor.cancel</target>
+        <jms:reference-file line="35">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetSecondFactorType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5cfc619c2ed7de12fed04b48e45e9803de43c899" resname="ss.form.ss_remote_vet_second_factor.remote_vet">
+        <source>ss.form.ss_remote_vet_second_factor.remote_vet</source>
+        <target>Validate identity</target>
+        <jms:reference-file line="31">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetSecondFactorType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="b3d573081dd44232cfd0fc03a04fe1b523715271" resname="ss.form.ss_revoke_second_factor.cancel">
         <source>ss.form.ss_revoke_second_factor.cancel</source>
         <target>Cancel</target>
-        <jms:reference-file line="34">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RevokeSecondFactorType.php</jms:reference-file>
+        <jms:reference-file line="35">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RevokeSecondFactorType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="ab87a286bf3aa3ccb30880d84c1a0605345338cc" resname="ss.form.ss_revoke_second_factor.revoke">
         <source>ss.form.ss_revoke_second_factor.revoke</source>
         <target>Remove</target>
-        <jms:reference-file line="30">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RevokeSecondFactorType.php</jms:reference-file>
+        <jms:reference-file line="31">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RevokeSecondFactorType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="e81e43e3bee8ede5bc43425f96030ec09f268e7e" resname="ss.form.ss_send_sms_challenge.button.send_challenge">
         <source>ss.form.ss_send_sms_challenge.button.send_challenge</source>
         <target>Send code</target>
-        <jms:reference-file line="52">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="55">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="dcb8e6ab8b77916403b532a97e955a3445f1918f" resname="ss.form.ss_verify_email.button.verify_email">
         <source>ss.form.ss_verify_email.button.verify_email</source>
         <target>Verify e-mail</target>
-        <jms:reference-file line="38">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifyEmailType.php</jms:reference-file>
+        <jms:reference-file line="40">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifyEmailType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="f8c912debc51cbf991a497fcf244c07c03d67650" resname="ss.form.ss_verify_email.text.verification_code">
         <source>ss.form.ss_verify_email.text.verification_code</source>
         <target>Verification code</target>
-        <jms:reference-file line="30">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifyEmailType.php</jms:reference-file>
+        <jms:reference-file line="32">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifyEmailType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="13bd61d79492403adcd7cc4a71a6b7acbc61216c" resname="ss.form.ss_verify_sms_challenge.button.resend_challenge">
         <source>ss.form.ss_verify_sms_challenge.button.resend_challenge</source>
         <target>Send new code</target>
-        <jms:reference-file line="36">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifySmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="38">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifySmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="8237b3cb8724d01124f8cc3588bd38db546c51b8" resname="ss.form.ss_verify_sms_challenge.button.verify_challenge">
         <source>ss.form.ss_verify_sms_challenge.button.verify_challenge</source>
         <target>Verify</target>
-        <jms:reference-file line="41">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifySmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="43">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifySmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="35226fe84f63f1a41504b91b70800b70414a9265" resname="ss.form.ss_verify_sms_challenge.text.challenge">
         <source>ss.form.ss_verify_sms_challenge.text.challenge</source>
         <target>Code</target>
-        <jms:reference-file line="30">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifySmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="32">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/VerifySmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="e3554b07567999b6bd90ee405bf4e60db4d5d727" resname="ss.prove_phone_possession.challenge_expired">
         <source>ss.prove_phone_possession.challenge_expired</source>
@@ -163,82 +175,83 @@
       <trans-unit id="702bbd352dda1a6f1029201de2f40e9e87bbc6a4" resname="ss.registration.registration_email_sent.label.expiration_date">
         <source>ss.registration.registration_email_sent.label.expiration_date</source>
         <target state="new">The activation code is valid until and including %expirationDate%.</target>
-        <jms:reference-file line="32">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="15">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d38c5271077c89a3b39e6ee655e21059dcb1da94" resname="ss.registration.registration_email_sent.label.registration_code">
         <source>ss.registration.registration_email_sent.label.registration_code</source>
         <target>Activation code</target>
-        <jms:reference-file line="40">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="23">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8324fbb0b4fe0b88092294e3a1f958f0bc02d6da" resname="ss.registration.registration_email_sent.text.activation_instructions">
         <source>ss.registration.registration_email_sent.text.activation_instructions</source>
         <target>Visit the location below to get your token activated. Please bring the following:</target>
-        <jms:reference-file line="20">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="3">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a83fee04452531e7eba20178cf820677f88db4cf" resname="ss.registration.registration_email_sent.text.activation_instructions_item_1">
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_1</source>
         <target>Your token</target>
-        <jms:reference-file line="23">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="6">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ebdd61f271ba18583ca0a18fbe9b675c88375b98" resname="ss.registration.registration_email_sent.text.activation_instructions_item_2">
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_2</source>
         <target>A valid proof of identity (passport, driver's license or national ID-card)</target>
-        <jms:reference-file line="24">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="7">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d608041873dea3059d34724b9a24e4e751ebdffe" resname="ss.registration.registration_email_sent.text.activation_instructions_item_3">
         <source>ss.registration.registration_email_sent.text.activation_instructions_item_3</source>
         <target>Your activation code</target>
-        <jms:reference-file line="25">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="8">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="63974b83ce6262c68656a606d22f6538742e22c5" resname="ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution">
         <source>ss.registration.registration_email_sent.text.no_ra_locations_for_your_institution</source>
         <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
-        <jms:reference-file line="75">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="58">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8388ff05103a22d0917788a48ccdc9716a353ac8" resname="ss.registration.registration_email_sent.text.no_ras_for_your_institution">
         <source>ss.registration.registration_email_sent.text.no_ras_for_your_institution</source>
         <target>There are no locations available within your institution to activate your token. Please contact your helpdesk for support.</target>
-        <jms:reference-file line="93">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="76">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7c9ea58235246dd0f14a2d6aaed379ad0638d0e7" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent">
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent</source>
         <target>An e-mail containing these instructions and your activation code has also been sent to the e-mail address %email%.</target>
-        <jms:reference-file line="50">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="33">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9cd651eed31a40300b9bdbe4eb6f43b47590ab13" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent_no_email">
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent_no_email</source>
         <target>If you do not have access (yet) to your e-mail address you can also print or download the instructions and your activation code.</target>
-        <jms:reference-file line="54">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="37">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4cf581fa68d2c12db4d799554971856cbecc3e16" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent_pdf">
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent_pdf</source>
         <target>PDF</target>
-        <jms:reference-file line="65">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="48">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="da18b75fb1c21ae87ec2ec68d747518bd2f3659f" resname="ss.registration.registration_email_sent.text.registration_code_has_been_sent_print">
         <source>ss.registration.registration_email_sent.text.registration_code_has_been_sent_print</source>
         <target>Print</target>
-        <jms:reference-file line="61">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="44">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9ef48b4bbb1cef4ef12eb3e5146beb743e648752" resname="ss.registration.registration_email_sent.text.thank_you_for_registration">
         <source>ss.registration.registration_email_sent.text.thank_you_for_registration</source>
         <target>Thank you for registering your token. Your token is almost ready to use.</target>
-        <jms:reference-file line="18">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="1">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="61c16d1cf1191b8bfb09d98779fbbf5cb748bd6b" resname="ss.registration.registration_email_sent.title">
         <source>ss.registration.registration_email_sent.title</source>
         <target>Activation code</target>
         <jms:reference-file line="3">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="3">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSentPdf.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="536255f00c5e95be847f318b9a692596a9d927a2" resname="ss.registration.registration_email_sent.title.list_of_ra_locations">
         <source>ss.registration.registration_email_sent.title.list_of_ra_locations</source>
         <target>Location(s) to activate your token</target>
-        <jms:reference-file line="72">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="55">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="fad1d50cfe9eadd2b8c3dd3e10456e70a5c927f0" resname="ss.registration.registration_email_sent.title.list_of_ras">
         <source>ss.registration.registration_email_sent.title.list_of_ras</source>
         <target>Location(s) to activate your token</target>
-        <jms:reference-file line="90">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/registrationEmailSent.html.twig</jms:reference-file>
+        <jms:reference-file line="73">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Registration/partial/registrationEmailSent.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <source>ss.registration.selector.sms.alt</source>
@@ -315,7 +328,7 @@ For all devices with a USB port.</target>
       <trans-unit id="c50571e9afcd050cbd75609b1334730df8dae3f0" resname="ss.registration.sms.challenge_body">
         <source>ss.registration.sms.challenge_body</source>
         <target>Your SMS code: %challenge%</target>
-        <jms:reference-file line="113">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
+        <jms:reference-file line="112">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="9d363fe71a339b50940b951f20b0a2d93ce416bf" resname="ss.registration.sms.prove_possession.title.page">
         <source>ss.registration.sms.prove_possession.title.page</source>
@@ -420,13 +433,13 @@ For all devices with a USB port.</target>
       <trans-unit id="c954ee253d560c6f6d5baf1811ca34988a9029d8" resname="ss.second_factor.list.button.register_second_factor">
         <source>ss.second_factor.list.button.register_second_factor</source>
         <target>Add token</target>
-        <jms:reference-file line="22">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="29">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="474737f264f9527e93a9f4f4c4c380331b52e759" resname="ss.second_factor.list.text.no_second_factors">
         <source>ss.second_factor.list.text.no_second_factors</source>
         <target xml:space="preserve">There are no tokens registered for your account. Click on 'Register token' to register a new token.
 </target>
-        <jms:reference-file line="18">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="25">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a1a1aa0e1c0a720bc6144c5a5a03d89ad6fdcc87" resname="ss.second_factor.list.text.unverified">
         <source>ss.second_factor.list.text.unverified</source>
@@ -451,6 +464,46 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target>Token Overview</target>
         <jms:reference-file line="4">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="d22ee706c1ee42504cb6ea13d2b949613b9a1b99" resname="ss.second_factor.remote_vet.table_header.common_name">
+        <source>ss.second_factor.remote_vet.table_header.common_name</source>
+        <target state="new">ss.second_factor.remote_vet.table_header.common_name</target>
+        <jms:reference-file line="18">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/RemoteVetting/remoteVet.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="20d87a46c0e0319eda366a716a453cd5e61c9a27" resname="ss.second_factor.remote_vet.table_header.email">
+        <source>ss.second_factor.remote_vet.table_header.email</source>
+        <target state="new">ss.second_factor.remote_vet.table_header.email</target>
+        <jms:reference-file line="26">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/RemoteVetting/remoteVet.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="156bd9395463a58b25db06fe831b3bb11dc39eb3" resname="ss.second_factor.remote_vet.table_header.institution">
+        <source>ss.second_factor.remote_vet.table_header.institution</source>
+        <target state="new">ss.second_factor.remote_vet.table_header.institution</target>
+        <jms:reference-file line="22">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/RemoteVetting/remoteVet.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="6209f2ed64e891f36b68c7d1e67b904c9e65b08b" resname="ss.second_factor.remote_vet.table_header.name_id">
+        <source>ss.second_factor.remote_vet.table_header.name_id</source>
+        <target state="new">ss.second_factor.remote_vet.table_header.name_id</target>
+        <jms:reference-file line="14">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/RemoteVetting/remoteVet.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="30d87d7bb51927925ff78ede4ee2c4daaae497e3" resname="ss.second_factor.remote_vet.table_header.second_factor.identifier">
+        <source>ss.second_factor.remote_vet.table_header.second_factor.identifier</source>
+        <target state="new">ss.second_factor.remote_vet.table_header.second_factor.identifier</target>
+        <jms:reference-file line="34">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/RemoteVetting/remoteVet.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d083da12d24cb557d8f2a23c73f6844db606f91e" resname="ss.second_factor.remote_vet.table_header.type">
+        <source>ss.second_factor.remote_vet.table_header.type</source>
+        <target state="new">ss.second_factor.remote_vet.table_header.type</target>
+        <jms:reference-file line="30">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/RemoteVetting/remoteVet.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="64cd3b12ab8e092173e5e99069d38afdaf811b16" resname="ss.second_factor.remote_vet.text.are_you_sure">
+        <source>ss.second_factor.remote_vet.text.are_you_sure</source>
+        <target>Are you sure you want to confirm your identity through a third party?</target>
+        <jms:reference-file line="9">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/RemoteVetting/remoteVet.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="460752b1bf195dc38fb4fcce77b3603c6de3b7fd" resname="ss.second_factor.remote_vet.title">
+        <source>ss.second_factor.remote_vet.title</source>
+        <target>Confirm identity</target>
+        <jms:reference-file line="4">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/RemoteVetting/remoteVet.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="6ddd63626b39582e37d8f3012d893e9d4eac14db" resname="ss.second_factor.revoke.alert.revocation_failed">
         <source>ss.second_factor.revoke.alert.revocation_failed</source>
         <target>Token revocation failed</target>
@@ -461,15 +514,20 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target>Your token has been removed.</target>
         <jms:reference-file line="43">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="37ebd30d3648afd0fd123bb864ce6713a3857a74" resname="ss.second_factor.revoke.button.remote_vet">
+        <source>ss.second_factor.revoke.button.remote_vet</source>
+        <target state="new">ss.second_factor.revoke.button.remote_vet</target>
+        <jms:reference-file line="72">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="39bf5f5849cef0ac9b176c769c79169676fc7b96" resname="ss.second_factor.revoke.button.revoke">
         <source>ss.second_factor.revoke.button.revoke</source>
         <target>Remove</target>
-        <jms:reference-file line="61">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="77">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="17d18b6bcd8642fedf8e5371cb722efc604e8281" resname="ss.second_factor.revoke.button.test">
         <source>ss.second_factor.revoke.button.test</source>
         <target>Test a token</target>
-        <jms:reference-file line="73">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="16">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8cb0dc5d3faca805d69dce7496307078d2234dfb" resname="ss.second_factor.revoke.second_factor_type.sms">
         <source>ss.second_factor.revoke.second_factor_type.sms</source>
@@ -524,27 +582,28 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="86cc7496d68c0c83cd166ad3e22ed89b47b1c989" resname="ss.second_factor_list.header.expiration_date">
         <source>ss.second_factor_list.header.expiration_date</source>
         <target>Expiration date</target>
-        <jms:reference-file line="39">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="48">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="de7df14a4a009c74319576cad9e6c6e68e89ac0c" resname="ss.second_factor_list.header.expired_explanation">
         <source>ss.second_factor_list.header.expired_explanation</source>
         <target>The token registration period has expired. Please remove your token and restart the registration process.</target>
-        <jms:reference-file line="82">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="88">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1d6751b490158de0a89683522c6ba1a8b957875c" resname="ss.second_factor_list.header.expired_warning">
         <source>ss.second_factor_list.header.expired_warning</source>
         <target>Expired</target>
-        <jms:reference-file line="53">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="63">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="88">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="fedd12f3e661692730a3650ef6db64e71c9d8441" resname="ss.second_factor_list.header.second_factor_identifier">
         <source>ss.second_factor_list.header.second_factor_identifier</source>
         <target>ID</target>
-        <jms:reference-file line="38">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="46">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e4d199fd46ed7fa1c78a8fde6faef80f034cd662" resname="ss.second_factor_list.header.type">
         <source>ss.second_factor_list.header.type</source>
         <target>Token</target>
-        <jms:reference-file line="37">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
+        <jms:reference-file line="45">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="fb5cac733dfdfe5c5e6818dee7d71aea02e95aa4" resname="ss.security.session_expired.click_to_login">
         <source>ss.security.session_expired.click_to_login</source>
@@ -564,7 +623,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="bbd9e56cf5b5effaa4a6ace130497a4b5a4da1f9" resname="ss.support_url_text">
         <source>ss.support_url_text</source>
         <target>Help</target>
-        <jms:reference-file line="67">/Resources/views/base.html.twig</jms:reference-file>
+        <jms:reference-file line="70">/Resources/views/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cbdf2c4bacdae4b97285b0201968c2d3a9de1be1" resname="ss.test_second_factor.verification_failed">
         <source>ss.test_second_factor.verification_failed</source>
@@ -636,7 +695,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="4333aed6f41daef505fd25cc77e65a7dc4b12303" resname="stepup.error.missing_required_attribute.title">
         <source>stepup.error.missing_required_attribute.title</source>
         <target>Missing required attribute</target>
-        <jms:reference-file line="36">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php</jms:reference-file>
+        <jms:reference-file line="38">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="b4809e818f782127b31392936e35593812543700" resname="stepup.error.page_not_found.text">
         <source>stepup.error.page_not_found.text</source>
@@ -717,12 +776,12 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="fcbfd9e643bb8d8f3fcf3ca0380a73bb9dffee2b" resname="stepup_middleware_client.form.switch_locale.switch">
         <source>stepup_middleware_client.form.switch_locale.switch</source>
         <target>Switch</target>
-        <jms:reference-file line="59">/../vendor/surfnet/stepup-bundle/src/Form/Type/SwitchLocaleType.php</jms:reference-file>
+        <jms:reference-file line="61">/../vendor/surfnet/stepup-bundle/src/Form/Type/SwitchLocaleType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="d3810fbfb6254169454c8c68850947acce991691" resname="subscriberNumber">
         <source>subscriberNumber</source>
         <target>Number</target>
-        <jms:reference-file line="41">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="44">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
       </trans-unit>
     </body>
   </file>
