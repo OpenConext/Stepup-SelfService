@@ -1,0 +1,124 @@
+<?php
+/**
+ * Copyright 2010 SURFnet B.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
+
+use Psr\Log\LoggerInterface;
+use SAML2\Constants;
+use SAML2\XML\saml\SubjectConfirmation;
+use Surfnet\SamlBundle\Http\PostBinding;
+use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
+use Symfony\Component\HttpFoundation\Request;
+
+class SamlCalloutHelper
+{
+    /**
+     * @var IdentityProviderFactory
+     */
+    private $identityProviderFactory;
+    /**
+     * @var PostBinding
+     */
+    private $postBinding;
+    /**
+     * @var RemoteVettingService
+     */
+    private $remoteVettingService;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+    /**
+     * @var ServiceProviderFactory
+     */
+    private $serviceProviderFactory;
+
+    public function __construct(
+        IdentityProviderFactory $identityProviderFactory,
+        ServiceProviderFactory $serviceProviderFactory,
+        PostBinding $postBinding,
+        RemoteVettingService $remoteVettingService,
+        LoggerInterface $logger
+    ) {
+        $this->identityProviderFactory = $identityProviderFactory;
+        $this->serviceProviderFactory = $serviceProviderFactory;
+        $this->postBinding = $postBinding;
+        $this->remoteVettingService = $remoteVettingService;
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param string $identityProviderName
+     * @return string
+     */
+    public function createAuthnRequest($identityProviderName)
+    {
+        $this->logger->info(sprintf('Creating a SAML2 AuthnRequest to send to the %s remote vetting IdP', $identityProviderName));
+
+        $identityProvider = $this->identityProviderFactory->create($identityProviderName);
+        $serviceProvider = $this->serviceProviderFactory->create();
+        $authnRequest = AuthnRequestFactory::createNewRequest($serviceProvider, $identityProvider);
+
+        // Set NameId
+        $authnRequest->setSubject('', Constants::NAMEID_UNSPECIFIED);
+
+        // Set AuthnContextClassRef
+        $authnRequest->setAuthenticationContextClassRef(Constants::AC_UNSPECIFIED);
+
+        // Handle validating state
+        $this->remoteVettingService->startValidation(ProcessId::create($authnRequest->getRequestId()));
+
+        // Create redirect response.
+        $query = $authnRequest->buildRequestQuery();
+
+        return sprintf(
+            '%s?%s',
+            $identityProvider->getSsoUrl(),
+            $query
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param string $identityProviderName
+     */
+    public function handleResponse(Request $request, $identityProviderName)
+    {
+        $identityProvider = $this->identityProviderFactory->create($identityProviderName);
+        $serviceProvider = $this->serviceProviderFactory->create();
+
+        $this->logger->info(sprintf('Process the SAML Respons received from the %s remote vetting IdP', $identityProviderName));
+
+        $assertion = $this->postBinding->processResponse(
+            $request,
+            $identityProvider,
+            $serviceProvider
+        );
+
+        /** @var SubjectConfirmation $subjectConfirmation */
+        $subjectConfirmation = $assertion->getSubjectConfirmation()[0];
+        $requestId = $subjectConfirmation->SubjectConfirmationData->InResponseTo;
+
+        // Handle validated state
+        $processId = ProcessId::create($requestId);
+        $this->remoteVettingService->finishValidation($processId);
+        return $processId;
+    }
+}
