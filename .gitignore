@@ -4,7 +4,7 @@
 /web/app_test.php
 /web/js
 /web/css
-/web/fonts
+/web/fonts/*
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
