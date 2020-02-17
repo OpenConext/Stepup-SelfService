@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2020 SURFnet B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,41 +18,31 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\ButtonTypeInterface;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AnchorType extends AbstractType implements ButtonTypeInterface
+class OtpType extends TextType
 {
-    public function getParent()
-    {
-        return ButtonType::class;
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'anchor';
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'route'           => null,
-            'auto_initialize' => false,
-        ]);
-
-        $resolver->setRequired(['route']);
-
-        $resolver->setAllowedTypes('route', 'string');
+        $resolver->setDefaults(
+            [
+                'label' => false,
+                'required' => true,
+                'attr' => [
+                    'autofocus' => true,
+                    'autocomplete' => 'off',
+                ]
+            ]
+        );
+    }
+    public function getBlockPrefix()
+    {
+        return 'otp';
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function getParent()
     {
-        parent::buildView($view, $form, $options);
-
-        $view->vars['route'] = $options['route'];
+        return TextType::class;
     }
 }

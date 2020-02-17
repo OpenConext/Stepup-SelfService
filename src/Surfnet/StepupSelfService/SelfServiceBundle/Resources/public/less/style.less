@@ -2,8 +2,8 @@
 @import "../../../../../../../node_modules/font-awesome/less/font-awesome";
 
 // overriding the font path for correct loading.
-@FontAwesomePath: "./fonts";
-@fa-font-path: "./fonts";
+@FontAwesomePath: "../fonts";
+@fa-font-path: "../fonts";
 
 // This override of the mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Resources/public/less/font-awesome/path.less
 // prevents loading of the none existing woff2 file that resulted in four oh fours.
@@ -61,6 +61,19 @@ form[name="ss_prove_yubikey_possession"] {
     margin: 1em auto;
     padding: 0.75em 1em;
     max-width: 525px;
+
+    .input-group {
+        .input-group-addon {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        input {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            width: 100%;
+        }
+    }
 }
 
 form[name="ss_send_sms_challenge"] {

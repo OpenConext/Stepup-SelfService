@@ -35,6 +35,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     exception_controller: SurfnetStepupSelfServiceSelfServiceBundle:Exception:show
+    form_themes: ['bootstrap_4_horizontal_layout.html.twig', '@SurfnetStepupSelfServiceSelfService/Form/fields.html.twig']
     globals:
         global_view_parameters: "@self_service.service.global_view_parameters"
         root_path: "%kernel.root_dir%"

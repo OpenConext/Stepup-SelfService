@@ -27,17 +27,7 @@ class ProveYubikeyPossessionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('otp', TextType::class, [
-            'label' => /** @Ignore */ false,
-            'required' => true,
-            'widget_addon_prepend' => [
-                'icon' => 'key'
-            ],
-            'attr' => [
-                'autofocus' => true,
-                'autocomplete' => 'off',
-            ]
-        ]);
+        $builder->add('otp', OtpType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

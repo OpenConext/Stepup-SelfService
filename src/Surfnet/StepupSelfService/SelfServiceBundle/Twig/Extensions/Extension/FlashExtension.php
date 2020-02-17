@@ -1,15 +1,6 @@
 <?php
 
-/*
- * This file is part of the MopaBootstrapBundle.
- *
- * (c) Philipp A. Mohrenweiser <phiamo@googlemail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-namespace Mopa\Bundle\BootstrapBundle\Twig;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Twig\Extensions\Extension;
 
 /**
  * MopaBootstrap Flash Extension.
