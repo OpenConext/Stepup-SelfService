@@ -11,6 +11,10 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="../vendor/autoload.php">
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <server name="KERNEL_DIR" value="../app/" />
+    </php>
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>../src/Surfnet/StepupSelfService/SelfServiceBundle/Tests</directory>

@@ -158,9 +158,48 @@ class RemoteVettingContextTest extends IntegrationTest
      * @test
      * @group rv
      */
+    public function a_remote_vetting_process_which_is_not_initialized_could_not_be_validating()
+    {
+        $this->expectException(InvalidRemoteVettingContextException::class);
+        $this->expectExceptionMessage('No remote vetting process found');
+
+        $token = $this->createToken();
+        $processId = ProcessId::create('12345');
+
+        $context = new RemoteVettingContext($this->session);
+
+        $context->validating($processId);
+    }
+
+    /**
+     * @test
+     * @group rv
+     */
+    public function a_remote_vetting_process_which_is_not_validating_could_not_be_validated()
+    {
+        $this->expectException(InvalidRemoteVettingStateException::class);
+        $this->expectExceptionMessage('Unable to finish validation of a token');
+
+        $token = $this->createToken();
+        $processId = ProcessId::create('12345');
+
+        $context = new RemoteVettingContext($this->session);
+
+        $context->initialize($token);
+        //$context->validating($processId);
+        $context->validated($processId);
+    }
+
+
+
+    /**
+     * @test
+     * @group rv
+     */
     public function a_remote_vetting_process_which_is_not_validated_should_never_result_in_a_validated_token()
     {
         $this->expectException(InvalidRemoteVettingStateException::class);
+        $this->expectExceptionMessage('Unable to end the validation of a token');
 
         $token = $this->createToken();
         $processId = ProcessId::create('12345');

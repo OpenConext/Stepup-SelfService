@@ -17,22 +17,29 @@
 
 namespace Surfnet\Tests\Mock\RemoteVetting;
 
-use Exception;
-use RobRichards\XMLSecLibs\XMLSecurityKey;
-use SAML2\Certificate\PrivateKeyLoader;
+use Mockery as m;
+use Psr\Log\NullLogger;
+use SAML2\Certificate\KeyLoader;
 use SAML2\Configuration\PrivateKey;
-use SAML2\Constants;
+use SAML2\Response\Processor;
 use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
-use Surfnet\SamlBundle\SAML2\AuthnRequest;
-use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
+use Surfnet\SamlBundle\Http\PostBinding;
+use Surfnet\SamlBundle\Signing\SignatureVerifier;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\ServiceProviderFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 
+/**
+ * @runTestsInSeparateProcesses
+ */
 class MockRemoteVetControllerTest extends WebTestCase
 {
     /**
@@ -47,11 +54,14 @@ class MockRemoteVetControllerTest extends WebTestCase
      * @var string
      */
     private $privateKey;
-
     /**
      * @var RemoteVettingService
      */
     private $remoteVettingService;
+    /**
+     * @var SamlCalloutHelper
+     */
+    private $samlCalloutHelper;
 
     protected function setUp()
     {
@@ -63,14 +73,23 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         $projectDir = self::$kernel->getProjectDir();
 
-        $this->publicKey = $projectDir . '/app/config/sp.crt';
-        $this->privateKey = $projectDir . '/app/config/sp.key';
+        $keyPath =  '/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources';
+
+        $this->publicKey = $projectDir . $keyPath . '/test.crt';
+        $this->privateKey = $projectDir . $keyPath . '/test.key';
+
+        $this->samlCalloutHelper = $this->setupSamlCalloutHelper();
     }
 
-    public function _testDecisionPage()
+    /**
+     * @test
+     * @group rv
+     */
+    public function the_mock_remote_vetting_idp_should_present_us_with_possible_results_for_testing_purposes()
     {
         $this->logIn();
-        $authnRequestUrl = $this->createAuthnRequestUrl($this->createServiceProvider(), $this->createIdentityProvider(), 'IdentityId', 'SecondFactorId');
+        $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -80,10 +99,15 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->assertContains('One moment please...', $this->client->getResponse()->getContent());
     }
 
-    public function _testSuccessfulResponse()
+    /**
+     * @test
+     * @group rv
+     */
+    public function an_succesful_response_from_a_remote_vetting_idp_should_succeed()
     {
         $this->logIn();
-        $authnRequestUrl = $this->createAuthnRequestUrl($this->createServiceProvider(), $this->createIdentityProvider(), 'IdentityId', 'SecondFactorId');
+        $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -97,12 +121,18 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         // Test if on sp acs
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Demo Service provider ConsumerAssertionService endpoint', $crawler->filter('h2')->text());
+        $this->assertContains('success', $this->client->getResponse()->getContent());
     }
 
-    public function _testUserCancelledResponse()
+    /**
+     * @test
+     * @group rv
+     */
+    public function an_user_cancelled_response_from_a_remote_vetting_idp_should_fail()
     {
-        $authnRequestUrl = $this->createAuthnRequestUrl($this->createServiceProvider(), $this->createIdentityProvider(), 'IdentityId', 'SecondFactorId');
+        $this->logIn();
+        $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -114,16 +144,22 @@ class MockRemoteVetControllerTest extends WebTestCase
         $form = $crawler->selectButton('Submit-user-cancelled')->form();
         $crawler = $this->client->submit($form);
 
+        //todo: handle and test user cancelled?
+
         // Test if on sp acs
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Demo Service provider ConsumerAssertionService endpoint', $crawler->filter('h2')->text());
-        $this->assertContains('Error SAMLResponse', $this->client->getResponse());
-        $this->assertContains('Responder/AuthnFailed Authentication cancelled by user', $this->client->getResponse());
+        $this->assertContains('failed', $this->client->getResponse()->getContent());
     }
 
-    public function _testUnsuccessfulResponse()
+    /**
+     * @test
+     * @group rv
+     */
+    public function an_unsuccessful_response_from_a_remote_vetting_idp_should_fail()
     {
-        $authnRequestUrl = $this->createAuthnRequestUrl($this->createServiceProvider(), $this->createIdentityProvider(), 'IdentityId', 'SecondFactorId');
+        $this->logIn();
+        $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -137,43 +173,40 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         // Test if on sp acs
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Demo Service provider ConsumerAssertionService endpoint', $crawler->filter('h2')->text());
-        $this->assertContains('Error SAMLResponse', $this->client->getResponse());
-        $this->assertContains('Responder/AuthnFailed', $this->client->getResponse());
+        $this->assertContains('failed', $this->client->getResponse()->getContent());
     }
 
     /**
-     * @param ServiceProvider $serviceProvider
-     * @param IdentityProvider $identityProvider
-     * @param string $url
-     * @param string $emailAddress
-     * @return string
+     * @return SamlCalloutHelper
      */
-    private function createAuthnRequestUrl(ServiceProvider $serviceProvider, IdentityProvider $identityProvider, $identityId, $secondFactorId)
+    private function setupSamlCalloutHelper()
     {
-        $authnRequest = AuthnRequestFactory::createNewRequest($serviceProvider, $identityProvider);
+        $identityProviderFactory = m::mock(IdentityProviderFactory::class);
+        $identityProviderFactory->shouldReceive('create')
+            ->with('MockIdP')
+            ->once()
+            ->andReturn($this->createIdentityProvider());
 
-        // Set NameId
-        $authnRequest->setSubject('', Constants::NAMEID_UNSPECIFIED);
+        $serviceProviderFactory = m::mock(ServiceProviderFactory::class);
+        $serviceProviderFactory->shouldReceive('create')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($this->createServiceProvider());
 
-        // Set AuthnContextClassRef
-        $authnRequest->setAuthenticationContextClassRef(Constants::AC_UNSPECIFIED);
+        $logger = new NullLogger();
 
-        // Build request query parameters.
-        $requestAsXml = $authnRequest->getUnsignedXML();
-        $encodedRequest = base64_encode(gzdeflate($requestAsXml));
-        $queryParams = [AuthnRequest::PARAMETER_REQUEST => $encodedRequest];
+        $responseProcessor = new Processor($logger);
+        $keyLoader = new KeyLoader();
+        $signatureVerifier = new SignatureVerifier($keyLoader, $logger);
+        $postBinding = new PostBinding($responseProcessor, $logger, $signatureVerifier);
 
-        // Create redirect response.
-        $query = $this->signRequestQuery($queryParams, $serviceProvider);
-        $url = sprintf('%s?%s', $identityProvider->getSsoUrl(), $query);
-
-        // Set session specific data
-        $token = new RemoteVettingTokenDto($identityId, $secondFactorId);
-        $token->setRequestId($authnRequest->getRequestId());
-        $this->remoteVettingService->startAuthentication($token);
-
-        return $url;
+        return new SamlCalloutHelper(
+            $identityProviderFactory,
+            $serviceProviderFactory,
+            $postBinding,
+            $this->remoteVettingService,
+            $logger
+        );
     }
 
     private function createServiceProvider()
@@ -212,58 +245,25 @@ class MockRemoteVetControllerTest extends WebTestCase
         );
     }
 
-    /**
-     * Sign AuthnRequest query parameters.
-     *
-     * @param array $queryParams
-     * @param ServiceProvider $serviceProvider
-     * @return string
-     *
-     * @throws Exception
-     */
-    private function signRequestQuery(array $queryParams, ServiceProvider $serviceProvider)
-    {
-        /** @var  $securityKey */
-        $securityKey = $this->loadServiceProviderPrivateKey($serviceProvider);
-        $queryParams[AuthnRequest::PARAMETER_SIGNATURE_ALGORITHM] = $securityKey->type;
-        $toSign = http_build_query($queryParams);
-        $signature = $securityKey->signData($toSign);
-
-        return $toSign . '&Signature=' . urlencode(base64_encode($signature));
-    }
-
-    /**
-     * Loads the private key from the service provider.
-     *
-     * @param ServiceProvider $serviceProvider
-     * @return XMLSecurityKey
-     *
-     * @throws Exception
-     */
-    private function loadServiceProviderPrivateKey(ServiceProvider $serviceProvider)
-    {
-        $keyLoader = new PrivateKeyLoader();
-        $privateKey = $keyLoader->loadPrivateKey(
-            $serviceProvider->getPrivateKey(PrivateKey::NAME_DEFAULT)
-        );
-        $key = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
-        $key->loadKey($privateKey->getKeyAsString());
-
-        return $key;
-    }
 
     private function logIn()
     {
         $session = $this->client->getContainer()->get('session');
 
-        $firewallName = 'saml_based';
-        // if you don't define multiple connected firewalls, the context defaults to the firewall name
-        // See https://symfony.com/doc/current/reference/configuration/security.html#firewall-context
         $firewallContext = 'saml_based';
 
-        // you may need to use a different token class depending on your application.
-        // for example, when using Guard authentication you must instantiate PostAuthenticationGuardToken
+        $user = new Identity([
+            'id' => '12345567890',
+            'name_id' => 'name-id',
+            'institution' => 'institution',
+            'email' => 'name@institution.tld',
+            'common_name' => 'Common Name',
+            'preferred_locale' => 'nl',
+        ]);
+
         $token = new SamlToken(['ROLE_USER']);
+        $token->setUser($user);
+
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();
 

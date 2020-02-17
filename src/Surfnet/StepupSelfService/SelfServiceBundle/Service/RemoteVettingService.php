@@ -58,7 +58,6 @@ class RemoteVettingService
     public function startValidation(ProcessId $processId)
     {
         $this->logger->info('Starting an remote vetting authentication based on the provided token');
-        ;
 
         $this->remoteVettingContext->validating($processId);
     }
@@ -70,7 +69,6 @@ class RemoteVettingService
     public function finishValidation(ProcessId $processId)
     {
         $this->logger->info('Starting an remote vetting authentication based on the provided token');
-        ;
 
         $this->remoteVettingContext->validated($processId);
     }

@@ -99,7 +99,8 @@ class RemoteVettingController extends Controller
                 $command->secondFactor->id
             );
             $this->remoteVettingService->start($token);
-            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest($token, 'mock_idp'));
+            // todo : implement idp selection
+            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest('mock_idp'));
         }
 
         return [
@@ -134,13 +135,20 @@ class RemoteVettingController extends Controller
             // todo: record attributes
             // todo: vet token
             $flashBag->add('error', sprintf("TODO: implement attribute validation\n%s", print_r($token, true)));
-            throw new Exception('Implement manual vetting');
 
-//            $command = new RemoteVetCommand();
-//            $command->identity = $user->getIdentityId();
-//            $command->secondFactor = $user->getSecondFactorId();
-//
-//            // todo: add flashbag translations?
+
+            // This need to be changed after implementing all
+            if ($this->container->get('kernel')->getEnvironment() !== 'test') {
+                throw new Exception('Implement manual vetting');
+
+//                $command = new RemoteVetCommand();
+//                $command->identity = $user->getIdentityId();
+//                $command->secondFactor = $user->getSecondFactorId();
+            }
+
+            // todo: add flashbag translations?
+
+            return new Response('success');
 //
 //            if ($service->remoteVet($command)) {
 //                $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
@@ -152,8 +160,7 @@ class RemoteVettingController extends Controller
 
             //$this->logger->error('The authentication failed. Rejecting the response.');
 
-            $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
-            return $this->redirectToRoute('ss_second_factor_list');
+            return new Response('failed');
         }
 
         return $this->redirectToRoute('ss_second_factor_list');

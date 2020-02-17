@@ -27,6 +27,10 @@ before_script:
 script:
   - ant
 
+after_script:
+  - cat $TRAVIS_BUILD_DIR/app/logs/*.log
+  - cat $TRAVIS_BUILD_DIR/app/config/parameters.yml
+
 branches:
   only:
     - master
@@ -34,7 +38,6 @@ branches:
     - /^feature\/(.*)$/
     - /^hotfix\/(.*)$/
     - /^bugfix\/(.*)$/
-
 
 addons:
   apt:

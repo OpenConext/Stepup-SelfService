@@ -20,10 +20,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 use Psr\Log\LoggerInterface;
 use SAML2\Constants;
 use SAML2\XML\saml\SubjectConfirmation;
+use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -46,9 +46,9 @@ class SamlCalloutHelper
      */
     private $logger;
     /**
-     * @var ServiceProviderFactory
+     * @var ServiceProvider
      */
-    private $serviceProviderFactory;
+    private $serviceProvider;
 
     public function __construct(
         IdentityProviderFactory $identityProviderFactory,
@@ -58,7 +58,7 @@ class SamlCalloutHelper
         LoggerInterface $logger
     ) {
         $this->identityProviderFactory = $identityProviderFactory;
-        $this->serviceProviderFactory = $serviceProviderFactory;
+        $this->serviceProvider = $serviceProviderFactory->create();
         $this->postBinding = $postBinding;
         $this->remoteVettingService = $remoteVettingService;
         $this->logger = $logger;
@@ -73,8 +73,7 @@ class SamlCalloutHelper
         $this->logger->info(sprintf('Creating a SAML2 AuthnRequest to send to the %s remote vetting IdP', $identityProviderName));
 
         $identityProvider = $this->identityProviderFactory->create($identityProviderName);
-        $serviceProvider = $this->serviceProviderFactory->create();
-        $authnRequest = AuthnRequestFactory::createNewRequest($serviceProvider, $identityProvider);
+        $authnRequest = AuthnRequestFactory::createNewRequest($this->serviceProvider, $identityProvider);
 
         // Set NameId
         $authnRequest->setSubject('', Constants::NAMEID_UNSPECIFIED);
@@ -98,18 +97,18 @@ class SamlCalloutHelper
     /**
      * @param Request $request
      * @param string $identityProviderName
+     * @return ProcessId
      */
     public function handleResponse(Request $request, $identityProviderName)
     {
         $identityProvider = $this->identityProviderFactory->create($identityProviderName);
-        $serviceProvider = $this->serviceProviderFactory->create();
 
         $this->logger->info(sprintf('Process the SAML Respons received from the %s remote vetting IdP', $identityProviderName));
 
         $assertion = $this->postBinding->processResponse(
             $request,
             $identityProvider,
-            $serviceProvider
+            $this->serviceProvider
         );
 
         /** @var SubjectConfirmation $subjectConfirmation */
