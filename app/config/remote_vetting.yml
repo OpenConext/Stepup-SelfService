@@ -1,14 +1,17 @@
 parameters:
+  saml_rv_publickey: "%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt"
+  saml_rv_privatekey: "%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key"
+
   remote_vetting_idps:
       - name: mock_idp
         entityId: https://selfservice.stepup.example.com/mock/metadata
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
-        certificateFile: "%saml_sp_publickey%"
-        privateKey: "%saml_sp_publickey%"
+        certificateFile: "%saml_rv_publickey%"
+        privateKey: "%saml_rv_privatekey%"
   remote_vetting_sp:
     entityId: https://selfservice.stepup.example.com/saml/metadata
     assertionConsumerUrl: https://selfservice.stepup.example.com/second-factor/acs
-    privateKey: "%saml_sp_privatekey%"
+    privateKey: "%saml_rv_privatekey%"
 
   identity_encryption_configuration:
     encryption_public_key: |-
@@ -69,8 +72,8 @@ services:
     arguments:
       $identityProviderEntityId: 'https://selfservice.stepup.example.com/mock/idp/metadata'
       $serviceProviderEntityId: 'https://selfservice.stepup.example.com/saml/metadata'
-      $privateKeyPath: '%saml_sp_privatekey%'
-      $publicCertPath: '%saml_sp_publickey%'
+      $privateKeyPath: '%saml_rv_privatekey%'
+      $publicCertPath: '%saml_rv_publickey%'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockRemoteVetController:
     arguments:
