@@ -1,24 +1,4 @@
-{% macro session_flash(close, use_raw, class, domain) %}
-    {% import _self as flash_messages %}
-
-    {% if app.session.flashbag.peekAll|length > 0 %}
-        {% set mapping = mopa_bootstrap_flash_mapping()|merge({'fos_user_success':'success'}) %}
-        {% set flashes = {} %}
-
-        {% for type in mapping|keys %}
-            {% set flashes = flashes | merge({ (type) : app.session.flashbag.get(type) }) %}
-        {% endfor %}
-
-        {% for type, messages in flashes %}
-            {% if type == 'fos_user_success' %}
-                {% set domain = 'FOSUserBundle' %}
-            {% endif %}
-            {% for message in messages %}
-                {{ flash_messages.flash(mapping[type], message, close, use_raw, class, domain) }}
-            {% endfor %}
-        {% endfor %}
-    {% endif %}
-{% endmacro %}
+{% from 'flash.html.twig' import session_flash %}
 
 <!DOCTYPE html>
 
@@ -93,15 +73,15 @@
         {% endif %}
     {% endblock page_header %}
 
-    {% block flashes %}
+    {% block form_errors %}
         {% if app.session.flashbag.peekAll|length > 0 %}
             <div class="row-fluid">
                 <div id="flash" class="span12">
-                    {#                        {{ session_flash() }}#}
+                    {{ session_flash() }}
                 </div>
             </div>
         {% endif %}
-    {% endblock flashes %}
+    {% endblock form_errors %}
 
     {% block content_row %}
         {% block content %}

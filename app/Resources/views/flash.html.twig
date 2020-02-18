@@ -1,0 +1,28 @@
+{% macro session_flash(close, use_raw, class, domain) %}
+    {% from _self import flash %}
+
+    {% if app.session.flashbag.peekAll|length > 0 %}
+        {% set mapping = {error: 'error'} %}
+        {% set flashes = {} %}
+
+        {% for type in mapping|keys %}
+            {% set flashes = flashes | merge({ (type) : app.session.flashbag.get(type) }) %}
+        {% endfor %}
+
+        {% for type, messages in flashes %}
+            {% for message in messages %}
+                {{ flash(mapping[type], message, close, use_raw, class, domain) }}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% macro flash(type, message, close, use_raw, class, domain) %}
+    <div class="alert alert-danger fade in">
+        {% if use_raw|default(false) %}
+            {{ message|trans({}, domain|default('messages'))|raw }}
+        {% else %}
+            {{ message|trans({}, domain|default('messages')) }}
+        {% endif %}
+    </div>
+{% endmacro %}

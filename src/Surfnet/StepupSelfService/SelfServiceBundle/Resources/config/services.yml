@@ -168,9 +168,3 @@ services:
             - "@surfnet_stepup.service.second_factor_type_translator"
         tags:
             - { name : twig.extension }
-
-    Surfnet\StepupSelfService\SelfServiceBundle\Twig\Extensions\Extension\FlashExtension:
-        arguments:
-            - []
-        tags:
-            - { name: twig.extension }
