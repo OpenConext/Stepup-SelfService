@@ -95,8 +95,7 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         // Test if on decision page
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('success', $crawler->filter('h2')->text());
-        $this->assertContains('One moment please...', $this->client->getResponse()->getContent());
+        $this->assertContains('Select response', $crawler->filter('h2')->text());
     }
 
     /**
@@ -113,10 +112,14 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         // Test if on decision page
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('success', $crawler->filter('h2')->text());
+        $this->assertContains('Select response', $crawler->filter('h2')->text());
 
-        // Return success response
-        $form = $crawler->selectButton('Submit-success')->form();
+        // Test valid response
+        $form = $crawler->selectButton('success')->form();
+        $crawler = $this->client->submit($form);
+
+        // Post response
+        $form = $crawler->selectButton('Post')->form();
         $crawler = $this->client->submit($form);
 
         // Test if on sp acs
@@ -138,10 +141,14 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         // Test if on decision page
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('success', $crawler->filter('h2')->text());
+        $this->assertContains('Select response', $crawler->filter('h2')->text());
 
-        // Return success response
-        $form = $crawler->selectButton('Submit-user-cancelled')->form();
+        // Test cancelled response
+        $form = $crawler->selectButton('user-cancelled')->form();
+        $crawler = $this->client->submit($form);
+
+        // Post response
+        $form = $crawler->selectButton('Post')->form();
         $crawler = $this->client->submit($form);
 
         //todo: handle and test user cancelled?
@@ -165,10 +172,14 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         // Test if on decision page
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('success', $crawler->filter('h2')->text());
+        $this->assertContains('Select response', $crawler->filter('h2')->text());
 
-        // Return success response
-        $form = $crawler->selectButton('Submit-unknown')->form();
+        // Test unknown response
+        $form = $crawler->selectButton('unknown')->form();
+        $crawler = $this->client->submit($form);
+
+        // Post response
+        $form = $crawler->selectButton('Post')->form();
         $crawler = $this->client->submit($form);
 
         // Test if on sp acs

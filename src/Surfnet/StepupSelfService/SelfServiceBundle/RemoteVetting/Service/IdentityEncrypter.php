@@ -19,7 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\IdentityDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
 
 class IdentityEncrypter
 {
@@ -40,12 +40,12 @@ class IdentityEncrypter
     }
 
     /**
-     * @param IdentityDto $identity
+     * @param AttributeLogDto $identity
      * @param string $source
      */
-    public function encrypt(IdentityDto $identity, $source)
+    public function encrypt(AttributeLogDto $identity)
     {
-        $data = $this->constructData($identity, $source);
+        $data = $this->constructData($identity);
         $publicKey = $this->configuration->getPublicKey();
 
         $encryptedData = '';
@@ -53,12 +53,14 @@ class IdentityEncrypter
         $this->writer->write($encryptedData);
     }
 
-    private function constructData(IdentityDto $identityDto, $source)
+    private function constructData(AttributeLogDto $identityDto)
     {
         return json_encode(
             array_merge(
                 $identityDto->jsonSerialize(),
-                ['version' => $this->configuration->getVersion(), 'source' => $source]
+                [
+                    'version' => $this->configuration->getVersion(),
+                ]
             )
         );
     }

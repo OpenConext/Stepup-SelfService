@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Servic
 use Mockery as m;
 use PHPUnit_Framework_TestCase as UnitTest;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\IdentityDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityEncrypter;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityFilesystemWriter;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityWriterInterface;
@@ -76,7 +76,7 @@ CERT;
         $this->writer
             ->shouldReceive('write');
 
-        $data = new IdentityDto(['email' => 'johndoe@example.com', 'firstName' => 'John']);
+        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John']);
         $this->encrypter->encrypt($data, RemoteVettingConfiguration::SOURCE_IRMA);
     }
 }

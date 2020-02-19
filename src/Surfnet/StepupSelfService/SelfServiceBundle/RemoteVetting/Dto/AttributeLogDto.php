@@ -27,7 +27,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
  * Which of the attributes are considered identity data is to be decided by the
  * user of this DTO.
  */
-class IdentityDto implements JsonSerializable
+class AttributeLogDto implements JsonSerializable
 {
     /**
      * @var AttributeCollection
@@ -39,17 +39,32 @@ class IdentityDto implements JsonSerializable
      */
     private $timestamp;
 
-    public function __construct(array $attributes)
+    /**
+     * @var string
+     */
+    private $raw;
+
+    /**
+     * @var string
+     */
+    private $nameId;
+
+    public function __construct(array $attributes, $nameId, $raw)
     {
         $this->attributes = new AttributeCollection($attributes);
         $this->timestamp = DateTime::now();
+        $this->raw = $raw;
+        $this->attributes = $attributes;
+        $this->nameId = $nameId;
     }
 
     public function jsonSerialize()
     {
         return [
             'timestamp' => $this->timestamp->format('Y-m-d\TH:i:sP'),
-            'attributes' => $this->attributes
+            'nameId' => $this->nameId,
+            'attributes' => $this->attributes,
+            'raw' => $this->raw,
         ];
     }
 }

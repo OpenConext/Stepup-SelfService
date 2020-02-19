@@ -1,0 +1,11 @@
+<html>
+
+    <h2>Post SAML response back to SSO</h2>
+    <form method="post" action="{{ response.acu }}">
+        <input type="hidden" name="SAMLResponse" value="{{ response.encodedResponse }}"/>
+        {% if response.relayState|length > 0 %}
+            <input type="hidden" name="RelayState" value="{{ response.relayState|escape }}"/>
+        {% endif %}
+        <input type="submit" value="Post"/>
+    </form>
+</html>

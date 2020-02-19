@@ -132,7 +132,6 @@ class RemoteVettingController extends Controller
             //$this->logger->info('Process the authentication');
             $token = $this->remoteVettingService->done($token);
 
-            // todo: record attributes
             // todo: vet token
             $flashBag->add('error', sprintf("TODO: implement attribute validation\n%s", print_r($token, true)));
 
@@ -158,9 +157,20 @@ class RemoteVettingController extends Controller
         } catch (AuthnFailedSamlResponseException $e) {
             // todo: add flashbag translations?
 
+            if ($this->container->get('kernel')->getEnvironment() === 'test') {
+                // todo implement descent failed handling
+                return new Response('failed');
+            }
+
+
             //$this->logger->error('The authentication failed. Rejecting the response.');
 
-            return new Response('failed');
+            // Todo catch cancelled
+            // Todo cacth unknown
+
+            $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
+
+            return $this->redirectToRoute('ss_second_factor_list');
         }
 
         return $this->redirectToRoute('ss_second_factor_list');

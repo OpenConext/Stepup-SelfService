@@ -19,6 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityEncrypter;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
@@ -33,13 +35,19 @@ class RemoteVettingService
      * @var RemoteVettingContext
      */
     private $remoteVettingContext;
+    /**
+     * @var IdentityEncrypter
+     */
+    private $identityEncrypter;
 
     public function __construct(
         RemoteVettingContext $remoteVettingContext,
+        IdentityEncrypter $identityEncrypter,
         LoggerInterface $logger
     ) {
         $this->remoteVettingContext = $remoteVettingContext;
         $this->logger = $logger;
+        $this->identityEncrypter = $identityEncrypter;
     }
 
     /**
@@ -65,12 +73,15 @@ class RemoteVettingService
 
     /**
      * @param ProcessId $processId
+     * @param AttributeLogDto $identityDto
      */
-    public function finishValidation(ProcessId $processId)
+    public function finishValidation(ProcessId $processId, AttributeLogDto $identityDto)
     {
         $this->logger->info('Starting an remote vetting authentication based on the provided token');
 
         $this->remoteVettingContext->validated($processId);
+
+        $this->identityEncrypter->encrypt($identityDto);
     }
 
 

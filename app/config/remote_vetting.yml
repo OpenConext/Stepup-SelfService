@@ -60,6 +60,7 @@ services:
     class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService
     arguments:
       $remoteVettingContext: "@self_service.remote_vetting.remote_vetting_context"
+      $identityEncrypter: "@self_service.remote_vetting.service.identity_encrypter"
       $logger: "@logger"
 
   Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVettingController:
@@ -84,3 +85,14 @@ services:
       class: Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway
       arguments:
         - '@Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration'
+
+  Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityFilesystemWriter:
+    arguments:
+      - '@Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration'
+
+
+  self_service.remote_vetting.service.identity_encrypter:
+    class: Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityEncrypter
+    arguments:
+      $configuration: '@Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration'
+      $writer: '@Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityFilesystemWriter'
