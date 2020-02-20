@@ -1,15 +1,17 @@
 parameters:
+  saml_rv_publickey: "%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt"
+  saml_rv_privatekey: "%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key"
 
   remote_vetting_idps:
       - name: mock_idp
         entityId: https://selfservice.stepup.example.com/mock/metadata
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
-        certificateFile: "%saml_sp_publickey%"
-        privateKey: "%saml_sp_publickey%"
+        certificateFile: "%saml_rv_publickey%"
+        privateKey: "%saml_rv_privatekey%"
   remote_vetting_sp:
     entityId: https://selfservice.stepup.example.com/saml/metadata
     assertionConsumerUrl: https://selfservice.stepup.example.com/second-factor/acs
-    privateKey: "%saml_sp_privatekey%"
+    privateKey: "%saml_rv_privatekey%"
 
   identity_encryption_configuration:
     encryption_public_key: |-
@@ -25,7 +27,6 @@ parameters:
     storage_location: /tmp/
 
 services:
-
   self_service.remote_vetting.identity_provider_factory:
     class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory
     arguments:
@@ -41,32 +42,45 @@ services:
       $configurationSettings: "%identity_encryption_configuration%"
       $version: "%asset_version%"
 
+  self_service.remote_vetting.remote_vetting_context:
+    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext
+    arguments:
+      $session: "@session"
 
-  self_service.remote_vetting.service:
-    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService
+  self_service.remote_vetting.saml_callout_helper:
+    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper
     arguments:
       $identityProviderFactory: "@self_service.remote_vetting.identity_provider_factory"
       $serviceProviderFactory: "@self_service.remote_vetting.service_provider_factory"
       $postBinding: "@surfnet_saml.http.post_binding"
-      $session: "@session"
+      $remoteVettingService: "@self_service.remote_vetting.service"
+      $logger: "@logger"
+
+  self_service.remote_vetting.service:
+    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService
+    arguments:
+      $remoteVettingContext: "@self_service.remote_vetting.remote_vetting_context"
       $logger: "@logger"
 
   Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVettingController:
     arguments:
       - "@self_service.remote_vetting.service"
-
-  Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway:
-    arguments:
-      - '@Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration'
+      - "@self_service.remote_vetting.saml_callout_helper"
+      - "@logger"
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration:
     arguments:
       $identityProviderEntityId: 'https://selfservice.stepup.example.com/mock/idp/metadata'
       $serviceProviderEntityId: 'https://selfservice.stepup.example.com/saml/metadata'
-      $privateKeyPath: '%saml_sp_privatekey%'
-      $publicCertPath: '%saml_sp_publickey%'
+      $privateKeyPath: '%saml_rv_privatekey%'
+      $publicCertPath: '%saml_rv_publickey%'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockRemoteVetController:
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway'
       - '@twig'
+
+  Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway:
+      class: Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway
+      arguments:
+        - '@Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration'

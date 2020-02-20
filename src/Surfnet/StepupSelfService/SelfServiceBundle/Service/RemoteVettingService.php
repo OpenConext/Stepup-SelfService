@@ -19,174 +19,71 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
-use SAML2\Constants;
-use SAML2\XML\saml\SubjectConfirmation;
-use Surfnet\SamlBundle\Entity\IdentityProvider;
-use Surfnet\SamlBundle\Entity\ServiceProvider;
-use Surfnet\SamlBundle\Http\PostBinding;
-use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
-use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingAuthenticationContextException;
-use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingResponseException;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingTokenDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\ServiceProviderFactory;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class RemoteVettingService
 {
-    const TOKEN_SESSION_KEY = 'remote-vetting-token';
-
-    /**
-     * @var IdentityProviderFactory
-     */
-    private $identityProviderFactory;
-
-    /**
-     * @var PostBinding
-     */
-    private $postBinding;
-    /**
-     * @var SessionInterface
-     */
-    private $session;
     /**
      * @var LoggerInterface
      */
     private $logger;
     /**
-     * @var ServiceProviderFactory
+     * @var RemoteVettingContext
      */
-    private $serviceProviderFactory;
+    private $remoteVettingContext;
 
     public function __construct(
-        IdentityProviderFactory $identityProviderFactory,
-        ServiceProviderFactory $serviceProviderFactory,
-        PostBinding $postBinding,
-        SessionInterface $session,
+        RemoteVettingContext $remoteVettingContext,
         LoggerInterface $logger
     ) {
-        $this->identityProviderFactory = $identityProviderFactory;
-        $this->serviceProviderFactory = $serviceProviderFactory;
-        $this->postBinding = $postBinding;
-        $this->session = $session;
+        $this->remoteVettingContext = $remoteVettingContext;
         $this->logger = $logger;
     }
 
     /**
-     * @param RemoteVettingTokenDto $token
-     * @return RemoteVettingTokenDto
+     * @param RemoteVettingTokenDto $remoteVettingToken
      */
-    public function startAuthentication(RemoteVettingTokenDto $token)
+    public function start(RemoteVettingTokenDto $remoteVettingToken)
     {
-        $this->logger->info('Starting an authentication based on the provided token');
-        ;
-        $this->logger->info('Updating remote vetting token session: creating');
-        $this->session->set(self::TOKEN_SESSION_KEY, $token);
+        $this->logger->info('Starting an remote vetting authentication based on the provided token');
 
-        return $token;
+        $this->remoteVettingContext->initialize($remoteVettingToken);
     }
 
     /**
-     * @param RemoteVettingTokenDto $token
-     * @return RemoteVettingTokenDto
+     * @param ProcessId $processId
      */
-    public function finishAuthentication(RemoteVettingTokenDto $token)
+    public function startValidation(ProcessId $processId)
     {
-        $this->logger->info('Finishing the authentication');
-        $sessionToken = $this->session->get(self::TOKEN_SESSION_KEY);
+        $this->logger->info('Starting an remote vetting authentication based on the provided token');
 
-        if (!$token->isEqual($sessionToken)) {
-            throw new InvalidRemoteVettingAuthenticationContextException(
-                'Unknown authentication context another process is started in the meantime'
-            );
-        }
-
-        $this->logger->info('Updating remote vetting session: removing');
-        $this->session->remove(self::TOKEN_SESSION_KEY);
-
-        return $token;
+        $this->remoteVettingContext->validating($processId);
     }
 
+
     /**
-     * @param RemoteVettingTokenDto $token
-     * @param string $identityProviderName
-     * @param string $nameId
-     * @param string $uthnContextClassRef
-     * @return string
+     * @param ProcessId $processId
      */
-    public function createAuthnRequest(RemoteVettingTokenDto $token, $identityProviderName)
+    public function finishValidation(ProcessId $processId)
     {
-        $this->logger->info('Creating a SAML2 AuthnRequest to send to the IdP');
+        $this->logger->info('Starting an remote vetting authentication based on the provided token');
 
-        $identityProvider = $this->identityProviderFactory->create($identityProviderName);
-        $serviceProvider = $this->serviceProviderFactory->create();
-        $authnRequest = AuthnRequestFactory::createNewRequest($serviceProvider, $identityProvider);
-
-        // Set NameId
-        $authnRequest->setSubject('', Constants::NAMEID_UNSPECIFIED);
-
-        // Set AuthnContextClassRef
-        $authnRequest->setAuthenticationContextClassRef(Constants::AC_UNSPECIFIED);
-
-        // Set RequestId to be able to validate response
-        $token->setRequestId($authnRequest->getRequestId());
-        $this->session->set(self::TOKEN_SESSION_KEY, $token);
-
-        // Create redirect response.
-        $query = $authnRequest->buildRequestQuery();
-
-        return sprintf(
-            '%s?%s',
-            $identityProvider->getSsoUrl(),
-            $query
-        );
+        $this->remoteVettingContext->validated($processId);
     }
 
+
     /**
-     * @param Request $request
-     * @param string $identityProviderName
+     * @param ProcessId $processId
      * @return RemoteVettingTokenDto
      */
-    public function handleResponse(Request $request, $identityProviderName)
+    public function done(ProcessId $processId)
     {
-        // Load the registering/authenticating token
-        /** @var RemoteVettingTokenDto $token */
-        $token = $this->session->get(self::TOKEN_SESSION_KEY);
+        $this->logger->info('Finishing the remote vetting authentication');
 
-        if (!$token) {
-            throw new InvalidRemoteVettingAuthenticationContextException(
-                'Unable to find active authentication context'
-            );
-        }
+        $this->remoteVettingContext->done($processId);
 
-        $identityProvider = $this->identityProviderFactory->create($identityProviderName);
-        $serviceProvider = $this->serviceProviderFactory->create();
-
-        $this->logger->info('Process the SAML Response');
-        $assertion = $this->postBinding->processResponse(
-            $request,
-            $identityProvider,
-            $serviceProvider
-        );
-
-        /** @var SubjectConfirmation $subjectConfirmation */
-        $subjectConfirmation = $assertion->getSubjectConfirmation()[0];
-        $requestId = $subjectConfirmation->SubjectConfirmationData->InResponseTo;
-
-        if ($requestId != $token->getRequestId()) {
-            throw new InvalidRemoteVettingResponseException('The received response is not an answer to the sended request');
-        }
-
-
-        // todo: catch assertions and validate them
-        //$a = $assertion->getAttributes();
-
-        $this->logger->info('Log the returned assertions from the received response');
-
-        return $token;
+        return $this->remoteVettingContext->getValidatedToken();
     }
 }

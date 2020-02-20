@@ -18,7 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Exception;
 
-class InvalidRemoteVettingAuthenticationContextException extends RuntimeException
+class InvalidRemoteVettingContextException extends RuntimeException
 {
 
 }

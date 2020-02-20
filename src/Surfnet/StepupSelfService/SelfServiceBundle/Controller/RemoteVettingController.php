@@ -18,12 +18,13 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Exception;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\SamlBundle\Http\Exception\AuthnFailedSamlResponseException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetSecondFactorType;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -38,10 +39,23 @@ class RemoteVettingController extends Controller
      * @var RemoteVettingService
      */
     private $remoteVettingService;
+    /**
+     * @var SamlCalloutHelper
+     */
+    private $samlCalloutHelper;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct(RemoteVettingService $remoteVettingService)
-    {
+    public function __construct(
+        RemoteVettingService $remoteVettingService,
+        SamlCalloutHelper $samlCalloutHelper,
+        LoggerInterface $logger
+    ) {
         $this->remoteVettingService = $remoteVettingService;
+        $this->samlCalloutHelper = $samlCalloutHelper;
+        $this->logger = $logger;
     }
 
     /**
@@ -80,9 +94,13 @@ class RemoteVettingController extends Controller
         $form = $this->createForm(RemoteVetSecondFactorType::class, $command)->handleRequest($request);
 
         if ($form->isValid()) {
-            $token = new RemoteVettingTokenDto($command->identity->id, $command->secondFactor->id);
-            $this->remoteVettingService->startAuthentication($token);
-            return new RedirectResponse($this->remoteVettingService->createAuthnRequest($token, 'mock_idp'));
+            $token = RemoteVettingTokenDto::create(
+                $command->identity->id,
+                $command->secondFactor->id
+            );
+            $this->remoteVettingService->start($token);
+            // todo : implement idp selection
+            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest('mock_idp'));
         }
 
         return [
@@ -101,30 +119,36 @@ class RemoteVettingController extends Controller
         /** @var SecondFactorService $service */
 //        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
-        //$this->logger->info('Receiving response from the remote IdP');
+        $this->logger->info('Receiving response from the remote IdP');
 
         /** @var FlashBagInterface $flashBag */
         $flashBag = $this->get('session')->getFlashBag();
 
         try {
-            //$this->logger->info('Load the associated Stepup user from this response');
-            $token = $this->remoteVettingService->handleResponse($request, 'mock_idp');
+            $this->logger->info('Load the attributes from the saml response');
+            $token = $this->samlCalloutHelper->handleResponse($request, 'mock_idp');
 
             // handle callout response
             //$this->logger->info('Process the authentication');
-            $user = $this->remoteVettingService->finishAuthentication($token);
+            $token = $this->remoteVettingService->done($token);
 
             // todo: record attributes
             // todo: vet token
-            $flashBag->add('error', 'TODO: implement attribute validation');
-            throw new Exception('Implement manual vetting');
+            $flashBag->add('error', sprintf("TODO: implement attribute validation\n%s", print_r($token, true)));
 
-            $user = null;
-//            $command = new RemoteVetCommand();
-//            $command->identity = $user->getIdentityId();
-//            $command->secondFactor = $user->getSecondFactorId();
-//
-//            // todo: add flashbag translations?
+
+            // This need to be changed after implementing all
+            if ($this->container->get('kernel')->getEnvironment() !== 'test') {
+                throw new Exception('Implement manual vetting');
+
+//                $command = new RemoteVetCommand();
+//                $command->identity = $user->getIdentityId();
+//                $command->secondFactor = $user->getSecondFactorId();
+            }
+
+            // todo: add flashbag translations?
+
+            return new Response('success');
 //
 //            if ($service->remoteVet($command)) {
 //                $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
@@ -136,8 +160,7 @@ class RemoteVettingController extends Controller
 
             //$this->logger->error('The authentication failed. Rejecting the response.');
 
-            $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
-            return $this->redirectToRoute('ss_second_factor_list');
+            return new Response('failed');
         }
 
         return $this->redirectToRoute('ss_second_factor_list');

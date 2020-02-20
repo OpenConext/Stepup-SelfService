@@ -25,6 +25,8 @@ final class MockConfiguration
     private $serviceProviderEntityId;
     private $publicKeyCertData;
     private $privateKeyPem;
+    private $publicKeyCertDataFile;
+    private $privateKeyPemFile;
 
     /**
      * @param string $identityProviderEntityId
@@ -48,6 +50,8 @@ final class MockConfiguration
 
         $this->identityProviderEntityId = $identityProviderEntityId;
         $this->serviceProviderEntityId = $serviceProviderEntityId;
+        $this->privateKeyPemFile = $privateKeyPath;
+        $this->publicKeyCertDataFile = $publicCertPath;
         $this->privateKeyPem = file_get_contents($privateKeyPath);
         $this->publicKeyCertData = file_get_contents($publicCertPath);
     }
@@ -82,5 +86,21 @@ final class MockConfiguration
     public function getServiceProviderEntityId()
     {
         return $this->serviceProviderEntityId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublicKeyCertDataFile()
+    {
+        return $this->publicKeyCertDataFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrivateKeyPemFile()
+    {
+        return $this->privateKeyPemFile;
     }
 }

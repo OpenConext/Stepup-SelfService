@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
 class RemoteVettingTokenDto
 {
@@ -27,39 +27,40 @@ class RemoteVettingTokenDto
      * @var string
      */
     private $secondFactorId;
+
     /**
-     * @var string
+     * @param string $identityId
+     * @param string $secondFactorId
+     * @return RemoteVettingTokenDto
      */
-    private $requestId;
+    public static function create($identityId, $secondFactorId)
+    {
+        return new self($identityId, $secondFactorId);
+    }
 
     /**
      * @param string $identityId
      * @param string $secondFactorId
      */
-    public function __construct($identityId, $secondFactorId)
+    private function __construct($identityId, $secondFactorId)
     {
         $this->identityId = $identityId;
         $this->secondFactorId = $secondFactorId;
     }
 
-    public function isEqual(RemoteVettingTokenDto $token)
+    /**
+     * @return string
+     */
+    public function getIdentityId()
     {
-        return $this == $token;
+        return $this->identityId;
     }
 
     /**
      * @return string
      */
-    public function getRequestId()
+    public function getSecondFactorId()
     {
-        return $this->requestId;
-    }
-
-    /**
-     * @param string $requestId
-     */
-    public function setRequestId($requestId)
-    {
-        $this->requestId = $requestId;
+        return $this->secondFactorId;
     }
 }
