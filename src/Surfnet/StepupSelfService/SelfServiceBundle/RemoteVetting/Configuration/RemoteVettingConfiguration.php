@@ -20,21 +20,14 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuratio
 
 class RemoteVettingConfiguration
 {
-    const SOURCE_IRMA = 'IRMA';
-    const SOURCE_IDIN = 'iDIN';
-    const SOURCE_READ_ID = 'READ.ID';
-
     private $publicKey;
 
     private $location;
-
-    private $version;
 
     public function __construct($configurationSettings, $version)
     {
         $this->publicKey = $configurationSettings['encryption_public_key'];
         $this->location = $configurationSettings['storage_location'];
-        $this->version = $version;
     }
 
     public function getLocation()
@@ -45,10 +38,5 @@ class RemoteVettingConfiguration
     public function getPublicKey()
     {
         return $this->publicKey;
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
     }
 }

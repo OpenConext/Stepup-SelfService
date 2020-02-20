@@ -20,10 +20,11 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Servic
 
 use Mockery as m;
 use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit_Framework_Error_Warning as Warning;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityEncrypter;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityFilesystemWriter;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityWriterInterface;
 
 class IdentityEncrypterTest extends UnitTest
@@ -55,7 +56,6 @@ qxaUW4nfb5DtK33bZBYMeyV6BZtSggc5Z/19aPx/s0bf6ySTUyB3lRqe5d3etCns
 -----END CERTIFICATE-----
 CERT;
 
-
     protected function setUp()
     {
         $this->config = m::mock(RemoteVettingConfiguration::class);
@@ -63,20 +63,107 @@ CERT;
         $this->encrypter = new IdentityEncrypter($this->config, $this->writer);
     }
 
-    public function test_happy_flow()
+    /**
+     * @test
+     */
+    public function happy_flow_should_succeed()
     {
         $this->config
             ->shouldReceive('getPublicKey')
             ->andReturn($this->cert);
 
+        $this->writer
+            ->shouldReceive('write')
+            ->withArgs(function ($data) use (&$encryptedData ){
+                $encryptedData = $data;
+                return true;
+            });
+
+        $nameId = 'a-random-nameid@something.else';
+        $raw = 'the raw message we could incorporate';
+
+        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $this->encrypter->encrypt($data);
+
+        // Assert result
+        $decryptedData = $this->decrypt($encryptedData, $this->cert);
+        $this->assertSame(json_encode($data->jsonSerialize()), $decryptedData);
+    }
+
+    /**
+     * @test
+     */
+    public function a_large_chunk_should_succeed()
+    {
         $this->config
-            ->shouldReceive('getVersion')
-            ->andReturn('v0.0');
+            ->shouldReceive('getPublicKey')
+            ->andReturn($this->cert);
 
         $this->writer
-            ->shouldReceive('write');
+            ->shouldReceive('write')
+            ->withArgs(function ($data) use (&$encryptedData ){
+                $encryptedData = $data;
+                return true;
+            });
 
-        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John']);
-        $this->encrypter->encrypt($data, RemoteVettingConfiguration::SOURCE_IRMA);
+        $nameId = 'a-random-nameid@something.else';
+        $raw = $this->generateRandomString(5000);
+
+        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $this->encrypter->encrypt($data);
+
+        // Assert result
+        $decryptedData = $this->decrypt($encryptedData, $this->cert);
+        $this->assertSame(json_encode($data->jsonSerialize()), $decryptedData);
+    }
+
+    /**
+     * @test
+     */
+    public function an_invalid_key_should_fail()
+    {
+        $this->expectException(Warning::class);
+        $this->expectExceptionMessage('openssl_x509_read(): supplied parameter cannot be coerced into an X509 certificate!');
+
+        $this->config
+            ->shouldReceive('getPublicKey')
+            ->andReturn('invalid key');
+
+        $this->writer
+            ->shouldReceive('write')
+            ->withArgs(function ($data) use (&$encryptedData ){
+                $encryptedData = $data;
+                return true;
+            });
+
+        $nameId = 'a-random-nameid@something.else';
+        $raw = 'the raw message we could incorporate';
+
+        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $this->encrypter->encrypt($data);
+    }
+
+    private function generateRandomString($length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"\\}\'';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    /**
+     * @param string $data
+     * @param string $password
+     * @return string
+     * @throws \Exception
+     */
+    private function decrypt($data, $password)
+    {
+        $decrypter = new XMLSecurityKey(XMLSecurityKey::AES256_CBC);
+        $decrypter->loadKey($password, false, true);
+        return $decrypter->decryptData($data);
     }
 }

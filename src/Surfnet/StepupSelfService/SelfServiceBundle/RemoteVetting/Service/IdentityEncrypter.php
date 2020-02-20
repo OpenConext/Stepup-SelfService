@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service;
 
+use RobRichards\XMLSecLibs\XMLSecurityKey;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
 
@@ -41,27 +42,17 @@ class IdentityEncrypter
 
     /**
      * @param AttributeLogDto $identity
-     * @param string $source
+     * @throws \Exception
      */
     public function encrypt(AttributeLogDto $identity)
     {
-        $data = $this->constructData($identity);
+        $data = json_encode($identity->jsonSerialize());
         $publicKey = $this->configuration->getPublicKey();
 
-        $encryptedData = '';
-        openssl_public_encrypt($data, $encryptedData, $publicKey);
-        $this->writer->write($encryptedData);
-    }
+        $encrypter = new XMLSecurityKey(XMLSecurityKey::AES256_CBC);
+        $encrypter->loadKey($publicKey, false, true);
+        $encryptedData = $encrypter->encryptData($data);
 
-    private function constructData(AttributeLogDto $identityDto)
-    {
-        return json_encode(
-            array_merge(
-                $identityDto->jsonSerialize(),
-                [
-                    'version' => $this->configuration->getVersion(),
-                ]
-            )
-        );
+        $this->writer->write($encryptedData);
     }
 }
