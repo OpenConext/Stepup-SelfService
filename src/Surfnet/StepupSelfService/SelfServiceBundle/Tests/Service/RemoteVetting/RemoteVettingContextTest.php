@@ -77,7 +77,7 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $validatedToken = $context->getValidatedToken();
 
-        $this->assertSame($token, $validatedToken);
+        $this->assertEquals($token, $validatedToken);
     }
 
 

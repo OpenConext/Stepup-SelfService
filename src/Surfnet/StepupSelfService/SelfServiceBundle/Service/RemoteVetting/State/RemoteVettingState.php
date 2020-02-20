@@ -25,6 +25,11 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Proc
 interface RemoteVettingState
 {
     /**
+     * The entity can not contain state to be able to (de-)serialize session data
+     */
+    public function __construct();
+
+    /**
      * @param RemoteVettingContext $context
      * @param RemoteVettingTokenDto $token
      * @return RemoteVettingProcessDto

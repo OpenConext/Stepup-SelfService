@@ -17,10 +17,11 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
+use Serializable;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State\RemoteVettingState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 
-class RemoteVettingProcessDto
+class RemoteVettingProcessDto implements Serializable
 {
     /**
      * @var ProcessId
@@ -34,7 +35,7 @@ class RemoteVettingProcessDto
     /**
      * @var RemoteVettingState|null
      */
-    private $state;
+    private $state = null;
 
     /**
      * @param ProcessId $processId
@@ -45,6 +46,17 @@ class RemoteVettingProcessDto
     public static function create(ProcessId $processId, RemoteVettingTokenDto $token)
     {
         return new self($processId, $token, null);
+    }
+
+    /**
+     * @param string $serialized
+     * @return RemoteVettingProcessDto
+     */
+    public static function deserialize($serialized)
+    {
+        $instance = new self;
+        $instance->unserialize($serialized);
+        return $instance;
     }
 
     /**
@@ -62,7 +74,7 @@ class RemoteVettingProcessDto
      * @param RemoteVettingTokenDto $token
      * @param RemoteVettingState $state
      */
-    private function __construct(ProcessId $processId, RemoteVettingTokenDto $token, RemoteVettingState $state = null)
+    private function __construct(ProcessId $processId = null, RemoteVettingTokenDto $token = null, RemoteVettingState $state = null)
     {
         $this->processId = $processId;
         $this->token = $token;
@@ -91,5 +103,33 @@ class RemoteVettingProcessDto
     public function getState()
     {
         return $this->state;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function serialize()
+    {
+        $stateClass = !is_null($this->state) ? get_class($this->state) : null;
+
+        return json_encode([
+            'processId' => $this->processId->getProcessId(),
+            'token' => $this->token->serialize(),
+            'state' => $stateClass,
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unserialize($serialized)
+    {
+        $data = json_decode($serialized, true);
+
+        $stateClass = !is_null($data['state']) ? new $data['state']() : null;
+
+        $this->processId = ProcessId::create($data['processId']);
+        $this->token = RemoteVettingTokenDto::deserialize($data['token']);
+        $this->state = $stateClass;
     }
 }

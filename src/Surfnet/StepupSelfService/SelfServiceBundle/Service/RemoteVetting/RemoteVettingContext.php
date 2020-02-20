@@ -114,10 +114,12 @@ class RemoteVettingContext
     private function loadProcess()
     {
         // get active process
-        $process = $this->session->get(self::SESSION_KEY, null);
-        if ($process == null) {
+        $serialized = $this->session->get(self::SESSION_KEY, null);
+        if ($serialized == null) {
             throw new InvalidRemoteVettingContextException('No remote vetting process found');
         }
+
+        $process = RemoteVettingProcessDto::deserialize($serialized);
 
         // update state from session
         $this->state = $process->getState();
@@ -133,6 +135,6 @@ class RemoteVettingContext
     {
         // save state in session
         $process = RemoteVettingProcessDto::updateState($process, $this->state);
-        $this->session->set(self::SESSION_KEY, $process);
+        $this->session->set(self::SESSION_KEY, $process->serialize());
     }
 }

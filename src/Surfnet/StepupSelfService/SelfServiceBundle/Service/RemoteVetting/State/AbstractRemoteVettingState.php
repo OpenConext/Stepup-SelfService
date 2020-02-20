@@ -25,6 +25,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Proc
 
 abstract class AbstractRemoteVettingState
 {
+    /**
+     * Don not set state to be able to (de-)serialize state
+     */
+    public function __construct()
+    {
+    }
 
     public function handleInitialise(RemoteVettingContext $context, RemoteVettingTokenDto $token)
     {

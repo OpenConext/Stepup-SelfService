@@ -17,7 +17,9 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
-class RemoteVettingTokenDto
+use Serializable;
+
+class RemoteVettingTokenDto implements Serializable
 {
     /**
      * @var string
@@ -36,6 +38,18 @@ class RemoteVettingTokenDto
     public static function create($identityId, $secondFactorId)
     {
         return new self($identityId, $secondFactorId);
+    }
+
+
+    /**
+     * @param string $serialized
+     * @return RemoteVettingTokenDto
+     */
+    public static function deserialize($serialized)
+    {
+        $instance = new self('', '');
+        $instance->unserialize($serialized);
+        return $instance;
     }
 
     /**
@@ -62,5 +76,27 @@ class RemoteVettingTokenDto
     public function getSecondFactorId()
     {
         return $this->secondFactorId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function serialize()
+    {
+        return json_encode([
+            'identityId' => $this->identityId,
+            'secondFactorId' => $this->secondFactorId,
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unserialize($serialized)
+    {
+        $data = json_decode($serialized, true);
+
+        $this->identityId = $data['identityId'];
+        $this->secondFactorId = $data['secondFactorId'];
     }
 }
