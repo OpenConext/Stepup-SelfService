@@ -9,4 +9,8 @@
     <p>{{ 'ss.second_factor.remote_vet.text.are_you_sure'|trans }}</p>
 
     {{ form(form) }}
+
+    <form action="{{ url('ss_second_factor_remote_vetting_idps', {'secondFactorId': secondFactor.id}) }}" method="get">
+        <button class="btn btn-danger">Back</button>
+    </form>
 {% endblock %}

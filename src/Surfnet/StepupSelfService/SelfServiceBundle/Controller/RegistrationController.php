@@ -88,6 +88,18 @@ class RegistrationController extends Controller
 
     /**
      * @Template
+     * @param string $secondFactorId
+     */
+    public function displayVettingTypesAction($secondFactorId)
+    {
+        return [
+            'verifyEmail' => $this->emailVerificationIsRequired(),
+            'secondFactorId' => $secondFactorId,
+        ];
+    }
+
+    /**
+     * @Template
      */
     public function emailVerificationEmailSentAction()
     {
@@ -116,7 +128,7 @@ class RegistrationController extends Controller
 
         if ($service->verifyEmail($identityId, $nonce)) {
             return $this->redirectToRoute(
-                'ss_registration_registration_email_sent',
+                'ss_second_factor_remote_vetting_types',
                 ['secondFactorId' => $secondFactor->id]
             );
         }

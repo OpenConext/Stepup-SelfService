@@ -1,0 +1,63 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.remote_vetting_idp.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% if verifyEmail %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress':75, 'step': 4, verifyEmail: true} only %}
+    {% else %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <div class="row second-factors">
+
+        <div class="col-xs-12 col-md-4">
+            <div class="thumbnail second-factor-selector">
+                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnCiAgd2lkdGg9IjYwMCIKICBoZWlnaHQ9IjYwMCIKICB2aWV3Qm94PSIwIDAgNjAwIDYwMCIKICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCj4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMDAsMzAwKSI+CiAgICA8cGF0aCBkPSJNMTAyLjksLTU4LjlDMTQ0LjYsMTIuOCwxOTcuNSw3OC43LDE4Mi4yLDEyNS43QzE2Ni45LDE3Mi43LDgzLjQsMjAwLjgsOC45LDE5NS43Qy02NS41LDE5MC41LC0xMzEuMSwxNTIsLTE0NCwxMDYuM0MtMTU3LDYwLjcsLTExNy41LDcuOCwtODQuNywtNTguN0MtNTIsLTEyNS4zLC0yNiwtMjA1LjcsMi4zLC0yMDdDMzAuNiwtMjA4LjMsNjEuMiwtMTMwLjcsMTAyLjksLTU4LjlaIiBmaWxsPSIjYWJiOGMzIiAvPgogIDwvZz4KPC9zdmc+CiAg" alt="">
+                <h3>iDIN</h3>
+                <p>
+                    iDIN is a service offered by banks which allows consumers to use their bank’s secure and reliable login methods to carry out the following actions on the websites of other organisations:
+                </p>
+                <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                <button type="submit" class="btn btn-primary">Continue</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+            <div class="thumbnail second-factor-selector">
+                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnCiAgd2lkdGg9IjYwMCIKICBoZWlnaHQ9IjYwMCIKICB2aWV3Qm94PSIwIDAgNjAwIDYwMCIKICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCj4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMDAsMzAwKSI+CiAgICA8cGF0aCBkPSJNNzguMywtMTE5LjhDOTUuOSwtOTUsMTAwLjcsLTY0LjcsMTIyLjUsLTMxLjhDMTQ0LjIsMS4xLDE4Mi45LDM2LjYsMTk0LjIsODIuMUMyMDUuNSwxMjcuNiwxODkuNSwxODMuMSwxNTIuNSwxODQuOUMxMTUuNiwxODYuOCw1Ny44LDEzNC45LDIxLjEsMTA1LjlDLTE1LjcsNzYuOSwtMzEuMyw3MC44LC02OC45LDY5LjJDLTEwNi41LDY3LjYsLTE2NS45LDcwLjQsLTIwMCw0NkMtMjM0LDIxLjYsLTI0Mi41LC0zMCwtMjMwLjksLTc3LjlDLTIxOS4zLC0xMjUuOSwtMTg3LjUsLTE3MC4xLC0xNDUuNywtMTg3Qy0xMDMuOCwtMjAzLjksLTUxLjksLTE5My41LC0xMC44LC0xNzguNkMzMC40LC0xNjMuOCw2MC43LC0xNDQuNiw3OC4zLC0xMTkuOFoiIGZpbGw9IiNhYmI4YzMiIC8+CiAgPC9nPgo8L3N2Zz4=">
+                <h3>ReadID</h3>
+                <p>
+                    ReadID® verifies identity documents with NFC on a smartphone
+                </p>
+                <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                <button type="submit" class="btn btn-primary">Continue</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+            <div class="thumbnail second-factor-selector">
+                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnCiAgd2lkdGg9IjYwMCIKICBoZWlnaHQ9IjYwMCIKICB2aWV3Qm94PSIwIDAgNjAwIDYwMCIKICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCj4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMDAsMzAwKSI+CiAgICA8cGF0aCBkPSJNMzksLTg2LjJDNTYuNywtNDkuMyw4MS42LC00OC45LDgwLjQsLTQwLjFDNzkuMiwtMzEuMiw1MiwtMTMuOCw0My43LDIuNUMzNS40LDE4LjcsNDYsMzMuOSw1NS44LDgwLjdDNjUuNiwxMjcuNCw3NC41LDIwNS43LDU1LjYsMjI5LjdDMzYuNywyNTMuNiwtMTAsMjIzLjIsLTQ4LjUsMTk3LjNDLTg3LjEsMTcxLjQsLTExNy42LDE0OS45LC0xMTIuMywxMTguM0MtMTA3LDg2LjgsLTY1LjksNDUuMiwtNTcuOSwxNi4xQy00OS45LC0xMi45LC03NSwtMjkuMywtNzMuMywtMzMuN0MtNzEuNiwtMzgsLTQzLjEsLTMwLjQsLTI2LjQsLTY3LjhDLTkuNywtMTA1LjEsLTQuOSwtMTg3LjYsMi45LC0xOTIuMUMxMC42LC0xOTYuNSwyMS4zLC0xMjMuMSwzOSwtODYuMloiIGZpbGw9IiNhYmI4YzMiIC8+CiAgPC9nPgo8L3N2Zz4=">
+                <h3>IRMA</h3>
+                <p>
+                    IRMA is a unique privacy-friendly identity platform for both authentication and signing.
+                </p>
+                <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                <button type="submit" class="btn btn-primary">Continue</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <form action="{{ url('ss_second_factor_remote_vetting_types', {'secondFactorId': secondFactorId}) }}" method="get">
+        <button class="btn btn-danger">Back</button>
+    </form>
+{% endblock %}

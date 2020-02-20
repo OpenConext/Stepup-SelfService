@@ -69,6 +69,18 @@ class RemoteVettingController extends Controller
 
     /**
      * @Template
+     * @param string $secondFactorId
+     */
+    public function displayRemoteVettingIdPsAction($secondFactorId)
+    {
+        return [
+            'verifyEmail' => $this->emailVerificationIsRequired(),
+            'secondFactorId' => $secondFactorId,
+        ];
+    }
+
+    /**
+     * @Template
      * @param Request $request
      * @param string $secondFactorId
      * @return array|Response
