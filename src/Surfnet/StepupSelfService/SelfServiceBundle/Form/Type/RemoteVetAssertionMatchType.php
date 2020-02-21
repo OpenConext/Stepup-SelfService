@@ -18,36 +18,31 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetValidationCommand;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RemoteVetSecondFactorType extends AbstractType
+class RemoteVetAssertionMatchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('remote_vet', SubmitType::class, [
-            'label' => 'ss.form.ss_remote_vet_second_factor.remote_vet',
-            'attr' => [ 'class' => 'btn btn-primary pull-right' ],
+        $builder->add('valid', CheckboxType::class, [
+            'label'    => 'VALID',
+            'required' => false,
         ]);
-        $builder->add('cancel', AnchorType::class, [
-            'label' => 'ss.form.ss_remote_vet_second_factor.cancel',
-            'attr' => [ 'class' => 'btn pull-right' ],
-            'route' => 'ss_second_factor_list',
-        ]);
-    }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => RemoteVetCommand::class,
+        $builder->add('remarks', TextareaType::class, [
+            'label'    => 'REMARKS',
+            'required' => false,
         ]);
     }
 
     public function getBlockPrefix()
     {
-        return 'ss_remote_vet_second_factor';
+        return 'ss_remote_vet_assertion';
     }
 }

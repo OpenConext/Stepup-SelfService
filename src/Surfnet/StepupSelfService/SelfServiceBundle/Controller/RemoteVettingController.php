@@ -22,11 +22,15 @@ use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\SamlBundle\Http\Exception\AuthnFailedSamlResponseException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetValidationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetSecondFactorType;
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetValidationType;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\Tests\Mock\RemoteVetting\MockRemoteVetControllerTest;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -126,17 +130,37 @@ class RemoteVettingController extends Controller
 
         try {
             $this->logger->info('Load the attributes from the saml response');
-            $token = $this->samlCalloutHelper->handleResponse($request, 'mock_idp');
 
-            // handle callout response
-            //$this->logger->info('Process the authentication');
-            $token = $this->remoteVettingService->done($token);
+            // todo:: enable again, disabled to allow reposting of the same page
+//            $token = $this->samlCalloutHelper->handleResponse($request, 'mock_idp');
+            //$token = $this->remoteVettingService->done($token);
 
             // todo: vet token
-            $flashBag->add('error', sprintf("TODO: implement attribute validation\n%s", print_r($token, true)));
+            //$flashBag->add('error', sprintf("TODO: implement attribute validation\n%s", print_r($token, true)));
 
 
-            // This need to be changed after implementing all
+
+            // todo: get attributes from saml token
+            // todo: get attributes from idp configuration
+            /**
+             * @var SamlToken $token
+             */
+            $token = $this->container->get('security.token_storage')->getToken();
+
+            $command = new RemoteVetValidationCommand();
+            $command->attributes = [
+                'name' => [],
+                'uid' => [],
+            ];
+
+            $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
+            return $this->render('SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:validation.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+
+
+            // This needs to be changed after implementing it all
             if ($this->container->get('kernel')->getEnvironment() !== 'test') {
                 throw new Exception('Implement manual vetting');
 
@@ -146,6 +170,7 @@ class RemoteVettingController extends Controller
             }
 
             // todo: add flashbag translations?
+
 
             return new Response('success');
 //
