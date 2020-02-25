@@ -41,7 +41,8 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects) to much coupling dus to glue code nature oof this controller, could be refactored later on
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) Too much coupling dus to glue code nature of this controller.
+ *                                                 Could be refactored later on
  */
 class RemoteVettingController extends Controller
 {
