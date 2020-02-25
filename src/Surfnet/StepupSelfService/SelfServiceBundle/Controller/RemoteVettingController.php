@@ -134,7 +134,7 @@ class RemoteVettingController extends Controller
             $this->remoteVettingService->start($token);
 
             // todo : implement idp selection
-            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest('mock_idp'));
+            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest('IRMA'));
         }
 
         return [
@@ -158,7 +158,7 @@ class RemoteVettingController extends Controller
         $this->logger->info('Load the attributes from the saml response');
 
         try {
-            $processId = $this->samlCalloutHelper->handleResponse($request, 'mock_idp');
+            $processId = $this->samlCalloutHelper->handleResponse($request, 'IRMA');
         } catch (InvalidRemoteVettingStateException $e) {
             $this->logger->error($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
