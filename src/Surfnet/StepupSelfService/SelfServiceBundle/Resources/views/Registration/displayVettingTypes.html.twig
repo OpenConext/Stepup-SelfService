@@ -15,30 +15,26 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <div class="row second-factors">
+    <div class="row remote-vetting">
 
         <div class="col-xs-12 col-md-4">
-            <div class="thumbnail second-factor-selector">
-                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnCiAgd2lkdGg9IjYwMCIKICBoZWlnaHQ9IjYwMCIKICB2aWV3Qm94PSIwIDAgNjAwIDYwMCIKICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCj4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMDAsMzAwKSI+CiAgICA8cGF0aCBkPSJNMTAyLjksLTU4LjlDMTQ0LjYsMTIuOCwxOTcuNSw3OC43LDE4Mi4yLDEyNS43QzE2Ni45LDE3Mi43LDgzLjQsMjAwLjgsOC45LDE5NS43Qy02NS41LDE5MC41LC0xMzEuMSwxNTIsLTE0NCwxMDYuM0MtMTU3LDYwLjcsLTExNy41LDcuOCwtODQuNywtNTguN0MtNTIsLTEyNS4zLC0yNiwtMjA1LjcsMi4zLC0yMDdDMzAuNiwtMjA4LjMsNjEuMiwtMTMwLjcsMTAyLjksLTU4LjlaIiBmaWxsPSIjYWJiOGMzIiAvPgogIDwvZz4KPC9zdmc+CiAg" alt="">
-                <h3>Remote vetting</h3>
-                <p>
-                    Prove your identity using one of three verification methods. ReadId document scanner (read your passport, drivers licence or ID card using the ReadId connect app and a NFF compatible document), IRMA (RMA offers a way for privacy-friendly authentication. When authenticating, you as a user reveal only relevant properties (attributes) of yourself, using an IRMA app on your mobile phone — for instance that you are older than 16.) or iDIN (bank).
-                </p>
+            <div class="thumbnail remote-vetting-selector">
+                <i class="fa fa-globe"></i>
+                <h3>{{ 'ss.registration.vetting_type.title.remote_vetting'|trans }}</h3>
+                <p>{{ 'ss.registration.vetting_type.description.remote_vetting'|trans }}</p>
                 <form action="{{ url('ss_second_factor_remote_vetting_idps', {'secondFactorId': secondFactorId}) }}" method="get">
-                <button type="submit" class="btn btn-primary">Continue with remote vetting</button>
+                <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.remote_vetting'|trans }}</button>
                 </form>
             </div>
         </div>
 
         <div class="col-xs-12 col-md-4">
-            <div class="thumbnail second-factor-selector">
-                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnCiAgd2lkdGg9IjYwMCIKICBoZWlnaHQ9IjYwMCIKICB2aWV3Qm94PSIwIDAgNjAwIDYwMCIKICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCj4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMDAsMzAwKSI+CiAgICA8cGF0aCBkPSJNNzguMywtMTE5LjhDOTUuOSwtOTUsMTAwLjcsLTY0LjcsMTIyLjUsLTMxLjhDMTQ0LjIsMS4xLDE4Mi45LDM2LjYsMTk0LjIsODIuMUMyMDUuNSwxMjcuNiwxODkuNSwxODMuMSwxNTIuNSwxODQuOUMxMTUuNiwxODYuOCw1Ny44LDEzNC45LDIxLjEsMTA1LjlDLTE1LjcsNzYuOSwtMzEuMyw3MC44LC02OC45LDY5LjJDLTEwNi41LDY3LjYsLTE2NS45LDcwLjQsLTIwMCw0NkMtMjM0LDIxLjYsLTI0Mi41LC0zMCwtMjMwLjksLTc3LjlDLTIxOS4zLC0xMjUuOSwtMTg3LjUsLTE3MC4xLC0xNDUuNywtMTg3Qy0xMDMuOCwtMjAzLjksLTUxLjksLTE5My41LC0xMC44LC0xNzguNkMzMC40LC0xNjMuOCw2MC43LC0xNDQuNiw3OC4zLC0xMTkuOFoiIGZpbGw9IiNhYmI4YzMiIC8+CiAgPC9nPgo8L3N2Zz4=">
-                <h3>RA vetting</h3>
-                <p>
-                    Vet your second factor token at one of your registration authority locations.
-                </p>
+            <div class="thumbnail remote-vetting-selector">
+                <i class="fa fa-university"></i>
+                <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
+                <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
                 <form action="{{ url('ss_registration_registration_email_sent', {'secondFactorId': secondFactorId}) }}" method="get">
-                <button type="submit" class="btn btn-primary">Continue</button>
+                <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
                 </form>
             </div>
         </div>
