@@ -17,6 +17,9 @@
 
 namespace Surfnet\Tests\Mock\RemoteVetting;
 
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Mockery as m;
 use Psr\Log\NullLogger;
 use SAML2\Certificate\KeyLoader;
@@ -25,6 +28,7 @@ use SAML2\Response\Processor;
 use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
 use Surfnet\SamlBundle\Signing\SignatureVerifier;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
@@ -36,10 +40,8 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\DomCrawler\Crawler;
 
-/**
- * @runTestsInSeparateProcesses
- */
 class MockRemoteVetControllerTest extends WebTestCase
 {
     /**
@@ -65,7 +67,7 @@ class MockRemoteVetControllerTest extends WebTestCase
 
     protected function setUp()
     {
-        $this->client = static::createClient();
+        $this->client = static::createClient(['environment' => 'test']);
         $this->client->followRedirects(true);
 
         $container = static::$kernel->getContainer();
@@ -104,29 +106,20 @@ class MockRemoteVetControllerTest extends WebTestCase
      */
     public function a_succesful_response_from_a_remote_vetting_idp_should_succeed()
     {
-        $this->markTestSkipped('will get fixed for travis later on');
-
         $this->logIn();
         $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
-        // Test if on decision page
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Select response', $crawler->filter('h2')->text());
-
         // Test valid response
-        $form = $crawler->selectButton('success')->form();
-        $crawler = $this->client->submit($form);
+        $this->postForm($crawler, 'success');
 
-        // Post response
-        $form = $crawler->selectButton('Post')->form();
-        $crawler = $this->client->submit($form);
-
-        // Test if on sp acs
+        // Test if on manual matching form
+        $c = $this->client->getResponse()->getContent();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('success', $this->client->getResponse()->getContent());
+        $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
+        $this->assertContains('ss.second_factor.remote_vet_validation.title', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -135,31 +128,19 @@ class MockRemoteVetControllerTest extends WebTestCase
      */
     public function a_user_cancelled_response_from_a_remote_vetting_idp_should_fail()
     {
-        $this->markTestSkipped('will get fixed for travis later on');
-
         $this->logIn();
         $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
-        // Test if on decision page
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Select response', $crawler->filter('h2')->text());
-
-        // Test cancelled response
-        $form = $crawler->selectButton('user-cancelled')->form();
-        $crawler = $this->client->submit($form);
-
-        // Post response
-        $form = $crawler->selectButton('Post')->form();
-        $crawler = $this->client->submit($form);
-
-        //todo: handle and test user cancelled?
+        // Test user cancelled response
+        $this->postForm($crawler, 'user-cancelled');
 
         // Test if on sp acs
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('failed', $this->client->getResponse()->getContent());
+        //$this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
+        $this->assertEquals('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
+        $this->assertContains('ss.second_factor.revoke.alert.remote_vetting_failed', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -168,29 +149,19 @@ class MockRemoteVetControllerTest extends WebTestCase
      */
     public function an_unsuccessful_response_from_a_remote_vetting_idp_should_fail()
     {
-        $this->markTestSkipped('will get fixed for travis later on');
-
         $this->logIn();
         $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
-        // Test if on decision page
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Select response', $crawler->filter('h2')->text());
-
         // Test unknown response
-        $form = $crawler->selectButton('unknown')->form();
-        $crawler = $this->client->submit($form);
-
-        // Post response
-        $form = $crawler->selectButton('Post')->form();
-        $crawler = $this->client->submit($form);
+        $this->postForm($crawler, 'unknown');
 
         // Test if on sp acs
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('failed', $this->client->getResponse()->getContent());
+        //$this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
+        $this->assertEquals('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
+        $this->assertContains('ss.second_factor.revoke.alert.remote_vetting_failed', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -262,6 +233,27 @@ class MockRemoteVetControllerTest extends WebTestCase
         );
     }
 
+    /**
+     * @param Crawler $crawler
+     * @param string $state State button to press
+     */
+    private function postForm(Crawler $crawler, $state)
+    {
+        $c = $this->client->getResponse()->getContent();
+        // Test if on decision page
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertContains('Select response', $crawler->filter('h2')->text());
+
+        // Test valid response
+        $form = $crawler->selectButton($state)->form();
+        $crawler = $this->client->submit($form);
+        //$this->client->insulate();
+
+        // Post response
+        $form = $crawler->selectButton('Post')->form();
+
+        $crawler = $this->client->submit($form);
+    }
 
     private function logIn()
     {
@@ -269,17 +261,20 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         $firewallContext = 'saml_based';
 
-        $user = new Identity([
+        $user = Identity::fromData([
             'id' => '12345567890',
             'name_id' => 'name-id',
             'institution' => 'institution',
             'email' => 'name@institution.tld',
             'common_name' => 'Common Name',
-            'preferred_locale' => 'nl',
+            'preferred_locale' => 'nl_NL',
         ]);
 
         $token = new SamlToken(['ROLE_USER']);
         $token->setUser($user);
+
+        // todo: inject attributes to match against, currently only idp attributes are used
+        $token->setAttribute(SamlToken::ATTRIBUTE_SET, AttributeSet::create([]));
 
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();

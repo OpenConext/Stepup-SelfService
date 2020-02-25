@@ -165,7 +165,7 @@ class RemoteVettingController extends Controller
             return $this->redirectToRoute('ss_second_factor_list');
         } catch (Exception $e) {
             //PreconditionNotMetException $e) {
-            // todo: add saml specific logging?
+            // todo: add saml specific logging (user flashbag may differ) ?
             $this->logger->error($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
             return $this->redirectToRoute('ss_second_factor_list');
@@ -193,8 +193,6 @@ class RemoteVettingController extends Controller
      */
     public function remoteVetMatchAction(Request $request, $processId)
     {
-        $this->logger->info('Matching remote vetting second factor');
-
         /** @var FlashBagInterface $flashBag */
         $flashBag = $this->get('session')->getFlashBag();
 
@@ -242,7 +240,7 @@ class RemoteVettingController extends Controller
             }
 
             return $this->render('SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:validation.html.twig', [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]);
         } catch (InvalidRemoteVettingStateException $e) {
             $this->logger->error($e->getMessage());

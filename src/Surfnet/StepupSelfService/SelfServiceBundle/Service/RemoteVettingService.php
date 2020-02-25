@@ -125,13 +125,13 @@ class RemoteVettingService
     private function fromAttributeSet(AttributeSet $attributeSet)
     {
         $attributes = [];
-        $nameID = null;
+        $nameID = '';
         /** @var \Surfnet\SamlBundle\SAML2\Attribute\Attribute $attribute */
         foreach ($attributeSet as $attribute) {
             $values = $attribute->getValue();
             foreach ($values as $value) {
                 if ($value instanceof NameID) {
-                    $nameID = $value->value;
+                    $nameID = (string)$value->value;
                     continue;
                 }
                 $attributes[$attribute->getAttributeDefinition()->getName()] = $values;

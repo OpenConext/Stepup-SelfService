@@ -1,14 +1,13 @@
 {% extends "::base.html.twig" %}
-{% import _self as macro %}
 
 {% block page_title %}{{ 'ss.second_factor.list.title'|trans }}{% endblock %}
 
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted', email, expirationHelper) }}
-    {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email, expirationHelper) }}
-    {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email, expirationHelper) }}
+    {{ _self.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted', email, expirationHelper) }}
+    {{ _self.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email, expirationHelper) }}
+    {{ _self.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email, expirationHelper) }}
 
     <div class="btn-toolbar token-button-group" role="toolbar">
     {% if vettedSecondFactors.elements is not empty %}

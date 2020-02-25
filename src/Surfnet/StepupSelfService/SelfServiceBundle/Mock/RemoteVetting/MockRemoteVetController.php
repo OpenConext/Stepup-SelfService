@@ -72,6 +72,7 @@ class MockRemoteVetController extends Controller
                 $body = $this->twig->render(
                     'dev/mock-acs.html.twig',
                     [
+                        'action' => $request->getUri(),
                         'responses' => [
                             'success',
                             'user-cancelled',
