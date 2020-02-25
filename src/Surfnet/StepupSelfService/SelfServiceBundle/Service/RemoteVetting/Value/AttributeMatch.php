@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2020 SURFnet B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +15,15 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
-
-class RemoteVetValidationCommand
+class AttributeMatch
 {
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
     /**
      * The attributes and their state
      *
@@ -34,21 +32,9 @@ class RemoteVetValidationCommand
      *      'remarks' => 'remarks',
      *  ]]
      *
-     * @var AttributeMatchCollection
      */
-    public $matches = [];
 
-    /**
-     * Should the attributes considered to be valid
-     *
-     * @var bool
-     */
     public $valid = false;
-
-    /**
-     * Remarks about the attributes matching
-     *
-     * @var string
-     */
     public $remarks = '';
+    public $name = '';
 }

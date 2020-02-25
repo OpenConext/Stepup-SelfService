@@ -40,6 +40,13 @@ class RemoteVettingTokenDto implements Serializable
         return new self($identityId, $secondFactorId);
     }
 
+    /**
+     * @return RemoteVettingTokenDto
+     */
+    public static function notSet()
+    {
+        return new self('', '');
+    }
 
     /**
      * @param string $serialized

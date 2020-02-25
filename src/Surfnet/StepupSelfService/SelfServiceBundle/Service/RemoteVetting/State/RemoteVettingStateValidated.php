@@ -28,4 +28,9 @@ class RemoteVettingStateValidated extends AbstractRemoteVettingState implements 
         $context->setState(new RemoteVettingStateDone());
         return $process;
     }
+
+    public function getAttributes(RemoteVettingProcessDto $process)
+    {
+        return $process->getAttributes();
+    }
 }

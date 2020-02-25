@@ -16,16 +16,16 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption;
 
 use Mockery as m;
 use PHPUnit_Framework_TestCase as UnitTest;
 use PHPUnit_Framework_Error_Warning as Warning;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityEncrypter;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityWriterInterface;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityWriterInterface;
 
 class IdentityEncrypterTest extends UnitTest
 {
@@ -82,7 +82,7 @@ CERT;
         $nameId = 'a-random-nameid@something.else';
         $raw = 'the raw message we could incorporate';
 
-        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
         $this->encrypter->encrypt($data);
 
         // Assert result
@@ -109,7 +109,7 @@ CERT;
         $nameId = 'a-random-nameid@something.else';
         $raw = $this->generateRandomString(5000);
 
-        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
         $this->encrypter->encrypt($data);
 
         // Assert result
@@ -139,7 +139,7 @@ CERT;
         $nameId = 'a-random-nameid@something.else';
         $raw = 'the raw message we could incorporate';
 
-        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
         $this->encrypter->encrypt($data);
     }
 

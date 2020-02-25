@@ -28,35 +28,13 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Proc
 
 class RemoteVettingProcessDtoTest extends Unittest
 {
-
-    /**
-     * @test
-     */
-    public function a_process_without_state_could_be_serialized_and_deserialized()
-    {
-        $expected = '{"processId":"process id","token":"{\"identityId\":\"identityId\",\"secondFactorId\":\"secondFactorId\"}","state":null}';
-
-        $processId = ProcessId::create('process id');
-        $token = RemoteVettingTokenDto::create('identityId', 'secondFactorId');
-        $processDto = RemoteVettingProcessDto::create($processId, $token);
-
-        $serialized = $processDto->serialize();
-
-        $this->assertSame($expected, $serialized);
-
-        $newProcessDto = RemoteVettingProcessDto::deserialize($serialized);
-
-        $this->assertEquals($processDto, $newProcessDto);
-        $this->assertSame($expected, $newProcessDto->serialize());
-    }
-
     /**
      * @test
      * @dataProvider provideState
      */
-    public function a_process_with_state_could_be_serialized_and_deserialized($name, $state, $expected)
+    public function a_process_could_be_serialized_and_deserialized($name, $state, $expected)
     {
-        $expected = sprintf('{"processId":"process id","token":"{\"identityId\":\"identityId\",\"secondFactorId\":\"secondFactorId\"}","state":%s}', json_encode($expected));
+        $expected = sprintf('{"processId":"process id","token":"{\"identityId\":\"identityId\",\"secondFactorId\":\"secondFactorId\"}","state":%s,"attributes":"{\"nameId\":\"\",\"attributes\":[]}"}', json_encode($expected));
 
         $processId = ProcessId::create('process id');
         $token = RemoteVettingTokenDto::create('identityId', 'secondFactorId');

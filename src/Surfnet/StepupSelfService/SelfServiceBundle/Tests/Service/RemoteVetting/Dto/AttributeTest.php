@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Dto;
 use PHPUnit_Framework_TestCase as UnitTest;
 use stdClass;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedException;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\Attribute;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attribute;
 
 class AttributeTest extends UnitTest
 {

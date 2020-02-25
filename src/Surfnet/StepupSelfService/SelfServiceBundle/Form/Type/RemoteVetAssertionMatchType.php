@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetValidationCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -38,6 +39,13 @@ class RemoteVetAssertionMatchType extends AbstractType
         $builder->add('remarks', TextareaType::class, [
             'label'    => 'REMARKS',
             'required' => false,
+        ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => AttributeMatch::class,
         ]);
     }
 

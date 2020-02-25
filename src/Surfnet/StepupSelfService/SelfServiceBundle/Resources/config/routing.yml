@@ -30,6 +30,11 @@ ss_second_factor_remote_vet_acs:
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:acs }
 
+ss_second_factor_remote_vet_match:
+    path:     /second-factor/remote-vetting/match/{processId}
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:remoteVetMatch }
+
 ss_registration_display_types:
     path:     /registration/select-token
     methods:  [GET]

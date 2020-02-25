@@ -31,7 +31,7 @@ class RemoteVetValidationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('attributes', CollectionType::class, [
+        $builder->add('matches', CollectionType::class, [
             // each entry in the array will be an "email" field
             'entry_type' => RemoteVetAssertionMatchType::class,
             // these options are passed to each "email" type

@@ -100,7 +100,7 @@ class SamlProvider implements AuthenticationProviderInterface
         $authenticatedToken = new SamlToken(['ROLE_USER']);
 
         $authenticatedToken->setUser($identity);
-        $authenticatedToken->setAttribute('attribute_set', $translatedAssertion->getAttributeSet());
+        $authenticatedToken->setAttribute(SamlToken::ATTRIBUTE_SET, $translatedAssertion->getAttributeSet());
 
         return $authenticatedToken;
     }

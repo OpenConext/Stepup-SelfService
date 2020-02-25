@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption;
 
 use RobRichards\XMLSecLibs\XMLSecurityKey;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 
 class IdentityEncrypter
 {
@@ -41,10 +41,9 @@ class IdentityEncrypter
     }
 
     /**
-     * @param AttributeLogDto $identity
-     * @throws \Exception
+     * @param AttributeListDto $identity
      */
-    public function encrypt(AttributeLogDto $identity)
+    public function encrypt(AttributeListDto $identity)
     {
         $data = json_encode($identity->jsonSerialize());
         $publicKey = $this->configuration->getPublicKey();

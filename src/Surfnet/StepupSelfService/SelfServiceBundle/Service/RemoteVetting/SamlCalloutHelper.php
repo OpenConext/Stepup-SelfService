@@ -23,8 +23,8 @@ use SAML2\XML\saml\SubjectConfirmation;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeCollection;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Symfony\Component\HttpFoundation\Request;
@@ -117,8 +117,8 @@ class SamlCalloutHelper
         $subjectConfirmation = $assertion->getSubjectConfirmation()[0];
         $requestId = $subjectConfirmation->SubjectConfirmationData->InResponseTo;
 
-        // Create log DTO to store
-        $attributeLogDto = new AttributeLogDto(
+        // Create log DTO in order to store
+        $attributeLogDto = new AttributeListDto(
             $assertion->getAttributes(),
             $subjectConfirmation->NameID,
             $assertion->toXML()->ownerDocument->saveXML()

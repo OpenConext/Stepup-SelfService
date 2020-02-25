@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value;
 
 use JsonSerializable;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
@@ -45,6 +45,22 @@ class Attribute implements JsonSerializable
             Assert::allScalar($value, 'The $value of an Attribute must be a scalar or array value');
         }
         $this->value = $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     public function jsonSerialize()

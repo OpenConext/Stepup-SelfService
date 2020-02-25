@@ -17,18 +17,14 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State;
 
-use Psr\Log\LoggerInterface;
-use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingStateException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingProcessDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SessionContext;
 
 class RemoteVettingStateDone extends AbstractRemoteVettingState implements RemoteVettingState
 {
     /**
-     * @param RemoteVettingProcessDto $token
+     * @param RemoteVettingProcessDto $process
      * @return RemoteVettingTokenDto
      */
     public function getValidatedToken(RemoteVettingProcessDto $process)

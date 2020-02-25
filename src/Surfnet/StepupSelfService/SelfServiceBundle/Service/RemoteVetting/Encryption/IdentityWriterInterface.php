@@ -16,27 +16,14 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption;
 
-class RemoteVettingConfiguration
+interface IdentityWriterInterface
 {
-    private $publicKey;
-
-    private $location;
-
-    public function __construct($configurationSettings, $version)
-    {
-        $this->publicKey = $configurationSettings['encryption_public_key'];
-        $this->location = $configurationSettings['storage_location'];
-    }
-
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    public function getPublicKey()
-    {
-        return $this->publicKey;
-    }
+    /**
+     * Writes identity data to a data store. The data should be passed as a string.
+     *
+     * @param string $data
+     */
+    public function write($data);
 }

@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption;
 
 use PHPUnit_Framework_TestCase as UnitTest;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\AttributeLogDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityEncrypter;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
 
 /**
  * By using a fake IdentityWriter we are able to intercept the encrypted data (that would otherwise
@@ -108,7 +108,7 @@ KEY;
         $nameId = 'a-random-nameid@something.else';
         $raw = 'the raw message we could incorporate';
 
-        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
         $this->encrypter->encrypt($data);
 
         $writtenData = $this->writer->getData();
@@ -127,7 +127,7 @@ KEY;
         $nameId = 'a-random-nameid@something.else';
         $raw = 'the raw message we could incorporate';
 
-        $data = new AttributeLogDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
         $this->encrypter->encrypt($data);
 
         $writtenData = $this->writer->getData();
@@ -171,7 +171,6 @@ KEY;
      * @param string $data
      * @param string $password
      * @return string
-     * @throws \Exception
      */
     private function decrypt($data, $password)
     {
