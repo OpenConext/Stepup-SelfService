@@ -16,16 +16,13 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption;
 
-use Exception;
-use Mockery as m;
 use PHPUnit_Framework_TestCase as UnitTest;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\IdentityDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityEncrypter;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityFilesystemWriter;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityWriterInterface;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
 
 /**
  * By using a fake IdentityWriter we are able to intercept the encrypted data (that would otherwise
@@ -108,28 +105,30 @@ KEY;
      */
     public function test_happy_flow()
     {
-        $data = new IdentityDto(['email' => 'johndoe@example.com', 'firstName' => 'John']);
-        $this->encrypter->encrypt($data, RemoteVettingConfiguration::SOURCE_IRMA);
+        $nameId = 'a-random-nameid@something.else';
+        $raw = 'the raw message we could incorporate';
+
+        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $this->encrypter->encrypt($data);
 
         $writtenData = $this->writer->getData();
+
         // Now decrypt the data with the private key to prove the data is actually retrievable
-        $result = '';
-        $decrypted = openssl_private_decrypt($writtenData, $result, $this->privateKey);
-        $this->assertTrue($decrypted);
+        $result = $this->decrypt($writtenData, $this->publicKey);
 
         $serialized = json_decode($result, true);
 
-        $this->assertEquals('email', $serialized['attributes'][0]['name']);
-        $this->assertEquals('johndoe@example.com', $serialized['attributes'][0]['value']);
-        $this->assertEquals('firstName', $serialized['attributes'][1]['name']);
-        $this->assertEquals('John', $serialized['attributes'][1]['value']);
-        $this->assertEquals('IRMA', $serialized['source']);
+        $this->assertEquals('johndoe@example.com', $serialized['attributes']['email']);
+        $this->assertEquals('John', $serialized['attributes']['firstName']);
     }
 
     public function test_valid_private_key_required_to_decrypt()
     {
-        $data = new IdentityDto(['email' => 'johndoe@example.com', 'firstName' => 'John']);
-        $this->encrypter->encrypt($data, RemoteVettingConfiguration::SOURCE_IRMA);
+        $nameId = 'a-random-nameid@something.else';
+        $raw = 'the raw message we could incorporate';
+
+        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $this->encrypter->encrypt($data);
 
         $writtenData = $this->writer->getData();
         // Now decrypt the data with the private key to prove the data is actually retrievable
@@ -166,5 +165,17 @@ O+A1YzoLHWIeDK53JUjH4kbZejf9Du5m/cegl3FFgP45t2xNHE4nmQ==
 KEY;
 
         $this->assertFalse(openssl_private_decrypt($writtenData, $result, $invalidPrivateKey));
+    }
+
+    /**
+     * @param string $data
+     * @param string $password
+     * @return string
+     */
+    private function decrypt($data, $password)
+    {
+        $decrypter = new XMLSecurityKey(XMLSecurityKey::AES256_CBC);
+        $decrypter->loadKey($password, false, true);
+        return $decrypter->decryptData($data);
     }
 }

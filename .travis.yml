@@ -14,12 +14,15 @@ php:
 env:
   global:
     - SYMFONY_ENV=test
+    - ANT_OPTS=-Xmx512m # ensure we got enough memory for ant
 
 cache:
   directories:
     - ~/.composer
 
 before_script:
+  # Disable XDebug to prevent segfaults in webtests
+  - phpenv config-rm xdebug.ini
   - phpenv config-add .travis.php.ini
   - composer self-update
   - composer install --prefer-dist
@@ -29,7 +32,6 @@ script:
 
 after_script:
   - cat $TRAVIS_BUILD_DIR/app/logs/*.log
-  - cat $TRAVIS_BUILD_DIR/app/config/parameters.yml
 
 branches:
   only:

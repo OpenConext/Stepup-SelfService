@@ -1,72 +1,76 @@
 parameters:
-  saml_rv_publickey: "%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt"
-  saml_rv_privatekey: "%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key"
+  saml_rv_publickey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt'
+  saml_rv_privatekey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key'
 
   remote_vetting_idps:
       - name: mock_idp
         entityId: https://selfservice.stepup.example.com/mock/metadata
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
-        certificateFile: "%saml_rv_publickey%"
-        privateKey: "%saml_rv_privatekey%"
+        certificateFile: '%saml_rv_publickey%'
+        privateKey: '%saml_rv_privatekey%'
   remote_vetting_sp:
     entityId: https://selfservice.stepup.example.com/saml/metadata
     assertionConsumerUrl: https://selfservice.stepup.example.com/second-factor/acs
-    privateKey: "%saml_rv_privatekey%"
+    privateKey: '%saml_rv_privatekey%'
 
   identity_encryption_configuration:
-    encryption_public_key: |-
-      -----BEGIN PUBLIC KEY-----
-      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyOZnmunnDgF4ivLai3zA
-      7BeI7RDgP1cWp6TLgaLKHnomzE/ytn93SOl7fnw+vPLdQ3jNIbOiULos9Lt0vyJq
-      hduC5ykPwC/C+oJqM4YBDUvOdtyKrvKs4/IplUibeB0NC1f/JvayfkT9da+Dx165
-      6PndKDeUHUpho1EsK5ylKYFQCsQjktIhb1Z6WEUdDMZee+syPzefSSVaJMiZIRbF
-      fvbcqoQMtmR+1Ua/HuXdBFk53+7GqWzF/0Rx/Lcf8u97TIAiYTA/4g1sM3KW8YOM
-      CRXjEAAMc04Ok2KnFgFsjefEOLDWlPOueTp31+HShsjEkhwZ2RMXMV18bPV3wD7X
-      lwIDAQAB
-      -----END PUBLIC KEY-----
-    storage_location: /tmp/
+    encryption_public_key: |
+        -----BEGIN CERTIFICATE-----
+        MIIC6jCCAdICCQC9cRx5wiwWOjANBgkqhkiG9w0BAQsFADA3MRwwGgYDVQQDDBNT
+        ZWxmU2VydmljZSBTQU1MIFNQMRcwFQYDVQQKDA5EZXZlbG9wbWVudCBWTTAeFw0x
+        ODA3MzAxMjMwNDdaFw0yMzA3MjkxMjMwNDdaMDcxHDAaBgNVBAMME1NlbGZTZXJ2
+        aWNlIFNBTUwgU1AxFzAVBgNVBAoMDkRldmVsb3BtZW50IFZNMIIBIjANBgkqhkiG
+        9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqhbI0Xy682DuvWchg6FYnI+DNwLXef2XExM4
+        YVRBaMMsOZ3rBtQUTMSqYan6SK/BOEXLs0rNiJjyM0dn+F98wg3fv5zIADlvfk3L
+        BVdcGsrpVfFUWtSa73yMgbROy8/RJADbUJE/HUB3ZmdjdiuD2Cui2aoWwT2HR8uk
+        Jwmoxiu45IWFPbqPQ7/1mH644JPOWTPLTv4OGGLQo8MNrP1oRCiZ0IEL4CQeGOOj
+        u5rfIJ0bTVm0UmelT4hGaqZovBMwXp3QV41akJ7UEMEBK2YMnLQy47Xuzi7aTDhJ
+        lvHcJ8mfH2NbjRh7hJoACVRTvQloxajgkr1iGMiWiiqT0e+YYwIDAQABMA0GCSqG
+        SIb3DQEBCwUAA4IBAQBwZ0gRHvR8B8KivrXrhWNL9uLvWhEAH7OiDqo+fywkBp5K
+        EuDJcbbvEPftHunSAGylg7M2xKuBIGamFpp74WDJccrtZ1jJ4qqnacUDRQrTLqqM
+        ZKqGpFOU0xjKkSxSGRuMtGN9/7er/TeonjQ0XBvjYvTomy3b5aCLVWRvEfKu2g1s
+        Dd8uhr62RY/HfMgidEt7LHDolkCVg+6JzY3OTcgeHga3cvYObOYPplxw1YPq5+Bq
+        qxaUW4nfb5DtK33bZBYMeyV6BZtSggc5Z/19aPx/s0bf6ySTUyB3lRqe5d3etCns
+        4bGidORCl/6EZiXwVcPvmYmxYXqmuNWfps7isUvo
+        -----END CERTIFICATE-----
+    storage_location: '%kernel.project_dir%/app/rv'
 
 services:
-  self_service.remote_vetting.identity_provider_factory:
-    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory:
     arguments:
-      - "%remote_vetting_idps%"
+      - '%remote_vetting_idps%'
 
-  self_service.remote_vetting.service_provider_factory:
-    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\ServiceProviderFactory
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\ServiceProviderFactory:
     arguments:
-      - "%remote_vetting_sp%"
+      - '%remote_vetting_sp%'
 
-  Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration:
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration:
     arguments:
-      $configurationSettings: "%identity_encryption_configuration%"
-      $version: "%asset_version%"
+      $configurationSettings: '%identity_encryption_configuration%'
+      $version: '%asset_version%'
 
-  self_service.remote_vetting.remote_vetting_context:
-    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext:
     arguments:
-      $session: "@session"
+      $session: '@session'
 
-  self_service.remote_vetting.saml_callout_helper:
-    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper
-    arguments:
-      $identityProviderFactory: "@self_service.remote_vetting.identity_provider_factory"
-      $serviceProviderFactory: "@self_service.remote_vetting.service_provider_factory"
-      $postBinding: "@surfnet_saml.http.post_binding"
-      $remoteVettingService: "@self_service.remote_vetting.service"
-      $logger: "@logger"
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper:
+      $identityProviderFactory: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory'
+      $serviceProviderFactory: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\ServiceProviderFactory'
+      $postBinding: '@surfnet_saml.http.post_binding'
+      $remoteVettingService: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
+      $logger: '@logger'
 
-  self_service.remote_vetting.service:
-    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService:
     arguments:
-      $remoteVettingContext: "@self_service.remote_vetting.remote_vetting_context"
-      $logger: "@logger"
+      $remoteVettingContext: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext'
+      $identityEncrypter: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter'
+      $logger: '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVettingController:
     arguments:
-      - "@self_service.remote_vetting.service"
-      - "@self_service.remote_vetting.saml_callout_helper"
-      - "@logger"
+      - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
+      - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper'
+      - '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration:
     arguments:
@@ -81,6 +85,15 @@ services:
       - '@twig'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway:
-      class: Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway
       arguments:
         - '@Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration'
+
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityFilesystemWriter:
+    arguments:
+      - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
+
+
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter:
+    arguments:
+      $configuration: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
+      $writer: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityFilesystemWriter'

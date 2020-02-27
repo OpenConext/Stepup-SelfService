@@ -21,7 +21,6 @@ use Exception;
 use SAML2\Constants;
 use SAML2\Response as SamlResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -57,22 +56,40 @@ class MockRemoteVetController extends Controller
         }
 
         try {
+            $status = $request->get('status');
+
             // Check binding
-            if (!$request->isMethod(Request::METHOD_GET)) {
+            if (!$request->isMethod(Request::METHOD_GET) &&  !$status) {
                 throw new BadRequestHttpException(sprintf(
                     'Could not receive AuthnRequest from HTTP Request: expected a GET method, got %s',
                     $request->getMethod()
                 ));
             }
 
+            // show possible saml response status to return
+            if (!$status) {
+                // Present response
+                $body = $this->twig->render(
+                    'dev/mock-acs.html.twig',
+                    [
+                        'responses' => [
+                            'success',
+                            'user-cancelled',
+                            'unknown',
+                        ],
+                    ]
+                );
+                return new Response($body);
+            }
+
             // Parse available responses
-            $responses = $this->getAvailableResponses($request);
+            $response = $this->getSelectedResponse($request, $status);
 
             // Present response
             $body = $this->twig->render(
-                'dev/mock-acs.html.twig',
+                'dev/mock-acs-post.html.twig',
                 [
-                    'responses' => $responses,
+                    'response' => $response,
                 ]
             );
 
@@ -86,37 +103,46 @@ class MockRemoteVetController extends Controller
 
     /**
      * @param Request $request
-     * @return mixed
-     * @throws Exception
+     * @param string $status
+     * @return array
      */
-    private function getAvailableResponses(Request $request)
+    private function getSelectedResponse(Request $request, $status)
     {
-        $results = [];
+        switch (true) {
+            case ($status == 'success'):
+                // Parse successful
+                $rawAttributes = $request->get('attributes');
+                $attributes = $this->parseAttributes($rawAttributes);
 
-        // Parse successful
-        $samlResponse = $this->mockGateway->handleSsoSuccess($request, $this->getFullRequestUri($request));
-        $results['success'] = $this->getResponseData($request, $samlResponse);
+                $samlResponse = $this->mockGateway->handleSsoSuccess($request, $this->getFullRequestUri($request), $attributes);
+                return $this->getResponseData($request, $samlResponse);
 
-        // Parse user cancelled
-        $samlResponse = $this->mockGateway->handleSsoFailure(
-            $request,
-            $this->getFullRequestUri($request),
-            Constants::STATUS_RESPONDER,
-            Constants::STATUS_AUTHN_FAILED,
-            'Authentication cancelled by user'
-        );
-        $results['user-cancelled'] = $this->getResponseData($request, $samlResponse);
+            case ($status == 'user-cancelled'):
+                // Parse user cancelled
+                $samlResponse = $this->mockGateway->handleSsoFailure(
+                    $request,
+                    $this->getFullRequestUri($request),
+                    Constants::STATUS_RESPONDER,
+                    Constants::STATUS_AUTHN_FAILED,
+                    'Authentication cancelled by user'
+                );
+                return $this->getResponseData($request, $samlResponse);
 
-        // Parse unknown
-        $samlResponse = $this->mockGateway->handleSsoFailure(
-            $request,
-            $this->getFullRequestUri($request),
-            Constants::STATUS_RESPONDER,
-            Constants::STATUS_AUTHN_FAILED
-        );
-        $results['unknown'] = $this->getResponseData($request, $samlResponse);
-
-        return $results;
+            case ($status == 'unknown'):
+                // Parse unknown
+                $samlResponse = $this->mockGateway->handleSsoFailure(
+                    $request,
+                    $this->getFullRequestUri($request),
+                    Constants::STATUS_RESPONDER,
+                    Constants::STATUS_AUTHN_FAILED
+                );
+                return $this->getResponseData($request, $samlResponse);
+            default:
+                throw new BadRequestHttpException(sprintf(
+                    'Could not create a response for status %s',
+                    $status
+                ));
+        }
     }
 
     /**
@@ -142,6 +168,59 @@ class MockRemoteVetController extends Controller
      */
     private function getFullRequestUri(Request $request)
     {
-        return $request->getSchemeAndHttpHost() . $request->getBasePath() .$request->getPathInfo();
+        return $request->getSchemeAndHttpHost() . $request->getBasePath() . $request->getPathInfo();
+    }
+
+    /**
+     * @param string $data
+     * @return array
+     */
+    private function parseAttributes($data)
+    {
+        @json_decode($data);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new BadRequestHttpException(sprintf(
+                'Could not parse the attributes because no valid json was given %s',
+                $data
+            ));
+        }
+
+        $data = json_decode($data, true);
+
+        $result = [];
+        foreach ($data as $attr) {
+            if (!array_key_exists('name', $attr)) {
+                throw new BadRequestHttpException(sprintf(
+                    'Could not parse the attributes because no valid name was given %s',
+                    json_encode($data)
+                ));
+            }
+            if (!array_key_exists('value', $attr)) {
+                throw new BadRequestHttpException(sprintf(
+                    'Could not parse the attributes because no valid value was given %s',
+                    json_encode($data)
+                ));
+            }
+
+            if (!is_array($attr['value'])) {
+                throw new BadRequestHttpException(sprintf(
+                    'Could not parse the attributes because a value should be an array with strings %s',
+                    json_encode($data)
+                ));
+            }
+
+            foreach ($attr['value'] as $value) {
+                if (!is_string($value)) {
+                    throw new BadRequestHttpException(sprintf(
+                        'Could not parse the attributes because if a value is an array it should consist of strings %s',
+                        json_encode($data)
+                    ));
+                }
+            }
+
+            $result[$attr['name']] = $attr['value'];
+        }
+
+        return $result;
     }
 }

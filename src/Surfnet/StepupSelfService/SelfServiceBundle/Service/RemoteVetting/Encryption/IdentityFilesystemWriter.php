@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption;
 
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 
 class IdentityFilesystemWriter implements IdentityWriterInterface
 {

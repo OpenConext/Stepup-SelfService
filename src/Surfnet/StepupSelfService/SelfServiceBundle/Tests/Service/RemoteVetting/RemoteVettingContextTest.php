@@ -22,6 +22,7 @@ use PHPUnit_Framework_TestCase as IntegrationTest;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingContextException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingStateException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
@@ -54,9 +55,9 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
-        $context->initialize($token2);
-        $context->initialize($token3);
+        $context->initialize($token, AttributeListDto::notSet());
+        $context->initialize($token2, AttributeListDto::notSet());
+        $context->initialize($token3, AttributeListDto::notSet());
     }
 
     /**
@@ -70,14 +71,35 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
+        $context->initialize($token, AttributeListDto::notSet());
         $context->validating($processId);
-        $context->validated($processId);
+        $context->validated($processId, AttributeListDto::notSet());
         $context->done($processId);
 
         $validatedToken = $context->getValidatedToken();
 
-        $this->assertSame($token, $validatedToken);
+        $this->assertEquals($token, $validatedToken);
+    }
+
+    /**
+     * @test
+     * @group rv
+     */
+    public function a_incomplete_remote_vetting_process_wil_never_result_in_a_validated_token_0()
+    {
+        $this->expectException(InvalidRemoteVettingStateException::class);
+        $this->expectExceptionMessage('Unable to find a validated token');
+
+        $token = $this->createToken();
+        $processId = ProcessId::create('12345');
+
+        $context = new RemoteVettingContext($this->session);
+
+        $context->initialize($token, AttributeListDto::notSet());
+        $context->validating($processId);
+        $context->validated($processId, AttributeListDto::notSet());
+
+        $context->getValidatedToken();
     }
 
 
@@ -95,9 +117,9 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
+        $context->initialize($token, AttributeListDto::notSet());
         $context->validating($processId);
-        $context->validated($processId);
+        $context->validated($processId, AttributeListDto::notSet());
 
         $context->getValidatedToken();
     }
@@ -116,7 +138,7 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
+        $context->initialize($token, AttributeListDto::notSet());
         $context->validating($processId);
 
         $context->getValidatedToken();
@@ -135,7 +157,7 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
+        $context->initialize($token, AttributeListDto::notSet());
 
         $context->getValidatedToken();
     }
@@ -185,12 +207,10 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
+        $context->initialize($token, AttributeListDto::notSet());
         //$context->validating($processId);
-        $context->validated($processId);
+        $context->validated($processId, AttributeListDto::notSet());
     }
-
-
 
     /**
      * @test
@@ -206,7 +226,7 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
+        $context->initialize($token, AttributeListDto::notSet());
         $context->validating($processId);
         //$context->validated($processId);
         $context->done($processId);
@@ -228,9 +248,9 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
+        $context->initialize($token, AttributeListDto::notSet());
         $context->validating($processId);
-        $context->validated($wrongProcessId);
+        $context->validated($wrongProcessId, AttributeListDto::notSet());
     }
 
     /**
@@ -249,10 +269,11 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->initialize($token);
+        $context->initialize($token, AttributeListDto::notSet());
         $context->validating($processId);
-        $context->validated($wrongProcessId);
-        $context->validated($processId);
+        $context->validated($wrongProcessId, AttributeListDto::notSet());
+        $context->validated($processId, AttributeListDto::notSet());
+        $context->matched($processId, AttributeListDto::notSet());
         $context->done($wrongProcessId);
     }
 
@@ -285,7 +306,7 @@ class RemoteVettingContextTest extends IntegrationTest
 
         $context = new RemoteVettingContext($this->session);
 
-        $context->validated($processId);
+        $context->validated($processId, AttributeListDto::notSet());
     }
 
     /**

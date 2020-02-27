@@ -30,6 +30,8 @@ use SAML2\Message;
 use SAML2\Response;
 use SAML2\XML\saml\SubjectConfirmation;
 use SAML2\XML\saml\SubjectConfirmationData;
+use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeDefinition;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -70,7 +72,7 @@ class MockGateway
      * @param string $fullRequestUri
      * @return Response
      */
-    public function handleSsoSuccess(Request $request, $fullRequestUri)
+    public function handleSsoSuccess(Request $request, $fullRequestUri, array $attributes)
     {
         // parse the authnRequest
         $authnRequest = $this->parseRequest($request, $fullRequestUri);
@@ -86,7 +88,8 @@ class MockGateway
             $nameId,
             $destination,
             $authnContextClassRef,
-            $requestId
+            $requestId,
+            $attributes
         );
     }
 
@@ -116,17 +119,22 @@ class MockGateway
      * @param string $destination The ACS location
      * @param string|null $authnContextClassRef The loa level
      * @param string $requestId The requestId
+     * @param array $attributes All new attributes, as an associative array.
      * @return Response
      */
-    private function createSecondFactorOnlyResponse($nameId, $destination, $authnContextClassRef, $requestId)
+    private function createSecondFactorOnlyResponse($nameId, $destination, $authnContextClassRef, $requestId, $attributes)
     {
+        $assertion = $this->createNewAssertion(
+            $nameId,
+            $authnContextClassRef,
+            $destination,
+            $requestId
+        );
+
+        $assertion->setAttributes($attributes);
+
         return $this->createNewAuthnResponse(
-            $this->createNewAssertion(
-                $nameId,
-                $authnContextClassRef,
-                $destination,
-                $requestId
-            ),
+            $assertion,
             $destination,
             $requestId
         );

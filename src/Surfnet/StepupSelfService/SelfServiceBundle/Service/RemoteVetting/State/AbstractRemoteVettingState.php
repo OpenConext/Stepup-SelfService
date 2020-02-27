@@ -18,6 +18,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingStateException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingProcessDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
@@ -25,6 +26,13 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Proc
 
 abstract class AbstractRemoteVettingState
 {
+    /**
+     * Do not set state to be able to (de-)serialize state
+     * The vetting state is only used to change behaviour and therefore state is not wanted.
+     */
+    public function __construct()
+    {
+    }
 
     public function handleInitialise(RemoteVettingContext $context, RemoteVettingTokenDto $token)
     {
@@ -36,7 +44,7 @@ abstract class AbstractRemoteVettingState
         throw new InvalidRemoteVettingStateException('Unable to start the validation of a token');
     }
 
-    public function handleValidated(RemoteVettingContext $context, RemoteVettingProcessDto $process, ProcessId $id)
+    public function handleValidated(RemoteVettingContext $context, RemoteVettingProcessDto $process, ProcessId $id, AttributeListDto $attributeLogDto)
     {
         throw new InvalidRemoteVettingStateException('Unable to finish validation of a token');
     }
@@ -49,5 +57,10 @@ abstract class AbstractRemoteVettingState
     public function getValidatedToken(RemoteVettingProcessDto $process)
     {
         throw new InvalidRemoteVettingStateException('Unable to find a validated token');
+    }
+
+    public function getAttributes(RemoteVettingProcessDto $process)
+    {
+        throw new InvalidRemoteVettingStateException('Unable to find attributes');
     }
 }

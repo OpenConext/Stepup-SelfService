@@ -16,21 +16,27 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration;
 
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service\IdentityWriterInterface;
-
-class FakeIdentityWriter implements IdentityWriterInterface
+class RemoteVettingConfiguration
 {
-    private $data;
+    private $publicKey;
 
-    public function write($data)
+    private $location;
+
+    public function __construct($configurationSettings, $version)
     {
-        $this->data = $data;
+        $this->publicKey = $configurationSettings['encryption_public_key'];
+        $this->location = $configurationSettings['storage_location'];
     }
 
-    public function getData()
+    public function getLocation()
     {
-        return $this->data;
+        return $this->location;
+    }
+
+    public function getPublicKey()
+    {
+        return $this->publicKey;
     }
 }

@@ -12,6 +12,8 @@
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
+/app/rv/*
+!/app/rv/.keep
 /build/
 /vendor/
 /composer.phar

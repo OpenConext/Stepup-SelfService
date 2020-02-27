@@ -16,16 +16,24 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value;
 
+use ArrayIterator;
+use IteratorAggregate;
 use JsonSerializable;
+use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 
-class AttributeCollection implements JsonSerializable
+class AttributeCollection implements JsonSerializable, IteratorAggregate
 {
+    /**
+     * @var Attribute
+     */
     private $attributes = [];
 
     public function __construct($attributes)
     {
+        Assert::isArray($attributes, 'The $aatributes of an AttributeCollection must be an array value');
+
         foreach ($attributes as $attributeName => $attributeValue) {
             $this->add(new Attribute($attributeName, $attributeValue));
         }
@@ -37,8 +45,18 @@ class AttributeCollection implements JsonSerializable
         $this->attributes[] = $attribute;
     }
 
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->attributes);
+    }
+
     public function jsonSerialize()
     {
-        return $this->attributes;
+        $attributes = [];
+        foreach ($this->attributes as $item) {
+            $attributes[$item->getName()] = $item->getValue();
+        }
+        return $attributes;
     }
 }

@@ -18,6 +18,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingContextException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingProcessDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
@@ -79,11 +80,12 @@ class RemoteVettingContext
 
     /**
      * @param ProcessId $processId
+     * @param AttributeListDto $xexternalAttributes
      */
-    public function validated(ProcessId $processId)
+    public function validated(ProcessId $processId, AttributeListDto $xexternalAttributes)
     {
         $process = $this->loadProcess();
-        $process = $this->state->handleValidated($this, $process, $processId);
+        $process = $this->state->handleValidated($this, $process, $processId, $xexternalAttributes);
         $this->saveProcess($process);
     }
 
@@ -109,15 +111,26 @@ class RemoteVettingContext
     }
 
     /**
+     * @return AttributeListDto
+     */
+    public function getAttributes()
+    {
+        $process = $this->loadProcess();
+        return $this->state->getAttributes($process);
+    }
+
+    /**
      * @return RemoteVettingProcessDto
      */
     private function loadProcess()
     {
         // get active process
-        $process = $this->session->get(self::SESSION_KEY, null);
-        if ($process == null) {
+        $serialized = $this->session->get(self::SESSION_KEY, null);
+        if ($serialized == null) {
             throw new InvalidRemoteVettingContextException('No remote vetting process found');
         }
+
+        $process = RemoteVettingProcessDto::deserialize($serialized);
 
         // update state from session
         $this->state = $process->getState();
@@ -133,6 +146,6 @@ class RemoteVettingContext
     {
         // save state in session
         $process = RemoteVettingProcessDto::updateState($process, $this->state);
-        $this->session->set(self::SESSION_KEY, $process);
+        $this->session->set(self::SESSION_KEY, $process->serialize());
     }
 }

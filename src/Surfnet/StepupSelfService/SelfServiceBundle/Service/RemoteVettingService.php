@@ -19,6 +19,11 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
+use SAML2\XML\saml\NameID;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
@@ -33,13 +38,19 @@ class RemoteVettingService
      * @var RemoteVettingContext
      */
     private $remoteVettingContext;
+    /**
+     * @var IdentityEncrypter
+     */
+    private $identityEncrypter;
 
     public function __construct(
         RemoteVettingContext $remoteVettingContext,
+        IdentityEncrypter $identityEncrypter,
         LoggerInterface $logger
     ) {
         $this->remoteVettingContext = $remoteVettingContext;
         $this->logger = $logger;
+        $this->identityEncrypter = $identityEncrypter;
     }
 
     /**
@@ -47,7 +58,7 @@ class RemoteVettingService
      */
     public function start(RemoteVettingTokenDto $remoteVettingToken)
     {
-        $this->logger->info('Starting an remote vetting authentication based on the provided token');
+        $this->logger->info('Starting an remote vetting process for the provided token');
 
         $this->remoteVettingContext->initialize($remoteVettingToken);
     }
@@ -57,33 +68,76 @@ class RemoteVettingService
      */
     public function startValidation(ProcessId $processId)
     {
-        $this->logger->info('Starting an remote vetting authentication based on the provided token');
+        $this->logger->info('Starting an remote vetting authentication for the current process');
 
         $this->remoteVettingContext->validating($processId);
     }
 
-
     /**
      * @param ProcessId $processId
+     * @param AttributeListDto $externalAttributes
      */
-    public function finishValidation(ProcessId $processId)
+    public function finishValidation(ProcessId $processId, AttributeListDto $externalAttributes)
     {
-        $this->logger->info('Starting an remote vetting authentication based on the provided token');
+        $this->logger->info('Finishing a remote vetting authentication for the current process');
 
-        $this->remoteVettingContext->validated($processId);
+        $this->remoteVettingContext->validated($processId, $externalAttributes);
     }
 
-
     /**
      * @param ProcessId $processId
+     * @param AttributeMatchCollection $matches
+     * @param string $remarks
      * @return RemoteVettingTokenDto
      */
-    public function done(ProcessId $processId)
+    public function done(ProcessId $processId, AttributeMatchCollection $matches, $remarks)
     {
-        $this->logger->info('Finishing the remote vetting authentication');
+        $this->logger->info('Finish the remote vetting process for the current process');
+
+        // todo: make loging better
+        // todo: store remarks
+        // todo: store AttributeMatchCollection
+        // todo: store Attributes
 
         $this->remoteVettingContext->done($processId);
 
         return $this->remoteVettingContext->getValidatedToken();
+    }
+
+    /**
+     * @param ProcessId $processId
+     * @param AttributeSet $localAttributes
+     * @return AttributeListDto
+     */
+    public function getValidatingAttributes(ProcessId $processId, AttributeSet $localAttributes)
+    {
+        // todo: filter on idp attribute mapping
+        $localAttributes = $this->fromAttributeSet($localAttributes);
+        $externalAttributes = $this->remoteVettingContext->getAttributes();
+
+        return $externalAttributes;
+    }
+
+    /**
+     * @param AttributeSet $attributeSet
+     * @return AttributeListDto
+     */
+    private function fromAttributeSet(AttributeSet $attributeSet)
+    {
+        $attributes = [];
+        $nameID = null;
+        /** @var \Surfnet\SamlBundle\SAML2\Attribute\Attribute $attribute */
+        foreach ($attributeSet as $attribute) {
+            $values = $attribute->getValue();
+            foreach ($values as $value) {
+                if ($value instanceof NameID) {
+                    $nameID = $value->value;
+                    continue;
+                }
+                $attributes[$attribute->getAttributeDefinition()->getName()] = $values;
+            }
+        }
+
+        return new AttributeListDto($attributes, $nameID);
     }
 }

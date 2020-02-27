@@ -16,14 +16,21 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption;
 
-interface IdentityWriterInterface
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityWriterInterface;
+
+class FakeIdentityWriter implements IdentityWriterInterface
 {
-    /**
-     * Writes identity data to a data store. The data should be passed as a string.
-     *
-     * @param string $data
-     */
-    public function write($data);
+    private $data;
+
+    public function write($data)
+    {
+        $this->data = $data;
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
 }

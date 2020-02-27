@@ -18,6 +18,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingContextException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingProcessDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
@@ -25,11 +26,17 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Proc
 class RemoteVettingStateValidating extends AbstractRemoteVettingState implements RemoteVettingState
 {
 
-    public function handleValidated(RemoteVettingContext $context, RemoteVettingProcessDto $process, ProcessId $id)
-    {
+    public function handleValidated(
+        RemoteVettingContext $context,
+        RemoteVettingProcessDto $process,
+        ProcessId $id,
+        AttributeListDto $externalAttributes
+    ) {
         if (!$process->getProcessId()->isValid($id)) {
             throw new InvalidRemoteVettingContextException('Invalid remote vetting context found');
         }
+
+        $process->setAttributes($externalAttributes);
 
         $context->setState(new RemoteVettingStateValidated());
 

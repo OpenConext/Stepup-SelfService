@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption;
 
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Configuration\RemoteVettingConfiguration;
-use Surfnet\StepupSelfService\SelfServiceBundle\RemoteVetting\Dto\IdentityDto;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 
 class IdentityEncrypter
 {
@@ -40,26 +41,17 @@ class IdentityEncrypter
     }
 
     /**
-     * @param IdentityDto $identity
-     * @param string $source
+     * @param AttributeListDto $identity
      */
-    public function encrypt(IdentityDto $identity, $source)
+    public function encrypt(AttributeListDto $identity)
     {
-        $data = $this->constructData($identity, $source);
+        $data = json_encode($identity->jsonSerialize());
         $publicKey = $this->configuration->getPublicKey();
 
-        $encryptedData = '';
-        openssl_public_encrypt($data, $encryptedData, $publicKey);
-        $this->writer->write($encryptedData);
-    }
+        $encrypter = new XMLSecurityKey(XMLSecurityKey::AES256_CBC);
+        $encrypter->loadKey($publicKey, false, true);
+        $encryptedData = $encrypter->encryptData($data);
 
-    private function constructData(IdentityDto $identityDto, $source)
-    {
-        return json_encode(
-            array_merge(
-                $identityDto->jsonSerialize(),
-                ['version' => $this->configuration->getVersion(), 'source' => $source]
-            )
-        );
+        $this->writer->write($encryptedData);
     }
 }

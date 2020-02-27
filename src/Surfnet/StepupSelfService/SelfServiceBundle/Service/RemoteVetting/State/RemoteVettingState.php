@@ -17,6 +17,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingProcessDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
@@ -24,6 +25,11 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Proc
 
 interface RemoteVettingState
 {
+    /**
+     * The entity can not contain state to be able to (de-)serialize session data
+     */
+    public function __construct();
+
     /**
      * @param RemoteVettingContext $context
      * @param RemoteVettingTokenDto $token
@@ -43,9 +49,15 @@ interface RemoteVettingState
      * @param RemoteVettingContext $context
      * @param RemoteVettingProcessDto $process
      * @param ProcessId $id
+     * @param AttributeListDto $externalAttributes
      * @return RemoteVettingProcessDto
      */
-    public function handleValidated(RemoteVettingContext $context, RemoteVettingProcessDto $process, ProcessId $id);
+    public function handleValidated(
+        RemoteVettingContext $context,
+        RemoteVettingProcessDto $process,
+        ProcessId $id,
+        AttributeListDto $externalAttributes
+    );
 
     /**
      * @param RemoteVettingContext $context
@@ -59,4 +71,10 @@ interface RemoteVettingState
      * @return RemoteVettingTokenDto
      */
     public function getValidatedToken(RemoteVettingProcessDto $process);
+
+    /**
+     * @param RemoteVettingProcessDto $process
+     * @return AttributeListDto
+     */
+    public function getAttributes(RemoteVettingProcessDto $process);
 }
