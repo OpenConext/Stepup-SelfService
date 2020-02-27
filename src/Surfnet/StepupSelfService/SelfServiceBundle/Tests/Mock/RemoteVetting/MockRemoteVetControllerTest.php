@@ -65,8 +65,13 @@ class MockRemoteVetControllerTest extends WebTestCase
      */
     private $samlCalloutHelper;
 
-    protected function setUp()
-    {
+    protected function setUp() {
+
+        // This is a fix to prevent segfaults in php 5.6 on Travis
+        if (version_compare(phpversion(), '7', '<')) {
+               ini_set('zend.enable_gc', '0');
+        }
+
         $this->client = static::createClient(['environment' => 'test']);
         $this->client->followRedirects(true);
 
