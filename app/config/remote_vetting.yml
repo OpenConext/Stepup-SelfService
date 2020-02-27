@@ -3,7 +3,29 @@ parameters:
   saml_rv_privatekey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key'
 
   remote_vetting_idps:
-      - name: mock_idp
+      - name: "IRMA"
+        logo: "/images/remote-vetting/irma.png"
+        description:
+          nl_NL: Met IRMA kunt u op een privacy-vriendelijke, beveiligde manier eigenschappen (attributen) van uzelf onthullen.
+          en_GB: IRMA is a unique privacy-friendly identity platform for both authentication and signing.
+        entityId: https://selfservice.stepup.example.com/mock/metadata
+        ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
+        certificateFile: "%saml_rv_publickey%"
+        privateKey: "%saml_rv_privatekey%"
+      - name: "ReadId"
+        logo: "/images/remote-vetting/readid.png"
+        description:
+          nl_NL: ReadID® verifieert identiteitsbewijzen uitgerust met NFC op een smartphone.
+          en_GB: ReadID® verifies identity documents with NFC on a smartphone
+        entityId: https://selfservice.stepup.example.com/mock/metadata
+        ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
+        certificateFile: "%saml_rv_publickey%"
+        privateKey: "%saml_rv_privatekey%"
+      - name: "iDIN"
+        logo: "/images/remote-vetting/idin.png"
+        description:
+          nl_NL: iDIN is een dienst van de banken waarmee consumenten zich bij andere organisaties met de veilige en vertrouwde inlogmiddelen van hun eigen bank kunnen identificeren.
+          en_GB: iDIN is a service offered by banks which allows consumers to use their bank’s secure and reliable login methods to carry out the following actions on the websites of other organisations.
         entityId: https://selfservice.stepup.example.com/mock/metadata
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
         certificateFile: '%saml_rv_publickey%'
@@ -69,6 +91,7 @@ services:
   Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVettingController:
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
+      - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper'
       - '@logger'
 
@@ -92,6 +115,9 @@ services:
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
 
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper:
+    arguments:
+      $remoteVettingIdpConfig: "%remote_vetting_idps%"
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter:
     arguments:

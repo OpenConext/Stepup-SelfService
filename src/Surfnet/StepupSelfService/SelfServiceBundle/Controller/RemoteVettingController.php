@@ -28,6 +28,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetSecondFactorT
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetValidationType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
@@ -40,7 +41,8 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects) to much coupling dus to glue code nature oof this controller, could be refactored later on
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) Too much coupling dus to glue code nature of this controller.
+ *                                                 Could be refactored later on
  */
 class RemoteVettingController extends Controller
 {
@@ -48,6 +50,10 @@ class RemoteVettingController extends Controller
      * @var RemoteVettingService
      */
     private $remoteVettingService;
+    /**
+     * @var RemoteVettingViewHelper
+     */
+    private $remoteVettingViewHelper;
     /**
      * @var SamlCalloutHelper
      */
@@ -59,12 +65,27 @@ class RemoteVettingController extends Controller
 
     public function __construct(
         RemoteVettingService $remoteVettingService,
+        RemoteVettingViewHelper $viewHelper,
         SamlCalloutHelper $samlCalloutHelper,
         LoggerInterface $logger
     ) {
         $this->remoteVettingService = $remoteVettingService;
+        $this->remoteVettingViewHelper = $viewHelper;
         $this->samlCalloutHelper = $samlCalloutHelper;
         $this->logger = $logger;
+    }
+
+    /**
+     * @Template
+     * @param string $secondFactorId
+     */
+    public function displayRemoteVettingIdPsAction($secondFactorId)
+    {
+        return [
+            'identityProviders' => $this->remoteVettingViewHelper->getIdentityProviders(),
+            'verifyEmail' => $this->emailVerificationIsRequired(),
+            'secondFactorId' => $secondFactorId,
+        ];
     }
 
     /**
@@ -113,7 +134,7 @@ class RemoteVettingController extends Controller
             $this->remoteVettingService->start($token);
 
             // todo : implement idp selection
-            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest('mock_idp'));
+            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest('IRMA'));
         }
 
         return [
@@ -137,7 +158,7 @@ class RemoteVettingController extends Controller
         $this->logger->info('Load the attributes from the saml response');
 
         try {
-            $processId = $this->samlCalloutHelper->handleResponse($request, 'mock_idp');
+            $processId = $this->samlCalloutHelper->handleResponse($request, 'IRMA');
         } catch (InvalidRemoteVettingStateException $e) {
             $this->logger->error($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');

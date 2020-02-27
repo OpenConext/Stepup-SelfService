@@ -1,0 +1,43 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.vetting_type.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% if verifyEmail %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress':75, 'step': 4, verifyEmail: true} only %}
+    {% else %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <div class="row remote-vetting">
+
+        <div class="col-xs-12 col-md-4">
+            <div class="thumbnail remote-vetting-selector">
+                <i class="fa fa-globe"></i>
+                <h3>{{ 'ss.registration.vetting_type.title.remote_vetting'|trans }}</h3>
+                <p>{{ 'ss.registration.vetting_type.description.remote_vetting'|trans }}</p>
+                <form action="{{ url('ss_second_factor_remote_vetting_idps', {'secondFactorId': secondFactorId}) }}" method="get">
+                <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.remote_vetting'|trans }}</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+            <div class="thumbnail remote-vetting-selector">
+                <i class="fa fa-university"></i>
+                <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
+                <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
+                <form action="{{ url('ss_registration_registration_email_sent', {'secondFactorId': secondFactorId}) }}" method="get">
+                <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

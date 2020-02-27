@@ -1,0 +1,39 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.remote_vetting_idp.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% if verifyEmail %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress':75, 'step': 4, verifyEmail: true} only %}
+    {% else %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <div class="row remote-vetting">
+
+        {% for identityProvider in identityProviders %}
+            <div class="col-xs-12 col-md-4">
+                <div class="thumbnail remote-vetting-selector">
+                    <img src="{{ identityProvider.logo }}" alt="Logo of {{ identityProvider.name }}">
+                    <h3>{{ identityProvider.name }}</h3>
+                    <p>
+                        {{ identityProvider.description(app.request.locale) }}
+                    </p>
+                    <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                        <button type="submit" class="btn btn-primary">Continue</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+    <form action="{{ url('ss_second_factor_remote_vetting_types', {'secondFactorId': secondFactorId}) }}" method="get">
+        <button class="btn btn-danger">Back</button>
+    </form>
+{% endblock %}
