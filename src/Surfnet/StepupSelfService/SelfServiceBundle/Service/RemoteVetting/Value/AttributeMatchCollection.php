@@ -34,7 +34,7 @@ class AttributeMatchCollection implements JsonSerializable, IteratorAggregate, A
     {
         $instance = new self();
         foreach ($attributeCollection as $attribute) {
-            $match = new AttributeMatch($attribute->getName());
+            $match = new AttributeMatch($attribute->getName(), false, '');
             $instance->matches[$attribute->getName()] = $match;
         }
 
