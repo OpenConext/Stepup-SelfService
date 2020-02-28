@@ -18,6 +18,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Dto;
 
 use PHPUnit_Framework_TestCase as Unittest;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingProcessDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State\RemoteVettingStateDone;
@@ -34,14 +35,17 @@ class RemoteVettingProcessDtoTest extends Unittest
      */
     public function a_process_could_be_serialized_and_deserialized($name, $state, $expected)
     {
-        $expected = sprintf('{"processId":"process id","token":"{\"identityId\":\"identityId\",\"secondFactorId\":\"secondFactorId\"}","state":%s,"attributes":"{\"nameId\":\"\",\"attributes\":[]}"}', json_encode($expected));
+        $attributes = new AttributeListDto(['foo' => 'bar'], 'nameId');
+        $expected = sprintf('{"processId":"process id","token":"{\"identityId\":\"identityId\",\"secondFactorId\":\"secondFactorId\"}","state":%s,"attributes":"{\"nameId\":\"nameId\",\"attributes\":{\"foo\":\"bar\"}}"}', json_encode($expected));
 
         $processId = ProcessId::create('process id');
         $token = RemoteVettingTokenDto::create('identityId', 'secondFactorId');
+
         $processDto = RemoteVettingProcessDto::create($processId, $token);
 
-
         $processDto = RemoteVettingProcessDto::updateState($processDto, $state);
+
+        $processDto->setAttributes($attributes);
 
         $serialized = $processDto->serialize();
 

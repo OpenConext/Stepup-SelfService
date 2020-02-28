@@ -75,20 +75,20 @@ class AttributeListDto implements Serializable
         return $this->attributes;
     }
 
-    public function jsonSerialize()
-    {
-        return [
-            'nameId' => $this->nameId,
-            'attributes' => $this->attributes->jsonSerialize(),
-        ];
-    }
-
     /**
      * @inheritDoc
      */
     public function serialize()
     {
-        return json_encode($this->jsonSerialize());
+        $attributes = [];
+        foreach ($this->attributes as $item) {
+            $attributes[$item->getName()] = $item->getValue();
+        }
+
+        return json_encode([
+            'nameId' => $this->nameId,
+            'attributes' => $attributes,
+        ]);
     }
 
     /**

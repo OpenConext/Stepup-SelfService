@@ -45,7 +45,7 @@ class IdentityEncrypter
      */
     public function encrypt(AttributeListDto $identity)
     {
-        $data = json_encode($identity->jsonSerialize());
+        $data = $identity->serialize();
         $publicKey = $this->configuration->getPublicKey();
 
         $encrypter = new XMLSecurityKey(XMLSecurityKey::AES256_CBC);
