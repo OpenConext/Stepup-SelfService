@@ -125,7 +125,7 @@ class RemoteVettingController extends Controller
 
         $form = $this->createForm(RemoteVetSecondFactorType::class, $command)->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $token = RemoteVettingTokenDto::create(
                 $command->identity->id,
                 $command->secondFactor->id
@@ -213,7 +213,7 @@ class RemoteVettingController extends Controller
             $command->matches = AttributeMatchCollection::fromAttributeCollection($attributes->getAttributes());
 
             $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
                 /** @var RemoteVetValidationCommand $command */
                 $command = $form->getData();

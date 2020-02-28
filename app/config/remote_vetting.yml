@@ -83,12 +83,14 @@ services:
     $logger: '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService:
+    public: true
     arguments:
       $remoteVettingContext: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext'
       $identityEncrypter: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter'
       $logger: '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVettingController:
+    public: true
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper'
@@ -103,6 +105,7 @@ services:
       $publicCertPath: '%saml_rv_publickey%'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockRemoteVetController:
+    public: true
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway'
       - '@twig'
