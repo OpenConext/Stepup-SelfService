@@ -125,7 +125,7 @@ class RemoteVettingController extends Controller
 
         $form = $this->createForm(RemoteVetSecondFactorType::class, $command)->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $token = RemoteVettingTokenDto::create(
                 $command->identity->id,
                 $command->secondFactor->id
@@ -165,7 +165,7 @@ class RemoteVettingController extends Controller
             return $this->redirectToRoute('ss_second_factor_list');
         } catch (Exception $e) {
             //PreconditionNotMetException $e) {
-            // todo: add saml specific logging?
+            // todo: add saml specific logging (user flashbag may differ) ?
             $this->logger->error($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
             return $this->redirectToRoute('ss_second_factor_list');
@@ -193,8 +193,6 @@ class RemoteVettingController extends Controller
      */
     public function remoteVetMatchAction(Request $request, $processId)
     {
-        $this->logger->info('Matching remote vetting second factor');
-
         /** @var FlashBagInterface $flashBag */
         $flashBag = $this->get('session')->getFlashBag();
 
@@ -215,7 +213,7 @@ class RemoteVettingController extends Controller
             $command->matches = AttributeMatchCollection::fromAttributeCollection($attributes->getAttributes());
 
             $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
                 /** @var RemoteVetValidationCommand $command */
                 $command = $form->getData();
@@ -242,7 +240,7 @@ class RemoteVettingController extends Controller
             }
 
             return $this->render('SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:validation.html.twig', [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]);
         } catch (InvalidRemoteVettingStateException $e) {
             $this->logger->error($e->getMessage());

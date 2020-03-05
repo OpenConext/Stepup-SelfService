@@ -120,7 +120,7 @@ class SamlCalloutHelper
         // Create log DTO in order to store
         $attributeLogDto = new AttributeListDto(
             $assertion->getAttributes(),
-            $subjectConfirmation->NameID,
+            (string)$subjectConfirmation->NameID,
             $assertion->toXML()->ownerDocument->saveXML()
         );
 
