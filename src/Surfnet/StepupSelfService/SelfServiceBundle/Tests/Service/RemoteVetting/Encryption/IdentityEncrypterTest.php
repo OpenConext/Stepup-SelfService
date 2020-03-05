@@ -87,7 +87,7 @@ CERT;
 
         // Assert result
         $decryptedData = $this->decrypt($encryptedData, $this->cert);
-        $this->assertSame(json_encode($data->jsonSerialize()), $decryptedData);
+        $this->assertSame($data->serialize(), $decryptedData);
     }
 
     /**
@@ -114,7 +114,7 @@ CERT;
 
         // Assert result
         $decryptedData = $this->decrypt($encryptedData, $this->cert);
-        $this->assertSame(json_encode($data->jsonSerialize()), $decryptedData);
+        $this->assertSame($data->serialize(), $decryptedData);
     }
 
     /**

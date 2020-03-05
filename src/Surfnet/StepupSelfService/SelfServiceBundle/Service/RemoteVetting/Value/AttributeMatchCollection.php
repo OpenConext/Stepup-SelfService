@@ -23,7 +23,7 @@ use ArrayAccess;
 use IteratorAggregate;
 use JsonSerializable;
 
-class AttributeMatchCollection implements JsonSerializable, IteratorAggregate, ArrayAccess
+class AttributeMatchCollection implements IteratorAggregate, ArrayAccess
 {
     /**
      * @var AttributeMatch[]
@@ -34,7 +34,7 @@ class AttributeMatchCollection implements JsonSerializable, IteratorAggregate, A
     {
         $instance = new self();
         foreach ($attributeCollection as $attribute) {
-            $match = new AttributeMatch($attribute->getName());
+            $match = new AttributeMatch($attribute->getName(), false, '');
             $instance->matches[$attribute->getName()] = $match;
         }
 
@@ -44,15 +44,6 @@ class AttributeMatchCollection implements JsonSerializable, IteratorAggregate, A
     public function getIterator()
     {
         return new ArrayIterator($this->matches);
-    }
-
-    public function jsonSerialize()
-    {
-        $attributes = [];
-        foreach ($this->matches as $item) {
-            $attributes[$item->getName()] = $item->getValue();
-        }
-        return $attributes;
     }
 
     public function offsetSet($offset, $value)

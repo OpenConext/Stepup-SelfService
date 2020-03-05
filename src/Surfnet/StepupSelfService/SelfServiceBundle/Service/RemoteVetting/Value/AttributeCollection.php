@@ -23,7 +23,7 @@ use IteratorAggregate;
 use JsonSerializable;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 
-class AttributeCollection implements JsonSerializable, IteratorAggregate
+class AttributeCollection implements IteratorAggregate
 {
     /**
      * @var Attribute
@@ -32,7 +32,7 @@ class AttributeCollection implements JsonSerializable, IteratorAggregate
 
     public function __construct($attributes)
     {
-        Assert::isArray($attributes, 'The $aatributes of an AttributeCollection must be an array value');
+        Assert::isArray($attributes, 'The $attributes of an AttributeCollection must be an array value');
 
         foreach ($attributes as $attributeName => $attributeValue) {
             $this->add(new Attribute($attributeName, $attributeValue));
@@ -49,14 +49,5 @@ class AttributeCollection implements JsonSerializable, IteratorAggregate
     public function getIterator()
     {
         return new ArrayIterator($this->attributes);
-    }
-
-    public function jsonSerialize()
-    {
-        $attributes = [];
-        foreach ($this->attributes as $item) {
-            $attributes[$item->getName()] = $item->getValue();
-        }
-        return $attributes;
     }
 }

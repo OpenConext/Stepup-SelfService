@@ -19,22 +19,52 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Valu
 
 class AttributeMatch
 {
-    public function __construct($name)
+    /**
+     * @var bool
+     */
+    private $valid;
+    /**
+     * @var string
+     */
+    private $remarks = '';
+    /**
+     * @var string
+     */
+    private $name = '';
+
+    /**
+     * @param string $name
+     * @param bool $valid
+     * @param string $remarks
+     */
+    public function __construct($name, $valid, $remarks)
     {
         $this->name = $name;
+        $this->valid = $valid;
+        $this->remarks = $remarks;
     }
 
     /**
-     * The attributes and their state
-     *
-     *  [key => [
-     *      'valid' => true,
-     *      'remarks' => 'remarks',
-     *  ]]
-     *
+     * @return bool
      */
+    public function isValid()
+    {
+        return $this->valid;
+    }
 
-    public $valid = false;
-    public $remarks = '';
-    public $name = '';
+    /**
+     * @return string
+     */
+    public function getRemarks()
+    {
+        return $this->remarks;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }

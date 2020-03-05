@@ -128,13 +128,14 @@ class RemoteVettingService
         $nameID = '';
         /** @var \Surfnet\SamlBundle\SAML2\Attribute\Attribute $attribute */
         foreach ($attributeSet as $attribute) {
+            $name = $attribute->getAttributeDefinition()->getName();
             $values = $attribute->getValue();
             foreach ($values as $value) {
                 if ($value instanceof NameID) {
                     $nameID = (string)$value->value;
                     continue;
                 }
-                $attributes[$attribute->getAttributeDefinition()->getName()] = $values;
+                $attributes[$name] = $values;
             }
         }
 
