@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption;
 
 use RobRichards\XMLSecLibs\XMLSecurityKey;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 
@@ -40,18 +41,75 @@ class IdentityEncrypter
         $this->writer = $writer;
     }
 
-    /**
-     * @param AttributeListDto $identity
-     */
     public function encrypt(AttributeListDto $identity)
     {
         $data = $identity->serialize();
-        $publicKey = $this->configuration->getPublicKey();
+        $rsaPublicKey = $this->configuration->getPublicKey();
 
-        $encrypter = new XMLSecurityKey(XMLSecurityKey::AES256_CBC);
-        $encrypter->loadKey($publicKey, false, true);
-        $encryptedData = $encrypter->encryptData($data);
+        if (!is_string($data) || !is_string($rsaPublicKey)) {
+            // Invalid argument
+            throw new InvalidArgumentException('Invalid input was provided to the encrypt method');
+        }
 
-        $this->writer->write($encryptedData);
+        // Use AES-256 in GCM
+        $symmetricAlgorithm = 'aes-256-gcm';
+
+        // Generate initialisation vector for the symmetric encryption algorithm
+        $ivLength = openssl_cipher_iv_length($symmetricAlgorithm);
+        if (false === $ivLength) {
+            // Error generating key
+            throw new InvalidArgumentException(
+                'Unable to generate an initialization vector (iv) based on the selected symmetric encryption algorithm'
+            );
+        }
+
+        $iv = openssl_random_pseudo_bytes($ivLength);
+        if (false === $iv) {
+            // Error generating key
+            throw new InvalidArgumentException('Unable to generate a correct initialization vector (iv)');
+        }
+
+        // Generate a 256 bits AES key
+        $secretKey = openssl_random_pseudo_bytes(256 / 8);
+        if (false === $secretKey) {
+            // Error generating key
+            throw new InvalidArgumentException('Unable to generate the secret key');
+        }
+
+        // Encrypt the data
+        $tag = '';
+        $ciphertext = openssl_encrypt($data, $symmetricAlgorithm, $secretKey, 0, $iv, $tag);
+        if (false === $ciphertext) {
+            // Encryption failed
+            throw new InvalidArgumentException(
+                sprintf('Unable to encrypt the data, ssl error: "%s"', openssl_error_string())
+            );
+        }
+
+        // Encrypt symmetric key
+        $rsaPublicKeyHandle = openssl_pkey_get_public($rsaPublicKey);
+        if (false === $rsaPublicKeyHandle) {
+            // Reading RSA public key failed
+            throw new InvalidArgumentException('Reading RSA public key failed');
+        }
+        $encryptedKey = '';
+
+        $res = openssl_public_encrypt($secretKey, $encryptedKey, $rsaPublicKeyHandle, OPENSSL_PKCS1_OAEP_PADDING);
+        if (false === $res) {
+            // Key encryption failed
+            openssl_pkey_free($rsaPublicKeyHandle);
+            throw new InvalidArgumentException('Key encryption failed');
+        }
+
+        openssl_pkey_free($rsaPublicKeyHandle);
+        $output = array(
+            'algorithm' => $symmetricAlgorithm,
+            'iv' => base64_encode($iv),
+            'tag'=> base64_encode($tag),
+            'ciphertext' => base64_encode($ciphertext),
+            'encrypted_key' => base64_encode($encryptedKey)
+        );
+
+        $this->writer->write($output);
     }
 }

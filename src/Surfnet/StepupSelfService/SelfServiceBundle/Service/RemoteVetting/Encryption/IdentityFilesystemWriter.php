@@ -35,12 +35,12 @@ class IdentityFilesystemWriter implements IdentityWriterInterface
     /**
      * Writes identity data to a data store. The data should be passed as a string.
      *
-     * @param string $data
+     * @param string[] $data
      */
-    public function write($data)
+    public function write(array $data)
     {
         $fileName = $this->createFileName($this->configuration->getLocation());
-        file_put_contents($fileName, $data);
+        file_put_contents($fileName, json_encode($data));
     }
 
     private function createFileName($location)

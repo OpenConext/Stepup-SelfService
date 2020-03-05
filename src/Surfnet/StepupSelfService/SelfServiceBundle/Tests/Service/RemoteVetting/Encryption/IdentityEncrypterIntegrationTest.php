@@ -18,8 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption;
 
-use PHPUnit_Framework_TestCase as UnitTest;
-use RobRichards\XMLSecLibs\XMLSecurityKey;
+use PHPUnit_Framework_TestCase as IntegrationTest;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
@@ -28,7 +27,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption
  * By using a fake IdentityWriter we are able to intercept the encrypted data (that would otherwise
  * be stored to a backend) and perform some sanity checks on it.
  */
-class IdentityEncrypterIntegrationTest extends UnitTest
+class IdentityEncrypterIntegrationTest extends IntegrationTest
 {
     private $encrypter;
 
@@ -114,68 +113,11 @@ KEY;
         $writtenData = $this->writer->getData();
 
         // Now decrypt the data with the private key to prove the data is actually retrievable
-        $result = $this->decrypt($writtenData, $this->publicKey);
+        $result = Decrypter::decrypt($writtenData, $this->privateKey);
 
         $serialized = json_decode($result, true);
 
         $this->assertEquals('johndoe@example.com', $serialized['attributes']['email']);
         $this->assertEquals('John', $serialized['attributes']['firstName']);
-    }
-
-    public function test_valid_private_key_required_to_decrypt()
-    {
-        $nameId = 'a-random-nameid@something.else';
-        $raw = 'the raw message we could incorporate';
-
-        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
-        $this->encrypter->encrypt($data);
-
-        $writtenData = $this->writer->getData();
-        // Now decrypt the data with the private key to prove the data is actually retrievable
-        $result = '';
-
-        $invalidPrivateKey = <<<KEY
------BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEAyOZnmunnDgF4ivLai3zA7BeI7RDgP1cWp6TLgaLKHnomzE/y
-tn93SOl7fnw+vPLdQ3jNIbOiULos9Lt0vyJqhduC5ykPwC/C+oJqM4YBDUvOdtyK
-rvKs4/IplUibeB0NC1f/JvayfkT9da+Dx1656PndKDeUHUpho1EsK5ylKYFQCsQj
-ktIhb1Z6WEUdDMZee+syPzefSSVaJMiZIRbFfvbcqoQMtmR+1Ua/HuXdBFk53+7G
-qWzF/0Rx/Lcf8u97TIAiYTA/4g1sM3KW8YOMCRXjEAAMc04Ok2KnFgFsjefEOLDW
-lPOueTp31+HShsjEkhwZ2RMXMV18bPV3wD7XlwIDAQABAoIBAF14teOhyFr/3DHp
-5DzaAnjWSmLiYzOVNXkyd20NbLTZaIvO9sJqc/l8iHTFIfuPk9r8rZRsm6yrspb7
-UMpNHPrCsxkSRb3JexJK81adloe1KY6r9eqIBmDYHvjSG2O7QIJyoshiJ5IQT00e
-KFXugNkgyAEaOtOV8++kqMRx0XaJXKNpx1iJVKJkoFH97FN/bgXNwyh3g3/fV82O
-HXhxRFo0shxxIxxQWXZwSNJv2hEkEjPQf0IJYWINX2nrNq/MP2Qacy9ifwvY8RrD
-TNLLOq9sPzB0cZcaya+gXHjaHUcZznl7I/xyRIFqcB1NpR9px5kPOpesIdFSbKCY
-Glpw5QECgYEA61fNYBt6ALJRbbVD3TljDcl4oWcB9xVvQq4PX75FxrtWocBQ2NF5
-ZSyeXZc+nfLfsm2DDwE8pAd64s4j+4kr6c6td3YeehzxdJVr0lKKDTwOTNVT276L
-C885u3KS2325RdWU8EbFO6ZjitMTHBME7bl4AKudwaT4VI8qSMyNYbcCgYEA2oip
-xOQLne/Anm4pID8FrJorS6VPP0uQjI8FbmQ0MQIUqITSDVRIYLI2z5c63wOFHt8s
-DXkIYDOB8u2aoEYkSv+r2idNbanF67KtI74sIBv9wkAD7KNUSEul+y1M3Y3a9enc
-wIdJVxZIQRQBb4RUlqVnYkvLSwZdcu6C/VzYuSECgYBwFQTuvKdCJaq6QRXtCiOu
-sUEOPWymLEMs0pDn3EqG9zmvF1RprnnOQY26rQlZWA5Jf/Zm8wPaauWPlvV0GkQb
-uh7LQioJpjcoevE63ax52RxGY2LoyLqYCT1JlKt0dVADflDMjifo3LmTqCr1t+kk
-/qu0Rgd/7f2G6BgPS7wZyQKBgQDLJ7MTW6DFEUYywlwvIwdmXugS6bnTMK9PTAIT
-jsnKKZIE23zecVTbt7EmqQNMoVwWyAeO+s5jiF6s9GAD0VEZ+7bKFjFv2h0psTAu
-AzPIId10wMglK+1FTDYgXAuSB7bfV6olvV7bu9Yt0ahIAHAWn+uNQMLbmy4ykzJo
-0PCUoQKBgQDHfIlHx/0LsZS2z+wqeWO/gSxEJPkmCBq9dm+oJo48vVFPiotXjgyc
-qRG2YXye1GXbbgqR8Wj81kWe7X3FWD/SCFY/PQhmxwzjQhkrvgyVGiMr2SkdPwtz
-O+A1YzoLHWIeDK53JUjH4kbZejf9Du5m/cegl3FFgP45t2xNHE4nmQ==
------END RSA PRIVATE KEY-----
-KEY;
-
-        $this->assertFalse(openssl_private_decrypt($writtenData, $result, $invalidPrivateKey));
-    }
-
-    /**
-     * @param string $data
-     * @param string $password
-     * @return string
-     */
-    private function decrypt($data, $password)
-    {
-        $decrypter = new XMLSecurityKey(XMLSecurityKey::AES256_CBC);
-        $decrypter->loadKey($password, false, true);
-        return $decrypter->decryptData($data);
     }
 }

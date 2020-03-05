@@ -23,7 +23,7 @@ interface IdentityWriterInterface
     /**
      * Writes identity data to a data store. The data should be passed as a string.
      *
-     * @param string $data
+     * @param string[] $data
      */
-    public function write($data);
+    public function write(array $data);
 }
