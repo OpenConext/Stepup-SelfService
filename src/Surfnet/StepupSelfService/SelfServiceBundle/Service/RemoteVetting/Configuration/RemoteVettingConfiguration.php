@@ -24,7 +24,7 @@ class RemoteVettingConfiguration
 
     private $location;
 
-    public function __construct($configurationSettings, $version)
+    public function __construct($configurationSettings)
     {
         $this->publicKey = $configurationSettings['encryption_public_key'];
         $this->location = $configurationSettings['storage_location'];

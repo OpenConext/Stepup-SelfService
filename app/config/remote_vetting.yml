@@ -78,7 +78,6 @@ services:
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration:
     arguments:
       $configurationSettings: '%identity_encryption_configuration%'
-      $version: '%asset_version%'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext:
     arguments:
