@@ -21,10 +21,12 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVettin
 class Decrypter
 {
     public static function decrypt($ciphertext, $privateKey) {
-        if ( !is_array($ciphertext) || !is_string($privateKey)) {
+        if (!is_array(json_decode($ciphertext, true)) || !is_string($privateKey)) {
             // Invalid argument
             return false;
         }
+
+        $ciphertext = json_decode($ciphertext, true);
         if ( !isset($ciphertext['algorithm'], $ciphertext['iv'], $ciphertext['tag'], $ciphertext['ciphertext'], $ciphertext['encrypted_key']) ) {
             // Invalid argument
             return false;

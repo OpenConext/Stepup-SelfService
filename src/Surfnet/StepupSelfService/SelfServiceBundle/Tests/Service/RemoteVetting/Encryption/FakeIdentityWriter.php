@@ -24,7 +24,7 @@ class FakeIdentityWriter implements IdentityWriterInterface
 {
     private $data;
 
-    public function write(array $data)
+    public function write($data)
     {
         $this->data = $data;
     }

@@ -102,12 +102,14 @@ class IdentityEncrypter
         }
 
         openssl_pkey_free($rsaPublicKeyHandle);
-        $output = array(
-            'algorithm' => $symmetricAlgorithm,
-            'iv' => base64_encode($iv),
-            'tag'=> base64_encode($tag),
-            'ciphertext' => base64_encode($ciphertext),
-            'encrypted_key' => base64_encode($encryptedKey)
+        $output = json_encode(
+            [
+                'algorithm' => $symmetricAlgorithm,
+                'iv' => base64_encode($iv),
+                'tag' => base64_encode($tag),
+                'ciphertext' => base64_encode($ciphertext),
+                'encrypted_key' => base64_encode($encryptedKey),
+            ]
         );
 
         $this->writer->write($output);
