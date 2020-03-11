@@ -17,9 +17,10 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value;
 
+use JsonSerializable;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 
-class AttributeMatch
+class AttributeMatch implements JsonSerializable
 {
     /**
      * @var bool
@@ -88,5 +89,10 @@ class AttributeMatch
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function jsonSerialize()
+    {
+        return ['name' => $this->name, 'is-valid' => $this->valid, 'remarks' => $this->remarks];
     }
 }

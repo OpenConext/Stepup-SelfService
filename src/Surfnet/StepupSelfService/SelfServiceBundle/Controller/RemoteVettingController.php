@@ -211,7 +211,7 @@ class RemoteVettingController extends Controller
             );
 
             // todo: add command assertions
-            $command->matches = AttributeMatchCollection::fromAttributeCollection($attributes->getAttributes());
+            $command->matches = AttributeMatchCollection::fromAttributeCollection($attributes->getAttributeCollection());
 
             $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
