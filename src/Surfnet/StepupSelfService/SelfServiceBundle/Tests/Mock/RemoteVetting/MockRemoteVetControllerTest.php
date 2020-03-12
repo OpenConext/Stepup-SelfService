@@ -95,7 +95,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function the_mock_remote_vetting_idp_should_present_us_with_possible_results_for_testing_purposes()
     {
         $this->logIn();
-        $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('IRMA',  RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
@@ -112,7 +112,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function a_succesful_response_from_a_remote_vetting_idp_should_succeed()
     {
         $this->logIn();
-        $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('IRMA', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
@@ -134,7 +134,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function a_user_cancelled_response_from_a_remote_vetting_idp_should_fail()
     {
         $this->logIn();
-        $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('IRMA', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
@@ -155,7 +155,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function an_unsuccessful_response_from_a_remote_vetting_idp_should_fail()
     {
         $this->logIn();
-        $this->remoteVettingService->start(RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('IRMA', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);

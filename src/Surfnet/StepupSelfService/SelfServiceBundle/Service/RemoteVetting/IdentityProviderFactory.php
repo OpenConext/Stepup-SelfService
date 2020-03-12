@@ -30,27 +30,40 @@ class IdentityProviderFactory
     private $identityProviders = [];
 
     /**
+     * @var array
+     */
+    private $attributeMapping = [];
+
+    /**
      * @param array $configuration
      */
     public function __construct(array $configuration)
     {
         foreach ($configuration as $idpConfiguration) {
-            Assert::keyExists($idpConfiguration, 'name');
-            Assert::keyExists($idpConfiguration, 'entityId');
-            Assert::keyExists($idpConfiguration, 'ssoUrl');
-            Assert::keyExists($idpConfiguration, 'privateKey');
-            Assert::keyExists($idpConfiguration, 'certificateFile');
+            Assert::keyExists($idpConfiguration, 'name', 'name should be set');
+            Assert::keyExists($idpConfiguration, 'entityId', 'entityId should be set');
+            Assert::keyExists($idpConfiguration, 'ssoUrl', 'ssoUrl should be set');
+            Assert::keyExists($idpConfiguration, 'privateKey', 'privateKey should be set');
+            Assert::keyExists($idpConfiguration, 'certificateFile', 'certificateFile should be set');
+            Assert::isArray($idpConfiguration, 'attributeMapping should be an array');
+            Assert::allString($idpConfiguration['attributeMapping'], 'attributeMapping should consist of strings');
 
-            Assert::string($idpConfiguration['name']);
-            Assert::url($idpConfiguration['entityId']);
-            Assert::url($idpConfiguration['ssoUrl']);
-            Assert::file($idpConfiguration['privateKey']);
-            Assert::file($idpConfiguration['certificateFile']);
+            Assert::string($idpConfiguration['name'], 'name should be a string');
+            Assert::url($idpConfiguration['entityId'], 'entityId should be an url');
+            Assert::url($idpConfiguration['ssoUrl'], 'ssoUrl should be an url');
+            Assert::file($idpConfiguration['privateKey'], 'privateKey should be an url');
+            Assert::file($idpConfiguration['certificateFile'], 'certificateFile should be an url');
 
             $idpConfiguration['privateKeys'] = [new PrivateKey($idpConfiguration['privateKey'], PrivateKey::NAME_DEFAULT)];
             unset($idpConfiguration['privateKey']);
 
+            // set idp
             $this->identityProviders[$idpConfiguration['name']] = new IdentityProvider($idpConfiguration);
+
+            // set mapping
+            foreach ($idpConfiguration['attributeMapping'] as $key => $value) {
+                $this->attributeMapping[$idpConfiguration['name']][$key] = $value;
+            }
         }
     }
 
@@ -65,5 +78,21 @@ class IdentityProviderFactory
         }
 
         throw new InvalidRemoteVettingIdentityProviderException(sprintf("Invalid IdP requested '%s'", $name));
+    }
+
+
+    /**
+     * @param string $name
+     * @return array
+     */
+    public function getAttributeMapping($name)
+    {
+        if (array_key_exists($name, $this->attributeMapping)) {
+            return $this->attributeMapping[$name];
+        }
+
+        throw new InvalidRemoteVettingIdentityProviderException(
+            sprintf("Unable to find the attribute mapping for an unknown IdP identified by '%s'", $name)
+        );
     }
 }

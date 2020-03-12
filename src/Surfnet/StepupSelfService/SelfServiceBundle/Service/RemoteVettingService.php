@@ -19,10 +19,13 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
+use SAML2\Assertion;
 use SAML2\XML\saml\NameID;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
@@ -42,25 +45,32 @@ class RemoteVettingService
      * @var IdentityEncrypter
      */
     private $identityEncrypter;
+    /**
+     * @var AttributeMapper
+     */
+    private $attributeMapper;
 
     public function __construct(
         RemoteVettingContext $remoteVettingContext,
+        AttributeMapper $attributeMapper,
         IdentityEncrypter $identityEncrypter,
         LoggerInterface $logger
     ) {
         $this->remoteVettingContext = $remoteVettingContext;
         $this->logger = $logger;
         $this->identityEncrypter = $identityEncrypter;
+        $this->attributeMapper = $attributeMapper;
     }
 
     /**
+     * @param string $identityProviderName
      * @param RemoteVettingTokenDto $remoteVettingToken
      */
-    public function start(RemoteVettingTokenDto $remoteVettingToken)
+    public function start($identityProviderName, RemoteVettingTokenDto $remoteVettingToken)
     {
         $this->logger->info('Starting an remote vetting process for the provided token');
 
-        $this->remoteVettingContext->initialize($remoteVettingToken);
+        $this->remoteVettingContext->initialize($identityProviderName, $remoteVettingToken);
     }
 
     /**
@@ -111,11 +121,12 @@ class RemoteVettingService
      */
     public function getValidatingAttributes(ProcessId $processId, AttributeSet $localAttributes)
     {
-        // todo: filter on idp attribute mapping
         $localAttributes = $this->fromAttributeSet($localAttributes);
         $externalAttributes = $this->remoteVettingContext->getAttributes();
 
-        return $externalAttributes;
+        $identityProviderName = $this->remoteVettingContext->getIdentityProviderName();
+
+        return $this->attributeMapper->map($identityProviderName, $localAttributes, $externalAttributes);
     }
 
     /**

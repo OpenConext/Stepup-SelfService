@@ -33,7 +33,7 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('valid', CheckboxType::class, [
-            'label'    => 'VALID',
+            'label'    => 'valid',
             'required' => false,
         ]);
 
@@ -91,6 +91,7 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
         // Keep the name from the original object
         $viewData = new AttributeMatch(
             $viewData->getName(),
+            $viewData->getValue(),
             $forms['valid']->getData(),
             $forms['remarks']->getData()
         );

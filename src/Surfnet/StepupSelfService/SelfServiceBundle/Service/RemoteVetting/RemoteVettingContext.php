@@ -60,11 +60,12 @@ class RemoteVettingContext
     }
 
     /**
+     * @param string $identityProviderName
      * @param RemoteVettingTokenDto $token
      */
-    public function initialize(RemoteVettingTokenDto $token)
+    public function initialize($identityProviderName, RemoteVettingTokenDto $token)
     {
-        $process = $this->state->handleInitialise($this, $token);
+        $process = $this->state->handleInitialise($this, $identityProviderName, $token);
         $this->saveProcess($process);
     }
 
@@ -117,6 +118,15 @@ class RemoteVettingContext
     {
         $process = $this->loadProcess();
         return $this->state->getAttributes($process);
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentityProviderName()
+    {
+        $process = $this->loadProcess();
+        return $process->getIdentityProviderName();
     }
 
     /**

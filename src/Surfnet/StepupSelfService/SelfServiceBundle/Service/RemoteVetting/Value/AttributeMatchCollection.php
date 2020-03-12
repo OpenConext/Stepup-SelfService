@@ -34,7 +34,7 @@ class AttributeMatchCollection implements IteratorAggregate, ArrayAccess
     {
         $instance = new self();
         foreach ($attributeCollection as $attribute) {
-            $match = new AttributeMatch($attribute->getName(), false, '');
+            $match = new AttributeMatch($attribute->getName(), $attribute->getValue(), false, '');
             $instance->matches[$attribute->getName()] = $match;
         }
 

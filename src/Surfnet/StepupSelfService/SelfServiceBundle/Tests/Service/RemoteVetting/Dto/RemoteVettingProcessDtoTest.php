@@ -36,12 +36,12 @@ class RemoteVettingProcessDtoTest extends Unittest
     public function a_process_could_be_serialized_and_deserialized($name, $state, $expected)
     {
         $attributes = new AttributeListDto(['foo' => 'bar'], 'nameId');
-        $expected = sprintf('{"processId":"process id","token":"{\"identityId\":\"identityId\",\"secondFactorId\":\"secondFactorId\"}","state":%s,"attributes":"{\"nameId\":\"nameId\",\"attributes\":{\"foo\":\"bar\"}}"}', json_encode($expected));
+        $expected = sprintf('{"processId":"process id","token":"{\"identityId\":\"identityId\",\"secondFactorId\":\"secondFactorId\"}","state":%s,"attributes":"{\"nameId\":\"nameId\",\"attributes\":{\"foo\":\"bar\"}}","identityProvider":"IRMA"}', json_encode($expected));
 
         $processId = ProcessId::create('process id');
         $token = RemoteVettingTokenDto::create('identityId', 'secondFactorId');
 
-        $processDto = RemoteVettingProcessDto::create($processId, $token);
+        $processDto = RemoteVettingProcessDto::create($processId, $token, 'IRMA');
 
         $processDto = RemoteVettingProcessDto::updateState($processDto, $state);
 

@@ -12,6 +12,9 @@ parameters:
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
         certificateFile: "%saml_rv_publickey%"
         privateKey: "%saml_rv_privatekey%"
+        attributeMapping:
+          mail: mail
+          uid: uid
       - name: "ReadId"
         logo: "/images/remote-vetting/readid.png"
         description:
@@ -21,6 +24,9 @@ parameters:
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
         certificateFile: "%saml_rv_publickey%"
         privateKey: "%saml_rv_privatekey%"
+        attributeMapping:
+          mail: mail
+          uid: uid
       - name: "iDIN"
         logo: "/images/remote-vetting/idin.png"
         description:
@@ -30,6 +36,9 @@ parameters:
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
         certificateFile: '%saml_rv_publickey%'
         privateKey: '%saml_rv_privatekey%'
+        attributeMapping:
+          mail: mail
+          uid: uid
   remote_vetting_sp:
     entityId: https://selfservice.stepup.example.com/saml/metadata
     assertionConsumerUrl: https://selfservice.stepup.example.com/second-factor/acs
@@ -82,10 +91,14 @@ services:
     $remoteVettingService: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
     $logger: '@logger'
 
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper:
+    $identityProviderFactory: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory'
+
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService:
     public: true
     arguments:
       $remoteVettingContext: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext'
+      $attributeMapper: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper'
       $identityEncrypter: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter'
       $logger: '@logger'
 

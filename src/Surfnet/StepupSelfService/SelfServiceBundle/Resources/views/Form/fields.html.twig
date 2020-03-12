@@ -30,3 +30,16 @@
         {% endif %}
     {% endspaceless %}
 {% endblock anchor_row %}
+
+
+{# Show value in the remote vetting attribute match. #}
+{% block ss_remote_vet_assertion_widget %}
+    {% spaceless %}
+        <div class="text_widget">
+            <h3>{{ form.vars.data.name }}: '{{ form.vars.data.value|join(', ') }}'</h3>
+
+            {{ form_widget(form) }}
+
+        </div>
+    {% endspaceless %}
+{% endblock %}
