@@ -24,7 +24,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityData;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypterInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
@@ -43,7 +43,7 @@ class RemoteVettingService
      */
     private $remoteVettingContext;
     /**
-     * @var IdentityEncrypter
+     * @var IdentityEncrypterInterface
      */
     private $identityEncrypter;
     /**
@@ -54,7 +54,7 @@ class RemoteVettingService
     public function __construct(
         RemoteVettingContext $remoteVettingContext,
         AttributeMapper $attributeMapper,
-        IdentityEncrypter $identityEncrypter,
+        IdentityEncrypterInterface $identityEncrypter,
         LoggerInterface $logger
     ) {
         $this->remoteVettingContext = $remoteVettingContext;

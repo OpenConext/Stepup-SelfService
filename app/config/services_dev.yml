@@ -1,0 +1,15 @@
+# Use this service definition file to override services and parameters in the test environment.
+# For example to mock certain services, or override a password for test.
+
+services:
+  Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption\FakeIdentityEncrypter:
+    arguments:
+      $configuration: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
+      $writer: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityFilesystemWriter'
+
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService:
+    public: true
+    arguments:
+      $remoteVettingContext: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext'
+      $identityEncrypter: '@Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption\FakeIdentityEncrypter'
+      $logger: '@logger'

@@ -24,7 +24,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configurat
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionInterface;
 
-class IdentityEncrypter
+class IdentityEncrypter implements IdentityEncrypterInterface
 {
     /**
      * @var RemoteVettingConfiguration $configuration
