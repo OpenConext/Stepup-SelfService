@@ -40,7 +40,7 @@ class IdentityFilesystemWriter implements IdentityWriterInterface
     public function write($data)
     {
         $fileName = $this->createFileName($this->configuration->getLocation());
-        file_put_contents($fileName, $data);
+        file_put_contents($fileName, json_encode($data));
     }
 
     private function createFileName($location)
