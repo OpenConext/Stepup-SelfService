@@ -234,7 +234,7 @@ class RemoteVettingController extends Controller
                 $institution = $this->getIdentity()->institution;
                 $version = $this->applicationHelper->getApplicationVersion();
                 $remarks = $command->remarks;
-                $remoteVettingSource = 'foobar';
+                $remoteVettingSource = 'Todo, set the correct RV IdP!';
 
                 $attributeCollectionAggregate = new AttributeCollectionAggregate();
                 $attributeCollectionAggregate->add('identity-provider-attributes', $attributes);
@@ -251,7 +251,6 @@ class RemoteVettingController extends Controller
                 );
 
                 $this->remoteVettingService->done(ProcessId::create($processId), $identityData);
-                //$token = $this->remoteVettingService->done(ProcessId::create($processId), $command->matches, $command->remarks);
 
                 $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
 
