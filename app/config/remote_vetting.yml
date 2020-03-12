@@ -107,6 +107,7 @@ services:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper'
+      - '@self_service.service.application'
       - '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration:

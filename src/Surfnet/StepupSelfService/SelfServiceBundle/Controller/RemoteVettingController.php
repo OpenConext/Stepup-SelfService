@@ -26,9 +26,13 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingSt
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetSecondFactorType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetValidationType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ApplicationHelper;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityData;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionAggregate;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
@@ -54,6 +58,10 @@ class RemoteVettingController extends Controller
      */
     private $remoteVettingViewHelper;
     /**
+     * @var ApplicationHelper
+     */
+    private $applicationHelper;
+    /**
      * @var SamlCalloutHelper
      */
     private $samlCalloutHelper;
@@ -66,11 +74,13 @@ class RemoteVettingController extends Controller
         RemoteVettingService $remoteVettingService,
         RemoteVettingViewHelper $viewHelper,
         SamlCalloutHelper $samlCalloutHelper,
+        ApplicationHelper $applicationHelper,
         LoggerInterface $logger
     ) {
         $this->remoteVettingService = $remoteVettingService;
         $this->remoteVettingViewHelper = $viewHelper;
         $this->samlCalloutHelper = $samlCalloutHelper;
+        $this->applicationHelper = $applicationHelper;
         $this->logger = $logger;
     }
 
@@ -199,19 +209,20 @@ class RemoteVettingController extends Controller
 
         /** @var SamlToken $samlToken */
         $samlToken = $this->container->get('security.token_storage')->getToken();
-        $attributes = $samlToken->getAttribute(SamlToken::ATTRIBUTE_SET);
+
+        $attributes = AttributeListDto::fromAttributeSet($samlToken->getAttribute(SamlToken::ATTRIBUTE_SET));
 
         $command = new RemoteVetValidationCommand();
         $command->processId = $processId;
 
         try {
-            $attributes = $this->remoteVettingService->getValidatingAttributes(
+            $remoteVettingAttributes = $this->remoteVettingService->getValidatingAttributes(
                 ProcessId::create($processId),
                 $attributes
             );
 
             // todo: add command assertions
-            $command->matches = AttributeMatchCollection::fromAttributeCollection($attributes->getAttributeCollection());
+            $command->matches = AttributeMatchCollection::fromAttributeCollection($remoteVettingAttributes->getAttributeCollection());
 
             $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -219,7 +230,27 @@ class RemoteVettingController extends Controller
                 /** @var RemoteVetValidationCommand $command */
                 $command = $form->getData();
 
-                $this->remoteVettingService->done(ProcessId::create($processId), $command->matches, $command->remarks);
+                $nameId = $this->getIdentity()->nameId;
+                $institution = $this->getIdentity()->institution;
+                $version = $this->applicationHelper->getApplicationVersion();
+                $remarks = $command->remarks;
+                $remoteVettingSource = 'foobar';
+
+                $attributeCollectionAggregate = new AttributeCollectionAggregate();
+                $attributeCollectionAggregate->add('identity-provider-attributes', $attributes);
+                $attributeCollectionAggregate->add('remote-vetting-attributes', $remoteVettingAttributes);
+                $attributeCollectionAggregate->add('matching-results', $command->matches);
+
+                $identityData = new IdentityData(
+                    $attributeCollectionAggregate,
+                    $nameId,
+                    $version,
+                    $remarks,
+                    $institution,
+                    $remoteVettingSource
+                );
+
+                $this->remoteVettingService->done(ProcessId::create($processId), $identityData);
                 //$token = $this->remoteVettingService->done(ProcessId::create($processId), $command->matches, $command->remarks);
 
                 $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');

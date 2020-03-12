@@ -19,7 +19,12 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Dto;
 
 use PHPUnit_Framework_TestCase as UnitTest;
+use SAML2\XML\saml\NameID;
 use stdClass;
+use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeDefinition;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
+use Surfnet\SamlBundle\Tests\Unit\SAML2\Attribute\Mock\DummyAttributeSet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 
@@ -54,6 +59,27 @@ class AttributeListDtoTest extends UnitTest
         $this->expectException(AssertionFailedException::class);
         $this->expectExceptionMessage($expectedExceptionMessage);
         $attribute = new  AttributeListDto($attributes, $nameId);
+    }
+
+    public function test_can_be_created_from_attribute_set()
+    {
+        $attributes = [
+            new Attribute(new AttributeDefinition('firstName', 'urn:mace:firstName', 'urn:oid:0.2.1'), ['John']),
+            new Attribute(new AttributeDefinition('lastName', 'urn:mace:lastName', 'urn:oid:0.2.2'), ['Doe']),
+            new Attribute(new AttributeDefinition('isMemberOf', 'urn:mace:isMemberOf', 'urn:oid:0.2.7'), ['team-a', 'a-team']),
+            new Attribute(new AttributeDefinition('nameId', 'urn:mace:nameId', 'urn:oid:0.2.7'), [NameID::fromArray(['Value' => 'johndoe.example.com', 'Format' => 'unspecified'])]),
+        ];
+        $set = AttributeSet::create($attributes);
+
+        $dto = AttributeListDto::fromAttributeSet($set);
+
+        $convertedAttributes = $dto->getAttributeCollection()->getAttributes();
+
+        $this->assertCount(3, $dto->getAttributeCollection());
+        $this->assertEquals('John', $convertedAttributes['firstName']->getValue());
+        $this->assertEquals('Doe', $convertedAttributes['lastName']->getValue());
+        $this->assertEquals(['team-a', 'a-team'], $convertedAttributes['isMemberOf']->getValue());
+        $this->assertEquals('johndoe.example.com', $dto->getNameId());
     }
 
     public function provideValidAttributes()

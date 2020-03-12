@@ -19,7 +19,10 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
 use phpDocumentor\Reflection\Types\Self_;
+use SAML2\XML\saml\NameID;
 use Serializable;
+use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attribute;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollection;
@@ -50,6 +53,36 @@ class AttributeListDto implements Serializable, AttributeCollectionInterface
 
         $this->attributes = new AttributeCollection($attributes);
         $this->nameId = $nameId;
+    }
+
+    /**
+     * @param AttributeSet $attributeSet
+     * @return AttributeListDto
+     */
+    public static function fromAttributeSet(AttributeSet $attributeSet)
+    {
+        $attributes = [];
+        $nameID = '';
+        /** @var Attribute $attribute */
+        foreach ($attributeSet as $attribute) {
+            $name = $attribute->getAttributeDefinition()->getName();
+            $values = $attribute->getValue();
+            foreach ($values as $value) {
+                if ($value instanceof NameID) {
+                    $nameID = (string)$value->value;
+                    continue;
+                }
+
+                // Singular values wrapped in an array are extracted for convenience
+                if (is_array($values) && count($values) === 1) {
+                    $values = reset($values);
+                }
+
+                $attributes[$name] = $values;
+            }
+        }
+
+        return new self($attributes, $nameID);
     }
 
     /**

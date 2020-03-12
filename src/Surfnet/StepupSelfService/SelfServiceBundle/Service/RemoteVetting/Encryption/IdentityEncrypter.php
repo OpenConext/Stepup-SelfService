@@ -22,6 +22,7 @@ use RobRichards\XMLSecLibs\XMLSecurityKey;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionInterface;
 
 class IdentityEncrypter
 {
@@ -41,9 +42,8 @@ class IdentityEncrypter
         $this->writer = $writer;
     }
 
-    public function encrypt(AttributeListDto $identity)
+    public function encrypt($data)
     {
-        $data = $identity->serialize();
         $rsaPublicKey = $this->configuration->getPublicKey();
 
         if (!is_string($data) || !is_string($rsaPublicKey)) {
