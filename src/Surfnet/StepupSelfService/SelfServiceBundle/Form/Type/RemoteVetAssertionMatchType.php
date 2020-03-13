@@ -38,7 +38,7 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
         ]);
 
         $builder->add('remarks', TextareaType::class, [
-            'label'    => 'REMARKS',
+            'label'    => 'remarks',
             'required' => false,
         ]);
 
