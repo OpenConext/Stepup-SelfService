@@ -45,7 +45,6 @@ class AttributeCollection implements IteratorAggregate
         $this->attributes[] = $attribute;
     }
 
-
     public function getIterator()
     {
         return new ArrayIterator($this->attributes);

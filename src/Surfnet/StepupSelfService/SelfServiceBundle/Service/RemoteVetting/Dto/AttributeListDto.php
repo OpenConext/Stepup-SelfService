@@ -20,6 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
 use Serializable;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attribute;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollection;
 
 /**
@@ -68,7 +69,7 @@ class AttributeListDto implements Serializable
     }
 
     /**
-     * @return AttributeCollection
+     * @return AttributeCollection|Attribute[]
      */
     public function getAttributes()
     {
@@ -100,5 +101,13 @@ class AttributeListDto implements Serializable
 
         $this->nameId = $data['nameId'];
         $this->attributes = new AttributeCollection($data['attributes']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameId()
+    {
+        return $this->nameId;
     }
 }

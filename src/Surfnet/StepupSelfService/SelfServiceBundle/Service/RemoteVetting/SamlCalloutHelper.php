@@ -18,6 +18,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 
 use Psr\Log\LoggerInterface;
+use SAML2\Assertion;
 use SAML2\Constants;
 use SAML2\XML\saml\SubjectConfirmation;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
@@ -120,8 +121,7 @@ class SamlCalloutHelper
         // Create log DTO in order to store
         $attributeLogDto = new AttributeListDto(
             $assertion->getAttributes(),
-            (string)$subjectConfirmation->NameID,
-            $assertion->toXML()->ownerDocument->saveXML()
+            (string)$subjectConfirmation->NameID
         );
 
         // Handle validated state

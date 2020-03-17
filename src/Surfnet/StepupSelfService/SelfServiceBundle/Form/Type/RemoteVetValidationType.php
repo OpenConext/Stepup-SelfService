@@ -37,6 +37,7 @@ class RemoteVetValidationType extends AbstractType
             // these options are passed to each "email" type
             'entry_options' => [
                 'attr' => ['class' => 'assertion_match'],
+                'label' => false,
             ],
         ]);
 

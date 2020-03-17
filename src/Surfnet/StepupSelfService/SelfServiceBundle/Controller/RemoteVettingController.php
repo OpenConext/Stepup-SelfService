@@ -20,7 +20,6 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetValidationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingStateException;
@@ -131,10 +130,12 @@ class RemoteVettingController extends Controller
                 $command->secondFactor->id
             );
 
-            $this->remoteVettingService->start($token);
-
             // todo : implement idp selection
-            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest('IRMA'));
+            $identityProviderName = 'IRMA';
+
+            $this->remoteVettingService->start($identityProviderName, $token);
+
+            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest($identityProviderName));
         }
 
         return [
@@ -196,7 +197,7 @@ class RemoteVettingController extends Controller
         /** @var FlashBagInterface $flashBag */
         $flashBag = $this->get('session')->getFlashBag();
 
-        /** @var AttributeSet $attributes */
+        /** @var SamlToken $samlToken */
         $samlToken = $this->container->get('security.token_storage')->getToken();
         $attributes = $samlToken->getAttribute(SamlToken::ATTRIBUTE_SET);
 

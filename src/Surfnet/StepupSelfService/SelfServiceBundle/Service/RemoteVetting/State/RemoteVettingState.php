@@ -31,11 +31,12 @@ interface RemoteVettingState
     public function __construct();
 
     /**
+     * @param string $identityProviderName
      * @param RemoteVettingContext $context
      * @param RemoteVettingTokenDto $token
      * @return RemoteVettingProcessDto
      */
-    public function handleInitialise(RemoteVettingContext $context, RemoteVettingTokenDto $token);
+    public function handleInitialise(RemoteVettingContext $context, $identityProviderName, RemoteVettingTokenDto $token);
 
     /**
      * @param RemoteVettingContext $context

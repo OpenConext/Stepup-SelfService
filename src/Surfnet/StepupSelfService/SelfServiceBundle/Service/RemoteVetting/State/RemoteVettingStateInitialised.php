@@ -24,9 +24,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Proc
 
 class RemoteVettingStateInitialised extends AbstractRemoteVettingState implements RemoteVettingState
 {
-    public function handleInitialise(RemoteVettingContext $context, RemoteVettingTokenDto $token)
+    public function handleInitialise(RemoteVettingContext $context, $identityProviderName, RemoteVettingTokenDto $token)
     {
-        return RemoteVettingProcessDto::create(ProcessId::notSet(), $token);
+        return RemoteVettingProcessDto::create(ProcessId::notSet(), $token, $identityProviderName);
     }
 
     public function handleValidating(RemoteVettingContext $context, RemoteVettingProcessDto $process, ProcessId $id)
@@ -34,6 +34,6 @@ class RemoteVettingStateInitialised extends AbstractRemoteVettingState implement
         // set new process id on validation start
         $context->setState(new RemoteVettingStateValidating());
 
-        return RemoteVettingProcessDto::create($id, $process->getToken());
+        return RemoteVettingProcessDto::create($id, $process->getToken(), $process->getIdentityProviderName());
     }
 }

@@ -18,7 +18,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
 use Serializable;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State\RemoteVettingState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State\RemoteVettingStateInitialised;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
@@ -41,15 +41,21 @@ class RemoteVettingProcessDto implements Serializable
      * @var AttributeListDto
      */
     private $attributes;
+    /**
+     * @var string
+     */
+    private $identityProviderName;
 
     /**
      * @param ProcessId $processId
      * @param RemoteVettingTokenDto $token
+     * @param string $identityProviderName
      * @return RemoteVettingProcessDto
+     * @throws \Assert\AssertionFailedException
      */
-    public static function create(ProcessId $processId, RemoteVettingTokenDto $token)
+    public static function create(ProcessId $processId, RemoteVettingTokenDto $token, $identityProviderName)
     {
-        return new self($processId, $token, new RemoteVettingStateInitialised(), AttributeListDto::notSet());
+        return new self($processId, $token, new RemoteVettingStateInitialised(), AttributeListDto::notSet(), $identityProviderName);
     }
 
     /**
@@ -58,7 +64,13 @@ class RemoteVettingProcessDto implements Serializable
      */
     public static function deserialize($serialized)
     {
-        $instance = new self(ProcessId::notSet(), RemoteVettingTokenDto::notSet(), new RemoteVettingStateInitialised(), AttributeListDto::notSet());
+        $instance = new self(
+            ProcessId::notSet(),
+            RemoteVettingTokenDto::notSet(),
+            new RemoteVettingStateInitialised(),
+            AttributeListDto::notSet(),
+            ''
+        );
         $instance->unserialize($serialized);
         return $instance;
     }
@@ -70,7 +82,7 @@ class RemoteVettingProcessDto implements Serializable
      */
     public static function updateState(RemoteVettingProcessDto $process, RemoteVettingState $state)
     {
-        return new self($process->getProcessId(), $process->getToken(), $state, $process->getAttributes());
+        return new self($process->getProcessId(), $process->getToken(), $state, $process->getAttributes(), $process->getIdentityProviderName());
     }
 
     /**
@@ -78,13 +90,23 @@ class RemoteVettingProcessDto implements Serializable
      * @param RemoteVettingTokenDto $token
      * @param RemoteVettingState $state
      * @param AttributeListDto $attributes
+     * @param string $identityProviderName
+     * @throws \Assert\AssertionFailedException
      */
-    private function __construct(ProcessId $processId, RemoteVettingTokenDto $token, RemoteVettingState $state, AttributeListDto $attributes)
-    {
+    private function __construct(
+        ProcessId $processId,
+        RemoteVettingTokenDto $token,
+        RemoteVettingState $state,
+        AttributeListDto $attributes,
+        $identityProviderName
+    ) {
+        Assert::string($identityProviderName, 'The $identityProviderName in an RemoteVettingProcessDto must be a string value');
+
         $this->processId = $processId;
         $this->token = $token;
         $this->state = $state;
         $this->attributes = $attributes;
+        $this->identityProviderName = $identityProviderName;
     }
 
     /**
@@ -128,6 +150,14 @@ class RemoteVettingProcessDto implements Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getIdentityProviderName()
+    {
+        return $this->identityProviderName;
+    }
+
+    /**
      * @inheritDoc
      */
     public function serialize()
@@ -139,6 +169,7 @@ class RemoteVettingProcessDto implements Serializable
             'token' => $this->token->serialize(),
             'state' => $stateClass,
             'attributes' => $this->attributes->serialize(),
+            'identityProvider' => $this->identityProviderName,
         ]);
     }
 
@@ -155,5 +186,6 @@ class RemoteVettingProcessDto implements Serializable
         $this->token = RemoteVettingTokenDto::deserialize($data['token']);
         $this->state = $stateClass;
         $this->attributes = AttributeListDto::deserialize($data['attributes']);
+        $this->identityProviderName = $data['identityProvider'];
     }
 }

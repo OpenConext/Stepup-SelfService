@@ -34,7 +34,7 @@ abstract class AbstractRemoteVettingState
     {
     }
 
-    public function handleInitialise(RemoteVettingContext $context, RemoteVettingTokenDto $token)
+    public function handleInitialise(RemoteVettingContext $context, $identityProviderName, RemoteVettingTokenDto $token)
     {
         throw new InvalidRemoteVettingStateException('Unable to initialise the validation of a token');
     }

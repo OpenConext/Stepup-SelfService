@@ -17,6 +17,8 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
+
 class AttributeMatch
 {
     /**
@@ -31,17 +33,29 @@ class AttributeMatch
      * @var string
      */
     private $name = '';
+    /**
+     * @var string
+     */
+    private $value = '';
 
     /**
      * @param string $name
+     * @param string $value
      * @param bool $valid
      * @param string $remarks
+     * @throws \Assert\AssertionFailedException
      */
-    public function __construct($name, $valid, $remarks)
+    public function __construct($name, $value, $valid, $remarks)
     {
+        Assert::string($name, 'name should be string');
+        Assert::string($value, 'value should be string');
+        Assert::boolean($valid, 'valid should be boolean');
+        Assert::string($remarks, 'remarks should be string');
+
         $this->name = $name;
         $this->valid = $valid;
         $this->remarks = $remarks;
+        $this->value = $value;
     }
 
     /**
@@ -66,5 +80,13 @@ class AttributeMatch
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 }
