@@ -20,7 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
 use SAML2\XML\saml\NameID;
 use Serializable;
-use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
+use Surfnet\SamlBundle\SAML2\Attribute\Attribute as SAMLAttribute;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attribute;
@@ -61,7 +61,7 @@ class AttributeListDto implements Serializable, AttributeCollectionInterface
     {
         $attributes = [];
         $nameID = '';
-        /** @var Attribute $attribute */
+        /** @var SAMLAttribute $attribute */
         foreach ($attributeSet as $attribute) {
             $name = $attribute->getAttributeDefinition()->getName();
             $values = $attribute->getValue();
@@ -140,14 +140,6 @@ class AttributeListDto implements Serializable, AttributeCollectionInterface
             'nameId' => $this->nameId,
             'attributes' => $attributes,
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getNameId()
-    {
-        return $this->nameId;
     }
 
     /**

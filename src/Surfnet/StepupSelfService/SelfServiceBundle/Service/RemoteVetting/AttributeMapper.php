@@ -45,14 +45,14 @@ class AttributeMapper
         $mappedAttributes = [];
         $attributesToMap = [];
 
-        foreach ($localAttributes->getAttributes() as $attribute) {
+        foreach ($localAttributes->getAttributeCollection() as $attribute) {
             if (array_key_exists($attribute->getName(), $attributeMapping)) {
                 $attributesToMap[$attributeMapping[$attribute->getName()]] = $attribute->getName();
                 $mappedAttributes[$attribute->getName()] = null;
             }
         }
 
-        foreach ($externalAttributes->getAttributes() as $attribute) {
+        foreach ($externalAttributes->getAttributeCollection() as $attribute) {
             if (array_key_exists($attribute->getName(), $attributesToMap)) {
                 $mappedAttributes[$attributesToMap[$attribute->getName()]] = $attribute->getValue();
             }
