@@ -32,19 +32,16 @@ class Attribute implements JsonSerializable
 
     /**
      * @param string $name
-     * @param string|array $value
+     * @param string[] $value
      */
     public function __construct($name, $value)
     {
         Assert::string($name, 'The $name of an Attribute must be a scalar value');
+        Assert::isArray($value, 'The $value of an Attribute must be an array with strings');
+        Assert::allString($value, 'The $value of an Attribute must be an array with strings');
+
         $this->name = $name;
-        try {
-            Assert::scalar($value, 'The $value of an Attribute must be a scalar or array value');
-        } catch (AssertionFailedException $e) {
-            Assert::isArray($value, 'The $value of an Attribute must be a scalar or array value');
-            Assert::allScalar($value, 'The $value of an Attribute must be a scalar or array value');
-        }
-        $this->value = $value;
+        $this->value = array_values($value);
     }
 
     /**
@@ -56,7 +53,7 @@ class Attribute implements JsonSerializable
     }
 
     /**
-     * @return array|string
+     * @return string[]
      */
     public function getValue()
     {

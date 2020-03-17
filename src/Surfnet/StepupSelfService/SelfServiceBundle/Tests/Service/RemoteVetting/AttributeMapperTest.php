@@ -49,14 +49,14 @@ class AttributeMapperTest extends UnitTest
 
         $nameId = 'foo@bar.baz';
         $local = [
-            'foo1' => 'bar1',
-            'foo2' => 'bar2',
-            'foo3' => 'bar3',
+            'foo1' => ['bar1'],
+            'foo2' => ['bar2'],
+            'foo3' => ['bar3'],
         ];
         $external = [
-            'baz1' => 'foobar1',
-            'baz2' => 'foobar2',
-            'baz3' => 'foobar3',
+            'baz1' => ['foobar1'],
+            'baz2' => ['foobar2'],
+            'baz3' => ['foobar3'],
         ];
 
         $this->identityProviderFactory->shouldReceive('getAttributeMapping')
@@ -69,7 +69,7 @@ class AttributeMapperTest extends UnitTest
 
         $result = $mappedAttributes->serialize();
 
-        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo2":"foobar2","foo3":"foobar1"}}', $result);
+        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo2":["foobar2"],"foo3":["foobar1"]}}', $result);
     }
 
 
@@ -82,14 +82,14 @@ class AttributeMapperTest extends UnitTest
 
         $nameId = 'foo@bar.baz';
         $local = [
-            'foo1' => 'bar1',
-            'foo2' => 'bar2',
-            'foo3' => 'bar3',
+            'foo1' => ['bar1'],
+            'foo2' => ['bar2'],
+            'foo3' => ['bar3'],
         ];
         $external = [
-            'baz1' => 'foobar1',
-            'baz2' => 'foobar2',
-            'baz3' => 'foobar3',
+            'baz1' => ['foobar1'],
+            'baz2' => ['foobar2'],
+            'baz3' => ['foobar3'],
         ];
 
         $this->identityProviderFactory->shouldReceive('getAttributeMapping')
@@ -102,7 +102,7 @@ class AttributeMapperTest extends UnitTest
 
         $result = $mappedAttributes->serialize();
 
-        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo3":"foobar1"}}', $result);
+        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo3":["foobar1"]}}', $result);
     }
 
 
@@ -116,14 +116,14 @@ class AttributeMapperTest extends UnitTest
 
         $nameId = 'foo@bar.baz';
         $local = [
-            'foo1' => 'bar1',
-            'foo2' => 'bar2',
-            'foo3' => 'bar3',
+            'foo1' => ['bar1'],
+            'foo2' => ['bar2'],
+            'foo3' => ['bar3'],
         ];
         $external = [
-            'baz1' => 'foobar1',
-            'baz2' => 'foobar2',
-            'baz3' => 'foobar3',
+            'baz1' => ['foobar1'],
+            'baz2' => ['foobar2'],
+            'baz3' => ['foobar3'],
         ];
 
         $this->identityProviderFactory->shouldReceive('getAttributeMapping')
@@ -136,6 +136,6 @@ class AttributeMapperTest extends UnitTest
 
         $result = $mappedAttributes->serialize();
 
-        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo3":"foobar1"}}', $result);
+        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo3":["foobar1"]}}', $result);
     }
 }

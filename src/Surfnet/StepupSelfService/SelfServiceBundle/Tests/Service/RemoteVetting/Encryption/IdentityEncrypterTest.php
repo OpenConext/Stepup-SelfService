@@ -133,9 +133,8 @@ RSA_PUBLIC_KEY;
             });
 
         $nameId = 'a-random-nameid@something.else';
-        $raw = 'the raw message we could incorporate';
 
-        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => ['johndoe@example.com'], 'firstName' => ['John']], $nameId);
         $this->encrypter->encrypt($data->serialize());
 
         // Assert result
@@ -162,7 +161,7 @@ RSA_PUBLIC_KEY;
         $nameId = 'a-random-nameid@something.else';
         $raw = $this->generateRandomString(5000);
 
-        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => ['johndoe@example.com'], 'firstName' => ['John']], $nameId, $raw);
         $this->encrypter->encrypt($data->serialize());
 
         // Assert result
@@ -181,7 +180,7 @@ RSA_PUBLIC_KEY;
 
         $nameId = 'a-random-nameid@something.else';
         $raw = 'the raw message we could incorporate';
-        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => ['johndoe@example.com'], 'firstName' => ['John']], $nameId, $raw);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid input was provided to the encrypt method');
@@ -200,7 +199,7 @@ RSA_PUBLIC_KEY;
         $nameId = 'a-random-nameid@something.else';
         $raw = 'the raw message we could incorporate';
 
-        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => ['johndoe@example.com'], 'firstName' => ['John']], $nameId, $raw);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Reading RSA public key failed');

@@ -93,7 +93,7 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
             $viewData->getName(),
             $viewData->getValue(),
             $forms['valid']->getData(),
-            $forms['remarks']->getData()
+            (string)$forms['remarks']->getData()
         );
     }
 }
