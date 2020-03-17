@@ -18,7 +18,6 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
-use phpDocumentor\Reflection\Types\Self_;
 use SAML2\XML\saml\NameID;
 use Serializable;
 use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
@@ -27,7 +26,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attribute;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionInterface;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 
 /**
  * The identity is a set of SAML Response assertion attributes
