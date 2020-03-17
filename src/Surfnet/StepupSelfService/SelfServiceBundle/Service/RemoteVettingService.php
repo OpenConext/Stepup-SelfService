@@ -19,13 +19,14 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
-use SAML2\Assertion;
 use SAML2\XML\saml\NameID;
-use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
+use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityData;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypterInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
@@ -42,7 +43,7 @@ class RemoteVettingService
      */
     private $remoteVettingContext;
     /**
-     * @var IdentityEncrypter
+     * @var IdentityEncrypterInterface
      */
     private $identityEncrypter;
     /**
@@ -53,7 +54,7 @@ class RemoteVettingService
     public function __construct(
         RemoteVettingContext $remoteVettingContext,
         AttributeMapper $attributeMapper,
-        IdentityEncrypter $identityEncrypter,
+        IdentityEncrypterInterface $identityEncrypter,
         LoggerInterface $logger
     ) {
         $this->remoteVettingContext = $remoteVettingContext;
@@ -96,60 +97,30 @@ class RemoteVettingService
 
     /**
      * @param ProcessId $processId
-     * @param AttributeMatchCollection $matches
-     * @param string $remarks
+     * @param IdentityData $identityData
      * @return RemoteVettingTokenDto
      */
-    public function done(ProcessId $processId, AttributeMatchCollection $matches, $remarks)
+    public function done(ProcessId $processId, IdentityData $identityData)
     {
-        $this->logger->info('Finish the remote vetting process for the current process');
-
-        // todo: make loging better
-        // todo: store remarks
-        // todo: store AttributeMatchCollection
-        // todo: store Attributes
-
         $this->remoteVettingContext->done($processId);
+        $this->logger->info('Saving the encrypted assertion to the filesystem');
+        $this->identityEncrypter->encrypt($identityData->serialize());
+
+        $this->logger->info('Finished the remote vetting process for the current process');
 
         return $this->remoteVettingContext->getValidatedToken();
     }
 
     /**
      * @param ProcessId $processId
-     * @param AttributeSet $localAttributes
+     * @param AttributeListDto $localAttributes
      * @return AttributeListDto
      */
-    public function getValidatingAttributes(ProcessId $processId, AttributeSet $localAttributes)
+    public function getValidatingAttributes(ProcessId $processId, AttributeListDto $localAttributes)
     {
-        $localAttributes = $this->fromAttributeSet($localAttributes);
         $externalAttributes = $this->remoteVettingContext->getAttributes();
-
         $identityProviderName = $this->remoteVettingContext->getIdentityProviderName();
 
         return $this->attributeMapper->map($identityProviderName, $localAttributes, $externalAttributes);
-    }
-
-    /**
-     * @param AttributeSet $attributeSet
-     * @return AttributeListDto
-     */
-    private function fromAttributeSet(AttributeSet $attributeSet)
-    {
-        $attributes = [];
-        $nameID = '';
-        /** @var \Surfnet\SamlBundle\SAML2\Attribute\Attribute $attribute */
-        foreach ($attributeSet as $attribute) {
-            $name = $attribute->getAttributeDefinition()->getName();
-            $values = $attribute->getValue();
-            foreach ($values as $value) {
-                if ($value instanceof NameID) {
-                    $nameID = (string)$value->value;
-                    continue;
-                }
-                $attributes[$name] = $values;
-            }
-        }
-
-        return new AttributeListDto($attributes, $nameID);
     }
 }

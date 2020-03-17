@@ -16,27 +16,14 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value;
 
-class RemoteVettingConfiguration
+interface AttributeCollectionInterface
 {
-    private $publicKey;
-
-    private $location;
-
-    public function __construct($configurationSettings)
-    {
-        $this->publicKey = $configurationSettings['encryption_public_key'];
-        $this->location = $configurationSettings['storage_location'];
-    }
-
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    public function getPublicKey()
-    {
-        return $this->publicKey;
-    }
+    /**
+     * Should return the data of the collection in a JSON serializable manner
+     *
+     * @return array
+     */
+    public function getAttributes();
 }

@@ -18,10 +18,14 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto;
 
+use SAML2\XML\saml\NameID;
 use Serializable;
+use Surfnet\SamlBundle\SAML2\Attribute\Attribute as SAMLAttribute;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attribute;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionInterface;
 
 /**
  * The identity is a set of SAML Response assertion attributes
@@ -29,7 +33,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attr
  * Which of the attributes are considered identity data is to be decided by the
  * user of this DTO.
  */
-class AttributeListDto implements Serializable
+class AttributeListDto implements Serializable, AttributeCollectionInterface
 {
     /**
      * @var AttributeCollection
@@ -47,6 +51,36 @@ class AttributeListDto implements Serializable
 
         $this->attributes = new AttributeCollection($attributes);
         $this->nameId = $nameId;
+    }
+
+    /**
+     * @param AttributeSet $attributeSet
+     * @return AttributeListDto
+     */
+    public static function fromAttributeSet(AttributeSet $attributeSet)
+    {
+        $attributes = [];
+        $nameID = '';
+        /** @var SAMLAttribute $attribute */
+        foreach ($attributeSet as $attribute) {
+            $name = $attribute->getAttributeDefinition()->getName();
+            $values = $attribute->getValue();
+            foreach ($values as $value) {
+                if ($value instanceof NameID) {
+                    $nameID = (string)$value->value;
+                    continue;
+                }
+
+                // Singular values wrapped in an array are extracted for convenience
+                if (is_array($values) && count($values) === 1) {
+                    $values = reset($values);
+                }
+
+                $attributes[$name] = $values;
+            }
+        }
+
+        return new self($attributes, $nameID);
     }
 
     /**
@@ -71,7 +105,7 @@ class AttributeListDto implements Serializable
     /**
      * @return AttributeCollection|Attribute[]
      */
-    public function getAttributes()
+    public function getAttributeCollection()
     {
         return $this->attributes;
     }
@@ -81,15 +115,7 @@ class AttributeListDto implements Serializable
      */
     public function serialize()
     {
-        $attributes = [];
-        foreach ($this->attributes as $item) {
-            $attributes[$item->getName()] = $item->getValue();
-        }
-
-        return json_encode([
-            'nameId' => $this->nameId,
-            'attributes' => $attributes,
-        ]);
+        return json_encode($this->getAttributes());
     }
 
     /**
@@ -101,6 +127,19 @@ class AttributeListDto implements Serializable
 
         $this->nameId = $data['nameId'];
         $this->attributes = new AttributeCollection($data['attributes']);
+    }
+
+    public function getAttributes()
+    {
+        $attributes = [];
+        foreach ($this->attributes as $item) {
+            $attributes[$item->getName()] = $item->getValue();
+        }
+
+        return [
+            'nameId' => $this->nameId,
+            'attributes' => $attributes,
+        ];
     }
 
     /**

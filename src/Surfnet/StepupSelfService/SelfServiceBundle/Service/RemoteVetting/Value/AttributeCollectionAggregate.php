@@ -23,38 +23,32 @@ use IteratorAggregate;
 use JsonSerializable;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 
-class AttributeCollection implements IteratorAggregate, AttributeCollectionInterface
+class AttributeCollectionAggregate implements AttributeCollectionInterface
 {
     /**
-     * @var Attribute[]
+     * @var AttributeCollectionInterface[]
      */
-    private $attributes = [];
+    private $attributeCollections = [];
 
-    public function __construct($attributes)
+    public function add($name, AttributeCollectionInterface $collection)
     {
-        Assert::isArray($attributes, 'The $attributes of an AttributeCollection must be an array value');
-
-        foreach ($attributes as $attributeName => $attributeValue) {
-            $this->add(new Attribute($attributeName, $attributeValue));
-        }
-    }
-
-    private function add(Attribute $attribute)
-    {
-        // Attributes are not
-        $this->attributes[] = $attribute;
-    }
-
-    public function getIterator()
-    {
-        return new ArrayIterator($this->attributes);
+        Assert::string(
+            $name,
+            'The name of the attribute collection should not be null, and should identify the purpose of the collection'
+        );
+        Assert::keyNotExists(
+            $this->attributeCollections,
+            $name,
+            sprintf('The collection named: "%s" is already present in the collection', $name)
+        );
+        $this->attributeCollections[$name] = $collection;
     }
 
     public function getAttributes()
     {
         $output = [];
-        foreach ($this->attributes as $attribute) {
-            $output[$attribute->getName()] = $attribute;
+        foreach ($this->attributeCollections as $name => $collection) {
+            $output[$name] = $collection->getAttributes();
         }
         return $output;
     }

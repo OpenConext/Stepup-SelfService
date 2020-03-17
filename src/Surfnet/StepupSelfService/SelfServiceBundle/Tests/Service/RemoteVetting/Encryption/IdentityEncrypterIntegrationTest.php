@@ -108,7 +108,7 @@ KEY;
         $raw = 'the raw message we could incorporate';
 
         $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
-        $this->encrypter->encrypt($data);
+        $this->encrypter->encrypt($data->serialize());
 
         $writtenData = $this->writer->getData();
 

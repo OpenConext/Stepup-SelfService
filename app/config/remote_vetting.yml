@@ -78,7 +78,6 @@ services:
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration:
     arguments:
       $configurationSettings: '%identity_encryption_configuration%'
-      $version: '%asset_version%'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext:
     arguments:
@@ -108,6 +107,7 @@ services:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper'
+      - '@self_service.service.application'
       - '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration:

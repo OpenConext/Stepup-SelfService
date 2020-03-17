@@ -98,6 +98,11 @@ services:
         arguments: ['self_service.session.u2f_registration']
         calls: [ [setName, ['self_service.session.u2f_registration']] ]
 
+    self_service.service.application:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\ApplicationHelper
+        arguments:
+            $kernelRootDir: "%kernel.root_dir%"
+
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
         arguments:
