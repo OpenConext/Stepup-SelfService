@@ -99,6 +99,7 @@ services:
       $remoteVettingContext: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext'
       $attributeMapper: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper'
       $identityEncrypter: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter'
+      $applicationHelper: '@self_service.service.application'
       $logger: '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Controller\RemoteVettingController:
@@ -107,7 +108,6 @@ services:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper'
-      - '@self_service.service.application'
       - '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration:

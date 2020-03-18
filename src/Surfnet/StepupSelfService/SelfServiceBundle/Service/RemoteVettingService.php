@@ -19,18 +19,16 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
-use SAML2\XML\saml\NameID;
-use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityData;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypterInterface;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionInterface;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionAggregate;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
 
 class RemoteVettingService
 {
@@ -50,17 +48,24 @@ class RemoteVettingService
      * @var AttributeMapper
      */
     private $attributeMapper;
+    /**
+     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\ApplicationHelper
+     */
+    private $applicationHelper;
+
 
     public function __construct(
         RemoteVettingContext $remoteVettingContext,
         AttributeMapper $attributeMapper,
         IdentityEncrypterInterface $identityEncrypter,
+        ApplicationHelper $applicationHelper,
         LoggerInterface $logger
     ) {
         $this->remoteVettingContext = $remoteVettingContext;
         $this->logger = $logger;
         $this->identityEncrypter = $identityEncrypter;
         $this->attributeMapper = $attributeMapper;
+        $this->applicationHelper = $applicationHelper;
     }
 
     /**
@@ -97,13 +102,23 @@ class RemoteVettingService
 
     /**
      * @param ProcessId $processId
-     * @param IdentityData $identityData
+     * @param Identity $identity
+     * @param AttributeListDto $localAttributes
+     * @param AttributeMatchCollection $attributeMatches
+     * @param string $remarks
      * @return RemoteVettingTokenDto
      */
-    public function done(ProcessId $processId, IdentityData $identityData)
-    {
+    public function done(
+        ProcessId $processId,
+        Identity $identity,
+        AttributeListDto $localAttributes,
+        AttributeMatchCollection $attributeMatches,
+        $remarks
+    ) {
         $this->remoteVettingContext->done($processId);
         $this->logger->info('Saving the encrypted assertion to the filesystem');
+
+        $identityData = $this->aggregateIdentityData($identity, $localAttributes, $attributeMatches, $remarks);
         $this->identityEncrypter->encrypt($identityData->serialize());
 
         $this->logger->info('Finished the remote vetting process for the current process');
@@ -112,15 +127,48 @@ class RemoteVettingService
     }
 
     /**
-     * @param ProcessId $processId
      * @param AttributeListDto $localAttributes
      * @return AttributeListDto
      */
-    public function getValidatingAttributes(ProcessId $processId, AttributeListDto $localAttributes)
+    public function getValidatingAttributes(AttributeListDto $localAttributes)
     {
         $externalAttributes = $this->remoteVettingContext->getAttributes();
         $identityProviderName = $this->remoteVettingContext->getIdentityProviderName();
 
         return $this->attributeMapper->map($identityProviderName, $localAttributes, $externalAttributes);
+    }
+
+    /**
+     * @param Identity $identity
+     * @param AttributeListDto $localAttributes
+     * @param AttributeMatchCollection $attributeMatches
+     * @param string $remarks
+     * @return IdentityData
+     */
+    private function aggregateIdentityData(
+        Identity $identity,
+        AttributeListDto $localAttributes,
+        AttributeMatchCollection $attributeMatches,
+        $remarks
+    ) {
+        $nameId = $identity->nameId;
+        $institution = $identity->institution;
+        $version = $this->applicationHelper->getApplicationVersion();
+        $remarks = (string)$remarks;
+        $remoteVettingSource = $this->remoteVettingContext->getIdentityProviderName();
+
+        $attributeCollectionAggregate = new AttributeCollectionAggregate();
+        $attributeCollectionAggregate->add('identity-provider-attributes', $localAttributes);
+        $attributeCollectionAggregate->add('remote-vetting-attributes', $this->remoteVettingContext->getAttributes());
+        $attributeCollectionAggregate->add('matching-results', $attributeMatches);
+
+        return new IdentityData(
+            $attributeCollectionAggregate,
+            $nameId,
+            $version,
+            $remarks,
+            $institution,
+            $remoteVettingSource
+        );
     }
 }

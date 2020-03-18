@@ -31,4 +31,9 @@ class RemoteVettingStateDone extends AbstractRemoteVettingState implements Remot
     {
         return $process->getToken();
     }
+
+    public function getAttributes(RemoteVettingProcessDto $process)
+    {
+        return $process->getAttributes();
+    }
 }
