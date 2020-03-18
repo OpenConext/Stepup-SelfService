@@ -10,7 +10,7 @@
 
     {{ form(form) }}
 
-    <form action="{{ url('ss_second_factor_remote_vetting_idps', {'secondFactorId': secondFactor.id}) }}" method="get">
+    <form action="{{ url('ss_second_factor_remote_vetting_types', {'secondFactorId': secondFactor.id}) }}" method="get">
         <button class="btn btn-danger">Back</button>
     </form>
 {% endblock %}

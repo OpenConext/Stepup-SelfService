@@ -29,7 +29,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\Sa
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\ApplicationHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
@@ -52,10 +51,6 @@ class RemoteVettingController extends Controller
      */
     private $remoteVettingService;
     /**
-     * @var RemoteVettingViewHelper
-     */
-    private $remoteVettingViewHelper;
-    /**
      * @var SamlCalloutHelper
      */
     private $samlCalloutHelper;
@@ -66,27 +61,12 @@ class RemoteVettingController extends Controller
 
     public function __construct(
         RemoteVettingService $remoteVettingService,
-        RemoteVettingViewHelper $viewHelper,
         SamlCalloutHelper $samlCalloutHelper,
         LoggerInterface $logger
     ) {
         $this->remoteVettingService = $remoteVettingService;
-        $this->remoteVettingViewHelper = $viewHelper;
         $this->samlCalloutHelper = $samlCalloutHelper;
         $this->logger = $logger;
-    }
-
-    /**
-     * @Template
-     * @param string $secondFactorId
-     */
-    public function displayRemoteVettingIdPsAction($secondFactorId)
-    {
-        return [
-            'identityProviders' => $this->remoteVettingViewHelper->getIdentityProviders(),
-            'verifyEmail' => $this->emailVerificationIsRequired(),
-            'secondFactorId' => $secondFactorId,
-        ];
     }
 
     /**

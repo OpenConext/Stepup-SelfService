@@ -15,20 +15,16 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <p>{{ 'ss.registration.vetting_type.description.vetting'|trans }}</p>
+        </div>
+    </div>
+
     <div class="row remote-vetting">
 
-        <div class="col-xs-12 col-md-4">
-            <div class="thumbnail remote-vetting-selector">
-                <i class="fa fa-globe"></i>
-                <h3>{{ 'ss.registration.vetting_type.title.remote_vetting'|trans }}</h3>
-                <p>{{ 'ss.registration.vetting_type.description.remote_vetting'|trans }}</p>
-                <form action="{{ url('ss_second_factor_remote_vetting_idps', {'secondFactorId': secondFactorId}) }}" method="get">
-                <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.remote_vetting'|trans }}</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-3">
             <div class="thumbnail remote-vetting-selector">
                 <i class="fa fa-university"></i>
                 <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
@@ -38,6 +34,21 @@
                 </form>
             </div>
         </div>
+
+        {% for identityProvider in identityProviders %}
+            <div class="col-xs-12 col-md-3">
+                <div class="thumbnail remote-vetting-selector">
+                    <img src="{{ identityProvider.logo }}" alt="Logo of {{ identityProvider.name }}">
+                    <h3>{{ identityProvider.name }}</h3>
+                    <p>
+                        {{ identityProvider.description(app.request.locale) }}
+                    </p>
+                    <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                        <button type="submit" class="btn btn-primary">Continue</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
 
     </div>
 {% endblock %}
