@@ -158,8 +158,8 @@ class RemoteVettingService
         $remoteVettingSource = $this->remoteVettingContext->getIdentityProviderName();
 
         $attributeCollectionAggregate = new AttributeCollectionAggregate();
-        $attributeCollectionAggregate->add('identity-provider-attributes', $localAttributes);
-        $attributeCollectionAggregate->add('remote-vetting-attributes', $this->remoteVettingContext->getAttributes());
+        $attributeCollectionAggregate->add('local-attributes', $localAttributes);
+        $attributeCollectionAggregate->add('remote-attributes', $this->remoteVettingContext->getAttributes());
         $attributeCollectionAggregate->add('matching-results', $attributeMatches);
 
         return new IdentityData(

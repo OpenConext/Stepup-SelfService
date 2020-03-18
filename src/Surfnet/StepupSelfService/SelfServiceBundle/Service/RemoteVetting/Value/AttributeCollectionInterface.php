@@ -18,12 +18,13 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+
 interface AttributeCollectionInterface
 {
     /**
      * Should return the data of the collection in a JSON serializable manner
-     *
-     * @return array
+     * @return AttributeListDto[]
      */
     public function getAttributes();
 }
