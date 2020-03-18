@@ -121,10 +121,9 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->postForm($crawler, 'success');
 
         // Test if on manual matching form
-        $c = $this->client->getResponse()->getContent();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
-        $this->assertContains('Controleer informatie', $this->client->getResponse()->getContent());
+        $this->assertContains('Validate information', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -145,7 +144,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         // Test if on sp acs
         //$this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
         $this->assertEquals('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
-        $this->assertContains('De identiteitsinformatie kon niet worden gevalideerd', $this->client->getResponse()->getContent());
+        $this->assertContains('Unable to validate the information', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -166,7 +165,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         // Test if on sp acs
         //$this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
         $this->assertEquals('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
-        $this->assertContains('De identiteitsinformatie kon niet worden gevalideerd', $this->client->getResponse()->getContent());
+        $this->assertContains('Unable to validate the information', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -272,7 +271,7 @@ class MockRemoteVetControllerTest extends WebTestCase
             'institution' => 'institution',
             'email' => 'name@institution.tld',
             'common_name' => 'Common Name',
-            'preferred_locale' => 'nl_NL',
+            'preferred_locale' => 'en_GB',
         ]);
 
         $token = new SamlToken(['ROLE_USER']);
