@@ -213,7 +213,6 @@ class RemoteVettingController extends Controller
         $attributes = AttributeListDto::fromAttributeSet($samlToken->getAttribute(SamlToken::ATTRIBUTE_SET));
 
         $command = new RemoteVetValidationCommand();
-        $command->processId = $processId;
 
         try {
             $remoteVettingAttributes = $this->remoteVettingService->getValidatingAttributes(
@@ -233,7 +232,7 @@ class RemoteVettingController extends Controller
                 $nameId = $this->getIdentity()->nameId;
                 $institution = $this->getIdentity()->institution;
                 $version = $this->applicationHelper->getApplicationVersion();
-                $remarks = $command->remarks;
+                $remarks = (string)$command->remarks;
                 $remoteVettingSource = 'Todo, set the correct RV IdP!';
 
                 $attributeCollectionAggregate = new AttributeCollectionAggregate();

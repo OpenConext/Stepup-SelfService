@@ -76,17 +76,18 @@ class AttributeListDtoTest extends UnitTest
         $convertedAttributes = $dto->getAttributeCollection()->getAttributes();
 
         $this->assertCount(3, $dto->getAttributeCollection());
-        $this->assertEquals('John', $convertedAttributes['firstName']->getValue());
-        $this->assertEquals('Doe', $convertedAttributes['lastName']->getValue());
+        $this->assertEquals(['John'], $convertedAttributes['firstName']->getValue());
+        $this->assertEquals(['Doe'], $convertedAttributes['lastName']->getValue());
         $this->assertEquals(['team-a', 'a-team'], $convertedAttributes['isMemberOf']->getValue());
         $this->assertEquals('johndoe.example.com', $dto->getNameId());
     }
 
     public function provideValidAttributes()
     {
-        yield ['foobar', ['foo' => 'bar'], '{"nameId":"foobar","attributes":{"foo":"bar"}}'];
-        yield ['foobar', ['foo' => 'bar', 'foo2' => 2], '{"nameId":"foobar","attributes":{"foo":"bar","foo2":2}}'];
-        yield ['foobar', ['foo' => 'bar', 'foo2' => 'bar2', 'foo3' => 'bar3'], '{"nameId":"foobar","attributes":{"foo":"bar","foo2":"bar2","foo3":"bar3"}}'];
+        yield ['foobar', ['foo' => ['bar']], '{"nameId":"foobar","attributes":{"foo":["bar"]}}'];
+        yield ['foobar', ['foo' => ['bar', 'foo2' => '2']], '{"nameId":"foobar","attributes":{"foo":["bar","2"]}}'];
+        yield ['foobar', ['foo' => ['bar', 'foo2' => 'bar2', 'foo3' => 'bar3']], '{"nameId":"foobar","attributes":{"foo":["bar","bar2","bar3"]}}'];
+        yield ['foobar', ['foo' => ['bar'], 'foo2' => ['bar', 'bar2']], '{"nameId":"foobar","attributes":{"foo":["bar"],"foo2":["bar","bar2"]}}'];
     }
 
     public function provideInvalidAttributes()
@@ -96,6 +97,11 @@ class AttributeListDtoTest extends UnitTest
         yield ['foobar', [['foobar']], 'The $name of an Attribute must be a scalar value'];
         yield ['foobar', [['foo'=>'bar']], 'The $name of an Attribute must be a scalar value'];
         yield ['foobar', ['valid', new stdClass()], 'The $name of an Attribute must be a scalar value'];
+
+        yield ['foobar', ["foobar" => 0], 'The $value of an Attribute must be an array with strings'];
+        yield ['foobar', ["foobar" => "0"], 'The $value of an Attribute must be an array with strings'];
+        yield ['foobar', ["foobar" => [0]], 'The $value of an Attribute must be an array with strings'];
+        yield ['foobar', ["foobar" => [[]]], 'The $value of an Attribute must be an array with strings'];
 
         yield [1, ['foobar'], 'The $nameId in an AttributeListDto must be a string value'];
         yield [false, ['foobar'], 'The $nameId in an AttributeListDto must be a string value'];

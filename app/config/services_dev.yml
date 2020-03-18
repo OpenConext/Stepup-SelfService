@@ -3,7 +3,7 @@
 
 services:
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter:
+    class: \Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption\FakeIdentityEncrypter
     arguments:
       $configuration: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
       $writer: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityFilesystemWriter'
-

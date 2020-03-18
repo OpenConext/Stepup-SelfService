@@ -41,7 +41,7 @@ class AttributeMatch implements JsonSerializable
 
     /**
      * @param string $name
-     * @param string $value
+     * @param string[] $value
      * @param bool $valid
      * @param string $remarks
      * @throws \Assert\AssertionFailedException
@@ -49,7 +49,8 @@ class AttributeMatch implements JsonSerializable
     public function __construct($name, $value, $valid, $remarks)
     {
         Assert::string($name, 'name should be string');
-        Assert::string($value, 'value should be string');
+        Assert::isArray($value, 'value should be an array');
+        Assert::allString($value, 'values should be string');
         Assert::boolean($valid, 'valid should be boolean');
         Assert::string($remarks, 'remarks should be string');
 
@@ -84,7 +85,7 @@ class AttributeMatch implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return string[]
      */
     public function getValue()
     {

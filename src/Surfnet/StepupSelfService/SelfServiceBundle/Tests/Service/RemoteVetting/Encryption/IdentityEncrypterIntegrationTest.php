@@ -105,9 +105,8 @@ KEY;
     public function test_happy_flow()
     {
         $nameId = 'a-random-nameid@something.else';
-        $raw = 'the raw message we could incorporate';
 
-        $data = new AttributeListDto(['email' => 'johndoe@example.com', 'firstName' => 'John'], $nameId, $raw);
+        $data = new AttributeListDto(['email' => ['johndoe@example.com'], 'firstName' => ['John']], $nameId);
         $this->encrypter->encrypt($data->serialize());
 
         $writtenData = $this->writer->getData();
@@ -117,7 +116,7 @@ KEY;
 
         $serialized = json_decode($result, true);
 
-        $this->assertEquals('johndoe@example.com', $serialized['attributes']['email']);
-        $this->assertEquals('John', $serialized['attributes']['firstName']);
+        $this->assertEquals(['johndoe@example.com'], $serialized['attributes']['email']);
+        $this->assertEquals(['John'], $serialized['attributes']['firstName']);
     }
 }

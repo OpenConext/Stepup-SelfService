@@ -71,11 +71,6 @@ class AttributeListDto implements Serializable, AttributeCollectionInterface
                     continue;
                 }
 
-                // Singular values wrapped in an array are extracted for convenience
-                if (is_array($values) && count($values) === 1) {
-                    $values = reset($values);
-                }
-
                 $attributes[$name] = $values;
             }
         }

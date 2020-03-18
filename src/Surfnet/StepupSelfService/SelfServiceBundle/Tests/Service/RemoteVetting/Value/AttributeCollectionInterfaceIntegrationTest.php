@@ -32,13 +32,13 @@ class AttributeCollectionInterfaceIntegrationTest extends IntegrationTest
     public function test_correct_integration_of_collections()
     {
         $attributes = [
-            'name' => 'John',
-            'lastName' => 'Doe',
-            'shacHomeOrganization' => 'institution-a.example.com'
+            'name' => ['John'],
+            'lastName' => ['Doe'],
+            'shacHomeOrganization' => ['institution-a.example.com']
         ];
 
         $institutionAttributes = new AttributeListDto($attributes, 'johndoe.institution-a.example.com');
-        $remoteVettingAttributes = new AttributeListDto(array_merge($attributes, ['documentNumber' => 1234567890]), 'identifier-at-rv-idp');
+        $remoteVettingAttributes = new AttributeListDto(array_merge($attributes, ['documentNumber' => ["1234567890"]]), 'identifier-at-rv-idp');
 
         $attributeCollection = new AttributeCollection($attributes);
         $attributeMatches = AttributeMatchCollection::fromAttributeCollection($attributeCollection);
