@@ -69,14 +69,14 @@ class RemoteVettingService
     }
 
     /**
-     * @param string $identityProviderName
+     * @param string $identityProviderSlug
      * @param RemoteVettingTokenDto $remoteVettingToken
      */
-    public function start($identityProviderName, RemoteVettingTokenDto $remoteVettingToken)
+    public function start($identityProviderSlug, RemoteVettingTokenDto $remoteVettingToken)
     {
         $this->logger->info('Starting an remote vetting process for the provided token');
 
-        $this->remoteVettingContext->initialize($identityProviderName, $remoteVettingToken);
+        $this->remoteVettingContext->initialize($identityProviderSlug, $remoteVettingToken);
     }
 
     /**
@@ -133,9 +133,17 @@ class RemoteVettingService
     public function getAttributeMatchCollection(AttributeListDto $localAttributes)
     {
         $externalAttributes = $this->remoteVettingContext->getAttributes();
-        $identityProviderName = $this->remoteVettingContext->getIdentityProviderName();
+        $identityProviderSlug = $this->remoteVettingContext->getIdentityProviderSlug();
 
-        return $this->attributeMapper->map($identityProviderName, $localAttributes, $externalAttributes);
+        return $this->attributeMapper->map($identityProviderSlug, $localAttributes, $externalAttributes);
+    }
+
+    /**
+     * @return string
+     */
+    public function getActiveIdentityProviderSlug()
+    {
+        return $this->remoteVettingContext->getIdentityProviderSlug();
     }
 
     /**
@@ -155,7 +163,7 @@ class RemoteVettingService
         $institution = $identity->institution;
         $version = $this->applicationHelper->getApplicationVersion();
         $remarks = (string)$remarks;
-        $remoteVettingSource = $this->remoteVettingContext->getIdentityProviderName();
+        $remoteVettingSource = $this->remoteVettingContext->getIdentityProviderSlug();
 
         $attributeCollectionAggregate = new AttributeCollectionAggregate();
         $attributeCollectionAggregate->add('local-attributes', $localAttributes);

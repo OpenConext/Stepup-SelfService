@@ -73,9 +73,10 @@ class RemoteVettingController extends Controller
      * @Template
      * @param Request $request
      * @param string $secondFactorId
+     * @param string $identityProviderSlug
      * @return array|Response
      */
-    public function remoteVetAction(Request $request, $secondFactorId)
+    public function remoteVetAction(Request $request, $secondFactorId, $identityProviderSlug)
     {
         $identity = $this->getIdentity();
 
@@ -112,12 +113,9 @@ class RemoteVettingController extends Controller
                 $command->secondFactor->id
             );
 
-            // todo : implement idp selection
-            $identityProviderName = 'IRMA';
+            $this->remoteVettingService->start($identityProviderSlug, $token);
 
-            $this->remoteVettingService->start($identityProviderName, $token);
-
-            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest($identityProviderName));
+            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest($identityProviderSlug));
         }
 
         return [
@@ -141,13 +139,13 @@ class RemoteVettingController extends Controller
         $this->logger->info('Load the attributes from the saml response');
 
         try {
-            $processId = $this->samlCalloutHelper->handleResponse($request, 'IRMA');
+            $processId = $this->samlCalloutHelper->handleResponse($request, $this->remoteVettingService->getActiveIdentityProviderSlug());
         } catch (InvalidRemoteVettingStateException $e) {
             $this->logger->error($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
             return $this->redirectToRoute('ss_second_factor_list');
         } catch (PreconditionNotMetException $e) {
-            $this->logger->notice($e->getMessage());
+            $this->logger->error($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
             return $this->redirectToRoute('ss_second_factor_list');
         } catch (InvalidRemoteVettingContextException $e) {

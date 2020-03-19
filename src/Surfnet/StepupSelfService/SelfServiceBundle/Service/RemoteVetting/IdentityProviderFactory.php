@@ -58,11 +58,11 @@ class IdentityProviderFactory
             unset($idpConfiguration['privateKey']);
 
             // set idp
-            $this->identityProviders[$idpConfiguration['name']] = new IdentityProvider($idpConfiguration);
+            $this->identityProviders[$idpConfiguration['slug']] = new IdentityProvider($idpConfiguration);
 
             // set mapping
             foreach ($idpConfiguration['attributeMapping'] as $key => $value) {
-                $this->attributeMapping[$idpConfiguration['name']][$key] = $value;
+                $this->attributeMapping[$idpConfiguration['slug']][$key] = $value;
             }
         }
     }

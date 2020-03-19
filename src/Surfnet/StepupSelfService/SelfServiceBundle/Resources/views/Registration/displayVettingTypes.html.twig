@@ -43,7 +43,7 @@
                     <p>
                         {{ identityProvider.description(app.request.locale) }}
                     </p>
-                    <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                    <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId, 'identityProviderSlug': identityProvider.slug }) }}" method="get">
                         <button type="submit" class="btn btn-primary">Continue</button>
                     </form>
                 </div>

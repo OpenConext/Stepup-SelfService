@@ -8,6 +8,7 @@ parameters:
         description:
           nl_NL: Met IRMA kunt u op een privacy-vriendelijke, beveiligde manier eigenschappen (attributen) van uzelf onthullen.
           en_GB: IRMA is a unique privacy-friendly identity platform for both authentication and signing.
+        slug: irma
         entityId: https://selfservice.stepup.example.com/mock/metadata
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
         certificateFile: "%saml_rv_publickey%"
@@ -20,6 +21,7 @@ parameters:
         description:
           nl_NL: ReadID® verifieert identiteitsbewijzen uitgerust met NFC op een smartphone.
           en_GB: ReadID® verifies identity documents with NFC on a smartphone
+        slug: readid
         entityId: https://selfservice.stepup.example.com/mock/metadata
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
         certificateFile: "%saml_rv_publickey%"
@@ -32,6 +34,7 @@ parameters:
         description:
           nl_NL: iDIN is een dienst van de banken waarmee consumenten zich bij andere organisaties met de veilige en vertrouwde inlogmiddelen van hun eigen bank kunnen identificeren.
           en_GB: iDIN is a service offered by banks which allows consumers to use their bank’s secure and reliable login methods to carry out the following actions on the websites of other organisations.
+        slug: idin
         entityId: https://selfservice.stepup.example.com/mock/metadata
         ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
         certificateFile: '%saml_rv_publickey%'

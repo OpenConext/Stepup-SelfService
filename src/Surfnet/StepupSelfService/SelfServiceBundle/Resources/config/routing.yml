@@ -26,7 +26,7 @@ ss_second_factor_remote_vetting_types:
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:displayVettingTypes }
 
 ss_second_factor_remote_vet:
-    path:     /second-factor/{secondFactorId}/remote-vet
+    path:     /second-factor/{secondFactorId}/remote-vet/{identityProviderSlug}
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:remoteVet }
 
