@@ -35,11 +35,38 @@
 {# Show value in the remote vetting attribute match. #}
 {% block ss_remote_vet_assertion_widget %}
     {% spaceless %}
-        <div class="text_widget">
-            <h3>{{ form.vars.data.name }}: '{{ form.vars.data.value|join(', ') }}'</h3>
-
-            {{ form_widget(form) }}
-
-        </div>
+        <table class="table table-bordered table-hover table-responsive">
+            <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>{{ 'ss.second_factor.remote_vet.local_attribute'|trans }}</th>
+                <th>{{ 'ss.second_factor.remote_vet.remote_attribute'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>{{ 'ss.second_factor.remote_vet.attribute_name'|trans }}</strong></td>
+                    <td>{{ form.vars.data.localAttribute.name }}</td>
+                    <td>{{ form.vars.data.remoteAttribute.name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'ss.second_factor.remote_vet.attribute_value'|trans }}</strong></td>
+                    <td>{{ form.vars.data.localAttribute.value|join(',<br/>') }}</td>
+                    <td>{{ form.vars.data.remoteAttribute.value|join(',<br/>') }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'ss.second_factor.remote_vet.is_attribute_valid'|trans }}</strong></td>
+                    <td colspan="2">
+                        {{ form_widget(form.valid) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'ss.second_factor.remote_vet.remarks'|trans }}</strong></td>
+                    <td colspan="2">
+                        {{ form_widget(form.remarks) }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     {% endspaceless %}
 {% endblock %}

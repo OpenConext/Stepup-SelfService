@@ -17,8 +17,10 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingMappingException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attribute;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 
 class AttributeMapper
 {
@@ -36,30 +38,49 @@ class AttributeMapper
      * @param string $identityProviderName
      * @param AttributeListDto $localAttributes
      * @param AttributeListDto $externalAttributes
-     * @return AttributeListDto
+     * @return AttributeMatchCollection
+     * @throws InvalidRemoteVettingMappingException
      */
-    public function map($identityProviderName, AttributeListDto $localAttributes, AttributeListDto $externalAttributes)
+    public function map($identityProviderName, AttributeListDto $localAttributes, AttributeListDto $remoteAttributes)
     {
         $attributeMapping = $this->identityProviderFactory->getAttributeMapping($identityProviderName);
 
-        $mappedAttributes = [];
-        $attributesToMap = [];
+        $localMap = $this->attributeListToMap($localAttributes);
+        $remoteMap = $this->attributeListToMap($remoteAttributes);
 
-        foreach ($localAttributes->getAttributeCollection() as $attribute) {
-            if (array_key_exists($attribute->getName(), $attributeMapping)) {
-                $attributesToMap[$attributeMapping[$attribute->getName()]] = $attribute->getName();
-                $mappedAttributes[$attribute->getName()] = null;
+        $matchCollection = new AttributeMatchCollection();
+        foreach ($attributeMapping as $localName => $remoteName) {
+            if (!array_key_exists($localName, $localMap)) {
+                throw new InvalidRemoteVettingMappingException(sprintf(
+                    'Invalid remote vetting attribute mapping, local attribute with name "%s" not found',
+                    $localName
+                ));
             }
-        }
 
-        foreach ($externalAttributes->getAttributeCollection() as $attribute) {
-            if (array_key_exists($attribute->getName(), $attributesToMap)) {
-                $mappedAttributes[$attributesToMap[$attribute->getName()]] = $attribute->getValue();
+            if (!array_key_exists($remoteName, $remoteMap)) {
+                throw new InvalidRemoteVettingMappingException(sprintf(
+                    'Invalid remote vetting attribute mapping, remote attribute with name "%s" not found',
+                    $remoteName
+                ));
             }
+
+            $attributeMatch = new AttributeMatch($localMap[$localName], $remoteMap[$remoteName], false, '');
+            $matchCollection->add($localName, $attributeMatch);
+        };
+
+        return $matchCollection;
+    }
+
+    /**
+     * @param AttributeListDto $attributeList
+     * @return array
+     */
+    private function attributeListToMap(AttributeListDto $attributeList)
+    {
+        $result = [];
+        foreach ($attributeList->getAttributeCollection() as $attribute) {
+            $result[$attribute->getName()] = $attribute;
         }
-
-        $mappedAttributes = array_filter($mappedAttributes);
-
-        return new AttributeListDto($mappedAttributes, $localAttributes->getNameId());
+        return $result;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2020-03-19T10:56:10Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2020-03-19T14:20:18Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -18,11 +18,6 @@
         <jms:reference-file line="6">/Resources/views/base.html.twig</jms:reference-file>
         <jms:reference-file line="44">/Resources/views/pdf.html.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/pdf.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="d7f67a250d8254339cc572b200990d99fe1baf29" resname="attributes">
-        <source>attributes</source>
-        <target>Attributen</target>
-        <jms:reference-file line="35">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetValidationType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="ff6230b38fe127145d864f4d4920ceb4d857af18" resname="button.logout">
         <source>button.logout</source>
@@ -43,12 +38,6 @@
         <source>locale.nl_NL</source>
         <target>Nederlands</target>
         <jms:reference-file line="3">/../vendor/surfnet/stepup-bundle/src/Resources/views/translations.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="8a77bfbad1a4dd40b5f431772e0466e32b7e418c" resname="remarks">
-        <source>remarks</source>
-        <target>Opmerkingen</target>
-        <jms:reference-file line="41">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetAssertionMatchType.php</jms:reference-file>
-        <jms:reference-file line="51">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetValidationType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
         <source>ss.flash.error_while_switching_locale</source>
@@ -509,6 +498,47 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <target>Overzicht tokens</target>
         <jms:reference-file line="3">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="06702235a44109d8e0d052b53a1bfb4de60c9ee1" resname="ss.second_factor.remote_vet.attribute_name">
+        <source>ss.second_factor.remote_vet.attribute_name</source>
+        <target>Naam</target>
+        <jms:reference-file line="48">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Form/fields.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1a205ba9c223e3a3194e5b4f043d5b5443372d0a" resname="ss.second_factor.remote_vet.attribute_value">
+        <source>ss.second_factor.remote_vet.attribute_value</source>
+        <target>Waarde</target>
+        <jms:reference-file line="53">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Form/fields.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c41ec2f6b69a078293cff21ee5a726dd7eb0404b" resname="ss.second_factor.remote_vet.attributes">
+        <source>ss.second_factor.remote_vet.attributes</source>
+        <target>Attributen</target>
+        <jms:reference-file line="15">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/validation.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="bb0dc870c01c67456de79fd0351f228166ed815f" resname="ss.second_factor.remote_vet.is_attribute_valid">
+        <source>ss.second_factor.remote_vet.is_attribute_valid</source>
+        <target>Dit attribuut is correct</target>
+        <jms:reference-file line="58">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Form/fields.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="73c1945e26144ea136d333208aad74c152eec61a" resname="ss.second_factor.remote_vet.is_identity_valid">
+        <source>ss.second_factor.remote_vet.is_identity_valid</source>
+        <target>Deze identiteit komt overeen</target>
+        <jms:reference-file line="22">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/validation.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3b0a7dfbf4d6786b0210a73eb312829c71d16687" resname="ss.second_factor.remote_vet.local_attribute">
+        <source>ss.second_factor.remote_vet.local_attribute</source>
+        <target>Lokale attributen</target>
+        <jms:reference-file line="42">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Form/fields.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="feef08cccc473f54b73861bb3d99e3eb05fd4567" resname="ss.second_factor.remote_vet.remarks">
+        <source>ss.second_factor.remote_vet.remarks</source>
+        <target>Opmerkingen</target>
+        <jms:reference-file line="64">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Form/fields.html.twig</jms:reference-file>
+        <jms:reference-file line="29">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/RemoteVetting/validation.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="bb9ce8385ce60bff940a2d9a96b59209f6e4375e" resname="ss.second_factor.remote_vet.remote_attribute">
+        <source>ss.second_factor.remote_vet.remote_attribute</source>
+        <target>Externe attributen</target>
+        <jms:reference-file line="43">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/Form/fields.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="64cd3b12ab8e092173e5e99069d38afdaf811b16" resname="ss.second_factor.remote_vet.text.are_you_sure">
         <source>ss.second_factor.remote_vet.text.are_you_sure</source>
         <target>Weet je zeker dat je je identiteit wilt valideren met behulp van een externe dienst?</target>
@@ -820,8 +850,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       </trans-unit>
       <trans-unit id="bec262808ffd307630f5d167bb7aaf470eabbe6b" resname="valid">
         <source>valid</source>
-        <target>Gelijk?</target>
-        <jms:reference-file line="36">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetAssertionMatchType.php</jms:reference-file>
+        <target>Ja</target>
         <jms:reference-file line="46">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetValidationType.php</jms:reference-file>
       </trans-unit>
     </body>

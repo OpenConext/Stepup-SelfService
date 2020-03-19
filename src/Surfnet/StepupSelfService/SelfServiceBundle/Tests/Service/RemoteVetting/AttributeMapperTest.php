@@ -19,6 +19,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVettin
 
 use Mockery as m;
 use PHPUnit_Framework_TestCase as UnitTest;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingMappingException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
@@ -65,16 +66,19 @@ class AttributeMapperTest extends UnitTest
         $localAttributes = new AttributeListDto($local, $nameId);
         $externalAttributes = new AttributeListDto($external, '');
 
-        $mappedAttributes = $this->attributeMapper->map('idp-name', $localAttributes, $externalAttributes);
+        $attributeMatchCollection = $this->attributeMapper->map('idp-name', $localAttributes, $externalAttributes);
 
-        $result = $mappedAttributes->serialize();
+        $result = json_encode($attributeMatchCollection->getAttributes());
 
-        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo2":["foobar2"],"foo3":["foobar1"]}}', $result);
+        $this->assertSame('{"foo2":{"local":{"name":"foo2","value":["bar2"]},"remote":{"name":"baz2","value":["foobar2"]},"is-valid":false,"remarks":""},"foo3":{"local":{"name":"foo3","value":["bar3"]},"remote":{"name":"baz1","value":["foobar1"]},"is-valid":false,"remarks":""}}', $result);
     }
 
 
     public function test_attribute_mapping_missing_local()
     {
+        $this->expectException(InvalidRemoteVettingMappingException::class);
+        $this->expectExceptionMessage('Invalid remote vetting attribute mapping, local attribute with name "MISSING" not found');
+
         $config = [
             'MISSING' => 'baz2',
             'foo3' => 'baz1',
@@ -98,17 +102,16 @@ class AttributeMapperTest extends UnitTest
         $localAttributes = new AttributeListDto($local, $nameId);
         $externalAttributes = new AttributeListDto($external, '');
 
-        $mappedAttributes = $this->attributeMapper->map('idp-name', $localAttributes, $externalAttributes);
-
-        $result = $mappedAttributes->serialize();
-
-        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo3":["foobar1"]}}', $result);
+        $this->attributeMapper->map('idp-name', $localAttributes, $externalAttributes);
     }
 
 
 
     public function test_attribute_mapping_missing_external()
     {
+        $this->expectException(InvalidRemoteVettingMappingException::class);
+        $this->expectExceptionMessage('Invalid remote vetting attribute mapping, remote attribute with name "MISSING" not found');
+
         $config = [
             'foo2' => 'MISSING',
             'foo3' => 'baz1',
@@ -133,9 +136,5 @@ class AttributeMapperTest extends UnitTest
         $externalAttributes = new AttributeListDto($external, '');
 
         $mappedAttributes = $this->attributeMapper->map('idp-name', $localAttributes, $externalAttributes);
-
-        $result = $mappedAttributes->serialize();
-
-        $this->assertSame('{"nameId":"foo@bar.baz","attributes":{"foo3":["foobar1"]}}', $result);
     }
 }

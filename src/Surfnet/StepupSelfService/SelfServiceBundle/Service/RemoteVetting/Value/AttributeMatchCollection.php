@@ -21,7 +21,6 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Valu
 use ArrayIterator;
 use ArrayAccess;
 use IteratorAggregate;
-use JsonSerializable;
 
 class AttributeMatchCollection implements AttributeCollectionInterface, IteratorAggregate, ArrayAccess
 {
@@ -30,15 +29,13 @@ class AttributeMatchCollection implements AttributeCollectionInterface, Iterator
      */
     private $matches = [];
 
-    public static function fromAttributeCollection(AttributeCollection $attributeCollection)
+    /**
+     * @param string $key
+     * @param AttributeMatch $attributeMatch
+     */
+    public function add($key, AttributeMatch $attributeMatch)
     {
-        $instance = new self();
-        foreach ($attributeCollection as $attribute) {
-            $match = new AttributeMatch($attribute->getName(), $attribute->getValue(), false, '');
-            $instance->matches[$attribute->getName()] = $match;
-        }
-
-        return $instance;
+        $this->matches[$key] = $attributeMatch;
     }
 
     public function getIterator()
@@ -72,10 +69,6 @@ class AttributeMatchCollection implements AttributeCollectionInterface, Iterator
 
     public function getAttributes()
     {
-        $output = [];
-        foreach ($this->getIterator() as $match) {
-            $output[$match->getName()] = $match;
-        }
-        return $output;
+        return $this->matches;
     }
 }

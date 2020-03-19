@@ -38,7 +38,7 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
         ]);
 
         $builder->add('remarks', TextareaType::class, [
-            'label'    => 'remarks',
+            'label'    => false,
             'required' => false,
         ]);
 
@@ -58,6 +58,7 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
     }
 
     /**
+     * @param $viewData AttributeMatch
      * @inheritDoc
      */
     public function mapDataToForms($viewData, $forms)
@@ -81,6 +82,7 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
     }
 
     /**
+     * @param $viewData AttributeMatch
      * @inheritDoc
      */
     public function mapFormsToData($forms, &$viewData)
@@ -90,8 +92,8 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
 
         // Keep the name from the original object
         $viewData = new AttributeMatch(
-            $viewData->getName(),
-            $viewData->getValue(),
+            $viewData->getLocalAttribute(),
+            $viewData->getRemoteAttribute(),
             $forms['valid']->getData(),
             (string)$forms['remarks']->getData()
         );
