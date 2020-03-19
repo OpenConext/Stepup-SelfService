@@ -20,11 +20,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVettin
 
 use JsonSerializable;
 use PHPUnit_Framework_TestCase as IntegrationTest;
-use stdClass;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionAggregate;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 
 class AttributeCollectionInterfaceIntegrationTest extends IntegrationTest
@@ -44,13 +42,16 @@ class AttributeCollectionInterfaceIntegrationTest extends IntegrationTest
         $attributeMatches = AttributeMatchCollection::fromAttributeCollection($attributeCollection);
 
         $aggregate = new AttributeCollectionAggregate();
-        $aggregate->add('institution-attributes', $institutionAttributes);
-        $aggregate->add('remote-vetting-attributes', $remoteVettingAttributes);
-        $aggregate->add('attributes-matches', $attributeMatches);
+        $aggregate->add('local-attributes', $institutionAttributes);
+        $aggregate->add('remote-attributes', $remoteVettingAttributes);
+        $aggregate->add('attribute-matches', $attributeMatches);
 
         $smashed = $aggregate->getAttributes();
 
         $this->assertTrue($this->isJsonSerializable($smashed));
+        $this->assertArrayHasKey('local-attributes', $smashed);
+        $this->assertArrayHasKey('remote-attributes', $smashed);
+        $this->assertArrayHasKey('attribute-matches', $smashed);
     }
 
     /**

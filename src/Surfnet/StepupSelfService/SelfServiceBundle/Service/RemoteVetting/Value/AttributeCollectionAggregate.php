@@ -18,10 +18,8 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value;
 
-use ArrayIterator;
-use IteratorAggregate;
-use JsonSerializable;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 
 class AttributeCollectionAggregate implements AttributeCollectionInterface
 {
@@ -44,6 +42,9 @@ class AttributeCollectionAggregate implements AttributeCollectionInterface
         $this->attributeCollections[$name] = $collection;
     }
 
+    /**
+     * @return AttributeListDto[]
+     */
     public function getAttributes()
     {
         $output = [];
