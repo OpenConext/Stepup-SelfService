@@ -25,9 +25,12 @@ use Psr\Log\NullLogger;
 use SAML2\Certificate\KeyLoader;
 use SAML2\Configuration\PrivateKey;
 use SAML2\Response\Processor;
+use SAML2\XML\saml\NameID;
 use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
+use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeDefinition;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
 use Surfnet\SamlBundle\Signing\SignatureVerifier;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
@@ -64,6 +67,10 @@ class MockRemoteVetControllerTest extends WebTestCase
      * @var SamlCalloutHelper
      */
     private $samlCalloutHelper;
+    /**
+     * @var AttributeSet
+     */
+    private $localAttributeSet;
 
     protected function setUp() {
 
@@ -86,6 +93,12 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->privateKey = $projectDir . $keyPath . '/test.key';
 
         $this->samlCalloutHelper = $this->setupSamlCalloutHelper();
+
+
+        $this->localAttributeSet = AttributeSet::create([
+            new Attribute(new AttributeDefinition('mail', 'urn:mace:mail', 'urn:oid:0.2.1'), ['john@domain.tld']),
+            new Attribute(new AttributeDefinition('uid', 'urn:mace:uid', 'urn:oid:0.2.2'), ['john-doe']),
+        ]);
     }
 
     /**
@@ -121,6 +134,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->postForm($crawler, 'success');
 
         // Test if on manual matching form
+        $c = $this->client->getResponse()->getContent();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
         $this->assertContains('Validate information', $this->client->getResponse()->getContent());
@@ -278,7 +292,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         $token->setUser($user);
 
         // todo: inject attributes to match against, currently only idp attributes are used
-        $token->setAttribute(SamlToken::ATTRIBUTE_SET, AttributeSet::create([]));
+        $token->setAttribute(SamlToken::ATTRIBUTE_SET, $this->localAttributeSet);
 
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();

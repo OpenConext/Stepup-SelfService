@@ -23,6 +23,7 @@ use PHPUnit_Framework_TestCase as IntegrationTest;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionAggregate;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 
 class AttributeCollectionInterfaceIntegrationTest extends IntegrationTest
@@ -39,7 +40,10 @@ class AttributeCollectionInterfaceIntegrationTest extends IntegrationTest
         $remoteVettingAttributes = new AttributeListDto(array_merge($attributes, ['documentNumber' => ["1234567890"]]), 'identifier-at-rv-idp');
 
         $attributeCollection = new AttributeCollection($attributes);
-        $attributeMatches = AttributeMatchCollection::fromAttributeCollection($attributeCollection);
+        $attributeMatches = new AttributeMatchCollection();
+        foreach ($attributeCollection as $attribute) {
+            $attributeMatches->add('name', new AttributeMatch($attribute, $attribute, false, ''));
+        }
 
         $aggregate = new AttributeCollectionAggregate();
         $aggregate->add('local-attributes', $institutionAttributes);

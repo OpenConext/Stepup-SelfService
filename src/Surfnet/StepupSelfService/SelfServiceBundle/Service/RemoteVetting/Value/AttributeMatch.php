@@ -31,33 +31,29 @@ class AttributeMatch implements JsonSerializable
      */
     private $remarks = '';
     /**
-     * @var string
+     * @var Attribute
      */
-    private $name = '';
+    private $localAttribute;
     /**
-     * @var string
+     * @var Attribute
      */
-    private $value = '';
+    private $remoteAttribute;
 
     /**
-     * @param string $name
-     * @param string[] $value
+     * @param Attribute $localAttribute
+     * @param Attribute $remoteAttribute
      * @param bool $valid
      * @param string $remarks
-     * @throws \Assert\AssertionFailedException
      */
-    public function __construct($name, $value, $valid, $remarks)
+    public function __construct(Attribute $localAttribute, Attribute $remoteAttribute, $valid, $remarks)
     {
-        Assert::string($name, 'name should be string');
-        Assert::isArray($value, 'value should be an array');
-        Assert::allString($value, 'values should be string');
         Assert::boolean($valid, 'valid should be boolean');
         Assert::string($remarks, 'remarks should be string');
 
-        $this->name = $name;
+        $this->localAttribute = $localAttribute;
+        $this->remoteAttribute = $remoteAttribute;
         $this->valid = $valid;
         $this->remarks = $remarks;
-        $this->value = $value;
     }
 
     /**
@@ -77,23 +73,23 @@ class AttributeMatch implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return Attribute
      */
-    public function getName()
+    public function getLocalAttribute()
     {
-        return $this->name;
+        return $this->localAttribute;
     }
 
     /**
-     * @return string[]
+     * @return Attribute
      */
-    public function getValue()
+    public function getRemoteAttribute()
     {
-        return $this->value;
+        return $this->remoteAttribute;
     }
 
     public function jsonSerialize()
     {
-        return ['name' => $this->name, 'is-valid' => $this->valid, 'remarks' => $this->remarks];
+        return ['local' => $this->localAttribute, 'remote' => $this->remoteAttribute, 'is-valid' => $this->valid, 'remarks' => $this->remarks];
     }
 }

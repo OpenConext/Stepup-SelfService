@@ -128,9 +128,9 @@ class RemoteVettingService
 
     /**
      * @param AttributeListDto $localAttributes
-     * @return AttributeListDto
+     * @return AttributeMatchCollection
      */
-    public function getValidatingAttributes(AttributeListDto $localAttributes)
+    public function getAttributeMatchCollection(AttributeListDto $localAttributes)
     {
         $externalAttributes = $this->remoteVettingContext->getAttributes();
         $identityProviderName = $this->remoteVettingContext->getIdentityProviderName();

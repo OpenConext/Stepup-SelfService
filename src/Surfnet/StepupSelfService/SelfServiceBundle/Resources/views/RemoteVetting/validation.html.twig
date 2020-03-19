@@ -8,5 +8,34 @@
 
     <p>{{ 'ss.second_factor.remote_vet.text.does_it_match'|trans }}</p>
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="row">
+        <div class="col-xs-3">
+            {{ 'ss.second_factor.remote_vet.attributes'|trans }}
+        </div>
+        <div class="col-xs-9">
+            {{ form_widget(form.matches) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3">
+            {{ 'ss.second_factor.remote_vet.is_identity_valid'|trans }}
+        </div>
+        <div class="col-xs-9">
+            {{ form_widget(form.valid) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3">
+            {{ 'ss.second_factor.remote_vet.remarks'|trans }}
+        </div>
+        <div class="col-xs-9">
+            {{ form_widget(form.remarks) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+
 {% endblock %}
