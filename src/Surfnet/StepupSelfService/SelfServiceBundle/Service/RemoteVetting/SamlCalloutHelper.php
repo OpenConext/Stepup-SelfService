@@ -123,7 +123,6 @@ class SamlCalloutHelper
             $assertion->getAttributes(),
             (string)$subjectConfirmation->NameID
         );
-        // todo: store raw result ($assertion->toXML()->ownerDocument->saveXML())
 
         // Handle validated state
         $processId = ProcessId::create($requestId);

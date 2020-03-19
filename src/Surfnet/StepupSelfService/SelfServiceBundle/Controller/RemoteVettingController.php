@@ -146,11 +146,12 @@ class RemoteVettingController extends Controller
             $this->logger->error($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
             return $this->redirectToRoute('ss_second_factor_list');
-        } catch (Exception $e) {
-            //PreconditionNotMetException $e) {
-            // todo: add saml specific logging (user flashbag may differ) ?
-            $this->logger->error($e->getMessage());
+        } catch (PreconditionNotMetException $e) {
+            $this->logger->notice($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
+            return $this->redirectToRoute('ss_second_factor_list');
+        } catch (InvalidRemoteVettingContextException $e) {
+            $this->logger->error($e->getMessage());
             return $this->redirectToRoute('ss_second_factor_list');
         }
 
@@ -215,6 +216,9 @@ class RemoteVettingController extends Controller
         } catch (InvalidRemoteVettingStateException $e) {
             $this->logger->error($e->getMessage());
             $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
+            return $this->redirectToRoute('ss_second_factor_list');
+        } catch (InvalidRemoteVettingContextException $e) {
+            $this->logger->error($e->getMessage());
             return $this->redirectToRoute('ss_second_factor_list');
         }
     }
