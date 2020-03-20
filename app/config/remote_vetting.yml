@@ -14,8 +14,8 @@ parameters:
         certificateFile: "%saml_rv_publickey%"
         privateKey: "%saml_rv_privatekey%"
         attributeMapping:
-          mail: mail
-          uid: uid
+          givenName: firstName
+          surname: lastName
       - name: "ReadId"
         logo: "/images/remote-vetting/readid.png"
         description:
@@ -27,8 +27,8 @@ parameters:
         certificateFile: "%saml_rv_publickey%"
         privateKey: "%saml_rv_privatekey%"
         attributeMapping:
-          mail: mail
-          uid: uid
+          givenName: firstName
+          surname: lastName
       - name: "iDIN"
         logo: "/images/remote-vetting/idin.png"
         description:
@@ -40,8 +40,8 @@ parameters:
         certificateFile: '%saml_rv_publickey%'
         privateKey: '%saml_rv_privatekey%'
         attributeMapping:
-          mail: mail
-          uid: uid
+          givenName: firstName
+          surname: lastName
   remote_vetting_sp:
     entityId: https://selfservice.stepup.example.com/saml/metadata
     assertionConsumerUrl: https://selfservice.stepup.example.com/second-factor/acs
@@ -109,6 +109,7 @@ services:
     public: true
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
+      - '@surfnet_stepup_self_service_self_service.service.second_factor'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper'
       - '@surfnet_stepup.registration_expiration_helper'
       - '@logger'

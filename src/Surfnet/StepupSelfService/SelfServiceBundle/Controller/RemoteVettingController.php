@@ -17,7 +17,6 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
-use Exception;
 use Psr\Log\LoggerInterface;
 use SAML2\Response\Exception\PreconditionNotMetException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -63,13 +62,19 @@ class RemoteVettingController extends Controller
      * @var RegistrationExpirationHelper
      */
     private $expirationHelper;
+    /**
+     * @var SecondFactorService
+     */
+    private $secondFactorService;
 
     public function __construct(
         RemoteVettingService $remoteVettingService,
+        SecondFactorService $secondFactorService,
         SamlCalloutHelper $samlCalloutHelper,
         RegistrationExpirationHelper $expirationHelper,
         LoggerInterface $logger
     ) {
+        $this->secondFactorService = $secondFactorService;
         $this->remoteVettingService = $remoteVettingService;
         $this->samlCalloutHelper = $samlCalloutHelper;
         $this->expirationHelper = $expirationHelper;
@@ -87,20 +92,11 @@ class RemoteVettingController extends Controller
     {
         $identity = $this->getIdentity();
 
-        /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-        if (!$service->identityHasSecondFactorOfStateWithId($identity->id, 'verified', $secondFactorId)) {
-            $this->get('logger')->error(sprintf(
-                'Identity "%s" tried to vet "%s" second factor "%s", but does not own that second factor',
-                $identity->id,
-                'verified',
-                $secondFactorId
-            ));
-            throw new NotFoundHttpException();
-        }
-
-        $secondFactor = $service->findOneVerified($secondFactorId);
-        if ($secondFactor === null || $this->expirationHelper->hasExpired($secondFactor->registrationRequestedAt)) {
+        $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
+        if ($secondFactor === null ||
+            $secondFactor->identityId != $identity->id ||
+            $this->expirationHelper->hasExpired($secondFactor->registrationRequestedAt)
+        ) {
             throw new NotFoundHttpException(
                 sprintf("No %s second factor with id '%s' exists.", 'verified', $secondFactorId)
             );
@@ -202,9 +198,7 @@ class RemoteVettingController extends Controller
                 $command->identity = $token->getIdentityId();
                 $command->secondFactor = $token->getSecondFactorId();
 
-                /** @var SecondFactorService $service */
-                $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-                if ($service->remoteVet($command)) {
+                if ($this->secondFactorService->remoteVet($command)) {
                     $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
                 } else {
                     $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');

@@ -18,18 +18,15 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
-
 class RemoteVetCommand
 {
     /**
-     * @var Identity
+     * @var string
      */
     public $identity;
 
     /**
-     * @var VerifiedSecondFactor
+     * @var string
      */
     public $secondFactor;
 }
