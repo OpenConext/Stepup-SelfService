@@ -51,8 +51,8 @@ class IdentityProviderFactory
             Assert::string($idpConfiguration['name'], 'name should be a string');
             Assert::url($idpConfiguration['entityId'], 'entityId should be an url');
             Assert::url($idpConfiguration['ssoUrl'], 'ssoUrl should be an url');
-            Assert::file($idpConfiguration['privateKey'], 'privateKey should be an url');
-            Assert::file($idpConfiguration['certificateFile'], 'certificateFile should be an url');
+            Assert::file($idpConfiguration['privateKey'], 'privateKey should be a file');
+            Assert::file($idpConfiguration['certificateFile'], 'certificateFile should be a file');
 
             $idpConfiguration['privateKeys'] = [new PrivateKey($idpConfiguration['privateKey'], PrivateKey::NAME_DEFAULT)];
             unset($idpConfiguration['privateKey']);

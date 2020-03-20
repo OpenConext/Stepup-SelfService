@@ -4,6 +4,10 @@
 parameters:
   middleware_credentials_password: secret
 
+  saml_rv_publickey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt'
+  saml_rv_privatekey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key'
+
+
 services:
   surfnet_stepup_self_service_self_service.service.sms_second_factor:
     class: Surfnet\StepupSelfService\SelfServiceBundle\Tests\TestDouble\Service\SmsSecondFactorService
