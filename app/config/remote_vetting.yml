@@ -110,6 +110,7 @@ services:
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper'
+      - '@surfnet_stepup.registration_expiration_helper'
       - '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration:

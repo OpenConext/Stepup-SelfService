@@ -21,6 +21,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use SAML2\Response\Exception\PreconditionNotMetException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupBundle\DateTime\RegistrationExpirationHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetValidationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingContextException;
@@ -58,14 +59,20 @@ class RemoteVettingController extends Controller
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var RegistrationExpirationHelper
+     */
+    private $expirationHelper;
 
     public function __construct(
         RemoteVettingService $remoteVettingService,
         SamlCalloutHelper $samlCalloutHelper,
+        RegistrationExpirationHelper $expirationHelper,
         LoggerInterface $logger
     ) {
         $this->remoteVettingService = $remoteVettingService;
         $this->samlCalloutHelper = $samlCalloutHelper;
+        $this->expirationHelper = $expirationHelper;
         $this->logger = $logger;
     }
 
@@ -93,13 +100,11 @@ class RemoteVettingController extends Controller
         }
 
         $secondFactor = $service->findOneVerified($secondFactorId);
-        if ($secondFactor === null) {
+        if ($secondFactor === null || $this->expirationHelper->hasExpired($secondFactor->registrationRequestedAt)) {
             throw new NotFoundHttpException(
                 sprintf("No %s second factor with id '%s' exists.", 'verified', $secondFactorId)
             );
         }
-
-        // todo: validate expired
 
         $command = new RemoteVetCommand();
         $command->identity = $identity;
