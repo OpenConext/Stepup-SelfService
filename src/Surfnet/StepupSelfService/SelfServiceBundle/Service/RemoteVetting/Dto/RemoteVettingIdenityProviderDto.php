@@ -54,7 +54,7 @@ class RemoteVettingIdenityProviderDto
         Assert::notBlank($configData['logo'], 'The logo of a remote vetting identity provider must not be blank');
         Assert::string($configData['logo'], 'The logo of a remote vetting identity provider must be of type string');
         Assert::string($configData['slug'], 'The slug of a remote identity provider must be of type string');
-        Assert::alnum($configData['slug'], '/', 'The slug must be alphanumeric');
+        Assert::alnum($configData['slug'], 'The slug must be alphanumeric');
 
         $identityProvider = new self();
         $identityProvider->name = $configData['name'];
