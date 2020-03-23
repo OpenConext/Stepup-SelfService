@@ -17,9 +17,8 @@
 
 namespace Surfnet\Tests\Mock\RemoteVetting;
 
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use DateTime;
+use Hamcrest\Core\IsEqual;
 use Mockery as m;
 use Psr\Log\NullLogger;
 use SAML2\Certificate\KeyLoader;
@@ -33,13 +32,21 @@ use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDefinition;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
 use Surfnet\SamlBundle\Signing\SignatureVerifier;
+use Surfnet\StepupMiddlewareClientBundle\Configuration\Dto\InstitutionConfigurationOptions;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\ServiceProviderFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorTypeCollection;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
@@ -71,33 +78,42 @@ class MockRemoteVetControllerTest extends WebTestCase
      * @var AttributeSet
      */
     private $localAttributeSet;
+    /**
+     * @var SecondFactorService|m
+     */
+    private $secondFactorService;
+    /**
+     * @var m\MockInterface|InstitutionConfigurationOptionsService
+     */
+    private $institutionConfigurationOptionsService;
 
-    protected function setUp() {
-
-        // This is a fix to prevent segfaults in php 5.6 on Travis
-        if (version_compare(phpversion(), '7', '<')) {
-               ini_set('zend.enable_gc', '0');
-        }
-
-        $this->client = static::createClient(['environment' => 'test']);
+    protected function setUp()
+    {
+        $this->client = static::createClient();
         $this->client->followRedirects(true);
+        $this->client->disableReboot();
 
-        $container = static::$kernel->getContainer();
-        $this->remoteVettingService = $container->get('Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService');
+        $this->remoteVettingService = $this->client->getKernel()->getContainer()->get('Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService');
+
+        // Mock second factor service
+        $this->secondFactorService = m::mock(SecondFactorService::class);
+        $this->client->getKernel()->getContainer()->set('surfnet_stepup_self_service_self_service.service.second_factor', $this->secondFactorService);
+
+        $this->mockSecondFactorOverviewPage();
 
         $projectDir = self::$kernel->getProjectDir();
 
-        $keyPath =  '/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources';
-
+        $keyPath = '/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources';
         $this->publicKey = $projectDir . $keyPath . '/test.crt';
         $this->privateKey = $projectDir . $keyPath . '/test.key';
 
         $this->samlCalloutHelper = $this->setupSamlCalloutHelper();
 
-
         $this->localAttributeSet = AttributeSet::create([
-            new Attribute(new AttributeDefinition('mail', 'urn:mace:mail', 'urn:oid:0.2.1'), ['john@domain.tld']),
-            new Attribute(new AttributeDefinition('uid', 'urn:mace:uid', 'urn:oid:0.2.2'), ['john-doe']),
+            new Attribute(new AttributeDefinition('givenName', 'urn:mace:firstName', 'urn:oid:0.2.1'), ['John']),
+            new Attribute(new AttributeDefinition('surname', 'urn:mace:lastName', 'urn:oid:0.2.2'), ['Doe']),
+            new Attribute(new AttributeDefinition('isMemberOf', 'urn:mace:isMemberOf', 'urn:oid:0.2.7'), ['team-a', 'a-team']),
+            new Attribute(new AttributeDefinition('nameId', 'urn:mace:nameId', 'urn:oid:0.2.7'), [NameID::fromArray(['Value' => 'johndoe.example.com', 'Format' => 'unspecified'])]),
         ]);
     }
 
@@ -108,7 +124,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function the_mock_remote_vetting_idp_should_present_us_with_possible_results_for_testing_purposes()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma',  RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
@@ -131,7 +147,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
         // Test valid response
-        $this->postForm($crawler, 'success');
+        $this->postMockIdpForm($crawler, 'success');
 
         // Test if on manual matching form
         $c = $this->client->getResponse()->getContent();
@@ -153,10 +169,10 @@ class MockRemoteVetControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
         // Test user cancelled response
-        $this->postForm($crawler, 'user-cancelled');
+        $this->postMockIdpForm($crawler, 'user-cancelled');
 
         // Test if on sp acs
-        //$this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
         $this->assertEquals('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
         $this->assertContains('Unable to validate the information', $this->client->getResponse()->getContent());
     }
@@ -174,12 +190,74 @@ class MockRemoteVetControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
         // Test unknown response
-        $this->postForm($crawler, 'unknown');
+        $this->postMockIdpForm($crawler, 'unknown');
 
         // Test if on sp acs
-        //$this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
         $this->assertEquals('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
         $this->assertContains('Unable to validate the information', $this->client->getResponse()->getContent());
+    }
+
+
+    /**
+     * @test
+     * @group rv
+     */
+    public function a_verified_token_must_be_vetted_with_external_idp_e2e()
+    {
+        // Mock remote vet vetting
+        $remoteVetCommand = new RemoteVetCommand();
+        $remoteVetCommand->identity = "identity-id-123456";
+        $remoteVetCommand->secondFactor = "second-factor-id-56789";
+
+        $this->secondFactorService
+            ->shouldReceive('remoteVet')
+            ->with(IsEqual::equalTo($remoteVetCommand))->once()
+            ->andReturn(true);
+
+        // Login
+        $this->logIn();
+
+        // On second factor overview page start vetting
+        $crawler = $this->client->request('GET', 'https://selfservice.stepup.example.com/overview');
+        $link = $crawler->selectLink('Validate identity')->link();
+        $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/vetting-types', $link->getUri());
+        $crawler = $this->client->click($link);
+
+        // Select 'irma' as vetting type
+        $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/vetting-types', $this->client->getRequest()->getUri());
+        $button = $crawler->selectButton('select-rv-idp-irma');
+        $form = $button->form();
+        $crawler = $this->client->submit($form);
+
+        // Accept sending info to IdP on consent screen
+        $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/remote-vet/irma', $this->client->getRequest()->getUri());
+        $button = $crawler->selectButton('Validate identity');
+        $form = $button->form();
+        $crawler = $this->client->submit($form);
+
+        // Handle IdP callout
+        $this->assertSame('https://selfservice.stepup.example.com/second-factor/mock/sso', $this->client->getRequest()->getSchemeAndHttpHost() . $this->client->getRequest()->getPathInfo());
+        $crawler = $this->postMockIdpForm($crawler, 'success');
+
+        // Test if on manual matching form
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
+        $this->assertContains('Validate information', $this->client->getResponse()->getContent());
+
+        // Set response attributes and post form
+        $form = $crawler->selectButton('ss_remote_vet_validation[validate]')->form();
+        $crawler = $this->client->submit($form, [
+            'ss_remote_vet_validation[matches][surname][valid]' => '1',
+            'ss_remote_vet_validation[matches][givenName][remarks]' => 'This is not my full first name',
+            'ss_remote_vet_validation[valid]' => '1',
+            'ss_remote_vet_validation[remarks]' => 'All other info seems valid',
+        ]);
+
+        // Check if on overview page with success flashbag message
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertStringStartsWith('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
+        $this->assertContains('Your identity information was validated successfully', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -254,33 +332,39 @@ class MockRemoteVetControllerTest extends WebTestCase
     /**
      * @param Crawler $crawler
      * @param string $state State button to press
+     * @return Crawler
      */
-    private function postForm(Crawler $crawler, $state)
+    private function postMockIdpForm(Crawler $crawler, $state)
     {
-        $c = $this->client->getResponse()->getContent();
+        $data = '[
+            {"name":"firstName","value":["john"]},
+            {"name":"lastName","value":["doe"]},
+            {"name":"eduPersonAffiliation","value":["users","role1"]}
+        ]';
+
         // Test if on decision page
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertContains('Select response', $crawler->filter('h2')->text());
 
-        // Test valid response
+        // Set response attributes and post form
         $form = $crawler->selectButton($state)->form();
+        $form->get('attributes')->setValue($data);
         $crawler = $this->client->submit($form);
-        //$this->client->insulate();
 
         // Post response
         $form = $crawler->selectButton('Post')->form();
 
-        $crawler = $this->client->submit($form);
+        return $this->client->submit($form);
     }
 
     private function logIn()
     {
-        $session = $this->client->getContainer()->get('session');
+        $session = $this->client->getKernel()->getContainer()->get('session');
 
         $firewallContext = 'saml_based';
 
         $user = Identity::fromData([
-            'id' => '12345567890',
+            'id' => 'identity-id-123456',
             'name_id' => 'name-id',
             'institution' => 'institution',
             'email' => 'name@institution.tld',
@@ -291,13 +375,71 @@ class MockRemoteVetControllerTest extends WebTestCase
         $token = new SamlToken(['ROLE_USER']);
         $token->setUser($user);
 
-        // todo: inject attributes to match against, currently only idp attributes are used
         $token->setAttribute(SamlToken::ATTRIBUTE_SET, $this->localAttributeSet);
 
-        $session->set('_security_'.$firewallContext, serialize($token));
+        $session->set('_security_' . $firewallContext, serialize($token));
         $session->save();
 
         $cookie = new Cookie($session->getName(), $session->getId());
         $this->client->getCookieJar()->set($cookie);
+    }
+
+    private function mockSecondFactorOverviewPage()
+    {
+        // Mock institution configuration for second factor overview page
+        $this->institutionConfigurationOptionsService = m::mock(InstitutionConfigurationOptionsService::class);
+        $this->client->getKernel()->getContainer()->set('self_service.service.institution_configuration_options', $this->institutionConfigurationOptionsService);
+
+        $verifiedResult = json_decode('{
+            "collection": {
+                "total_items": 1,
+                "page": 1,
+                "page_size": 1
+            },
+            "items": [
+                {
+                    "id": "second-factor-id-56789",
+                    "type": "yubikey",
+                    "second_factor_identifier": "2340897143",
+                    "registration_code": "DMHKJKH8",
+                    "registration_requested_at": "' . date(DateTime::ISO8601) . '",
+                    "identity_id": "identity-id-123456",
+                    "institution": "institution-f.example.com",
+                    "common_name": "joe-f3 Institution-f.example.com"
+                }
+            ],
+            "filters": []
+        }', true);
+
+        $emptyResult = json_decode('{
+            "collection": {
+                "total_items": 0,
+                "page": 0,
+                "page_size": 0
+            },
+            "items": [],
+            "filters": []
+        }', true);
+
+        $tokenCollection = new SecondFactorTypeCollection();
+        $tokenCollection->verified = VerifiedSecondFactorCollection::fromData($verifiedResult);
+        $tokenCollection->unverified = UnverifiedSecondFactorCollection::fromData($emptyResult);
+        $tokenCollection->vetted = VettedSecondFactorCollection::fromData($emptyResult);
+
+        $this->secondFactorService
+            ->shouldReceive('getSecondFactorsForIdentity')
+            ->once()
+            ->andReturn($tokenCollection);
+
+        $this->secondFactorService->shouldReceive('findOneVerified')
+            ->andReturn($tokenCollection->verified->getOnlyElement());
+
+        // Mock institution configuration
+        $institutionConfigurationOptions = new InstitutionConfigurationOptions();
+
+        $this->institutionConfigurationOptionsService
+            ->shouldReceive('getInstitutionConfigurationOptionsFor')
+            ->with('institution')->once()
+            ->andReturn($institutionConfigurationOptions);
     }
 }
