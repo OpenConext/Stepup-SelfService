@@ -123,7 +123,7 @@ class RemoteVettingContext
     /**
      * @return string
      */
-    public function getIdentityProviderName()
+    public function getIdentityProviderSlug()
     {
         $process = $this->loadProcess();
         return $process->getIdentityProviderName();

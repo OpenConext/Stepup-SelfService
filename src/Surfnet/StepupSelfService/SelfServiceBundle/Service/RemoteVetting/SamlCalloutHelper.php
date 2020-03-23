@@ -18,13 +18,11 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 
 use Psr\Log\LoggerInterface;
-use SAML2\Assertion;
 use SAML2\Constants;
 use SAML2\XML\saml\SubjectConfirmation;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
@@ -68,14 +66,14 @@ class SamlCalloutHelper
     }
 
     /**
-     * @param string $identityProviderName
+     * @param string $identityProviderSlug
      * @return string
      */
-    public function createAuthnRequest($identityProviderName)
+    public function createAuthnRequest($identityProviderSlug)
     {
-        $this->logger->info(sprintf('Creating a SAML2 AuthnRequest to send to the %s remote vetting IdP', $identityProviderName));
+        $this->logger->info(sprintf('Creating a SAML2 AuthnRequest to send to the %s remote vetting IdP', $identityProviderSlug));
 
-        $identityProvider = $this->identityProviderFactory->create($identityProviderName);
+        $identityProvider = $this->identityProviderFactory->create($identityProviderSlug);
         $authnRequest = AuthnRequestFactory::createNewRequest($this->serviceProvider, $identityProvider);
 
         // Set NameId
@@ -99,14 +97,14 @@ class SamlCalloutHelper
 
     /**
      * @param Request $request
-     * @param string $identityProviderName
+     * @param string $identityProviderSlug
      * @return ProcessId
      */
-    public function handleResponse(Request $request, $identityProviderName)
+    public function handleResponse(Request $request, $identityProviderSlug)
     {
-        $identityProvider = $this->identityProviderFactory->create($identityProviderName);
+        $identityProvider = $this->identityProviderFactory->create($identityProviderSlug);
 
-        $this->logger->info(sprintf('Process the SAML Respons received from the %s remote vetting IdP', $identityProviderName));
+        $this->logger->info(sprintf('Process the SAML Respons received from the %s remote vetting IdP', $identityProviderSlug));
 
         $assertion = $this->postBinding->processResponse(
             $request,
@@ -123,7 +121,6 @@ class SamlCalloutHelper
             $assertion->getAttributes(),
             (string)$subjectConfirmation->NameID
         );
-        // todo: store raw result ($assertion->toXML()->ownerDocument->saveXML())
 
         // Handle validated state
         $processId = ProcessId::create($requestId);

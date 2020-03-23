@@ -119,11 +119,9 @@ class SecondFactorService
      */
     public function remoteVet(RemoteVetCommand $command)
     {
-        $secondFactor = $command->secondFactor;
-
         $apiCommand = new RemoteVetSecondFactorCommand();
-        $apiCommand->identityId = $command->identity->id;
-        $apiCommand->secondFactorId = $secondFactor->id;
+        $apiCommand->identityId = $command->identity;
+        $apiCommand->secondFactorId = $command->secondFactor;
 
         $result = $this->commandService->execute($apiCommand);
 

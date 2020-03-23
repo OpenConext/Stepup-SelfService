@@ -37,9 +37,14 @@ class RemoteVettingIdenityProviderDto
     private $logo;
 
     /**
+     * @var string
+     */
+    private $slug;
+
+    /**
      * @param string $identityId
      * @param string $secondFactorId
-     * @return RemoteVettingTokenDto
+     * @return RemoteVettingIdenityProviderDto
      */
     public static function create(array $configData)
     {
@@ -48,11 +53,14 @@ class RemoteVettingIdenityProviderDto
         Assert::allString($configData['description'], 'All description entries must be of type string');
         Assert::notBlank($configData['logo'], 'The logo of a remote vetting identity provider must not be blank');
         Assert::string($configData['logo'], 'The logo of a remote vetting identity provider must be of type string');
+        Assert::string($configData['slug'], 'The slug of a remote identity provider must be of type string');
+        Assert::notContains($configData['slug'], '/', 'The slug of a remote identity provider must not contain a slash');
 
         $identityProvider = new self();
         $identityProvider->name = $configData['name'];
         $identityProvider->descriptions = $configData['description'];
         $identityProvider->logo = $configData['logo'];
+        $identityProvider->slug = $configData['slug'];
 
         return $identityProvider;
     }
@@ -80,5 +88,13 @@ class RemoteVettingIdenityProviderDto
     public function getLogo()
     {
         return $this->logo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

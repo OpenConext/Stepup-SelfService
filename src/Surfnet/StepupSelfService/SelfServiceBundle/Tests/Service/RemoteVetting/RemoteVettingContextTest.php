@@ -339,7 +339,7 @@ class RemoteVettingContextTest extends IntegrationTest
         $context->initialize('IRMA', $token, AttributeListDto::notSet());
 
 
-        $this->assertSame('IRMA', $context->getIdentityProviderName());
+        $this->assertSame('IRMA', $context->getIdentityProviderSlug());
     }
 
 
