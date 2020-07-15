@@ -47,7 +47,7 @@ assetic:
     bundles:        [SurfnetStepupSelfServiceSelfServiceBundle]
     #java: /usr/bin/java
     node: "/usr/bin/node"
-    node_paths: ["/usr/lib/node_modules"]
+    node_paths: ["%kernel.root_dir%/../node_modules"]
     filters:
         cssrewrite: ~
         less: ~

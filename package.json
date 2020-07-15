@@ -10,6 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "bootstrap": "^3.4.1",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "less": "^3.12.0"
   }
 }
