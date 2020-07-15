@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2020 SURFnet B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,27 +18,31 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProveYubikeyPossessionType extends AbstractType
+class OtpType extends TextType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('otp', OtpType::class);
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand',
-        ]);
+        $resolver->setDefaults(
+            [
+                'label' => false,
+                'required' => true,
+                'attr' => [
+                    'autofocus' => true,
+                    'autocomplete' => 'off',
+                ]
+            ]
+        );
     }
-
     public function getBlockPrefix()
     {
-        return 'ss_prove_yubikey_possession';
+        return 'otp';
+    }
+
+    public function getParent()
+    {
+        return TextType::class;
     }
 }

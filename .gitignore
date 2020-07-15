@@ -4,6 +4,7 @@
 /web/app_test.php
 /web/js
 /web/css
+/web/fonts/*
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
@@ -14,6 +15,7 @@
 !app/logs/.gitkeep
 /build/
 /vendor/
+/node_modules/
 /composer.phar
 /cache.properties
 /app/SymfonyRequirements.php
