@@ -56,7 +56,6 @@ final class ViewConfigTest extends TestCase
         $this->assertEquals('EN explanation', $viewConfig->getExplanation());
         $this->assertEquals('EN authnFailed', $viewConfig->getAuthnFailed());
         $this->assertEquals('EN popFailed', $viewConfig->getPopFailed());
-        $this->assertEquals('EN popFailed', $viewConfig->getPopFailed());
         $this->assertEquals('EN initiateButton', $viewConfig->getInitiateButton());
     }
 
