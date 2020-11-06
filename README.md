@@ -7,7 +7,7 @@ This component is part of "Step-up Authentication as-a Service" and requires oth
 
 ## Requirements
 
- * PHP 5.6+ or PHP7
+ * PHP 7.2
  * [Composer](https://getcomposer.org/)
  * A web server (Apache, Nginx)
  * Graylog2 (or disable this Monolog handler)

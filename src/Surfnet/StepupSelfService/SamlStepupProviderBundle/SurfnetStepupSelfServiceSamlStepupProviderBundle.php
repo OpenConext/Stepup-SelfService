@@ -23,6 +23,9 @@ use Surfnet\StepupSelfService\SamlStepupProviderBundle\DependencyInjection\Compi
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @SuppressWarnings(PHPMD.LongClassName)
+ */
 class SurfnetStepupSelfServiceSamlStepupProviderBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
