@@ -1,3 +1,4 @@
+import jQuery from 'jquery';
 /**
  * Copyright 2018 SURFnet B.V.
  *
@@ -14,12 +15,10 @@
  * limitations under the License.
  */
 
-jQuery(function ($) {
+document.addEventListener('DOMContentLoaded', (_) => {
+  jQuery('a.registration-print').on('click', (e) => {
+    e.preventDefault();
 
-    $('a.registration-print').on('click', function(e) {
-        e.preventDefault();
-
-        window.print();
-    });
-
+    window.print();
+  });
 });

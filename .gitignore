@@ -20,3 +20,6 @@
 /app/check.php
 /bin/*
 !/bin/extract-translations.sh
+.idea
+node_modules
+web/build

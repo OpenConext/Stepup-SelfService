@@ -18,7 +18,8 @@
 {% endblock %}
 
 {% block body_end %}
-    {% javascripts '@SurfnetStepupSelfServiceSelfServiceBundle/Resources/public/js/registration-print.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('registration-print') }}
+    {% endblock %}
 {% endblock body_end %}

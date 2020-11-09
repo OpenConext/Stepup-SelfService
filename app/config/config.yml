@@ -4,6 +4,7 @@ imports:
     - { resource: samlstepupproviders.yml }
     - { resource: global_view_parameters.yml }
     - { resource: logging.yml }
+    - { resource: webpack_encore.yaml }
 
 framework:
     #esi:             ~
@@ -18,7 +19,7 @@ framework:
     templating:
         engines: ['twig']
     assets:
-        version: "%asset_version%"
+      json_manifest_path: '%kernel.project_dir%/web/build/manifest.json'
     default_locale:  "%default_locale%"
     trusted_hosts:   ~
     session:
@@ -32,28 +33,13 @@ framework:
 
 # Twig Configuration
 twig:
+    form_themes: ['bootstrap_4_layout.html.twig']
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     exception_controller: SurfnetStepupSelfServiceSelfServiceBundle:Exception:show
     globals:
         global_view_parameters: "@self_service.service.global_view_parameters"
         root_path: "%kernel.root_dir%"
-
-# Assetic Configuration
-assetic:
-    debug:          "%kernel.debug%"
-    use_controller: false
-    bundles:        [MopaBootstrapBundle, SurfnetStepupSelfServiceSelfServiceBundle]
-    #java: /usr/bin/java
-    node: "/usr/bin/node"
-    node_paths: ["/usr/lib/node_modules"]
-    filters:
-        cssrewrite: ~
-        less: ~
-        #closure:
-        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
-        #yui_css:
-        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
 nelmio_security:
     clickjacking:
@@ -66,13 +52,6 @@ nelmio_security:
         report_logger_service: monolog.logger.security
         # Content types: default, script, object, style, img, media, frame, font, connect
         default: [ self ]
-
-mopa_bootstrap:
-    form:
-        show_legend: false
-        templating: SurfnetStepupSelfServiceSelfServiceBundle:Form:fields.html.twig
-    icons:
-        icon_set: fontawesome4
 
 services:
     twig.extension.text: # Required by JMSTranslationBundle

@@ -1,58 +1,68 @@
-{% extends 'MopaBootstrapBundle::base.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if block('page_title') is not empty %}{{ block('page_title') }} &mdash; {% endif %}
+        {{ 'app.name'|trans }}
+    </title>
+    {% block head_style %}
 
-{% block title %}
-    {%  if block('page_title') is not empty %}{{ block('page_title') }} &mdash; {% endif %}
-    {{ 'app.name'|trans }}
-{% endblock title %}
+        <style type="text/css">
+            body {
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
 
-{% block head_style %}
+            .registration-print-options {
+                display: none !important;
+            }
 
-    <style type="text/css">
-        body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-        .registration-print-options {
-            display: none !important;
-        }
-        .pull-right {
-            float: right;
-        }
-        .clearfix {
-            float: none;
-        }
-        .page-header {
-            height: 100px;
-        }
-        .page-header h1 {
-            padding-top: 14px;
-        }
-    </style>
+            .pull-right {
+                float: right;
+            }
 
-{% endblock head_style %}
-{% block head_bottom %}
-{% endblock head_bottom %}
+            .clearfix {
+                float: none;
+            }
 
-{% block navbar %}
-{% endblock navbar %}
+            .page-header {
+                height: 100px;
+            }
 
-    {% block header %}
-    {% endblock header %}
+            .page-header h1 {
+                padding-top: 14px;
+            }
+        </style>
 
+    {% endblock head_style %}
+</head>
+<body>
+<div class="container">
     {% block page_header %}
         <div class="page-header clearfix">
-            <img src="file://{{ root_path }}/../web/images/header-logo.png" class="pull-right logo" alt="OpenConext Stepup" style="width:55mm;">
+            <img src="file://{{ root_path }}/../web/images/header-logo.png" class="pull-right logo"
+                 alt="OpenConext Stepup" style="width:55mm;">
             <h1>{{ 'app.name'|trans }}</h1>
         </div>
     {% endblock page_header %}
 
-    {% block content_row %}
-        {% block content %}
-        {% endblock content %}
-    {% endblock content_row %}
+    <div class="main-content">
 
+        {% block content_row %}
+            {% block content %}
+            {% endblock content %}
+        {% endblock content_row %}
+    </div>
     {% block footer %}
     {% endblock footer %}
+</div>
 
 {% block foot_script %}
 
 {% endblock foot_script %}
+
+</body>
+</html>
+
+

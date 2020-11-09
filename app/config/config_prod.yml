@@ -5,3 +5,5 @@ imports:
 #    validation:
 #        cache: apc
 
+webpack_encore:
+  cache: true

@@ -31,7 +31,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Nelmio\SecurityBundle\NelmioSecurityBundle(),
-            new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Surfnet\StepupSelfService\SelfServiceBundle\SurfnetStepupSelfServiceSelfServiceBundle(),
             new Surfnet\StepupSelfService\SamlStepupProviderBundle\SurfnetStepupSelfServiceSamlStepupProviderBundle(),
             new Surfnet\StepupMiddlewareClientBundle\SurfnetStepupMiddlewareClientBundle(),
@@ -40,6 +39,7 @@ class AppKernel extends Kernel
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new Surfnet\StepupU2fBundle\SurfnetStepupU2fBundle(),
             new OpenConext\MonitorBundle\OpenConextMonitorBundle(),
+            new Symfony\WebpackEncoreBundle\WebpackEncoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
