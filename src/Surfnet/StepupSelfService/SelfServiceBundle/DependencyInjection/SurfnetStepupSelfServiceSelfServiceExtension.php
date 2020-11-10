@@ -18,7 +18,6 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\DependencyInjection;
 
-use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,6 +27,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration
+ *
+ * @SuppressWarnings(PHPMD.LongClassName)
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
