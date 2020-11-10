@@ -18,6 +18,7 @@
     "guzzlehttp/guzzle": "^6",
     "incenteev/composer-parameter-handler": "~2.0",
     "jms/translation-bundle": "~1.3.0",
+    "malukenho/docheader": "^0.1.8",
     "mopa/bootstrap-bundle": "^3.2",
     "mopa/composer-bridge": "~1.5",
     "mpdf/mpdf": "^7.0",
@@ -54,6 +55,7 @@
       "@phpmd",
       "@phpcs",
       "@phpcpd",
+      "@license-headers",
       "@phpunit",
       "@behat",
       "@security-tests"
@@ -64,6 +66,7 @@
     ],
     "lint-php": "vendor/bin/parallel-lint src",
     "lint-composer": "composer validate",
+    "license-headers": "vendor/bin/docheader check src/",
     "phpmd": "vendor/bin/phpmd ./src text phpmd.xml --suffixes php --exclude */Tests/*",
     "phpcs": [
       "vendor/bin/phpcs --standard=phpcs.xml --report=full --warning-severity=0 ./src"
