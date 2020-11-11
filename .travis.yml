@@ -20,7 +20,7 @@ cache:
 
 before_script:
   - phpenv config-add .travis.php.ini
-  - composer self-update 1.10.16
+  - composer self-update --1
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
   - nvm install 10.22.0
   - curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
