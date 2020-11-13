@@ -37,7 +37,6 @@ class AppKernel extends Kernel
             new Surfnet\SamlBundle\SurfnetSamlBundle(),
             new Surfnet\StepupBundle\SurfnetStepupBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
-            new Surfnet\StepupU2fBundle\SurfnetStepupU2fBundle(),
             new OpenConext\MonitorBundle\OpenConextMonitorBundle(),
             new Symfony\WebpackEncoreBundle\WebpackEncoreBundle(),
         );
