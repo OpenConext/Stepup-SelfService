@@ -139,3 +139,11 @@ span.label {
     border-bottom: none;
   }
 }
+
+.alert-error {
+  @extend .alert-danger;
+}
+
+.alert-notice {
+  @extend .alert-info;
+}
