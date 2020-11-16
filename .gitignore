@@ -1,9 +1,7 @@
-/web/bundles/
-/web/app_dev.php
+//bundles/
+/public/app_dev.php
 /web/app_dev.php.dist
-/web/app_test.php
-/web/js
-/web/css
+/public/app_test.php
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
@@ -22,4 +20,4 @@
 !/bin/extract-translations.sh
 .idea
 node_modules
-web/build
+public/build
