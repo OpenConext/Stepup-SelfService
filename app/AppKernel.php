@@ -28,7 +28,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Nelmio\SecurityBundle\NelmioSecurityBundle(),
             new Surfnet\StepupSelfService\SelfServiceBundle\SurfnetStepupSelfServiceSelfServiceBundle(),
@@ -43,7 +42,6 @@ class AppKernel extends Kernel
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-            $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
         }
 
         return $bundles;

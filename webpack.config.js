@@ -12,7 +12,10 @@ Encore
         './vendor/surfnet/stepup-bundle/src/Resources/public/less/stepup.less'
     ])
     .addEntry('registration-print', './public/typescript/registration-print.ts')
-    .addEntry('app', './public/typescript/app.ts')
+    .addEntry('app', [
+        './public/typescript/app.ts',
+        './vendor/surfnet/stepup-bundle/src/Resources/public/js/stepup.js'
+    ])
 
     // Convert sass files.
     .enableSassLoader(function (options) {

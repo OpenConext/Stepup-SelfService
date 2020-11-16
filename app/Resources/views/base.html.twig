@@ -86,11 +86,6 @@
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        {% javascripts
-            '@SurfnetStepupBundle/Resources/public/js/stepup.js'
-        %}
-            <script type="text/javascript" defer src="{{ asset_url }}"></script>
-        {% endjavascripts %}
     {% endblock %}
 </div>
 </body>
