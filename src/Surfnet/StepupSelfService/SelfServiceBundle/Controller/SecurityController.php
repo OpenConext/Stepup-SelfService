@@ -29,7 +29,7 @@ class SecurityController extends Controller
             ->getCurrentRequestUri();
 
         return $this->render(
-            '@SurfnetStepupSelfServiceSelfService/Security/sessionExpired.html.twig',
+            'SurfnetStepupSelfServiceSelfServiceBundle:Security:session_expired.html.twig',
             ['redirect_to_url' => $redirectToUrl]
         );
     }
