@@ -3,6 +3,10 @@ services:
     # application.
     _defaults: { public: true }
 
+    logger:
+      alias: 'monolog.logger'
+      public: true
+
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
         arguments:
