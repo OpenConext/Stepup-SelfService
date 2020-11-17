@@ -8,7 +8,6 @@ parameters:
 
     debug_toolbar:          true
     debug_redirects:        false
-    use_assetic_controller: true
 
     gateway_api_url: https://gw-dev.stepup.coin.surf.net/
     gateway_api_username: ss
