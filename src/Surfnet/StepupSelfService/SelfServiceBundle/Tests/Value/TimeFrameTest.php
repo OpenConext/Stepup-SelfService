@@ -18,12 +18,12 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Value;
 
-use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\TimeFrame;
 
-class TimeFrameTest extends UnitTest
+class TimeFrameTest extends TestCase
 {
     /**
      * @test
@@ -34,7 +34,7 @@ class TimeFrameTest extends UnitTest
      */
     public function it_cannot_be_given_an_non_positive_amount_of_seconds($notPositiveInteger)
     {
-        $this->setExpectedException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         TimeFrame::ofSeconds($notPositiveInteger);
     }
