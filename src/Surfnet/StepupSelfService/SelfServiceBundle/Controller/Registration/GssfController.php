@@ -269,7 +269,7 @@ final class GssfController extends Controller
             ]
         );
         return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
+            'SurfnetStepupSelfServiceSelfServiceBundle:registration/gssf:initiate.html.twig',
             $templateParameters
         );
     }

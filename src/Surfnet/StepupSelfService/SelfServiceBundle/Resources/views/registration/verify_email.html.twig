@@ -5,7 +5,7 @@
 {% block page_header %}
     {{ parent() }}
 
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progressBar.html.twig' with {'progress': 75, 'step': 4, verifyEmail: true} only %}
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 75, 'step': 4, verifyEmail: true} only %}
 {% endblock %}
 
 {% block content %}

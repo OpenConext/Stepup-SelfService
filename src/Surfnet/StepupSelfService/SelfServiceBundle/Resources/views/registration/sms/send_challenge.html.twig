@@ -6,9 +6,9 @@
     {{ parent() }}
 
     {% if verifyEmail %}
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progress_bar.html.twig' with {'progress': 25, 'step': 2, verifyEmail: true} only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 25, 'step': 2, verifyEmail: true} only %}
     {% else %}
-        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:progress_bar.html.twig' with {'progress': 35, 'step': 2, verifyEmail: false} only %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 35, 'step': 2, verifyEmail: false} only %}
     {% endif %}
 {% endblock %}
 
