@@ -15,7 +15,7 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <p>{{ secondFactorConfig.getExplanation() }}</p>
+    <p>{{ secondFactorConfig.getExplanation()|raw }}</p>
 
     <hr>
 
