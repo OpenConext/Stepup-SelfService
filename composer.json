@@ -132,13 +132,13 @@
         "symfony-assets-install": "symlink",
         "incenteev-parameters": [
             {
-                "file": "config/legacy/parameters.yml"
+                "file": "config/legacy/parameters.yaml"
             },
             {
-                "file": "config/legacy/samlstepupproviders_parameters.yml"
+                "file": "config/legacy/samlstepupproviders_parameters.yaml"
             },
             {
-                "file": "config/legacy/global_view_parameters.yml"
+                "file": "config/legacy/global_view_parameters.yaml"
             }
         ]
     }

@@ -1,8 +1,8 @@
 imports:
-  - { resource: 'legacy/samlstepupproviders_parameters.yml' }
-  - { resource: 'legacy/global_view_parameters.yml' }
-  - { resource: 'legacy/parameters.yml' }
-  - { resource: 'legacy/samlstepupproviders.yml' }
+  - { resource: 'legacy/samlstepupproviders_parameters.yaml' }
+  - { resource: 'legacy/global_view_parameters.yaml' }
+  - { resource: 'legacy/parameters.yaml' }
+  - { resource: 'legacy/samlstepupproviders.yaml' }
 
 services:
   logger:
