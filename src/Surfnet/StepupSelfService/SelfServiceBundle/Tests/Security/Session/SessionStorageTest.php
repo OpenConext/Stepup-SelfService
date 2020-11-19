@@ -20,19 +20,19 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Security\Session;
 
 use DateTime as CoreDateTime;
 use Mockery;
-use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class SessionStorageTest extends UnitTest
+class SessionStorageTest extends TestCase
 {
     /**
      * Ensures that any modifications to the time do not bleed through to other tests
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->setCurrentTime(null);
     }
@@ -56,7 +56,7 @@ class SessionStorageTest extends UnitTest
      */
     public function the_authentication_moment_cannot_be_logged_twice()
     {
-        $this->setExpectedException(LogicException::class);
+        $this->expectException(LogicException::class);
 
         $sessionStorage = new SessionStorage(new FakeSession());
 
@@ -105,7 +105,7 @@ class SessionStorageTest extends UnitTest
      */
     public function attempting_to_retrieve_an_authentication_moment_when_not_yet_logged_causes_an_exception_to_be_thrown()
     {
-        $this->setExpectedException(LogicException::class);
+        $this->expectException(LogicException::class);
 
         $sessionStorage = new SessionStorage(new FakeSession());
 

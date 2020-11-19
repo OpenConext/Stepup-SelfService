@@ -18,20 +18,19 @@
 
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Exception\InvalidConfigurationException;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Exception\UnknownProviderException;
 
 final class ProviderRepository
 {
     /**
-     * @var <ArrayCollection>Provider
+     * @var []]Provider
      */
     private $providers;
 
     public function __construct()
     {
-        $this->providers = new ArrayCollection();
+        $this->providers = [];
     }
 
     /**
@@ -39,14 +38,14 @@ final class ProviderRepository
      */
     public function addProvider(Provider $provider)
     {
-        if ($this->providers->containsKey($provider->getName())) {
+        if ($this->has($provider->getName())) {
             throw new InvalidConfigurationException(sprintf(
                 'Provider "%s" has already been added to the repository',
                 $provider->getName()
             ));
         }
 
-        $this->providers->set($provider->getName(), $provider);
+        $this->providers[$provider->getName()] = $provider;
     }
 
     /**
@@ -55,7 +54,7 @@ final class ProviderRepository
      */
     public function has($providerName)
     {
-        return $this->providers->containsKey($providerName);
+        return array_key_exists($providerName, $this->providers);
     }
 
     /**
@@ -65,9 +64,9 @@ final class ProviderRepository
     public function get($providerName)
     {
         if (!$this->has($providerName)) {
-            throw UnknownProviderException::create($providerName, $this->providers->getKeys());
+            throw UnknownProviderException::create($providerName, array_keys($this->providers));
         }
 
-        return $this->providers->get($providerName);
+        return $this->providers[$providerName];
     }
 }

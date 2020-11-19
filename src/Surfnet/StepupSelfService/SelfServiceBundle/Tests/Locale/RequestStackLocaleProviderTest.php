@@ -19,7 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Locale;
 
 use Mockery as m;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Locale\RequestStackLocaleProvider;
 
 final class RequestStackLocaleProviderTest extends TestCase
@@ -69,28 +70,28 @@ final class RequestStackLocaleProviderTest extends TestCase
     /**
      * @test
      * @dataProvider non_strings
-     * @expectedException Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException
-     * @expectedExceptionMessage given for "defaultLocale"
      * @param mixed $nonString
      */
     public function it_requires_the_default_locale_to_be_a_string($nonString)
     {
-        $requestStack = m::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $this->expectExceptionMessageMatches('/given for "defaultLocale"/');
+        $this->expectException(InvalidArgumentException::class);
 
+        $requestStack = m::mock('Symfony\Component\HttpFoundation\RequestStack');
         new RequestStackLocaleProvider($requestStack, $nonString, ['en_GB', 'nl_NL']);
     }
 
     /**
      * @test
      * @dataProvider non_strings
-     * @expectedException Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException
-     * @expectedExceptionMessage given for "supportedLocales[1]"
      * @param mixed $nonString
      */
     public function it_requires_the_supported_locales_to_be_strings($nonString)
     {
-        $requestStack = m::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/given for "supportedLocales\[1\]"/');
 
+        $requestStack = m::mock('Symfony\Component\HttpFoundation\RequestStack');
         new RequestStackLocaleProvider($requestStack, 'nl_NL', ['en_GB', $nonString]);
     }
 }

@@ -20,19 +20,19 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Security\Session;
 
 use DateTime as CoreDateTime;
 use Mockery;
-use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionLifetimeGuard;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\TimeFrame;
 
-class SessionLifetimeGuardTest extends UnitTest
+class SessionLifetimeGuardTest extends TestCase
 {
     /**
      * Ensures that any modifications to the time do not bleed through to other tests
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->setCurrentTime(null);
     }

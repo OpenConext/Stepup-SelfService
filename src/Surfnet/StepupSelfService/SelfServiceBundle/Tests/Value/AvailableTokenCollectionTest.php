@@ -18,11 +18,11 @@
 
 namespace Surfnet\Stepup\Tests;
 
-use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 
-class AvailableTokenCollectionTest extends UnitTest
+class AvailableTokenCollectionTest extends TestCase
 {
     public function test_create_from()
     {

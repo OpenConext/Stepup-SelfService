@@ -113,7 +113,7 @@ class SecondFactorController extends Controller
 
         $form = $this->createForm(RevokeSecondFactorType::class, $command)->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var FlashBagInterface $flashBag */
             $flashBag = $this->get('session')->getFlashBag();
 

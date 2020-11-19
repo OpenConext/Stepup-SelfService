@@ -96,6 +96,7 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
         }
 
         $definition->setArguments([$configuration]);
+        $definition->setPublic(true);
         $container->setDefinition('self_service.second_factor_test_idp', $definition);
     }
 }

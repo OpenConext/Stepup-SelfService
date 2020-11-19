@@ -18,14 +18,14 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service;
 
-use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorTypeCollection;
 use Mockery as m;
 
-class SecondFactorTypeCollectionTest extends UnitTest
+class SecondFactorTypeCollectionTest extends TestCase
 {
     public function test_it_calculates_number_of_registrations_left()
     {

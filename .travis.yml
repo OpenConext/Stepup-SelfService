@@ -18,7 +18,7 @@ matrix:
 
 env:
   global:
-    - SYMFONY_ENV=test
+    - APP_ENV=test
 
 cache:
   directories:

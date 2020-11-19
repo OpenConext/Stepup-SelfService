@@ -85,7 +85,7 @@ services:
 
     # Session
     self_service.security.authentication.session.session_storage:
-        public: false
+        public: true
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage
         arguments:
             - "@session"

@@ -1,0 +1,61 @@
+parameters:
+    trusted_proxies:   ~
+
+    default_locale:         en_GB
+    locales:                [nl_NL, en_GB]
+    locale_cookie_domain:   example.org
+    secret:                 NotSoSecretReplaceMe!
+
+    debug_toolbar:          true
+    debug_redirects:        false
+
+    gateway_api_url: https://gw-dev.stepup.coin.surf.net/
+    gateway_api_username: ss
+    gateway_api_password: ss
+
+    middleware_credentials_username: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    middleware_credentials_password: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    middleware_url_command_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
+    middleware_url_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
+
+    sms_originator: SURFStepup
+    sms_otp_expiry_interval: 900 # 15 minutes
+    sms_maximum_otp_requests: 3
+
+    saml_sp_publickey:
+    saml_sp_privatekey:
+
+    saml_metadata_publickey:
+    saml_metadata_privatekey:
+
+    saml_remote_idp_entity_id:
+    saml_remote_idp_sso_url:
+    saml_remote_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    asset_version: 1
+
+    second_factor_test_idp_entity_id: ~
+    second_factor_test_idp_sso_url: ~
+    second_factor_test_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+
+    stepup_loa_loa1: https://gateway.tld/authentication/loa1
+    stepup_loa_loa2: https://gateway.tld/authentication/loa2
+    stepup_loa_loa3: https://gateway.tld/authentication/loa3
+
+    logout_redirect_url:
+        nl_NL: https://www.surf.nl/over-surf/werkmaatschappijen/surfnet
+        en_GB: https://www.surf.nl/en/about-surf/subsidiaries/surfnet
+
+    enabled_second_factors:
+        - sms
+        - yubikey
+    enabled_generic_second_factors:
+        biometric:
+            loa: 3
+        tiqr:
+            loa: 3
+
+    irma_app_android_url: https://play.google.com/store/apps/details?id=org.irmacard.cardemu&hl=en
+    irma_app_ios_url: https://itunes.apple.com/us/app/irma-authentication/id1294092994?mt=8
+
+    session_max_absolute_lifetime: 3600 # 1 hours * 60 minutes * 60 seconds
+    session_max_relative_lifetime: 600  # 10 minutes * 60 seconds
