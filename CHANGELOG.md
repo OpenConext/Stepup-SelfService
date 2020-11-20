@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.0
+Platform update
+ * Drop support for php 5.6, Use PHP7.2
+ * Upgrade to Synfony 4
+ * Allow HTML in explanation/description
+ * Update dependencies
+
 ## 3.1.0
 A release with bugfixes after initial FGA tests
  * Fix exception controller authentication exceptions #179
