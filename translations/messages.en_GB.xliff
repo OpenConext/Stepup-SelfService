@@ -374,7 +374,7 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="474737f264f9527e93a9f4f4c4c380331b52e759" resname="ss.second_factor.list.text.no_second_factors">
         <source>ss.second_factor.list.text.no_second_factors</source>
-        <target xml:space="preserve">There are no tokens registered for your account. Click on 'Register token' to register a new token.
+        <target xml:space="preserve">There are no tokens registered for your account. Click on 'Add token' to register a new token.
 </target>
         <jms:reference-file line="18">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>

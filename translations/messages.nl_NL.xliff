@@ -374,7 +374,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="474737f264f9527e93a9f4f4c4c380331b52e759" resname="ss.second_factor.list.text.no_second_factors">
         <source>ss.second_factor.list.text.no_second_factors</source>
-        <target>Er zijn geen tokens geregistreerd voor jouw account. Klik op 'Registreer token' om een nieuw token te registreren.</target>
+        <target>Er zijn geen tokens geregistreerd voor jouw account. Klik op 'Token toevoegen' om een nieuw token te registreren.</target>
         <jms:reference-file line="18">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a1a1aa0e1c0a720bc6144c5a5a03d89ad6fdcc87" resname="ss.second_factor.list.text.unverified">
