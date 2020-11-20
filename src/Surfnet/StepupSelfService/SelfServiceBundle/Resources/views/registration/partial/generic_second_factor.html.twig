@@ -14,7 +14,7 @@
         <hr>
         <p>
             {{
-                (secondFactor.getDescription())|e|replace(
+                (secondFactor.getDescription())|replace(
                 {
                     '%android_link_start%': '<a href="'~appAndroidUrl~'">',
                     '%android_link_end%': '</a>',
