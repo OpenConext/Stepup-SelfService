@@ -47,7 +47,7 @@ class SmsController extends Controller
         $maximumOtpRequests = $service->getMaximumOtpRequestsCount();
         $viewVariables = ['otpRequestsRemaining' => $otpRequestsRemaining, 'maximumOtpRequests' => $maximumOtpRequests];
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $command->identity = $identity->id;
             $command->institution = $identity->institution;
 
@@ -97,7 +97,7 @@ class SmsController extends Controller
 
         $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {

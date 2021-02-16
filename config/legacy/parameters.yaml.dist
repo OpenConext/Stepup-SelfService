@@ -1,0 +1,152 @@
+parameters:
+    trusted_proxies:   ~
+
+    default_locale:         en_GB
+    locales:                [nl_NL, en_GB]
+    locale_cookie_domain:   example.org
+    secret:                 NotSoSecretReplaceMe!
+
+    debug_toolbar:          true
+    debug_redirects:        false
+
+    gateway_api_url: https://gw-dev.stepup.coin.surf.net/
+    gateway_api_username: ss
+    gateway_api_password: ss
+
+    middleware_credentials_username: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    middleware_credentials_password: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    middleware_url_command_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
+    middleware_url_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
+
+    sms_originator: SURFStepup
+    sms_otp_expiry_interval: 900 # 15 minutes
+    sms_maximum_otp_requests: 3
+
+    saml_sp_publickey:
+    saml_sp_privatekey:
+
+    saml_metadata_publickey:
+    saml_metadata_privatekey:
+
+    saml_remote_idp_entity_id:
+    saml_remote_idp_sso_url:
+    saml_remote_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    asset_version: 1
+
+    second_factor_test_idp_entity_id: ~
+    second_factor_test_idp_sso_url: ~
+    second_factor_test_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+
+    stepup_loa_loa1: https://gateway.tld/authentication/loa1
+    stepup_loa_loa2: https://gateway.tld/authentication/loa2
+    stepup_loa_loa3: https://gateway.tld/authentication/loa3
+
+    logout_redirect_url:
+        nl_NL: https://www.surf.nl/over-surf/werkmaatschappijen/surfnet
+        en_GB: https://www.surf.nl/en/about-surf/subsidiaries/surfnet
+
+    enabled_second_factors:
+        - sms
+        - yubikey
+    enabled_generic_second_factors:
+        biometric:
+            loa: 3
+        tiqr:
+            loa: 3
+
+    irma_app_android_url: https://play.google.com/store/apps/details?id=org.irmacard.cardemu&hl=en
+    irma_app_ios_url: https://itunes.apple.com/us/app/irma-authentication/id1294092994?mt=8
+
+    session_max_absolute_lifetime: 3600 # 1 hours * 60 minutes * 60 seconds
+    session_max_relative_lifetime: 600  # 10 minutes * 60 seconds
+
+    # remote vetting
+
+    # For each remote vetting IdP we require some parameters.
+    remote_vetting_idps:
+          # The display name
+        - name: "IRMA"
+          # The logo that is displayed in the UI, should be a transparent PNG, preferably monochrome coloured
+          logo: "/images/remote-vetting/irma.png"
+          # This discription is presented to the user choosing a remote vetting IdP, make sure this description amply
+          # describes the service.
+          description:
+            nl_NL: Met IRMA kunt u op een privacy-vriendelijke, beveiligde manier eigenschappen (attributen) van uzelf onthullen.
+            en_GB: IRMA is a unique privacy-friendly identity platform for both authentication and signing.
+          # The slug is used in the URL to keep track of which remote vetting IdP was chosen by the user. Should not contain
+          # special characters, alphanumeric (lower case) characters and dashes are allowed.
+          slug: irma
+          # The entity id of the remote vetting IdP
+          entityId: https://selfservice.stepup.example.com/mock/metadata
+          # The SSO url of the remote vetting IdP
+          ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
+          # Certificates for the remote vetting IdP
+          certificateFile: "%saml_rv_publickey%"
+          privateKey: "%saml_rv_privatekey%"
+          # The attribute mapping should map the institute IdP attributes with the ones received from the remote vetting
+          # IdP.
+          attributeMapping:
+            givenName: firstName
+            surname: lastName
+        - name: "ReadId"
+          logo: "/images/remote-vetting/readid.png"
+          description:
+            nl_NL: ReadID® verifieert identiteitsbewijzen uitgerust met NFC op een smartphone.
+            en_GB: ReadID® verifies identity documents with NFC on a smartphone
+          slug: readid
+          entityId: https://selfservice.stepup.example.com/mock/metadata
+          ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
+          certificateFile: "%saml_rv_publickey%"
+          privateKey: "%saml_rv_privatekey%"
+          attributeMapping:
+            givenName: firstName
+            surname: lastName
+        - name: "iDIN"
+          logo: "/images/remote-vetting/idin.png"
+          description:
+            nl_NL: iDIN is een dienst van de banken waarmee consumenten zich bij andere organisaties met de veilige en vertrouwde inlogmiddelen van hun eigen bank kunnen identificeren.
+            en_GB: iDIN is a service offered by banks which allows consumers to use their bank’s secure and reliable login methods to carry out the following actions on the websites of other organisations.
+          slug: idin
+          entityId: https://selfservice.stepup.example.com/mock/metadata
+          ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
+          certificateFile: '%saml_rv_publickey%'
+          privateKey: '%saml_rv_privatekey%'
+          attributeMapping:
+            givenName: firstName
+            surname: lastName
+    # SelfService acts as the remote vetting SP, this metadata is used by the remote vetting IdP's to post their SAML
+    # responses to
+    remote_vetting_sp:
+      entityId: https://selfservice.stepup.example.com/saml/metadata
+      assertionConsumerUrl: https://selfservice.stepup.example.com/second-factor/acs
+      privateKey: '%saml_rv_privatekey%'
+
+    identity_encryption_configuration:
+      # The public key used to encrypt the remote vetting user data. The private key matching this is used to decrypt,
+      # but is not configured in the application. The application can not be used to decrypt the data.
+      encryption_public_key: |
+        -----BEGIN CERTIFICATE-----
+        MIIC6jCCAdICCQC9cRx5wiwWOjANBgkqhkiG9w0BAQsFADA3MRwwGgYDVQQDDBNT
+        ZWxmU2VydmljZSBTQU1MIFNQMRcwFQYDVQQKDA5EZXZlbG9wbWVudCBWTTAeFw0x
+        ODA3MzAxMjMwNDdaFw0yMzA3MjkxMjMwNDdaMDcxHDAaBgNVBAMME1NlbGZTZXJ2
+        aWNlIFNBTUwgU1AxFzAVBgNVBAoMDkRldmVsb3BtZW50IFZNMIIBIjANBgkqhkiG
+        9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqhbI0Xy682DuvWchg6FYnI+DNwLXef2XExM4
+        YVRBaMMsOZ3rBtQUTMSqYan6SK/BOEXLs0rNiJjyM0dn+F98wg3fv5zIADlvfk3L
+        BVdcGsrpVfFUWtSa73yMgbROy8/RJADbUJE/HUB3ZmdjdiuD2Cui2aoWwT2HR8uk
+        Jwmoxiu45IWFPbqPQ7/1mH644JPOWTPLTv4OGGLQo8MNrP1oRCiZ0IEL4CQeGOOj
+        u5rfIJ0bTVm0UmelT4hGaqZovBMwXp3QV41akJ7UEMEBK2YMnLQy47Xuzi7aTDhJ
+        lvHcJ8mfH2NbjRh7hJoACVRTvQloxajgkr1iGMiWiiqT0e+YYwIDAQABMA0GCSqG
+        SIb3DQEBCwUAA4IBAQBwZ0gRHvR8B8KivrXrhWNL9uLvWhEAH7OiDqo+fywkBp5K
+        EuDJcbbvEPftHunSAGylg7M2xKuBIGamFpp74WDJccrtZ1jJ4qqnacUDRQrTLqqM
+        ZKqGpFOU0xjKkSxSGRuMtGN9/7er/TeonjQ0XBvjYvTomy3b5aCLVWRvEfKu2g1s
+        Dd8uhr62RY/HfMgidEt7LHDolkCVg+6JzY3OTcgeHga3cvYObOYPplxw1YPq5+Bq
+        qxaUW4nfb5DtK33bZBYMeyV6BZtSggc5Z/19aPx/s0bf6ySTUyB3lRqe5d3etCns
+        4bGidORCl/6EZiXwVcPvmYmxYXqmuNWfps7isUvo
+        -----END CERTIFICATE-----
+
+      # The location on disk where the encrypted remote vetting user data is stored
+      storage_location: '%kernel.project_dir%/app/rv'
+
+    # For test, we use a mock remote vetting IdP, these certificates are used for that.
+    saml_rv_publickey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt
+    saml_rv_privatekey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key

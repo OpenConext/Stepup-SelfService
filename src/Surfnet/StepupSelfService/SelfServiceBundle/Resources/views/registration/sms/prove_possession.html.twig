@@ -1,0 +1,49 @@
+{% extends "base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.sms.prove_possession.title.page'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% if verifyEmail %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 35, 'step': 2, verifyEmail: true} only %}
+    {% else %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 50, 'step': 2, verifyEmail: false} only %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.registration.sms.text.help_user_enter_challenge'|trans }}</p>
+
+    <ul>
+        <li>{{ 'ss.registration.sms.text.enter_challenge_below'|trans }}</li>
+        <li>{{ 'ss.registration.sms.text.retry_if_not_received'|trans }}</li>
+    </ul>
+
+    <hr>
+
+    {{ form_start(form) }}
+    <div class="row">
+        {{ form_errors(form) }}
+        <div class="col-xs-4">
+            {{ form_label(form.challenge) }}
+        </div>
+        <div class="col-xs-8">
+            {{ form_widget(form.challenge) }}
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row offset-top">
+        <div class="col-xs-4">&nbsp;</div>
+        <div class="col-xs-4">
+            {{ form_row(form.resendChallenge) }}
+        </div>
+        <div class="col-xs-4">
+            {{ form_row(form.verifyChallenge) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+
+{% endblock %}

@@ -27,10 +27,6 @@ class BuiltInToken implements AvailableTokenInterface
             'loaLevel' => 2,
             'route' => 'ss_registration_sms_send_challenge'
         ],
-        'u2f' => [
-            'loaLevel' => 3,
-            'route' => 'ss_registration_u2f_registration'
-        ],
         'yubikey' => [
             'loaLevel' => 3,
             'route' => 'ss_registration_yubikey_prove_possession'

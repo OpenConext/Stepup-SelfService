@@ -147,7 +147,7 @@ class RegistrationController extends Controller
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 
         return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
+            'SurfnetStepupSelfServiceSelfServiceBundle:registration:registration_email_sent.html.twig',
             $parameters
         );
     }
@@ -161,7 +161,7 @@ class RegistrationController extends Controller
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 
         $response = $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSentPdf.html.twig',
+            'SurfnetStepupSelfServiceSelfServiceBundle:registration:registration_email_sent_pdf.html.twig',
             $parameters
         );
         $content = $response->getContent();

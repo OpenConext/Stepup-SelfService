@@ -1,0 +1,7 @@
+surfnet_stepup_middleware_client:
+  authorisation:
+    username: "%middleware_credentials_username%"
+    password: "%middleware_credentials_password%"
+  url:
+    command_api: "%middleware_url_command_api%"
+    api: "%middleware_url_api%"

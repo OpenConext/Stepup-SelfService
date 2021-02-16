@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.registration_email_sent.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% if verifyEmail %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress':75, 'step': 4, verifyEmail: true} only %}
+    {% else %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:registration_email_sent.html.twig' %}
+{% endblock %}
+
+{% block body_end %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('registration-print') }}
+    {% endblock %}
+{% endblock body_end %}

@@ -62,7 +62,7 @@ final class LocaleController extends Controller
         );
         $form->handleRequest($request);
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addFlash('error', $this->get('translator')->trans('ss.flash.invalid_switch_locale_form'));
             $logger->error('The switch locale form unexpectedly contained invalid data');
             return $this->redirect($returnUrl);

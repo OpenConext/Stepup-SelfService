@@ -1,0 +1,37 @@
+security:
+  providers:
+    middleware:
+      id: self_service.service.identity
+
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/|^/_trans(/|$)
+      security: false
+
+    default:
+      pattern: ^/authentication/(metadata|session-expired)$
+      logout_on_user_change: true
+      anonymous: ~
+
+    monitor:
+      pattern: ^/(info|health)$
+      security: false
+
+    csp_report:
+      pattern: ^/csp/report$
+      security: false
+
+    saml_based:
+      saml: true
+      logout_on_user_change: true
+      logout:
+        path: /logout
+        success_handler: "self_service.security.authentication.handler.logout_success"
+        invalidate_session: true
+        csrf_token_generator: security.csrf.token_manager
+        csrf_parameter: 't'
+        csrf_token_id: 'self_service_logout_token'
+
+  access_control:
+    - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+    - { path: ^/, roles: ROLE_USER, requires_channel: https }

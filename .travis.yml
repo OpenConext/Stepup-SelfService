@@ -12,30 +12,29 @@ php:
   - 7.4
 
 matrix:
+  fast_finish: true
   allow_failures:
-      - php: 7.4
+    - php: 7.4
 
 env:
   global:
-    - SYMFONY_ENV=test
-    - ANT_OPTS=-Xmx512m # ensure we got enough memory for ant
+    - APP_ENV=test
 
 cache:
   directories:
     - ~/.composer
 
 before_script:
-  # Disable XDebug to prevent segfaults in webtests
-  - phpenv config-rm xdebug.ini
   - phpenv config-add .travis.php.ini
-  - composer self-update
+  - composer self-update --1
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+  - nvm install 10.22.0
+  - curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
   - composer install --prefer-dist
 
 script:
-  - ant
-
-after_script:
-  - cat $TRAVIS_BUILD_DIR/app/logs/*.log
+  - composer test
 
 branches:
   only:
@@ -45,8 +44,3 @@ branches:
     - /^feature\/(.*)$/
     - /^hotfix\/(.*)$/
     - /^bugfix\/(.*)$/
-
-addons:
-  apt:
-    packages:
-      - ant

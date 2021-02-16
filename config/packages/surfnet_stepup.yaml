@@ -1,0 +1,22 @@
+surfnet_stepup:
+  logging:
+    application_name: self-service
+  loa_definition:
+    loa1: "%stepup_loa_loa1%"
+    loa2: "%stepup_loa_loa2%"
+    loa3: "%stepup_loa_loa3%"
+  sms:
+    originator: "%sms_originator%"
+    otp_expiry_interval: "%sms_otp_expiry_interval%"
+    maximum_otp_requests: "%sms_maximum_otp_requests%"
+  gateway_api:
+    url: "%gateway_api_url%"
+    credentials:
+      username: "%gateway_api_username%"
+      password: "%gateway_api_password%"
+  attach_request_id_injector_to:
+    - surfnet_stepup.guzzle.gateway_api
+    - surfnet_stepup_middleware_client.guzzle.api
+    - surfnet_stepup_middleware_client.guzzle.commands
+  locale_cookie:
+    domain: "%locale_cookie_domain%"

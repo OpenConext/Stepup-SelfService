@@ -33,18 +33,14 @@ class SendSmsChallengeType extends AbstractType
         $builder
             ->add('country', ChoiceType::class, [
                 'label'                          => /** @Ignore */ 'country code',
-                'horizontal_label_class'         => 'sr-only',
                 'required'                       => true,
                 'choices' => CountryCodeListing::asArray(),
                 'preferred_choices'              =>
                     ['Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing', 'isPreferredChoice'],
-                'horizontal_input_wrapper_class' => 'foo',
             ])
             ->add('subscriber', TextType::class, [
                 'label'                          => /** @Ignore */ 'subscriberNumber',
-                'horizontal_label_class' => 'sr-only',
                 'required'                       => true,
-                'horizontal_input_wrapper_class' => 'foo',
                 'attr'                           => [
                     'autofocus' => true,
                     'class' => 'pull-right',
