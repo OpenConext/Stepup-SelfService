@@ -18,7 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting;
 
-use PHPUnit_Framework_TestCase as IntegrationTest;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingContextException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingStateException;
@@ -29,14 +29,14 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Proc
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
-class RemoteVettingContextTest extends IntegrationTest
+class RemoteVettingContextTest extends TestCase
 {
     /**
      * @var Session
      */
     private $session;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -58,6 +58,8 @@ class RemoteVettingContextTest extends IntegrationTest
         $context->initialize('IRMA', $token, AttributeListDto::notSet());
         $context->initialize('IRMA', $token2, AttributeListDto::notSet());
         $context->initialize('IRMA', $token3, AttributeListDto::notSet());
+
+        $this->assertInstanceOf(RemoteVettingContext::class, $context);
     }
 
     /**

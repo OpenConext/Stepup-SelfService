@@ -16,17 +16,17 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Value;
 
 use JsonSerializable;
-use PHPUnit_Framework_TestCase as IntegrationTest;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionAggregate;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 
-class AttributeCollectionInterfaceIntegrationTest extends IntegrationTest
+class AttributeCollectionInterfaceIntegrationTest extends TestCase
 {
     public function test_correct_integration_of_collections()
     {

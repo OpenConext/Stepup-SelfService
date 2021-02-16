@@ -18,7 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption;
 
-use PHPUnit_Framework_TestCase as IntegrationTest;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
@@ -27,7 +27,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption
  * By using a fake IdentityWriter we are able to intercept the encrypted data (that would otherwise
  * be stored to a backend) and perform some sanity checks on it.
  */
-class IdentityEncrypterIntegrationTest extends IntegrationTest
+class IdentityEncrypterIntegrationTest extends TestCase
 {
     private $encrypter;
 
@@ -87,7 +87,7 @@ pTLyJ51aerY27qJEtZ3JqbCux853aa2cxLIoje+5Kxso33bPe0EXGg==
 KEY;
 
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $config = [
             'encryption_public_key' => $this->publicKey,

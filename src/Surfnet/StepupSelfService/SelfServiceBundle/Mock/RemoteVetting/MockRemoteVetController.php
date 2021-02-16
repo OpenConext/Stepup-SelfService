@@ -178,7 +178,7 @@ class MockRemoteVetController extends Controller
      */
     private function parseAttributes($data)
     {
-        @json_decode($data);
+        json_decode($data);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new BadRequestHttpException(sprintf(
                 'Could not parse the attributes because no valid json was given %s',

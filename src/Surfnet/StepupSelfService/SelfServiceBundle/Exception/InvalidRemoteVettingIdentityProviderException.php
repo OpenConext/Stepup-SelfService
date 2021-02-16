@@ -18,6 +18,9 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Exception;
 
+/**
+ * @SuppressWarnings(PHPMD.LongClassName)
+ */
 class InvalidRemoteVettingIdentityProviderException extends RuntimeException
 {
 

@@ -18,13 +18,13 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting;
 
 use Mockery as m;
-use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingMappingException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
 
-class AttributeMapperTest extends UnitTest
+class AttributeMapperTest extends TestCase
 {
     /**
      * @var IdentityProviderFactory|m\Mock
@@ -35,7 +35,7 @@ class AttributeMapperTest extends UnitTest
      */
     private $attributeMapper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->identityProviderFactory = m::mock(IdentityProviderFactory::class);
         $this->attributeMapper = new AttributeMapper($this->identityProviderFactory);

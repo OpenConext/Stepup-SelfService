@@ -207,7 +207,7 @@ class RemoteVettingController extends Controller
                 return $this->redirectToRoute('ss_second_factor_list');
             }
 
-            return $this->render('SurfnetStepupSelfServiceSelfServiceBundle:RemoteVetting:validation.html.twig', [
+            return $this->render('SurfnetStepupSelfServiceSelfServiceBundle:remote_vetting:validation.html.twig', [
                 'form' => $form->createView(),
             ]);
         } catch (InvalidRemoteVettingStateException $e) {

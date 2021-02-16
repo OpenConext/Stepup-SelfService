@@ -283,6 +283,9 @@
     "symfony/asset": {
         "version": "v4.4.16"
     },
+    "symfony/browser-kit": {
+        "version": "v4.4.19"
+    },
     "symfony/cache": {
         "version": "v4.4.16"
     },
@@ -308,11 +311,17 @@
     "symfony/contracts": {
         "version": "v1.1.10"
     },
+    "symfony/css-selector": {
+        "version": "v4.4.19"
+    },
     "symfony/debug": {
         "version": "v4.4.16"
     },
     "symfony/dependency-injection": {
         "version": "v4.4.16"
+    },
+    "symfony/dom-crawler": {
+        "version": "v4.4.19"
     },
     "symfony/error-handler": {
         "version": "v4.4.16"

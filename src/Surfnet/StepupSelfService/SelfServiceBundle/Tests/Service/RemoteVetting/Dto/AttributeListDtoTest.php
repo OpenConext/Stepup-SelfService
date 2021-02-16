@@ -16,19 +16,18 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\RemoteVetting\Dto;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Dto;
 
-use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit\Framework\TestCase;
 use SAML2\XML\saml\NameID;
 use stdClass;
 use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDefinition;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeSet;
-use Surfnet\SamlBundle\Tests\Unit\SAML2\Attribute\Mock\DummyAttributeSet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 
-class AttributeListDtoTest extends UnitTest
+class AttributeListDtoTest extends TestCase
 {
     /**
      * @dataProvider provideValidAttributes

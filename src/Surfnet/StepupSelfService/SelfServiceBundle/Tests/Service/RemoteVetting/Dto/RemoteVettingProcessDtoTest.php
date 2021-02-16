@@ -17,7 +17,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Dto;
 
-use PHPUnit_Framework_TestCase as Unittest;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingProcessDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
@@ -27,7 +27,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State\Remo
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\State\RemoteVettingStateValidating;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 
-class RemoteVettingProcessDtoTest extends Unittest
+class RemoteVettingProcessDtoTest extends TestCase
 {
     /**
      * @test

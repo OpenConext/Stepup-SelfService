@@ -19,16 +19,14 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption;
 
 use Mockery as m;
-use PHPUnit_Framework_TestCase as UnitTest;
-use PHPUnit_Framework_Error_Warning as Warning;
-use RobRichards\XMLSecLibs\XMLSecurityKey;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityWriterInterface;
 
-class IdentityEncrypterTest extends UnitTest
+class IdentityEncrypterTest extends TestCase
 {
     private $encrypter;
 
@@ -109,7 +107,7 @@ ZveiwwfkcpIUZNWwrQJUiQkCAwEAAQ==
 -----END PUBLIC KEY-----
 RSA_PUBLIC_KEY;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->config = m::mock(RemoteVettingConfiguration::class);
         $this->writer = m::mock(IdentityWriterInterface::class);

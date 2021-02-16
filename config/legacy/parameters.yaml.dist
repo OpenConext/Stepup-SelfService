@@ -145,7 +145,7 @@ parameters:
         -----END CERTIFICATE-----
 
       # The location on disk where the encrypted remote vetting user data is stored
-      storage_location: '%kernel.project_dir%/app/rv'
+      storage_location: '%kernel.project_dir%/var/rv'
 
     # For test, we use a mock remote vetting IdP, these certificates are used for that.
     saml_rv_publickey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt

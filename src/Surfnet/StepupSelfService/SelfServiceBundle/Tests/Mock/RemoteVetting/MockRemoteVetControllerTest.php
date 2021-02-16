@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\Tests\Mock\RemoteVetting;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Mock\RemoteVetting;
 
 use DateTime;
 use Hamcrest\Core\IsEqual;
@@ -87,13 +87,13 @@ class MockRemoteVetControllerTest extends WebTestCase
      */
     private $institutionConfigurationOptionsService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->client = static::createClient();
         $this->client->followRedirects(true);
         $this->client->disableReboot();
 
-        $this->remoteVettingService = $this->client->getKernel()->getContainer()->get('Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService');
+        $this->remoteVettingService = $this->client->getKernel()->getContainer()->get(RemoteVettingService::class);
 
         // Mock second factor service
         $this->secondFactorService = m::mock(SecondFactorService::class);
@@ -131,7 +131,7 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         // Test if on decision page
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Select response', $crawler->filter('h2')->text());
+        $this->assertStringContainsString('Select response', $crawler->filter('h2')->text());
     }
 
     /**
@@ -153,7 +153,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         $c = $this->client->getResponse()->getContent();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
-        $this->assertContains('Validate information', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Validate information', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -174,7 +174,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         // Test if on sp acs
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
         $this->assertEquals('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
-        $this->assertContains('Unable to validate the information', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Unable to validate the information', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -195,7 +195,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         // Test if on sp acs
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode()); // this could be enabled if the request to MW are mocked
         $this->assertEquals('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
-        $this->assertContains('Unable to validate the information', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Unable to validate the information', $this->client->getResponse()->getContent());
     }
 
 
@@ -243,7 +243,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         // Test if on manual matching form
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
-        $this->assertContains('Validate information', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Validate information', $this->client->getResponse()->getContent());
 
         // Set response attributes and post form
         $form = $crawler->selectButton('ss_remote_vet_validation[validate]')->form();
@@ -257,7 +257,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         // Check if on overview page with success flashbag message
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/overview', $this->client->getRequest()->getUri());
-        $this->assertContains('Your identity information was validated successfully', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Your identity information was validated successfully', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -344,7 +344,7 @@ class MockRemoteVetControllerTest extends WebTestCase
 
         // Test if on decision page
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Select response', $crawler->filter('h2')->text());
+        $this->assertStringContainsString('Select response', $crawler->filter('h2')->text());
 
         // Set response attributes and post form
         $form = $crawler->selectButton($state)->form();
