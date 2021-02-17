@@ -19,6 +19,7 @@ yarn-error.log
 .phpunit
 .phpunit.result.cache
 config/preload.php
+local-php-security-checker
 
 ###> symfony/framework-bundle ###
 /.env.local
