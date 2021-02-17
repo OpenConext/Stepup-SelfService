@@ -47,7 +47,6 @@
         "phpunit/phpunit": "^8",
         "sebastian/exporter": "^3",
         "sebastian/phpcpd": "^4",
-        "sensiolabs/security-checker": "^6.0",
         "squizlabs/php_codesniffer": "^3.4",
         "symfony/browser-kit": "4.4.*",
         "symfony/css-selector": "4.4.*",
@@ -62,6 +61,7 @@
             "@license-headers",
             "@phpunit",
             "@behat",
+            "@download-security-checker",
             "@security-tests",
             "@yarn-audit"
         ],
@@ -80,7 +80,8 @@
             "vendor/bin/phpcpd  ./src"
         ],
         "phpunit": "vendor/bin/phpunit --configuration=phpunit.xml.dist --coverage-text",
-        "security-tests": "vendor/bin/security-checker security:check",
+        "download-security-checker": "if [ ! -f local-php-security-checker ]; then curl -s https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest | grep -E \"browser_download_url(.+)linux_386\" | cut -d : -f 2,3 | tr -d \\\" | xargs -I{} curl -L --output local-php-security-checker {} && chmod +x local-php-security-checker; fi",
+        "security-tests": "./local-php-security-checker",
         "yarn-audit": "yarn audit",
         "frontend-install": [
             "yarn install --frozen-lockfile",
