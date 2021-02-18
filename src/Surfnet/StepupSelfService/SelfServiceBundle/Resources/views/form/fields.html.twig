@@ -12,7 +12,7 @@
             {% set label = name|humanize %}
         {% endif %}
         <a href="{{ path(route) }}" {{ block('button_attributes') }}>
-            {% if icon is not empty %}
+            {% if icon is defined and icon is not empty %}
                 <span class="glyphicon glyphicon-{{ icon }}"{% if icon_inverted|default(false) %} style="color: white;"{% endif %}></span>
             {% endif %}
             {{ label|trans({}, translation_domain) }}</a>
@@ -26,7 +26,6 @@
             <div class="form-group">
                 <div {% for attrname, attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
                 {{ form_widget(form) }}
-            </div>
             </div>
         {% else %}
             <div>
