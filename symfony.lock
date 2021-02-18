@@ -98,6 +98,9 @@
     "openconext/monitor-bundle": {
         "version": "2.0"
     },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.4.0"
+    },
     "paragonie/random_compat": {
         "version": "v9.99.99"
     },
