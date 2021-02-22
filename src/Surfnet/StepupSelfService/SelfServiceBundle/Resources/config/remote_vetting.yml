@@ -5,10 +5,14 @@ services:
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\ServiceProviderFactory:
     arguments:
-      - '%remote_vetting_sp%'
+      $router: '@router'
+      $entityId: "%remote_vetting_entity_id%"
+      $assertionConsumerUrlSlug: "ss_second_factor_remote_vet_acs"
+      $privateKey: "%saml_rv_privatekey%"
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration:
     arguments:
+      $privateKey: '%saml_rv_privatekey%'
       $configurationSettings: '%identity_encryption_configuration%'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext:
@@ -46,7 +50,7 @@ services:
   Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration:
     arguments:
       $identityProviderEntityId: 'https://selfservice.stepup.example.com/mock/idp/metadata'
-      $serviceProviderEntityId: 'https://selfservice.stepup.example.com/saml/metadata'
+      $serviceProviderEntityId: 'https://selfservice.stepup.example.com/rv/metadata'
       $privateKeyPath: '%saml_rv_privatekey%'
       $publicCertPath: '%saml_rv_publickey%'
 

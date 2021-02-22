@@ -62,6 +62,8 @@ parameters:
 
     # remote vetting
 
+    remote_vetting_entity_id: https://selfservice.stepup.example.com/rv/metadata
+
     # For each remote vetting IdP we require some parameters.
     remote_vetting_idps:
           # The display name
@@ -114,12 +116,6 @@ parameters:
           attributeMapping:
             givenName: firstName
             surname: lastName
-    # SelfService acts as the remote vetting SP, this metadata is used by the remote vetting IdP's to post their SAML
-    # responses to
-    remote_vetting_sp:
-      entityId: https://selfservice.stepup.example.com/saml/metadata
-      assertionConsumerUrl: https://selfservice.stepup.example.com/second-factor/acs
-      privateKey: '%saml_rv_privatekey%'
 
     identity_encryption_configuration:
       # The public key used to encrypt the remote vetting user data. The private key matching this is used to decrypt,

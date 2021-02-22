@@ -20,6 +20,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 use SAML2\Configuration\PrivateKey;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 class ServiceProviderFactory
 {
@@ -28,14 +31,16 @@ class ServiceProviderFactory
      */
     private $serviceProvider;
 
-    /**
-     * @param array $configuration
-     */
-    public function __construct(array $configuration)
+    public function __construct(RouterInterface $router, string $entityId, string $assertionConsumerUrlSlug, string $privateKey)
     {
-        Assert::keyExists($configuration, 'entityId');
-        Assert::keyExists($configuration, 'assertionConsumerUrl');
-        Assert::keyExists($configuration, 'privateKey');
+        Assert::notEmpty($entityId, 'entityId');
+        Assert::notEmpty($assertionConsumerUrlSlug, 'assertionConsumerUrl');
+        Assert::notEmpty($privateKey, 'privateKey');
+
+        $configuration = [];
+        $configuration['entityId'] = $entityId;
+        $configuration['assertionConsumerUrl'] = $router->generate($assertionConsumerUrlSlug, [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $configuration['privateKey'] = $privateKey;
 
         Assert::url($configuration['entityId']);
         Assert::url($configuration['assertionConsumerUrl']);
