@@ -93,7 +93,7 @@ KEY;
             'encryption_public_key' => $this->publicKey,
             'storage_location' => '/tmp',
         ];
-        $this->config = new RemoteVettingConfiguration($config, 'v0.0');
+        $this->config = new RemoteVettingConfiguration($config);
         $this->writer = new FakeIdentityWriter();
         $this->encrypter = new IdentityEncrypter($this->config, $this->writer);
     }
