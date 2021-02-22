@@ -10,7 +10,8 @@
             "src/Kernel.php"
         ]
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "~7.2",
         "guzzlehttp/guzzle": "^6",
@@ -21,7 +22,7 @@
         "openconext/monitor-bundle": "^2.0",
         "sensio/framework-extra-bundle": "^5.0",
         "surfnet/stepup-bundle": "^4.0",
-        "surfnet/stepup-middleware-client-bundle": "^4.0",
+        "surfnet/stepup-middleware-client-bundle": "dev-remote-vetting",
         "surfnet/stepup-saml-bundle": "^4.1",
         "symfony/console": "4.4.*",
         "symfony/expression-language": "4.4.*",

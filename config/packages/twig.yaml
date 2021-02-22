@@ -1,5 +1,5 @@
 twig:
-  form_themes: ['bootstrap_4_layout.html.twig']
+  form_themes: ['bootstrap_4_layout.html.twig','@SurfnetStepupSelfServiceSelfService/form/fields.html.twig']
   debug:            "%kernel.debug%"
   strict_variables: "%kernel.debug%"
   exception_controller: SurfnetStepupSelfServiceSelfServiceBundle:Exception:show

@@ -12,7 +12,7 @@
             {% set label = name|humanize %}
         {% endif %}
         <a href="{{ path(route) }}" {{ block('button_attributes') }}>
-            {% if icon is not empty %}
+            {% if icon is defined and icon is not empty %}
                 <span class="glyphicon glyphicon-{{ icon }}"{% if icon_inverted|default(false) %} style="color: white;"{% endif %}></span>
             {% endif %}
             {{ label|trans({}, translation_domain) }}</a>
@@ -26,7 +26,6 @@
             <div class="form-group">
                 <div {% for attrname, attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
                 {{ form_widget(form) }}
-            </div>
             </div>
         {% else %}
             <div>
@@ -65,3 +64,43 @@
         </div>
     {% endspaceless %}
 {%- endblock otp_widget -%}
+
+{# Show value in the remote vetting attribute match. #}
+{% block ss_remote_vet_assertion_widget %}
+    {% spaceless %}
+        <table class="table table-bordered table-hover table-responsive">
+            <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>{{ 'ss.second_factor.remote_vet.local_attribute'|trans }}</th>
+                <th>{{ 'ss.second_factor.remote_vet.remote_attribute'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>{{ 'ss.second_factor.remote_vet.attribute_name'|trans }}</strong></td>
+                <td>{{ form.vars.data.localAttribute.name }}</td>
+                <td>{{ form.vars.data.remoteAttribute.name }}</td>
+            </tr>
+            <tr>
+                <td><strong>{{ 'ss.second_factor.remote_vet.attribute_value'|trans }}</strong></td>
+                <td>{{ form.vars.data.localAttribute.value|join(',<br/>') }}</td>
+                <td>{{ form.vars.data.remoteAttribute.value|join(',<br/>') }}</td>
+            </tr>
+            <tr>
+                <td><strong>{{ 'ss.second_factor.remote_vet.is_attribute_valid'|trans }}</strong></td>
+                <td colspan="2">
+                    {{ form_widget(form.valid) }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>{{ 'ss.second_factor.remote_vet.remarks'|trans }}</strong></td>
+                <td colspan="2">
+                    {{ form_widget(form.remarks) }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    {% endspaceless %}
+{% endblock %}
+
