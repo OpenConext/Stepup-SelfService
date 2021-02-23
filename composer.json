@@ -14,6 +14,7 @@
     "prefer-stable": true,
     "require": {
         "php": "~7.2",
+        "ext-json": "*",
         "guzzlehttp/guzzle": "^6",
         "incenteev/composer-parameter-handler": "~2.0",
         "jms/translation-bundle": "^1.3.0",
