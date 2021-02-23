@@ -22,15 +22,15 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
 
 class ApplicationHelper
 {
-    private $kernelRootDir;
+    private $kernelProjectDir;
 
     /**
-     * @param string $kernelRootDir
+     * @param string $kernelProjectDir
      */
-    public function __construct($kernelRootDir)
+    public function __construct($kernelProjectDir)
     {
-        Assert::string($kernelRootDir, 'Kernel root directory must have a string value');
-        $this->kernelRootDir = $kernelRootDir;
+        Assert::string($kernelProjectDir, 'Kernel project directory must have a string value');
+        $this->kernelProjectDir = $kernelProjectDir;
     }
 
     /**
@@ -44,7 +44,7 @@ class ApplicationHelper
     public function getApplicationVersion()
     {
         // The buildPath (version string) is the installation directory of the project. And is derived from the
-        // kernel.root_dir (which is the app folder).
-        return basename(realpath($this->kernelRootDir . '/../'));
+        // kernel.project_dir (which is the app folder).
+        return basename(realpath($this->kernelProjectDir));
     }
 }
