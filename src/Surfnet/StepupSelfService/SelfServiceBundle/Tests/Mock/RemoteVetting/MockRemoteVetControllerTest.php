@@ -124,7 +124,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function the_mock_remote_vetting_idp_should_present_us_with_possible_results_for_testing_purposes()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
@@ -141,7 +141,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function a_succesful_response_from_a_remote_vetting_idp_should_succeed()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
@@ -150,7 +150,6 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->postMockIdpForm($crawler, 'success');
 
         // Test if on manual matching form
-        $c = $this->client->getResponse()->getContent();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
         $this->assertStringContainsString('Validate information', $this->client->getResponse()->getContent());
@@ -163,7 +162,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function a_user_cancelled_response_from_a_remote_vetting_idp_should_fail()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
@@ -184,7 +183,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function an_unsuccessful_response_from_a_remote_vetting_idp_should_fail()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
         $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
@@ -224,14 +223,14 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/vetting-types', $link->getUri());
         $crawler = $this->client->click($link);
 
-        // Select 'irma' as vetting type
+        // Select 'mock' as vetting type
         $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/vetting-types', $this->client->getRequest()->getUri());
-        $button = $crawler->selectButton('select-rv-idp-irma');
+        $button = $crawler->selectButton('select-rv-idp-mock');
         $form = $button->form();
         $crawler = $this->client->submit($form);
 
         // Accept sending info to IdP on consent screen
-        $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/remote-vet/irma', $this->client->getRequest()->getUri());
+        $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/remote-vet/mock', $this->client->getRequest()->getUri());
         $button = $crawler->selectButton('Validate identity');
         $form = $button->form();
         $crawler = $this->client->submit($form);

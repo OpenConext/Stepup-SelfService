@@ -116,6 +116,19 @@ parameters:
           attributeMapping:
             givenName: firstName
             surname: lastName
+        - slug: mock
+          name: 'Mock IDP'
+          logo: /images/remote-vetting/mock.png
+          description:
+              nl_NL: 'This is an integration test IdP.'
+              en_GB: 'This is an integration test IdP.'
+          entityId: 'https://selfservice.stepup.example.com/mock/metadata'
+          ssoUrl: 'https://selfservice.stepup.example.com/second-factor/mock/sso'
+          certificateFile: '%saml_rv_publickey%'
+          privateKey: '%saml_rv_privatekey%'
+          attributeMapping:
+              givenName: firstName
+              surname: lastName
 
     identity_encryption_configuration:
       # The public key used to encrypt the remote vetting user data. The private key matching this is used to decrypt,
