@@ -177,7 +177,7 @@ class RemoteVettingProcessDto implements Serializable
             $params[] = json_encode($key).":{$value}";
         }
 
-        return '{'.implode(',',$params).'}';
+        return '{'.implode(',', $params).'}';
     }
 
     /**

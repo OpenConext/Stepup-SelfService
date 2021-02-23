@@ -1,7 +1,8 @@
 services:
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory:
+    public: true
     arguments:
-      - '%remote_vetting_idps%'
+      $configuration: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\ServiceProviderFactory:
     arguments:
@@ -14,6 +15,7 @@ services:
     arguments:
       $privateKey: '%saml_rv_privatekey%'
       $configurationSettings: '%identity_encryption_configuration%'
+      $remoteVettingIdpConfig: '%remote_vetting_idps%'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext:
     arguments:
@@ -27,7 +29,7 @@ services:
     $logger: '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper:
-    $identityProviderFactory: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory'
+    $configuration: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService:
     public: true
@@ -47,23 +49,6 @@ services:
       - '@surfnet_stepup.registration_expiration_helper'
       - '@logger'
 
-  Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration:
-    arguments:
-      $identityProviderEntityId: 'https://selfservice.stepup.example.com/mock/idp/metadata'
-      $serviceProviderEntityId: 'https://selfservice.stepup.example.com/rv/metadata'
-      $privateKeyPath: '%saml_rv_privatekey%'
-      $publicCertPath: '%saml_rv_publickey%'
-
-  Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockRemoteVetController:
-    public: true
-    arguments:
-      - '@Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway'
-      - '@twig'
-
-  Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockGateway:
-    arguments:
-      - '@Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration'
-
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityFilesystemWriter:
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
@@ -71,7 +56,7 @@ services:
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper:
     public: true
     arguments:
-      $remoteVettingIdpConfig: "%remote_vetting_idps%"
+      $configuration: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter:
     arguments:

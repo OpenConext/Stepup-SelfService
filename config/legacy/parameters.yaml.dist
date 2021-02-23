@@ -84,7 +84,6 @@ parameters:
           ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
           # Certificates for the remote vetting IdP
           certificateFile: "%saml_rv_publickey%"
-          privateKey: "%saml_rv_privatekey%"
           # The attribute mapping should map the institute IdP attributes with the ones received from the remote vetting
           # IdP.
           attributeMapping:
@@ -99,7 +98,6 @@ parameters:
           entityId: https://selfservice.stepup.example.com/mock/metadata
           ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
           certificateFile: "%saml_rv_publickey%"
-          privateKey: "%saml_rv_privatekey%"
           attributeMapping:
             givenName: firstName
             surname: lastName
@@ -112,7 +110,6 @@ parameters:
           entityId: https://selfservice.stepup.example.com/mock/metadata
           ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
           certificateFile: '%saml_rv_publickey%'
-          privateKey: '%saml_rv_privatekey%'
           attributeMapping:
             givenName: firstName
             surname: lastName
@@ -125,7 +122,6 @@ parameters:
           entityId: 'https://selfservice.stepup.example.com/mock/metadata'
           ssoUrl: 'https://selfservice.stepup.example.com/second-factor/mock/sso'
           certificateFile: '%saml_rv_publickey%'
-          privateKey: '%saml_rv_privatekey%'
           attributeMapping:
               givenName: firstName
               surname: lastName
@@ -156,6 +152,8 @@ parameters:
       # The location on disk where the encrypted remote vetting user data is stored
       storage_location: '%kernel.project_dir%/var/rv'
 
-    # For test, we use a mock remote vetting IdP, these certificates are used for that.
+
+    # Saml Remote Vetting SP public key
     saml_rv_publickey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt
+    # Saml Remote Vetting Mock IdP private key (used for development and testing, this value should be omitted in production)
     saml_rv_privatekey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key

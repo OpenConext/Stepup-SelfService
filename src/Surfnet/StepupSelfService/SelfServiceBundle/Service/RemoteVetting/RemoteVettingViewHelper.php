@@ -17,24 +17,22 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingIdenityProviderDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 
 class RemoteVettingViewHelper
 {
     /**
-     * @var RemoteVettingIdenityProviderDto[]
+     * @var RemoteVettingConfiguration
      */
-    private $identityProviders;
+    private $configuration;
 
-    public function __construct(array $remoteVettingIdpConfig)
+    public function __construct(RemoteVettingConfiguration $configuration)
     {
-        foreach ($remoteVettingIdpConfig as $idenityProvider) {
-            $this->identityProviders[] = RemoteVettingIdenityProviderDto::create($idenityProvider);
-        }
+        $this->configuration = $configuration;
     }
 
     public function getIdentityProviders()
     {
-        return $this->identityProviders;
+        return $this->configuration->getRemoteVettingIdps();
     }
 }

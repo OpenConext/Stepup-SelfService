@@ -19,30 +19,23 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service;
 
 use DateTime;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use Psr\Log\Test\TestLogger;
 use Surfnet\StepupBundle\Tests\DateTimeHelper;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupSelfService\SelfServiceBundle\Mock\RemoteVetting\MockConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\ApplicationHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityData;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypterInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
-use Mockery as m;
 use Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption\Decrypter;
 use Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption\FakeIdentityWriter;
-use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
@@ -143,13 +136,12 @@ KEY;
         
         $this->remoteVettingConfiguration = m::mock(RemoteVettingConfiguration::class);
         $this->applicationHelper = m::mock(ApplicationHelper::class);
-        $this->identityProviderFactory = m::mock(IdentityProviderFactory::class);
         $this->fakeIdentityWriter = new FakeIdentityWriter();
         $this->logger = new TestLogger();
         $session = new Session(new MockFileSessionStorage());
 
         $this->identityEncrypter = new IdentityEncrypter($this->remoteVettingConfiguration, $this->fakeIdentityWriter);
-        $this->attributeMapper = new AttributeMapper($this->identityProviderFactory);
+        $this->attributeMapper = new AttributeMapper($this->remoteVettingConfiguration);
         $this->remoteVettingContext = new RemoteVettingContext($session);
 
         $now =  new DateTime();
@@ -192,7 +184,8 @@ KEY;
         $externalAttributes = new AttributeListDto(['emailAddress' => ['johndoe@example.com'], 'givenName' => ['John'], "familyName" => ["Doe"], "fullName" => ["John Doe"]], $nameId);
         $remarks = "This seems a pretty decent match";
 
-        $this->identityProviderFactory->shouldReceive('getAttributeMapping')
+        $this->remoteVettingConfiguration->shouldReceive("getAttributeMapping")
+            ->with('mock')
             ->andReturn([
                 'email' => 'emailAddress',
                 'firstName' => 'givenName',

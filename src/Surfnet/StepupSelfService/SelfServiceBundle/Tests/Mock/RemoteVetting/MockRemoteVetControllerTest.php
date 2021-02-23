@@ -25,7 +25,6 @@ use SAML2\Certificate\KeyLoader;
 use SAML2\Configuration\PrivateKey;
 use SAML2\Response\Processor;
 use SAML2\XML\saml\NameID;
-use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
 use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
@@ -102,7 +101,6 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->mockSecondFactorOverviewPage();
 
         $projectDir = self::$kernel->getProjectDir();
-
         $keyPath = '/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources';
         $this->publicKey = $projectDir . $keyPath . '/test.crt';
         $this->privateKey = $projectDir . $keyPath . '/test.key';
@@ -125,7 +123,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     {
         $this->logIn();
         $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
-        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('mock');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -142,7 +140,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     {
         $this->logIn();
         $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
-        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('mock');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -163,7 +161,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     {
         $this->logIn();
         $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
-        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('mock');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -184,7 +182,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     {
         $this->logIn();
         $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
-        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('mock');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -264,11 +262,7 @@ class MockRemoteVetControllerTest extends WebTestCase
      */
     private function setupSamlCalloutHelper()
     {
-        $identityProviderFactory = m::mock(IdentityProviderFactory::class);
-        $identityProviderFactory->shouldReceive('create')
-            ->with('MockIdP')
-            ->once()
-            ->andReturn($this->createIdentityProvider());
+        $identityProviderFactory = $this->client->getKernel()->getContainer()->get(IdentityProviderFactory::class);
 
         $serviceProviderFactory = m::mock(ServiceProviderFactory::class);
         $serviceProviderFactory->shouldReceive('create')
@@ -296,7 +290,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     {
         return new ServiceProvider(
             [
-                'entityId' => 'https://selfservice.stepup.example.com/saml/metadata',
+                'entityId' => 'https://selfservice.stepup.example.com/rv/metadata',
                 'assertionConsumerUrl' => 'https://selfservice.stepup.example.com/second-factor/acs',
                 'certificateFile' => $this->publicKey,
                 'privateKeys' => [
@@ -306,24 +300,6 @@ class MockRemoteVetControllerTest extends WebTestCase
                     ),
                 ],
                 'sharedKey' => $this->publicKey,
-            ]
-        );
-    }
-
-    private function createIdentityProvider()
-    {
-        return new IdentityProvider(
-            [
-                'entityId' => 'https://selfservice.stepup.example.com/mock/idp/metadata',
-                'ssoUrl' => 'https://selfservice.stepup.example.com/second-factor/mock/sso',
-                'certificateFile' => $this->publicKey,
-                'privateKeys' => [
-                    new PrivateKey(
-                        $this->privateKey,
-                        'default'
-                    ),
-                ],
-                'sharedKey' => $this->publicKey
             ]
         );
     }

@@ -1,36 +1,6 @@
-# Use this service definition file to override services and parameters in the test environment.
+# Use this service definition file to override services and parameters in the dev environment.
 # For example to mock certain services, or override a password for test.
-
-parameters:
-  middleware_credentials_password: secret
-
 services:
-  surfnet_stepup_self_service_self_service.service.sms_second_factor:
-    class: Surfnet\StepupSelfService\SelfServiceBundle\Tests\TestDouble\Service\SmsSecondFactorService
-    arguments:
-        - "@surfnet_stepup_self_service_self_service.service.command"
-
-
-  # The middleware client bundle guzzle client is overloaded to be able to pass the testcookie to the ensure MW is
-  # loaded in test mode. This way people setting the testcookie in prod will not switch their mw api into testmode
-  # resulting in 500 errors.
-  surfnet_stepup_middleware_client.guzzle.api:
-    public: false
-    class: GuzzleHttp\Client
-    factory: ['Surfnet\StepupSelfService\SelfServiceBundle\Tests\TestDouble\Factory\GuzzleApiFactory', createApiGuzzleClient]
-    arguments:
-        - "%middleware_url_api%"
-        - "%middleware_credentials_username%"
-        - "%middleware_credentials_password%"
-
-  surfnet_stepup_middleware_client.guzzle.commands:
-    public: false
-    class: GuzzleHttp\Client
-    factory: ['Surfnet\StepupSelfService\SelfServiceBundle\Tests\TestDouble\Factory\GuzzleApiFactory', createCommandGuzzleClient]
-    arguments:
-        - "%middleware_url_command_api%"
-
-
   # A remote vetting mock IdP is used in order to mock the attributes released from a remote RV (Remote Vetting) IdP.
   # This IdP is utilized as a drop in replacement to test the attribute matching between a remote IdP to vet with and the local
   # OpenConext IdP.

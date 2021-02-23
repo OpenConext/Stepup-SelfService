@@ -89,11 +89,12 @@ KEY;
 
     protected function setUp(): void
     {
+        $privateKey = realpath(__DIR__ . '/../../../Resources/test.crt');
         $config = [
             'encryption_public_key' => $this->publicKey,
             'storage_location' => '/tmp',
         ];
-        $this->config = new RemoteVettingConfiguration($config);
+        $this->config = new RemoteVettingConfiguration($privateKey, $config, []);
         $this->writer = new FakeIdentityWriter();
         $this->encrypter = new IdentityEncrypter($this->config, $this->writer);
     }
