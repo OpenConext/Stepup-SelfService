@@ -154,6 +154,6 @@ parameters:
 
 
     # Saml Remote Vetting SP public key
-    saml_rv_publickey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt
+    saml_rv_publickey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt'
     # Saml Remote Vetting Mock IdP private key (used for development and testing, this value should be omitted in production)
-    saml_rv_privatekey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key
+    saml_rv_privatekey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key'
