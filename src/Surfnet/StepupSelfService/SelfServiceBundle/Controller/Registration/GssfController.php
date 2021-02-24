@@ -79,6 +79,12 @@ final class GssfController extends Controller
             $provider->getRemoteIdentityProvider()
         );
 
+        $attributeService = $this->get('surfnet_stepup_self_service_self_service.service.gsspuserattributes');
+        $attributeService->addGsspUserAttributes(
+            $authnRequest,
+            $provider,
+            $this->get('security.token_storage')->getToken()->getUser()
+        );
         $stateHandler = $provider->getStateHandler();
         $stateHandler->setRequestId($authnRequest->getRequestId());
 
