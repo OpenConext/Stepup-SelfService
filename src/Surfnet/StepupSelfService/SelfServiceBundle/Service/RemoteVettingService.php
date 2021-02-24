@@ -31,6 +31,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attr
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\FeedbackCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class RemoteVettingService
 {
     /**
@@ -50,7 +53,7 @@ class RemoteVettingService
      */
     private $attributeMapper;
     /**
-     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\ApplicationHelper
+     * @var ApplicationHelper
      */
     private $applicationHelper;
 
@@ -151,6 +154,7 @@ class RemoteVettingService
      * @param Identity $identity
      * @param AttributeListDto $localAttributes
      * @param AttributeMatchCollection $attributeMatches
+     * @param FeedbackCollection $feedback
      * @return IdentityData
      */
     private function aggregateIdentityData(

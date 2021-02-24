@@ -30,8 +30,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configurat
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption\IdentityEncrypter;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\FeedbackCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\RemoteVetting\Encryption\Decrypter;
@@ -146,13 +147,19 @@ class RemoteVettingServiceTest extends TestCase
 
         $matches = $this->attributeMapper->map('mock', $localAttributes, $externalAttributes);
 
-        // todo: add matching result!
+        // Update match
+        $match = $matches['email'];
+        $matches['email'] = new AttributeMatch($match->getLocalAttribute(), $match->getRemoteAttribute(), true, "This email is valid");
+
+        $feedbackCollection = new FeedbackCollection();
+        $feedbackCollection["key1"] = ["val1"];
+        $feedbackCollection["key2"] = ["val2"];
 
         $token = RemoteVettingTokenDto::create($identityId, $secondFactorId);
         $this->service->start('mock', $token);
         $this->service->startValidation($processId);
         $this->service->finishValidation($processId, $externalAttributes);
-        $remoteVettingToken = $this->service->done($processId, $identity, $localAttributes, $matches, $remarks);
+        $remoteVettingToken = $this->service->done($processId, $identity, $localAttributes, $matches, $feedbackCollection);
 
         // test token result
         $this->assertSame($identityId, $remoteVettingToken->getIdentityId());
@@ -160,7 +167,7 @@ class RemoteVettingServiceTest extends TestCase
 
         // test encrypted result
         $result = Decrypter::decrypt($this->fakeIdentityWriter->getData(), $this->privateKey);
-        $this->assertSame('{"attribute-data":{"local-attributes":{"nameId":"john.doe@example.com","attributes":{"email":["john@example.com"],"firstName":["Johnie"],"familyName":["Doe"],"telephone":["0612345678"]}},"remote-attributes":{"nameId":"john.doe@example.com","attributes":{"emailAddress":["johndoe@example.com"],"givenName":["John"],"familyName":["Doe"],"fullName":["John Doe"]}},"matching-results":{"email":{"local":{"name":"email","value":["john@example.com"]},"remote":{"name":"emailAddress","value":["johndoe@example.com"]},"is-valid":false,"remarks":""},"firstName":{"local":{"name":"firstName","value":["Johnie"]},"remote":{"name":"givenName","value":["John"]},"is-valid":false,"remarks":""},"familyName":{"local":{"name":"familyName","value":["Doe"]},"remote":{"name":"familyName","value":["Doe"]},"is-valid":false,"remarks":""}}},"remarks":"This seems a pretty decent match","name-id":"john.doe@example.com","institution":"stepup.example.com","remote-vetting-source":"mock","application-version":"Stepup-SelfService","time":"2021-02-22T14:35:37+00:00"}', $result);
+        $this->assertSame('{"attribute-data":{"local-attributes":{"nameId":"john.doe@example.com","attributes":{"email":["john@example.com"],"firstName":["Johnie"],"familyName":["Doe"],"telephone":["0612345678"]}},"remote-attributes":{"nameId":"john.doe@example.com","attributes":{"emailAddress":["johndoe@example.com"],"givenName":["John"],"familyName":["Doe"],"fullName":["John Doe"]}},"matching-results":{"email":{"local":{"name":"email","value":["john@example.com"]},"remote":{"name":"emailAddress","value":["johndoe@example.com"]},"is-valid":true,"remarks":"This email is valid"},"firstName":{"local":{"name":"firstName","value":["Johnie"]},"remote":{"name":"givenName","value":["John"]},"is-valid":false,"remarks":""},"familyName":{"local":{"name":"familyName","value":["Doe"]},"remote":{"name":"familyName","value":["Doe"]},"is-valid":false,"remarks":""}},"feedback":{"key1":["val1"],"key2":["val2"]}},"name-id":"john.doe@example.com","institution":"stepup.example.com","remote-vetting-source":"mock","application-version":"Stepup-SelfService","time":"2021-02-22T14:35:37+00:00"}', $result);
 
         // test logs
         $this->assertSame([

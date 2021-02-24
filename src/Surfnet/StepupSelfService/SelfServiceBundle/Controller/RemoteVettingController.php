@@ -30,6 +30,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetValidationTyp
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\FeedbackCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
@@ -67,9 +68,14 @@ class RemoteVettingController extends Controller
      * @var SecondFactorService
      */
     private $secondFactorService;
+    /**
+     * @var RemoteVettingViewHelper
+     */
+    private $remoteVettingViewHelper;
 
     public function __construct(
         RemoteVettingService $remoteVettingService,
+        RemoteVettingViewHelper $remoteVettingViewHelper,
         SecondFactorService $secondFactorService,
         SamlCalloutHelper $samlCalloutHelper,
         RegistrationExpirationHelper $expirationHelper,
@@ -80,6 +86,7 @@ class RemoteVettingController extends Controller
         $this->samlCalloutHelper = $samlCalloutHelper;
         $this->expirationHelper = $expirationHelper;
         $this->logger = $logger;
+        $this->remoteVettingViewHelper = $remoteVettingViewHelper;
     }
 
     /**
@@ -207,8 +214,12 @@ class RemoteVettingController extends Controller
 
                 return $this->redirectToRoute('ss_second_factor_list');
             }
+            
+            $provider = $this->remoteVettingViewHelper->getIdentityProvider($this->remoteVettingService->getActiveIdentityProviderSlug());
 
             return $this->render('SurfnetStepupSelfServiceSelfServiceBundle:remote_vetting:validation.html.twig', [
+                'provider' => $provider,
+                'identity' => $this->getIdentity(),
                 'form' => $form->createView(),
             ]);
         } catch (InvalidRemoteVettingStateException $e) {

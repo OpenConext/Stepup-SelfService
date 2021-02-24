@@ -32,23 +32,14 @@ class RemoteVetValidationCommand
     public $matches = [];
 
     /**
-     * Should the attributes considered to be valid
-     *
-     * @Assert\NotBlank()
-     * @Assert\Type(type="bool")
-     *
-     * @var bool
-     */
-    public $valid = false;
-
-    /**
      * Feedback for the attribute matching
      *
      * @var FeedbackCollection
      */
     public $feedback = [];
 
-    public function __construct(AttributeMatchCollection $matches, FeedbackCollection $feedback){
+    public function __construct(AttributeMatchCollection $matches, FeedbackCollection $feedback)
+    {
         $this->matches = $matches;
         $this->feedback = $feedback;
     }

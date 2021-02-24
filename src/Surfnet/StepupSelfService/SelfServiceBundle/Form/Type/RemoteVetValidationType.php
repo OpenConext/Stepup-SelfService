@@ -21,7 +21,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RemoteVetValidationCommand;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,23 +44,19 @@ class RemoteVetValidationType extends AbstractType
             ],
         ]);
 
-        $builder->add('valid', CheckboxType::class, [
-            'label' => 'valid',
-            'required' => true,
+        $builder->add('feedback', RemoteVetFeedbackType::class, [
+           'label' => 'ss.form.ss_remote_vet_second_factor.feedback',
         ]);
 
-        $builder->add('feedback', RemoteVetFeedbackType::class, [
-           'label' => 'feedback',
+        $builder->add('cancel', AnchorType::class, [
+            'label' => 'ss.form.ss_remote_vet_second_factor.cancel',
+            'attr' => [ 'class' => 'btn pull-right' ],
+            'route' => 'ss_second_factor_list',
         ]);
 
         $builder->add('validate', SubmitType::class, [
             'label' => 'ss.form.ss_remote_vet_second_factor.validate',
             'attr' => [ 'class' => 'btn btn-primary pull-right' ],
-        ]);
-        $builder->add('cancel', AnchorType::class, [
-            'label' => 'ss.form.ss_remote_vet_second_factor.cancel',
-            'attr' => [ 'class' => 'btn pull-right' ],
-            'route' => 'ss_second_factor_list',
         ]);
     }
 

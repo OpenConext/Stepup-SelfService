@@ -75,6 +75,15 @@ class RemoteVettingConfiguration
         return $this->idps;
     }
 
+    public function getRemoteVettingIdp(string $name): RemoteVettingIdenityProviderDto
+    {
+        if (array_key_exists($name, $this->idps)) {
+            return $this->idps[$name];
+        }
+
+        throw new InvalidRemoteVettingIdentityProviderException(sprintf("Invalid IdP requested '%s'", $name));
+    }
+
     /**
      * @param string
      * @return array

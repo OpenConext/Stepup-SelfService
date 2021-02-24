@@ -227,12 +227,6 @@ class MockRemoteVetControllerTest extends WebTestCase
         $form = $button->form();
         $crawler = $this->client->submit($form);
 
-        // Accept sending info to IdP on consent screen
-        $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/remote-vet/mock', $this->client->getRequest()->getUri());
-        $button = $crawler->selectButton('Validate identity');
-        $form = $button->form();
-        $crawler = $this->client->submit($form);
-
         // Handle IdP callout
         $this->assertSame('https://selfservice.stepup.example.com/second-factor/mock/sso', $this->client->getRequest()->getSchemeAndHttpHost() . $this->client->getRequest()->getPathInfo());
         $crawler = $this->postMockIdpForm($crawler, 'success');
