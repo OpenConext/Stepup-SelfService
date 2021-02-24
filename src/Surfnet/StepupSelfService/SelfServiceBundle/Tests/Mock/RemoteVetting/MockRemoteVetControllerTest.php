@@ -150,7 +150,7 @@ class MockRemoteVetControllerTest extends WebTestCase
         // Test if on manual matching form
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
-        $this->assertStringContainsString('Validate information', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Questions for you', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -234,15 +234,14 @@ class MockRemoteVetControllerTest extends WebTestCase
         // Test if on manual matching form
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
-        $this->assertStringContainsString('Validate information', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Questions for you', $this->client->getResponse()->getContent());
 
         // Set response attributes and post form
         $form = $crawler->selectButton('ss_remote_vet_validation[validate]')->form();
         $crawler = $this->client->submit($form, [
             'ss_remote_vet_validation[matches][surname][valid]' => '1',
             'ss_remote_vet_validation[matches][givenName][remarks]' => 'This is not my full first name',
-            'ss_remote_vet_validation[valid]' => '1',
-            'ss_remote_vet_validation[remarks]' => 'All other info seems valid',
+            'ss_remote_vet_validation[feedback][remarks]' => 'All other info seems valid',
         ]);
 
         // Check if on overview page with success flashbag message

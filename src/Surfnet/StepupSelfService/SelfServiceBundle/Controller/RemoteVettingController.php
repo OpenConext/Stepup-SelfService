@@ -110,28 +110,14 @@ class RemoteVettingController extends Controller
             );
         }
 
-        $command = new RemoteVetCommand();
-        $command->identity = $identity;
-        $command->secondFactor = $secondFactor;
+        $token = RemoteVettingTokenDto::create(
+            $identity->id,
+            $secondFactor->id
+        );
 
-        $form = $this->createForm(RemoteVetSecondFactorType::class, $command)->handleRequest($request);
+        $this->remoteVettingService->start($identityProviderSlug, $token);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $token = RemoteVettingTokenDto::create(
-                $command->identity->id,
-                $command->secondFactor->id
-            );
-
-            $this->remoteVettingService->start($identityProviderSlug, $token);
-
-            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest($identityProviderSlug));
-        }
-
-        return [
-            'form' => $form->createView(),
-            'identity' => $identity,
-            'secondFactor' => $secondFactor,
-        ];
+        return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest($identityProviderSlug));
     }
 
     /**
