@@ -31,6 +31,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\Sa
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\FeedbackCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
@@ -176,22 +177,22 @@ class RemoteVettingController extends Controller
 
         $localAttributes = AttributeListDto::fromAttributeSet($samlToken->getAttribute(SamlToken::ATTRIBUTE_SET));
 
-        $command = new RemoteVetValidationCommand();
+        $matches = $this->remoteVettingService->getAttributeMatchCollection($localAttributes);
+        $command = new RemoteVetValidationCommand($matches, new FeedbackCollection());
 
         try {
-            $command->matches = $this->remoteVettingService->getAttributeMatchCollection($localAttributes);
-
             $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
 
-                /** @var RemoteVetValidationCommand $command */$command = $form->getData();
+                /** @var RemoteVetValidationCommand $command */
+                $command = $form->getData();
 
                 $token =  $this->remoteVettingService->done(
                     ProcessId::create($processId),
                     $this->getIdentity(),
                     $localAttributes,
                     $command->matches,
-                    (string)$command->remarks
+                    $command->feedback
                 );
 
                 $command = new RemoteVetCommand();

@@ -28,6 +28,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Encryption
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingContext;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeCollectionAggregate;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\FeedbackCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 
 class RemoteVettingService
@@ -105,7 +106,7 @@ class RemoteVettingService
      * @param Identity $identity
      * @param AttributeListDto $localAttributes
      * @param AttributeMatchCollection $attributeMatches
-     * @param string $remarks
+     * @param FeedbackCollection $feedback
      * @return RemoteVettingTokenDto
      */
     public function done(
@@ -113,12 +114,12 @@ class RemoteVettingService
         Identity $identity,
         AttributeListDto $localAttributes,
         AttributeMatchCollection $attributeMatches,
-        $remarks
+        FeedbackCollection $feedback
     ) {
         $this->remoteVettingContext->done($processId);
         $this->logger->info('Saving the encrypted assertion to the filesystem');
 
-        $identityData = $this->aggregateIdentityData($identity, $localAttributes, $attributeMatches, $remarks);
+        $identityData = $this->aggregateIdentityData($identity, $localAttributes, $attributeMatches, $feedback);
         $this->identityEncrypter->encrypt($identityData->serialize());
 
         $this->logger->info('Finished the remote vetting process for the current process');
@@ -150,31 +151,29 @@ class RemoteVettingService
      * @param Identity $identity
      * @param AttributeListDto $localAttributes
      * @param AttributeMatchCollection $attributeMatches
-     * @param string $remarks
      * @return IdentityData
      */
     private function aggregateIdentityData(
         Identity $identity,
         AttributeListDto $localAttributes,
         AttributeMatchCollection $attributeMatches,
-        $remarks
+        FeedbackCollection $feedback
     ) {
         $nameId = $identity->nameId;
         $institution = $identity->institution;
         $version = $this->applicationHelper->getApplicationVersion();
-        $remarks = (string)$remarks;
         $remoteVettingSource = $this->remoteVettingContext->getIdentityProviderSlug();
 
         $attributeCollectionAggregate = new AttributeCollectionAggregate();
         $attributeCollectionAggregate->add('local-attributes', $localAttributes);
         $attributeCollectionAggregate->add('remote-attributes', $this->remoteVettingContext->getAttributes());
         $attributeCollectionAggregate->add('matching-results', $attributeMatches);
+        $attributeCollectionAggregate->add('feedback', $feedback);
 
         return new IdentityData(
             $attributeCollectionAggregate,
             $nameId,
             $version,
-            $remarks,
             $institution,
             $remoteVettingSource
         );

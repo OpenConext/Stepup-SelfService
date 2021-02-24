@@ -29,13 +29,11 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-3">
-            {{ 'ss.second_factor.remote_vet.remarks'|trans }}
-        </div>
-        <div class="col-xs-9">
-            {{ form_widget(form.remarks) }}
+        <div class="col-xs-12">
+            {{ form_widget(form.feedback) }}
         </div>
     </div>
+
     {{ form_end(form) }}
 
 {% endblock %}

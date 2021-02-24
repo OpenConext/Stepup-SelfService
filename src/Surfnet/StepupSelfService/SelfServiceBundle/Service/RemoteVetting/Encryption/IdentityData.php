@@ -42,11 +42,6 @@ class IdentityData
     /**
      * @var string
      */
-    private $remarks;
-
-    /**
-     * @var string
-     */
     private $institution;
 
     /**
@@ -58,26 +53,25 @@ class IdentityData
      * @param AttributeCollectionInterface $attributeCollectionAggregate
      * @param string $nameId
      * @param string $applicationVersion
-     * @param string $remarks
+     * @param $institution
+     * @param $remoteVettingSource
+     * @throws \Assert\AssertionFailedException
      */
     public function __construct(
         AttributeCollectionInterface $attributeCollectionAggregate,
         $nameId,
         $applicationVersion,
-        $remarks,
         $institution,
         $remoteVettingSource
     ) {
         Assert::string($nameId, 'The name id must have a string value');
         Assert::string($applicationVersion, 'The application version must have a string value');
-        Assert::string($remarks, 'The remarks must have a string value');
         Assert::string($institution, 'The SHO of the institution must have a string value');
         Assert::string($remoteVettingSource, 'The remote vetting source must have a string value');
 
         $this->attributeCollectionAggregate = $attributeCollectionAggregate;
         $this->nameId = $nameId;
         $this->applicationVersion = $applicationVersion;
-        $this->remarks = $remarks;
         $this->institution = $institution;
         $this->remoteVettingSource = $remoteVettingSource;
     }
@@ -87,7 +81,6 @@ class IdentityData
         return json_encode(
             [
                 'attribute-data' => $this->attributeCollectionAggregate->getAttributes(),
-                'remarks' => $this->remarks,
                 'name-id' => $this->nameId,
                 'institution' => $this->institution,
                 'remote-vetting-source' => $this->remoteVettingSource,

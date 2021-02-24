@@ -33,9 +33,9 @@ class RemoteVetValidationType extends AbstractType
     {
         $builder->add('matches', CollectionType::class, [
             'label' => false,
-            // each entry in the array will be an "email" field
+            // each entry in the array will be an "match" field
             'entry_type' => RemoteVetAssertionMatchType::class,
-            // these options are passed to each "email" type
+            // these options are passed to each "match" type
             'entry_options' => [
                 'attr' => ['class' => 'assertion_match'],
                 'label' => false,
@@ -47,9 +47,8 @@ class RemoteVetValidationType extends AbstractType
             'required' => true,
         ]);
 
-        $builder->add('remarks', TextareaType::class, [
-            'label' => false,
-            'required' => false,
+        $builder->add('feedback', RemoteVetFeedbackType::class, [
+           'label' => 'feedback',
         ]);
 
         $builder->add('validate', SubmitType::class, [
