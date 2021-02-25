@@ -57,6 +57,11 @@ services:
             - "@surfnet_stepup.guzzle.gateway_api"
             - "@logger"
 
+    surfnet_stepup_self_service_self_service.service.gsspuserattributes:
+      class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService
+      arguments:
+        - "@logger"
+
     surfnet_stepup_self_service_self_service.service.yubikey_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
         arguments:
