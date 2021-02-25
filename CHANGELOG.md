@@ -1,5 +1,9 @@
 # Changelog
 
+## Next release:
+ * Add GSSP UserAttributes extensions to SAMLAuthnRequest to pass user-information to GSSP's
+ * Update dependencies
+
 ## 3.2.0
 Platform update
  * Drop support for php 5.6, Use PHP7.2
