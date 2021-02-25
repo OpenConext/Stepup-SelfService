@@ -1,5 +1,8 @@
 # Changelog
 
+## Remote Vetting (RC)
+Remote vetting will allow configured Remote Vetting SAML IdP's to vet tokens.
+
 ## 3.2.0
 Platform update
  * Drop support for php 5.6, Use PHP7.2
