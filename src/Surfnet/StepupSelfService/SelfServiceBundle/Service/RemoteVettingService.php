@@ -74,7 +74,11 @@ class RemoteVettingService
      */
     public function start($identityProviderSlug, RemoteVettingTokenDto $remoteVettingToken)
     {
-        $this->logger->info('Starting an remote vetting process for the provided token');
+        $this->logger->notice('Starting a remote vetting process', [
+            'second-factor' => $remoteVettingToken->getSecondFactorId(),
+            'identity' => $remoteVettingToken->getIdentityId(),
+            'provider' => $identityProviderSlug,
+        ]);
 
         $this->remoteVettingContext->initialize($identityProviderSlug, $remoteVettingToken);
     }
@@ -84,7 +88,10 @@ class RemoteVettingService
      */
     public function startValidation(ProcessId $processId)
     {
-        $this->logger->info('Starting an remote vetting authentication for the current process');
+        $this->logger->notice('Starting a remote vetting authentication', [
+            'second-factor' => $this->remoteVettingContext->getTokenId(),
+            'process' => $processId->getProcessId(),
+        ]);
 
         $this->remoteVettingContext->validating($processId);
     }
@@ -95,7 +102,10 @@ class RemoteVettingService
      */
     public function finishValidation(ProcessId $processId, AttributeListDto $externalAttributes)
     {
-        $this->logger->info('Finishing a remote vetting authentication for the current process');
+        $this->logger->notice('Finishing a remote vetting authentication', [
+            'second-factor' => $this->remoteVettingContext->getTokenId(),
+            'process' => $processId->getProcessId(),
+        ]);
 
         $this->remoteVettingContext->validated($processId, $externalAttributes);
     }
@@ -116,12 +126,18 @@ class RemoteVettingService
         $remarks
     ) {
         $this->remoteVettingContext->done($processId);
-        $this->logger->info('Saving the encrypted assertion to the filesystem');
+        $this->logger->notice('Saving the encrypted match data to the filesystem', [
+            'second-factor' => $this->remoteVettingContext->getTokenId(),
+            'process' => $processId->getProcessId(),
+        ]);
 
         $identityData = $this->aggregateIdentityData($identity, $localAttributes, $attributeMatches, $remarks);
         $this->identityEncrypter->encrypt($identityData->serialize());
 
-        $this->logger->info('Finished the remote vetting process for the current process');
+        $this->logger->notice('Finished the remote vetting process', [
+            'second-factor' => $this->remoteVettingContext->getTokenId(),
+            'process' => $processId->getProcessId(),
+        ]);
 
         return $this->remoteVettingContext->getValidatedToken();
     }

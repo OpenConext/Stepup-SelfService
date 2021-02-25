@@ -132,12 +132,10 @@ class RemoteVettingController extends Controller
      */
     public function acsAction(Request $request)
     {
-        $this->logger->info('Receiving response from the remote IdP');
+        $this->logger->info('Receiving a remote vetting response from the remote IdP');
 
         /** @var FlashBagInterface $flashBag */
         $flashBag = $this->get('session')->getFlashBag();
-
-        $this->logger->info('Load the attributes from the saml response');
 
         try {
             $processId = $this->samlCalloutHelper->handleResponse($request, $this->remoteVettingService->getActiveIdentityProviderSlug());
@@ -168,6 +166,8 @@ class RemoteVettingController extends Controller
      */
     public function remoteVetMatchAction(Request $request, $processId)
     {
+        $this->logger->info('Start matching the remote vetting attributes');
+
         /** @var FlashBagInterface $flashBag */
         $flashBag = $this->get('session')->getFlashBag();
 
@@ -183,6 +183,7 @@ class RemoteVettingController extends Controller
 
             $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
+                $this->logger->info('Finishing matching the remote vetting attributes');
 
                 /** @var RemoteVetValidationCommand $command */$command = $form->getData();
 
@@ -199,8 +200,10 @@ class RemoteVettingController extends Controller
                 $command->secondFactor = $token->getSecondFactorId();
 
                 if ($this->secondFactorService->remoteVet($command)) {
+                    $this->logger->info('Remote vetting succeeded');
                     $flashBag->add('success', 'ss.second_factor.revoke.alert.remote_vetting_successful');
                 } else {
+                    $this->logger->info('Remote vetting failed');
                     $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_failed');
                 }
 

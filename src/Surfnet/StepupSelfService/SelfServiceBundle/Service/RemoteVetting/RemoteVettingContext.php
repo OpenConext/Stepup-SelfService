@@ -130,6 +130,15 @@ class RemoteVettingContext
     }
 
     /**
+     * @return string
+     */
+    public function getTokenId()
+    {
+        $process = $this->loadProcess();
+        return $process->getToken()->getSecondFactorId();
+    }
+
+    /**
      * @return RemoteVettingProcessDto
      */
     private function loadProcess()

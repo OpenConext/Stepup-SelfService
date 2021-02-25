@@ -165,25 +165,41 @@ class RemoteVettingServiceTest extends TestCase
         // test logs
         $this->assertSame([
             [
-                'level' => 'info',
-                'message' => 'Starting an remote vetting process for the provided token',
-                'context' => [],
+                'level' => 'notice',
+                'message' => 'Starting a remote vetting process',
+                'context' => [
+                    'second-factor' => 'dace3819-35e9-4205-8538-04bb09bdd479',
+                    'identity' => '95515f44-71a2-4dc1-8e8f-e7e4021ee65b',
+                    'provider' => 'mock',
+                ],
             ],[
-                'level' => 'info',
-                'message' => 'Starting an remote vetting authentication for the current process',
-                'context' => [],
+                'level' => 'notice',
+                'message' => 'Starting a remote vetting authentication',
+                'context' => [
+                    'second-factor' => 'dace3819-35e9-4205-8538-04bb09bdd479',
+                    'process' => '4a46493c-7387-4c04-b491-a41f7323d73a',
+                ],
             ],[
-                'level' => 'info',
-                'message' => 'Finishing a remote vetting authentication for the current process',
-                'context' => [],
+                'level' => 'notice',
+                'message' => 'Finishing a remote vetting authentication',
+                'context' => [
+                    'second-factor' => 'dace3819-35e9-4205-8538-04bb09bdd479',
+                    'process' => '4a46493c-7387-4c04-b491-a41f7323d73a',
+                ],
             ],[
-                'level' => 'info',
-                'message' => 'Saving the encrypted assertion to the filesystem',
-                'context' => [],
+                'level' => 'notice',
+                'message' => 'Saving the encrypted match data to the filesystem',
+                'context' => [
+                    'second-factor' => 'dace3819-35e9-4205-8538-04bb09bdd479',
+                    'process' => '4a46493c-7387-4c04-b491-a41f7323d73a',
+                ],
             ],[
-                'level' => 'info',
-                'message' => 'Finished the remote vetting process for the current process',
-                'context' => [],
+                'level' => 'notice',
+                'message' => 'Finished the remote vetting process',
+                'context' => [
+                    'second-factor' => 'dace3819-35e9-4205-8538-04bb09bdd479',
+                    'process' => '4a46493c-7387-4c04-b491-a41f7323d73a',
+                ],
             ],
         ], $this->logger->records);
     }
