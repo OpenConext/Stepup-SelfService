@@ -19,14 +19,8 @@
   }
 }
 
+.remote-vetting,
 .second-factors {
-
-  @media (min-width: $medium) {
-    > div:nth-child(3n+4) {
-      clear: left;
-    }
-  }
-
   .second-factor-selector {
     text-align: center;
 

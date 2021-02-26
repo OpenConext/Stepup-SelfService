@@ -25,27 +25,34 @@
     <div class="row remote-vetting">
 
         <div class="col-xs-12 col-md-3">
-            <div class="thumbnail remote-vetting-selector">
-                <i class="fa fa-university"></i>
+            <div class="thumbnail second-factor-selector">
+                <img src="/images/remote-vetting/on-premise.png"
+                     alt="{{ ('ss.registration.selector.on-premise.alt')|trans }}">
                 <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
+                <hr>
                 <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
-                <form action="{{ url('ss_registration_registration_email_sent', {'secondFactorId': secondFactorId}) }}" method="get">
-                <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
+                <p>
+                    <form action="{{ url('ss_registration_registration_email_sent', {'secondFactorId': secondFactorId}) }}" method="get">
+                    <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
+                </p>
                 </form>
             </div>
         </div>
 
         {% for identityProvider in identityProviders %}
             <div class="col-xs-12 col-md-3">
-                <div class="thumbnail remote-vetting-selector">
-                    <img src="{{ identityProvider.logo }}" alt="Logo of {{ identityProvider.name }}">
+                <div class="thumbnail second-factor-selector">
+                    <img class="image" src="{{ identityProvider.logo }}" alt="Logo of {{ identityProvider.name }}">
                     <h3>{{ identityProvider.name }}</h3>
+                    <hr>
                     <p>
                         {{ identityProvider.description(app.request.locale) }}
                     </p>
-                    <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId, 'identityProviderSlug': identityProvider.slug }) }}" method="get">
-                        <button type="submit" class="btn btn-primary" id="select-rv-idp-{{ identityProvider.slug }}">Continue</button>
-                    </form>
+                    <p>
+                        <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId, 'identityProviderSlug': identityProvider.slug }) }}" method="get">
+                            <button type="submit" class="btn btn-primary" id="select-rv-idp-{{ identityProvider.slug }}">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
+                        </form>
+                    </p>
                 </div>
             </div>
         {% endfor %}
