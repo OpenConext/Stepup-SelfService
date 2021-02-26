@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\FeedbackCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RemoteVetValidationCommand
@@ -31,21 +32,15 @@ class RemoteVetValidationCommand
     public $matches = [];
 
     /**
-     * Should the attributes considered to be valid
+     * Feedback for the attribute matching
      *
-     * @Assert\NotBlank()
-     * @Assert\Type(type="bool")
-     *
-     * @var bool
+     * @var FeedbackCollection
      */
-    public $valid = false;
+    public $feedback = [];
 
-    /**
-     * Remarks about the attributes matching
-     *
-     * @Assert\Type(type="string")
-     *
-     * @var string
-     */
-    public $remarks = '';
+    public function __construct(AttributeMatchCollection $matches, FeedbackCollection $feedback)
+    {
+        $this->matches = $matches;
+        $this->feedback = $feedback;
+    }
 }

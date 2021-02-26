@@ -30,7 +30,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RemoteVetValidationTyp
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\FeedbackCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
@@ -66,9 +68,14 @@ class RemoteVettingController extends Controller
      * @var SecondFactorService
      */
     private $secondFactorService;
+    /**
+     * @var RemoteVettingViewHelper
+     */
+    private $remoteVettingViewHelper;
 
     public function __construct(
         RemoteVettingService $remoteVettingService,
+        RemoteVettingViewHelper $remoteVettingViewHelper,
         SecondFactorService $secondFactorService,
         SamlCalloutHelper $samlCalloutHelper,
         RegistrationExpirationHelper $expirationHelper,
@@ -79,6 +86,7 @@ class RemoteVettingController extends Controller
         $this->samlCalloutHelper = $samlCalloutHelper;
         $this->expirationHelper = $expirationHelper;
         $this->logger = $logger;
+        $this->remoteVettingViewHelper = $remoteVettingViewHelper;
     }
 
     /**
@@ -102,28 +110,14 @@ class RemoteVettingController extends Controller
             );
         }
 
-        $command = new RemoteVetCommand();
-        $command->identity = $identity;
-        $command->secondFactor = $secondFactor;
+        $token = RemoteVettingTokenDto::create(
+            $identity->id,
+            $secondFactor->id
+        );
 
-        $form = $this->createForm(RemoteVetSecondFactorType::class, $command)->handleRequest($request);
+        $this->remoteVettingService->start($identityProviderSlug, $token);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $token = RemoteVettingTokenDto::create(
-                $command->identity->id,
-                $command->secondFactor->id
-            );
-
-            $this->remoteVettingService->start($identityProviderSlug, $token);
-
-            return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest($identityProviderSlug));
-        }
-
-        return [
-            'form' => $form->createView(),
-            'identity' => $identity,
-            'secondFactor' => $secondFactor,
-        ];
+        return new RedirectResponse($this->samlCalloutHelper->createAuthnRequest($identityProviderSlug));
     }
 
     /**
@@ -176,22 +170,22 @@ class RemoteVettingController extends Controller
 
         $localAttributes = AttributeListDto::fromAttributeSet($samlToken->getAttribute(SamlToken::ATTRIBUTE_SET));
 
-        $command = new RemoteVetValidationCommand();
+        $matches = $this->remoteVettingService->getAttributeMatchCollection($localAttributes);
+        $command = new RemoteVetValidationCommand($matches, new FeedbackCollection());
 
         try {
-            $command->matches = $this->remoteVettingService->getAttributeMatchCollection($localAttributes);
-
             $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
 
-                /** @var RemoteVetValidationCommand $command */$command = $form->getData();
+                /** @var RemoteVetValidationCommand $command */
+                $command = $form->getData();
 
                 $token =  $this->remoteVettingService->done(
                     ProcessId::create($processId),
                     $this->getIdentity(),
                     $localAttributes,
                     $command->matches,
-                    (string)$command->remarks
+                    $command->feedback
                 );
 
                 $command = new RemoteVetCommand();
@@ -206,8 +200,12 @@ class RemoteVettingController extends Controller
 
                 return $this->redirectToRoute('ss_second_factor_list');
             }
+            
+            $provider = $this->remoteVettingViewHelper->getIdentityProvider($this->remoteVettingService->getActiveIdentityProviderSlug());
 
             return $this->render('SurfnetStepupSelfServiceSelfServiceBundle:remote_vetting:validation.html.twig', [
+                'provider' => $provider,
+                'identity' => $this->getIdentity(),
                 'form' => $form->createView(),
             ]);
         } catch (InvalidRemoteVettingStateException $e) {

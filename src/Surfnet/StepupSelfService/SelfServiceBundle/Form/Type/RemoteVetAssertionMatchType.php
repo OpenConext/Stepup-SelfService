@@ -23,6 +23,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -32,9 +33,15 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('valid', CheckboxType::class, [
-            'label'    => 'valid',
-            'required' => false,
+        $builder->add('valid', ChoiceType::class, [
+            'label' => false,
+            'required' => true,
+            'choices'   => array(
+                'ss.form.ss_remote_vet_feedback.yes' => true,
+                'ss.form.ss_remote_vet_feedback.no' => false,
+            ),
+            'multiple' => false,
+            'expanded' => true,
         ]);
 
         $builder->add('remarks', TextareaType::class, [
@@ -49,6 +56,7 @@ class RemoteVetAssertionMatchType extends AbstractType implements DataMapperInte
     {
         $resolver->setDefaults([
             'data_class' => AttributeMatch::class,
+            'attr' => ['class' => 'form-inline'],
         ]);
     }
 

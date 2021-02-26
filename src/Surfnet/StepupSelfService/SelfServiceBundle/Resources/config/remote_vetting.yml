@@ -44,6 +44,7 @@ services:
     public: true
     arguments:
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService'
+      - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper'
       - '@surfnet_stepup_self_service_self_service.service.second_factor'
       - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper'
       - '@surfnet_stepup.registration_expiration_helper'

@@ -147,3 +147,21 @@ span.label {
 .alert-notice {
   @extend .alert-info;
 }
+
+/**
+ * This are custom RV form layout styles
+ */
+.rv-form {
+  #ss_remote_vet_validation_feedback {
+    .form-check {
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    legend {
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+    }
+  }
+}
