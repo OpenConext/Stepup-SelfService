@@ -1,7 +1,7 @@
 # Changelog
 
-## Next release:
- * Add GSSP UserAttributes extensions to SAMLAuthnRequest to pass user-information to GSSP's
+## 3.0.3:
+ * Add GSSP UserAttributes extensions to registration-SAMLAuthnRequest to pass user-information to GSSP's
  * Update dependencies
 
 ## 3.2.0
