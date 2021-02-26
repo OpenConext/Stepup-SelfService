@@ -18,16 +18,43 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingIdentityProviderException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingIdenityProviderDto;
+
 class RemoteVettingConfiguration
 {
     private $publicKey;
 
     private $location;
 
-    public function __construct($configurationSettings)
+    private $idps = [];
+
+    private $attributeMapping = [];
+
+    public function __construct(string $privateKey, array $configurationSettings, array $remoteVettingIdpConfig)
     {
+        Assert::string($privateKey, 'privateKey should be a string');
+        Assert::file($privateKey, 'privateKey should be a file');
+
+        Assert::string($configurationSettings['encryption_public_key'], 'identity_encryption_configuration.encryption_public_key should be a string');
+        Assert::string($configurationSettings['storage_location'], 'identity_encryption_configuration.storage_location should be a string');
+
         $this->publicKey = $configurationSettings['encryption_public_key'];
         $this->location = $configurationSettings['storage_location'];
+
+        foreach ($remoteVettingIdpConfig as $idpConfig) {
+            $idpConfig['privateKey'] = $privateKey;
+
+            $idp = RemoteVettingIdenityProviderDto::create($idpConfig);
+            $this->idps[$idp->getSlug()] = $idp;
+
+            Assert::keyExists($idpConfig, 'attributeMapping', sprintf('attributeMapping should be set: %s', $idp->getSlug()));
+            Assert::isArray($idpConfig['attributeMapping'], 'attributeMapping should be an array');
+            Assert::allString($idpConfig['attributeMapping'], 'attributeMapping should consist of strings');
+
+            $this->attributeMapping[$idp->getSlug()] = $idpConfig['attributeMapping'];
+        }
     }
 
     public function getLocation()
@@ -38,5 +65,26 @@ class RemoteVettingConfiguration
     public function getPublicKey()
     {
         return $this->publicKey;
+    }
+
+    /**
+     * @return RemoteVettingIdenityProviderDto[]
+     */
+    public function getRemoteVettingIdps(): array
+    {
+        return $this->idps;
+    }
+
+    /**
+     * @param string
+     * @return array
+     */
+    public function getAttributeMapping($name)
+    {
+        if (array_key_exists($name, $this->attributeMapping)) {
+            return $this->attributeMapping[$name];
+        }
+
+        throw new InvalidRemoteVettingIdentityProviderException(sprintf("Invalid IdP requested '%s'", $name));
     }
 }

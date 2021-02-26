@@ -18,6 +18,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingMappingException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
@@ -25,25 +26,25 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attr
 class AttributeMapper
 {
     /**
-     * @var IdentityProviderFactory
+     * @var RemoteVettingConfiguration
      */
-    private $identityProviderFactory;
+    private $configuration;
 
-    public function __construct(IdentityProviderFactory $identityProviderFactory)
+    public function __construct(RemoteVettingConfiguration $configuration)
     {
-        $this->identityProviderFactory = $identityProviderFactory;
+        $this->configuration = $configuration;
     }
 
     /**
      * @param string $identityProviderName
      * @param AttributeListDto $localAttributes
-     * @param AttributeListDto $externalAttributes
+     * @param AttributeListDto $remoteAttributes
      * @return AttributeMatchCollection
      * @throws InvalidRemoteVettingMappingException
      */
     public function map($identityProviderName, AttributeListDto $localAttributes, AttributeListDto $remoteAttributes)
     {
-        $attributeMapping = $this->identityProviderFactory->getAttributeMapping($identityProviderName);
+        $attributeMapping = $this->configuration->getAttributeMapping($identityProviderName);
 
         $localMap = $this->attributeListToMap($localAttributes);
         $remoteMap = $this->attributeListToMap($remoteAttributes);

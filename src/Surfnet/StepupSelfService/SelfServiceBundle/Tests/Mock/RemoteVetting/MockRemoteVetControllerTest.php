@@ -25,7 +25,6 @@ use SAML2\Certificate\KeyLoader;
 use SAML2\Configuration\PrivateKey;
 use SAML2\Response\Processor;
 use SAML2\XML\saml\NameID;
-use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
 use Surfnet\SamlBundle\SAML2\Attribute\Attribute;
@@ -102,7 +101,6 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->mockSecondFactorOverviewPage();
 
         $projectDir = self::$kernel->getProjectDir();
-
         $keyPath = '/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources';
         $this->publicKey = $projectDir . $keyPath . '/test.crt';
         $this->privateKey = $projectDir . $keyPath . '/test.key';
@@ -124,8 +122,8 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function the_mock_remote_vetting_idp_should_present_us_with_possible_results_for_testing_purposes()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
-        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
+        $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('mock');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -141,8 +139,8 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function a_succesful_response_from_a_remote_vetting_idp_should_succeed()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
-        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
+        $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('mock');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -150,7 +148,6 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->postMockIdpForm($crawler, 'success');
 
         // Test if on manual matching form
-        $c = $this->client->getResponse()->getContent();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertStringStartsWith('https://selfservice.stepup.example.com/second-factor/remote-vetting/match/', $this->client->getRequest()->getUri());
         $this->assertStringContainsString('Validate information', $this->client->getResponse()->getContent());
@@ -163,8 +160,8 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function a_user_cancelled_response_from_a_remote_vetting_idp_should_fail()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
-        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
+        $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('mock');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -184,8 +181,8 @@ class MockRemoteVetControllerTest extends WebTestCase
     public function an_unsuccessful_response_from_a_remote_vetting_idp_should_fail()
     {
         $this->logIn();
-        $this->remoteVettingService->start('irma', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
-        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('MockIdP');
+        $this->remoteVettingService->start('mock', RemoteVettingTokenDto::create('identity-id-123456', 'second-factor-id-56789'));
+        $authnRequestUrl = $this->samlCalloutHelper->createAuthnRequest('mock');
 
         $crawler = $this->client->request('GET', $authnRequestUrl);
 
@@ -224,14 +221,14 @@ class MockRemoteVetControllerTest extends WebTestCase
         $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/vetting-types', $link->getUri());
         $crawler = $this->client->click($link);
 
-        // Select 'irma' as vetting type
+        // Select 'mock' as vetting type
         $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/vetting-types', $this->client->getRequest()->getUri());
-        $button = $crawler->selectButton('select-rv-idp-irma');
+        $button = $crawler->selectButton('select-rv-idp-mock');
         $form = $button->form();
         $crawler = $this->client->submit($form);
 
         // Accept sending info to IdP on consent screen
-        $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/remote-vet/irma', $this->client->getRequest()->getUri());
+        $this->assertSame('https://selfservice.stepup.example.com/second-factor/second-factor-id-56789/remote-vet/mock', $this->client->getRequest()->getUri());
         $button = $crawler->selectButton('Validate identity');
         $form = $button->form();
         $crawler = $this->client->submit($form);
@@ -265,11 +262,7 @@ class MockRemoteVetControllerTest extends WebTestCase
      */
     private function setupSamlCalloutHelper()
     {
-        $identityProviderFactory = m::mock(IdentityProviderFactory::class);
-        $identityProviderFactory->shouldReceive('create')
-            ->with('MockIdP')
-            ->once()
-            ->andReturn($this->createIdentityProvider());
+        $identityProviderFactory = $this->client->getKernel()->getContainer()->get(IdentityProviderFactory::class);
 
         $serviceProviderFactory = m::mock(ServiceProviderFactory::class);
         $serviceProviderFactory->shouldReceive('create')
@@ -297,7 +290,7 @@ class MockRemoteVetControllerTest extends WebTestCase
     {
         return new ServiceProvider(
             [
-                'entityId' => 'https://selfservice.stepup.example.com/saml/metadata',
+                'entityId' => 'https://selfservice.stepup.example.com/rv/metadata',
                 'assertionConsumerUrl' => 'https://selfservice.stepup.example.com/second-factor/acs',
                 'certificateFile' => $this->publicKey,
                 'privateKeys' => [
@@ -307,24 +300,6 @@ class MockRemoteVetControllerTest extends WebTestCase
                     ),
                 ],
                 'sharedKey' => $this->publicKey,
-            ]
-        );
-    }
-
-    private function createIdentityProvider()
-    {
-        return new IdentityProvider(
-            [
-                'entityId' => 'https://selfservice.stepup.example.com/mock/idp/metadata',
-                'ssoUrl' => 'https://selfservice.stepup.example.com/second-factor/mock/sso',
-                'certificateFile' => $this->publicKey,
-                'privateKeys' => [
-                    new PrivateKey(
-                        $this->privateKey,
-                        'default'
-                    ),
-                ],
-                'sharedKey' => $this->publicKey
             ]
         );
     }

@@ -164,13 +164,20 @@ class RemoteVettingProcessDto implements Serializable
     {
         $stateClass = !is_null($this->state) ? get_class($this->state) : null;
 
-        return json_encode([
-            'processId' => $this->processId->getProcessId(),
+        $data = [
+            'processId' => json_encode($this->processId->getProcessId()),
             'token' => $this->token->serialize(),
-            'state' => $stateClass,
+            'state' => json_encode($stateClass),
             'attributes' => $this->attributes->serialize(),
-            'identityProvider' => $this->identityProviderName,
-        ]);
+            'identityProvider' => json_encode($this->identityProviderName),
+        ];
+
+        $params = [];
+        foreach ($data as $key => $value) {
+            $params[] = json_encode($key).":{$value}";
+        }
+
+        return '{'.implode(',', $params).'}';
     }
 
     /**
@@ -183,9 +190,9 @@ class RemoteVettingProcessDto implements Serializable
         $stateClass = !is_null($data['state']) ? new $data['state']() : null;
 
         $this->processId = ProcessId::create($data['processId']);
-        $this->token = RemoteVettingTokenDto::deserialize($data['token']);
+        $this->token = RemoteVettingTokenDto::deserialize(json_encode($data['token']));
         $this->state = $stateClass;
-        $this->attributes = AttributeListDto::deserialize($data['attributes']);
+        $this->attributes = AttributeListDto::deserialize(json_encode($data['attributes']));
         $this->identityProviderName = $data['identityProvider'];
     }
 }

@@ -82,7 +82,7 @@ services:
     self_service.service.application:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\ApplicationHelper
         arguments:
-            $kernelRootDir: "%kernel.root_dir%"
+            $kernelProjectDir: "%kernel.project_dir%"
 
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService

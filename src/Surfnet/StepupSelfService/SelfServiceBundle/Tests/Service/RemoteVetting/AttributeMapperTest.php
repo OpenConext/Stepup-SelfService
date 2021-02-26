@@ -21,15 +21,15 @@ use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidRemoteVettingMappingException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\AttributeMapper;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\IdentityProviderFactory;
 
 class AttributeMapperTest extends TestCase
 {
     /**
-     * @var IdentityProviderFactory|m\Mock
+     * @var RemoteVettingConfiguration|m\Mock
      */
-    private $identityProviderFactory;
+    private $configuration;
     /**
      * @var AttributeMapper
      */
@@ -37,8 +37,8 @@ class AttributeMapperTest extends TestCase
 
     public function setUp(): void
     {
-        $this->identityProviderFactory = m::mock(IdentityProviderFactory::class);
-        $this->attributeMapper = new AttributeMapper($this->identityProviderFactory);
+        $this->configuration = m::mock(RemoteVettingConfiguration::class);
+        $this->attributeMapper = new AttributeMapper($this->configuration);
     }
 
     public function test_attribute_mapping()
@@ -60,7 +60,8 @@ class AttributeMapperTest extends TestCase
             'baz3' => ['foobar3'],
         ];
 
-        $this->identityProviderFactory->shouldReceive('getAttributeMapping')
+        $this->configuration->shouldReceive('getAttributeMapping')
+            ->with('idp-name')
             ->andReturn($config);
 
         $localAttributes = new AttributeListDto($local, $nameId);
@@ -96,7 +97,8 @@ class AttributeMapperTest extends TestCase
             'baz3' => ['foobar3'],
         ];
 
-        $this->identityProviderFactory->shouldReceive('getAttributeMapping')
+        $this->configuration->shouldReceive('getAttributeMapping')
+            ->with('idp-name')
             ->andReturn($config);
 
         $localAttributes = new AttributeListDto($local, $nameId);
@@ -129,7 +131,8 @@ class AttributeMapperTest extends TestCase
             'baz3' => ['foobar3'],
         ];
 
-        $this->identityProviderFactory->shouldReceive('getAttributeMapping')
+        $this->configuration->shouldReceive('getAttributeMapping')
+            ->with('idp-name')
             ->andReturn($config);
 
         $localAttributes = new AttributeListDto($local, $nameId);

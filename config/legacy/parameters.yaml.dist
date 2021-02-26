@@ -62,6 +62,8 @@ parameters:
 
     # remote vetting
 
+    remote_vetting_entity_id: https://selfservice.stepup.example.com/rv/metadata
+
     # For each remote vetting IdP we require some parameters.
     remote_vetting_idps:
           # The display name
@@ -82,7 +84,6 @@ parameters:
           ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
           # Certificates for the remote vetting IdP
           certificateFile: "%saml_rv_publickey%"
-          privateKey: "%saml_rv_privatekey%"
           # The attribute mapping should map the institute IdP attributes with the ones received from the remote vetting
           # IdP.
           attributeMapping:
@@ -97,7 +98,6 @@ parameters:
           entityId: https://selfservice.stepup.example.com/mock/metadata
           ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
           certificateFile: "%saml_rv_publickey%"
-          privateKey: "%saml_rv_privatekey%"
           attributeMapping:
             givenName: firstName
             surname: lastName
@@ -110,16 +110,21 @@ parameters:
           entityId: https://selfservice.stepup.example.com/mock/metadata
           ssoUrl: https://selfservice.stepup.example.com/second-factor/mock/sso
           certificateFile: '%saml_rv_publickey%'
-          privateKey: '%saml_rv_privatekey%'
           attributeMapping:
             givenName: firstName
             surname: lastName
-    # SelfService acts as the remote vetting SP, this metadata is used by the remote vetting IdP's to post their SAML
-    # responses to
-    remote_vetting_sp:
-      entityId: https://selfservice.stepup.example.com/saml/metadata
-      assertionConsumerUrl: https://selfservice.stepup.example.com/second-factor/acs
-      privateKey: '%saml_rv_privatekey%'
+        - slug: mock
+          name: 'Mock IDP'
+          logo: /images/remote-vetting/mock.png
+          description:
+              nl_NL: 'This is an integration test IdP.'
+              en_GB: 'This is an integration test IdP.'
+          entityId: 'https://selfservice.stepup.example.com/mock/metadata'
+          ssoUrl: 'https://selfservice.stepup.example.com/second-factor/mock/sso'
+          certificateFile: '%saml_rv_publickey%'
+          attributeMapping:
+              givenName: firstName
+              surname: lastName
 
     identity_encryption_configuration:
       # The public key used to encrypt the remote vetting user data. The private key matching this is used to decrypt,
@@ -147,6 +152,8 @@ parameters:
       # The location on disk where the encrypted remote vetting user data is stored
       storage_location: '%kernel.project_dir%/var/rv'
 
-    # For test, we use a mock remote vetting IdP, these certificates are used for that.
-    saml_rv_publickey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt
-    saml_rv_privatekey: /src/Stepup-SelfService/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key
+
+    # Saml Remote Vetting SP public key
+    saml_rv_publickey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.crt'
+    # Saml Remote Vetting Mock IdP private key (used for development and testing, this value should be omitted in production)
+    saml_rv_privatekey: '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Tests/Resources/test.key'
