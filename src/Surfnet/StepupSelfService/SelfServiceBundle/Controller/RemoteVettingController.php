@@ -145,6 +145,7 @@ class RemoteVettingController extends Controller
             return $this->redirectToRoute('ss_second_factor_list');
         } catch (InvalidRemoteVettingContextException $e) {
             $this->logger->error($e->getMessage());
+            $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_invalid_context');
             return $this->redirectToRoute('ss_second_factor_list');
         }
 
@@ -170,10 +171,10 @@ class RemoteVettingController extends Controller
 
         $localAttributes = AttributeListDto::fromAttributeSet($samlToken->getAttribute(SamlToken::ATTRIBUTE_SET));
 
-        $matches = $this->remoteVettingService->getAttributeMatchCollection($localAttributes);
-        $command = new RemoteVetValidationCommand($matches, new FeedbackCollection());
-
         try {
+            $matches = $this->remoteVettingService->getAttributeMatchCollection($localAttributes);
+            $command = new RemoteVetValidationCommand($matches, new FeedbackCollection());
+
             $form = $this->createForm(RemoteVetValidationType::class, $command)->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
 
@@ -214,6 +215,7 @@ class RemoteVettingController extends Controller
             return $this->redirectToRoute('ss_second_factor_list');
         } catch (InvalidRemoteVettingContextException $e) {
             $this->logger->error($e->getMessage());
+            $flashBag->add('error', 'ss.second_factor.revoke.alert.remote_vetting_invalid_context');
             return $this->redirectToRoute('ss_second_factor_list');
         }
     }
