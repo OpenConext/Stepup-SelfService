@@ -1,4 +1,5 @@
 /config/legacy/parameters.yaml
+/config/legacy/samlstepupproviders.yaml
 /config/legacy/samlstepupproviders_parameters.yaml
 /config/legacy/global_view_parameters.yaml
 /vendor/
@@ -20,6 +21,7 @@ yarn-error.log
 .phpunit.result.cache
 config/preload.php
 local-php-security-checker
+.env.*
 
 ###> symfony/framework-bundle ###
 /.env.local
