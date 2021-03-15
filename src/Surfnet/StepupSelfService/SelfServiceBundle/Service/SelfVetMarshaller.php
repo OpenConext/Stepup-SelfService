@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2021 SURF B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,47 +18,55 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\RegistrationAuthorityCredentialsCollection;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RaService as ApiRaService;
+use Surfnet\StepupBundle\Service\SecondFactorTypeService;
+use Surfnet\StepupBundle\Value\SecondFactorType;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 
-class RaService
+class SelfVetMarshaller implements VettingMarshaller
 {
     /**
-     * @var ApiRaService
+     * @var SecondFactorService
      */
-    private $api;
+    private $secondFactorService;
 
-    public function __construct(ApiRaService $raService)
-    {
-        $this->api = $raService;
+    /**
+     * @var SecondFactorTypeService
+     */
+    private $secondFactorTypeService;
+
+    public function __construct(
+        SecondFactorService $secondFactorService,
+        SecondFactorTypeService $secondFactorTypeService
+    ) {
+        $this->secondFactorService = $secondFactorService;
+        $this->secondFactorTypeService = $secondFactorTypeService;
     }
 
     /**
-     * @param string $institution
-     * @return RegistrationAuthorityCredentialsCollection
+     * You are allowed to self vet when:
+     * 1. You already have a vetted token
+     * 2. The vetted token has higher LoA (or equal) to the one being vetted
      */
-    public function listRas($institution)
+    public function isAllowed(Identity $identity, string $secondFactorId): bool
     {
-        return $this->api->listRas($institution);
-    }
-
-    public function listRasWithoutRaas($institution)
-    {
-        $allRas = $this->api->listRas($institution);
-
-        $rasWithoutRaas = [];
-        foreach ($allRas->getElements() as $ra) {
-            if (!$ra->isRaa) {
-                $rasWithoutRaas[] = $ra;
+        $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);
+        if ($vettedSecondFactors->getTotalItems() === 0) {
+            return false;
+        }
+        $candidateToken = $this->secondFactorService->findOneVerified($secondFactorId);
+        if ($candidateToken) {
+            /** @var VettedSecondFactor $authoringSecondFactor */
+            foreach ($vettedSecondFactors->getElements() as $authoringSecondFactor) {
+                $hasSuitableToken = $this->secondFactorTypeService->hasEqualOrLowerLoaComparedTo(
+                    new SecondFactorType($candidateToken->type),
+                    new SecondFactorType($authoringSecondFactor->type)
+                );
+                if ($hasSuitableToken) {
+                    return true;
+                }
             }
         }
-
-        // All RAs and RAAs are fetched, so this can safely be returned (no pagination is used here)
-        return new RegistrationAuthorityCredentialsCollection(
-            $rasWithoutRaas,
-            count($rasWithoutRaas),
-            $allRas->getItemsPerPage(),
-            $allRas->getCurrentPage()
-        );
+        return false;
     }
 }
