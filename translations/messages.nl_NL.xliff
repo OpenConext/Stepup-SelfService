@@ -434,6 +434,37 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <target>ID</target>
         <jms:reference-file line="18">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/revoke.html.twig</jms:reference-file>
       </trans-unit>
+        <trans-unit id="6afeab6302e7089dd152da59ff6167355993e1fd" resname="ss.registration.vetting_type.button.ra_vetting">
+          <source>ss.registration.vetting_type.button.ra_vetting</source>
+          <target>Verder</target>
+          <jms:reference-file line="36">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+          <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
+          <source>ss.registration.vetting_type.description.ra_vetting</source>
+          <target>Activeer je token bij een van de RA locaties.</target>
+          <jms:reference-file line="33">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
+          <source>ss.registration.vetting_type.description.vetting</source>
+          <target>Activeer je token met behulp van een van de beschikbare remote vetting identificatiemiddelen (Fysiek op een RA-locatie, iDIN via bank, IRMA via app of ReadID scan een NFC id-bewijs)</target>
+          <jms:reference-file line="21">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="6b0aa1451c1b8e3edaa9a2064a2949108bb818ed" resname="ss.registration.vetting_type.title">
+          <source>ss.registration.vetting_type.title</source>
+          <target>Kies een activatiemethode</target>
+          <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="495f21302f01269871f9993f2b8da38bee78fe87" resname="ss.registration.vetting_type.title.ra_vetting">
+          <source>ss.registration.vetting_type.title.ra_vetting</source>
+          <target>RA vetting</target>
+          <jms:reference-file line="31">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+      <trans-unit id="37ebd30d3648afd0fd123bb864ce6713a3857a74" resname="ss.second_factor.button.remote_vet">
+        <source>ss.second_factor.button.remote_vet</source>
+        <target>Valideer identiteit</target>
+        <jms:reference-file line="72">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/second_factor/list.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="9cafb5ba1cb90702e38319e06a54c769632bd5f7" resname="ss.second_factor.revoke.table_header.type">
         <source>ss.second_factor.revoke.table_header.type</source>
         <target>Token</target>

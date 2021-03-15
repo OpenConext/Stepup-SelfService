@@ -441,6 +441,37 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target>Token</target>
         <jms:reference-file line="14">/../src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/SecondFactor/revoke.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="6afeab6302e7089dd152da59ff6167355993e1fd" resname="ss.registration.vetting_type.button.ra_vetting">
+          <source>ss.registration.vetting_type.button.ra_vetting</source>
+          <target>Continue</target>
+          <jms:reference-file line="36">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+          <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
+          <source>ss.registration.vetting_type.description.ra_vetting</source>
+          <target>Vet your second factor token at one of your registration authority locations.</target>
+          <jms:reference-file line="33">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
+          <source>ss.registration.vetting_type.description.vetting</source>
+          <target>Prove your identity using one of our verification methods. Physical vetting at one of your registration authority locations, ReadId document scanner (read your passport, drivers licence or ID card using the ReadId connect app and a NFF compatible document), IRMA (RMA offers a way for privacy-friendly authentication. When authenticating, you as a user reveal only relevant properties (attributes) of yourself, using an IRMA app on your mobile phone — for instance that you are older than 16.) or iDIN (bank).</target>
+          <jms:reference-file line="21">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="6b0aa1451c1b8e3edaa9a2064a2949108bb818ed" resname="ss.registration.vetting_type.title">
+          <source>ss.registration.vetting_type.title</source>
+          <target>Choose your prefered vetting method</target>
+          <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="495f21302f01269871f9993f2b8da38bee78fe87" resname="ss.registration.vetting_type.title.ra_vetting">
+          <source>ss.registration.vetting_type.title.ra_vetting</source>
+          <target>RA vetting</target>
+          <jms:reference-file line="31">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        </trans-unit>
+        <trans-unit id="37ebd30d3648afd0fd123bb864ce6713a3857a74" resname="ss.second_factor.button.remote_vet">
+            <source>ss.second_factor.button.remote_vet</source>
+            <target>Validate identity</target>
+            <jms:reference-file line="72">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/second_factor/list.html.twig</jms:reference-file>
+          </trans-unit>
       <trans-unit id="f128a2c75461adb88ef8dee0af0aeed951248e89" resname="ss.second_factor.revoke.text.are_you_sure">
         <source>ss.second_factor.revoke.text.are_you_sure</source>
         <target>You are about to remove the following token. Are you sure?</target>
