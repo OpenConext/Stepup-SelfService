@@ -7,6 +7,20 @@ services:
       alias: 'monolog.logger'
       public: true
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVetController:
+        arguments:
+            - "@self_service.test_second_factor_authentication_request_factory"
+            - "@surfnet_stepup_self_service_self_service.service.second_factor"
+            - "@surfnet_stepup.service.second_factor_type"
+            - "@surfnet_saml.hosted.service_provider"
+            - "@self_service.second_factor_test_idp"
+            - "@surfnet_saml.http.redirect_binding"
+            - "@surfnet_saml.http.post_binding"
+            - "@surfnet_stepup.service.loa_resolution"
+            - "@surfnet_saml.logger"
+            - "@session"
+            - "@logger"
+
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
         arguments:

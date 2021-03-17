@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2021 SURF B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,19 +19,16 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 
 class SelfVetCommand
 {
-    /**
-     * @var Identity
-     */
+    /** @var Identity */
     public $identity;
 
-    /**
-     * @var UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor
-     */
+    /** @var VerifiedSecondFactor */
     public $secondFactor;
+
+    /** @var string */
+    public $authoringLoa;
 }

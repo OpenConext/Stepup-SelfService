@@ -22,6 +22,7 @@ use Exception;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Value\Loa;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -77,10 +78,18 @@ class SamlController extends Controller
     {
         $logger = $this->get('logger');
 
-        $logger->notice('Received an authentication response for testing a second factor');
-
         $session = $this->get('session');
-
+        // The test authentication IdP is also used for self vetting, a different session id is
+        // used to mark a self vet command
+        if ($session->has(SelfVetController::SELF_VET_SESSION_ID)) {
+            /** @var SelfVetRequestId $selfVetRequestId */
+            $selfVetRequestId = $session->get(SelfVetController::SELF_VET_SESSION_ID);
+            $secondFactorId = $selfVetRequestId->vettingSecondFactorId();
+            return $this->forward(
+                'SurfnetStepupSelfServiceSelfServiceBundle:SelfVet:consumeSelfVetAssertion',
+                ['secondFactorId' => $secondFactorId]
+            );
+        }
         if (!$session->has('second_factor_test_request_id')) {
             $logger->error(
                 'Received an authentication response for testing a second factor, but no second factor test response was expected'
@@ -88,6 +97,8 @@ class SamlController extends Controller
 
             throw new AccessDeniedHttpException('Did not expect an authentication response');
         }
+
+        $logger->notice('Received an authentication response for testing a second factor');
 
         $initiatedRequestId = $session->get('second_factor_test_request_id');
 

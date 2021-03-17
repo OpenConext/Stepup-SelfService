@@ -21,7 +21,6 @@
             <p>{{ 'ss.registration.vetting_type.description.vetting'|trans }}</p>
         </div>
     </div>
-
     <div class="row remote-vetting">
 
         <div class="col-xs-12 col-md-3">
@@ -38,24 +37,23 @@
                 </form>
             </div>
         </div>
-{# TODO MK: implement SV here #}
-        {% for identityProvider in identityProviders %}
+        {% if allowSelfVetting %}
+        <div class="row remote-vetting">
             <div class="col-xs-12 col-md-3">
                 <div class="thumbnail second-factor-selector">
-                    <img class="image" src="{{ identityProvider.logo }}" alt="Logo of {{ identityProvider.name }}">
-                    <h3>{{ identityProvider.name }}</h3>
+                    <img src="/images/remote-vetting/self-vetting.png"
+                         alt="{{ ('ss.registration.selector.self_vet.alt')|trans }}">
+                    <h3>{{ 'ss.registration.vetting_type.title.self_vet'|trans }}</h3>
                     <hr>
+                    <p>{{ 'ss.registration.vetting_type.description.self_vet'|trans }}</p>
                     <p>
-                        {{ identityProvider.description(app.request.locale) }}
-                    </p>
-                    <p>
-                        <form action="{{ url('ss_second_factor_remote_vet', {'secondFactorId': secondFactorId, 'identityProviderSlug': identityProvider.slug }) }}" method="get">
-                            <button type="submit" class="btn btn-primary" id="select-rv-idp-{{ identityProvider.slug }}">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
-                        </form>
-                    </p>
+                    <form action="{{ url('ss_second_factor_self_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                        <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_vet'|trans }}</button>
+                        </p>
+                    </form>
                 </div>
             </div>
-        {% endfor %}
-
+        </div>
+        {% endif %}
     </div>
 {% endblock %}
