@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2021-03-17T11:46:23Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2021-03-23T21:10:36Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -559,6 +559,21 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <source>ss.security.session_expired.page_title</source>
         <target>Session Expired</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/security/session_expired.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="35dcfa9d6b292923d95e80d966959f1ceb95a513" resname="ss.self_vet.second_factor.alert.failed">
+        <source>ss.self_vet.second_factor.alert.failed</source>
+        <target>Second factor registration failed</target>
+        <jms:reference-file line="46">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b81e55de6c45243f5da03a038fe710ea992678fe" resname="ss.self_vet.second_factor.alert.successful">
+        <source>ss.self_vet.second_factor.alert.successful</source>
+        <target>The registration of the token was successful. You can login with your token.</target>
+        <jms:reference-file line="45">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="56f514dfde4ed6c3e8d30b3fbade7714cd960214" resname="ss.self_vet.second_factor.verification_failed">
+        <source>ss.self_vet.second_factor.verification_failed</source>
+        <target>Second factor registration failed, something went wrong during authentication.</target>
+        <jms:reference-file line="47">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="bbd9e56cf5b5effaa4a6ace130497a4b5a4da1f9" resname="ss.support_url_text">
         <source>ss.support_url_text</source>
