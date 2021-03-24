@@ -19,7 +19,12 @@ if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? false) {
 if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
     Request::setTrustedHosts([$trustedHosts]);
 }
-if (isset($_COOKIE['testcookie']) && strpos($_SERVER['HTTP_USER_AGENT'], 'GuzzleHttp') !== false) {
+// Support for behat test from stepup-deploy, when the `testcookie` and GuzzleHttp user agent
+// are present and app_env is not prod, then engage smoketest mode.
+if ($_SERVER['APP_ENV'] !== 'prod' &&
+    isset($_COOKIE['testcookie']) &&
+    strpos($_SERVER['HTTP_USER_AGENT'], 'GuzzleHttp') !== false
+) {
     $_SERVER['APP_ENV'] = 'smoketest';
     $_SERVER['APP_DEBUG'] = true;
 }
