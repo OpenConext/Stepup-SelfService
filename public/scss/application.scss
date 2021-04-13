@@ -19,6 +19,25 @@
   }
 }
 
+.remote-vetting {
+
+  @media (min-width: $medium) {
+    > div:nth-child(3n+4) {
+      clear: left;
+    }
+  }
+
+  .remote-vetting-selector {
+    text-align: center;
+
+    img {
+      margin-top: 1em;
+      max-width: 200px;
+      max-height: 90px;
+    }
+  }
+}
+
 .second-factors {
 
   @media (min-width: $medium) {

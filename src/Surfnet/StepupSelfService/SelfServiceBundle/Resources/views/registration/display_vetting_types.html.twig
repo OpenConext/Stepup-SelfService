@@ -22,9 +22,8 @@
         </div>
     </div>
     <div class="row remote-vetting">
-
         <div class="col-xs-12 col-md-3">
-            <div class="thumbnail second-factor-selector">
+            <div class="thumbnail remote-vetting-selector">
                 <img src="{{ asset('images/frontdesk.svg') }}" width="70%"
                      alt="{{ ('ss.registration.selector.on-premise.alt')|trans }}">
                 <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
@@ -38,22 +37,20 @@
             </div>
         </div>
         {% if allowSelfVetting %}
-        <div class="row remote-vetting">
-            <div class="col-xs-12 col-md-3">
-                <div class="thumbnail second-factor-selector">
-                    <img src="{{ asset('images/self-vet.svg') }}" width="70%"
-                         alt="{{ ('ss.registration.selector.self_vet.alt')|trans }}">
-                    <h3>{{ 'ss.registration.vetting_type.title.self_vet'|trans }}</h3>
-                    <hr>
-                    <p>{{ 'ss.registration.vetting_type.description.self_vet'|trans }}</p>
-                    <p>
-                    <form action="{{ url('ss_second_factor_self_vet', {'secondFactorId': secondFactorId}) }}" method="get">
-                        <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_vet'|trans }}</button>
-                        </p>
-                    </form>
-                </div>
-            </div>
-        </div>
+          <div class="col-xs-12 col-md-3">
+              <div class="thumbnail remote-vetting-selector">
+                  <img src="{{ asset('images/self-vet.svg') }}" width="70%"
+                       alt="{{ ('ss.registration.selector.self_vet.alt')|trans }}">
+                  <h3>{{ 'ss.registration.vetting_type.title.self_vet'|trans }}</h3>
+                  <hr>
+                  <p>{{ 'ss.registration.vetting_type.description.self_vet'|trans }}</p>
+                  <p>
+                  <form action="{{ url('ss_second_factor_self_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                      <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_vet'|trans }}</button>
+                      </p>
+                  </form>
+              </div>
+          </div>
         {% endif %}
     </div>
 {% endblock %}
