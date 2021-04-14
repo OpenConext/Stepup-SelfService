@@ -291,7 +291,7 @@ For all mobile phones.</target>
       </trans-unit>
       <trans-unit id="a1f47d6dbbe7ef58a52ee675decc2846b6496c64" resname="ss.registration.selector.yubikey.description">
         <source>ss.registration.selector.yubikey.description</source>
-        <target xml:space="preserve">Log in with a USB hardware token. 
+        <target xml:space="preserve">Log in with a USB hardware token.
 For all devices with a USB port.</target>
         <jms:reference-file line="8">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
@@ -372,17 +372,17 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
         <source>ss.registration.vetting_type.description.ra_vetting</source>
-        <target>Vet your second factor token at one of your registration authority locations.</target>
+        <target>Receive an activation code and go to one of your servicedesk locations with an ID-card or passport. The servicedesk employee wil validate your identity and activate your token.</target>
         <jms:reference-file line="32">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d72f763c2ed38cada18ea9e0a56b08f89178a454" resname="ss.registration.vetting_type.description.self_vet">
         <source>ss.registration.vetting_type.description.self_vet</source>
-        <target>Use an activated token</target>
+        <target>If you have a working activated token, you can use this to validate your identity. You'll be asked to use this token in the next step.</target>
         <jms:reference-file line="48">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
         <source>ss.registration.vetting_type.description.vetting</source>
-        <target>Prove your identity using one of our verification methods. Physical vetting at one of your registration authority locations, ReadId document scanner (read your passport, drivers licence or ID card using the ReadId connect app and a NFF compatible document), IRMA (RMA offers a way for privacy-friendly authentication. When authenticating, you as a user reveal only relevant properties (attributes) of yourself, using an IRMA app on your mobile phone — for instance that you are older than 16.) or iDIN (bank).</target>
+        <target>Choose how you want to prove your identity and activate your token.</target>
         <jms:reference-file line="21">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6b0aa1451c1b8e3edaa9a2064a2949108bb818ed" resname="ss.registration.vetting_type.title">
@@ -392,7 +392,7 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="495f21302f01269871f9993f2b8da38bee78fe87" resname="ss.registration.vetting_type.title.ra_vetting">
         <source>ss.registration.vetting_type.title.ra_vetting</source>
-        <target>RA vetting</target>
+        <target>Servicedesk vetting</target>
         <jms:reference-file line="30">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ed511e112f15e353c9c9122d9db7ec8039a592f6" resname="ss.registration.vetting_type.title.self_vet">
