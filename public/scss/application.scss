@@ -25,6 +25,24 @@
     > div:nth-child(3n+4) {
       clear: left;
     }
+    .remote-vetting-selector{
+      min-height: 400px;
+
+      button {
+        bottom: 2.5em;
+        left: 5.5em;
+        position: absolute;
+      }
+    }
+  }
+  @media (min-width: $large) {
+    .remote-vetting-selector{
+      min-height: 360px;
+
+      button {
+        left: 7.5em;
+      }
+    }
   }
 
   .remote-vetting-selector {
@@ -35,7 +53,9 @@
       max-width: 200px;
       max-height: 90px;
     }
+
   }
+
 }
 
 .second-factors {
