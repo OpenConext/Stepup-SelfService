@@ -372,32 +372,32 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
         <source>ss.registration.vetting_type.description.ra_vetting</source>
-        <target>Ontvang een activatiecode en ga naar de servicedesk met een identiteitskaart of paspoort. Een medewerker controleert jouw identiteit en activeert jouw token.</target>
+        <target>Activeer je token bij de servicedesk van je instelling.</target>
         <jms:reference-file line="32">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d72f763c2ed38cada18ea9e0a56b08f89178a454" resname="ss.registration.vetting_type.description.self_vet">
         <source>ss.registration.vetting_type.description.self_vet</source>
-        <target>Als je al een werkend geactiveerd token hebt, kun je deze gebruiken om je identiteit te bevestigen. In de volgende stap wordt je gevraagd om dit token te gebruiken.</target>
+        <target>Gebruik je bestaand token.</target>
         <jms:reference-file line="48">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
         <source>ss.registration.vetting_type.description.vetting</source>
-        <target>Kies hoe je jouw identiteit wil valideren om je token te activeren.</target>
+        <target>Je moet je token activeren. Kies één van deze opties:</target>
         <jms:reference-file line="21">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6b0aa1451c1b8e3edaa9a2064a2949108bb818ed" resname="ss.registration.vetting_type.title">
         <source>ss.registration.vetting_type.title</source>
-        <target>Kies een activatiemethode</target>
+        <target>Activeer je token</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="495f21302f01269871f9993f2b8da38bee78fe87" resname="ss.registration.vetting_type.title.ra_vetting">
         <source>ss.registration.vetting_type.title.ra_vetting</source>
-        <target>Servicedesk activatie</target>
+        <target>Servicedesk</target>
         <jms:reference-file line="30">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ed511e112f15e353c9c9122d9db7ec8039a592f6" resname="ss.registration.vetting_type.title.self_vet">
         <source>ss.registration.vetting_type.title.self_vet</source>
-        <target>Geactiveerd token</target>
+        <target>Token</target>
         <jms:reference-file line="46">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="51b48a932a70ae43f768348cb7631f248fffd1b1" resname="ss.registration.yubikey.text.connect_yubikey_to_pc">
@@ -422,7 +422,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="e0c3b599c6452627b605f6481046ccd6a9ccb405" resname="ss.second_factor.button.remote_vet">
         <source>ss.second_factor.button.remote_vet</source>
-        <target>Valideer identiteit</target>
+        <target>Activeer</target>
         <jms:reference-file line="72">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/second_factor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c954ee253d560c6f6d5baf1811ca34988a9029d8" resname="ss.second_factor.list.button.register_second_factor">
