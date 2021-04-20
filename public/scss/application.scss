@@ -25,7 +25,7 @@
     > div:nth-child(3n+4) {
       clear: left;
     }
-    .remote-vetting-selector{
+    .vetting-selector{
       min-height: 400px;
 
       button {
@@ -36,7 +36,7 @@
     }
   }
   @media (min-width: $large) {
-    .remote-vetting-selector{
+    .vetting-selector{
       min-height: 360px;
 
       button {
@@ -45,7 +45,7 @@
     }
   }
 
-  .remote-vetting-selector {
+  .vetting-selector {
     text-align: center;
 
     img {
