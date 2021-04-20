@@ -18,10 +18,12 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
 use Surfnet\StepupBundle\Value\SecondFactorType;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
+use function sprintf;
 
 class SelfVetMarshaller implements VettingMarshaller
 {
@@ -35,12 +37,26 @@ class SelfVetMarshaller implements VettingMarshaller
      */
     private $secondFactorTypeService;
 
+    /**
+     * @var InstitutionConfigurationOptionsService
+     */
+    private $institutionConfigurationService;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         SecondFactorService $secondFactorService,
-        SecondFactorTypeService $secondFactorTypeService
+        SecondFactorTypeService $secondFactorTypeService,
+        InstitutionConfigurationOptionsService $institutionConfigurationOptionsService,
+        LoggerInterface $logger
     ) {
         $this->secondFactorService = $secondFactorService;
         $this->secondFactorTypeService = $secondFactorTypeService;
+        $this->institutionConfigurationService = $institutionConfigurationOptionsService;
+        $this->logger = $logger;
     }
 
     /**
@@ -50,8 +66,22 @@ class SelfVetMarshaller implements VettingMarshaller
      */
     public function isAllowed(Identity $identity, string $secondFactorId): bool
     {
+        $this->logger->info('Determine if self vetting is allowed');
+        $configurationOptions = $this->institutionConfigurationService->getInstitutionConfigurationOptionsFor(
+            $identity->institution
+        );
+        if ($configurationOptions->selfVet === false) {
+            $this->logger->info(
+                sprintf(
+                    'Self vetting is not allowed, as the option is not enabled for institution %s',
+                    $identity->institution
+                )
+            );
+            return false;
+        }
         $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);
         if ($vettedSecondFactors->getTotalItems() === 0) {
+            $this->logger->info('Self vetting is not allowed, no vetted tokens are available');
             return false;
         }
         $candidateToken = $this->secondFactorService->findOneVerified($secondFactorId);
@@ -63,10 +93,12 @@ class SelfVetMarshaller implements VettingMarshaller
                     new SecondFactorType($authoringSecondFactor->type)
                 );
                 if ($hasSuitableToken) {
+                    $this->logger->info('Self vetting is allowed');
                     return true;
                 }
             }
         }
+        $this->logger->info('Self vetting is not allowed, no suitable tokens are available');
         return false;
     }
 }

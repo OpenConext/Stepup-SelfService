@@ -31,6 +31,7 @@ use Surfnet\StepupBundle\Service\SecondFactorTypeService;
 use Surfnet\StepupBundle\Value\SecondFactorType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor\TestAuthenticationRequestFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -72,6 +73,11 @@ class SelfVetController extends Controller
     /** @var LoaResolutionService */
     public $loaResolutionService;
 
+    /**
+     * @var SelfVetMarshaller
+     */
+    private $selfVetMarshaller;
+
     /** @var SamlAuthenticationLogger */
     public $samlLogger;
 
@@ -88,6 +94,7 @@ class SelfVetController extends Controller
         TestAuthenticationRequestFactory $authenticationRequestFactory,
         SecondFactorService $secondFactorService,
         SecondFactorTypeService $secondFactorTypeService,
+        SelfVetMarshaller $marshaller,
         ServiceProvider $serviceProvider,
         IdentityProvider $identityProvider,
         RedirectBinding $redirectBinding,
@@ -100,6 +107,7 @@ class SelfVetController extends Controller
         $this->authenticationRequestFactory = $authenticationRequestFactory;
         $this->secondFactorService = $secondFactorService;
         $this->secondFactorTypeService = $secondFactorTypeService;
+        $this->selfVetMarshaller = $marshaller;
         $this->serviceProvider = $serviceProvider;
         $this->identityProvider = $identityProvider;
         $this->redirectBinding = $redirectBinding;
@@ -113,20 +121,12 @@ class SelfVetController extends Controller
     public function selfVetAction(string $secondFactorId): RedirectResponse
     {
         $this->logger->notice('Starting self vet proof of possession using higher or equal LoA token');
-
         $identity = $this->getIdentity();
 
-        $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);
-        if (!$vettedSecondFactors || $vettedSecondFactors->getTotalItems() === 0) {
-            $this->logger->error(
-                sprintf(
-                    'Identity "%s" tried to self vet a second factor, but does not own a suitable vetted token.',
-                    $identity->id
-                )
-            );
-
+        if (!$this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {
             throw new NotFoundHttpException();
         }
+
         $candidateSecondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
         $candidateSecondFactorLoa = $this->secondFactorTypeService->getLevel(
             new SecondFactorType($candidateSecondFactor->type)
@@ -157,6 +157,11 @@ class SelfVetController extends Controller
 
     public function consumeSelfVetAssertionAction(Request $httpRequest, string $secondFactorId)
     {
+        $identity = $this->getIdentity();
+        if (!$this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {
+            throw new NotFoundHttpException();
+        }
+
         if (!$this->session->has(self::SELF_VET_SESSION_ID)) {
             $this->logger->error(
                 'Received an authentication response for self vetting a second factor, but no response was expected'
