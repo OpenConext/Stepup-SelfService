@@ -94,8 +94,17 @@ class RegistrationController extends Controller
     public function displayVettingTypesAction($secondFactorId)
     {
         $selfVetMarshaller = $this->get('self_service.service.self_vet_marshaller');
+
+        $allowSelfVetting = $selfVetMarshaller->isAllowed($this->getIdentity(), $secondFactorId);
+        if (!$allowSelfVetting) {
+            $this->get('logger')->notice('Skipping ahead to the RA vetting option as self vetting is not allowed');
+            return $this->forward(
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent',
+                ['secondFactorId' => $secondFactorId]
+            );
+        }
         return [
-            'allowSelfVetting' => $selfVetMarshaller->isAllowed($this->getIdentity(), $secondFactorId),
+            'allowSelfVetting' => $allowSelfVetting,
             'verifyEmail' => $this->emailVerificationIsRequired(),
             'secondFactorId' => $secondFactorId,
         ];
