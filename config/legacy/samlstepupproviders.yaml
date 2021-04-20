@@ -20,7 +20,7 @@ surfnet_stepup_self_service_saml_stepup_provider:
                 sso_url: "%gssp_tiqr_remote_sso_url%"
                 certificate: "%gssp_tiqr_remote_certificate%"
             view_config:
-                loa: "%gssp_tiqr_loa%"
+                loa: 2
                 logo: "%gssp_tiqr_logo%"
                 alt: "%gssp_tiqr_alt%"
                 title: "%gssp_tiqr_title%"
@@ -33,30 +33,6 @@ surfnet_stepup_self_service_saml_stepup_provider:
                 pop_failed: "%gssp_tiqr_pop_failed%"
                 app_android_url: "%gssp_tiqr_app_android_url%"
                 app_ios_url: "%gssp_tiqr_app_ios_url%"
-        biometric:
-          hosted:
-            service_provider:
-              public_key: "%gssp_biometric_sp_publickey%"
-              private_key: "%gssp_biometric_sp_privatekey%"
-            metadata:
-              public_key: "%gssp_biometric_metadata_publickey%"
-              private_key: "%gssp_biometric_metadata_privatekey%"
-          remote:
-            entity_id: "%gssp_biometric_remote_entity_id%"
-            sso_url: "%gssp_biometric_remote_sso_url%"
-            certificate: "%gssp_biometric_remote_certificate%"
-          view_config:
-            loa: "%gssp_biometric_loa%"
-            logo: "%gssp_biometric_logo%"
-            alt: "%gssp_biometric_alt%"
-            title: "%gssp_biometric_title%"
-            description: "%gssp_biometric_description%"
-            button_use: "%gssp_biometric_button_use%"
-            initiate_title: "%gssp_biometric_initiate_title%"
-            initiate_button: "%gssp_biometric_initiate_button%"
-            explanation: "%gssp_biometric_explanation%"
-            authn_failed: "%gssp_biometric_authn_failed%"
-            pop_failed: "%gssp_biometric_pop_failed%"
         webauthn:
             hosted:
                 service_provider:
