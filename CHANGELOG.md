@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.4.0
+**Feature**
+* Self vetting (vet token with previously RA vetted token) #227
+
+## 3.3.0
+**Feature**
+* Add GSSP UserAttributes extensions to registration-SAMLAuthnRequest to pass user-information to GSSP's
+
 ## 3.0.3:
  * Add GSSP UserAttributes extensions to registration-SAMLAuthnRequest to pass user-information to GSSP's
  * Update dependencies
