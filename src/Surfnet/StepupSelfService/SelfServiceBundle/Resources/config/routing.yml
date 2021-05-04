@@ -20,6 +20,21 @@ ss_second_factor_revoke:
     requirements:
         state: '^(unverified|verified|vetted)$'
 
+ss_second_factor_vetting_types:
+    path:     /second-factor/{secondFactorId}/vetting-types
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:displayVettingTypes }
+
+ss_second_factor_self_vet:
+    path:     /second-factor/{secondFactorId}/self-vet
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfVet:selfVet }
+
+ss_second_factor_self_vet_consume_assertion:
+    path:     /second-factor/{secondFactorId}/self-vet-consume-assertion
+    methods:  [POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfVet:consumeSelfVetAssertion }
+
 ss_registration_display_types:
     path:     /registration/select-token
     methods:  [GET]
@@ -82,16 +97,6 @@ ss_registration_gssf_consume_assertion:
     path:     /registration/gssf/{provider}/consume-assertion
     methods:  [POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:consumeAssertion }
-
-ss_registration_u2f_registration:
-    path:     /registration/u2f/registration
-    methods:  [GET]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/U2f:registration }
-
-ss_registration_u2f_prove_possession:
-    path:     /registration/u2f/prove-possession
-    methods:  [POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/U2f:provePossession }
 
 selfservice_saml_metadata:
     path: /authentication/metadata

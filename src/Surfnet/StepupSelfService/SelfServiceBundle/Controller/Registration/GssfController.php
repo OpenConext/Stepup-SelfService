@@ -79,6 +79,12 @@ final class GssfController extends Controller
             $provider->getRemoteIdentityProvider()
         );
 
+        $attributeService = $this->get('surfnet_stepup_self_service_self_service.service.gsspuserattributes');
+        $attributeService->addGsspUserAttributes(
+            $authnRequest,
+            $provider,
+            $this->get('security.token_storage')->getToken()->getUser()
+        );
         $stateHandler = $provider->getStateHandler();
         $stateHandler->setRequestId($authnRequest->getRequestId());
 
@@ -168,7 +174,7 @@ final class GssfController extends Controller
                 );
             } else {
                 return $this->redirectToRoute(
-                    'ss_registration_registration_email_sent',
+                    'ss_second_factor_vetting_types',
                     ['secondFactorId' => $secondFactorId]
                 );
             }
@@ -269,7 +275,7 @@ final class GssfController extends Controller
             ]
         );
         return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:Registration/Gssf:initiate.html.twig',
+            'SurfnetStepupSelfServiceSelfServiceBundle:registration/gssf:initiate.html.twig',
             $templateParameters
         );
     }

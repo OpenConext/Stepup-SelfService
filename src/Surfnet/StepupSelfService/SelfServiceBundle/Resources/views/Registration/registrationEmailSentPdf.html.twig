@@ -1,8 +1,0 @@
-{% extends "::pdf.html.twig" %}
-
-{% block page_title %}{{ 'ss.registration.registration_email_sent.title'|trans }}{% endblock %}
-
-{% block content %}
-    <h2>{{ block('page_title') }}</h2>
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:Registration/partial:registrationEmailSent.html.twig' %}
-{% endblock %}

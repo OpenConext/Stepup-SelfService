@@ -3,6 +3,25 @@ services:
     # application.
     _defaults: { public: true }
 
+    logger:
+      alias: 'monolog.logger'
+      public: true
+
+    Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVetController:
+        arguments:
+            - "@self_service.test_second_factor_authentication_request_factory"
+            - "@surfnet_stepup_self_service_self_service.service.second_factor"
+            - "@surfnet_stepup.service.second_factor_type"
+            - "@self_service.service.self_vet_marshaller"
+            - "@surfnet_saml.hosted.service_provider"
+            - "@self_service.second_factor_test_idp"
+            - "@surfnet_saml.http.redirect_binding"
+            - "@surfnet_saml.http.post_binding"
+            - "@surfnet_stepup.service.loa_resolution"
+            - "@surfnet_saml.logger"
+            - "@session"
+            - "@logger"
+
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
         arguments:
@@ -14,7 +33,6 @@ services:
         arguments:
             - "@surfnet_stepup_middleware_client.identity.service.second_factor"
             - "@surfnet_stepup_self_service_self_service.service.command"
-            - "@surfnet_stepup_self_service_self_service.service.u2f_second_factor"
         public: true
 
     surfnet_stepup_self_service_self_service.form.type.prove_yubikey_possession:
@@ -54,6 +72,11 @@ services:
             - "@surfnet_stepup.guzzle.gateway_api"
             - "@logger"
 
+    surfnet_stepup_self_service_self_service.service.gsspuserattributes:
+      class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService
+      arguments:
+        - "@logger"
+
     surfnet_stepup_self_service_self_service.service.yubikey_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
         arguments:
@@ -68,35 +91,18 @@ services:
             - "@translator"
             - "@surfnet_stepup_self_service_self_service.service.command"
 
-    surfnet_stepup_self_service_self_service.service.u2f_second_factor:
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService
-        arguments:
-            - "@surfnet_stepup_self_service_self_service.service.u2f"
-            - "@surfnet_stepup_self_service_self_service.service.command"
-
-    surfnet_stepup_self_service_self_service.service.u2f:
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fService
-        arguments:
-            - "@surfnet_stepup.guzzle.gateway_api"
-            - "@validator"
-            - "@logger"
-
     surfnet_stepup_self_service_self_service.service.gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
         arguments:
             - "@surfnet_stepup_self_service_self_service.service.command"
 
-    self_service.session.u2f_registration:
-        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
-        factory: ['@session', 'getBag']
-        arguments: ['self_service.session.u2f_registration']
-
-    # The bag itself that is returned from the factory of the service above
-    self_service.session.u2f_registration.bag:
-        public: false
-        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
-        arguments: ['self_service.session.u2f_registration']
-        calls: [ [setName, ['self_service.session.u2f_registration']] ]
+    self_service.service.self_vet_marshaller:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller
+        arguments:
+            - "@surfnet_stepup_self_service_self_service.service.second_factor"
+            - "@Surfnet\\StepupBundle\\Service\\SecondFactorTypeService"
+            - "@self_service.service.institution_configuration_options"
+            - "@logger"
 
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService

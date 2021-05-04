@@ -7,10 +7,6 @@
 {{ 'ss.registration.selector.yubikey.title'|trans }}
 {{ 'ss.registration.selector.yubikey.description'|trans }}
 {{ 'ss.registration.selector.yubikey.button.use'|trans }}
-{{ 'ss.registration.selector.u2f.alt'|trans }}
-{{ 'ss.registration.selector.u2f.title'|trans }}
-{{ 'ss.registration.selector.u2f.description'|trans }}
-{{ 'ss.registration.selector.u2f.button.use'|trans }}
 
 {# SmsController form errors #}
 {{ 'ss.prove_phone_possession.send_sms_challenge_failed'|trans }}
@@ -34,19 +30,18 @@
 {{ 'ss.second_factor.list.text.unverified'|trans }}
 {{ 'ss.second_factor.type.sms'|trans }}
 {{ 'ss.second_factor.type.yubikey'|trans }}
-{{ 'ss.second_factor.type.u2f'|trans }}
 
 {# SecondFactorController revoke #}
 {{ 'ss.second_factor.revoke.second_factor_type.sms'|trans }}
 {{ 'ss.second_factor.revoke.second_factor_type.yubikey'|trans }}
-{{ 'ss.second_factor.revoke.second_factor_type.u2f'|trans }}
 {{ 'ss.second_factor.revoke.alert.revocation_successful'|trans }}
 {{ 'ss.second_factor.revoke.alert.revocation_failed'|trans }}
-
-{# U2fController #}
-{{ 'ss.registration.u2f.alert.device_reported_an_error'|trans }}
-{{ 'ss.registration.u2f.alert.error'|trans }}
 
 {# SamlController flash messages #}
 {{ 'ss.test_second_factor.verification_successful'|trans }}
 {{ 'ss.test_second_factor.verification_failed'|trans }}
+
+{# Self vetting flash messages #}
+{{ 'ss.self_vet.second_factor.alert.successful'|trans }}
+{{ 'ss.self_vet.second_factor.alert.failed'|trans }}
+{{ 'ss.self_vet.second_factor.verification_failed'|trans }}

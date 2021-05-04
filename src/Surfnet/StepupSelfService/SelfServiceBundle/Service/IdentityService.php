@@ -108,8 +108,9 @@ class IdentityService implements UserProviderInterface
      */
     public function findByNameIdAndInstitution($nameId, $institution)
     {
-        $searchQuery = new IdentitySearchQuery($institution);
+        $searchQuery = new IdentitySearchQuery();
         $searchQuery->setNameId($nameId);
+        $searchQuery->setInstitution($institution);
 
         try {
             $result = $this->apiIdentityService->search($searchQuery);

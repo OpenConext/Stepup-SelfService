@@ -22,6 +22,9 @@ use DateInterval;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,8 +39,10 @@ class RegistrationController extends Controller
      */
     public function displaySecondFactorTypesAction()
     {
+        $institution = $this->getIdentity()->institution;
+
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
-            ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
+            ->getInstitutionConfigurationOptionsFor($institution);
 
         $identity = $this->getIdentity();
 
@@ -84,6 +89,29 @@ class RegistrationController extends Controller
 
     /**
      * @Template
+     * @param string $secondFactorId
+     */
+    public function displayVettingTypesAction($secondFactorId)
+    {
+        $selfVetMarshaller = $this->get('self_service.service.self_vet_marshaller');
+
+        $allowSelfVetting = $selfVetMarshaller->isAllowed($this->getIdentity(), $secondFactorId);
+        if (!$allowSelfVetting) {
+            $this->get('logger')->notice('Skipping ahead to the RA vetting option as self vetting is not allowed');
+            return $this->forward(
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent',
+                ['secondFactorId' => $secondFactorId]
+            );
+        }
+        return [
+            'allowSelfVetting' => $allowSelfVetting,
+            'verifyEmail' => $this->emailVerificationIsRequired(),
+            'secondFactorId' => $secondFactorId,
+        ];
+    }
+
+    /**
+     * @Template
      */
     public function emailVerificationEmailSentAction()
     {
@@ -112,7 +140,7 @@ class RegistrationController extends Controller
 
         if ($service->verifyEmail($identityId, $nonce)) {
             return $this->redirectToRoute(
-                'ss_registration_registration_email_sent',
+                'ss_second_factor_vetting_types',
                 ['secondFactorId' => $secondFactor->id]
             );
         }
@@ -129,7 +157,7 @@ class RegistrationController extends Controller
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 
         return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent.html.twig',
+            'SurfnetStepupSelfServiceSelfServiceBundle:registration:registration_email_sent.html.twig',
             $parameters
         );
     }
@@ -143,7 +171,7 @@ class RegistrationController extends Controller
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 
         $response = $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSentPdf.html.twig',
+            'SurfnetStepupSelfServiceSelfServiceBundle:registration:registration_email_sent_pdf.html.twig',
             $parameters
         );
         $content = $response->getContent();
@@ -197,7 +225,9 @@ class RegistrationController extends Controller
             'verifyEmail'      => $this->emailVerificationIsRequired(),
         ];
 
+        /** @var RaService $raService */
         $raService         = $this->get('self_service.service.ra');
+        /** @var RaLocationService $raLocationService */
         $raLocationService = $this->get('self_service.service.ra_location');
 
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')

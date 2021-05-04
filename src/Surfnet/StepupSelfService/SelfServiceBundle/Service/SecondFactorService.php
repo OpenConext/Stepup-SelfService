@@ -19,9 +19,10 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuery;
-use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorSearchQuery;
+use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorOfIdentitySearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Dto\CollectionDto;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\SelfVetSecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\VerifyEmailCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
@@ -31,6 +32,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollec
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 
@@ -51,23 +53,15 @@ class SecondFactorService
     private $commandService;
 
     /**
-     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\U2fSecondFactorService
-     */
-    private $u2fSecondFactorService;
-
-    /**
      * @param MiddlewareSecondFactorService $secondFactors
      * @param CommandService                $commandService
-     * @param U2fSecondFactorService        $u2fSecondFactorService
      */
     public function __construct(
         MiddlewareSecondFactorService $secondFactors,
-        CommandService $commandService,
-        U2fSecondFactorService $u2fSecondFactorService
+        CommandService $commandService
     ) {
         $this->secondFactors = $secondFactors;
         $this->commandService = $commandService;
-        $this->u2fSecondFactorService = $u2fSecondFactorService;
     }
 
     /**
@@ -101,13 +95,21 @@ class SecondFactorService
 
         $result = $this->commandService->execute($apiCommand);
 
-        if ($secondFactor->type === 'u2f') {
-            $this->u2fSecondFactorService->revokeRegistration(
-                $command->identity,
-                $secondFactor->secondFactorIdentifier
-            );
-        }
+        return $result->isSuccessful();
+    }
 
+    public function selfVet(SelfVetCommand $command): bool
+    {
+        $apiCommand = new SelfVetSecondFactorCommand();
+        $apiCommand->identityId = $command->identity->id;
+        $apiCommand->registrationCode = $command->secondFactor->registrationCode;
+        $apiCommand->secondFactorIdentifier = $command->secondFactor->id;
+        $apiCommand->secondFactorId = $command->secondFactor->secondFactorIdentifier;
+        $apiCommand->secondFactorType = $command->secondFactor->type;
+        $apiCommand->authorityId = $command->identity->id;
+        $apiCommand->authoringSecondFactorIdentifier = $command->authoringLoa;
+
+        $result = $this->commandService->execute($apiCommand);
         return $result->isSuccessful();
     }
 
@@ -179,9 +181,9 @@ class SecondFactorService
      */
     public function findVerifiedByIdentity($identityId)
     {
-        return $this->secondFactors->searchVerified(
-            (new VerifiedSecondFactorSearchQuery())->setIdentityId($identityId)
-        );
+        $query = new VerifiedSecondFactorOfIdentitySearchQuery();
+        $query->setIdentityId($identityId);
+        return $this->secondFactors->searchOwnVerified($query);
     }
 
     /**
@@ -246,30 +248,6 @@ class SecondFactorService
                 return reset($elements);
             default:
                 throw new LogicException('There cannot be more than one unverified second factor with the same nonce');
-        }
-    }
-
-    /**
-     * @param string $secondFactorId
-     * @param string $identityId
-     * @return null|string
-     */
-    public function getRegistrationCode($secondFactorId, $identityId)
-    {
-        $query = (new VerifiedSecondFactorSearchQuery())
-            ->setIdentityId($identityId)
-            ->setSecondFactorId($secondFactorId);
-
-        /** @var VerifiedSecondFactor[] $verifiedSecondFactors */
-        $verifiedSecondFactors = $this->secondFactors->searchVerified($query)->getElements();
-
-        switch (count($verifiedSecondFactors)) {
-            case 0:
-                return null;
-            case 1:
-                return reset($verifiedSecondFactors)->registrationCode;
-            default:
-                throw new LogicException('Searching by second factor ID cannot result in multiple results.');
         }
     }
 

@@ -1,0 +1,188 @@
+@charset "utf-8";
+
+@import "vars";
+@import "~bootstrap";
+
+.nav-header {
+  padding-bottom: 9px;
+  margin: 40px 0 0 0;
+}
+
+.nav-header + .page-header {
+  margin-top: 0;
+}
+
+.page-header {
+  img.logo {
+    max-width: 180px;
+    max-height: 90px;
+  }
+}
+
+.remote-vetting {
+
+  @media (min-width: $medium) {
+    > div:nth-child(3n+4) {
+      clear: left;
+    }
+    .vetting-selector{
+      min-height: 400px;
+
+      button {
+        bottom: 2.5em;
+        left: 5.5em;
+        position: absolute;
+      }
+    }
+  }
+  @media (min-width: $large) {
+    .vetting-selector{
+      min-height: 360px;
+
+      button {
+        left: 7.5em;
+      }
+    }
+  }
+
+  .vetting-selector {
+    text-align: center;
+
+    img {
+      margin-top: 1em;
+      max-width: 200px;
+      max-height: 90px;
+    }
+
+  }
+
+}
+
+.second-factors {
+
+  @media (min-width: $medium) {
+    > div:nth-child(3n+4) {
+      clear: left;
+    }
+  }
+
+  .second-factor-selector {
+    text-align: center;
+
+    img {
+      margin-top: 1em;
+      max-width: 200px;
+      max-height: 90px;
+    }
+  }
+}
+
+.progress-steps {
+  font-size: 110%;
+}
+
+form[name="ss_prove_yubikey_possession"] {
+  margin: 1em auto;
+  padding: 0.75em 1em;
+  max-width: 525px;
+}
+
+form[name="ss_send_sms_challenge"] {
+  margin: 1em auto;
+  padding: 0.75em 1em;
+  max-width: 650px;
+
+  .offset-top {
+    margin-top: 1em;
+  }
+}
+
+form[name="ss_verify_sms_challenge"] {
+  margin: 1em auto;
+  padding: 0.75em 1em;
+  max-width: 525px;
+
+  input[type="text"] {
+    font-family: "Monaco", "Inconsolata", "Consolas", monospace;
+    text-transform: uppercase;
+  }
+}
+
+form[name="ss_verify_email"] {
+  margin: 1em auto;
+  padding: 0.75em 1em;
+  max-width: 425px;
+
+  input[type="text"] {
+    font-family: "Monaco", "Inconsolata", "Consolas", monospace;
+    text-transform: uppercase;
+  }
+}
+
+form[name="stepup_switch_locale"] {
+  @extend .pull-right;
+}
+
+select[name="stepup_switch_locale[locale]"] {
+  min-width: 150px;
+}
+
+.progress- {
+  @for $i from 0 through 100 {
+    &#{$i} {
+      width: $i * 1%;
+    }
+  }
+}
+
+.text-extra-muted {
+  color: #cccccc;
+}
+
+.registration-print-options a {
+  display: inline-flex;
+  line-height: 2em;
+  margin-right: 2em;
+  vertical-align: middle;
+
+  i.fa {
+    margin-right: 5px;
+  }
+}
+
+.token-button-group {
+  margin: -4px 8px 0 0;
+}
+
+
+.table-striped tbody td {
+  vertical-align: middle !important;
+}
+
+span.label {
+  display: inline-block;
+  line-height: 2em;
+  padding: .2em .6em .1em;
+}
+
+@media print {
+  footer,
+  .page-header-user,
+  .progress-steps,
+  .progress,
+  .registration-print-options {
+    display: none !important;
+  }
+
+  .page-header {
+    border-bottom: none;
+  }
+}
+
+.alert-error {
+  @extend .alert-danger;
+}
+
+.alert-notice {
+  @extend .alert-info;
+}

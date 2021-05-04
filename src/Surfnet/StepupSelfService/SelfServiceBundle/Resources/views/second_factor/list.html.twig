@@ -1,0 +1,93 @@
+{% extends "base.html.twig" %}
+{% import _self as macro %}
+
+{% block page_title %}{{ 'ss.second_factor.list.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    {{ macro.secondFactorTable(vettedSecondFactors, 'ss.second_factor.list.text.vetted', 'vetted', email, expirationHelper) }}
+    {{ macro.secondFactorTable(verifiedSecondFactors, 'ss.second_factor.list.text.verified', 'verified', email, expirationHelper) }}
+    {{ macro.secondFactorTable(unverifiedSecondFactors, 'ss.second_factor.list.text.unverified', 'unverified', email, expirationHelper) }}
+
+    <div class="btn-toolbar token-button-group" role="toolbar">
+    {% if vettedSecondFactors.elements is not empty %}
+        <a class="btn btn-default pull-right" href="{{ path('ss_second_factor_test') }}">
+            {{ 'ss.second_factor.revoke.button.test'|trans }}
+        </a>
+    {% endif %}
+
+    {% if registrationsLeft > 0
+            and ((unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty)
+            or availableSecondFactors is not empty)
+    %}
+        {% if (unverifiedSecondFactors.elements is empty and verifiedSecondFactors.elements is empty and vettedSecondFactors.elements is empty) %}
+            <p>{{ 'ss.second_factor.list.text.no_second_factors'|trans }}</p>
+        {% endif %}
+        <a href="{{ path('ss_registration_display_types') }}"
+           class="btn btn-primary pull-right">
+            {{ 'ss.second_factor.list.button.register_second_factor'|trans }}
+        </a>
+    {% endif %}
+    </div>
+
+{% endblock %}
+
+{% macro secondFactorTable(secondFactorCollection, text, state, email, expirationHelper, locale) %}
+    {% if secondFactorCollection.elements is not empty %}
+        {% set hasExpired = false %}
+        <p>{{ text|trans({'%email%': email}) }}</p>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ 'ss.second_factor_list.header.type'|trans }}</th>
+                        <th scope="col">{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
+                        {% if state == 'verified' %}
+                            <th scope="col">{{ 'ss.second_factor_list.header.expiration_date'|trans }}</th>
+                        {% endif %}
+                        <th scope="col">{# Action button #}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for secondFactor in secondFactorCollection.elements %}
+                        <tr>
+                            <td>{{ secondFactor.type|trans_second_factor_type }}</td>
+                            <td>{{ secondFactor.secondFactorIdentifier }}</td>
+                            {% if state == 'verified' %}
+                            <td>
+                                {{ expirationHelper.expiresAt(secondFactor.registrationRequestedAt)|localizeddate('full', 'none', locale) }}
+                                {% if expirationHelper.hasExpired(secondFactor.registrationRequestedAt) %}
+                                    {% set hasExpired = true %}
+                                    <span class="label label-danger">{{ 'ss.second_factor_list.header.expired_warning'|trans }}</span>
+                                {% endif %}
+                            </td>
+                            {% endif %}
+                            <td>
+                                <div class="btn-group pull-right" role="group">
+                                    {% if state == 'verified' and not expirationHelper.hasExpired(secondFactor.registrationRequestedAt) %}
+                                        <a class="btn btn-mini btn-default"
+                                           href="{{ path('ss_second_factor_vetting_types', {'secondFactorId': secondFactor.id}) }}">
+                                            {{ 'ss.second_factor.button.remote_vet'|trans }}
+                                        </a>
+                                    {%  endif %}
+                                    <a class="btn btn-mini btn-warning"
+                                       href="{{ path('ss_second_factor_revoke', {'state': state, 'secondFactorId': secondFactor.id}) }}">
+                                        {{ 'ss.second_factor.revoke.button.revoke'|trans }}
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                {% if hasExpired %}
+                    <p><span class="label label-danger">{{ 'ss.second_factor_list.header.expired_warning'|trans }}</span> {{ 'ss.second_factor_list.header.expired_explanation'|trans }}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}

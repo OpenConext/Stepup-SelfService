@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.verify_email.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 75, 'step': 4, verifyEmail: true} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.registration.verify_email.text.verification_failed'|trans }}</p>
+{% endblock %}

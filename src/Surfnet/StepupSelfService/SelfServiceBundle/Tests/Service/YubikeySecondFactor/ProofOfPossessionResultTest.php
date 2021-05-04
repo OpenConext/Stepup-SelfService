@@ -18,10 +18,10 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\YubikeySecondFactor;
 
-use PHPUnit_Framework_TestCase as UnitTest;
+use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor\ProofOfPossessionResult;
 
-class ProofOfPossessionResultTest extends UnitTest
+class ProofOfPossessionResultTest extends TestCase
 {
     /**
      * @test

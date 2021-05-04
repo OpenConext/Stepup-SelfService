@@ -1,15 +1,52 @@
 # Changelog
 
+## 3.4.0
+**Feature**
+* Self vetting (vet token with previously RA vetted token) #227
+
+## 3.3.0
+**Feature**
+* Add GSSP UserAttributes extensions to registration-SAMLAuthnRequest to pass user-information to GSSP's
+
+## 3.0.3:
+ * Add GSSP UserAttributes extensions to registration-SAMLAuthnRequest to pass user-information to GSSP's
+ * Update dependencies
+
+## 3.2.0
+Platform update
+ * Drop support for php 5.6, Use PHP7.2
+ * Upgrade to Synfony 4
+ * Allow HTML in explanation/description
+ * Update dependencies
+
+## 3.1.0
+A release with bugfixes after initial FGA tests
+ * Fix exception controller authentication exceptions #179
+ * Update MW-client-bundle #178
+ * Install various security updates #177
+
+## 3.0.1 
+This is a security release that will harden the application against CVE 2019-346
+ * Upgrade Stepup-saml-bundle to version 4.1.8 #176
+ 
+## 3.0.0 FGA (fine grained authorization)
+
+The new fine grained authorization logic will allow Ra's from other institutions to accredidate RA's on behalf of another organisation. This is determined based on the institution configuration. https://github.com/OpenConext/Stepup-Deploy/wiki/rfc-fine-grained-authorization/b6852587baee698cccae7ebc922f29552420a296
+
+**Features & Bugfixes**
+The changes to SelfService in regards to the FGA changes only where to remain compatible with API changes made for Stepup-RA. No new features have been added.
+
 ## 2.10.7
 This is a security release that will harden the application against CVE 2019-346
- * Upgrade xmlseclibs to version 3.0.4 #175
+ * Upgrade Stepup-saml-bundle to version 4.1.8 #175
 
 ## 2.10.6
 **Bugfix**
  * Create a pdf base template to support local url's #168
 
 ## 2.10.5
-Do not use this release, it contains unreleased fine grained authorization changes.
+**Bugfix**
+* Create a pdf base template to support local url's #168
 
 ## 2.10.4
 **Improvement**

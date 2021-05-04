@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.vetting_type.title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+
+    {% if verifyEmail %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress':75, 'step': 4, verifyEmail: true} only %}
+    {% else %}
+        {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <p>{{ 'ss.registration.vetting_type.description.vetting'|trans }}</p>
+        </div>
+    </div>
+    <div class="row remote-vetting">
+        {% if allowSelfVetting %}
+          <div class="col-xs-12 col-md-3">
+              <div class="thumbnail vetting-selector">
+                  <img src="{{ asset('images/token.png') }}" width="70%"
+                       alt="{{ ('ss.registration.selector.self_vet.alt')|trans }}">
+                  <h3>{{ 'ss.registration.vetting_type.title.self_vet'|trans }}</h3>
+                  <hr>
+                  <p>{{ 'ss.registration.vetting_type.description.self_vet'|trans }}</p>
+                  <p>
+                  <form action="{{ url('ss_second_factor_self_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                      <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_vet'|trans }}</button>
+                      </p>
+                  </form>
+              </div>
+          </div>
+        {% endif %}
+        <div class="col-xs-12 col-md-3">
+            <div class="thumbnail vetting-selector">
+                <img src="{{ asset('images/frontdesk.svg') }}" width="70%"
+                     alt="{{ ('ss.registration.selector.on-premise.alt')|trans }}">
+                <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
+                <hr>
+                <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
+                <p>
+                    <form action="{{ url('ss_registration_registration_email_sent', {'secondFactorId': secondFactorId}) }}" method="get">
+                    <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
+                </p>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
