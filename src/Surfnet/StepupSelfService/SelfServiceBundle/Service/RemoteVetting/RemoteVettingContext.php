@@ -125,6 +125,7 @@ class RemoteVettingContext
      */
     public function getIdentityProviderSlug()
     {
+        /** @var RemoteVettingProcessDto $process */
         $process = $this->loadProcess();
         return $process->getIdentityProviderName();
     }

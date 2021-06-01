@@ -20,6 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Configuration\RemoteVettingConfiguration;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\AttributeListDto;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\Attribute;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatch;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 
@@ -41,44 +42,70 @@ class AttributeMapper
     }
 
     /**
-     * @param string $identityProviderName
-     * @param AttributeListDto $localAttributes
-     * @param AttributeListDto $remoteAttributes
+     * @param string $identityProviderName  "slug" of the RV IdP key in remote_vetting_idps map in parameters.yaml
+     * @param AttributeListDto $localAttributes  Attributes from the user's IdP
+     * @param AttributeListDto $remoteAttributes  Attributes from the Remote vetting IdP
      * @return AttributeMatchCollection
      */
     public function map($identityProviderName, AttributeListDto $localAttributes, AttributeListDto $remoteAttributes)
     {
+        // Get mapping from local attributes names => remote attributes names as array of string => string
         $attributeMapping = $this->configuration->getAttributeMapping($identityProviderName);
 
+        // Get attribute maps indexed by attribute name
         $localMap = $this->attributeListToMap($localAttributes);
         $remoteMap = $this->attributeListToMap($remoteAttributes);
 
+        $this->logger->info(sprintf(
+            'Received local attributes: %s',
+            implode(', ', array_keys($localMap))
+        ));
+        $this->logger->info(sprintf('Received remote attributes: %s',
+            implode(', ', array_keys($remoteMap))
+        ));
+
+        // Match the local attributes to the remote attributes
         $matchCollection = new AttributeMatchCollection();
         foreach ($attributeMapping as $localName => $remoteName) {
+            $localAttribute=new Attribute($remoteName, array(''));
             if (!array_key_exists($localName, $localMap)) {
                 $this->logger->warning(sprintf(
-                    'Invalid remote vetting attribute mapping, local attribute with name "%s" not found, skipping',
-                    $localName
+                    'Local attribute "%s" from the attribute mapping for "%s" not found in the local attributes',
+                    $localName, $identityProviderName
                 ));
-                continue;
+            }
+            else {
+                $localAttribute=$localMap[$localName];
             }
 
+            $remoteAttribute=new Attribute($remoteName, array(''));
             if (!array_key_exists($remoteName, $remoteMap)) {
                 $this->logger->warning(sprintf(
-                    'Invalid remote vetting attribute mapping, remote attribute with name "%s" not found, skipping',
-                    $remoteName
+                    'Remote attribute "%s" from the attribute mapping for "%s" not found in the remote attributes',
+                    $remoteName, $identityProviderName
                 ));
-                continue;
+            } else {
+                $remoteAttribute=$remoteMap[$remoteName];
             }
 
-            $attributeMatch = new AttributeMatch($localMap[$localName], $remoteMap[$remoteName], false, '');
+            $localValue=$localAttribute->getValue()[0];
+            $remoteValue=$remoteAttribute->getValue()[0];
+
+            // Test whether remote and local attribute values match by doing a case insensitive string compare
+            $isMatch = 0 === strcasecmp($localValue, $remoteValue);
+
+            $attributeMatch = new AttributeMatch($localAttribute, $remoteAttribute, $isMatch, '');
+            $this->logger->info(sprintf(
+                'Adding match "%s" => "%s"',
+                $attributeMatch->getLocalAttribute()->getName(), $attributeMatch->getRemoteAttribute()->getName()
+            ));
             $matchCollection->add($localName, $attributeMatch);
         };
 
         return $matchCollection;
     }
 
-    /**
+    /** Convert AttributeListDto to array of attribute name => array( name => attribute name, value => array(values)
      * @param AttributeListDto $attributeList
      * @return array
      */

@@ -152,6 +152,7 @@ class RemoteVettingService
      */
     public function getAttributeMatchCollection(AttributeListDto $localAttributes)
     {
+        /** @var AttributeListDto */ // Get attributes returned by the remote vetting IdP
         $externalAttributes = $this->remoteVettingContext->getAttributes();
         $identityProviderSlug = $this->remoteVettingContext->getIdentityProviderSlug();
 

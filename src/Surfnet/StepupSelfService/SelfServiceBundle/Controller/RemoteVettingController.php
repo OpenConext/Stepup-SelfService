@@ -32,6 +32,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\Attrib
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Dto\RemoteVettingTokenDto;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\RemoteVettingViewHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\SamlCalloutHelper;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\AttributeMatchCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\FeedbackCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVetting\Value\ProcessId;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RemoteVettingService;
@@ -169,9 +170,11 @@ class RemoteVettingController extends Controller
         /** @var SamlToken $samlToken */
         $samlToken = $this->container->get('security.token_storage')->getToken();
 
+        // Attributes from the IdP
         $localAttributes = AttributeListDto::fromAttributeSet($samlToken->getAttribute(SamlToken::ATTRIBUTE_SET));
 
         try {
+            /** @var AttributeMatchCollection $matches */
             $matches = $this->remoteVettingService->getAttributeMatchCollection($localAttributes);
             $command = new RemoteVetValidationCommand($matches, new FeedbackCollection());
 
