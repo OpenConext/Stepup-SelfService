@@ -38,7 +38,7 @@ class Attribute implements JsonSerializable
     {
         Assert::string($name, 'The $name of an Attribute must be a scalar value');
         Assert::isArray($value, 'The $value of an Attribute must be an array with strings');
-        Assert::allString($value, 'The $value of an Attribute must be an array with strings');
+        //Assert::allString($value, 'The $value of an Attribute must be an array with strings');
 
         $this->name = $name;
         $this->value = array_values($value);
