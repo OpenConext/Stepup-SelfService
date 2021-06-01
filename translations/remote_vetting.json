@@ -3,9 +3,17 @@
     "institution-d.example.com": {
       "nl_NL": "Instelling D",
       "en_GB": "Institution D"
+    },
+    "institution-b.example.com": {
+      "nl_NL": "Instelling B",
+      "en_GB": "Institution B"
     }
   },
   "attributes": {
+    "commonName": {
+      "nl_NL": "Volledege naam",
+      "en_GB": "Full name"
+    },
     "givenName": {
       "nl_NL": "Voornaam",
       "en_GB": "Given name"
@@ -13,6 +21,10 @@
     "surname": {
       "nl_NL": "Achternaam",
       "en_GB": "Surname"
+    },
+    "urn:mace:terena.org:attribute-def:schacDateOfBirth": {
+      "nl_NL": "Geboortedatum",
+      "en_GB": "Date of birth"
     }
   }
 }
