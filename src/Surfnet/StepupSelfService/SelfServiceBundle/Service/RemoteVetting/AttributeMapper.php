@@ -60,7 +60,8 @@ class AttributeMapper
             'Received local attributes: %s',
             implode(', ', array_keys($localMap))
         ));
-        $this->logger->info(sprintf('Received remote attributes: %s',
+        $this->logger->info(sprintf(
+            'Received remote attributes: %s',
             implode(', ', array_keys($remoteMap))
         ));
 
@@ -71,10 +72,10 @@ class AttributeMapper
             if (!array_key_exists($localName, $localMap)) {
                 $this->logger->warning(sprintf(
                     'Local attribute "%s" from the attribute mapping for "%s" not found in the local attributes',
-                    $localName, $identityProviderName
+                    $localName,
+                    $identityProviderName
                 ));
-            }
-            else {
+            } else {
                 $localAttribute=$localMap[$localName];
             }
 
@@ -82,7 +83,8 @@ class AttributeMapper
             if (!array_key_exists($remoteName, $remoteMap)) {
                 $this->logger->warning(sprintf(
                     'Remote attribute "%s" from the attribute mapping for "%s" not found in the remote attributes',
-                    $remoteName, $identityProviderName
+                    $remoteName,
+                    $identityProviderName
                 ));
             } else {
                 $remoteAttribute=$remoteMap[$remoteName];
@@ -97,7 +99,8 @@ class AttributeMapper
             $attributeMatch = new AttributeMatch($localAttribute, $remoteAttribute, $isMatch, '');
             $this->logger->info(sprintf(
                 'Adding match "%s" => "%s"',
-                $attributeMatch->getLocalAttribute()->getName(), $attributeMatch->getRemoteAttribute()->getName()
+                $attributeMatch->getLocalAttribute()->getName(),
+                $attributeMatch->getRemoteAttribute()->getName()
             ));
             $matchCollection->add($localName, $attributeMatch);
         };
