@@ -32,7 +32,15 @@
 
     {% set organization = identity.institution | trans_rv_schachome(app.request.locale) %}
 
-    <p>{{ 'ss.second_factor.remote_vet.text.does_it_match'|trans({
+    <p>{{ 'ss.second_factor.remote_vet.text.intro'|trans({
+            '%organization%': organization,
+            '%provider%': provider.name,
+        }) | nl2br }}</p>
+    <ul><strong>{{ 'ss.second_factor.remote_vet.text.consent'|trans({
+            '%organization%': organization,
+            '%provider%': provider.name,
+        }) | nl2br }}</strong></ul>
+    <p>{{ 'ss.second_factor.remote_vet.text.outro'|trans({
             '%organization%': organization,
             '%provider%': provider.name,
         }) | nl2br }}</p>
