@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2021-06-02T13:35:39Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2021-06-30T15:02:09Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -112,7 +112,7 @@
       </trans-unit>
       <trans-unit id="f23c9577ba6f3260253a8ca2fcfc999e5f19d2b1" resname="ss.form.ss_remote_vet_feedback.used-before">
         <source>ss.form.ss_remote_vet_feedback.used-before</source>
-        <target>Heb je SurfSecureID eerder gebruikt om via de servicedesk van je instelling een token te activeren</target>
+        <target>Heb je SURFsecureID eerder gebruikt om via de servicedesk van je instelling een token te activeren</target>
         <jms:reference-file line="31">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="15e184d0b7d3b825e1593ada9fd20f9ce0c6aa5b" resname="ss.form.ss_remote_vet_feedback.yes">
@@ -133,7 +133,7 @@
       </trans-unit>
       <trans-unit id="697ef084878c215ff97da5960df3bdc549cee9e7" resname="ss.form.ss_remote_vet_second_factor.validate">
         <source>ss.form.ss_remote_vet_second_factor.validate</source>
-        <target>Bevestig</target>
+        <target>Bewaar</target>
         <jms:reference-file line="58">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetValidationType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="b3d573081dd44232cfd0fc03a04fe1b523715271" resname="ss.form.ss_revoke_second_factor.cancel">
@@ -523,48 +523,54 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       <trans-unit id="06702235a44109d8e0d052b53a1bfb4de60c9ee1" resname="ss.second_factor.remote_vet.attribute_name">
         <source>ss.second_factor.remote_vet.attribute_name</source>
         <target>Persoonsgegeven</target>
-        <jms:reference-file line="57">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <jms:reference-file line="49">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d3cd6555fe9288579b5b287b2a7679265203c90b" resname="ss.second_factor.remote_vet.consent">
+        <source>ss.second_factor.remote_vet.consent</source>
+        <target>Toestemming</target>
+        <jms:reference-file line="71">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c0ad65bef267b1286f21b1b74390563f833bb77c" resname="ss.second_factor.remote_vet.feedback">
         <source>ss.second_factor.remote_vet.feedback</source>
-        <target state="new">Over je ervaringen</target>
-        <jms:reference-file line="72">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <target>Over je ervaringen</target>
+        <jms:reference-file line="64">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="bb0dc870c01c67456de79fd0351f228166ed815f" resname="ss.second_factor.remote_vet.is_attribute_valid">
         <source>ss.second_factor.remote_vet.is_attribute_valid</source>
         <target>Komen overeen</target>
-        <jms:reference-file line="60">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <jms:reference-file line="52">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="85af9776c41d4d96a56222baeaa6d49ca1e506b5" resname="ss.second_factor.remote_vet.personal_data">
         <source>ss.second_factor.remote_vet.personal_data</source>
         <target>Persoonsgegevens</target>
-        <jms:reference-file line="52">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <jms:reference-file line="44">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="feef08cccc473f54b73861bb3d99e3eb05fd4567" resname="ss.second_factor.remote_vet.remarks">
         <source>ss.second_factor.remote_vet.remarks</source>
         <target>Wat wil je verder nog aan ons kwijt?</target>
         <jms:reference-file line="66">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
-        <jms:reference-file line="61">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a258fa5314e7ec2d8f73424776ea10a12e748aa3" resname="ss.second_factor.remote_vet.text.consent">
         <source>ss.second_factor.remote_vet.text.consent</source>
-        <target state="new">Ja, ik geef SURF B.V. toestemming voor het vergelijken van mijn identiteitsgegevens en het opslaan van mijn gedeelde ervaringen ten behoeve van het ontwikkelen en verbeteren van de SURFsecureID.</target>
-        <jms:reference-file line="39">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <target state="new">Door op bewaar te klikken geef ik SURF B.V. toestemming voor het vergelijken van mijn identiteitsgegevens en het opslaan van mijn gedeelde ervaringen ten behoeve van het ontwikkelen en verbeteren van SURFsecureID.</target>
+        <jms:reference-file line="78">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="029b272c5e67c151c7dd07e26df2785a8a5495ce" resname="ss.second_factor.remote_vet.text.intro">
         <source>ss.second_factor.remote_vet.text.intro</source>
-        <target state="new">Hieronder vind je zowel de identiteitsgegevens die we van je instelling %organization% hebben ontvangen, als de identiteitsgegevens die we van %provider% hebben ontvangen. Uiteindelijk willen we het systeem deze identiteitsgegevens automatisch met elkaar laten vergelijken om te bepalen of het om de zelfde persoon gaat en je token te activeren.
+        <target xml:space="preserve" state="new">Hieronder vind je zowel de identiteitsgegevens die we van je instelling %organization% hebben ontvangen, als de identiteitsgegevens die we van %provider% hebben ontvangen. We stellen je ook een aantal vragen over je ervaringen tijdens het gebruik van deze proof-of-concept van de Remote Vetting functie van SURFsecureID.
 
-        Voor de vergelijking van de identiteitsgegevens die we van %organization% hebben ontvangen met de identiteitsgegevens die we van %provider% hebben ontvangen, verwerken wij jouw identiteitsgegevens. Vaak komen identiteitsgegevens van dezelfde persoon niet helemaal overeen. Daarom vragen we jou om de vergelijking nu zelf te doen en om dingen die jou opvallen in je eigen gegevens te melden zodat we hiervan kunnen leren. We stellen je ook een aantal vragen over je ervaringen tijdens het gebruik van deze proof-of-concept van de Remote Vetting functie van SURFsecureID. Hiervoor verkrijgen wij graag jouw toestemming:</target>
+          Vaak komen identiteitsgegevens van dezelfde persoon uit verschillende bronnen niet helemaal overeen. Daarom vragen we jou om de vergelijking je eigen gegevens nu zelf te doen en om dingen die jou opvallen te melden zodat we hiervan kunnen leren. Uiteindelijk willen we het systeem deze identiteitsgegevens automatisch met elkaar laten vergelijken om te bepalen of het om de zelfde persoon gaat en je token te activeren.
+        </target>
         <jms:reference-file line="35">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3f87d492e7c254fdf8e8c791ef555e9cc06e4c8b" resname="ss.second_factor.remote_vet.text.outro">
         <source>ss.second_factor.remote_vet.text.outro</source>
-        <target state="new">Je kunt je toestemming op ieder moment intrekken door een mail te sturen naar support@surfconext.nl. Voor meer informatie over de verwerking van jouw persoonsgegevens, kijk op help link onderaan in het scherm.
+        <target xml:space="preserve" state="new">Voor de vergelijking van de identiteitsgegevens die we van %organization% hebben ontvangen met de identiteitsgegevens die we van %provider% hebben ontvangen, verwerken wij jouw identiteitsgegevens.  Hiervoor verkrijgen wij graag jouw toestemming. Je kunt je toestemming op ieder moment intrekken door een mail te sturen naar support@surfconext.nl. Voor meer informatie over de verwerking van jouw persoonsgegevens, kijk op "help" link onderaan in het scherm.
 
-Als je op “Bewaar” klikt worden de gegevens die je op dit scherm hebt ingevuld versleuteld opgeslagen. We gebruiken deze gegevens uitsluitend voor het ontwikkelen en verbeteren van de Remote Vetting functie van SURFsecureID. Aan het einde van de proof-of-concept, uiterlijk op 1 november 2021, worden de bewaarde gegevens verwijderd. Wil je niet dat de gegevens worden bewaard, kies dan voor “Annuleer” of sluit dit venster.
+Als je op “Bewaar” klikt worden de gegevens die je op dit scherm hebt ingevuld versleuteld opgeslagen. We gebruiken deze gegevens uitsluitend voor het ontwikkelen en verbeteren van de Remote Vetting functie van SURFsecureID. Aan het einde van de proof-of-concept, uiterlijk op 1 november 2021, worden de bewaarde gegevens verwijderd. Wil je niet dat de gegevens worden bewaard, kies dan voor “Annuleeren” of sluit dit venster.
         </target>
-        <jms:reference-file line="43">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <jms:reference-file line="73">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9c1a0c3ced900e4d33e110a5c2772ca68e85bf0f" resname="ss.second_factor.remote_vet_validation.title">
         <source>ss.second_factor.remote_vet_validation.title</source>

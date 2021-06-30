@@ -36,14 +36,6 @@
             '%organization%': organization,
             '%provider%': provider.name,
         }) | nl2br }}</p>
-    <ul><strong>{{ 'ss.second_factor.remote_vet.text.consent'|trans({
-            '%organization%': organization,
-            '%provider%': provider.name,
-        }) | nl2br }}</strong></ul>
-    <p>{{ 'ss.second_factor.remote_vet.text.outro'|trans({
-            '%organization%': organization,
-            '%provider%': provider.name,
-        }) | nl2br }}</p>
 
     {{ form_start(form, {'attr':{'class': 'form-horizontal rv-form'}}) }}
     {{ form_errors(form) }}
@@ -73,6 +65,20 @@
 
             {{ form_widget(form.feedback) }}
 
+        </div>
+
+        <div class="col-xs-12">
+            <h3>{{ 'ss.second_factor.remote_vet.consent'|trans }}</h3>
+
+            <p>{{ 'ss.second_factor.remote_vet.text.outro'|trans({
+                    '%organization%': organization,
+                    '%provider%': provider.name,
+                }) | nl2br }}</p>
+
+            <strong>{{ 'ss.second_factor.remote_vet.text.consent'|trans({
+                    '%organization%': organization,
+                    '%provider%': provider.name,
+                }) | nl2br }}</strong>
         </div>
 
         {{ form_end(form) }}
