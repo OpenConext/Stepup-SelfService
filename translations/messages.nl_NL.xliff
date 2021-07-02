@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2021-06-30T15:02:09Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2021-07-02T16:13:53Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -455,7 +455,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
         <source>ss.registration.vetting_type.description.vetting</source>
-        <target>Activeer je token met behulp van een van de beschikbare remote vetting identificatiemiddelen (Fysiek op een RA-locatie, iDIN via bank, IRMA via app of ReadID scan een NFC id-bewijs)</target>
+        <target>Om je token te activeren moet je je identiteit verifiëren met één van de onderstaande methoden.</target>
         <jms:reference-file line="21">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6b0aa1451c1b8e3edaa9a2064a2949108bb818ed" resname="ss.registration.vetting_type.title">

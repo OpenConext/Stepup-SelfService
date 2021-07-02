@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2021-06-30T15:31:28Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2021-07-02T16:09:13Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -455,7 +455,7 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
         <source>ss.registration.vetting_type.description.vetting</source>
-        <target>Prove your identity using one of our verification methods. Physical vetting at one of your registration authority locations, ReadId document scanner (read your passport, drivers licence or ID card using the ReadId connect app and a NFF compatible document), IRMA (RMA offers a way for privacy-friendly authentication. When authenticating, you as a user reveal only relevant properties (attributes) of yourself, using an IRMA app on your mobile phone — for instance that you are older than 16.) or iDIN (bank).</target>
+        <target>To activate your token you must verify your identity using one of verification methods below.</target>
         <jms:reference-file line="21">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6b0aa1451c1b8e3edaa9a2064a2949108bb818ed" resname="ss.registration.vetting_type.title">

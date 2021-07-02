@@ -24,21 +24,6 @@
 
     <div class="row remote-vetting">
 
-        <div class="col-xs-12 col-md-3">
-            <div class="thumbnail second-factor-selector">
-                <img src="/images/remote-vetting/on-premise.png"
-                     alt="{{ ('ss.registration.selector.on-premise.alt')|trans }}">
-                <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
-                <hr>
-                <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
-                <p>
-                    <form action="{{ url('ss_registration_registration_email_sent', {'secondFactorId': secondFactorId}) }}" method="get">
-                    <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
-                </p>
-                </form>
-            </div>
-        </div>
-
         {% for identityProvider in identityProviders %}
             <div class="col-xs-12 col-md-3">
                 <div class="thumbnail second-factor-selector">
@@ -56,6 +41,21 @@
                 </div>
             </div>
         {% endfor %}
+
+        <div class="col-xs-12 col-md-3">
+            <div class="thumbnail second-factor-selector">
+                <img src="/images/remote-vetting/on-premise.png"
+                     alt="{{ ('ss.registration.selector.on-premise.alt')|trans }}">
+                <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
+                <hr>
+                <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
+                <p>
+                <form action="{{ url('ss_registration_registration_email_sent', {'secondFactorId': secondFactorId}) }}" method="get">
+                    <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
+                    </p>
+                </form>
+            </div>
+        </div>
 
     </div>
 {% endblock %}
