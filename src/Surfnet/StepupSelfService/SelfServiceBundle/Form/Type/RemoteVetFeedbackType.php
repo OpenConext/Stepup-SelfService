@@ -65,7 +65,7 @@ class RemoteVetFeedbackType extends AbstractType
         ]);
 
         $builder->add('remarks', TextareaType::class, [
-            'label' => 'ss.second_factor.remote_vet.remarks',
+            'label' => 'ss.second_factor.remote_vet.final_remarks',
             'required' => false,
         ]);
     }
