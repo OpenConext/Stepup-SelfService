@@ -13,6 +13,7 @@
         <div class="col-sm-6">
             {{- form_help(form) -}}
             {{- form_errors(form) -}}
+
             {{- form_widget(form) -}}
         </div>
     </div>
@@ -62,6 +63,11 @@
 
         <div class="col-xs-12">
             <h3>{{ 'ss.second_factor.remote_vet.feedback'|trans }}</h3>
+
+            <p>{{ 'ss.second_factor.remote_vet.feedback.intro'|trans({
+                    '%organization%': organization,
+                    '%provider%': provider.name,
+                }) | nl2br }}</p>
 
             {{ form_widget(form.feedback) }}
 

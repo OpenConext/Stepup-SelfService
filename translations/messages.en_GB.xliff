@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2021-07-02T16:09:13Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2021-07-07T11:28:22Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -9,32 +9,32 @@
       <trans-unit id="356a192b7913b04c54574d18c28d46e6395428ab" resname="1">
         <source>1</source>
         <target>1</target>
-        <jms:reference-file line="45">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="34">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="b1d5781111d84f7b3fe45a0852e59758cd7a87e5" resname="10">
         <source>10</source>
         <target state="new">10</target>
-        <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="42">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="da4b9237bacccdf19c0760cab7aec4a8359010b0" resname="2">
         <source>2</source>
         <target state="new">2</target>
-        <jms:reference-file line="46">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="35">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="1b6453892473a467d07372d45eb05abc2031647a" resname="4">
         <source>4</source>
         <target state="new">4</target>
-        <jms:reference-file line="47">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="36">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4" resname="5">
         <source>5</source>
         <target state="new">5</target>
-        <jms:reference-file line="48">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="37">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="c1dfd96eea8cc2b62785275bca38ac261256e278" resname="6">
         <source>6</source>
         <target state="new">6</target>
-        <jms:reference-file line="49">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="38">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="2f92022705bb464fd867cae9c37612c3ae0e995a" resname="612345678">
         <source>612345678</source>
@@ -44,17 +44,17 @@
       <trans-unit id="902ba3cda1883801594b6e1b452790cc53948fda" resname="7">
         <source>7</source>
         <target state="new">7</target>
-        <jms:reference-file line="50">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="39">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="fe5dbbcea5ce7e2988b8c69bcfdfde8904aabc1f" resname="8">
         <source>8</source>
         <target state="new">8</target>
-        <jms:reference-file line="51">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="40">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="0ade7c2cf97f75d009975f4d720d1fa6c19f4897" resname="9">
         <source>9</source>
         <target state="new">9</target>
-        <jms:reference-file line="52">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="41">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="0c3112826a8c897ac0b6a3d3a8432059b74dd996" resname="app.name">
         <source>app.name</source>
@@ -98,28 +98,28 @@
         <source>ss.form.ss_remote_vet_feedback.no</source>
         <target>No</target>
         <jms:reference-file line="41">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetAssertionMatchType.php</jms:reference-file>
-        <jms:reference-file line="35">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="59">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="f0c190504fe3aad1f0b6788790a432f174a01f3f" resname="ss.form.ss_remote_vet_feedback.rating">
         <source>ss.form.ss_remote_vet_feedback.rating</source>
-        <target>Rating</target>
-        <jms:reference-file line="42">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <target>How easy did you find it to use this verification method? (1=very difficult, 10=very easy)</target>
+        <jms:reference-file line="31">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="7804a38ccce8bda0fe5bb055af39ea24f135b8a4" resname="ss.form.ss_remote_vet_feedback.rating-explanation">
         <source>ss.form.ss_remote_vet_feedback.rating-explanation</source>
-        <target>Rating explanation</target>
-        <jms:reference-file line="61">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <target>Remarks</target>
+        <jms:reference-file line="50">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="f23c9577ba6f3260253a8ca2fcfc999e5f19d2b1" resname="ss.form.ss_remote_vet_feedback.used-before">
         <source>ss.form.ss_remote_vet_feedback.used-before</source>
         <target>Have you used SURFsecureID before to activate a token via the service desk of your institution?</target>
-        <jms:reference-file line="31">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="55">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="15e184d0b7d3b825e1593ada9fd20f9ce0c6aa5b" resname="ss.form.ss_remote_vet_feedback.yes">
         <source>ss.form.ss_remote_vet_feedback.yes</source>
         <target>Yes</target>
         <jms:reference-file line="40">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetAssertionMatchType.php</jms:reference-file>
-        <jms:reference-file line="34">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
+        <jms:reference-file line="58">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="0ba164e8499593f2b376e03b4fb3483a41696c7f" resname="ss.form.ss_remote_vet_second_factor.cancel">
         <source>ss.form.ss_remote_vet_second_factor.cancel</source>
@@ -333,7 +333,7 @@
       <trans-unit id="7c01f0c80cf83ed8fda6f899a31058df8f20baa2" resname="ss.registration.selector.on-premise.alt">
         <source>ss.registration.selector.on-premise.alt</source>
         <target>On premise</target>
-        <jms:reference-file line="30">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="48">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6348b54419006fd2ee31e33581af254358acd8e8" resname="ss.registration.selector.sms.alt">
         <source>ss.registration.selector.sms.alt</source>
@@ -445,13 +445,13 @@ For all devices with a USB port.</target>
       <trans-unit id="6afeab6302e7089dd152da59ff6167355993e1fd" resname="ss.registration.vetting_type.button.ra_vetting">
         <source>ss.registration.vetting_type.button.ra_vetting</source>
         <target>Continue</target>
-        <jms:reference-file line="36">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
-        <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="38">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="54">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
         <source>ss.registration.vetting_type.description.ra_vetting</source>
         <target>Vet your second factor token at one of your registration authority locations.</target>
-        <jms:reference-file line="33">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="51">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
         <source>ss.registration.vetting_type.description.vetting</source>
@@ -466,7 +466,7 @@ For all devices with a USB port.</target>
       <trans-unit id="495f21302f01269871f9993f2b8da38bee78fe87" resname="ss.registration.vetting_type.title.ra_vetting">
         <source>ss.registration.vetting_type.title.ra_vetting</source>
         <target>RA vetting</target>
-        <jms:reference-file line="31">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="49">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="51b48a932a70ae43f768348cb7631f248fffd1b1" resname="ss.registration.yubikey.text.connect_yubikey_to_pc">
         <source>ss.registration.yubikey.text.connect_yubikey_to_pc</source>
@@ -530,12 +530,17 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="d3cd6555fe9288579b5b287b2a7679265203c90b" resname="ss.second_factor.remote_vet.consent">
         <source>ss.second_factor.remote_vet.consent</source>
         <target>Consent</target>
-        <jms:reference-file line="71">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <jms:reference-file line="76">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c0ad65bef267b1286f21b1b74390563f833bb77c" resname="ss.second_factor.remote_vet.feedback">
         <source>ss.second_factor.remote_vet.feedback</source>
         <target>Your experience</target>
         <jms:reference-file line="64">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1887ca298b43f6d836546478721a6eb49d55df7a" resname="ss.second_factor.remote_vet.feedback.intro">
+        <source>ss.second_factor.remote_vet.feedback.intro</source>
+        <target>You just used %provider% to verify your identity.</target>
+        <jms:reference-file line="66">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="bb0dc870c01c67456de79fd0351f228166ed815f" resname="ss.second_factor.remote_vet.is_attribute_valid">
         <source>ss.second_factor.remote_vet.is_attribute_valid</source>
@@ -549,14 +554,14 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       </trans-unit>
       <trans-unit id="feef08cccc473f54b73861bb3d99e3eb05fd4567" resname="ss.second_factor.remote_vet.remarks">
         <source>ss.second_factor.remote_vet.remarks</source>
-        <target>Remarks</target>
+        <target>Do you have any other remarks for us?</target>
         <jms:reference-file line="66">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/RemoteVetFeedbackType.php</jms:reference-file>
         <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a258fa5314e7ec2d8f73424776ea10a12e748aa3" resname="ss.second_factor.remote_vet.text.consent">
         <source>ss.second_factor.remote_vet.text.consent</source>
         <target>By clicking "Store", I give SURF B.V. permission to compare my identity data and to store the answers about my experiences for the purpose of developing and improving SURFsecureID. </target>
-        <jms:reference-file line="78">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <jms:reference-file line="83">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="029b272c5e67c151c7dd07e26df2785a8a5495ce" resname="ss.second_factor.remote_vet.text.intro">
         <source>ss.second_factor.remote_vet.text.intro</source>
@@ -570,7 +575,7 @@ Often there are small differences in the identity data of the same person from d
         <target xml:space="preserve">To compare the data that we received from %organization% with the identity data that we received from %provider% we process your identity data. For doing this we request your consent. You can revoke your consent at any time by sending an email to support@surfconext.nl. For more information about the processing of your personal data, click the "help" link at the bottom of this page.
 
 If you choose "Store" the information in this screen is encrypted and then saved. We use the saved information only for developing and improving the Remote Vetting functionality in SURFsecureID. At the end of the proof-of-concept, but no later than november 1st 2021, the saved information will be deleted. If you do not want your information to be saved, choose "Cancel" or close this window.</target>
-        <jms:reference-file line="73">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
+        <jms:reference-file line="78">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9c1a0c3ced900e4d33e110a5c2772ca68e85bf0f" resname="ss.second_factor.remote_vet_validation.title">
         <source>ss.second_factor.remote_vet_validation.title</source>

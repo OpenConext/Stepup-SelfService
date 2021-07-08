@@ -27,17 +27,6 @@ class RemoteVetFeedbackType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('used-before', ChoiceType::class, [
-            'label' => 'ss.form.ss_remote_vet_feedback.used-before',
-            'required' => true,
-            'choices'   => array(
-                'ss.form.ss_remote_vet_feedback.yes' => 'yes',
-                'ss.form.ss_remote_vet_feedback.no' => 'no',
-            ),
-            'multiple' => false,
-            'expanded' => true,
-        ]);
-
         $builder->add('rating', ChoiceType::class, [
             'label' => 'ss.form.ss_remote_vet_feedback.rating',
             'required' => true,
@@ -55,11 +44,24 @@ class RemoteVetFeedbackType extends AbstractType
             'label_attr' => array('class' => 'checkbox-inline'),
             'multiple' => false,
             'expanded' => true,
+            'attr' => ['class' => 'no-bottom-margin'],   // No margin space below
         ]);
 
         $builder->add('rating-explanation', TextareaType::class, [
             'label' => 'ss.form.ss_remote_vet_feedback.rating-explanation',
             'required' => false,
+            'attr' => ['class' => 'add-bottom-margin'],   // Add some extra space below
+        ]);
+
+        $builder->add('used-before', ChoiceType::class, [
+            'label' => 'ss.form.ss_remote_vet_feedback.used-before',
+            'required' => true,
+            'choices'   => array(
+                'ss.form.ss_remote_vet_feedback.yes' => 'yes',
+                'ss.form.ss_remote_vet_feedback.no' => 'no',
+            ),
+            'multiple' => false,
+            'expanded' => true,
         ]);
 
         $builder->add('remarks', TextareaType::class, [
