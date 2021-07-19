@@ -450,7 +450,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
         <source>ss.registration.vetting_type.description.ra_vetting</source>
-        <target>Activeer je token op service desk locatie.</target>
+        <target>Activeer je token op een service desk locatie.</target>
         <jms:reference-file line="51">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
