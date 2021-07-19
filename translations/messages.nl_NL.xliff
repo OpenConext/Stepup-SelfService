@@ -450,7 +450,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
         <source>ss.registration.vetting_type.description.ra_vetting</source>
-        <target>Activeer je token bij een van de RA locaties.</target>
+        <target>Activeer je token op service desk locatie.</target>
         <jms:reference-file line="51">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
@@ -460,12 +460,12 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="6b0aa1451c1b8e3edaa9a2064a2949108bb818ed" resname="ss.registration.vetting_type.title">
         <source>ss.registration.vetting_type.title</source>
-        <target>Kies een activatiemethode</target>
+        <target>Kies een verificatiemethode</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="495f21302f01269871f9993f2b8da38bee78fe87" resname="ss.registration.vetting_type.title.ra_vetting">
         <source>ss.registration.vetting_type.title.ra_vetting</source>
-        <target>RA vetting</target>
+        <target>Service desk</target>
         <jms:reference-file line="49">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="51b48a932a70ae43f768348cb7631f248fffd1b1" resname="ss.registration.yubikey.text.connect_yubikey_to_pc">
@@ -567,7 +567,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       </trans-unit>
       <trans-unit id="029b272c5e67c151c7dd07e26df2785a8a5495ce" resname="ss.second_factor.remote_vet.text.intro">
         <source>ss.second_factor.remote_vet.text.intro</source>
-        <target xml:space="preserve" state="new">Hieronder vind je zowel de identiteitsgegevens die we van je instelling %organization% hebben ontvangen, als de identiteitsgegevens die we van %provider% hebben ontvangen. We stellen je ook een aantal vragen over je ervaringen tijdens het gebruik van deze proof-of-concept van de Remote Vetting functie van SURFsecureID.
+        <target xml:space="preserve" state="new">Hieronder vind je zowel de identiteitsgegevens die we van je instelling %organization% hebben ontvangen, als de identiteitsgegevens die we van %provider% hebben ontvangen. We stellen je ook een aantal vragen over je ervaringen tijdens test.
 
           Vaak komen identiteitsgegevens van dezelfde persoon uit verschillende bronnen niet helemaal overeen. Daarom vragen we jou om de vergelijking je eigen gegevens nu zelf te doen en om dingen die jou opvallen te melden zodat we hiervan kunnen leren. Uiteindelijk willen we het systeem deze identiteitsgegevens automatisch met elkaar laten vergelijken om te bepalen of het om de zelfde persoon gaat en je token te activeren.
         </target>
@@ -577,7 +577,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <source>ss.second_factor.remote_vet.text.outro</source>
         <target xml:space="preserve" state="new">Voor de vergelijking van de identiteitsgegevens die we van %organization% hebben ontvangen met de identiteitsgegevens die we van %provider% hebben ontvangen, verwerken wij jouw identiteitsgegevens.  Hiervoor verkrijgen wij graag jouw toestemming. Je kunt je toestemming op ieder moment intrekken door een mail te sturen naar support@surfconext.nl. Voor meer informatie over de verwerking van jouw persoonsgegevens, kijk op "help" link onderaan in het scherm.
 
-Als je op “Bewaar” klikt worden de gegevens die je op dit scherm hebt ingevuld versleuteld opgeslagen. We gebruiken deze gegevens uitsluitend voor het ontwikkelen en verbeteren van de Remote Vetting functie van SURFsecureID. Aan het einde van de proof-of-concept, uiterlijk op 1 november 2021, worden de bewaarde gegevens verwijderd. Wil je niet dat de gegevens worden bewaard, kies dan voor “Annuleeren” of sluit dit venster.
+Als je op “Bewaar” klikt worden de gegevens die je op dit scherm hebt ingevuld versleuteld opgeslagen. We gebruiken deze gegevens uitsluitend voor het ontwikkelen en verbeteren van SURFsecureID. Aan het einde van de proof-of-concept, uiterlijk op 1 november 2021, worden de bewaarde gegevens verwijderd. Wil je niet dat de gegevens worden bewaard, kies dan voor “Annuleeren” of sluit dit venster.
         </target>
         <jms:reference-file line="79">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>

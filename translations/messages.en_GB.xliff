@@ -450,7 +450,7 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
         <source>ss.registration.vetting_type.description.ra_vetting</source>
-        <target>Vet your second factor token at one of your registration authority locations.</target>
+        <target>Activate token by visiting a service desk.</target>
         <jms:reference-file line="51">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a8e8386218b7c03203e839b5e6742d008f84d4f2" resname="ss.registration.vetting_type.description.vetting">
@@ -460,12 +460,12 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="6b0aa1451c1b8e3edaa9a2064a2949108bb818ed" resname="ss.registration.vetting_type.title">
         <source>ss.registration.vetting_type.title</source>
-        <target>Choose your prefered vetting method</target>
+        <target>Choose your preferred identity verification method</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="495f21302f01269871f9993f2b8da38bee78fe87" resname="ss.registration.vetting_type.title.ra_vetting">
         <source>ss.registration.vetting_type.title.ra_vetting</source>
-        <target>RA vetting</target>
+        <target>Service desk</target>
         <jms:reference-file line="49">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="51b48a932a70ae43f768348cb7631f248fffd1b1" resname="ss.registration.yubikey.text.connect_yubikey_to_pc">
@@ -569,7 +569,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       </trans-unit>
       <trans-unit id="029b272c5e67c151c7dd07e26df2785a8a5495ce" resname="ss.second_factor.remote_vet.text.intro">
         <source>ss.second_factor.remote_vet.text.intro</source>
-        <target xml:space="preserve">Below you find the identity data that we received from your institution %organization% and the identity data that we received from %provider%. Additionally we ask you a few questions about your experiences with the Remote Vetting functionality of this SURFsecureID proof-of-concept.
+        <target xml:space="preserve">Below you find the identity data that we received from your institution %organization% and the identity data that we received from %provider%. Additionally we ask you a few questions about your experiences with the identity verification in this SURFsecureID test.
 
 Often there are small differences in the identity data of the same person from different sources. That is why we ask you to do the comparison manually and to report anything remarkable in your own identity data so we can learn from your observations. In the end we want the system to do this comparison to verify that these belong to the same person and only then activate your token.</target>
         <jms:reference-file line="36">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
@@ -578,7 +578,7 @@ Often there are small differences in the identity data of the same person from d
         <source>ss.second_factor.remote_vet.text.outro</source>
         <target xml:space="preserve">To compare the data that we received from %organization% with the identity data that we received from %provider% we process your identity data. For doing this we request your consent. You can revoke your consent at any time by sending an email to support@surfconext.nl. For more information about the processing of your personal data, click the "help" link at the bottom of this page.
 
-If you choose "Store" the information in this screen is encrypted and then saved. We use the saved information only for developing and improving the Remote Vetting functionality in SURFsecureID. At the end of the proof-of-concept, but no later than november 1st 2021, the saved information will be deleted. If you do not want your information to be saved, choose "Cancel" or close this window.</target>
+If you choose "Store" the information in this screen is encrypted and then saved. We use the saved information only for developing and improving SURFsecureID. At the end of the proof-of-concept, but no later than november 1st 2021, the saved information will be deleted. If you do not want your information to be saved, choose "Cancel" or close this window.</target>
         <jms:reference-file line="79">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9c1a0c3ced900e4d33e110a5c2772ca68e85bf0f" resname="ss.second_factor.remote_vet_validation.title">
