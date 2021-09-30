@@ -90,7 +90,7 @@
         "phpunit": "vendor/bin/phpunit --configuration=phpunit.xml.dist --coverage-text",
         "download-security-checker": "if [ ! -f local-php-security-checker ]; then curl -s https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest | grep -E \"browser_download_url(.+)linux_386\" | cut -d : -f 2,3 | tr -d \\\" | xargs -I{} curl -L --output local-php-security-checker {} && chmod +x local-php-security-checker; fi",
         "security-tests": "./local-php-security-checker",
-        "yarn-audit": "yarn audit --groups dependencies optionalDependencies",
+        "yarn-audit": "yarn audit",
         "frontend-install": [
             "yarn install --frozen-lockfile",
             "yarn encore production"
