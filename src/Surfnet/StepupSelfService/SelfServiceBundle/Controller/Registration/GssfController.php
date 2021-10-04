@@ -25,7 +25,7 @@ use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
-use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\InitiateGssfType;
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\StatusGssfType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -36,7 +36,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 final class GssfController extends Controller
 {
     /**
-     * Render the initiation form.
+     * Render the status form.
      *
      * This action has two parameters:
      *
@@ -51,15 +51,15 @@ final class GssfController extends Controller
      * @param string $provider
      * @return array|Response
      */
-    public function initiateAction(Request $request, $provider)
+    public function statusAction(Request $request, $provider)
     {
         $this->assertSecondFactorEnabled($provider);
 
-        return $this->renderInitiateForm(
+        return $this->renderStatusForm(
             $provider,
             [
-                'authenticationFailed' => (bool) $request->get('authenticationFailed'),
-                'proofOfPossessionFailed' => (bool) $request->get('proofOfPossessionFailed'),
+                'authenticationFailed' => (bool) $request->query->get('authenticationFailed'),
+                'proofOfPossessionFailed' => (bool) $request->query->get('proofOfPossessionFailed'),
             ]
         );
     }
@@ -131,7 +131,7 @@ final class GssfController extends Controller
                 sprintf('Could not process received Response, error: "%s"', $exception->getMessage())
             );
 
-            return $this->redirectToInitiationForm(
+            return $this->redirectToStatusReportForm(
                 $provider,
                 ['authenticationFailed' => true]
             );
@@ -146,7 +146,7 @@ final class GssfController extends Controller
                 ($expectedResponseTo ? 'expected "' . $expectedResponseTo . '"' : ' no response expected')
             ));
 
-            return $this->redirectToInitiationForm(
+            return $this->redirectToStatusReportForm(
                 $provider,
                 ['authenticationFailed' => true]
             );
@@ -182,20 +182,16 @@ final class GssfController extends Controller
 
         $this->getLogger()->error('Unable to prove GSSF possession');
 
-        return $this->redirectToInitiationForm(
+        return $this->redirectToStatusReportForm(
             $provider,
             ['proofOfPossessionFailed' => true]
         );
     }
 
-    /**
-     * @param Provider $provider
-     * @param array $options
-     */
-    private function redirectToInitiationForm(Provider $provider, array $options)
+    private function redirectToStatusReportForm(Provider $provider, array $options)
     {
         return $this->redirectToRoute(
-            'ss_registration_gssf_initiate',
+            'ss_registration_gssf_status_report',
             $options + [
                 'provider' => $provider->getName(),
             ]
@@ -245,18 +241,13 @@ final class GssfController extends Controller
         return $this->get('logger');
     }
 
-    /**
-     * @param string $provider
-     * @param array $parameters
-     * @return Response
-     */
-    private function renderInitiateForm($provider, array $parameters = [])
+    private function renderStatusForm(string $provider, array $parameters = []): Response
     {
         /** @var ViewConfig $secondFactorConfig */
         $secondFactorConfig = $this->get("gssp.view_config.{$provider}");
 
         $form = $this->createForm(
-            InitiateGssfType::class,
+            StatusGssfType::class,
             null,
             [
                 'provider' => $provider,
@@ -275,7 +266,7 @@ final class GssfController extends Controller
             ]
         );
         return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:registration/gssf:initiate.html.twig',
+            'SurfnetStepupSelfServiceSelfServiceBundle:registration/gssf:status.html.twig',
             $templateParameters
         );
     }
