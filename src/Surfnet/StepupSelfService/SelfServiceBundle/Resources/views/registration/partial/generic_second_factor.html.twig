@@ -25,9 +25,11 @@
             }}
         </p>
         <p>
-            <a href="{{ url }}" class="btn btn-primary">
-                {{ secondFactor.getButtonUse() }}
-            </a>
+            <form method="post" enctype="text/plain" accept-charset="UTF-8" action="{{ url }}">
+                <button type="submit" class="btn btn-primary">
+                    {{ secondFactor.getButtonUse() }}
+                </button>
+            </form>
         </p>
     </div>
 </div>

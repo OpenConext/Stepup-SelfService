@@ -63,7 +63,7 @@ class GsspToken implements AvailableTokenInterface
      */
     public function getRoute()
     {
-        return 'ss_registration_gssf_initiate';
+        return 'ss_registration_gssf_authenticate';
     }
 
     /**
