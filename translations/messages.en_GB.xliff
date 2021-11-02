@@ -578,7 +578,7 @@ Often there are small differences in the identity data of the same person from d
         <source>ss.second_factor.remote_vet.text.outro</source>
         <target xml:space="preserve">To compare the data that we received from %organization% with the identity data that we received from %provider% we process your identity data. For doing this we request your consent. You can revoke your consent at any time by sending an email to support@surfconext.nl. For more information about the processing of your personal data, click the "help" link at the bottom of this page.
 
-If you choose "Store" the information in this screen is encrypted and then saved. We use the saved information only for developing and improving SURFsecureID. At the end of the proof-of-concept, but no later than november 1st 2021, the saved information will be deleted. If you do not want your information to be saved, choose "Cancel" or close this window.</target>
+If you choose "Store" the information in this screen is encrypted and then saved. We use the saved information only for developing and improving SURFsecureID. At the end of the proof-of-concept, but no later than april 1st 2022, the saved information will be deleted. If you do not want your information to be saved, choose "Cancel" or close this window.</target>
         <jms:reference-file line="79">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9c1a0c3ced900e4d33e110a5c2772ca68e85bf0f" resname="ss.second_factor.remote_vet_validation.title">

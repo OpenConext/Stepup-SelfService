@@ -577,7 +577,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <source>ss.second_factor.remote_vet.text.outro</source>
         <target xml:space="preserve" state="new">Voor de vergelijking van de identiteitsgegevens die we van %organization% hebben ontvangen met de identiteitsgegevens die we van %provider% hebben ontvangen, verwerken wij jouw identiteitsgegevens.  Hiervoor verkrijgen wij graag jouw toestemming. Je kunt je toestemming op ieder moment intrekken door een mail te sturen naar support@surfconext.nl. Voor meer informatie over de verwerking van jouw persoonsgegevens, kijk op "help" link onderaan in het scherm.
 
-Als je op “Bewaar” klikt worden de gegevens die je op dit scherm hebt ingevuld versleuteld opgeslagen. We gebruiken deze gegevens uitsluitend voor het ontwikkelen en verbeteren van SURFsecureID. Aan het einde van de proof-of-concept, uiterlijk op 1 november 2021, worden de bewaarde gegevens verwijderd. Wil je niet dat de gegevens worden bewaard, kies dan voor “Annuleeren” of sluit dit venster.
+Als je op “Bewaar” klikt worden de gegevens die je op dit scherm hebt ingevuld versleuteld opgeslagen. We gebruiken deze gegevens uitsluitend voor het ontwikkelen en verbeteren van SURFsecureID. Aan het einde van de proof-of-concept, uiterlijk op 1 april 2022, worden de bewaarde gegevens verwijderd. Wil je niet dat de gegevens worden bewaard, kies dan voor “Annuleeren” of sluit dit venster.
         </target>
         <jms:reference-file line="79">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/remote_vetting/validation.html.twig</jms:reference-file>
       </trans-unit>
