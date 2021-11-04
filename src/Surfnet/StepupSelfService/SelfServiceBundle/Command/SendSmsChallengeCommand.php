@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
 use Surfnet\StepupBundle\Value\PhoneNumber\Country;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class SendSmsChallengeCommand
@@ -55,4 +56,10 @@ class SendSmsChallengeCommand
      * @var string
      */
     public $institution;
+
+    /**
+     * The self service second factor id is not actually a token ID that we would later use during SSO or SFO. As this
+     * token is not yet registered we use a hard-coded identifier instead.
+     */
+    public $secondFactorId = SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID;
 }
