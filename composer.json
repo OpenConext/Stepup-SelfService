@@ -57,7 +57,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git"
+            "url": "git@github.com:ibuildingsnl/Stepup-bundle.git"
         }
     ],
     "scripts": {
