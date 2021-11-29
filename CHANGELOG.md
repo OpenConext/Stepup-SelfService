@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.5.2
+Update Stepup Bundle and Http Foundation to prevent deprecation warnings
+
+## 3.5.1
+Update stepup-saml-bundle and stepup-bundle
+
+## 3.5.0
+Update Stepup-Bundle
+
 ## 3.4.0
 **Feature**
 * Self vetting (vet token with previously RA vetted token) #227
