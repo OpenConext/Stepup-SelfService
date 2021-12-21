@@ -69,9 +69,9 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     /**
      * @return int
      */
-    public function getOtpRequestsRemainingCount()
+    public function getOtpRequestsRemainingCount(string $identifier)
     {
-        return $this->smsSecondFactorService->getOtpRequestsRemainingCount();
+        return $this->smsSecondFactorService->getOtpRequestsRemainingCount($identifier);
     }
 
     /**
@@ -85,14 +85,14 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     /**
      * @return bool
      */
-    public function hasSmsVerificationState()
+    public function hasSmsVerificationState(string $secondFactorId)
     {
-        return $this->smsSecondFactorService->hasSmsVerificationState();
+        return $this->smsSecondFactorService->hasSmsVerificationState($secondFactorId);
     }
 
-    public function clearSmsVerificationState()
+    public function clearSmsVerificationState(string $secondFactorId)
     {
-        $this->smsSecondFactorService->clearSmsVerificationState();
+        $this->smsSecondFactorService->clearSmsVerificationState($secondFactorId);
     }
 
     /**
@@ -112,6 +112,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
         $stepupCommand->body = $this->translator->trans('ss.registration.sms.challenge_body');
         $stepupCommand->identity = $command->identity;
         $stepupCommand->institution = $command->institution;
+        $stepupCommand->secondFactorId = $command->secondFactorId;
 
         return $this->smsSecondFactorService->sendChallenge($stepupCommand);
     }
@@ -124,6 +125,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     {
         $stepupCommand = new VerifyPossessionOfPhoneCommand();
         $stepupCommand->challenge = $challengeCommand->challenge;
+        $stepupCommand->secondFactorId = $challengeCommand->secondFactorId;
 
         $verification = $this->smsSecondFactorService->verifyPossession($stepupCommand);
 

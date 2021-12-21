@@ -59,11 +59,11 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType
         tags: [{ name: form.type, alias: ss_revoke_second_factor }]
 
-    surfnet_stepup_self_service_self_service.form.type.initiate_gssf:
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\InitiateGssfType
+    surfnet_stepup_self_service_self_service.form.type.status_gssf:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\StatusGssfType
         arguments:
             - "@router"
-        tags: [{ name: form.type, alias: ss_initiate_gssf }]
+        tags: [{ name: form.type, alias: ss_status_gssf }]
 
     surfnet_stepup_self_service_self_service.service.yubikey:
         public: false

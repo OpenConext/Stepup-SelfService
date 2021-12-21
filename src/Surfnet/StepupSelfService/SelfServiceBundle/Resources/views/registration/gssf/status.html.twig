@@ -15,16 +15,17 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-    <p>{{ secondFactorConfig.getExplanation()|raw }}</p>
-
-    <hr>
-
     {% if authenticationFailed == true %}
         <div class="alert alert-danger">{{ secondFactorConfig.getAuthnFailed() }}</div>
     {% endif %}
     {% if proofOfPossessionFailed == true %}
         <div class="alert alert-danger">{{ secondFactorConfig.getPopFailed() }}</div>
     {% endif %}
+
+    <hr>
+
+    <p>{{ secondFactorConfig.getExplanation()|raw }}</p>
+
     {{ form(form) }}
 
 {% endblock %}

@@ -25,7 +25,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
-class InitiateGssfType extends AbstractType
+class StatusGssfType extends AbstractType
 {
     /**
      * @var RouterInterface
@@ -57,6 +57,6 @@ class InitiateGssfType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ss_initiate_gssf';
+        return 'ss_status_gssf';
     }
 }

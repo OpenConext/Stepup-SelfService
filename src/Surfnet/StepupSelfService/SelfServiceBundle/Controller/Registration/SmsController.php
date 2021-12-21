@@ -25,6 +25,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\SendSmsChallengeType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifySmsChallengeType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SmsController extends Controller
@@ -43,7 +44,7 @@ class SmsController extends Controller
 
         /** @var SmsSecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-        $otpRequestsRemaining = $service->getOtpRequestsRemainingCount();
+        $otpRequestsRemaining = $service->getOtpRequestsRemainingCount(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
         $maximumOtpRequests = $service->getMaximumOtpRequestsCount();
         $viewVariables = ['otpRequestsRemaining' => $otpRequestsRemaining, 'maximumOtpRequests' => $maximumOtpRequests];
 
@@ -84,7 +85,7 @@ class SmsController extends Controller
         /** @var SmsSecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
 
-        if (!$service->hasSmsVerificationState()) {
+        if (!$service->hasSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID)) {
             $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
 
             return $this->redirectToRoute('ss_registration_sms_send_challenge');
@@ -101,7 +102,7 @@ class SmsController extends Controller
             $result = $service->provePossession($command);
 
             if ($result->isSuccessful()) {
-                $service->clearSmsVerificationState();
+                $service->clearSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
 
                 if ($this->emailVerificationIsRequired()) {
                     return $this->redirectToRoute(
