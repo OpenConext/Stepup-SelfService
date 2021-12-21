@@ -22,13 +22,14 @@
         "nelmio/security-bundle": "^2",
         "openconext/monitor-bundle": "^2.0",
         "sensio/framework-extra-bundle": "^5.0",
-        "surfnet/stepup-bundle": "^4.0",
+        "surfnet/stepup-bundle": "^4.2",
         "surfnet/stepup-middleware-client-bundle": "^4.1",
-        "surfnet/stepup-saml-bundle": "^4.2.1",
+        "surfnet/stepup-saml-bundle": "^4.3.1",
         "symfony/console": "4.4.*",
         "symfony/expression-language": "4.4.*",
         "symfony/flex": "^1.8",
         "symfony/form": "4.4.*",
+        "symfony/http-foundation": "^5.0",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/security-bundle": "4.4.*",
         "symfony/stopwatch": "4.4.*",
@@ -54,12 +55,6 @@
         "symfony/css-selector": "4.4.*",
         "symfony/phpunit-bridge": "^3.0"
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git"
-        }
-    ],
     "scripts": {
         "test": [
             "@lint",
@@ -112,7 +107,7 @@
         "optimize-autoloader": true,
         "sort-packages": true,
         "platform": {
-            "php": "7.2"
+            "php": "7.2.5"
         }
     },
     "archive": {

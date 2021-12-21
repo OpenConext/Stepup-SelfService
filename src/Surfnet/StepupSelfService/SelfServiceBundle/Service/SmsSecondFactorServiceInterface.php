@@ -25,11 +25,13 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfP
 
 interface SmsSecondFactorServiceInterface
 {
+    public const REGISTRATION_SECOND_FACTOR_ID = 'registration';
+
     /**
      * The remaining number of requests as an integer value.
      * @return int
      */
-    public function getOtpRequestsRemainingCount();
+    public function getOtpRequestsRemainingCount(string $secondFactorId);
 
     /**
      * Return the number of OTP requests that can be taken as an integer value.
@@ -41,13 +43,13 @@ interface SmsSecondFactorServiceInterface
      * Tests if this session has made prior requests
      * @return bool
      */
-    public function hasSmsVerificationState();
+    public function hasSmsVerificationState(string $secondFactorId);
 
     /**
      * Clears the verification state, forget this user has performed SMS requests.
      * @return mixed
      */
-    public function clearSmsVerificationState();
+    public function clearSmsVerificationState(string $secondFactorId);
 
     /**
      * Send an SMS OTP challenge
