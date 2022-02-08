@@ -1,4 +1,7 @@
 # Changelog
+## 3.5.4
+- Introduce a Github Actions workflow for auto-building tags
+
 ## 3.5.3
 - Added browserlist entry in package.json to ensure IE 11 support
 
