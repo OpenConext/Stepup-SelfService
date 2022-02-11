@@ -11,7 +11,7 @@
         "jest": "^27",
         "less": "^3.12.2",
         "less-loader": "^10",
-        "node-sass": "^4.14",
+        "node-sass": "^7.0",
         "sass-loader": "^9",
         "ts-jest": "^27",
         "ts-loader": "^9.0",
