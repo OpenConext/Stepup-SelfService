@@ -11,7 +11,7 @@
         "jest": "^27",
         "less": "^3.12.2",
         "less-loader": "^10",
-        "node-sass": "^4.14",
+        "sass": "^1.43.4",
         "sass-loader": "^9",
         "ts-jest": "^27",
         "ts-loader": "^9.0",
@@ -26,13 +26,11 @@
         "bootstrap": "^3",
         "jquery": "^3.5.0",
         "popper.js": "^1.16.1",
+        "postcss": ">=8.2.13",
         "select2": "^4.0.3",
         "yargs-parser": ">=18.1.2"
     },
     "resolutions": {
-        "ansi-regex": "^5.0.1",
-        "tar": ">3.2.3",
-        "trim-newlines": ">=3.0.1",
         "postcss": ">=8.2.13"
     }
 }
