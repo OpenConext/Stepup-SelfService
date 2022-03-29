@@ -5,6 +5,9 @@
     "composer/ca-bundle": {
         "version": "1.2.9"
     },
+    "composer/pcre": {
+        "version": "2.0.0"
+    },
     "composer/xdebug-handler": {
         "version": "1.4.5"
     },
@@ -102,7 +105,7 @@
         "version": "3.1.0"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.2.5"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -293,6 +296,15 @@
     "symfony/dependency-injection": {
         "version": "v4.4.19"
     },
+    "symfony/deprecation-contracts": {
+        "version": "0.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "0.0",
+            "ref": ""
+        }
+    },
     "symfony/dom-crawler": {
         "version": "v4.4.19"
     },
@@ -363,9 +375,6 @@
         "version": "v4.4.19"
     },
     "symfony/intl": {
-        "version": "v4.4.19"
-    },
-    "symfony/mime": {
         "version": "v4.4.19"
     },
     "symfony/monolog-bridge": {
