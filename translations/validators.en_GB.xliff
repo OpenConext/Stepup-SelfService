@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2021-03-17T11:46:23Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2022-04-13T09:56:13Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -409,6 +409,10 @@
       <trans-unit id="8b87f20ba80c487ed07070e32d031343571d34b9" resname="stepup.verify_possession_of_phone_command.challenge.must_be_string">
         <source>stepup.verify_possession_of_phone_command.challenge.must_be_string</source>
         <target>SMS challenge must be a string</target>
+      </trans-unit>
+      <trans-unit id="e835d8b451f38086986c8e10ae614aacf5e5d8e8" resname="stepup.verify_possession_of_phone_command.second_factor_id.must_be_string">
+        <source>stepup.verify_possession_of_phone_command.second_factor_id.must_be_string</source>
+        <target state="new">stepup.verify_possession_of_phone_command.second_factor_id.must_be_string</target>
       </trans-unit>
     </body>
   </file>
