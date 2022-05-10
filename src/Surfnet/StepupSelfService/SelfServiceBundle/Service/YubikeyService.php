@@ -66,7 +66,7 @@ class YubikeyService
                 'Yubikey OTP verification failed; %s error; HTTP/%d %s',
                 $type,
                 $statusCode,
-                $response->getReasonPhrase(),
+                $response->getReasonPhrase()
             ));
             $this->logger->warn((string) $response->getBody());
 
