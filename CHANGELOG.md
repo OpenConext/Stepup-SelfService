@@ -1,4 +1,8 @@
 # Changelog
+
+## 3.5.5
+- Make the info and health endpoints available on both `/` and `/internal/` paths. 'Deprecating' the original /health and /info endpoints.
+
 ## 3.5.4
 - Introduce a Github Actions workflow for auto-building tags
 
