@@ -20,7 +20,7 @@
         "jms/translation-bundle": "^1.3.0",
         "mpdf/mpdf": "^7.0",
         "nelmio/security-bundle": "^2",
-        "openconext/monitor-bundle": "^2.0",
+        "openconext/monitor-bundle": "^3.1",
         "sensio/framework-extra-bundle": "^5.0",
         "surfnet/stepup-bundle": "^4.2",
         "surfnet/stepup-middleware-client-bundle": "^4.1",
