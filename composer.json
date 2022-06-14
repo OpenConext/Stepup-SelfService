@@ -12,6 +12,12 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle"
+        }
+    ],
     "require": {
         "php": "~7.2",
         "ext-json": "*",
@@ -23,7 +29,7 @@
         "openconext/monitor-bundle": "^3.1",
         "sensio/framework-extra-bundle": "^5.0",
         "surfnet/stepup-bundle": "^4.2",
-        "surfnet/stepup-middleware-client-bundle": "^4.1",
+        "surfnet/stepup-middleware-client-bundle": "dev-feature/self-asserted-tokens",
         "surfnet/stepup-saml-bundle": "^4.3.1",
         "symfony/console": "4.4.*",
         "symfony/expression-language": "4.4.*",
