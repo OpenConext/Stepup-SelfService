@@ -21,19 +21,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service;
 use PHPUnit\Framework\TestCase;
 use Mockery as m;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
-use Surfnet\StepupBundle\Service\SecondFactorTypeService;
-use Surfnet\StepupBundle\Value\Loa;
-use Surfnet\StepupMiddlewareClientBundle\Configuration\Dto\InstitutionConfigurationOptions;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokensMarshaller;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller;
-use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 
 class SelfAssertedTokensMarshallerTest extends TestCase
 {
@@ -45,13 +36,13 @@ class SelfAssertedTokensMarshallerTest extends TestCase
     /**
      * @var InstitutionConfigurationOptionsService
      */
-    private $institutionConfigService;
+    private $authorizationService;
 
     protected function setUp(): void
     {
-        $this->institutionConfigService = m::mock(InstitutionConfigurationOptionsService::class);
+        $this->authorizationService = m::mock(AuthorizationService::class);
         $this->marshaller = new SelfAssertedTokensMarshaller(
-            $this->institutionConfigService,
+            $this->authorizationService,
             m::mock(LoggerInterface::class)->shouldIgnoreMissing()
         );
     }
@@ -60,27 +51,23 @@ class SelfAssertedTokensMarshallerTest extends TestCase
     {
         $identity = new Identity();
         $identity->institution = 'institution-a';
-        $option = new InstitutionConfigurationOptions();
-        $option->allowSelfAssertedTokens = true;
-        $this->institutionConfigService
-            ->shouldReceive('getInstitutionConfigurationOptionsFor')
-            ->with('institution-a')
-            ->andReturn($option);
+        $this->authorizationService
+            ->shouldReceive('mayRegisterSelfAssertedTokens')
+            ->with($identity)
+            ->andReturn('true');
 
         $this->assertTrue($this->marshaller->isAllowed($identity, 'sfid'));
     }
-public function test_it_denies_sat_when_institution_is_configured_without_sat()
+
+    public function test_it_denies_sat_when_institution_is_configured_without_sat()
     {
         $identity = new Identity();
         $identity->institution = 'institution-a';
-        $option = new InstitutionConfigurationOptions();
-        $option->allowSelfAssertedTokens = false;
-        $this->institutionConfigService
-            ->shouldReceive('getInstitutionConfigurationOptionsFor')
-            ->with('institution-a')
-            ->andReturn($option);
+        $this->authorizationService
+            ->shouldReceive('mayRegisterSelfAssertedTokens')
+            ->with($identity)
+            ->andReturnFalse();
 
         $this->assertFalse($this->marshaller->isAllowed($identity, 'sfid'));
     }
-
 }
