@@ -22,6 +22,14 @@ services:
             - "@session"
             - "@logger"
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfAssertedTokensController:
+        arguments:
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\RecoveryTokenService'
+            - '@surfnet_stepup_self_service_self_service.service.second_factor'
+            - '@logger'
+        tags:
+            - 'controller.service_arguments'
+
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
         arguments:
@@ -103,6 +111,20 @@ services:
             - "@Surfnet\\StepupBundle\\Service\\SecondFactorTypeService"
             - "@self_service.service.institution_configuration_options"
             - "@logger"
+
+    self_service.service.self_asserted_tokens_marshaller:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokensMarshaller
+        arguments:
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService'
+            - "@logger"
+
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\RecoveryTokenService:
+        arguments:
+            - '@Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService'
+
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService:
+        arguments:
+            - '@Surfnet\StepupMiddlewareClientBundle\Identity\Service\AuthorizationService'
 
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService

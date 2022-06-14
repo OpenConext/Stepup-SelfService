@@ -38,6 +38,22 @@
               </div>
           </div>
         {% endif %}
+        {% if allowSelfAssertedTokens %}
+            <div class="col-xs-12 col-md-3">
+                <div class="thumbnail vetting-selector">
+                    <img src="{{ asset('images/self-asserted-token-registration.png') }}"
+                         alt="{{ ('ss.registration.selector.self_asserted_tokens.alt')|trans }}">
+                    <h3>{{ 'ss.registration.vetting_type.title.self_asserted_tokens'|trans }}</h3>
+                    <hr>
+                    <p>{{ 'ss.registration.vetting_type.description.self_asserted_tokens'|trans }}</p>
+                    <p>
+                    <form action="{{ url('ss_second_factor_self_asserted_tokens', {'secondFactorId': secondFactorId}) }}" method="get">
+                        <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_asserted_tokens'|trans }}</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
         <div class="col-xs-12 col-md-3">
             <div class="thumbnail vetting-selector">
                 <img src="{{ asset('images/frontdesk.svg') }}" width="70%"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2022-04-13T09:56:13Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2022-06-14T14:44:45Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -162,6 +162,47 @@
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/progress_bar.html.twig</jms:reference-file>
         <jms:reference-file line="8">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/progress_bar.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="4c4994a99f805729bae6d0d0a7e2b19b0bdcd390" resname="ss.registration.recovery_token.button.continue">
+        <source>ss.registration.recovery_token.button.continue</source>
+        <target>Continue</target>
+        <jms:reference-file line="31">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+        <jms:reference-file line="48">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7ffedc2af6cc7fcdd3dd4cf043610496ddda3ac1" resname="ss.registration.recovery_token.description.sms">
+        <source>ss.registration.recovery_token.description.sms</source>
+        <target>Use your mobile phone to recieve recovery codes</target>
+        <jms:reference-file line="43">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a602cc2348f99a8b5177249b332c9690a2c8d906" resname="ss.registration.recovery_token.description.safe-store">
+        <source>ss.registration.recovery_token.description.safe-store</source>
+        <target>Receive a one-time password for safe store</target>
+        <jms:reference-file line="26">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="baa2cb3b414b922aa1d7dc1c8355f4042c5e5ce7" resname="ss.registration.recovery_token.safe-store.alt">
+        <source>ss.registration.recovery_token.safe-store.alt</source>
+        <target>Safe store</target>
+        <jms:reference-file line="23">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d8030ca094c4837a6c7fd8bbe57fd4cafd9b30d1" resname="ss.registration.recovery_token.sms.alt">
+        <source>ss.registration.recovery_token.sms.alt</source>
+        <target>SMS</target>
+        <jms:reference-file line="40">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7e95b65ee3f9aaf827a3d4ba64bf7002b2735d27" resname="ss.registration.recovery_token.title">
+        <source>ss.registration.recovery_token.title</source>
+        <target>Choose your [recovery token] type</target>
+        <jms:reference-file line="15">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="85d75ecede0e42db05d2ffe572b322b6a8d54831" resname="ss.registration.recovery_token.title.safe-store">
+        <source>ss.registration.recovery_token.title.safe-store</source>
+        <target>Safe-store</target>
+        <jms:reference-file line="24">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="2aab459d9cee8bac681c37e08c0ad2b06ecd5b31" resname="ss.registration.recovery_token.title.sms">
+        <source>ss.registration.recovery_token.title.sms</source>
+        <target>SMS</target>
+        <jms:reference-file line="41">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="702bbd352dda1a6f1029201de2f40e9e87bbc6a4" resname="ss.registration.registration_email_sent.label.expiration_date">
         <source>ss.registration.registration_email_sent.label.expiration_date</source>
         <target>The activation code is valid until and including %expirationDate%.</target>
@@ -246,7 +287,12 @@
       <trans-unit id="7c01f0c80cf83ed8fda6f899a31058df8f20baa2" resname="ss.registration.selector.on-premise.alt">
         <source>ss.registration.selector.on-premise.alt</source>
         <target>Servicedesk</target>
-        <jms:reference-file line="44">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="60">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="978b459c168d75e1cc1cacb9577fcfd6b48ce40c" resname="ss.registration.selector.self_asserted_tokens.alt">
+        <source>ss.registration.selector.self_asserted_tokens.alt</source>
+        <target>Self asserted token</target>
+        <jms:reference-file line="45">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f2fccc6470be3068080fd903fcd1cdda9a7cf357" resname="ss.registration.selector.self_vet.alt">
         <source>ss.registration.selector.self_vet.alt</source>
@@ -299,6 +345,16 @@ For all devices with a USB port.</target>
         <source>ss.registration.selector.yubikey.title</source>
         <target>YubiKey</target>
         <jms:reference-file line="7">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f8916d206cdd9e68de226df4e66e3bb4b7b48733" resname="ss.registration.self_asserted.new_recovery_token.title">
+        <source>ss.registration.self_asserted.new_recovery_token.title</source>
+        <target>Add a [recovery token]</target>
+        <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1e492ec7a3e13d540bde6fbb9a0bd26b9cf30770" resname="ss.registration.self_asserted.recovery_token.title">
+        <source>ss.registration.self_asserted.recovery_token.title</source>
+        <target state="new">ss.registration.self_asserted.recovery_token.title</target>
+        <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/registration.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cb8f1be659847e3d5566890256517229aade2389" resname="ss.registration.sms.alert.no_verification_state">
         <source>ss.registration.sms.alert.no_verification_state</source>
@@ -363,7 +419,12 @@ For all devices with a USB port.</target>
       <trans-unit id="6afeab6302e7089dd152da59ff6167355993e1fd" resname="ss.registration.vetting_type.button.ra_vetting">
         <source>ss.registration.vetting_type.button.ra_vetting</source>
         <target>Continue</target>
-        <jms:reference-file line="50">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="66">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="69dea38e752d5face42561fc82e2ace24744ac3e" resname="ss.registration.vetting_type.button.self_asserted_tokens">
+        <source>ss.registration.vetting_type.button.self_asserted_tokens</source>
+        <target>Continue</target>
+        <jms:reference-file line="51">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="20dea31f0328ab5116f6104ad7b0c614439fb7f5" resname="ss.registration.vetting_type.button.self_vet">
         <source>ss.registration.vetting_type.button.self_vet</source>
@@ -373,7 +434,12 @@ For all devices with a USB port.</target>
       <trans-unit id="36f60e5402c0f9f29d5167f5448cf08e9b309176" resname="ss.registration.vetting_type.description.ra_vetting">
         <source>ss.registration.vetting_type.description.ra_vetting</source>
         <target>Activate your token at your intitution's servicedesk.</target>
-        <jms:reference-file line="47">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="63">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="28a12bced010e17743538e9eebaab14200e961f0" resname="ss.registration.vetting_type.description.self_asserted_tokens">
+        <source>ss.registration.vetting_type.description.self_asserted_tokens</source>
+        <target>Activate this token without an ID check. The token might not be usable for every application.</target>
+        <jms:reference-file line="48">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d72f763c2ed38cada18ea9e0a56b08f89178a454" resname="ss.registration.vetting_type.description.self_vet">
         <source>ss.registration.vetting_type.description.self_vet</source>
@@ -393,7 +459,12 @@ For all devices with a USB port.</target>
       <trans-unit id="495f21302f01269871f9993f2b8da38bee78fe87" resname="ss.registration.vetting_type.title.ra_vetting">
         <source>ss.registration.vetting_type.title.ra_vetting</source>
         <target>Servicedesk vetting</target>
-        <jms:reference-file line="45">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+        <jms:reference-file line="61">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1f9c008be46d78bf37a98d1e98d0758aa070015e" resname="ss.registration.vetting_type.title.self_asserted_tokens">
+        <source>ss.registration.vetting_type.title.self_asserted_tokens</source>
+        <target>Recovery Token</target>
+        <jms:reference-file line="46">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ed511e112f15e353c9c9122d9db7ec8039a592f6" resname="ss.registration.vetting_type.title.self_vet">
         <source>ss.registration.vetting_type.title.self_vet</source>
