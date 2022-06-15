@@ -47,7 +47,7 @@ ss_second_factor_new_recovery_token:
 
 ss_registration_recovery_token_safe_store:
     path:     /second-factor/{secondFactorId}/safe-store
-    methods:  [GET]
+    methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:registerRecoveryTokenSafeStore }
 
 ss_registration_recovery_token_sms:

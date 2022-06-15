@@ -19,10 +19,14 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
-
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\PromiseSafeStorePossessionType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SelfAssertedTokensController extends Controller
@@ -42,12 +46,19 @@ class SelfAssertedTokensController extends Controller
      */
     private $logger;
 
+    /**
+     * @var SafeStoreService
+     */
+    private $safeStoreService;
+
     public function __construct(
         RecoveryTokenService $recoveryTokenService,
+        SafeStoreService $safeStoreService,
         SecondFactorService $secondFactorService,
         LoggerInterface $logger
     ) {
         $this->recoveryTokenService = $recoveryTokenService;
+        $this->safeStoreService = $safeStoreService;
         $this->secondFactorService = $secondFactorService;
         $this->logger = $logger;
     }
@@ -61,9 +72,8 @@ class SelfAssertedTokensController extends Controller
                 ['message' => 'hello world']
             );
         }
-        return $this->forward(
-            'SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:newRecoveryToken',
-            ['secondFactorId' => $secondFactorId]
+        return $this->redirect(
+            $this->generateUrl('ss_second_factor_new_recovery_token', ['secondFactorId' => $secondFactorId])
         );
     }
 
@@ -71,22 +81,8 @@ class SelfAssertedTokensController extends Controller
     {
         $this->logger->info('Determining which recovery token are available');
         $identity = $this->getIdentity();
-        $identityOwnsSecondFactor = $this->secondFactorService->identityHasSecondFactorOfStateWithId(
-            $identity->id,
-            'verified',
-            $secondFactorId
-        );
-
-        if (!$identityOwnsSecondFactor) {
-            throw new LogicException(
-                sprintf(
-                    'Identity "%s" tried to register recovery token during registration ' .
-                    'of second factor token "%s", but does not own that second factor',
-                    $identity->id,
-                    $secondFactorId
-                )
-            );
-        }
+        $this->assertSecondFactorInPossession($secondFactorId, $identity);
+        $this->assertNoRecoveryTokens($identity);
 
         $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
         $allowPhoneRecoveryToken = true;
@@ -104,12 +100,36 @@ class SelfAssertedTokensController extends Controller
         );
     }
 
-    public function registerRecoveryTokenSafeStoreAction($secondFactorId)
+    public function registerRecoveryTokenSafeStoreAction(Request $request, $secondFactorId)
     {
+        $identity = $this->getIdentity();
+        $this->assertSecondFactorInPossession($secondFactorId, $identity);
+        $this->assertNoRecoveryTokens($identity);
+
+        $secret = $this->safeStoreService->produceSecret();
+        $command = new PromiseSafeStorePossessionCommand();
+
+        $form = $this->createForm(PromiseSafeStorePossessionType::class, $command)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $command->secret = $secret;
+            $command->identity = $this->getIdentity();
+
+            $executionResult = $this->safeStoreService->promisePossession($command);
+            if (!$executionResult->getErrors()) {
+                return $this->redirect(
+                    $this->generateUrl('ss_second_factor_self_asserted_tokens', ['secondFactorId' => $secondFactorId])
+                );
+            }
+            $this->addFlash('error', 'ss.form.recovery_token.error.error_message');
+        }
+
         return $this->render(
             '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/recovery_token_safe_store.html.twig',
             [
+                'form' => $form->createView(),
                 'secondFactorId' => $secondFactorId,
+                'secret' => $secret,
             ]
         );
     }
@@ -123,4 +143,38 @@ class SelfAssertedTokensController extends Controller
             ]
         );
     }
+
+    private function assertSecondFactorInPossession(string $secondFactorId, Identity $identity)
+    {
+        $identityOwnsSecondFactor = $this->secondFactorService->identityHasSecondFactorOfStateWithId(
+            $identity->id,
+            'verified',
+            $secondFactorId
+        );
+
+        if (!$identityOwnsSecondFactor) {
+            throw new LogicException(
+                sprintf(
+                    'Identity "%s" tried to register recovery token during registration ' .
+                    'of second factor token "%s", but does not own that second factor',
+                    $identity->id,
+                    $secondFactorId
+                )
+            );
+        }
+    }
+
+    private function assertNoRecoveryTokens(Identity $identity)
+    {
+        if ($this->recoveryTokenService->hasRecoveryToken($identity)) {
+            throw new LogicException(
+                sprintf(
+                    'Identity "%s" tried to register a recovery token, but one was already in possession. ' .
+                    'This is not allowed during token registration.',
+                    $identity->id
+                )
+            );
+        }
+    }
+
 }
