@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens;
 
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService as MiddlewareRecoveryTokenService;
