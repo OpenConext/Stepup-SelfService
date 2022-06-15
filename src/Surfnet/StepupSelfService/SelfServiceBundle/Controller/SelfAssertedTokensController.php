@@ -20,8 +20,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\RecoveryTokenService;
+
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Symfony\Component\HttpFoundation\Response;
 
 class SelfAssertedTokensController extends Controller
