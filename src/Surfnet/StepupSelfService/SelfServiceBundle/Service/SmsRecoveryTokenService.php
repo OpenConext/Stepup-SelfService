@@ -19,20 +19,22 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupBundle\Command\SendRecoveryTokenSmsChallengeCommand as StepupSendRecoveryTokenSmsChallengeCommand;
-use Surfnet\StepupBundle\Command\VerifyPossessionOfPhoneCommand;
+use Surfnet\StepupBundle\Command\VerifyPossessionOfPhoneForRecoveryTokenCommand;
 use Surfnet\StepupBundle\Service\Exception\TooManyChallengesRequestedException;
 use Surfnet\StepupBundle\Service\SmsRecoveryTokenService as StepupSmsRecoveryTokenService;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhoneRecoveryTokenPossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsRecoveryTokenChallengeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\ProofOfPossessionResult;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class SmsRecoveryTokenService
 {
+    public const REGISTRATION_RECOVERY_TOKEN_ID = 'registration';
+
     private $smsService;
 
     private $translator;
@@ -90,11 +92,11 @@ class SmsRecoveryTokenService
         return $this->smsService->sendChallenge($stepupCommand);
     }
 
-    public function provePossession(VerifySmsChallengeCommand $challengeCommand): ProofOfPossessionResult
+    public function provePossession(VerifySmsRecoveryTokenChallengeCommand $challengeCommand): ProofOfPossessionResult
     {
-        $stepupCommand = new VerifyPossessionOfPhoneCommand();
+        $stepupCommand = new VerifyPossessionOfPhoneForRecoveryTokenCommand();
         $stepupCommand->challenge = $challengeCommand->challenge;
-        $stepupCommand->secondFactorId = $challengeCommand->secondFactorId;
+        $stepupCommand->recoveryTokenId = $challengeCommand->recoveryTokenId;
 
         $verification = $this->smsService->verifyPossession($stepupCommand);
 
@@ -108,9 +110,9 @@ class SmsRecoveryTokenService
             return ProofOfPossessionResult::incorrectChallenge();
         }
 
-        $command = new ProvePhonePossessionCommand();
+        $command = new ProvePhoneRecoveryTokenPossessionCommand();
         $command->identityId = $challengeCommand->identity;
-        $command->secondFactorId = Uuid::generate();
+        $command->recoveryTokenId = Uuid::generate();
         $command->phoneNumber = $verification->getPhoneNumber();
 
         $result = $this->commandService->execute($command);
@@ -119,6 +121,6 @@ class SmsRecoveryTokenService
             return ProofOfPossessionResult::proofOfPossessionCommandFailed();
         }
 
-        return ProofOfPossessionResult::secondFactorCreated($command->secondFactorId);
+        return ProofOfPossessionResult::recoveryTokenCreated($command->recoveryTokenId);
     }
 }
