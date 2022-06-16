@@ -20,8 +20,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens
 
 use Surfnet\StepupMiddlewareClient\Service\ExecutionResult;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\PromiseSafeStoreSecretTokenPossessionCommand;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RevokeOwnRecoveryTokenCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeRecoveryTokenCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
@@ -62,6 +64,14 @@ class SafeStoreService
         $apiCommand->identityId = $command->identity->id;
         $apiCommand->recoveryTokenId = Uuid::generate();
         $apiCommand->secret = $command->secret->display();
+        return $this->commandService->execute($apiCommand);
+    }
+
+    public function revokeRecoveryToken(RevokeRecoveryTokenCommand $command): ExecutionResult
+    {
+        $apiCommand = new RevokeOwnRecoveryTokenCommand();
+        $apiCommand->identityId = $command->identity->id;
+        $apiCommand->recoveryTokenId = $command->recoveryToken->recoveryTokenId;
         return $this->commandService->execute($apiCommand);
     }
 }

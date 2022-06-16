@@ -16,32 +16,20 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
-use Surfnet\StepupBundle\Security\OtpGenerator;
-use function chunk_split;
+use Surfnet\StepupMiddlewareClient\Identity\Dto\RecoveryToken;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 
-class SafeStoreSecret
+class RevokeRecoveryTokenCommand
 {
-    private $secret;
+    /**
+     * @var Identity
+     */
+    public $identity;
 
     /**
-     * Length of the secret
+     * @var RecoveryToken
      */
-    private const LENGTH = 12;
-
-    public function __construct()
-    {
-        $this->secret = OtpGenerator::generate(self::LENGTH);
-    }
-
-    /**
-     * The output format, %s-%s-%s results in something like:
-     * 3K1A-5CQ9-YCPE
-     */
-    public function display()
-    {
-        $split = chunk_split($this->secret, 4, '-');
-        return substr($split, 0, -1);
-    }
+    public $recoveryToken;
 }

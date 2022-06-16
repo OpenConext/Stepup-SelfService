@@ -19,8 +19,10 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupMiddlewareClientBundle\Exception\NotFoundException;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeRecoveryTokenCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\PromiseSafeStorePossessionType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
@@ -85,22 +87,36 @@ class SelfAssertedTokensController extends Controller
         $this->assertNoRecoveryTokens($identity);
 
         $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
-        $allowPhoneRecoveryToken = true;
+        $availableRecoveryTokens = $this->recoveryTokenService->getRemainingTokenTypes($identity);
         if ($secondFactor && $secondFactor->type === 'sms') {
             $this->logger->notice('SMS recovery token type is not allowed as we are vetting a SMS second factor');
-            $allowPhoneRecoveryToken = false;
+            unset($availableRecoveryTokens['sms']);
         }
 
         return $this->render(
             '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/new_recovery_token.html.twig',
             [
-                'allowPhoneRecoveryToken' => $allowPhoneRecoveryToken,
                 'secondFactorId' => $secondFactorId,
+                'availableRecoveryTokens' => $availableRecoveryTokens
             ]
         );
     }
 
-    public function registerRecoveryTokenSafeStoreAction(Request $request, $secondFactorId)
+    public function selectTokenTypeAction()
+    {
+        $this->logger->info('Determining which recovery token are available');
+        $identity = $this->getIdentity();
+        $this->assertMayAddRecoveryToken($identity);
+
+        $availableRecoveryTokens = $this->recoveryTokenService->getRemainingTokenTypes($identity);
+
+        return $this->render(
+            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/select_recovery_token.html.twig',
+            ['availableRecoveryTokens' => $availableRecoveryTokens]
+        );
+    }
+
+    public function registerCreateRecoveryTokenSafeStoreAction(Request $request, $secondFactorId)
     {
         $identity = $this->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
@@ -144,6 +160,64 @@ class SelfAssertedTokensController extends Controller
         );
     }
 
+    public function createSafeStoreAction(Request $request)
+    {
+        $identity = $this->getIdentity();
+        $this->assertNoRecoveryTokens($identity);
+
+        $secret = $this->safeStoreService->produceSecret();
+        $command = new PromiseSafeStorePossessionCommand();
+
+        $form = $this->createForm(PromiseSafeStorePossessionType::class, $command)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $command->secret = $secret;
+            $command->identity = $this->getIdentity();
+
+            $executionResult = $this->safeStoreService->promisePossession($command);
+            if (!$executionResult->getErrors()) {
+                return $this->redirect(
+                    $this->generateUrl('ss_second_factor_list')
+                );
+            }
+            $this->addFlash('error', 'ss.form.recovery_token.error.error_message');
+        }
+
+        return $this->render(
+            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/create_safe_store.html.twig',
+            [
+                'form' => $form->createView(),
+                'secret' => $secret,
+            ]
+        );
+    }
+
+    public function createSmsAction()
+    {
+    }
+
+    public function deleteAction(string $recoveryTokenId)
+    {
+        try {
+            $recoveryToken = $this->recoveryTokenService->getRecoveryToken($recoveryTokenId);
+            $command = new RevokeRecoveryTokenCommand();
+            $command->identity = $this->getIdentity();
+            $command->recoveryToken = $recoveryToken;
+            $executionResult = $this->safeStoreService->revokeRecoveryToken($command);
+            if (!empty($executionResult->getErrors())) {
+                $this->addFlash('error', 'ss.form.recovery_token.delete.success');
+                foreach ($executionResult->getErrors() as $error) {
+                    $this->logger->error(sprintf('Recovery Token revocation failed with message: "%s"', $error));
+                }
+                return;
+            }
+        } catch (NotFoundException $e) {
+            throw new LogicException('Identity %s tried to remove an unpossessed recovery token');
+        }
+        $this->addFlash('success', 'ss.form.recovery_token.delete.success');
+        return $this->redirect($this->generateUrl('ss_second_factor_list'));
+    }
+
     private function assertSecondFactorInPossession(string $secondFactorId, Identity $identity)
     {
         $identityOwnsSecondFactor = $this->secondFactorService->identityHasSecondFactorOfStateWithId(
@@ -177,4 +251,17 @@ class SelfAssertedTokensController extends Controller
         }
     }
 
+    private function assertMayAddRecoveryToken(Identity $identity)
+    {
+        $availableTypes = $this->recoveryTokenService->getRemainingTokenTypes($identity);
+        if (count($availableTypes) === 0) {
+            throw new LogicException(
+                sprintf(
+                    'Identity %s tried to register a token type, but all available token types have ' .
+                    'already been registered',
+                    $identity
+                )
+            );
+        }
+    }
 }
