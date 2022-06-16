@@ -26,6 +26,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeRecoveryTokenComma
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsRecoveryTokenChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\PromiseSafeStorePossessionType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\SendSmsChallengeType;
@@ -38,6 +39,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function array_key_exists;
 
 class SelfAssertedTokensController extends Controller
 {
@@ -135,7 +137,7 @@ class SelfAssertedTokensController extends Controller
     {
         $identity = $this->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
-        $this->assertNoRecoveryTokens($identity);
+        $this->assertNoRecoveryTokenOfType('safe-store', $identity);
 
         $secret = $this->safeStoreService->produceSecret();
         $command = new PromiseSafeStorePossessionCommand();
@@ -177,6 +179,8 @@ class SelfAssertedTokensController extends Controller
 
     public function createSafeStoreAction(Request $request)
     {
+        $identity = $this->getIdentity();
+        $this->assertNoRecoveryTokenOfType('safe-store', $identity);
         $secret = $this->safeStoreService->produceSecret();
         $command = new PromiseSafeStorePossessionCommand();
 
@@ -184,7 +188,7 @@ class SelfAssertedTokensController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $command->secret = $secret;
-            $command->identity = $this->getIdentity();
+            $command->identity = $identity;
 
             $executionResult = $this->safeStoreService->promisePossession($command);
             if (!$executionResult->getErrors()) {
@@ -207,6 +211,7 @@ class SelfAssertedTokensController extends Controller
     public function createSmsAction(Request $request)
     {
         $identity = $this->getIdentity();
+        $this->assertNoRecoveryTokenOfType('sms', $identity);
         $command = new SendRecoveryTokenSmsChallengeCommand();
         $form = $this->createForm(SendSmsChallengeType::class, $command)->handleRequest($request);
         /** @var SmsSecondFactorService $service */
@@ -225,10 +230,9 @@ class SelfAssertedTokensController extends Controller
             }
 
             if ($this->smsService->sendChallenge($command)) {
-                return $this->redirect($this->generateUrl('ss_second_factor_list'));
-            } else {
-                $this->addFlash('error', 'ss.form.recovery_token.error.error_message');
+                return $this->redirect($this->generateUrl('ss_recovery_token_prove_sms_possession'));
             }
+            $this->addFlash('error', 'ss.form.recovery_token.error.error_message');
         }
         return $this->render(
             '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/create_sms.html.twig',
@@ -242,41 +246,25 @@ class SelfAssertedTokensController extends Controller
         );
     }
 
-    public function proveSmsPossessionAction()
+    public function proveSmsPossessionAction(Request $request)
     {
-        /** @var SmsSecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-
-        if (!$service->hasSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID)) {
+        if (!$this->smsService->hasSmsVerificationState(SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID)) {
             $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
-
-            return $this->redirectToRoute('ss_registration_sms_send_challenge');
+            return $this->redirectToRoute('ss_recovery_token_sms');
         }
-
         $identity = $this->getIdentity();
+        $this->assertNoRecoveryTokenOfType('sms', $identity);
 
-        $command = new VerifySmsChallengeCommand();
+        $command = new VerifySmsRecoveryTokenChallengeCommand();
         $command->identity = $identity->id;
 
         $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $result = $service->provePossession($command);
-
+            $result = $this->smsService->provePossession($command);
             if ($result->isSuccessful()) {
-                $service->clearSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
-
-                if ($this->emailVerificationIsRequired()) {
-                    return $this->redirectToRoute(
-                        'ss_registration_email_verification_email_sent',
-                        ['secondFactorId' => $result->getSecondFactorId()]
-                    );
-                } else {
-                    return $this->redirectToRoute(
-                        'ss_second_factor_vetting_types',
-                        ['secondFactorId' => $result->getSecondFactorId()]
-                    );
-                }
+                $this->smsService->clearSmsVerificationState(SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID);
+                return $this->redirectToRoute('ss_second_factor_list');
             } elseif ($result->wasIncorrectChallengeResponseGiven()) {
                 $this->addFlash('error', 'ss.prove_phone_possession.incorrect_challenge_response');
             } elseif ($result->hasChallengeExpired()) {
@@ -288,10 +276,13 @@ class SelfAssertedTokensController extends Controller
             }
         }
 
-        return [
-            'form' => $form->createView(),
-            'verifyEmail' => $this->emailVerificationIsRequired(),
-        ];
+        return $this->render(
+            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/sms_prove_possession.html.twig',
+            [
+                'form' => $form->createView(),
+                'verifyEmail' => $this->emailVerificationIsRequired(),
+            ]
+        );
     }
 
     public function deleteAction(string $recoveryTokenId)
@@ -336,9 +327,10 @@ class SelfAssertedTokensController extends Controller
         }
     }
 
-    private function assertNoRecoveryTokens(Identity $identity)
+    private function assertNoRecoveryTokenOfType(string $type, Identity $identity)
     {
-        if ($this->recoveryTokenService->hasRecoveryToken($identity)) {
+        $tokens = $this->recoveryTokenService->getRecoveryTokensForIdentity($identity);
+        if (array_key_exists($type, $tokens)) {
             throw new LogicException(
                 sprintf(
                     'Identity "%s" tried to register a recovery token, but one was already in possession. ' .

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2022-06-16T12:26:10Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2022-06-16T14:35:12Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -9,7 +9,7 @@
       <trans-unit id="2f92022705bb464fd867cae9c37612c3ae0e995a" resname="612345678">
         <source>612345678</source>
         <target state="new">612345678</target>
-        <jms:reference-file line="47">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="48">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="0c3112826a8c897ac0b6a3d3a8432059b74dd996" resname="app.name">
         <source>app.name</source>
@@ -27,7 +27,7 @@
       <trans-unit id="a91ec2021294ddfceb930e47ee05536b0f85193b" resname="country code">
         <source>country code</source>
         <target>country code</target>
-        <jms:reference-file line="35">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="36">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a08764057e3607049e3495943676b29f7baefba9" resname="locale.en_GB">
         <source>locale.en_GB</source>
@@ -97,7 +97,7 @@
       <trans-unit id="e81e43e3bee8ede5bc43425f96030ec09f268e7e" resname="ss.form.ss_send_sms_challenge.button.send_challenge">
         <source>ss.form.ss_send_sms_challenge.button.send_challenge</source>
         <target>Send code</target>
-        <jms:reference-file line="51">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="52">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="dcb8e6ab8b77916403b532a97e955a3445f1918f" resname="ss.form.ss_verify_email.button.verify_email">
         <source>ss.form.ss_verify_email.button.verify_email</source>
@@ -255,6 +255,11 @@
         <source>ss.registration.recovery_token.sms.alt</source>
         <target>SMS</target>
         <jms:reference-file line="40">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="dbb35c78382f5e2650ab7b7e3e34662536d9cc29" resname="ss.registration.recovery_token.sms.promise_possession_title">
+        <source>ss.registration.recovery_token.sms.promise_possession_title</source>
+        <target>Register an SMS recovery token</target>
+        <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/create_sms.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f52b2d059e214ffd688b271cf4359f5d90d9a5f4" resname="ss.registration.recovery_token.sms.prove_posession_title">
         <source>ss.registration.recovery_token.sms.prove_posession_title</source>
@@ -443,6 +448,7 @@ For all devices with a USB port.</target>
       <trans-unit id="c50571e9afcd050cbd75609b1334730df8dae3f0" resname="ss.registration.sms.challenge_body">
         <source>ss.registration.sms.challenge_body</source>
         <target>Your SMS code: %challenge%</target>
+        <jms:reference-file line="85">/src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php</jms:reference-file>
         <jms:reference-file line="112">/src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="9d363fe71a339b50940b951f20b0a2d93ce416bf" resname="ss.registration.sms.prove_possession.title.page">
@@ -458,7 +464,7 @@ For all devices with a USB port.</target>
       <trans-unit id="5cac3b52eed8f48770d80fb00b871e3dc3ae565a" resname="ss.registration.sms.text.ensure_phone_has_signal">
         <source>ss.registration.sms.text.ensure_phone_has_signal</source>
         <target>Please ensure your mobile phone has a signal and can receive text messages.</target>
-        <jms:reference-file line="19">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/sms/send_challenge.html.twig</jms:reference-file>
+        <jms:reference-file line="4">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_send_challenge.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="61e00906a71f4cde92328a327aaa55e55061186e" resname="ss.registration.sms.text.enter_challenge_below">
         <source>ss.registration.sms.text.enter_challenge_below</source>
@@ -468,7 +474,7 @@ For all devices with a USB port.</target>
       <trans-unit id="7a3ffc345262052d848b83714296cd342950ec0a" resname="ss.registration.sms.text.enter_phone_number_below">
         <source>ss.registration.sms.text.enter_phone_number_below</source>
         <target>Please enter your mobile phone number below:</target>
-        <jms:reference-file line="20">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/sms/send_challenge.html.twig</jms:reference-file>
+        <jms:reference-file line="5">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_send_challenge.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1c6c4046436965583c51f835f122786636d3bf57" resname="ss.registration.sms.text.help_user_enter_challenge">
         <source>ss.registration.sms.text.help_user_enter_challenge</source>
@@ -478,7 +484,7 @@ For all devices with a USB port.</target>
       <trans-unit id="88ad34f02420fb8e202b105ef43e417f0480c53f" resname="ss.registration.sms.text.otp_requests_remaining">
         <source>ss.registration.sms.text.otp_requests_remaining</source>
         <target>Attempts remaining: %count%</target>
-        <jms:reference-file line="27">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/sms/send_challenge.html.twig</jms:reference-file>
+        <jms:reference-file line="12">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_send_challenge.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="66bcc644c0a26ef762954fc544a03885175587c8" resname="ss.registration.sms.text.retry_if_not_received">
         <source>ss.registration.sms.text.retry_if_not_received</source>
@@ -901,7 +907,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="d3810fbfb6254169454c8c68850947acce991691" resname="subscriberNumber">
         <source>subscriberNumber</source>
         <target>Number</target>
-        <jms:reference-file line="42">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
+        <jms:reference-file line="43">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/SendSmsChallengeType.php</jms:reference-file>
       </trans-unit>
     </body>
   </file>

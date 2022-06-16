@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class VerifySmsChallengeCommand
+class VerifySmsChallengeCommand implements SmsVerificationCommandInterface
 {
     /**
      * @Assert\NotBlank(message="ss.verify_sms_challenge_command.challenge.may_not_be_empty")

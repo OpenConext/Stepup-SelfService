@@ -70,6 +70,11 @@ ss_recovery_token_sms:
     methods: [GET, POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:createSms }
 
+ss_recovery_token_prove_sms_possession:
+    path: /recovery-token/prove-sms-possession
+    methods: [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:proveSmsPossession }
+
 ss_registration_recovery_token_sms:
     path:     /second-factor/{secondFactorId}/sms
     methods:  [GET]

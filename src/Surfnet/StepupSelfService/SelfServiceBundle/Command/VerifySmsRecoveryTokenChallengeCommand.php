@@ -18,30 +18,18 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
-use Surfnet\StepupBundle\Value\PhoneNumber\Country;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class SendRecoveryTokenSmsChallengeCommand implements SendSmsChallengeCommandInterface
+class VerifySmsRecoveryTokenChallengeCommand implements SmsVerificationCommandInterface
 {
     /**
-     * @var Country
-     */
-    public $country;
-
-    /**
-     * @Assert\NotBlank(message="ss.send_sms_challenge_command.recipient.may_not_be_empty")
-     * @Assert\Type(type="string", message="ss.send_sms_challenge_command.recipient.must_be_string")
-     * @Assert\Regex(
-     *     pattern="~^\d+$~",
-     *     message="ss.send_sms_challenge_command.recipient.must_be_full_number_with_country_code_no_plus"
-     * )
-     *
-     * The subscriber number as a string of digits (31612345678 for +31 6 1234 5678).
+     * @Assert\NotBlank(message="ss.verify_sms_challenge_command.challenge.may_not_be_empty")
+     * @Assert\Type(type="string", message="ss.verify_sms_challenge_command.challenge.must_be_string")
      *
      * @var string
      */
-    public $subscriber;
+    public $challenge;
 
     /**
      * The requesting identity's ID (not name ID).
@@ -51,16 +39,8 @@ class SendRecoveryTokenSmsChallengeCommand implements SendSmsChallengeCommandInt
     public $identity;
 
     /**
-     * The requesting identity's institution.
-     *
-     * @var string
-     */
-    public $institution;
-
-    /**
-     * An arbitrary token id, not recored in Middleware.
-     * This is used to do a preliminary proof of phone possession.
-     * @var string
+     * The self service recovery token id is not actually a token ID that we would later use during SSO or SFO. As this
+     * token is not yet registered we use a hard-coded identifier instead.
      */
     public $recoveryTokenId = SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID;
 }
