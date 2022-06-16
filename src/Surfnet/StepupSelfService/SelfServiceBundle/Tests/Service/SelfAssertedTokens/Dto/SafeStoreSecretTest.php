@@ -23,6 +23,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\S
 
 class SafeStoreSecretTest extends TestCase
 {
+    public function test_it_creates_asecret()
+    {
+        $secret = new SafeStoreSecret();
+        $this->assertIsString($secret->display());
+    }
+
     /**
      * @dataProvider provideSecrets
      */

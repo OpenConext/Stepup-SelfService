@@ -31,6 +31,8 @@
     {% endif %}
     </div>
 
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:crud_list.html.twig' %}
+
 {% endblock %}
 
 {% macro secondFactorTable(secondFactorCollection, text, state, email, expirationHelper, locale) %}

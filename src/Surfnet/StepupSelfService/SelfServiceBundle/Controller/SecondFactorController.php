@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -52,6 +53,14 @@ class SecondFactorController extends Controller
             $institutionConfigurationOptions->numberOfTokensPerIdentity
         );
 
+        /** @var RecoveryTokenService $recoveryTokenService */
+        $recoveryTokenService = $this->get(RecoveryTokenService::class);
+        $selfAssertedTokenRegistration = $institutionConfigurationOptions->allowSelfAssertedTokens === true;
+        $recoveryTokens = [];
+        if ($selfAssertedTokenRegistration) {
+            $recoveryTokens = $recoveryTokenService->getRecoveryTokensForIdentity($identity);
+        }
+
         return [
             'email' => $identity->email,
             'maxNumberOfTokens' => $secondFactors->getMaximumNumberOfRegistrations(),
@@ -61,6 +70,8 @@ class SecondFactorController extends Controller
             'vettedSecondFactors' => $secondFactors->vetted,
             'availableSecondFactors' => $secondFactors->available,
             'expirationHelper' => $expirationHelper,
+            'selfAssertedTokenRegistration' => $selfAssertedTokenRegistration,
+            'recoveryTokens' => $recoveryTokens,
         ];
     }
 

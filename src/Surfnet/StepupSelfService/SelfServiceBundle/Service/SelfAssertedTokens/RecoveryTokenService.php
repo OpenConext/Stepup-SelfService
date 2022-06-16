@@ -18,8 +18,10 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens;
 
+use Surfnet\StepupMiddlewareClient\Identity\Dto\RecoveryToken;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService as MiddlewareRecoveryTokenService;
+use function in_array;
 
 class RecoveryTokenService
 {
@@ -36,5 +38,33 @@ class RecoveryTokenService
     public function hasRecoveryToken(Identity $identity): bool
     {
         return $this->recoveryTokenService->hasRecoveryToken($identity);
+    }
+
+    public function getRecoveryToken(string $recoveryTokenId): RecoveryToken
+    {
+        return $this->recoveryTokenService->findOne($recoveryTokenId);
+    }
+
+    public function getRecoveryTokensForIdentity(Identity $identity)
+    {
+        return $this->recoveryTokenService->findAllFor($identity);
+    }
+
+    public function getRemainingTokenTypes(Identity $identity)
+    {
+        $tokens = $this->getRecoveryTokensForIdentity($identity);
+        $tokenTypes = $this->recoveryTokenService->getAvailableRecoveryTokenTypes();
+        /** @var RecoveryToken $token */
+        foreach ($tokens as $token) {
+            if (in_array($token->type, $tokenTypes)) {
+                unset($tokenTypes[$token->type]);
+            }
+        }
+        return $tokenTypes;
+    }
+
+    public function delete(RecoveryToken $recoveryToken)
+    {
+        $this->recoveryTokenService->delete($recoveryToken);
     }
 }
