@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2022 SURFnet bv
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,9 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
 use Surfnet\StepupBundle\Value\PhoneNumber\Country;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class SendSmsChallengeCommand implements SendSmsChallengeCommandInterface
+class SendRecoveryTokenSmsChallengeCommand implements SendSmsChallengeCommandInterface
 {
     /**
      * @var Country
@@ -58,8 +57,9 @@ class SendSmsChallengeCommand implements SendSmsChallengeCommandInterface
     public $institution;
 
     /**
-     * The self service second factor id is not actually a token ID that we would later use during SSO or SFO. As this
-     * token is not yet registered we use a hard-coded identifier instead.
+     * An arbitrary token id, not recored in Middleware.
+     * This is used to do a preliminary proof of phone possession.
+     * @var string
      */
-    public $secondFactorId = SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID;
+    public $recoveryTokenId = 'register-recovery-token';
 }
