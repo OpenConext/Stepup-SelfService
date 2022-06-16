@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.recovery_token.sms.promise_possession_title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+        {% include '@SurfnetStepupSelfServiceSelfService/registration/partial/sms_send_challenge.html.twig' with { pageTitle: block('page_title') } %}
+{% endblock %}
