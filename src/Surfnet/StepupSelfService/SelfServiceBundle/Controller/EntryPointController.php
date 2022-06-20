@@ -19,17 +19,33 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 
 class EntryPointController extends Controller
 {
+    /**
+     * @var SecondFactorService
+     */
+    private $secondFactorService;
+
+    /**
+     * @var RecoveryTokenService
+     */
+    private $recoveryTokenService;
+
+    public function __construct(SecondFactorService $secondFactorService, RecoveryTokenService $recoveryTokenService)
+    {
+        $this->secondFactorService = $secondFactorService;
+        $this->recoveryTokenService = $recoveryTokenService;
+    }
+
     public function decideSecondFactorFlowAction()
     {
         $identity = $this->getIdentity();
+        $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
+        $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
 
-        /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-
-        if ($service->doSecondFactorsExistForIdentity($identity->id)) {
+        if ($hasSecondFactor || $hasRecoveryToken) {
             return $this->redirect($this->generateUrl('ss_second_factor_list'));
         } else {
             return $this->redirect(
