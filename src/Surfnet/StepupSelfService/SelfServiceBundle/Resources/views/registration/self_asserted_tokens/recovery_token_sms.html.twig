@@ -8,14 +8,5 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ block('page_title') }}</h2>
-
-    <div class="row">
-        <div class="col-xs-12 col-md-12">
-            <p>{{ 'ss.registration.recovery_token.sms.prove_possession_subtitle'|trans }}</p>
-        </div>
-    </div>
-
-    {{ secondFactorId }}
-
+    {% include '@SurfnetStepupSelfServiceSelfService/registration/partial/sms_send_challenge.html.twig' with { 'pageTitle': block('page_title') } %}
 {% endblock %}

@@ -24,8 +24,6 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeRecoveryTokenCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsRecoveryTokenChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\PromiseSafeStorePossessionType;
@@ -167,13 +165,23 @@ class SelfAssertedTokensController extends Controller
         );
     }
 
-    public function registerRecoveryTokenSmsAction($secondFactorId)
+    public function registerRecoveryTokenSmsAction(Request $request, string $secondFactorId)
     {
-        return $this->render(
+        return $this->handleSmsChallenge(
+            $request,
             '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/recovery_token_sms.html.twig',
-            [
-                'secondFactorId' => $secondFactorId,
-            ]
+            'ss_registration_recovery_token_sms_proof_of_possession',
+            $secondFactorId
+        );
+    }
+
+    public function registerRecoveryTokenSmsProofOfPossessionAction(Request $request, string $secondFactorId)
+    {
+        return $this->handleSmsProofOfPossession(
+            $request,
+            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/registration_sms_prove_possession.html.twig',
+            'ss_second_factor_self_asserted_tokens',
+            $secondFactorId
         );
     }
 
@@ -210,78 +218,19 @@ class SelfAssertedTokensController extends Controller
 
     public function createSmsAction(Request $request)
     {
-        $identity = $this->getIdentity();
-        $this->assertNoRecoveryTokenOfType('sms', $identity);
-        $command = new SendRecoveryTokenSmsChallengeCommand();
-        $form = $this->createForm(SendSmsChallengeType::class, $command)->handleRequest($request);
-        /** @var SmsSecondFactorService $service */
-        $otpRequestsRemaining = $this->smsService
-            ->getOtpRequestsRemainingCount(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
-        $maximumOtpRequests = $this->smsService->getMaximumOtpRequestsCount();
-        $viewVariables = ['otpRequestsRemaining' => $otpRequestsRemaining, 'maximumOtpRequests' => $maximumOtpRequests];
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $command->identity = $identity->id;
-            $command->institution = $identity->institution;
-
-            if ($otpRequestsRemaining === 0) {
-                $this->addFlash('error', 'ss.prove_phone_possession.challenge_request_limit_reached');
-                return array_merge(['form' => $form->createView()], $viewVariables);
-            }
-
-            if ($this->smsService->sendChallenge($command)) {
-                return $this->redirect($this->generateUrl('ss_recovery_token_prove_sms_possession'));
-            }
-            $this->addFlash('error', 'ss.form.recovery_token.error.error_message');
-        }
-        return $this->render(
+        return $this->handleSmsChallenge(
+            $request,
             '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/create_sms.html.twig',
-             array_merge(
-                 [
-                    'form' => $form->createView(),
-                    'verifyEmail' => $this->emailVerificationIsRequired(),
-                ],
-                $viewVariables
-            )
+            'ss_recovery_token_prove_sms_possession'
         );
     }
 
     public function proveSmsPossessionAction(Request $request)
     {
-        if (!$this->smsService->hasSmsVerificationState(SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID)) {
-            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
-            return $this->redirectToRoute('ss_recovery_token_sms');
-        }
-        $identity = $this->getIdentity();
-        $this->assertNoRecoveryTokenOfType('sms', $identity);
-
-        $command = new VerifySmsRecoveryTokenChallengeCommand();
-        $command->identity = $identity->id;
-
-        $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $result = $this->smsService->provePossession($command);
-            if ($result->isSuccessful()) {
-                $this->smsService->clearSmsVerificationState(SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID);
-                return $this->redirectToRoute('ss_second_factor_list');
-            } elseif ($result->wasIncorrectChallengeResponseGiven()) {
-                $this->addFlash('error', 'ss.prove_phone_possession.incorrect_challenge_response');
-            } elseif ($result->hasChallengeExpired()) {
-                $this->addFlash('error', 'ss.prove_phone_possession.challenge_expired');
-            } elseif ($result->wereTooManyAttemptsMade()) {
-                $this->addFlash('error', 'ss.prove_phone_possession.too_many_attempts');
-            } else {
-                $this->addFlash('error', 'ss.prove_phone_possession.proof_of_possession_failed');
-            }
-        }
-
-        return $this->render(
+        return $this->handleSmsProofOfPossession(
+            $request,
             '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/sms_prove_possession.html.twig',
-            [
-                'form' => $form->createView(),
-                'verifyEmail' => $this->emailVerificationIsRequired(),
-            ]
+            'ss_second_factor_list'
         );
     }
 
@@ -327,6 +276,19 @@ class SelfAssertedTokensController extends Controller
         }
     }
 
+    private function assertNoRecoveryTokens(Identity $identity)
+    {
+        if ($this->recoveryTokenService->hasRecoveryToken($identity)) {
+            throw new LogicException(
+                sprintf(
+                    'Identity "%s" tried to register a recovery token, but one was already in possession. ' .
+                    'This is not allowed during self-asserted token registration.',
+                    $identity->id
+                )
+            );
+        }
+    }
+
     private function assertNoRecoveryTokenOfType(string $type, Identity $identity)
     {
         $tokens = $this->recoveryTokenService->getRecoveryTokensForIdentity($identity);
@@ -353,5 +315,111 @@ class SelfAssertedTokensController extends Controller
                 )
             );
         }
+    }
+
+    /**
+     * Shared Send SMS challenge form handler
+     * - One is used during SMS recovery token registration within the vetting flow
+     * - The other is actioned from the recovery token overview on the '/overview' page
+     *
+     * Note fourth param: '$secondFactorId' is optional parameter, only used in the vetting flow scenario
+     */
+    private function handleSmsChallenge(
+        Request $request,
+        string $templateName,
+        string $exitRoute,
+        ?string $secondFactorId = null
+    ): Response {
+        $identity = $this->getIdentity();
+        $this->assertNoRecoveryTokenOfType('sms', $identity);
+        $command = new SendRecoveryTokenSmsChallengeCommand();
+        $form = $this->createForm(SendSmsChallengeType::class, $command)->handleRequest($request);
+        /** @var SmsSecondFactorService $service */
+        $otpRequestsRemaining = $this->smsService
+            ->getOtpRequestsRemainingCount(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
+        $maximumOtpRequests = $this->smsService->getMaximumOtpRequestsCount();
+
+        $viewVariables = [
+            'otpRequestsRemaining' => $otpRequestsRemaining,
+            'maximumOtpRequests' => $maximumOtpRequests
+        ];
+
+        if (isset($secondFactorId)) {
+            $viewVariables['secondFactorId'] = $secondFactorId;
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $command->identity = $identity->id;
+            $command->institution = $identity->institution;
+
+            if ($otpRequestsRemaining === 0) {
+                $this->addFlash('error', 'ss.prove_phone_possession.challenge_request_limit_reached');
+                return array_merge(['form' => $form->createView()], $viewVariables);
+            }
+
+            if ($this->smsService->sendChallenge($command)) {
+                $urlParameter = [];
+                if (isset($secondFactorId)) {
+                    $urlParameter = ['secondFactorId' => $secondFactorId];
+                }
+                return $this->redirect($this->generateUrl($exitRoute, $urlParameter));
+            }
+            $this->addFlash('error', 'ss.form.recovery_token.error.error_message');
+        }
+        return $this->render(
+            $templateName,
+            array_merge(
+                [
+                    'form' => $form->createView(),
+                ],
+                $viewVariables
+            )
+        );
+    }
+
+    private function handleSmsProofOfPossession(
+        Request $request,
+        string $templateName,
+        string $exitRoute,
+        ?string $secondFactorId = null
+    ) {
+        if (!$this->smsService->hasSmsVerificationState(SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID)) {
+            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
+            return $this->redirectToRoute('ss_recovery_token_sms');
+        }
+        $identity = $this->getIdentity();
+        $this->assertNoRecoveryTokenOfType('sms', $identity);
+
+        $command = new VerifySmsRecoveryTokenChallengeCommand();
+        $command->identity = $identity->id;
+
+        $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $result = $this->smsService->provePossession($command);
+            if ($result->isSuccessful()) {
+                $this->smsService->clearSmsVerificationState(SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID);
+                $urlParameter = [];
+                if (isset($secondFactorId)) {
+                    $urlParameter = ['secondFactorId' => $secondFactorId];
+                }
+                return $this->redirect($this->generateUrl($exitRoute, $urlParameter));
+            } elseif ($result->wasIncorrectChallengeResponseGiven()) {
+                $this->addFlash('error', 'ss.prove_phone_possession.incorrect_challenge_response');
+            } elseif ($result->hasChallengeExpired()) {
+                $this->addFlash('error', 'ss.prove_phone_possession.challenge_expired');
+            } elseif ($result->wereTooManyAttemptsMade()) {
+                $this->addFlash('error', 'ss.prove_phone_possession.too_many_attempts');
+            } else {
+                $this->addFlash('error', 'ss.prove_phone_possession.proof_of_possession_failed');
+            }
+        }
+
+        return $this->render(
+            $templateName,
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 }
