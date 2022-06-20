@@ -7,6 +7,11 @@ services:
       alias: 'monolog.logger'
       public: true
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Controller\:
+        resource: '../../Controller'
+        autowire: true
+        tags: [ 'controller.service_arguments' ]
+
     Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVetController:
         arguments:
             - "@self_service.test_second_factor_authentication_request_factory"
@@ -22,21 +27,14 @@ services:
             - "@session"
             - "@logger"
 
-    Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfAssertedTokensController:
-        arguments:
-            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService'
-            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService'
-            - '@surfnet_stepup_self_service_self_service.service.second_factor'
-            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService'
-            - '@logger'
-        tags:
-            - 'controller.service_arguments'
-
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
         arguments:
             - "@surfnet_stepup_middleware_client.service.command"
             - "@security.token_storage"
+
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService:
+        alias: surfnet_stepup_self_service_self_service.service.second_factor
 
     surfnet_stepup_self_service_self_service.service.second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService
@@ -213,3 +211,4 @@ services:
             - "@surfnet_stepup.service.second_factor_type_translator"
         tags:
             - { name : twig.extension }
+
