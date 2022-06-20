@@ -58,7 +58,7 @@ class SendRecoveryTokenSmsChallengeCommand implements SendSmsChallengeCommandInt
     public $institution;
 
     /**
-     * An arbitrary token id, not recored in Middleware.
+     * An arbitrary token id, not recorded in Middleware.
      * This is used to do a preliminary proof of phone possession.
      * @var string
      */
