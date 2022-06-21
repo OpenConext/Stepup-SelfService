@@ -44,3 +44,4 @@ branches:
   only:
     - master
     - develop
+    - feature/self-asserted-tokens
