@@ -40,6 +40,16 @@ ss_second_factor_self_asserted_tokens:
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistration }
 
+ss_second_factor_self_asserted_tokens_recovery_token:
+    path:     /second-factor/{secondFactorId}/self-asserted-token-registration/{recoveryTokenId}
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistrationRecoveryToken }
+
+ss_second_factor_self_asserted_tokens_recovery_token_sms:
+    path:     /second-factor/{secondFactorId}/self-asserted-token-registration/{recoveryTokenId}/authenticate
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRecoveryTokenSmsAuthentication }
+
 ss_second_factor_new_recovery_token:
     path:     /second-factor/{secondFactorId}/new-recovery-token
     methods:  [GET]

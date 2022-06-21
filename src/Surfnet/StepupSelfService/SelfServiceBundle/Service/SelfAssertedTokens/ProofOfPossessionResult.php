@@ -58,6 +58,11 @@ final class ProofOfPossessionResult
         return new self(self::STATUS_CHALLENGE_OK, $recoveryTokenId);
     }
 
+    public static function recoveryTokenVerified(): ProofOfPossessionResult
+    {
+        return new self(self::STATUS_CHALLENGE_OK);
+    }
+
     public static function tooManyAttempts(): ProofOfPossessionResult
     {
         return new self(self::STATUS_TOO_MANY_ATTEMPTS);
@@ -66,6 +71,11 @@ final class ProofOfPossessionResult
     public function isSuccessful(): bool
     {
         return $this->status === self::STATUS_CHALLENGE_OK && $this->recoveryTokenId !== null;
+    }
+
+    public function authenticated(): bool
+    {
+        return $this->status === self::STATUS_CHALLENGE_OK;
     }
 
     public function didProofOfPossessionFail(): bool

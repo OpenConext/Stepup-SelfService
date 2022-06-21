@@ -23,7 +23,7 @@ use Surfnet\StepupMiddlewareClientBundle\Command\Metadata;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService as MiddlewareCommandService;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-final class CommandService
+class CommandService
 {
     /**
      * @var \Surfnet\StepupMiddlewareClientBundle\Service\CommandService
