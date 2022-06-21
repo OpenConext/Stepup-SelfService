@@ -122,5 +122,4 @@ class SelfAssertedTokensController extends Controller
             ]
         );
     }
-        if ($this->recoveryTokenService->hasRecoveryToken($this->getIdentity())) {
 }
