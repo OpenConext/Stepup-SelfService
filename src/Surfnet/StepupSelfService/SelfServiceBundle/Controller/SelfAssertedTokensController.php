@@ -209,6 +209,8 @@ class SelfAssertedTokensController extends Controller
 
         $command = new VerifySmsRecoveryTokenChallengeCommand();
         $command->identity = $identity->id;
+        $command->resendRoute = 'ss_second_factor_self_asserted_tokens_recovery_token';
+        $command->resendRouteParameters = ['secondFactorId' => $secondFactorId, 'recoveryTokenId' => $recoveryTokenId];
 
         $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
 
@@ -241,7 +243,7 @@ class SelfAssertedTokensController extends Controller
             }
         }
         return $this->render(
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/sms_prove_possession.html.twig',
+            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/registration_sms_prove_possession.html.twig',
             [
                 'form' => $form->createView(),
             ]
