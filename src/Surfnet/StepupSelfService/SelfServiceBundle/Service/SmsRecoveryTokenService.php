@@ -26,11 +26,15 @@ use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhoneRecoveryTokenPossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsAuthenticationChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsRecoveryTokenChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\ProofOfPossessionResult;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class SmsRecoveryTokenService
 {
     public const REGISTRATION_RECOVERY_TOKEN_ID = 'registration';
@@ -69,6 +73,18 @@ class SmsRecoveryTokenService
     public function clearSmsVerificationState(string $secondFactorId): void
     {
         $this->smsService->clearSmsVerificationState($secondFactorId);
+    }
+
+    public function authenticate(SendRecoveryTokenSmsAuthenticationChallengeCommand $command): bool
+    {
+        $stepupCommand = new StepupSendRecoveryTokenSmsChallengeCommand();
+        $stepupCommand->phoneNumber = $command->identifier;
+        $stepupCommand->body = $this->translator->trans('ss.registration.sms.challenge_body');
+        $stepupCommand->identity = $command->identity;
+        $stepupCommand->institution = $command->institution;
+        $stepupCommand->recoveryTokenId = $command->recoveryTokenId;
+
+        return $this->smsService->sendChallenge($stepupCommand);
     }
 
     /**
@@ -122,5 +138,26 @@ class SmsRecoveryTokenService
         }
 
         return ProofOfPossessionResult::recoveryTokenCreated($command->recoveryTokenId);
+    }
+
+    public function verifyAuthentication(VerifySmsRecoveryTokenChallengeCommand $command)
+    {
+        $stepupCommand = new VerifyPossessionOfPhoneForRecoveryTokenCommand();
+        $stepupCommand->challenge = $command->challenge;
+        $stepupCommand->recoveryTokenId = $command->recoveryTokenId;
+
+        $verification = $this->smsService->verifyPossession($stepupCommand);
+
+        if ($verification->didOtpExpire()) {
+            return ProofOfPossessionResult::challengeExpired();
+        }
+        if ($verification->wasAttemptedTooManyTimes()) {
+            return ProofOfPossessionResult::tooManyAttempts();
+        }
+        if (!$verification->wasSuccessful()) {
+            return ProofOfPossessionResult::incorrectChallenge();
+        }
+
+        return ProofOfPossessionResult::recoveryTokenVerified();
     }
 }

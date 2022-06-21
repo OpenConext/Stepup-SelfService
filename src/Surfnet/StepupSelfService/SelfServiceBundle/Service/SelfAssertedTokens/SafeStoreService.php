@@ -27,6 +27,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeRecoveryTokenComma
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
+use function password_verify;
 
 class SafeStoreService
 {
@@ -73,5 +74,13 @@ class SafeStoreService
         $apiCommand->identityId = $command->identity->id;
         $apiCommand->recoveryTokenId = $command->recoveryToken->recoveryTokenId;
         return $this->commandService->execute($apiCommand);
+    }
+
+    /**
+     * Verifies if the password hash matches the secret that was provided
+     */
+    public function authenticate(string $secret, string $passwordHash)
+    {
+        return password_verify($secret, $passwordHash);
     }
 }

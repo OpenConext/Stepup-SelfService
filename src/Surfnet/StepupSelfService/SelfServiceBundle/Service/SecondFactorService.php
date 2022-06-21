@@ -22,6 +22,7 @@ use Surfnet\StepupMiddlewareClient\Identity\Dto\UnverifiedSecondFactorSearchQuer
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VerifiedSecondFactorOfIdentitySearchQuery;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\VettedSecondFactorSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Dto\CollectionDto;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RegisterSelfAssertedSecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\SelfVetSecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\RevokeOwnSecondFactorCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\VerifyEmailCommand;
@@ -32,6 +33,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollec
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService as MiddlewareSecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfAssertedTokenRegistrationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
@@ -108,6 +110,21 @@ class SecondFactorService
         $apiCommand->secondFactorType = $command->secondFactor->type;
         $apiCommand->authorityId = $command->identity->id;
         $apiCommand->authoringSecondFactorIdentifier = $command->authoringLoa;
+
+        $result = $this->commandService->execute($apiCommand);
+        return $result->isSuccessful();
+    }
+
+    public function registerSelfAssertedToken(SelfAssertedTokenRegistrationCommand $command): bool
+    {
+        $apiCommand = new RegisterSelfAssertedSecondFactorCommand();
+        $apiCommand->identityId = $command->identity->id;
+        $apiCommand->registrationCode = $command->secondFactor->registrationCode;
+        $apiCommand->secondFactorIdentifier = $command->secondFactor->secondFactorIdentifier;
+        $apiCommand->secondFactorId = $command->secondFactor->id;
+        $apiCommand->secondFactorType = $command->secondFactor->type;
+        $apiCommand->authorityId = $command->identity->id;
+        $apiCommand->authoringRecoveryTokenId = $command->recoveryTokenId;
 
         $result = $this->commandService->execute($apiCommand);
         return $result->isSuccessful();

@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens
 use Surfnet\StepupMiddlewareClient\Identity\Dto\RecoveryToken;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService as MiddlewareRecoveryTokenService;
-use function in_array;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\SafeStoreAuthenticationCommand;
 
 class RecoveryTokenService
 {
@@ -30,9 +30,17 @@ class RecoveryTokenService
      */
     private $recoveryTokenService;
 
-    public function __construct(MiddlewareRecoveryTokenService $recoveryTokenService)
-    {
+    /**
+     * @var SafeStoreService
+     */
+    private $safeStoreService;
+
+    public function __construct(
+        MiddlewareRecoveryTokenService $recoveryTokenService,
+        SafeStoreService $safeStoreService
+    ) {
         $this->recoveryTokenService = $recoveryTokenService;
+        $this->safeStoreService = $safeStoreService;
     }
 
     public function hasRecoveryToken(Identity $identity): bool
@@ -45,7 +53,10 @@ class RecoveryTokenService
         return $this->recoveryTokenService->findOne($recoveryTokenId);
     }
 
-    public function getRecoveryTokensForIdentity(Identity $identity)
+    /**
+     * @return RecoveryToken[]
+     */
+    public function getRecoveryTokensForIdentity(Identity $identity): array
     {
         return $this->recoveryTokenService->findAllFor($identity);
     }
@@ -66,5 +77,13 @@ class RecoveryTokenService
     public function delete(RecoveryToken $recoveryToken)
     {
         $this->recoveryTokenService->delete($recoveryToken);
+    }
+
+    /**
+     * Verify the password hash with the secret specified on the command.
+     */
+    public function authenticateSafeStore(SafeStoreAuthenticationCommand $command): bool
+    {
+        return $this->safeStoreService->authenticate($command->secret, $command->recoveryToken->identifier);
     }
 }

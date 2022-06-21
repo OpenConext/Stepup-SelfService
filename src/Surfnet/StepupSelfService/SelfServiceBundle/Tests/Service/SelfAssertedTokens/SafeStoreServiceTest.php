@@ -20,11 +20,14 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\SelfAsserted
 
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreState;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use function password_hash;
+use const PASSWORD_BCRYPT;
 
 class SafeStoreServiceTest extends TestCase
 {
@@ -34,7 +37,8 @@ class SafeStoreServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->state = Mockery::mock(SafeStoreState::class);
-        $this->service = new SafeStoreService($this->state);
+        $commandService = Mockery::mock(CommandService::class);
+        $this->service = new SafeStoreService($this->state, $commandService);
     }
 
     protected function tearDown(): void
@@ -56,5 +60,14 @@ class SafeStoreServiceTest extends TestCase
         $this->state->shouldReceive('retrieveSecret')->andReturn($secret);
         $retrievedSecret = $this->service->produceSecret();
         $this->assertEquals($retrievedSecret, $secret);
+    }
+
+    public function test_it_can_verify_a_safe_store_secret()
+    {
+        $secret = new SafeStoreSecret();
+        $passwordHash = password_hash($secret->display(), PASSWORD_BCRYPT);
+        $this->assertTrue($this->service->authenticate($secret->display(), $passwordHash));
+        // A wrong secret should result in a false return
+        $this->assertFalse($this->service->authenticate('wrong-password', $passwordHash));
     }
 }
