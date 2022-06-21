@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function array_key_exists;
 
 class VerifySmsChallengeType extends AbstractType
 {
@@ -38,7 +39,8 @@ class VerifySmsChallengeType extends AbstractType
         $builder->add('resendChallenge', AnchorType::class, [
             'label' => 'ss.form.ss_verify_sms_challenge.button.resend_challenge',
             'attr' => [ 'class' => 'btn btn-default' ],
-            'route' => 'ss_registration_sms_send_challenge',
+            'route' => $options['data']->resendRoute,
+            'route_parameters' => $options['data']->resendRouteParameters,
         ]);
         $builder->add('verifyChallenge', SubmitType::class, [
             'label' => 'ss.form.ss_verify_sms_challenge.button.verify_challenge',

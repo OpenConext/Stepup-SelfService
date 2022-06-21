@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block page_title %}{{ 'ss.registration.self_asserted.new_recovery_token.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'ss.recovery_token.safe-store.authentication.title'|trans }}{% endblock %}
 
 {% block page_header %}
     {{ parent() }}
@@ -8,6 +8,28 @@
 {% endblock %}
 
 {% block content %}
+    <h2>{{ block('page_title') }}</h2>
 
-{{ form(form) }}
+    <p>{{ 'ss.recovery_token.safe-store.authentication.explanation'|trans }}</p>
+
+    {{ form_start(form) }}
+    <div class="row">
+        {{ form_errors(form) }}
+        <div class="col-xs-4">
+            {{ form_label(form.secret) }}
+        </div>
+        <div class="col-xs-4">
+            {{ form_widget(form.secret) }}
+        </div>
+
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row offset-top">
+        <div class="col-xs-4">&nbsp;</div>
+        <div class="col-xs-4">
+            {{ form_row(form.verifySecret) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+
 {% endblock %}
