@@ -34,7 +34,7 @@ class AuthenticateSafeStoreType extends AbstractType
             'required' => true,
             'attr' => ['autofocus' => true],
         ]);
-        $builder->add('verifyPassword', SubmitType::class, [
+        $builder->add('verifySecret', SubmitType::class, [
             'label' => 'ss.form.ss_authenticate_safe_store_type.button.continue',
             'attr' => [ 'class' => 'btn btn-primary pull-right' ],
         ]);

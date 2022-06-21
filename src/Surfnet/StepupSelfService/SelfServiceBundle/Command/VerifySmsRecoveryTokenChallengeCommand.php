@@ -43,4 +43,14 @@ class VerifySmsRecoveryTokenChallengeCommand implements SmsVerificationCommandIn
      * token is not yet registered we use a hard-coded identifier instead.
      */
     public $recoveryTokenId = SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID;
+
+    /**
+     * The route used to trigger a resend of the SMS verification code
+     */
+    public $resendRoute = 'ss_registration_sms_send_challenge';
+
+    /**
+     * Route parameters required to build the resend route
+     */
+    public $resendRouteParameters = [];
 }
