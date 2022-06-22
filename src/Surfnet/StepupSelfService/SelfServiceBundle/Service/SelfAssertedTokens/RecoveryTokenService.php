@@ -18,8 +18,10 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens;
 
+use Psr\Log\LoggerInterface;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\RecoveryToken;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService as MiddlewareRecoveryTokenService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SafeStoreAuthenticationCommand;
 
@@ -35,12 +37,19 @@ class RecoveryTokenService
      */
     private $safeStoreService;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         MiddlewareRecoveryTokenService $recoveryTokenService,
-        SafeStoreService $safeStoreService
+        SafeStoreService $safeStoreService,
+        LoggerInterface $logger
     ) {
         $this->recoveryTokenService = $recoveryTokenService;
         $this->safeStoreService = $safeStoreService;
+        $this->logger = $logger;
     }
 
     public function hasRecoveryToken(Identity $identity): bool
@@ -85,5 +94,25 @@ class RecoveryTokenService
     public function authenticateSafeStore(SafeStoreAuthenticationCommand $command): bool
     {
         return $this->safeStoreService->authenticate($command->secret, $command->recoveryToken->identifier);
+    }
+
+    public function getAvailableTokens(Identity $identity, VerifiedSecondFactor $secondFactor): array
+    {
+        $tokens = $this->getRecoveryTokensForIdentity($identity);
+        if ($secondFactor->type === 'sms' && array_key_exists('sms', $tokens)) {
+            // Check if the phone number of the recovery token is the same as that of the second factor token
+            $smsRecoveryToken = $tokens['sms'];
+            if ($smsRecoveryToken->identifier === $secondFactor->secondFactorIdentifier) {
+                $this->logger->info(
+                    sprintf(
+                        'Filtering the SMS recovery token from the available recovery tokens: [%s]. As the phone ' .
+                        ' numbers are the same for both second factor and recovery tokens.',
+                        implode(', ', array_keys($tokens))
+                    )
+                );
+                unset($tokens['sms']);
+            }
+        }
+        return $tokens;
     }
 }

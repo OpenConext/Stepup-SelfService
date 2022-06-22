@@ -104,9 +104,15 @@ class SelfAssertedTokensController extends Controller
         $this->logger->info('Checking if Identity has a recovery token');
         $identity = $this->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
-
+        $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
         if ($this->recoveryTokenService->hasRecoveryToken($identity)) {
-            $tokens = $this->recoveryTokenService->getRecoveryTokensForIdentity($identity);
+            $tokens = $this->recoveryTokenService->getAvailableTokens($identity, $secondFactor);
+            if (count($tokens) === 0) {
+                // User is in possession of a recovery token, but it is not safe to use here (for example sms recovery
+                // token is not available while activating a SMS second factor)
+                $this->addFlash('error', 'ss.self_asserted_tokens.second_factor.no_available_recovery_token.alert.failed');
+                return $this->redirectToRoute('ss_second_factor_list');
+            }
             if (count($tokens) > 1) {
                 $this->logger->info('Show recovery token selection screen');
                 return $this->render(
@@ -163,18 +169,25 @@ class SelfAssertedTokensController extends Controller
                     ['secondFactorId' => $secondFactorId, 'recoveryTokenId' => $recoveryTokenId]
                 );
             case "safe-store":
+                // No authentication of the safe store token is required if created during SF token registration
+                if ($this->safeStoreService->wasSafeStoreTokenCreatedDuringSecondFactorRegistration()) {
+                    // Forget we created the safe-store recovery token during token registration. Next time Identity
+                    // must fill its password.
+                    $this->safeStoreService->forgetSafeStoreTokenCreatedDuringSecondFactorRegistration();
+                    if ($this->invokeSelfAssertedTokenRegistrationCommand($secondFactorId, $recoveryTokenId)) {
+                        $this->addFlash('success', 'ss.self_asserted_tokens.second_factor.vetting.alert.successful');
+                    } else {
+                        $this->addFlash('error', 'ss.self_asserted_tokens.second_factor.vetting.alert.failed');
+                    }
+                    return $this->redirectToRoute('ss_second_factor_list');
+                }
                 $command = new SafeStoreAuthenticationCommand();
                 $command->recoveryToken = $token;
                 $command->identity = $identity;
                 $form = $this->createForm(AuthenticateSafeStoreType::class, $command)->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
                     if ($this->recoveryTokenService->authenticateSafeStore($command)) {
-                        $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
-                        $command = new SelfAssertedTokenRegistrationCommand();
-                        $command->identity = $this->getIdentity();
-                        $command->secondFactor = $secondFactor;
-                        $command->recoveryTokenId = $recoveryTokenId;
-                        if ($this->secondFactorService->registerSelfAssertedToken($command)) {
+                        if ($this->invokeSelfAssertedTokenRegistrationCommand($secondFactorId, $recoveryTokenId)) {
                             $this->addFlash('success', 'ss.self_asserted_tokens.second_factor.vetting.alert.successful');
                             return $this->redirectToRoute('ss_second_factor_list');
                         }
@@ -209,7 +222,6 @@ class SelfAssertedTokensController extends Controller
 
         $command = new VerifySmsRecoveryTokenChallengeCommand();
         $command->identity = $identity->id;
-        $command->resendRoute = 'ss_second_factor_self_asserted_tokens_recovery_token';
         $command->resendRouteParameters = ['secondFactorId' => $secondFactorId, 'recoveryTokenId' => $recoveryTokenId];
 
         $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
@@ -569,6 +581,7 @@ class SelfAssertedTokensController extends Controller
 
         $command = new VerifySmsRecoveryTokenChallengeCommand();
         $command->identity = $identity->id;
+        $command->resendRoute = 'ss_recovery_token_sms';
 
         $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
 
@@ -598,5 +611,15 @@ class SelfAssertedTokensController extends Controller
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    private function invokeSelfAssertedTokenRegistrationCommand(string $secondFactorId, string $recoveryTokenId): bool
+    {
+        $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
+        $command = new SelfAssertedTokenRegistrationCommand();
+        $command->identity = $this->getIdentity();
+        $command->secondFactor = $secondFactor;
+        $command->recoveryTokenId = $recoveryTokenId;
+        return $this->secondFactorService->registerSelfAssertedToken($command);
     }
 }

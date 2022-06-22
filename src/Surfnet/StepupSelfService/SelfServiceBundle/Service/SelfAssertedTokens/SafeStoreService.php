@@ -27,7 +27,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeRecoveryTokenComma
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
-use function password_verify;
 
 class SafeStoreService
 {
@@ -65,6 +64,8 @@ class SafeStoreService
         $apiCommand->identityId = $command->identity->id;
         $apiCommand->recoveryTokenId = Uuid::generate();
         $apiCommand->secret = $command->secret->display();
+        $this->stateStore->forget();
+        $this->stateStore->tokenCreatedDuringSecondFactorRegistration();
         return $this->commandService->execute($apiCommand);
     }
 
@@ -76,11 +77,21 @@ class SafeStoreService
         return $this->commandService->execute($apiCommand);
     }
 
+    public function wasSafeStoreTokenCreatedDuringSecondFactorRegistration(): bool
+    {
+        return $this->stateStore->wasSafeStoreTokenCreatedDuringSecondFactorRegistration();
+    }
+
     /**
      * Verifies if the password hash matches the secret that was provided
      */
     public function authenticate(string $secret, string $passwordHash)
     {
         return password_verify($secret, $passwordHash);
+    }
+
+    public function forgetSafeStoreTokenCreatedDuringSecondFactorRegistration(): void
+    {
+        $this->stateStore->forgetSafeStoreTokenCreatedDuringSecondFactorRegistration();
     }
 }
