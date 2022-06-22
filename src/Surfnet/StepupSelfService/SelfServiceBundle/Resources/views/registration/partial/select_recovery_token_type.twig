@@ -1,0 +1,58 @@
+{% if showAvailable is defined and showAvailable %}
+    {% set smsUrl =  url('ss_second_factor_self_asserted_tokens_recovery_token', {'secondFactorId': secondFactorId, 'recoveryTokenId': availableRecoveryTokens['sms'].recoveryTokenId})  %}
+    {% set safeStoreUrl = url('ss_second_factor_self_asserted_tokens_recovery_token', {'secondFactorId': secondFactorId, 'recoveryTokenId': availableRecoveryTokens['safe-store'].recoveryTokenId}) %}
+    {% set availableRecoveryTokens = availableRecoveryTokens|keys %}
+{% elseif secondFactorId is defined %}
+    {% set smsUrl =  url('ss_registration_recovery_token_sms', {'secondFactorId': secondFactorId})  %}
+    {% set safeStoreUrl = url('ss_registration_recovery_token_safe_store', {'secondFactorId': secondFactorId}) %}
+{% else %}
+    {% set smsUrl = url('ss_recovery_token_sms') %}
+    {% set safeStoreUrl = url('ss_recovery_token_safe_store') %}
+{% endif %}
+
+<h2>{{ page_title }}</h2>
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <p>{{ 'ss.registration.recovery_token.title'|trans }}</p>
+    </div>
+</div>
+<div class="row remote-vetting">
+    {% if 'safe-store' in availableRecoveryTokens %}
+        <div class="col-xs-12 col-md-3">
+            <div class="thumbnail vetting-selector">
+                <img src="{{ asset('images/safe-store.png') }}"
+                     alt="{{ ('ss.registration.recovery_token.safe-store.alt')|trans }}">
+                <h3>{{ 'ss.registration.recovery_token.title.safe-store'|trans }}</h3>
+                <hr>
+                <p>{{ 'ss.registration.recovery_token.description.safe-store'|trans }}</p>
+                <p>
+                <form action="{{ safeStoreUrl }}"
+                      method="get">
+                    <button type="submit"
+                            class="btn btn-primary">{{ 'ss.registration.recovery_token.button.continue'|trans }}</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if 'sms' in availableRecoveryTokens %}
+        <div class="col-xs-12 col-md-3">
+            <div class="thumbnail vetting-selector">
+                <img src="{{ asset('images/second-factor/sms.png') }}"
+                     alt="{{ ('ss.registration.recovery_token.sms.alt')|trans }}">
+                <h3>{{ 'ss.registration.recovery_token.title.sms'|trans }}</h3>
+                <hr>
+                <p>{{ 'ss.registration.recovery_token.description.sms'|trans }}</p>
+                <p>
+                <form action="{{ smsUrl }}"
+                      method="get">
+                    <button type="submit"
+                            class="btn btn-primary">{{ 'ss.registration.recovery_token.button.continue'|trans }}</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+</div>

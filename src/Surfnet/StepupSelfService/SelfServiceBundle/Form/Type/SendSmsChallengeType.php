@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
 use Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommandInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -57,7 +58,7 @@ class SendSmsChallengeType extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => ['class' => 'form-inline'],
-            'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand',
+            'data_class' => SendSmsChallengeCommandInterface::class,
         ]);
     }
 

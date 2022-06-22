@@ -8,49 +8,5 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ block('page_title') }}</h2>
-
-    <div class="row">
-        <div class="col-xs-12 col-md-12">
-            <p>{{ 'ss.registration.recovery_token.title'|trans }}</p>
-        </div>
-    </div>
-
-    <div class="row remote-vetting">
-        <div class="col-xs-12 col-md-3">
-            <div class="thumbnail vetting-selector">
-                <img src="{{ asset('images/safe-store.png') }}"
-                     alt="{{ ('ss.registration.recovery_token.safe-store.alt')|trans }}">
-                <h3>{{ 'ss.registration.recovery_token.title.safe-store'|trans }}</h3>
-                <hr>
-                <p>{{ 'ss.registration.recovery_token.description.safe-store'|trans }}</p>
-                <p>
-                <form action="{{ url('ss_registration_recovery_token_safe_store', {'secondFactorId': secondFactorId}) }}"
-                      method="get">
-                    <button type="submit"
-                            class="btn btn-primary">{{ 'ss.registration.recovery_token.button.continue'|trans }}</button>
-                    </p>
-                </form>
-            </div>
-        </div>
-        {% if allowPhoneRecoveryToken %}
-         <div class="col-xs-12 col-md-3">
-            <div class="thumbnail vetting-selector">
-                <img src="{{ asset('images/second-factor/sms.png') }}"
-                     alt="{{ ('ss.registration.recovery_token.sms.alt')|trans }}">
-                <h3>{{ 'ss.registration.recovery_token.title.sms'|trans }}</h3>
-                <hr>
-                <p>{{ 'ss.registration.recovery_token.description.sms'|trans }}</p>
-                <p>
-                <form action="{{ url('ss_registration_recovery_token_sms', {'secondFactorId': secondFactorId}) }}"
-                      method="get">
-                    <button type="submit"
-                            class="btn btn-primary">{{ 'ss.registration.recovery_token.button.continue'|trans }}</button>
-                    </p>
-                </form>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-
+    {% include '@SurfnetStepupSelfServiceSelfService/registration/partial/select_recovery_token_type.twig' with { 'page_title': block('page_title') } %}
 {% endblock %}

@@ -16,25 +16,20 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
+use Surfnet\StepupMiddlewareClient\Identity\Dto\RecoveryToken;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService as MiddlewareRecoveryTokenService;
 
-class RecoveryTokenService
+class RevokeRecoveryTokenCommand
 {
     /**
-     * @var MiddlewareRecoveryTokenService
+     * @var Identity
      */
-    private $recoveryTokenService;
+    public $identity;
 
-    public function __construct(MiddlewareRecoveryTokenService $recoveryTokenService)
-    {
-        $this->recoveryTokenService = $recoveryTokenService;
-    }
-
-    public function hasRecoveryToken(Identity $identity): bool
-    {
-        return $this->recoveryTokenService->hasRecoveryToken($identity);
-    }
+    /**
+     * @var RecoveryToken
+     */
+    public $recoveryToken;
 }

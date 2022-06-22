@@ -22,7 +22,7 @@ use Surfnet\StepupBundle\Value\PhoneNumber\Country;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class SendSmsChallengeCommand
+class SendSmsChallengeCommand implements SendSmsChallengeCommandInterface
 {
     /**
      * @var Country

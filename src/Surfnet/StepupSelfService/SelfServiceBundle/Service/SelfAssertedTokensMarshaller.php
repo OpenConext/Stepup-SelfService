@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 
@@ -44,7 +45,12 @@ class SelfAssertedTokensMarshaller implements VettingMarshaller
     public function isAllowed(Identity $identity, string $secondFactorId): bool
     {
         $this->logger->info('Determine if self-asserted token registration is allowed');
-        $decision = $this->authorizationService->mayRegisterSelfAssertedTokens($identity);
+        try {
+            $decision = $this->authorizationService->mayRegisterSelfAssertedTokens($identity);
+        } catch (Exception $e) {
+            $this->logger->warning(sprintf('Self-asserted token registration is not allowed. Message "%s"', $e->getMessage()));
+            return false;
+        }
         $this->logger->info(
             sprintf(
                 'Self-asserted token registration is %s for %s',
