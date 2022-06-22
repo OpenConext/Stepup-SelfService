@@ -47,7 +47,7 @@ class VerifySmsRecoveryTokenChallengeCommand implements SmsVerificationCommandIn
     /**
      * The route used to trigger a resend of the SMS verification code
      */
-    public $resendRoute = 'ss_registration_sms_send_challenge';
+    public $resendRoute = 'ss_second_factor_self_asserted_tokens_recovery_token';
 
     /**
      * Route parameters required to build the resend route
