@@ -104,7 +104,7 @@ services:
             - '@Surfnet\StepupBundle\Service\SmsRecoveryTokenService'
             - "@translator"
             - "@surfnet_stepup_self_service_self_service.service.command"
-            -
+
     surfnet_stepup_self_service_self_service.service.gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
         arguments:
@@ -184,6 +184,11 @@ services:
         arguments:
             - '@surfnet_saml.hosted.service_provider'
             - '@self_service.second_factor_test_idp'
+
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\AuthenticationRequestFactory:
+        arguments:
+            - "@surfnet_saml.hosted.service_provider"
+            - "@self_service.recovery_token_step_up_idp"
 
     self_service.event_listener.locale:
         class: Surfnet\StepupSelfService\SelfServiceBundle\EventListener\LocaleListener
