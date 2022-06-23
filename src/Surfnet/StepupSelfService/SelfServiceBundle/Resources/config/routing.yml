@@ -35,6 +35,31 @@ ss_second_factor_self_vet_consume_assertion:
     methods:  [POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfVet:consumeSelfVetAssertion }
 
+ss_recovery_token_display_types:
+    path: /recovery-token/select-recovery-token
+    methods: [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:selectTokenType }
+
+ss_recovery_token_safe_store:
+    path: /recovery-token/create-safe-store
+    methods: [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:createSafeStore }
+
+ss_recovery_token_delete:
+    path: /recovery-token/delete/{recoveryTokenId}
+    methods: [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:delete }
+
+ss_recovery_token_sms:
+    path: /recovery-token/create-sms
+    methods: [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:createSms }
+
+ss_recovery_token_prove_sms_possession:
+    path: /recovery-token/prove-sms-possession
+    methods: [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:proveSmsPossession }
+
 ss_second_factor_self_asserted_tokens:
     path:     /second-factor/{secondFactorId}/self-asserted-token-registration
     methods:  [GET]
@@ -59,31 +84,6 @@ ss_registration_recovery_token_safe_store:
     path:     /second-factor/{secondFactorId}/safe-store
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:registerCreateRecoveryTokenSafeStore }
-
-ss_recovery_token_display_types:
-    path: /recovery-token/select-recovery-token
-    methods: [GET]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selectTokenType }
-
-ss_recovery_token_safe_store:
-    path: /recovery-token/create-safe-store
-    methods: [GET, POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:createSafeStore }
-
-ss_recovery_token_delete:
-    path: /recovery-token/delete/{recoveryTokenId}
-    methods: [GET]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:delete }
-
-ss_recovery_token_sms:
-    path: /recovery-token/create-sms
-    methods: [GET, POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:createSms }
-
-ss_recovery_token_prove_sms_possession:
-    path: /recovery-token/prove-sms-possession
-    methods: [GET, POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:proveSmsPossession }
 
 ss_registration_recovery_token_sms:
     path:     /second-factor/{secondFactorId}/sms
