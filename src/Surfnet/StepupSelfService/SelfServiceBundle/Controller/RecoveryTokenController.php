@@ -331,8 +331,8 @@ class RecoveryTokenController extends Controller
                     $identity->id
                 )
             );
-
-            throw new NotFoundHttpException();
+            $this->addFlash('error', 'ss.recovery_token.step_up.no_tokens_available.failed');
+            return $this->redirect($this->generateUrl('ss_second_factor_list'));
         }
 
         // By requesting LoA 1.5 any relevant token can be tested (LoA self asserted, 2 and 3)
