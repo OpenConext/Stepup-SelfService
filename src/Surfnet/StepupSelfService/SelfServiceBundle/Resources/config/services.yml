@@ -27,6 +27,21 @@ services:
             - "@session"
             - "@logger"
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController:
+        arguments:
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService'
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService'
+            - '@surfnet_stepup_self_service_self_service.service.second_factor'
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService'
+            - '@surfnet_stepup.service.loa_resolution'
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\AuthenticationRequestFactory'
+            - '@surfnet_saml.http.redirect_binding'
+            - '@surfnet_saml.http.post_binding'
+            - '@surfnet_saml.hosted.service_provider'
+            - '@self_service.second_factor_test_idp'
+            - '@surfnet_saml.logger'
+            - '@logger'
+
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
         arguments:
@@ -128,9 +143,14 @@ services:
         arguments:
             - '@Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService'
             - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService'
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState'
             - '@logger'
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreState:
+        arguments:
+            - '@session'
+
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState:
         arguments:
             - '@session'
 
@@ -188,7 +208,7 @@ services:
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\AuthenticationRequestFactory:
         arguments:
             - "@surfnet_saml.hosted.service_provider"
-            - "@self_service.recovery_token_step_up_idp"
+            - "@self_service.second_factor_test_idp"
 
     self_service.event_listener.locale:
         class: Surfnet\StepupSelfService\SelfServiceBundle\EventListener\LocaleListener

@@ -18,18 +18,37 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use Exception;
 use Psr\Log\LoggerInterface;
+use Surfnet\SamlBundle\Entity\IdentityProvider;
+use Surfnet\SamlBundle\Entity\ServiceProvider;
+use Surfnet\SamlBundle\Http\PostBinding;
+use Surfnet\SamlBundle\Http\RedirectBinding;
+use Surfnet\SamlBundle\Monolog\SamlAuthenticationLogger;
+use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
+use Surfnet\StepupBundle\Service\LoaResolutionService;
+use Surfnet\StepupBundle\Value\Loa;
 use Surfnet\StepupMiddlewareClientBundle\Exception\NotFoundException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeRecoveryTokenCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\PromiseSafeStorePossessionType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\AuthenticationRequestFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+
+ */
 class RecoveryTokenController extends Controller
 {
     use RecoveryTokenControllerTrait;
@@ -58,25 +77,78 @@ class RecoveryTokenController extends Controller
      */
     private $smsService;
 
+    /**
+     * @var LoaResolutionService
+     */
+    private $loaResolutionService;
+
+    /**
+     * @var AuthenticationRequestFactory
+     */
+    private $authnRequestFactory;
+
+    /**
+     * @var SamlAuthenticationLogger
+     */
+    private $samlLogger;
+
+    /**
+     * @var RedirectBinding
+     */
+    private $redirectBinding;
+
+    /**
+     * @var PostBinding
+     */
+    private $postBinding;
+
+    /**
+     * @var ServiceProvider
+     */
+    private $serviceProvider;
+
+    /**
+     * @var IdentityProvider
+     */
+    private $identityProvider;
+
+    /**
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     */
     public function __construct(
         RecoveryTokenService $recoveryTokenService,
         SafeStoreService $safeStoreService,
         SecondFactorService $secondFactorService,
         SmsRecoveryTokenService $smsService,
+        LoaResolutionService $loaResolutionService,
+        AuthenticationRequestFactory $authenticationRequestFactory,
+        RedirectBinding $redirectBinding,
+        PostBinding $postBinding,
+        ServiceProvider $serviceProvider,
+        IdentityProvider $identityProvider,
+        SamlAuthenticationLogger $samlLogger,
         LoggerInterface $logger
     ) {
         $this->recoveryTokenService = $recoveryTokenService;
         $this->safeStoreService = $safeStoreService;
         $this->secondFactorService = $secondFactorService;
-        $this->smsService = $smsService;
+        $this->loaResolutionService = $loaResolutionService;
+        $this->authnRequestFactory = $authenticationRequestFactory;
+        $this->redirectBinding = $redirectBinding;
+        $this->postBinding = $postBinding;
+        $this->serviceProvider = $serviceProvider;
+        $this->identityProvider = $identityProvider;
+        $this->samlLogger = $samlLogger;
         $this->logger = $logger;
+        // Looks like an unused service, is used in RecoveryTokenControllerTrait
+        $this->smsService = $smsService;
     }
 
     /**
      * Recovery Tokens: Select the token type to add
      * Shows an overview of the available token types for this Identity
      */
-    public function selectTokenTypeAction()
+    public function selectTokenTypeAction(): Response
     {
         $this->logger->info('Determining which recovery token are available');
         $identity = $this->getIdentity();
@@ -90,7 +162,7 @@ class RecoveryTokenController extends Controller
         );
     }
 
-    public function newRecoveryTokenAction($secondFactorId)
+    public function newRecoveryTokenAction($secondFactorId): Response
     {
         $this->logger->info('Determining which recovery token are available');
         $identity = $this->getIdentity();
@@ -121,8 +193,14 @@ class RecoveryTokenController extends Controller
      *
      * Note: A stepup authentication is required to perform this action.
      */
-    public function createSafeStoreAction(Request $request)
+    public function createSafeStoreAction(Request $request): Response
     {
+        if (!$this->recoveryTokenService->wasStepUpGiven()) {
+            $this->recoveryTokenService->setReturnTo(RecoveryTokenState::RECOVERY_TOKEN_RETURN_TO_CREATE_SAFE_STORE);
+            return $this->forward("Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUpAction");
+        }
+        $this->recoveryTokenService->resetReturnTo();
+
         $identity = $this->getIdentity();
         $this->assertNoRecoveryTokenOfType('safe-store', $identity);
         $secret = $this->safeStoreService->produceSecret();
@@ -136,6 +214,7 @@ class RecoveryTokenController extends Controller
 
             $executionResult = $this->safeStoreService->promisePossession($command);
             if (!$executionResult->getErrors()) {
+                $this->recoveryTokenService->resetStepUpGiven();
                 return $this->redirect(
                     $this->generateUrl('ss_second_factor_list')
                 );
@@ -159,8 +238,14 @@ class RecoveryTokenController extends Controller
      * Note: Shares logic with the registration SMS recovery token send challenge action
      * Note: A stepup authentication is required to perform this action.
      */
-    public function createSmsAction(Request $request)
+    public function createSmsAction(Request $request): Response
     {
+        if (!$this->recoveryTokenService->wasStepUpGiven()) {
+            $this->recoveryTokenService->setReturnTo(RecoveryTokenState::RECOVERY_TOKEN_RETURN_TO_CREATE_SMS);
+            return $this->forward("Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUpAction");
+        }
+        $this->recoveryTokenService->resetReturnTo();
+
         return $this->handleSmsChallenge(
             $request,
             '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/create_sms.html.twig',
@@ -174,8 +259,9 @@ class RecoveryTokenController extends Controller
      *
      * Note: Shares logic with the registration SMS recovery token send challenge action
      */
-    public function proveSmsPossessionAction(Request $request)
+    public function proveSmsPossessionAction(Request $request): Response
     {
+        $this->recoveryTokenService->resetStepUpGiven();
         return $this->handleSmsProofOfPossession(
             $request,
             '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/sms_prove_possession.html.twig',
@@ -191,8 +277,19 @@ class RecoveryTokenController extends Controller
      *
      * Note: A stepup authentication is required to perform this action.
      */
-    public function deleteAction(string $recoveryTokenId)
+    public function deleteAction(string $recoveryTokenId): Response
     {
+        if (!$this->recoveryTokenService->wasStepUpGiven()) {
+            $this->recoveryTokenService->setReturnTo(
+                RecoveryTokenState::RECOVERY_TOKEN_RETURN_TO_DELETE,
+                ['recoveryTokenId' => $recoveryTokenId]
+            );
+            return $this->forward(
+                "Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUpAction"
+            );
+        }
+        $this->recoveryTokenService->resetReturnTo();
+        $this->recoveryTokenService->resetStepUpGiven();
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $this->getIdentity());
         try {
             $recoveryToken = $this->recoveryTokenService->getRecoveryToken($recoveryTokenId);
@@ -205,12 +302,90 @@ class RecoveryTokenController extends Controller
                 foreach ($executionResult->getErrors() as $error) {
                     $this->logger->error(sprintf('Recovery Token revocation failed with message: "%s"', $error));
                 }
-                return;
+                return $this->redirect($this->generateUrl('ss_second_factor_list'));
             }
         } catch (NotFoundException $e) {
             throw new LogicException('Identity %s tried to remove an unpossessed recovery token');
         }
         $this->addFlash('success', 'ss.form.recovery_token.delete.success');
         return $this->redirect($this->generateUrl('ss_second_factor_list'));
+    }
+
+    /**
+     * Create a step-up AuthNRequest
+     *
+     * This request is sent to the Gateway (using the SF test endpoint)
+     * LoA 1.5 is requested, allowing use of self-asserted tokens.
+     */
+    public function stepUpAction(): Response
+    {
+        $this->logger->notice('Starting step up authentication for a recovery token action');
+
+        $identity = $this->getIdentity();
+
+        $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);
+        if (!$vettedSecondFactors || $vettedSecondFactors->getTotalItems() === 0) {
+            $this->logger->error(
+                sprintf(
+                    'Identity "%s" tried to test a second factor, but does not own a suitable vetted token.',
+                    $identity->id
+                )
+            );
+
+            throw new NotFoundHttpException();
+        }
+
+        // By requesting LoA 1.5 any relevant token can be tested (LoA self asserted, 2 and 3)
+        $authenticationRequest = $this->authnRequestFactory->createSecondFactorRequest(
+            $identity->nameId,
+            $this->loaResolutionService->getLoaByLevel(Loa::LOA_1_5)
+        );
+
+        $this->recoveryTokenService->startStepUpRequest($authenticationRequest->getRequestId());
+
+        $samlLogger = $this->samlLogger->forAuthentication($authenticationRequest->getRequestId());
+        $samlLogger->notice('Sending authentication request to the second factor test IDP');
+
+        return $this->redirectBinding->createRedirectResponseFor($authenticationRequest);
+    }
+
+    /**
+     * Consume the Saml Response from the Step Up authentication
+     * We need this step-up auth for adding and deleting recovery tokens.
+     */
+    public function stepUpConsumeAssertionAction(Request $httpRequest): Response
+    {
+        if (!$this->recoveryTokenService->hasStepUpRequest()) {
+            $this->logger->error(
+                'Received an authentication response modifying a recovery token, no matching request was found'
+            );
+            throw new AccessDeniedHttpException('Did not expect an authentication response');
+        }
+        $this->logger->notice('Received an authentication response for  a second factor');
+        $initiatedRequestId = $this->recoveryTokenService->getStepUpRequest();
+        $samlLogger = $this->samlLogger->forAuthentication($initiatedRequestId);
+        $this->recoveryTokenService->deleteStepUpRequest();
+        try {
+            $assertion = $this->postBinding->processResponse(
+                $httpRequest,
+                $this->identityProvider,
+                $this->serviceProvider
+            );
+            if (!InResponseTo::assertEquals($assertion, $initiatedRequestId)) {
+                $samlLogger->error(
+                    sprintf(
+                        'Expected a response to the request with ID "%s", but the SAMLResponse was a response to a different request',
+                        $initiatedRequestId
+                    )
+                );
+                throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
+            }
+        } catch (Exception $exception) {
+            $this->addFlash('error', 'ss.recovery_token.step_up.failed');
+        }
+        // Store step-up was given in state
+        $this->recoveryTokenService->stepUpGiven();
+        $returnTo = $this->recoveryTokenService->returnTo();
+        return $this->redirectToRoute($returnTo->getRoute(), $returnTo->getParameters());
     }
 }
