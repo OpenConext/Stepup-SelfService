@@ -30,6 +30,7 @@ class SafeStoreState
     private $session;
 
     private const SAFE_STORE_SESSION_NAME = 'safe_store_secret';
+    private const SAFE_STORE_REGISTRATION_MARKER = 'safe_store_created_during_registration';
 
     public function __construct(SessionInterface $session)
     {
@@ -47,5 +48,28 @@ class SafeStoreState
             return $this->session->get(self::SAFE_STORE_SESSION_NAME);
         }
         throw new SafeStoreSecretNotFoundException('Unable to retrieve SafeStore secret, it was not found in state');
+    }
+
+    public function forget(): void
+    {
+        $this->session->remove(self::SAFE_STORE_SESSION_NAME);
+    }
+
+    public function tokenCreatedDuringSecondFactorRegistration(): void
+    {
+        $this->session->set(self::SAFE_STORE_REGISTRATION_MARKER, true);
+    }
+
+    public function wasSafeStoreTokenCreatedDuringSecondFactorRegistration(): bool
+    {
+        if ($this->session->has(self::SAFE_STORE_REGISTRATION_MARKER)) {
+            return $this->session->get(self::SAFE_STORE_REGISTRATION_MARKER);
+        }
+        return false;
+    }
+
+    public function forgetSafeStoreTokenCreatedDuringSecondFactorRegistration(): void
+    {
+        $this->session->remove(self::SAFE_STORE_REGISTRATION_MARKER);
     }
 }
