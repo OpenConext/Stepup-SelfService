@@ -55,9 +55,10 @@ class SecondFactorController extends Controller
 
         /** @var RecoveryTokenService $recoveryTokenService */
         $recoveryTokenService = $this->get(RecoveryTokenService::class);
-        $selfAssertedTokenRegistration = $institutionConfigurationOptions->allowSelfAssertedTokens === true;
+        $recoveryTokensMarshaller = $this->get('self_service.service.recovery_tokens_marshaller');
+        $allowRecoveryTokenManagement = $recoveryTokensMarshaller->isAllowed($identity, null);
         $recoveryTokens = [];
-        if ($selfAssertedTokenRegistration) {
+        if ($allowRecoveryTokenManagement) {
             $recoveryTokens = $recoveryTokenService->getRecoveryTokensForIdentity($identity);
         }
 
@@ -70,7 +71,7 @@ class SecondFactorController extends Controller
             'vettedSecondFactors' => $secondFactors->vetted,
             'availableSecondFactors' => $secondFactors->available,
             'expirationHelper' => $expirationHelper,
-            'selfAssertedTokenRegistration' => $selfAssertedTokenRegistration,
+            'allowRecoveryTokenManagement' => $allowRecoveryTokenManagement,
             'recoveryTokens' => $recoveryTokens,
         ];
     }
