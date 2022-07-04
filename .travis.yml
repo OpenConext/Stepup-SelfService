@@ -20,6 +20,8 @@ env:
   global:
     - APP_ENV=test
 
+dist: bionic
+
 cache:
   directories:
     - ~/.composer

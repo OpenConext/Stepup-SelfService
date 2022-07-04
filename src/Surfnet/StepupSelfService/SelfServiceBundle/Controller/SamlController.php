@@ -22,6 +22,7 @@ use Exception;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Value\Loa;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -60,10 +61,10 @@ class SamlController extends Controller
 
         $authenticationRequestFactory = $this->get('self_service.test_second_factor_authentication_request_factory');
 
-        // By requesting LoA 2 any relevant token can be tested (LoA 2 and 3)
+        // By requesting LoA 1.5 any relevant token can be tested (LoA 2 and 3)
         $authenticationRequest = $authenticationRequestFactory->createSecondFactorTestRequest(
             $identity->nameId,
-            $loaResolutionService->getLoaByLevel(Loa::LOA_2)
+            $loaResolutionService->getLoaByLevel(Loa::LOA_1_5)
         );
 
         $this->get('session')->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
@@ -79,59 +80,65 @@ class SamlController extends Controller
         $logger = $this->get('logger');
 
         $session = $this->get('session');
-        // The test authentication IdP is also used for self vetting, a different session id is
-        // used to mark a self vet command
-        if ($session->has(SelfVetController::SELF_VET_SESSION_ID)) {
-            /** @var SelfVetRequestId $selfVetRequestId */
-            $selfVetRequestId = $session->get(SelfVetController::SELF_VET_SESSION_ID);
-            $secondFactorId = $selfVetRequestId->vettingSecondFactorId();
-            return $this->forward(
-                'SurfnetStepupSelfServiceSelfServiceBundle:SelfVet:consumeSelfVetAssertion',
-                ['secondFactorId' => $secondFactorId]
-            );
-        }
-        if (!$session->has('second_factor_test_request_id')) {
-            $logger->error(
-                'Received an authentication response for testing a second factor, but no second factor test response was expected'
-            );
-
-            throw new AccessDeniedHttpException('Did not expect an authentication response');
-        }
-
-        $logger->notice('Received an authentication response for testing a second factor');
-
-        $initiatedRequestId = $session->get('second_factor_test_request_id');
-
-        $samlLogger = $this->get('surfnet_saml.logger')->forAuthentication($initiatedRequestId);
-
-        $session->remove('second_factor_test_request_id');
-
-        $postBinding = $this->get('surfnet_saml.http.post_binding');
-
-        try {
-            $assertion = $postBinding->processResponse(
-                $httpRequest,
-                $this->get('self_service.second_factor_test_idp'),
-                $this->get('surfnet_saml.hosted.service_provider')
-            );
-
-            if (!InResponseTo::assertEquals($assertion, $initiatedRequestId)) {
-                $samlLogger->error(
-                    sprintf(
-                        'Expected a response to the request with ID "%s", but the SAMLResponse was a response to a different request',
-                        $initiatedRequestId
-                    )
+        switch (true) {
+            case ($session->has(SelfVetController::SELF_VET_SESSION_ID)):
+                // The test authentication IdP is also used for self vetting, a different session id is
+                // used to mark a self vet command
+                /** @var SelfVetRequestId $selfVetRequestId */
+                $selfVetRequestId = $session->get(SelfVetController::SELF_VET_SESSION_ID);
+                $secondFactorId = $selfVetRequestId->vettingSecondFactorId();
+                return $this->forward(
+                    'SurfnetStepupSelfServiceSelfServiceBundle:SelfVet:consumeSelfVetAssertion',
+                    ['secondFactorId' => $secondFactorId]
                 );
+            case ($session->has(RecoveryTokenState::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER)):
+                // The test authentication IdP is also used for self-asserted recovery token
+                // verification a different session id is used to mark the authentication.
+                return $this->forward('SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:stepUpConsumeAssertion');
+            default:
+                if (!$session->has('second_factor_test_request_id')) {
+                    $logger->error(
+                        'Received an authentication response for testing a second factor, but no second factor test response was expected'
+                    );
 
-                throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
-            }
+                    throw new AccessDeniedHttpException('Did not expect an authentication response');
+                }
 
-            $session->getFlashBag()->add('success', 'ss.test_second_factor.verification_successful');
-        } catch (Exception $exception) {
-            $session->getFlashBag()->add('error', 'ss.test_second_factor.verification_failed');
+                $logger->notice('Received an authentication response for testing a second factor');
+
+                $initiatedRequestId = $session->get('second_factor_test_request_id');
+
+                $samlLogger = $this->get('surfnet_saml.logger')->forAuthentication($initiatedRequestId);
+
+                $session->remove('second_factor_test_request_id');
+
+                $postBinding = $this->get('surfnet_saml.http.post_binding');
+
+                try {
+                    $assertion = $postBinding->processResponse(
+                        $httpRequest,
+                        $this->get('self_service.second_factor_test_idp'),
+                        $this->get('surfnet_saml.hosted.service_provider')
+                    );
+
+                    if (!InResponseTo::assertEquals($assertion, $initiatedRequestId)) {
+                        $samlLogger->error(
+                            sprintf(
+                                'Expected a response to the request with ID "%s", but the SAMLResponse was a response to a different request',
+                                $initiatedRequestId
+                            )
+                        );
+
+                        throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
+                    }
+
+                    $session->getFlashBag()->add('success', 'ss.test_second_factor.verification_successful');
+                } catch (Exception $exception) {
+                    $session->getFlashBag()->add('error', 'ss.test_second_factor.verification_failed');
+                }
+
+                return $this->redirectToRoute('ss_second_factor_list');
         }
-
-        return $this->redirectToRoute('ss_second_factor_list');
     }
 
     public function metadataAction()

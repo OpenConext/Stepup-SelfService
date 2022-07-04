@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2022-06-22T14:33:43Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
+  <file date="2022-06-28T10:24:46Z" source-language="en" target-language="nl_NL" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -42,12 +42,12 @@
       <trans-unit id="e59d5dbfb886036d6a99e85bf857442d4ea4009c" resname="safe-store">
         <source>safe-store</source>
         <target>Safe store</target>
-        <jms:reference-file line="60">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="64">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="83b04e2653917150804a1a71da678664e3e509b5" resname="sms">
         <source>sms</source>
         <target>SMS</target>
-        <jms:reference-file line="59">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="63">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
         <source>ss.flash.error_while_switching_locale</source>
@@ -78,6 +78,11 @@
         <source>ss.form.recovery_token.delete.success</source>
         <target state="translated">Je [recovery token] is succesvol verwijderd</target>
         <jms:reference-file line="51">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e426ad1c2c11cf5702e4808054059e41d7756524" resname="ss.form.recovery_token.error.challenge_not_sent_error_message">
+        <source>ss.form.recovery_token.error.challenge_not_sent_error_message</source>
+        <target state="translated">Het verzenden van de SMS verificatiecode is mislukt, probeer opnieuw</target>
+        <jms:reference-file line="58">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1056c8b78526c39c46b53c03b442af8e07e83ca6" resname="ss.form.recovery_token.error.error_message">
         <source>ss.form.recovery_token.error.error_message</source>
@@ -186,7 +191,7 @@
       </trans-unit>
       <trans-unit id="879c12224efa2d6f5da55a898e8f828dcbd9fea3" resname="ss.recovery_token.sms.prove_possession_title">
         <source>ss.recovery_token.sms.prove_possession_title</source>
-        <target state="new">ss.recovery_token.sms.prove_possession_title</target>
+        <target state="translated">SMS [Recovery token]</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/registration_sms_prove_possession.html.twig</jms:reference-file>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/sms_prove_possession.html.twig</jms:reference-file>
       </trans-unit>
@@ -194,6 +199,16 @@
         <source>ss.recovery_token.sms.send_challenge_title</source>
         <target state="translated">Registreer een SMS [Recovery token]</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/create_sms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fb1af9d7b1a3a1ae5faa7e626ef5946cb2d9a315" resname="ss.recovery_token.step_up.failed">
+        <source>ss.recovery_token.step_up.failed</source>
+        <target state="translated">Verificatie met je token is mislukt</target>
+        <jms:reference-file line="59">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d66a9a79cff9eab1025ad228d31555e0721722c4" resname="ss.recovery_token.step_up.no_tokens_available.failed">
+        <source>ss.recovery_token.step_up.no_tokens_available.failed</source>
+        <target state="translated">Het is niet mogelijk om een [recovery token] toe te voegen of te verwijderen zonder een token. Bezoek de service desk om het [recovery token] te verwijderen, of registreer een nieuw token.</target>
+        <jms:reference-file line="60">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="231069934a847862c6128f2dca767b9a577aed18" resname="ss.recovery_token_list.header.recovery_token_identifier">
         <source>ss.recovery_token_list.header.recovery_token_identifier</source>
@@ -765,12 +780,17 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       <trans-unit id="03881b38b73aa0c36816dfeb6ce493f01bae69cd" resname="ss.self_asserted_tokens.second_factor.no_available_recovery_token.alert.failed">
         <source>ss.self_asserted_tokens.second_factor.no_available_recovery_token.alert.failed</source>
         <target>Je hebt geen geschikt [recovery-token] om je token mee te activeren. Je mag bijvoorbeeld met een SMS [recovery-token] niet een SMS token activeren.</target>
-        <jms:reference-file line="56">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="57">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d3653739e7a9767a2a614acb62d85eac2421d7af" resname="ss.self_asserted_tokens.second_factor.vetting.alert.failed">
+        <source>ss.self_asserted_tokens.second_factor.vetting.alert.failed</source>
+        <target state="translated">Het activeren van je token is mislukt, probeer het opnieuw</target>
+        <jms:reference-file line="55">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="da675d9cfce3bea01d6ff884c6941a4cb00de0ed" resname="ss.self_asserted_tokens.second_factor.vetting.alert.successful">
         <source>ss.self_asserted_tokens.second_factor.vetting.alert.successful</source>
         <target state="translated">Je token is geactiveerd</target>
-        <jms:reference-file line="55">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
+        <jms:reference-file line="56">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="35dcfa9d6b292923d95e80d966959f1ceb95a513" resname="ss.self_vet.second_factor.alert.failed">
         <source>ss.self_vet.second_factor.alert.failed</source>

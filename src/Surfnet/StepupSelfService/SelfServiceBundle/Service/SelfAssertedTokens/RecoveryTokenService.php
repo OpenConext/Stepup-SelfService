@@ -24,6 +24,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService as MiddlewareRecoveryTokenService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SafeStoreAuthenticationCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\ReturnTo;
 
 class RecoveryTokenService
 {
@@ -42,13 +43,20 @@ class RecoveryTokenService
      */
     private $logger;
 
+    /**
+     * @var RecoveryTokenState
+     */
+    private $stateStore;
+
     public function __construct(
         MiddlewareRecoveryTokenService $recoveryTokenService,
         SafeStoreService $safeStoreService,
+        RecoveryTokenState $recoveryTokenState,
         LoggerInterface $logger
     ) {
         $this->recoveryTokenService = $recoveryTokenService;
         $this->safeStoreService = $safeStoreService;
+        $this->stateStore = $recoveryTokenState;
         $this->logger = $logger;
     }
 
@@ -114,5 +122,55 @@ class RecoveryTokenService
             }
         }
         return $tokens;
+    }
+
+    public function startStepUpRequest(string $requestId): void
+    {
+        $this->stateStore->startStepUpRequest($requestId);
+    }
+
+    public function hasStepUpRequest(): bool
+    {
+        return $this->stateStore->hasStepUpRequest();
+    }
+
+    public function getStepUpRequest(): string
+    {
+        return $this->stateStore->getStepUpRequest();
+    }
+
+    public function deleteStepUpRequest(): void
+    {
+        $this->stateStore->deleteStepUpRequest();
+    }
+
+    public function wasStepUpGiven(): bool
+    {
+        return $this->stateStore->getStepUpGiven();
+    }
+
+    public function stepUpGiven(): void
+    {
+        $this->stateStore->setStepUpGiven(true);
+    }
+
+    public function setReturnTo(string $route, array $parameters = [])
+    {
+        $this->stateStore->setReturnTo($route, $parameters);
+    }
+
+    public function returnTo(): ReturnTo
+    {
+        return $this->stateStore->returnTo();
+    }
+
+    public function resetReturnTo() :void
+    {
+        $this->stateStore->resetReturnTo();
+    }
+
+    public function resetStepUpGiven()
+    {
+        $this->stateStore->resetStepUpGiven();
     }
 }
