@@ -64,7 +64,7 @@ class SamlController extends Controller
         // By requesting LoA 1.5 any relevant token can be tested (LoA 2 and 3)
         $authenticationRequest = $authenticationRequestFactory->createSecondFactorTestRequest(
             $identity->nameId,
-            $loaResolutionService->getLoaByLevel(Loa::LOA_1_5)
+            $loaResolutionService->getLoaByLevel(Loa::LOA_SELF_VETTED)
         );
 
         $this->get('session')->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
