@@ -86,6 +86,8 @@ class SelfVetMarshallerTest extends TestCase
     private function buildVettedTokenFromLoa(int $loa): VettedSecondFactor
     {
         $vettedSecondFactor = new VettedSecondFactor();
+        $vettedSecondFactor->vettingType = 'on-premise';
+
         switch ($loa) {
             case Loa::LOA_2:
                 $vettedSecondFactor->type = 'sms';
