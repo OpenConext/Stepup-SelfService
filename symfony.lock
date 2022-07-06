@@ -5,9 +5,6 @@
     "composer/ca-bundle": {
         "version": "1.2.9"
     },
-    "composer/package-versions-deprecated": {
-        "version": "1.11.99.5"
-    },
     "composer/pcre": {
         "version": "2.0.0"
     },
