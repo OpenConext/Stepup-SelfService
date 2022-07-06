@@ -29,6 +29,7 @@ use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
 use Surfnet\StepupBundle\Value\SecondFactorType;
+use Surfnet\StepupBundle\Value\VettingType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller;
@@ -129,7 +130,8 @@ class SelfVetController extends Controller
 
         $candidateSecondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
         $candidateSecondFactorLoa = $this->secondFactorTypeService->getLevel(
-            new SecondFactorType($candidateSecondFactor->type)
+            new SecondFactorType($candidateSecondFactor->type),
+            new VettingType(VettingType::TYPE_SELF_VET)
         );
         $candidateSecondFactorLoa = $this->loaResolutionService->getLoaByLevel($candidateSecondFactorLoa);
 

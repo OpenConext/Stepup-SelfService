@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
 use Surfnet\StepupBundle\Value\SecondFactorType;
+use Surfnet\StepupBundle\Value\VettingType;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use function sprintf;
@@ -90,7 +91,9 @@ class SelfVetMarshaller implements VettingMarshaller
             foreach ($vettedSecondFactors->getElements() as $authoringSecondFactor) {
                 $hasSuitableToken = $this->secondFactorTypeService->hasEqualOrLowerLoaComparedTo(
                     new SecondFactorType($candidateToken->type),
-                    new SecondFactorType($authoringSecondFactor->type)
+                    new VettingType(VettingType::TYPE_SELF_VET),
+                    new SecondFactorType($authoringSecondFactor->type),
+                    new VettingType($authoringSecondFactor->vettingType)
                 );
                 if ($hasSuitableToken) {
                     $this->logger->info('Self vetting is allowed');
