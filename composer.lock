@@ -2923,16 +2923,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "5.0.1",
+            "version": "5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-bundle.git",
-                "reference": "1bcfa1e6c85fc0bfa3975cf0599bfab164cabe29"
+                "reference": "f663a50667e8ca695e77f21c39a0577f1db7c625"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/1bcfa1e6c85fc0bfa3975cf0599bfab164cabe29",
-                "reference": "1bcfa1e6c85fc0bfa3975cf0599bfab164cabe29",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/f663a50667e8ca695e77f21c39a0577f1db7c625",
+                "reference": "f663a50667e8ca695e77f21c39a0577f1db7c625",
                 "shasum": ""
             },
             "require": {
@@ -2977,10 +2977,10 @@
                 "surfnet"
             ],
             "support": {
-                "source": "https://github.com/OpenConext/Stepup-bundle/tree/5.0.1",
+                "source": "https://github.com/OpenConext/Stepup-bundle/tree/5.0.3",
                 "issues": "https://github.com/OpenConext/Stepup-bundle/issues"
             },
-            "time": "2022-07-04T13:26:23+00:00"
+            "time": "2022-07-12T11:06:51+00:00"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -2988,19 +2988,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "b7d24b5a3039ac73128b58e3541100a5e8691243"
+                "reference": "5dd5d019aed68eb1ed00d80bc0813bd215446777"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/b7d24b5a3039ac73128b58e3541100a5e8691243",
-                "reference": "b7d24b5a3039ac73128b58e3541100a5e8691243",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/5dd5d019aed68eb1ed00d80bc0813bd215446777",
+                "reference": "5dd5d019aed68eb1ed00d80bc0813bd215446777",
                 "shasum": ""
             },
             "require": {
                 "beberlei/assert": "~2.0",
                 "guzzlehttp/guzzle": "^6.0",
                 "moontoast/math": "~1.1",
-                "php": "^7.0",
+                "php": "^7.2",
                 "psr/log": "~1.0",
                 "ramsey/uuid": "^3.4",
                 "surfnet/stepup-bundle": "^5.0",
@@ -3045,7 +3045,7 @@
                 "source": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/tree/feature/self-asserted-tokens",
                 "issues": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/issues"
             },
-            "time": "2022-07-05T13:09:52+00:00"
+            "time": "2022-07-14T09:53:59+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",

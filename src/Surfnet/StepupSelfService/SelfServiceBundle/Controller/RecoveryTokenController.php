@@ -338,7 +338,7 @@ class RecoveryTokenController extends Controller
         // By requesting LoA 1.5 any relevant token can be tested (LoA self asserted, 2 and 3)
         $authenticationRequest = $this->authnRequestFactory->createSecondFactorRequest(
             $identity->nameId,
-            $this->loaResolutionService->getLoaByLevel(Loa::LOA_1_5)
+            $this->loaResolutionService->getLoaByLevel(Loa::LOA_SELF_VETTED)
         );
 
         $this->recoveryTokenService->startStepUpRequest($authenticationRequest->getRequestId());
