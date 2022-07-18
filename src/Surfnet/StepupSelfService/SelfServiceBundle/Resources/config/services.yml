@@ -163,6 +163,13 @@ services:
         arguments:
             - '@Surfnet\StepupMiddlewareClientBundle\Identity\Service\AuthorizationService'
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService:
+        arguments:
+            - "@session"
+            - "@logger"
+            - '' # See extension
+            - [] # See extension
+
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
         arguments:

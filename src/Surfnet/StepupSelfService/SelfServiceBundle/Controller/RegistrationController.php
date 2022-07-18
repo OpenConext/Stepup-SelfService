@@ -23,9 +23,12 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +43,6 @@ class RegistrationController extends Controller
     public function displaySecondFactorTypesAction()
     {
         $institution = $this->getIdentity()->institution;
-
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($institution);
 
@@ -95,7 +97,8 @@ class RegistrationController extends Controller
     {
         $selfVetMarshaller = $this->get('self_service.service.self_vet_marshaller');
         $selfAssertedTokensMarshaller = $this->get('self_service.service.self_asserted_tokens_marshaller');
-
+        $activationFlowService = $this->get(ActivationFlowService::class);
+        $preference = $activationFlowService->getPreference();
         $allowSelfVetting = $selfVetMarshaller->isAllowed($this->getIdentity(), $secondFactorId);
         $allowSelfAssertedTokens = $selfAssertedTokensMarshaller->isAllowed($this->getIdentity(), $secondFactorId);
 
@@ -110,6 +113,7 @@ class RegistrationController extends Controller
             );
         }
         return [
+            'preference' => $preference,
             'allowSelfVetting' => $allowSelfVetting,
             'allowSelfAssertedTokens' => $allowSelfAssertedTokens,
             'verifyEmail' => $this->emailVerificationIsRequired(),

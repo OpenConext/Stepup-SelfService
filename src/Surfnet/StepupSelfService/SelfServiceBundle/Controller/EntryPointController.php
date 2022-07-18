@@ -18,8 +18,11 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
+use Symfony\Component\HttpFoundation\Request;
 
 class EntryPointController extends Controller
 {
@@ -33,17 +36,28 @@ class EntryPointController extends Controller
      */
     private $recoveryTokenService;
 
-    public function __construct(SecondFactorService $secondFactorService, RecoveryTokenService $recoveryTokenService)
-    {
+    private $authStateHandler;
+
+    private $activationFlowService;
+
+    public function __construct(
+        SecondFactorService $secondFactorService,
+        RecoveryTokenService $recoveryTokenService,
+        ActivationFlowService $activationFlowService,
+        AuthenticatedSessionStateHandler $authenticatedSessionStateHandler
+    ) {
         $this->secondFactorService = $secondFactorService;
         $this->recoveryTokenService = $recoveryTokenService;
+        $this->activationFlowService = $activationFlowService;
+        $this->authStateHandler = $authenticatedSessionStateHandler;
     }
 
-    public function decideSecondFactorFlowAction()
+    public function decideSecondFactorFlowAction(Request $request)
     {
         $identity = $this->getIdentity();
         $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
         $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
+        $this->activationFlowService->process($this->authStateHandler->getCurrentRequestUri());
 
         if ($hasSecondFactor || $hasRecoveryToken) {
             return $this->redirect($this->generateUrl('ss_second_factor_list'));
