@@ -90,6 +90,9 @@ services:
         arguments:
             - "@session"
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler:
+        alias: "self_service.security.authentication.session.session_storage"
+
     self_service.security.authentication.session.session_lifetime_guard:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionLifetimeGuard
