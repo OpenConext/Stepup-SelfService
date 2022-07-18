@@ -60,3 +60,7 @@ parameters:
 
     session_max_absolute_lifetime: 3600 # 1 hours * 60 minutes * 60 seconds
     session_max_relative_lifetime: 600  # 10 minutes * 60 seconds
+
+    preferred_activation_flow_name: activate
+    preferred_activation_flow_options: [ra, self]
+
