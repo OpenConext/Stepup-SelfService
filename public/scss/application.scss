@@ -53,9 +53,11 @@
       max-width: 200px;
       max-height: 90px;
     }
-
   }
 
+}
+.vetting-selector.highlighted {
+    border-color: $blue;
 }
 
 .second-factors {

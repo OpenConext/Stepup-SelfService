@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2022 SURFnet bv
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,47 +18,64 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
-use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\RegistrationAuthorityCredentialsCollection;
-use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RaService as ApiRaService;
+use Psr\Log\LoggerInterface;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\OnPremise;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\SelfAssertedToken;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\SelfVet;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeCollection;
 
-class RaService
+class VettingTypeService
 {
     /**
-     * @var ApiRaService
+     * @var SelfVetMarshaller
      */
-    private $api;
-
-    public function __construct(ApiRaService $raService)
-    {
-        $this->api = $raService;
-    }
+    private $selfVetMarshaller;
 
     /**
-     * @param string $institution
-     * @return RegistrationAuthorityCredentialsCollection
+     * @var SelfAssertedTokensMarshaller
      */
-    public function listRas($institution)
-    {
-        return $this->api->listRas($institution);
+    private $selfAssertedTokensMarshaller;
+
+    /**
+     * @var ActivationFlowService
+     */
+    private $activationFlowService;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        SelfVetMarshaller $selfVetMarshaller,
+        SelfAssertedTokensMarshaller $selfAssertedTokensMarshaller,
+        ActivationFlowService $activationFlowService,
+        LoggerInterface $logger
+    ) {
+        $this->selfVetMarshaller = $selfVetMarshaller;
+        $this->selfAssertedTokensMarshaller = $selfAssertedTokensMarshaller;
+        $this->activationFlowService = $activationFlowService;
+        $this->logger = $logger;
     }
 
-    public function listRasWithoutRaas($institution)
+    public function vettingTypes(Identity $identity, string $secondFactorId): VettingTypeCollection
     {
-        $allRas = $this->api->listRas($institution);
-
-        $rasWithoutRaas = [];
-        foreach ($allRas->getElements() as $ra) {
-            if (!$ra->isRaa) {
-                $rasWithoutRaas[] = $ra;
-            }
+        $collection = new VettingTypeCollection();
+        $this->logger->info('Adding "OnPremise" vetting type to VettingTypeCollection');
+        $collection->add(new OnPremise());
+        if ($this->selfAssertedTokensMarshaller->isAllowed($identity, $secondFactorId)) {
+            $this->logger->info('Adding "SelfAssertedToken" vetting type to VettingTypeCollection');
+            $collection->add(new SelfAssertedToken());
         }
+        if ($this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {
+            $this->logger->info('Adding "SelfVet" vetting type to VettingTypeCollection');
+            $collection->add(new SelfVet());
+        }
+        $preference = $this->activationFlowService->getPreference();
+        $this->logger->info(sprintf('Expressing "%s" vetting type as prefered activation flow', $preference));
+        $collection->expressVettingPreference($preference);
 
-        // All RAs and RAAs are fetched, so this can safely be returned (no pagination is used here)
-        return new RegistrationAuthorityCredentialsCollection(
-            $rasWithoutRaas,
-            count($rasWithoutRaas),
-            $allRas->getItemsPerPage(),
-            $allRas->getCurrentPage()
-        );
+        return $collection;
     }
 }

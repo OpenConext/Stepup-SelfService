@@ -27,9 +27,11 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -95,14 +97,12 @@ class RegistrationController extends Controller
      */
     public function displayVettingTypesAction($secondFactorId)
     {
-        $selfVetMarshaller = $this->get('self_service.service.self_vet_marshaller');
-        $selfAssertedTokensMarshaller = $this->get('self_service.service.self_asserted_tokens_marshaller');
-        $activationFlowService = $this->get(ActivationFlowService::class);
-        $preference = $activationFlowService->getPreference();
-        $allowSelfVetting = $selfVetMarshaller->isAllowed($this->getIdentity(), $secondFactorId);
-        $allowSelfAssertedTokens = $selfAssertedTokensMarshaller->isAllowed($this->getIdentity(), $secondFactorId);
-
-        if (!$allowSelfVetting && !$allowSelfAssertedTokens) {
+        /**
+         * @var VettingTypeService
+         */
+        $vettingTypeService = $this->get(VettingTypeService::class);
+        $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getIdentity(), $secondFactorId);
+        if (!$vettingTypeCollection->allowSelfVetting() && !$vettingTypeCollection->allowSelfAssertedTokens()) {
             $this->get('logger')
                 ->notice(
                     'Skipping ahead to the RA vetting option as self vetting or self-asserted tokens are not allowed'
@@ -113,9 +113,12 @@ class RegistrationController extends Controller
             );
         }
         return [
-            'preference' => $preference,
-            'allowSelfVetting' => $allowSelfVetting,
-            'allowSelfAssertedTokens' => $allowSelfAssertedTokens,
+            'allowSelfVetting' => $vettingTypeCollection->allowSelfVetting(),
+            'allowSelfAssertedTokens' => $vettingTypeCollection->allowSelfAssertedTokens(),
+            'highlightOnPremise' => $vettingTypeCollection->isPreferred(VettingTypeInterface::ON_PREMISE),
+            'highlightSelfAssertedTokens' => $vettingTypeCollection->isPreferred(
+                VettingTypeInterface::SELF_ASSERTED_TOKENS
+            ),
             'verifyEmail' => $this->emailVerificationIsRequired(),
             'secondFactorId' => $secondFactorId,
         ];

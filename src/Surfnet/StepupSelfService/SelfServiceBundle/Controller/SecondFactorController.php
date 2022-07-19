@@ -19,6 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Surfnet\StepupBundle\Service\LoaResolutionService;
+use Surfnet\StepupBundle\Service\SecondFactorTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
@@ -60,8 +62,10 @@ class SecondFactorController extends Controller
         if ($selfAssertedTokenRegistration) {
             $recoveryTokens = $recoveryTokenService->getRecoveryTokensForIdentity($identity);
         }
+        $loaService = $this->get(SecondFactorTypeService::class);
 
         return [
+            'loaService' => $loaService,
             'email' => $identity->email,
             'maxNumberOfTokens' => $secondFactors->getMaximumNumberOfRegistrations(),
             'registrationsLeft' => $secondFactors->getRegistrationsLeft(),

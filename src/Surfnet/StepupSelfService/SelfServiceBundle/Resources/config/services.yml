@@ -139,6 +139,13 @@ services:
             - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService'
             - "@logger"
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService:
+        arguments:
+            - '@self_service.service.self_vet_marshaller'
+            - '@self_service.service.self_asserted_tokens_marshaller'
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService'
+            - '@logger'
+
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService:
         arguments:
             - '@Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService'
