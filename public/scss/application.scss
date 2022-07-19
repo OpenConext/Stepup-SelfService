@@ -195,3 +195,10 @@ span.label {
   padding: 1em;
   margin: 1em 0;
 }
+
+.loa-star-rating {
+  img {
+    height: 1em;
+    filter: $star-color;
+  }
+}
