@@ -144,6 +144,7 @@ services:
             - '@self_service.service.self_vet_marshaller'
             - '@self_service.service.self_asserted_tokens_marshaller'
             - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService'
+            - '@Surfnet\StepupMiddlewareClientBundle\Identity\Service\VettingTypeHintService'
             - '@logger'
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService:
