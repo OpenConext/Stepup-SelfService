@@ -19,11 +19,16 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupMiddlewareClient\Identity\Dto\VettingTypeHint;
+use Surfnet\StepupMiddlewareClientBundle\Exception\NotFoundException;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Service\VettingTypeHintService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\OnPremise;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\SelfAssertedToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\SelfVet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeCollection;
+use function array_filter;
+use function array_key_exists;
 
 class VettingTypeService
 {
@@ -43,6 +48,11 @@ class VettingTypeService
     private $activationFlowService;
 
     /**
+     * @var VettingTypeHintService
+     */
+    private $vettingTypeHintService;
+
+    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -51,11 +61,13 @@ class VettingTypeService
         SelfVetMarshaller $selfVetMarshaller,
         SelfAssertedTokensMarshaller $selfAssertedTokensMarshaller,
         ActivationFlowService $activationFlowService,
+        VettingTypeHintService $vettingTypeHintService,
         LoggerInterface $logger
     ) {
         $this->selfVetMarshaller = $selfVetMarshaller;
         $this->selfAssertedTokensMarshaller = $selfAssertedTokensMarshaller;
         $this->activationFlowService = $activationFlowService;
+        $this->vettingTypeHintService = $vettingTypeHintService;
         $this->logger = $logger;
     }
 
@@ -77,5 +89,23 @@ class VettingTypeService
         $collection->expressVettingPreference($preference);
 
         return $collection;
+    }
+
+    public function vettingTypeHint(string $institution, string $locale): ?string
+    {
+        try {
+            $hint = $this->vettingTypeHintService->findOne($institution);
+            if (!empty($hint->hints)) {
+                $hintText = array_filter($hint->hints, function ($hintEntry) use ($locale) {
+                    return $hintEntry['locale'] === $locale;
+                });
+                if ($hintText) {
+                    return reset($hintText)['hint'];
+                }
+            }
+        } catch (NotFoundException $e) {
+            // Do nothing for now
+        }
+        return null;
     }
 }
