@@ -20,7 +20,6 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
-use Surfnet\StepupBundle\Service\SmsRecoveryTokenService;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SafeStoreAuthenticationCommand;
@@ -34,6 +33,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\AuthenticationRequestFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

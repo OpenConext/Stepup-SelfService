@@ -279,17 +279,6 @@ class RecoveryTokenController extends Controller
      */
     public function deleteAction(string $recoveryTokenId): Response
     {
-        if (!$this->recoveryTokenService->wasStepUpGiven()) {
-            $this->recoveryTokenService->setReturnTo(
-                RecoveryTokenState::RECOVERY_TOKEN_RETURN_TO_DELETE,
-                ['recoveryTokenId' => $recoveryTokenId]
-            );
-            return $this->forward(
-                "Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUpAction"
-            );
-        }
-        $this->recoveryTokenService->resetReturnTo();
-        $this->recoveryTokenService->resetStepUpGiven();
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $this->getIdentity());
         try {
             $recoveryToken = $this->recoveryTokenService->getRecoveryToken($recoveryTokenId);
