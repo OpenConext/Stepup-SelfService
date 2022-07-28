@@ -48,8 +48,6 @@ class RecoveryTokenState
 
     private const RECOVERY_TOKEN_RETURN_TO_IDENTIFIER = 'recovery_token_return_to';
 
-    public const RECOVERY_TOKEN_RETURN_TO_DELETE = 'ss_recovery_token_delete';
-
     public const RECOVERY_TOKEN_RETURN_TO_CREATE_SAFE_STORE = 'ss_recovery_token_safe_store';
 
     public const RECOVERY_TOKEN_RETURN_TO_CREATE_SMS = 'ss_recovery_token_sms';
