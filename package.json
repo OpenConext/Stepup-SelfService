@@ -31,6 +31,7 @@
         "yargs-parser": ">=18.1.2"
     },
     "resolutions": {
-        "glob-parent": ">=6.0.1"
+        "glob-parent": ">=6.0.1",
+        "terser": ">=5.14.2"
     }
 }
