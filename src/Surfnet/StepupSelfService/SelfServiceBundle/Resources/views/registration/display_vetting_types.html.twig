@@ -15,12 +15,21 @@
 {% block content %}
     <h2>{{ block('page_title') }}</h2>
 
-
     <div class="row">
         <div class="col-xs-12 col-md-12">
             <p>{{ 'ss.registration.vetting_type.description.vetting'|trans }}</p>
         </div>
     </div>
+
+
+    {% if hasVettingTypeHint %}
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <p class="alert alert-info" role="alert">{{ vettingTypeHint|escape }}</p>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="row remote-vetting">
         {% if allowSelfVetting %}
           <div class="col-xs-12 col-md-3">

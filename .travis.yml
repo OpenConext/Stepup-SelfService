@@ -47,3 +47,4 @@ branches:
     - master
     - develop
     - feature/self-asserted-tokens
+    - /^feature/sat-.*$/

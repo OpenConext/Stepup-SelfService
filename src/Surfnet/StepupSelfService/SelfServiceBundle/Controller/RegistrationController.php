@@ -95,13 +95,14 @@ class RegistrationController extends Controller
      * @Template
      * @param string $secondFactorId
      */
-    public function displayVettingTypesAction($secondFactorId)
+    public function displayVettingTypesAction(Request $request, $secondFactorId)
     {
         /**
          * @var VettingTypeService
          */
         $vettingTypeService = $this->get(VettingTypeService::class);
         $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getIdentity(), $secondFactorId);
+
         if (!$vettingTypeCollection->allowSelfVetting() && !$vettingTypeCollection->allowSelfAssertedTokens()) {
             $this->get('logger')
                 ->notice(
@@ -112,10 +113,17 @@ class RegistrationController extends Controller
                 ['secondFactorId' => $secondFactorId]
             );
         }
+
+        $institution = $this->getIdentity()->institution;
+        $currentLocale = $request->getLocale();
+        $vettingTypeHint = $vettingTypeService->vettingTypeHint($institution, $currentLocale);
+
         return [
             'allowSelfVetting' => $vettingTypeCollection->allowSelfVetting(),
             'allowSelfAssertedTokens' => $vettingTypeCollection->allowSelfAssertedTokens(),
             'highlightOnPremise' => $vettingTypeCollection->isPreferred(VettingTypeInterface::ON_PREMISE),
+            'hasVettingTypeHint' => !is_null($vettingTypeHint),
+            'vettingTypeHint' => $vettingTypeHint,
             'highlightSelfAssertedTokens' => $vettingTypeCollection->isPreferred(
                 VettingTypeInterface::SELF_ASSERTED_TOKENS
             ),

@@ -37,4 +37,9 @@ class AuthorizationService
     {
         return $this->authorizationService->assertRegistrationOfSelfAssertedTokensIsAllowed($identity);
     }
+
+    public function mayRegisterRecoveryTokens(Identity $identity): bool
+    {
+        return $this->authorizationService->assertRegistrationOfRecoveryTokensIsAllowed($identity);
+    }
 }

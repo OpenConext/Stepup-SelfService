@@ -19,10 +19,10 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Surfnet\StepupBundle\Service\LoaResolutionService;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +39,7 @@ class SecondFactorController extends Controller
     {
         $identity = $this->getIdentity();
         $institution = $this->getIdentity()->institution;
-        $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
+        $options = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($institution);
         /** @var SecondFactorService $service */
         $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
@@ -51,15 +51,19 @@ class SecondFactorController extends Controller
         $secondFactors = $service->getSecondFactorsForIdentity(
             $identity,
             $allSecondFactors,
-            $institutionConfigurationOptions->allowedSecondFactors,
-            $institutionConfigurationOptions->numberOfTokensPerIdentity
+            $options->allowedSecondFactors,
+            $options->numberOfTokensPerIdentity
         );
 
         /** @var RecoveryTokenService $recoveryTokenService */
         $recoveryTokenService = $this->get(RecoveryTokenService::class);
-        $selfAssertedTokenRegistration = $institutionConfigurationOptions->allowSelfAssertedTokens === true;
+        /** @var AuthorizationService $authorizationService */
+        $authorizationService = $this->get(AuthorizationService::class);
+        $recoveryTokensAllowed = $authorizationService->mayRegisterRecoveryTokens($identity);
+        $selfAssertedTokenRegistration = $options->allowSelfAssertedTokens === true && $recoveryTokensAllowed;
+
         $recoveryTokens = [];
-        if ($selfAssertedTokenRegistration) {
+        if ($selfAssertedTokenRegistration && $recoveryTokensAllowed) {
             $recoveryTokens = $recoveryTokenService->getRecoveryTokensForIdentity($identity);
         }
         $loaService = $this->get(SecondFactorTypeService::class);
