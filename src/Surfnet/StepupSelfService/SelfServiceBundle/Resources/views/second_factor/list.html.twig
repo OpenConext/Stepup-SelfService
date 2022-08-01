@@ -35,7 +35,7 @@
 
 {% endblock %}
 
-{% macro secondFactorTable(secondFactorCollection, text, state, email, expirationHelper, locale) %}
+{% macro secondFactorTable(secondFactorCollection, text, state, email, expirationHelper, loaService, locale) %}
     {% if secondFactorCollection.elements is not empty %}
         {% set hasExpired = false %}
         <p>{{ text|trans({'%email%': email}) }}</p>
@@ -48,6 +48,9 @@
                         <th scope="col">{{ 'ss.second_factor_list.header.second_factor_identifier'|trans }}</th>
                         {% if state == 'verified' %}
                             <th scope="col">{{ 'ss.second_factor_list.header.expiration_date'|trans }}</th>
+                        {% endif %}
+                        {% if state == 'vetted' %}
+                            <th scope="col">{{ 'ss.second_factor_list.header.loa'|trans }}</th>
                         {% endif %}
                         <th scope="col">{# Action button #}</th>
                     </tr>
@@ -65,6 +68,11 @@
                                     <span class="label label-danger">{{ 'ss.second_factor_list.header.expired_warning'|trans }}</span>
                                 {% endif %}
                             </td>
+                            {% endif %}
+                            {% if state == 'vetted' %}
+                                <td>
+                                    {% include '@SurfnetStepupSelfServiceSelfService/second_factor/loa-stars.html.twig' with { level: secondFactor.loaLevel } %}
+                                </td>
                             {% endif %}
                             <td>
                                 <div class="btn-group pull-right" role="group">

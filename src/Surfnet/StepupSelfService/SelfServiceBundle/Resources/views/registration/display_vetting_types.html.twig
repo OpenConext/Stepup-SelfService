@@ -40,7 +40,7 @@
         {% endif %}
         {% if allowSelfAssertedTokens %}
             <div class="col-xs-12 col-md-3">
-                <div class="thumbnail vetting-selector">
+                <div class="thumbnail vetting-selector{% if highlightSelfAssertedTokens %} highlighted{% endif %}">
                     <img src="{{ asset('images/self-asserted-token-registration.png') }}"
                          alt="{{ ('ss.registration.selector.self_asserted_tokens.alt')|trans }}">
                     <h3>{{ 'ss.registration.vetting_type.title.self_asserted_tokens'|trans }}</h3>
@@ -55,7 +55,7 @@
             </div>
         {% endif %}
         <div class="col-xs-12 col-md-3">
-            <div class="thumbnail vetting-selector">
+            <div class="thumbnail vetting-selector{% if highlightOnPremise %} highlighted{% endif %}">
                 <img src="{{ asset('images/frontdesk.svg') }}" width="70%"
                      alt="{{ ('ss.registration.selector.on-premise.alt')|trans }}">
                 <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>

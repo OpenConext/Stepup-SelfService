@@ -33,6 +33,7 @@ class Configuration implements ConfigurationInterface
         $this->appendEnabledSecondFactorTypesConfiguration($childNodes);
         $this->appendSecondFactorTestIdentityProvider($childNodes);
         $this->appendSessionConfiguration($childNodes);
+        $this->appendActivationFlow($childNodes);
 
         return $treeBuilder;
     }
@@ -123,6 +124,25 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('loa')
                     ->isRequired()
                     ->info('The LOA level of the Gssp')
+                ->end()
+            ->end();
+    }
+
+    private function appendActivationFlow(NodeBuilder $childNodes)
+    {
+        $childNodes
+            ->arrayNode('preferred_activation_flow')
+            ->isRequired()
+                ->children()
+                    ->scalarNode('query_string_field_name')
+                        ->isRequired()
+                        ->info('The name of the query string field that triggers the preferred activation flow')
+                    ->end()
+                    ->arrayNode('options')
+                        ->prototype('scalar')
+                        ->isRequired()
+                        ->info('The options describing the preferred activation flow. Example: ra, self')
+                    ->end()
                 ->end()
             ->end();
     }
