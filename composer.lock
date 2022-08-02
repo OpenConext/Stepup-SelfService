@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "89f1ba60a55f0a6b70f0abdd73b07172",
+    "content-hash": "315459f6bc0e5c7496c7d5f0a6d1813d",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2923,16 +2923,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "5.0.3",
+            "version": "5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-bundle.git",
-                "reference": "f663a50667e8ca695e77f21c39a0577f1db7c625"
+                "reference": "c0740f4753635a5b98bb2ef949f6f03e3e83c5c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/f663a50667e8ca695e77f21c39a0577f1db7c625",
-                "reference": "f663a50667e8ca695e77f21c39a0577f1db7c625",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/c0740f4753635a5b98bb2ef949f6f03e3e83c5c4",
+                "reference": "c0740f4753635a5b98bb2ef949f6f03e3e83c5c4",
                 "shasum": ""
             },
             "require": {
@@ -2967,6 +2967,7 @@
                     "Surfnet\\StepupBundle\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -2977,23 +2978,23 @@
                 "surfnet"
             ],
             "support": {
-                "source": "https://github.com/OpenConext/Stepup-bundle/tree/5.0.3",
-                "issues": "https://github.com/OpenConext/Stepup-bundle/issues"
+                "issues": "https://github.com/OpenConext/Stepup-bundle/issues",
+                "source": "https://github.com/OpenConext/Stepup-bundle/tree/5.0.4"
             },
-            "time": "2022-07-12T11:06:51+00:00"
+            "time": "2022-08-02T12:43:19+00:00"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "dev-feature/self-asserted-tokens",
+            "version": "4.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "224e496da9b61997cddd035f4706e6ba89bf0474"
+                "reference": "81143bbec44ecc7f20bd281cdb491e2e8b985dad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/224e496da9b61997cddd035f4706e6ba89bf0474",
-                "reference": "224e496da9b61997cddd035f4706e6ba89bf0474",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/81143bbec44ecc7f20bd281cdb491e2e8b985dad",
+                "reference": "81143bbec44ecc7f20bd281cdb491e2e8b985dad",
                 "shasum": ""
             },
             "require": {
@@ -3025,27 +3026,20 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Surfnet\\StepupMiddlewareClientBundle\\": "src/Surfnet/StepupMiddlewareClientBundle/",
-                    "Surfnet\\StepupMiddlewareClient\\": "src/Surfnet/StepupMiddlewareClient/"
+                    "Surfnet\\StepupMiddlewareClient\\": "src/Surfnet/StepupMiddlewareClient/",
+                    "Surfnet\\StepupMiddlewareClientBundle\\": "src/Surfnet/StepupMiddlewareClientBundle/"
                 }
             },
-            "scripts": {
-                "download-security-checker": [
-                    "if [ ! -f local-php-security-checker ]; then curl -s https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest | grep -E \"browser_download_url(.+)linux_386\" | cut -d : -f 2,3 | tr -d \\\" | xargs -I{} curl -L --output local-php-security-checker {} && chmod +x local-php-security-checker; fi"
-                ],
-                "security-tests": [
-                    "./local-php-security-checker"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "description": "Symfony2 bundle for consuming the Step-up Middleware API.",
             "support": {
-                "source": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/tree/feature/self-asserted-tokens",
-                "issues": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/issues"
+                "issues": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/issues",
+                "source": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/tree/4.1.4"
             },
-            "time": "2022-07-26T09:50:54+00:00"
+            "time": "2022-08-02T12:52:00+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -10410,9 +10404,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "surfnet/stepup-middleware-client-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
