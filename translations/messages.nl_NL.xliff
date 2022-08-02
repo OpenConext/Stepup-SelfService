@@ -207,7 +207,7 @@
       </trans-unit>
       <trans-unit id="d66a9a79cff9eab1025ad228d31555e0721722c4" resname="ss.recovery_token.step_up.no_tokens_available.failed">
         <source>ss.recovery_token.step_up.no_tokens_available.failed</source>
-        <target state="translated">Het is niet mogelijk om een [recovery token] toe te voegen of te verwijderen zonder een token. Bezoek de service desk om het [recovery token] te verwijderen, of registreer een nieuw token.</target>
+        <target state="translated">Het is niet mogelijk om een [recovery token] toe te voegen zonder een token.</target>
         <jms:reference-file line="60">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="231069934a847862c6128f2dca767b9a577aed18" resname="ss.recovery_token_list.header.recovery_token_identifier">
