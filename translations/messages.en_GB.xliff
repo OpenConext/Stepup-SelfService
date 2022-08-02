@@ -590,7 +590,7 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="1f9c008be46d78bf37a98d1e98d0758aa070015e" resname="ss.registration.vetting_type.title.self_asserted_tokens">
         <source>ss.registration.vetting_type.title.self_asserted_tokens</source>
-        <target>Recovery Token</target>
+        <target>[Self-asserted registration]</target>
         <jms:reference-file line="55">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ed511e112f15e353c9c9122d9db7ec8039a592f6" resname="ss.registration.vetting_type.title.self_vet">
