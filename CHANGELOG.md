@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.0.0
+**Self-asserted token registration**
+- Nudge the vetting type more aggressively c67201bc
+- Integrate Recovery tokens in SelfService #261
+- Require step up authentication for Recovery Token create and delete actions #264
+- Support the new loa-self-asserted level of assurance #265
+- Allow expression of a preferred activation flow (vetting type) #266
+- Display the Institutional vetting type hint #268
+- Allow recovery token revocation without second factor token possession #269
+
 ## 3.5.5
 - Make the info and health endpoints available on both `/` and `/internal/` paths. 'Deprecating' the original /health and /info endpoints.
 - Give a concrete error message when a required attribute is missing
