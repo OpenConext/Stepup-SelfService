@@ -37,10 +37,14 @@ class VettingTypeCollection
     {
         switch ((string) $preference) {
             case 'ra':
-                $this->collection[VettingTypeInterface::ON_PREMISE]->setPrefered();
+                if (array_key_exists(VettingTypeInterface::ON_PREMISE, $this->collection)) {
+                    $this->collection[VettingTypeInterface::ON_PREMISE]->setPrefered();
+                }
                 break;
             case 'self':
-                $this->collection[VettingTypeInterface::SELF_ASSERTED_TOKENS]->setPrefered();
+                if (array_key_exists(VettingTypeInterface::SELF_ASSERTED_TOKENS, $this->collection)) {
+                    $this->collection[VettingTypeInterface::SELF_ASSERTED_TOKENS]->setPrefered();
+                }
                 break;
         }
     }
