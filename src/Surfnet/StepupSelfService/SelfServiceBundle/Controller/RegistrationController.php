@@ -103,8 +103,34 @@ class RegistrationController extends Controller
         $vettingTypeService = $this->get(VettingTypeService::class);
         $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getIdentity(), $secondFactorId);
 
+        $logger = $this->get('logger');
+
+        $nudgeSelfAssertedTokens = $vettingTypeCollection->isPreferred(VettingTypeInterface::SELF_ASSERTED_TOKENS);
+        $nudgeRaVetting = $vettingTypeCollection->isPreferred(VettingTypeInterface::ON_PREMISE);
+
+        // Nudging section: helping the Identity into choosing the right vetting type:
+
+        // Option 1: A self-asserted token registration nudge was requested via query string (?activate=self)
+        if ($nudgeSelfAssertedTokens && $vettingTypeCollection->allowSelfAssertedTokens()) {
+            $logger->notice('Nudging (forcing) self-asserted token registration');
+            return $this->forward(
+                'SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistration',
+                ['secondFactorId' => $secondFactorId]
+            );
+        }
+
+        // Option 2: A ra-vetting nudge was requested via query string (?activate=ra)
+        if ($nudgeRaVetting) {
+            $logger->notice('Nudging (forcing) RA vetting');
+            return $this->forward(
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent',
+                ['secondFactorId' => $secondFactorId]
+            );
+        }
+
+        // Option 3: non-formal nudge, skip over selection screen. As only ra vetting is available.
         if (!$vettingTypeCollection->allowSelfVetting() && !$vettingTypeCollection->allowSelfAssertedTokens()) {
-            $this->get('logger')
+            $logger
                 ->notice(
                     'Skipping ahead to the RA vetting option as self vetting or self-asserted tokens are not allowed'
                 );
@@ -121,12 +147,8 @@ class RegistrationController extends Controller
         return [
             'allowSelfVetting' => $vettingTypeCollection->allowSelfVetting(),
             'allowSelfAssertedTokens' => $vettingTypeCollection->allowSelfAssertedTokens(),
-            'highlightOnPremise' => $vettingTypeCollection->isPreferred(VettingTypeInterface::ON_PREMISE),
             'hasVettingTypeHint' => !is_null($vettingTypeHint),
             'vettingTypeHint' => $vettingTypeHint,
-            'highlightSelfAssertedTokens' => $vettingTypeCollection->isPreferred(
-                VettingTypeInterface::SELF_ASSERTED_TOKENS
-            ),
             'verifyEmail' => $this->emailVerificationIsRequired(),
             'secondFactorId' => $secondFactorId,
         ];
