@@ -207,7 +207,7 @@
       </trans-unit>
       <trans-unit id="d66a9a79cff9eab1025ad228d31555e0721722c4" resname="ss.recovery_token.step_up.no_tokens_available.failed">
         <source>ss.recovery_token.step_up.no_tokens_available.failed</source>
-        <target state="translated">Unable to create or remove a recovery token without possession of a second factor token. Please visit the service desk to remove the recovery token or vet a new second factor token.</target>
+        <target state="translated">Unable to create a recovery token without possession of a second factor token.</target>
         <jms:reference-file line="60">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="231069934a847862c6128f2dca767b9a577aed18" resname="ss.recovery_token_list.header.recovery_token_identifier">
