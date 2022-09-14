@@ -501,7 +501,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       </trans-unit>
       <trans-unit id="f128a2c75461adb88ef8dee0af0aeed951248e89" resname="ss.second_factor.revoke.text.are_you_sure">
         <source>ss.second_factor.revoke.text.are_you_sure</source>
-        <target>You are about to remove the following token. Are you sure?</target>
+        <target>You are about to remove the following token. Attention: once a token has been removed, you can no longer use it. If you want to re-add it, this might require that you activate it at your servicedesk. Are you sure?</target>
         <jms:reference-file line="9">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/second_factor/revoke.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="184ec164f27d3f9bffd41469e34843a4c99d2fdc" resname="ss.second_factor.revoke.title">
