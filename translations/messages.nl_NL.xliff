@@ -499,7 +499,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       </trans-unit>
       <trans-unit id="f128a2c75461adb88ef8dee0af0aeed951248e89" resname="ss.second_factor.revoke.text.are_you_sure">
         <source>ss.second_factor.revoke.text.are_you_sure</source>
-        <target>Je gaat het volgende token verwijderen. Let op: als een token eenmaal verwijderd is, kun je hem niet meer gebruiken. Als je hem opnieuw wilt activeren moet je mogelijkerwijs eerst langs je servicedesk. Weet je het zeker?</target>
+        <target>Je gaat het volgende token verwijderen. Let op: als een token eenmaal verwijderd is, kun je het niet meer gebruiken. Om een nieuw token te activeren moet je mogelijkerwijs eerst langs je servicedesk. Weet je het zeker?</target>
         <jms:reference-file line="9">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/second_factor/revoke.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="184ec164f27d3f9bffd41469e34843a4c99d2fdc" resname="ss.second_factor.revoke.title">
