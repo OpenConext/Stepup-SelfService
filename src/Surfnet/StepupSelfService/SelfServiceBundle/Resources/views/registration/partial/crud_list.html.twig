@@ -38,13 +38,14 @@
         <p>{{ 'ss.second_factor.list.text.no_recovery_tokens'|trans }}</p>
     {% endif %}
 
+    {% if hasRemainingRecoveryTokens %}
     <p>
         <a href="{{ path('ss_recovery_token_display_types') }}"
            class="btn btn-primary pull-right">
             {{ 'ss.second_factor.list.button.register_recovery_token'|trans }}
         </a>
     </p>
-
+    {% endif %}
     <p>&nbsp;</p>
     <p>&nbsp;</p>
 

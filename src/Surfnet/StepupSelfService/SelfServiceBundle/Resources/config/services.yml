@@ -147,11 +147,17 @@ services:
             - '@Surfnet\StepupMiddlewareClientBundle\Identity\Service\VettingTypeHintService'
             - '@logger'
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenConfig:
+        arguments:
+            - '%recovery_method_sms_enabled%'
+            - '%recovery_method_safe_store_code_enabled%'
+
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService:
         arguments:
             - '@Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService'
             - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService'
             - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState'
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenConfig'
             - '@logger'
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreState:
