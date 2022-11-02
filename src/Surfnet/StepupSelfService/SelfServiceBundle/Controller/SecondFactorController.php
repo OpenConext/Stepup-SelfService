@@ -61,7 +61,7 @@ class SecondFactorController extends Controller
         $authorizationService = $this->get(AuthorizationService::class);
         $recoveryTokensAllowed = $authorizationService->mayRegisterRecoveryTokens($identity);
         $selfAssertedTokenRegistration = $options->allowSelfAssertedTokens === true && $recoveryTokensAllowed;
-
+        $hasRemainingTokenTypes = count($recoveryTokenService->getRemainingTokenTypes($identity)) > 0;
         $recoveryTokens = [];
         if ($selfAssertedTokenRegistration && $recoveryTokensAllowed) {
             $recoveryTokens = $recoveryTokenService->getRecoveryTokensForIdentity($identity);
@@ -80,6 +80,7 @@ class SecondFactorController extends Controller
             'expirationHelper' => $expirationHelper,
             'selfAssertedTokenRegistration' => $selfAssertedTokenRegistration,
             'recoveryTokens' => $recoveryTokens,
+            'hasRemainingRecoveryTokens' => $hasRemainingTokenTypes,
         ];
     }
 

@@ -48,15 +48,22 @@ class RecoveryTokenService
      */
     private $stateStore;
 
+    /**
+     * @var RecoveryTokenConfig
+     */
+    private $config;
+
     public function __construct(
         MiddlewareRecoveryTokenService $recoveryTokenService,
         SafeStoreService $safeStoreService,
         RecoveryTokenState $recoveryTokenState,
+        RecoveryTokenConfig $config,
         LoggerInterface $logger
     ) {
         $this->recoveryTokenService = $recoveryTokenService;
         $this->safeStoreService = $safeStoreService;
         $this->stateStore = $recoveryTokenState;
+        $this->config = $config;
         $this->logger = $logger;
     }
 
@@ -78,10 +85,13 @@ class RecoveryTokenService
         return $this->recoveryTokenService->findAllFor($identity);
     }
 
-    public function getRemainingTokenTypes(Identity $identity)
+    public function getRemainingTokenTypes(Identity $identity): array
     {
         $tokens = $this->getRecoveryTokensForIdentity($identity);
-        $tokenTypes = $this->recoveryTokenService->getAvailableRecoveryTokenTypes();
+        $tokenTypes = $this->excludeDisabledRecoveryTokens(
+            $this->recoveryTokenService->getAvailableRecoveryTokenTypes()
+        );
+
         /** @var RecoveryToken $token */
         foreach ($tokens as $token) {
             if (in_array($token->type, $tokenTypes)) {
@@ -172,5 +182,18 @@ class RecoveryTokenService
     public function resetStepUpGiven()
     {
         $this->stateStore->resetStepUpGiven();
+    }
+
+    private function excludeDisabledRecoveryTokens(array $availableRecoveryTokenTypes): array
+    {
+        foreach ($availableRecoveryTokenTypes as $identifier => $token) {
+            if ($token === 'sms' && $this->config->isSmsDisabled()) {
+                unset($availableRecoveryTokenTypes[$identifier]);
+            }
+            if ($token === 'safe-store' && $this->config->isSafeStoreCodeDisabled()) {
+                unset($availableRecoveryTokenTypes[$identifier]);
+            }
+        }
+        return $availableRecoveryTokenTypes;
     }
 }
