@@ -41,7 +41,7 @@
       </trans-unit>
       <trans-unit id="e59d5dbfb886036d6a99e85bf857442d4ea4009c" resname="safe-store">
         <source>safe-store</source>
-        <target>Safe store</target>
+        <target>Herstelcode</target>
         <jms:reference-file line="64">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="83b04e2653917150804a1a71da678664e3e509b5" resname="sms">
@@ -292,7 +292,7 @@
       </trans-unit>
       <trans-unit id="94d294f6e902245f5fb147751757b1f55630c74d" resname="ss.registration.recovery_token.safe-store.promise_possession_subtitle">
         <source>ss.registration.recovery_token.safe-store.promise_possession_subtitle</source>
-        <target state="translated">[subtitel]</target>
+        <target state="translated"></target>
         <jms:reference-file line="14">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/create_safe_store.html.twig</jms:reference-file>
         <jms:reference-file line="15">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/recovery_token_safe_store.html.twig</jms:reference-file>
       </trans-unit>

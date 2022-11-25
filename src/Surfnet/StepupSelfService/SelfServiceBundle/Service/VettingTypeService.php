@@ -85,7 +85,7 @@ class VettingTypeService
             $collection->add(new SelfVet());
         }
         $preference = $this->activationFlowService->getPreference();
-        $this->logger->info(sprintf('Expressing "%s" vetting type as prefered activation flow', $preference));
+        $this->logger->info(sprintf('Expressing "%s" vetting type as preferred activation flow', $preference));
         $collection->expressVettingPreference($preference);
 
         return $collection;
