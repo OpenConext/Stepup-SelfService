@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="2aab459d9cee8bac681c37e08c0ad2b06ecd5b31" resname="ss.registration.recovery_token.title.sms">
         <source>ss.registration.recovery_token.title.sms</source>
-        <target>SMS</target>
+        <target>Servicedesk activatie</target>
         <jms:reference-file line="45">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="702bbd352dda1a6f1029201de2f40e9e87bbc6a4" resname="ss.registration.registration_email_sent.label.expiration_date">
@@ -477,7 +477,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="f8916d206cdd9e68de226df4e66e3bb4b7b48733" resname="ss.registration.self_asserted.new_recovery_token.title">
         <source>ss.registration.self_asserted.new_recovery_token.title</source>
-        <target>Een hetstelmethode toevoegen</target>
+        <target>Een herstelmethode toevoegen</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/select_recovery_token.html.twig</jms:reference-file>
       </trans-unit>
