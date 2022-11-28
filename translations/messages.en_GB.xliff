@@ -212,7 +212,7 @@
       </trans-unit>
       <trans-unit id="231069934a847862c6128f2dca767b9a577aed18" resname="ss.recovery_token_list.header.recovery_token_identifier">
         <source>ss.recovery_token_list.header.recovery_token_identifier</source>
-        <target state="translated">[Recovery token identifier]</target>
+        <target state="translated">ID</target>
         <jms:reference-file line="15">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d1db33949f2ef9882b76092ddb03125a950ef9a0" resname="ss.recovery_token_list.header.type">
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="2aab459d9cee8bac681c37e08c0ad2b06ecd5b31" resname="ss.registration.recovery_token.title.sms">
         <source>ss.registration.recovery_token.title.sms</source>
-        <target>SMS</target>
+        <target>Servicedesk activation</target>
         <jms:reference-file line="45">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="702bbd352dda1a6f1029201de2f40e9e87bbc6a4" resname="ss.registration.registration_email_sent.label.expiration_date">
