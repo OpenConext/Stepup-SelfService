@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="2aab459d9cee8bac681c37e08c0ad2b06ecd5b31" resname="ss.registration.recovery_token.title.sms">
         <source>ss.registration.recovery_token.title.sms</source>
-        <target>Servicedesk activatie</target>
+        <target>Hersteltelefoonnummer</target>
         <jms:reference-file line="45">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="702bbd352dda1a6f1029201de2f40e9e87bbc6a4" resname="ss.registration.registration_email_sent.label.expiration_date">
