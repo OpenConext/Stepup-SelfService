@@ -46,7 +46,7 @@
       </trans-unit>
       <trans-unit id="83b04e2653917150804a1a71da678664e3e509b5" resname="sms">
         <source>sms</source>
-        <target>SMS</target>
+        <target>Hersteltelefoonnnummer</target>
         <jms:reference-file line="63">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
@@ -472,7 +472,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="3c5270965cff002b6b94695f1a75f8d42b9cf915" resname="ss.registration.self_asserted.choose_recovery_token.title">
         <source>ss.registration.self_asserted.choose_recovery_token.title</source>
-        <target state="translated">SMS herstelmethode</target>
+        <target state="translated">Kies je herstelmethode</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/select_available_recovery_token.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f8916d206cdd9e68de226df4e66e3bb4b7b48733" resname="ss.registration.self_asserted.new_recovery_token.title">
