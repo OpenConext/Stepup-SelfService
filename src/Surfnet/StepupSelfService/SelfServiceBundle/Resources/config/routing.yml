@@ -110,6 +110,11 @@ ss_registration_verify_email:
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:verifyEmail }
 
+ss_registration_send_registration_email:
+    path:     /registration/{secondFactorId}/send-registration-email
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail }
+
 ss_registration_registration_email_sent:
     path:     /registration/{secondFactorId}/registration-email-sent
     methods:  [GET]

@@ -190,17 +190,27 @@ class RegistrationController extends Controller
     }
 
     /**
+     * Intermediate action where the registration mail is sent. After which the
+     * email-sent page is displayed. Preventing the mail message from being sent
+     * over and over again when the user performs a page reload.
+     */
+    public function sendRegistrationEmailAction(string $secondFactorId)
+    {
+        // Send the registration email
+        $this->get('self_service.service.ra')
+            ->sendRegistrationMailMessage($this->getIdentity()->id, $secondFactorId);
+        return $this->redirectToRoute(
+            'ss_registration_registration_email_sent',
+            ['secondFactorId' => $secondFactorId]
+        );
+    }
+
+    /**
      * @param $secondFactorId
      * @return Response
      */
     public function registrationEmailSentAction($secondFactorId)
     {
-
-        // Send the registration email
-        $identityId = $this->getIdentity()->id;
-        $secondFactorId = $secondFactorId;re
-        $this->
-
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
         // Report that it was sent
         return $this->render(
