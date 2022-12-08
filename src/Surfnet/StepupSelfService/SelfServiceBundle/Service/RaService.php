@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClientBundle\Identity\Command\SendSecondFactorRegistrationEmailCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\RegistrationAuthorityCredentialsCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RaService as ApiRaService;
 
@@ -48,14 +49,6 @@ class RaService
         return $this->api->listRas($institution);
     }
 
-    public function sendRegistrationMailMessage(string $identityId, string $secondFactorId)
-    {
-        $command = new SendSecondFactorRegistrationEmailCommand();
-        $command->identityId = $identityId;
-        $command->secondFactorId = $secondFactorId;
-        $this->commandService->execute($command);
-    }
-
     public function listRasWithoutRaas($institution)
     {
         $allRas = $this->api->listRas($institution);
@@ -74,5 +67,13 @@ class RaService
             $allRas->getItemsPerPage(),
             $allRas->getCurrentPage()
         );
+    }
+
+    public function sendRegistrationMailMessage(string $identityId, string $secondFactorId)
+    {
+        $command = new SendSecondFactorRegistrationEmailCommand();
+        $command->identityId = $identityId;
+        $command->secondFactorId = $secondFactorId;
+        $this->commandService->execute($command);
     }
 }
