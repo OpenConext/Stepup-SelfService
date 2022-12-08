@@ -28,9 +28,15 @@ class RaService
      */
     private $api;
 
-    public function __construct(ApiRaService $raService)
+    /**
+     * @var CommandService
+     */
+    private $commandService;
+
+    public function __construct(ApiRaService $raService, CommandService $commandService)
     {
         $this->api = $raService;
+        $this->commandService = $commandService;
     }
 
     /**
@@ -40,6 +46,14 @@ class RaService
     public function listRas($institution)
     {
         return $this->api->listRas($institution);
+    }
+
+    public function sendRegistrationMailMessage(string $identityId, string $secondFactorId)
+    {
+        $command = new SendSecondFactorRegistrationEmailCommand();
+        $command->identityId = $identityId;
+        $command->secondFactorId = $secondFactorId;
+        $this->commandService->execute($command);
     }
 
     public function listRasWithoutRaas($institution)
