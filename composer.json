@@ -42,6 +42,7 @@
         "twig/twig": "^2"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "jakub-onderka/php-parallel-lint": "^1.0",
         "malukenho/docheader": "^0.1.8",
         "matthiasnoback/symfony-config-test": "^4",
@@ -64,7 +65,6 @@
             "@license-headers",
             "@phpunit",
             "@behat",
-            "@download-security-checker",
             "@security-tests",
             "@yarn-audit"
         ],
@@ -83,8 +83,7 @@
             "vendor/bin/phpcpd  ./src"
         ],
         "phpunit": "vendor/bin/phpunit --configuration=phpunit.xml.dist --coverage-text",
-        "download-security-checker": "if [ ! -f local-php-security-checker ]; then curl -s https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest | grep -E \"browser_download_url(.+)linux_386\" | cut -d : -f 2,3 | tr -d \\\" | xargs -I{} curl -L --output local-php-security-checker {} && chmod +x local-php-security-checker; fi",
-        "security-tests": "./local-php-security-checker",
+        "security-tests": "composer audit",
         "yarn-audit": "yarn audit",
         "frontend-install": [
             "yarn install --frozen-lockfile",
