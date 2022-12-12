@@ -23,13 +23,10 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
-use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -193,13 +190,29 @@ class RegistrationController extends Controller
     }
 
     /**
+     * Intermediate action where the registration mail is sent. After which the
+     * email-sent page is displayed. Preventing the mail message from being sent
+     * over and over again when the user performs a page reload.
+     */
+    public function sendRegistrationEmailAction(string $secondFactorId)
+    {
+        // Send the registration email
+        $this->get('self_service.service.ra')
+            ->sendRegistrationMailMessage($this->getIdentity()->id, $secondFactorId);
+        return $this->redirectToRoute(
+            'ss_registration_registration_email_sent',
+            ['secondFactorId' => $secondFactorId]
+        );
+    }
+
+    /**
      * @param $secondFactorId
      * @return Response
      */
     public function registrationEmailSentAction($secondFactorId)
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
-
+        // Report that it was sent
         return $this->render(
             'SurfnetStepupSelfServiceSelfServiceBundle:registration:registration_email_sent.html.twig',
             $parameters

@@ -201,6 +201,7 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService
         arguments:
             - "@surfnet_stepup_middleware_client.identity.service.ra"
+            - "@surfnet_stepup_self_service_self_service.service.command"
 
     self_service.service.ra_location:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService

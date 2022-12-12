@@ -169,7 +169,7 @@ final class GssfController extends Controller
 
             if ($this->emailVerificationIsRequired()) {
                 return $this->redirectToRoute(
-                    'ss_registration_email_verification_email_sent',
+                    'ss_registration_send_registration_email',
                     ['secondFactorId' => $secondFactorId]
                 );
             } else {

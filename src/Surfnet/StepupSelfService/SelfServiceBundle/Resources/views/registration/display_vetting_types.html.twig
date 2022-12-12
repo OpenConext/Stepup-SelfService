@@ -71,7 +71,7 @@
                 <hr>
                 <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
                 <p>
-                    <form action="{{ url('ss_registration_registration_email_sent', {'secondFactorId': secondFactorId}) }}" method="get">
+                    <form action="{{ url('ss_registration_send_registration_email', {'secondFactorId': secondFactorId}) }}" method="get">
                     <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
                 </p>
                 </form>
