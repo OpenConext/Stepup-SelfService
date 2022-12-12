@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2022-07-27T14:58:28Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
+  <file date="2022-11-24T14:02:22Z" source-language="en" target-language="en_GB" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -41,12 +41,12 @@
       </trans-unit>
       <trans-unit id="e59d5dbfb886036d6a99e85bf857442d4ea4009c" resname="safe-store">
         <source>safe-store</source>
-        <target>Safe store</target>
+        <target>Recovery code</target>
         <jms:reference-file line="64">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="83b04e2653917150804a1a71da678664e3e509b5" resname="sms">
         <source>sms</source>
-        <target>SMS</target>
+        <target>Recovery phone number</target>
         <jms:reference-file line="63">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b4adb3d9176c2fbdf293bee1b7dda2c6fb56c67c" resname="ss.flash.error_while_switching_locale">
@@ -66,7 +66,7 @@
       </trans-unit>
       <trans-unit id="5ee0c465691c05a6461dc87647778b0e96589f8b" resname="ss.form.recovery_token.checkbox.promise_possession">
         <source>ss.form.recovery_token.checkbox.promise_possession</source>
-        <target>I have stored the password safely</target>
+        <target>I have safely stored my recovery code</target>
         <jms:reference-file line="33">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/PromiseSafeStorePossessionType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="125dd8836af00a03f75d967cc629c8f74dc44dd3" resname="ss.form.recovery_token.delete.failed">
@@ -86,7 +86,7 @@
       </trans-unit>
       <trans-unit id="1056c8b78526c39c46b53c03b442af8e07e83ca6" resname="ss.form.recovery_token.error.error_message">
         <source>ss.form.recovery_token.error.error_message</source>
-        <target>Unable to save your safe-store recovery token, please try again</target>
+        <target>Unable to save your recovery code, please try again</target>
         <jms:reference-file line="50">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6afc7f6f4610a70415040cd039517ab7da7f4353" resname="ss.form.ss_authenticate_safe_store_type.button.continue">
@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="102605582f8652cce1292377efa001914b4f1019" resname="ss.form.ss_authenticate_safe_store_type.text.secret">
         <source>ss.form.ss_authenticate_safe_store_type.text.secret</source>
-        <target state="translated">Password</target>
+        <target state="translated">Recovery code</target>
         <jms:reference-file line="33">/src/Surfnet/StepupSelfService/SelfServiceBundle/Form/Type/AuthenticateSafeStoreType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="b3d573081dd44232cfd0fc03a04fe1b523715271" resname="ss.form.ss_revoke_second_factor.cancel">
@@ -181,17 +181,17 @@
       </trans-unit>
       <trans-unit id="d63830aff1083a3cd072cfcebecd5a12a66d9cc1" resname="ss.recovery_token.safe-store.authentication.explanation">
         <source>ss.recovery_token.safe-store.authentication.explanation</source>
-        <target state="translated">Fill your [safe-store] password and click 'continue' to activate your second factor token.</target>
+        <target state="translated">Enter your recovery code to activate your token</target>
         <jms:reference-file line="13">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/authenticate_safe_store.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e09d6c9acf0e0096907ebbf8659856de96ae6f81" resname="ss.recovery_token.safe-store.authentication.title">
         <source>ss.recovery_token.safe-store.authentication.title</source>
-        <target state="translated">Verify with your [safe-store] password</target>
+        <target state="translated">Activate using your recovery code</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/authenticate_safe_store.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="879c12224efa2d6f5da55a898e8f828dcbd9fea3" resname="ss.recovery_token.sms.prove_possession_title">
         <source>ss.recovery_token.sms.prove_possession_title</source>
-        <target state="translated">Verification code</target>
+        <target state="translated">Enter code</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/registration_sms_prove_possession.html.twig</jms:reference-file>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/sms_prove_possession.html.twig</jms:reference-file>
       </trans-unit>
@@ -212,17 +212,22 @@
       </trans-unit>
       <trans-unit id="231069934a847862c6128f2dca767b9a577aed18" resname="ss.recovery_token_list.header.recovery_token_identifier">
         <source>ss.recovery_token_list.header.recovery_token_identifier</source>
-        <target state="translated">[Recovery token identifier]</target>
-        <jms:reference-file line="13">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
+        <target state="translated">ID</target>
+        <jms:reference-file line="15">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d1db33949f2ef9882b76092ddb03125a950ef9a0" resname="ss.recovery_token_list.header.type">
         <source>ss.recovery_token_list.header.type</source>
-        <target>Type</target>
-        <jms:reference-file line="12">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
+        <target>Method</target>
+        <jms:reference-file line="14">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="826816874096ea137a86fdc42fa8f63522960bce" resname="ss.recovery_token_list.help">
+        <source>ss.recovery_token_list.help</source>
+        <target>If you can no longer use your token, for example if you lose your mobile phone, you can use a recovery method to register a new token. Always make sure you have at least one recovery method</target>
+        <jms:reference-file line="5">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9a459ed17961a24dd326bc04408d9dab3fa75720" resname="ss.recovery_token_list.title">
         <source>ss.recovery_token_list.title</source>
-        <target state="translated">[Recovery tokens]</target>
+        <target state="translated">Recovery methods</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1fd92b34e65dcbb10330e06d6079564e19252093" resname="ss.registration.email_verification_email_sent.text.email_verification_has_been_sent">
@@ -266,60 +271,60 @@
       </trans-unit>
       <trans-unit id="a602cc2348f99a8b5177249b332c9690a2c8d906" resname="ss.registration.recovery_token.description.safe-store">
         <source>ss.registration.recovery_token.description.safe-store</source>
-        <target>Receive a one-time password for safe store</target>
+        <target>Request a recovery code. Keep it in a safe place</target>
         <jms:reference-file line="28">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7c72c0039b939d97998a3841f825ba7448be7aea" resname="ss.registration.recovery_token.description.sms">
         <source>ss.registration.recovery_token.description.sms</source>
-        <target>Use your mobile phone to recieve recovery codes</target>
+        <target>You'll receive a text message with a verification code</target>
         <jms:reference-file line="47">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="baa2cb3b414b922aa1d7dc1c8355f4042c5e5ce7" resname="ss.registration.recovery_token.safe-store.alt">
         <source>ss.registration.recovery_token.safe-store.alt</source>
-        <target>Safe store</target>
+        <target>Your recovery code</target>
         <jms:reference-file line="25">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3a859d2b850a8993bbbb25ff8385e5da372e2cb7" resname="ss.registration.recovery_token.safe-store.promise_possession_explanation">
         <source>ss.registration.recovery_token.safe-store.promise_possession_explanation</source>
-        <target>This secret is displayed once during this session, please write it down or print it and store it in a safe location like a vault or password manager</target>
+        <target>The recovery code below will only be displayed once. Keep this recovery code somewhere safe in case you need it in the future</target>
         <jms:reference-file line="18">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/create_safe_store.html.twig</jms:reference-file>
         <jms:reference-file line="19">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/recovery_token_safe_store.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="94d294f6e902245f5fb147751757b1f55630c74d" resname="ss.registration.recovery_token.safe-store.promise_possession_subtitle">
         <source>ss.registration.recovery_token.safe-store.promise_possession_subtitle</source>
-        <target>[Subtitle]</target>
+        <target></target>
         <jms:reference-file line="14">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/create_safe_store.html.twig</jms:reference-file>
         <jms:reference-file line="15">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/recovery_token_safe_store.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="16505faafda66344dc869b08912d29e44e07c5a2" resname="ss.registration.recovery_token.safe-store.promise_possession_title">
         <source>ss.registration.recovery_token.safe-store.promise_possession_title</source>
-        <target>Safe store recovery token password</target>
+        <target>Your recovery code</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/create_safe_store.html.twig</jms:reference-file>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/recovery_token_safe_store.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d8030ca094c4837a6c7fd8bbe57fd4cafd9b30d1" resname="ss.registration.recovery_token.sms.alt">
         <source>ss.registration.recovery_token.sms.alt</source>
-        <target>SMS</target>
+        <target>Recovery phone number</target>
         <jms:reference-file line="44">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f52b2d059e214ffd688b271cf4359f5d90d9a5f4" resname="ss.registration.recovery_token.sms.prove_posession_title">
         <source>ss.registration.recovery_token.sms.prove_posession_title</source>
-        <target state="translated">SMS [recovery token]</target>
+        <target state="translated">Register recovery phone number</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/recovery_token_sms.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7e95b65ee3f9aaf827a3d4ba64bf7002b2735d27" resname="ss.registration.recovery_token.title">
         <source>ss.registration.recovery_token.title</source>
-        <target>Choose your [recovery token] type</target>
+        <target>If you can no longer use your token, for example if you lose your mobile phone, you can use the recovery method to register a new token</target>
         <jms:reference-file line="17">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="85d75ecede0e42db05d2ffe572b322b6a8d54831" resname="ss.registration.recovery_token.title.safe-store">
         <source>ss.registration.recovery_token.title.safe-store</source>
-        <target>Safe-store</target>
+        <target>Recovery code</target>
         <jms:reference-file line="26">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2aab459d9cee8bac681c37e08c0ad2b06ecd5b31" resname="ss.registration.recovery_token.title.sms">
         <source>ss.registration.recovery_token.title.sms</source>
-        <target>SMS</target>
+        <target>Phone number</target>
         <jms:reference-file line="45">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/select_recovery_token_type.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="702bbd352dda1a6f1029201de2f40e9e87bbc6a4" resname="ss.registration.registration_email_sent.label.expiration_date">
@@ -467,12 +472,12 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="3c5270965cff002b6b94695f1a75f8d42b9cf915" resname="ss.registration.self_asserted.choose_recovery_token.title">
         <source>ss.registration.self_asserted.choose_recovery_token.title</source>
-        <target state="translated">SMS [Recovery Token]</target>
+        <target state="translated">Choose your recovery method</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/select_available_recovery_token.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f8916d206cdd9e68de226df4e66e3bb4b7b48733" resname="ss.registration.self_asserted.new_recovery_token.title">
         <source>ss.registration.self_asserted.new_recovery_token.title</source>
-        <target>Add a [recovery token]</target>
+        <target>Add recovery method</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/new_recovery_token.html.twig</jms:reference-file>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/select_recovery_token.html.twig</jms:reference-file>
       </trans-unit>
@@ -511,17 +516,12 @@ For all devices with a USB port.</target>
       <trans-unit id="61e00906a71f4cde92328a327aaa55e55061186e" resname="ss.registration.sms.text.enter_challenge_below">
         <source>ss.registration.sms.text.enter_challenge_below</source>
         <target>Enter the code that was sent to your phone and click 'Verify'</target>
-        <jms:reference-file line="6">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_prove_possession.html.twig</jms:reference-file>
+        <jms:reference-file line="4">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_prove_possession.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7a3ffc345262052d848b83714296cd342950ec0a" resname="ss.registration.sms.text.enter_phone_number_below">
         <source>ss.registration.sms.text.enter_phone_number_below</source>
         <target>Please enter your mobile phone number below:</target>
         <jms:reference-file line="5">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_send_challenge.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="1c6c4046436965583c51f835f122786636d3bf57" resname="ss.registration.sms.text.help_user_enter_challenge">
-        <source>ss.registration.sms.text.help_user_enter_challenge</source>
-        <target>Please validate that you can receive SMS messages on this phone:</target>
-        <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_prove_possession.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="88ad34f02420fb8e202b105ef43e417f0480c53f" resname="ss.registration.sms.text.otp_requests_remaining">
         <source>ss.registration.sms.text.otp_requests_remaining</source>
@@ -531,7 +531,7 @@ For all devices with a USB port.</target>
       <trans-unit id="66bcc644c0a26ef762954fc544a03885175587c8" resname="ss.registration.sms.text.retry_if_not_received">
         <source>ss.registration.sms.text.retry_if_not_received</source>
         <target>Click 'Send new code' if you did not receive a code.</target>
-        <jms:reference-file line="7">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_prove_possession.html.twig</jms:reference-file>
+        <jms:reference-file line="5">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/sms_prove_possession.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c0b7cacbe163182d07eadf53926718aad310c6a5" resname="ss.registration.verify_email.text.verification_failed">
         <source>ss.registration.verify_email.text.verification_failed</source>
@@ -565,7 +565,7 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="28a12bced010e17743538e9eebaab14200e961f0" resname="ss.registration.vetting_type.description.self_asserted_tokens">
         <source>ss.registration.vetting_type.description.self_asserted_tokens</source>
-        <target>Activate this token without an ID check. The token might not be usable for every application.</target>
+        <target>Activate your token yourself. Your token may not be usable for every application</target>
         <jms:reference-file line="57">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d72f763c2ed38cada18ea9e0a56b08f89178a454" resname="ss.registration.vetting_type.description.self_vet">
@@ -590,7 +590,7 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="1f9c008be46d78bf37a98d1e98d0758aa070015e" resname="ss.registration.vetting_type.title.self_asserted_tokens">
         <source>ss.registration.vetting_type.title.self_asserted_tokens</source>
-        <target>[Self-asserted registration]</target>
+        <target>Self-activation</target>
         <jms:reference-file line="55">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ed511e112f15e353c9c9122d9db7ec8039a592f6" resname="ss.registration.vetting_type.title.self_vet">
@@ -625,8 +625,8 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="4ee3b496dd41dd774e53cd591a5105c5555ac9f9" resname="ss.second_factor.list.button.register_recovery_token">
         <source>ss.second_factor.list.button.register_recovery_token</source>
-        <target state="translated">Add recovery token</target>
-        <jms:reference-file line="44">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
+        <target state="translated">Add recovery method</target>
+        <jms:reference-file line="47">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c954ee253d560c6f6d5baf1811ca34988a9029d8" resname="ss.second_factor.list.button.register_second_factor">
         <source>ss.second_factor.list.button.register_second_factor</source>
@@ -635,8 +635,8 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="f2169d672913395209ad9a8a46fe850b016d8fe7" resname="ss.second_factor.list.text.no_recovery_tokens">
         <source>ss.second_factor.list.text.no_recovery_tokens</source>
-        <target state="translated">There are no recovery tokens registered to your account. Press 'Add token' to register a new [recovery token].</target>
-        <jms:reference-file line="38">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
+        <target state="translated">There are no recovery methods registered to your account. Press 'Add revocery method' to add a new recovery method</target>
+        <jms:reference-file line="40">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="474737f264f9527e93a9f4f4c4c380331b52e759" resname="ss.second_factor.list.text.no_second_factors">
         <source>ss.second_factor.list.text.no_second_factors</source>
@@ -680,7 +680,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       <trans-unit id="39bf5f5849cef0ac9b176c769c79169676fc7b96" resname="ss.second_factor.revoke.button.revoke">
         <source>ss.second_factor.revoke.button.revoke</source>
         <target>Remove</target>
-        <jms:reference-file line="26">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
+        <jms:reference-file line="28">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
         <jms:reference-file line="87">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/second_factor/list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="17d18b6bcd8642fedf8e5371cb722efc604e8281" resname="ss.second_factor.revoke.button.test">
@@ -776,17 +776,17 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
       </trans-unit>
       <trans-unit id="9b376990b5857dad4e7e3b2e279df9fc3482ead3" resname="ss.self_asserted_tokens.safe_store.authentication.alert.failed">
         <source>ss.self_asserted_tokens.safe_store.authentication.alert.failed</source>
-        <target state="translated">The [safe-store] password is not correct, please try again.</target>
+        <target state="translated">The recovery code is not correct, please try again.</target>
         <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="028fd8373bfb6805a7ab482ebb19b79f725c6887" resname="ss.self_asserted_tokens.second_factor.alert.successful ">
         <source>ss.self_asserted_tokens.second_factor.alert.successful </source>
-        <target state="translated">Your [recovery token\ was activate</target>
+        <target state="translated">Your recovery method was activated</target>
         <jms:reference-file line="54">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="03881b38b73aa0c36816dfeb6ce493f01bae69cd" resname="ss.self_asserted_tokens.second_factor.no_available_recovery_token.alert.failed">
         <source>ss.self_asserted_tokens.second_factor.no_available_recovery_token.alert.failed</source>
-        <target>Unable to activate the token with your [recovery-token]. For example, you are not allowed to activate an SMS token with an SMS [recovery token]</target>
+        <target>Unable to activate the token with your recovery method. For example, you are not allowed to activate an SMS token with an SMS recovery method</target>
         <jms:reference-file line="57">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d3653739e7a9767a2a614acb62d85eac2421d7af" resname="ss.self_asserted_tokens.second_factor.vetting.alert.failed">
