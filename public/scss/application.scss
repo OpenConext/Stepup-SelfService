@@ -53,9 +53,11 @@
       max-width: 200px;
       max-height: 90px;
     }
-
   }
 
+}
+.vetting-selector.highlighted {
+    border-color: $blue;
 }
 
 .second-factors {
@@ -185,4 +187,20 @@ span.label {
 
 .alert-notice {
   @extend .alert-info;
+}
+
+.password {
+  font-family: monospace;
+  font-size: 110%;
+  background-color: #cccccc;
+  border: 1px solid #333333;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.loa-star-rating {
+  img {
+    height: 1em;
+    filter: $star-color;
+  }
 }

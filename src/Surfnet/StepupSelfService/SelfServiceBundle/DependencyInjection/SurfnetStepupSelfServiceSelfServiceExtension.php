@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\DependencyInjection;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -68,6 +69,10 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
             $config['second_factor_test_identity_provider'],
             $container
         );
+        $this->parseActivationFlowPreferenceConfiguration(
+            $config['preferred_activation_flow'],
+            $container
+        );
     }
 
     /**
@@ -98,5 +103,14 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
         $definition->setArguments([$configuration]);
         $definition->setPublic(true);
         $container->setDefinition('self_service.second_factor_test_idp', $definition);
+    }
+
+    private function parseActivationFlowPreferenceConfiguration(
+        array $preferenceConfig,
+        ContainerBuilder $container
+    ) {
+        $container->getDefinition(ActivationFlowService::class)
+            ->replaceArgument(2, $preferenceConfig['query_string_field_name'])
+            ->replaceArgument(3, $preferenceConfig['options']);
     }
 }

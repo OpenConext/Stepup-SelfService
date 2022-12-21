@@ -35,6 +35,66 @@ ss_second_factor_self_vet_consume_assertion:
     methods:  [POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfVet:consumeSelfVetAssertion }
 
+ss_recovery_token_display_types:
+    path: /recovery-token/select-recovery-token
+    methods: [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:selectTokenType }
+
+ss_recovery_token_safe_store:
+    path: /recovery-token/create-safe-store
+    methods: [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:createSafeStore }
+
+ss_recovery_token_delete:
+    path: /recovery-token/delete/{recoveryTokenId}
+    methods: [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:delete }
+
+ss_recovery_token_sms:
+    path: /recovery-token/create-sms
+    methods: [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:createSms }
+
+ss_recovery_token_prove_sms_possession:
+    path: /recovery-token/prove-sms-possession
+    methods: [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:proveSmsPossession }
+
+ss_second_factor_self_asserted_tokens:
+    path:     /second-factor/{secondFactorId}/self-asserted-token-registration
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistration }
+
+ss_second_factor_self_asserted_tokens_recovery_token:
+    path:     /second-factor/{secondFactorId}/self-asserted-token-registration/{recoveryTokenId}
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistrationRecoveryToken }
+
+ss_second_factor_self_asserted_tokens_recovery_token_sms:
+    path:     /second-factor/{secondFactorId}/self-asserted-token-registration/{recoveryTokenId}/authenticate
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRecoveryTokenSmsAuthentication }
+
+ss_second_factor_new_recovery_token:
+    path:     /second-factor/{secondFactorId}/new-recovery-token
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:newRecoveryToken }
+
+ss_registration_recovery_token_safe_store:
+    path:     /second-factor/{secondFactorId}/safe-store
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:registerCreateRecoveryTokenSafeStore }
+
+ss_registration_recovery_token_sms:
+    path:     /second-factor/{secondFactorId}/sms
+    methods:  [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:registerRecoveryTokenSms }
+
+ss_registration_recovery_token_sms_proof_of_possession:
+    path: /recovery-token/{secondFactorId}/prove-sms-possession
+    methods: [GET, POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:registerRecoveryTokenSmsProofOfPossession }
+
 ss_registration_display_types:
     path:     /registration/select-token
     methods:  [GET]
@@ -49,6 +109,11 @@ ss_registration_verify_email:
     path:     /verify-email
     methods:  [GET]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:verifyEmail }
+
+ss_registration_send_registration_email:
+    path:     /registration/{secondFactorId}/send-registration-email
+    methods:  [GET]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail }
 
 ss_registration_registration_email_sent:
     path:     /registration/{secondFactorId}/registration-email-sent
