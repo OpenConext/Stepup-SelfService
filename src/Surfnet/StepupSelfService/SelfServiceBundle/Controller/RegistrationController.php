@@ -120,7 +120,7 @@ class RegistrationController extends Controller
         if ($nudgeRaVetting) {
             $logger->notice('Nudging (forcing) RA vetting');
             return $this->forward(
-                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent',
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail',
                 ['secondFactorId' => $secondFactorId]
             );
         }
@@ -132,7 +132,7 @@ class RegistrationController extends Controller
                     'Skipping ahead to the RA vetting option as self vetting or self-asserted tokens are not allowed'
                 );
             return $this->forward(
-                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent',
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail',
                 ['secondFactorId' => $secondFactorId]
             );
         }

@@ -51,7 +51,7 @@ class YubikeyController extends Controller
             if ($result->isSuccessful()) {
                 if ($this->emailVerificationIsRequired()) {
                     return $this->redirectToRoute(
-                        'ss_registration_send_registration_email',
+                        'ss_registration_email_verification_email_sent',
                         ['secondFactorId' => $result->getSecondFactorId()]
                     );
                 } else {
