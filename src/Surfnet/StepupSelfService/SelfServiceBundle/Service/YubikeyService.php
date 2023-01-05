@@ -62,7 +62,13 @@ class YubikeyService
 
         if ($statusCode != 200) {
             $type = $statusCode >= 400 && $statusCode < 500 ? 'client' : 'server';
-            $this->logger->info(sprintf('Yubikey OTP verification failed; %s error', $type));
+            $this->logger->info(sprintf(
+                'Yubikey OTP verification failed; %s error; HTTP/%d %s',
+                $type,
+                $statusCode,
+                $response->getReasonPhrase()
+            ));
+            $this->logger->warn((string) $response->getBody());
 
             return new YubikeyVerificationResult(true, false);
         }

@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.recovery_token.safe-store.promise_possession_title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress':82, 'step': 5, verifyEmail: false} only %}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <p>{{ 'ss.registration.recovery_token.safe-store.promise_possession_subtitle'|trans }}</p>
+        </div>
+    </div>
+
+    <p>{{ 'ss.registration.recovery_token.safe-store.promise_possession_explanation'|trans }}</p>
+
+    <p class="password">{{ secret.display }}</p>
+
+    {{ form(form) }}
+
+    <p>&nbsp;</p>
+{% endblock %}

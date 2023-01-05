@@ -18,18 +18,48 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
+use Symfony\Component\HttpFoundation\Request;
 
 class EntryPointController extends Controller
 {
-    public function decideSecondFactorFlowAction()
+    /**
+     * @var SecondFactorService
+     */
+    private $secondFactorService;
+
+    /**
+     * @var RecoveryTokenService
+     */
+    private $recoveryTokenService;
+
+    private $authStateHandler;
+
+    private $activationFlowService;
+
+    public function __construct(
+        SecondFactorService $secondFactorService,
+        RecoveryTokenService $recoveryTokenService,
+        ActivationFlowService $activationFlowService,
+        AuthenticatedSessionStateHandler $authenticatedSessionStateHandler
+    ) {
+        $this->secondFactorService = $secondFactorService;
+        $this->recoveryTokenService = $recoveryTokenService;
+        $this->activationFlowService = $activationFlowService;
+        $this->authStateHandler = $authenticatedSessionStateHandler;
+    }
+
+    public function decideSecondFactorFlowAction(Request $request)
     {
         $identity = $this->getIdentity();
+        $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
+        $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
+        $this->activationFlowService->process($this->authStateHandler->getCurrentRequestUri());
 
-        /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-
-        if ($service->doSecondFactorsExistForIdentity($identity->id)) {
+        if ($hasSecondFactor || $hasRecoveryToken) {
             return $this->redirect($this->generateUrl('ss_second_factor_list'));
         } else {
             return $this->redirect(

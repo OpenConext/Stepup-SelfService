@@ -13,18 +13,17 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "~7.2",
+        "php": "^7.2|^8.0",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^6",
         "incenteev/composer-parameter-handler": "~2.0",
         "jms/translation-bundle": "^1.3.0",
         "mpdf/mpdf": "^7.0",
         "nelmio/security-bundle": "^2",
-        "openconext/monitor-bundle": "^2.0",
+        "openconext/monitor-bundle": "^3.1",
         "sensio/framework-extra-bundle": "^5.0",
-        "surfnet/stepup-bundle": "^4.2",
+        "surfnet/stepup-bundle": "^5.0",
         "surfnet/stepup-middleware-client-bundle": "^4.1",
-        "surfnet/stepup-saml-bundle": "^4.3.1",
         "symfony/console": "4.4.*",
         "symfony/expression-language": "4.4.*",
         "symfony/flex": "^1.8",
@@ -42,6 +41,7 @@
         "twig/twig": "^2"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "jakub-onderka/php-parallel-lint": "^1.0",
         "malukenho/docheader": "^0.1.8",
         "matthiasnoback/symfony-config-test": "^4",
@@ -64,7 +64,6 @@
             "@license-headers",
             "@phpunit",
             "@behat",
-            "@download-security-checker",
             "@security-tests",
             "@yarn-audit"
         ],
@@ -83,8 +82,7 @@
             "vendor/bin/phpcpd  ./src"
         ],
         "phpunit": "vendor/bin/phpunit --configuration=phpunit.xml.dist --coverage-text",
-        "download-security-checker": "if [ ! -f local-php-security-checker ]; then curl -s https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest | grep -E \"browser_download_url(.+)linux_386\" | cut -d : -f 2,3 | tr -d \\\" | xargs -I{} curl -L --output local-php-security-checker {} && chmod +x local-php-security-checker; fi",
-        "security-tests": "./local-php-security-checker",
+        "security-tests": "composer audit",
         "yarn-audit": "yarn audit",
         "frontend-install": [
             "yarn install --frozen-lockfile",
@@ -104,6 +102,9 @@
         ]
     },
     "config": {
+        "allow-plugins": {
+            "symfony/flex": true
+        },
         "optimize-autoloader": true,
         "sort-packages": true,
         "platform": {

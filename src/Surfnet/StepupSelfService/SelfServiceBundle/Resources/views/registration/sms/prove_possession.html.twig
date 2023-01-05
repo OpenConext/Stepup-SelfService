@@ -13,37 +13,5 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ block('page_title') }}</h2>
-
-    <p>{{ 'ss.registration.sms.text.help_user_enter_challenge'|trans }}</p>
-
-    <ul>
-        <li>{{ 'ss.registration.sms.text.enter_challenge_below'|trans }}</li>
-        <li>{{ 'ss.registration.sms.text.retry_if_not_received'|trans }}</li>
-    </ul>
-
-    <hr>
-
-    {{ form_start(form) }}
-    <div class="row">
-        {{ form_errors(form) }}
-        <div class="col-xs-4">
-            {{ form_label(form.challenge) }}
-        </div>
-        <div class="col-xs-8">
-            {{ form_widget(form.challenge) }}
-        </div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row offset-top">
-        <div class="col-xs-4">&nbsp;</div>
-        <div class="col-xs-4">
-            {{ form_row(form.resendChallenge) }}
-        </div>
-        <div class="col-xs-4">
-            {{ form_row(form.verifyChallenge) }}
-        </div>
-    </div>
-    {{ form_rest(form) }}
-
+    {% include '@SurfnetStepupSelfServiceSelfService/registration/partial/sms_prove_possession.html.twig' with { 'pageTitle': block('page_title') } %}
 {% endblock %}

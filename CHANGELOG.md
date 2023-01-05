@@ -1,4 +1,31 @@
 # Changelog
+## 4.0.1 .. 4.0.3
+- Do not send activation mail when verify email required #280
+- Upgrade Stepup SAML bundle #278
+- Upgrade js dependencies #277
+- Improve verification mail message timing #276
+- Explain the potential consequences of token removal #270
+- Add toggles to disable recovery token types #274
+
+## 4.0.0
+**Self-asserted token registration**
+- Nudge the vetting type more aggressively c67201bc
+- Integrate Recovery tokens in SelfService #261
+- Require step up authentication for Recovery Token create and delete actions #264
+- Support the new loa-self-asserted level of assurance #265
+- Allow expression of a preferred activation flow (vetting type) #266
+- Display the Institutional vetting type hint #268
+- Allow recovery token revocation without second factor token possession #269
+
+## 3.5.5
+- Make the info and health endpoints available on both `/` and `/internal/` paths. 'Deprecating' the original /health and /info endpoints.
+- Give a concrete error message when a required attribute is missing
+- Enhance logging of Yubico API errors
+- Update dependencies
+
+## 3.5.4
+- Introduce a Github Actions workflow for auto-building tags
+
 ## 3.5.3
 - Added browserlist entry in package.json to ensure IE 11 support
 

@@ -1,0 +1,21 @@
+{% set wholeStars = level|number_of_whole_stars %}
+{% set halfStar = level|half_star %}
+{% set remainingStars = 3 - wholeStars %}
+<span class="loa-star-rating">
+{% if wholeStars > 0 %}
+    {% for star in 1..wholeStars %}
+        <img class="star" src="{{ asset('images/star.svg') }}">
+    {% endfor %}
+{% endif %}
+
+{% if halfStar %}
+<img class="star star-half" src="{{ asset('images/star-half.svg') }}">
+{% set remainingStars = remainingStars - 1 %}
+{% endif %}
+
+{% if remainingStars > 0 %}
+{% for star in 1..remainingStars %}
+    <img class="star star-open" src="{{ asset('images/star-open.svg') }}">
+{% endfor %}
+{% endif %}
+</span>

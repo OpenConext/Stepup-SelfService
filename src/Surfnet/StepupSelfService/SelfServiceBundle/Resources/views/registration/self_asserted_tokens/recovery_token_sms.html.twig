@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block page_title %}{{ 'ss.registration.recovery_token.sms.prove_posession_title'|trans }}{% endblock %}
+
+{% block page_header %}
+    {{ parent() }}
+    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress':82, 'step': 5, verifyEmail: false} only %}
+{% endblock %}
+
+{% block content %}
+    {% include '@SurfnetStepupSelfServiceSelfService/registration/partial/sms_send_challenge.html.twig' with { 'pageTitle': block('page_title') } %}
+{% endblock %}

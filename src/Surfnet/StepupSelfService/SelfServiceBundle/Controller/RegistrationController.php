@@ -26,7 +26,9 @@ use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -40,7 +42,6 @@ class RegistrationController extends Controller
     public function displaySecondFactorTypesAction()
     {
         $institution = $this->getIdentity()->institution;
-
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($institution);
 
@@ -91,20 +92,60 @@ class RegistrationController extends Controller
      * @Template
      * @param string $secondFactorId
      */
-    public function displayVettingTypesAction($secondFactorId)
+    public function displayVettingTypesAction(Request $request, $secondFactorId)
     {
-        $selfVetMarshaller = $this->get('self_service.service.self_vet_marshaller');
+        /**
+         * @var VettingTypeService
+         */
+        $vettingTypeService = $this->get(VettingTypeService::class);
+        $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getIdentity(), $secondFactorId);
 
-        $allowSelfVetting = $selfVetMarshaller->isAllowed($this->getIdentity(), $secondFactorId);
-        if (!$allowSelfVetting) {
-            $this->get('logger')->notice('Skipping ahead to the RA vetting option as self vetting is not allowed');
+        $logger = $this->get('logger');
+
+        $nudgeSelfAssertedTokens = $vettingTypeCollection->isPreferred(VettingTypeInterface::SELF_ASSERTED_TOKENS);
+        $nudgeRaVetting = $vettingTypeCollection->isPreferred(VettingTypeInterface::ON_PREMISE);
+
+        // Nudging section: helping the Identity into choosing the right vetting type:
+
+        // Option 1: A self-asserted token registration nudge was requested via query string (?activate=self)
+        if ($nudgeSelfAssertedTokens && $vettingTypeCollection->allowSelfAssertedTokens()) {
+            $logger->notice('Nudging (forcing) self-asserted token registration');
             return $this->forward(
-                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:registrationEmailSent',
+                'SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistration',
                 ['secondFactorId' => $secondFactorId]
             );
         }
+
+        // Option 2: A ra-vetting nudge was requested via query string (?activate=ra)
+        if ($nudgeRaVetting) {
+            $logger->notice('Nudging (forcing) RA vetting');
+            return $this->forward(
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail',
+                ['secondFactorId' => $secondFactorId]
+            );
+        }
+
+        // Option 3: non-formal nudge, skip over selection screen. As only ra vetting is available.
+        if (!$vettingTypeCollection->allowSelfVetting() && !$vettingTypeCollection->allowSelfAssertedTokens()) {
+            $logger
+                ->notice(
+                    'Skipping ahead to the RA vetting option as self vetting or self-asserted tokens are not allowed'
+                );
+            return $this->forward(
+                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail',
+                ['secondFactorId' => $secondFactorId]
+            );
+        }
+
+        $institution = $this->getIdentity()->institution;
+        $currentLocale = $request->getLocale();
+        $vettingTypeHint = $vettingTypeService->vettingTypeHint($institution, $currentLocale);
+
         return [
-            'allowSelfVetting' => $allowSelfVetting,
+            'allowSelfVetting' => $vettingTypeCollection->allowSelfVetting(),
+            'allowSelfAssertedTokens' => $vettingTypeCollection->allowSelfAssertedTokens(),
+            'hasVettingTypeHint' => !is_null($vettingTypeHint),
+            'vettingTypeHint' => $vettingTypeHint,
             'verifyEmail' => $this->emailVerificationIsRequired(),
             'secondFactorId' => $secondFactorId,
         ];
@@ -149,13 +190,29 @@ class RegistrationController extends Controller
     }
 
     /**
+     * Intermediate action where the registration mail is sent. After which the
+     * email-sent page is displayed. Preventing the mail message from being sent
+     * over and over again when the user performs a page reload.
+     */
+    public function sendRegistrationEmailAction(string $secondFactorId)
+    {
+        // Send the registration email
+        $this->get('self_service.service.ra')
+            ->sendRegistrationMailMessage($this->getIdentity()->id, $secondFactorId);
+        return $this->redirectToRoute(
+            'ss_registration_registration_email_sent',
+            ['secondFactorId' => $secondFactorId]
+        );
+    }
+
+    /**
      * @param $secondFactorId
      * @return Response
      */
     public function registrationEmailSentAction($secondFactorId)
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
-
+        // Report that it was sent
         return $this->render(
             'SurfnetStepupSelfServiceSelfServiceBundle:registration:registration_email_sent.html.twig',
             $parameters

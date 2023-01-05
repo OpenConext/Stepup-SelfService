@@ -5,6 +5,9 @@
     "composer/ca-bundle": {
         "version": "1.2.9"
     },
+    "composer/pcre": {
+        "version": "2.0.0"
+    },
     "composer/xdebug-handler": {
         "version": "1.4.5"
     },
@@ -20,11 +23,38 @@
             "config/routes/annotations.yaml"
         ]
     },
+    "doctrine/cache": {
+        "version": "2.1.1"
+    },
+    "doctrine/collections": {
+        "version": "1.6.8"
+    },
+    "doctrine/common": {
+        "version": "3.3.0"
+    },
+    "doctrine/dbal": {
+        "version": "2.13.8"
+    },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
+    },
+    "doctrine/event-manager": {
+        "version": "1.1.1"
+    },
+    "doctrine/inflector": {
+        "version": "2.0.4"
+    },
     "doctrine/instantiator": {
         "version": "1.4.0"
     },
     "doctrine/lexer": {
         "version": "1.2.1"
+    },
+    "doctrine/orm": {
+        "version": "2.10.5"
+    },
+    "doctrine/persistence": {
+        "version": "2.5.1"
     },
     "guzzlehttp/guzzle": {
         "version": "6.5.5"
@@ -100,9 +130,6 @@
     },
     "phar-io/version": {
         "version": "3.1.0"
-    },
-    "php": {
-        "version": "7.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -293,6 +320,15 @@
     "symfony/dependency-injection": {
         "version": "v4.4.19"
     },
+    "symfony/deprecation-contracts": {
+        "version": "0.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "0.0",
+            "ref": ""
+        }
+    },
     "symfony/dom-crawler": {
         "version": "v4.4.19"
     },
@@ -363,9 +399,6 @@
         "version": "v4.4.19"
     },
     "symfony/intl": {
-        "version": "v4.4.19"
-    },
-    "symfony/mime": {
         "version": "v4.4.19"
     },
     "symfony/monolog-bridge": {

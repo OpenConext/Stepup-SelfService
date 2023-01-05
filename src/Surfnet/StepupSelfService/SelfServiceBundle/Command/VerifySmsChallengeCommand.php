@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class VerifySmsChallengeCommand
+class VerifySmsChallengeCommand implements SmsVerificationCommandInterface
 {
     /**
      * @Assert\NotBlank(message="ss.verify_sms_challenge_command.challenge.may_not_be_empty")
@@ -43,4 +43,14 @@ class VerifySmsChallengeCommand
      * token is not yet registered we use a hard-coded identifier instead.
      */
     public $secondFactorId = SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID;
+
+    /**
+     * The route used to trigger a resend of the SMS verification code
+     */
+    public $resendRoute = 'ss_registration_sms_send_challenge';
+
+    /**
+     * Route parameters required to build the resend route
+     */
+    public $resendRouteParameters = [];
 }
