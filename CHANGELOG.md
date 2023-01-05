@@ -1,4 +1,11 @@
 # Changelog
+## 4.0.1 .. 4.0.3
+- Do not send activation mail when verify email required #280
+- Upgrade Stepup SAML bundle #278
+- Upgrade js dependencies #277
+- Improve verification mail message timing #276
+- Explain the potential consequences of token removal #270
+- Add toggles to disable recovery token types #274
 
 ## 4.0.0
 **Self-asserted token registration**
