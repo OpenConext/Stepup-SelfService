@@ -70,11 +70,6 @@ ss_second_factor_self_asserted_tokens_recovery_token:
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistrationRecoveryToken }
 
-ss_second_factor_self_asserted_tokens_recovery_token_sms:
-    path:     /second-factor/{secondFactorId}/self-asserted-token-registration/{recoveryTokenId}/authenticate
-    methods:  [GET,POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRecoveryTokenSmsAuthentication }
-
 ss_second_factor_new_recovery_token:
     path:     /second-factor/{secondFactorId}/new-recovery-token
     methods:  [GET]
@@ -134,11 +129,6 @@ ss_registration_sms_send_challenge:
     path:     /registration/sms/send-challenge
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:sendChallenge }
-
-ss_registration_sms_prove_possession:
-    path:     /registration/sms/prove-possession
-    methods:  [GET,POST]
-    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:provePossession }
 
 ss_registration_gssf_status_report:
     path:     /registration/gssf/{provider}/status
