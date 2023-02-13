@@ -63,7 +63,6 @@
             "@phpcpd",
             "@license-headers",
             "@phpunit",
-            "@behat",
             "@security-tests",
             "@yarn-audit"
         ],
