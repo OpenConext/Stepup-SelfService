@@ -29,11 +29,11 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
-use function sprintf;
 
 class SelfVetMarshallerTest extends TestCase
 {
@@ -52,6 +52,14 @@ class SelfVetMarshallerTest extends TestCase
      * @var InstitutionConfigurationOptionsService
      */
     private $institutionConfigService;
+    /**
+     * @var m\LegacyMockInterface|m\MockInterface|AuthorizationService|(AuthorizationService&m\LegacyMockInterface)|(AuthorizationService&m\MockInterface)
+     */
+
+    /**
+     * @var AuthorizationService|m\Mock
+     */
+    private $authhService;
 
     /**
      * @param int[] $vettedLoas
@@ -67,6 +75,7 @@ class SelfVetMarshallerTest extends TestCase
         $candidate = $this->buildVerifiedTokenFromLoa($candidateLoa);
         $this->typeService = m::mock(SecondFactorTypeService::class);
         $this->institutionConfigService = m::mock(InstitutionConfigurationOptionsService::class);
+        $this->authhService = m::mock(AuthorizationService::class);
         $secondFactorService = m::mock(SecondFactorService::class);
         $vettedCollection = m::mock(VettedSecondFactorCollection::class);
         $vettedCollection->shouldReceive('getTotalItems')->andReturn(count($vettedLoaCollection));
@@ -79,6 +88,7 @@ class SelfVetMarshallerTest extends TestCase
             $secondFactorService,
             $this->typeService,
             $this->institutionConfigService,
+            $this->authhService,
             m::mock(LoggerInterface::class)->shouldIgnoreMissing()
         );
     }
@@ -141,6 +151,19 @@ class SelfVetMarshallerTest extends TestCase
         $this->assertTrue($this->marshaller->isAllowed($identity, self::LOA_2_ID));
     }
 
+    public function test_marshaller_allows_sat_tokens()
+    {
+        $this->buildMarshaller([Loa::LOA_2], Loa::LOA_3);
+        $identity = m::mock(Identity::class);
+        $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
+        $this->typeService->shouldReceive('hasEqualOrLowerLoaComparedTo')->andReturn(false);
+        $this->authhService->shouldReceive('maySelfVetSelfAssertedTokens')->andReturn(true)->once();
+        $option = new InstitutionConfigurationOptions();
+        $option->selfVet = true;
+        $this->institutionConfigService->shouldReceive('getInstitutionConfigurationOptionsFor')->andReturn($option);
+        $this->assertTrue($this->marshaller->isAllowed($identity, self::LOA_2_ID));
+    }
+
     public function test_marshaller_rejects_when_no_vetted_token_is_present()
     {
         $this->buildMarshaller([], Loa::LOA_2);
@@ -158,6 +181,7 @@ class SelfVetMarshallerTest extends TestCase
         $identity = m::mock(Identity::class);
         $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
         $this->typeService->shouldReceive('hasEqualOrLowerLoaComparedTo')->andReturn(false);
+        $this->authhService->shouldReceive('maySelfVetSelfAssertedTokens')->andReturn(false);
         $option = new InstitutionConfigurationOptions();
         $option->selfVet = true;
         $this->institutionConfigService->shouldReceive('getInstitutionConfigurationOptionsFor')->andReturn($option);
