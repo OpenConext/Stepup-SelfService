@@ -109,7 +109,7 @@ class SecondFactorService
         $apiCommand->secondFactorId = $command->secondFactor->secondFactorIdentifier;
         $apiCommand->secondFactorType = $command->secondFactor->type;
         $apiCommand->authorityId = $command->identity->id;
-        $apiCommand->authoringSecondFactorIdentifier = $command->authoringLoa;
+        $apiCommand->authoringSecondFactorLoa = $command->authoringLoa;
 
         $result = $this->commandService->execute($apiCommand);
         return $result->isSuccessful();

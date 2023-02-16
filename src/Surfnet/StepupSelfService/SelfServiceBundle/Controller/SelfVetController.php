@@ -28,9 +28,11 @@ use Surfnet\SamlBundle\Monolog\SamlAuthenticationLogger;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
+use Surfnet\StepupBundle\Value\Loa;
 use Surfnet\StepupBundle\Value\SecondFactorType;
 use Surfnet\StepupBundle\Value\VettingType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfVetCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor\TestAuthenticationRequestFactory;
@@ -88,6 +90,9 @@ class SelfVetController extends Controller
     /** @var LoggerInterface */
     public $logger;
 
+    /** @var AuthorizationService */
+    private $authorizationService;
+
     /**
      * @@SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -96,6 +101,7 @@ class SelfVetController extends Controller
         SecondFactorService $secondFactorService,
         SecondFactorTypeService $secondFactorTypeService,
         SelfVetMarshaller $marshaller,
+        AuthorizationService $authorizationService,
         ServiceProvider $serviceProvider,
         IdentityProvider $identityProvider,
         RedirectBinding $redirectBinding,
@@ -109,6 +115,7 @@ class SelfVetController extends Controller
         $this->secondFactorService = $secondFactorService;
         $this->secondFactorTypeService = $secondFactorTypeService;
         $this->selfVetMarshaller = $marshaller;
+        $this->authorizationService = $authorizationService;
         $this->serviceProvider = $serviceProvider;
         $this->identityProvider = $identityProvider;
         $this->redirectBinding = $redirectBinding;
@@ -128,13 +135,27 @@ class SelfVetController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $candidateSecondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
-        $candidateSecondFactorLoa = $this->secondFactorTypeService->getLevel(
-            new SecondFactorType($candidateSecondFactor->type),
-            new VettingType(VettingType::TYPE_SELF_VET)
-        );
-        $candidateSecondFactorLoa = $this->loaResolutionService->getLoaByLevel($candidateSecondFactorLoa);
 
+        // Start with some assumptions that are overwritten with the correct values in the code below
+        $candidateSecondFactorLoa = $this->loaResolutionService->getLoaByLevel(Loa::LOA_SELF_VETTED);
+        $isSelfVetOfSatToken = false;
+
+        // Determine if we are dealing with a SelfVet action of a SAT token
+        if ($this->authorizationService->maySelfVetSelfAssertedTokens($identity)) {
+            $this->logger->notice('Determined we are self vetting a token using a self-asserted token');
+            $isSelfVetOfSatToken = true;
+        }
+
+        // When a regular self-vet action is performed grab the candidate second factor loa from the SF projection
+        if (!$isSelfVetOfSatToken) {
+            $this->logger->notice('Determined we are self vetting a token using an identity vetted token');
+            $candidateSecondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
+            $candidateSecondFactorLoa = $this->secondFactorTypeService->getLevel(
+                new SecondFactorType($candidateSecondFactor->type),
+                new VettingType(VettingType::TYPE_SELF_VET)
+            );
+            $candidateSecondFactorLoa = $this->loaResolutionService->getLoaByLevel($candidateSecondFactorLoa);
+        }
         $this->logger->notice(
             sprintf(
                 'Creating AuthNRequest requiring a LoA %s or higher token for self vetting.',
