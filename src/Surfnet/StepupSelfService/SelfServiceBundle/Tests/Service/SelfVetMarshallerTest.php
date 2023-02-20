@@ -53,13 +53,9 @@ class SelfVetMarshallerTest extends TestCase
      */
     private $institutionConfigService;
     /**
-     * @var m\LegacyMockInterface|m\MockInterface|AuthorizationService|(AuthorizationService&m\LegacyMockInterface)|(AuthorizationService&m\MockInterface)
-     */
-
-    /**
      * @var AuthorizationService|m\Mock
      */
-    private $authhService;
+    private $authService;
 
     /**
      * @param int[] $vettedLoas
@@ -75,7 +71,7 @@ class SelfVetMarshallerTest extends TestCase
         $candidate = $this->buildVerifiedTokenFromLoa($candidateLoa);
         $this->typeService = m::mock(SecondFactorTypeService::class);
         $this->institutionConfigService = m::mock(InstitutionConfigurationOptionsService::class);
-        $this->authhService = m::mock(AuthorizationService::class);
+        $this->authService = m::mock(AuthorizationService::class);
         $secondFactorService = m::mock(SecondFactorService::class);
         $vettedCollection = m::mock(VettedSecondFactorCollection::class);
         $vettedCollection->shouldReceive('getTotalItems')->andReturn(count($vettedLoaCollection));
@@ -88,7 +84,7 @@ class SelfVetMarshallerTest extends TestCase
             $secondFactorService,
             $this->typeService,
             $this->institutionConfigService,
-            $this->authhService,
+            $this->authService,
             m::mock(LoggerInterface::class)->shouldIgnoreMissing()
         );
     }
@@ -157,7 +153,7 @@ class SelfVetMarshallerTest extends TestCase
         $identity = m::mock(Identity::class);
         $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
         $this->typeService->shouldReceive('hasEqualOrLowerLoaComparedTo')->andReturn(false);
-        $this->authhService->shouldReceive('maySelfVetSelfAssertedTokens')->andReturn(true)->once();
+        $this->authService->shouldReceive('maySelfVetSelfAssertedTokens')->andReturn(true)->once();
         $option = new InstitutionConfigurationOptions();
         $option->selfVet = true;
         $this->institutionConfigService->shouldReceive('getInstitutionConfigurationOptionsFor')->andReturn($option);
@@ -181,7 +177,7 @@ class SelfVetMarshallerTest extends TestCase
         $identity = m::mock(Identity::class);
         $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
         $this->typeService->shouldReceive('hasEqualOrLowerLoaComparedTo')->andReturn(false);
-        $this->authhService->shouldReceive('maySelfVetSelfAssertedTokens')->andReturn(false);
+        $this->authService->shouldReceive('maySelfVetSelfAssertedTokens')->andReturn(false);
         $option = new InstitutionConfigurationOptions();
         $option->selfVet = true;
         $this->institutionConfigService->shouldReceive('getInstitutionConfigurationOptionsFor')->andReturn($option);
