@@ -43,6 +43,8 @@ class SelfVetMarshaller implements VettingMarshaller
      */
     private $institutionConfigurationService;
 
+    private $authorizationService;
+
     /**
      * @var LoggerInterface
      */
@@ -52,11 +54,13 @@ class SelfVetMarshaller implements VettingMarshaller
         SecondFactorService $secondFactorService,
         SecondFactorTypeService $secondFactorTypeService,
         InstitutionConfigurationOptionsService $institutionConfigurationOptionsService,
+        AuthorizationService $authorizationService,
         LoggerInterface $logger
     ) {
         $this->secondFactorService = $secondFactorService;
         $this->secondFactorTypeService = $secondFactorTypeService;
         $this->institutionConfigurationService = $institutionConfigurationOptionsService;
+        $this->authorizationService = $authorizationService;
         $this->logger = $logger;
     }
 
@@ -64,20 +68,16 @@ class SelfVetMarshaller implements VettingMarshaller
      * You are allowed to self vet when:
      * 1. You already have a vetted token
      * 2. The vetted token has higher LoA (or equal) to the one being vetted
+     *
+     * Or
+     *
+     * When you have a self asserted token, you are allowed to self-vet any
+     * token with the self-vetted token. Resulting in tokens that are of the
+     * self-asserted token type.
      */
     public function isAllowed(Identity $identity, string $secondFactorId): bool
     {
-        $this->logger->info('Determine if self vetting is allowed');
-        $configurationOptions = $this->institutionConfigurationService->getInstitutionConfigurationOptionsFor(
-            $identity->institution
-        );
-        if ($configurationOptions->selfVet === false) {
-            $this->logger->info(
-                sprintf(
-                    'Self vetting is not allowed, as the option is not enabled for institution %s',
-                    $identity->institution
-                )
-            );
+        if (!$this->isSelfVettingEnabledFor($identity)) {
             return false;
         }
         $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);
@@ -96,12 +96,43 @@ class SelfVetMarshaller implements VettingMarshaller
                     new VettingType($authoringSecondFactor->vettingType)
                 );
                 if ($hasSuitableToken) {
-                    $this->logger->info('Self vetting is allowed');
+                    $this->logger->info('Self vetting is allowed, a suitable token was found');
                     return true;
                 }
             }
         }
+
+        // Finally, we allow vetting with self-asserted tokens. Using the SAT authorization service
+        // we ascertain if the user is allowed to use SAT.
+        if ($this->authorizationService->maySelfVetSelfAssertedTokens($identity)) {
+            $this->logger->info('Self vetting is allowed, by utilizing self-asserted tokens');
+            return true;
+        }
+
         $this->logger->info('Self vetting is not allowed, no suitable tokens are available');
         return false;
+    }
+
+    /**
+     * Does the institution allow for self vetting?
+     */
+
+    private function isSelfVettingEnabledFor(Identity $identity):bool
+    {
+        $this->logger->info('Determine if self vetting is allowed');
+        $configurationOptions = $this->institutionConfigurationService->getInstitutionConfigurationOptionsFor(
+            $identity->institution
+        );
+        if ($configurationOptions->selfVet === false) {
+            $this->logger->info(
+                sprintf(
+                    'Self vetting is not allowed, as the option is not enabled for institution %s',
+                    $identity->institution
+                )
+            );
+            return false;
+        }
+        $this->logger->info(sprintf('Self vetting is allowed for %s', $identity->institution));
+        return true;
     }
 }

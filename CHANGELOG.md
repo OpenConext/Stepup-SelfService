@@ -1,4 +1,7 @@
 # Changelog
+## 4.0.4
+- Support self-vetting using a self-asserted token #284
+
 ## 4.0.1 .. 4.0.3
 - Do not send activation mail when verify email required #280
 - Upgrade Stepup SAML bundle #278

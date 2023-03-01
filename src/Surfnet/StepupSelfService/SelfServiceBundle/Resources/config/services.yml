@@ -18,6 +18,7 @@ services:
             - "@surfnet_stepup_self_service_self_service.service.second_factor"
             - "@surfnet_stepup.service.second_factor_type"
             - "@self_service.service.self_vet_marshaller"
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService'
             - "@surfnet_saml.hosted.service_provider"
             - "@self_service.second_factor_test_idp"
             - "@surfnet_saml.http.redirect_binding"
@@ -129,8 +130,9 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller
         arguments:
             - "@surfnet_stepup_self_service_self_service.service.second_factor"
-            - "@Surfnet\\StepupBundle\\Service\\SecondFactorTypeService"
+            - '@Surfnet\StepupBundle\Service\SecondFactorTypeService'
             - "@self_service.service.institution_configuration_options"
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService'
             - "@logger"
 
     self_service.service.self_asserted_tokens_marshaller:
