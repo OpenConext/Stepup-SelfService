@@ -73,7 +73,8 @@ trait RecoveryTokenControllerTrait
 
             if ($otpRequestsRemaining === 0) {
                 $this->addFlash('error', 'ss.prove_phone_possession.challenge_request_limit_reached');
-                return array_merge(['form' => $form->createView()], $viewVariables);
+                $parameters = array_merge(['form' => $form->createView()], $viewVariables);
+                return $this->render($templateName, $parameters);
             }
 
             if ($this->smsService->sendChallenge($command)) {
