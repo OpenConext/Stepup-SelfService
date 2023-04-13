@@ -1,4 +1,14 @@
 # Changelog
+
+## 4.0.5
+**Maintenance:**
+- Framework: esi, fragments not used so disable
+- Security upgrades are installed
+
+**Bugfixes:**
+- SMS prove possession route not found #288
+- Repair return type inconsistency in recovery token trait #287
+
 ## 4.0.4
 - Support self-vetting using a self-asserted token #284
 
