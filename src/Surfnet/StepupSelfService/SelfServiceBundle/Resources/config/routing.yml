@@ -130,6 +130,11 @@ ss_registration_sms_send_challenge:
     methods:  [GET,POST]
     defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:sendChallenge }
 
+ss_registration_sms_prove_possession:
+    path:     /registration/sms/prove-possession
+    methods:  [GET,POST]
+    defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:Registration/Sms:provePossession }
+
 ss_registration_gssf_status_report:
     path:     /registration/gssf/{provider}/status
     methods:  [GET]
