@@ -46,7 +46,11 @@ class SmsController extends Controller
         $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
         $otpRequestsRemaining = $service->getOtpRequestsRemainingCount(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
         $maximumOtpRequests = $service->getMaximumOtpRequestsCount();
-        $viewVariables = ['otpRequestsRemaining' => $otpRequestsRemaining, 'maximumOtpRequests' => $maximumOtpRequests];
+        $viewVariables = [
+            'otpRequestsRemaining' => $otpRequestsRemaining,
+            'maximumOtpRequests' => $maximumOtpRequests,
+            'verifyEmail' => $this->emailVerificationIsRequired(),
+        ];
 
         if ($form->isSubmitted() && $form->isValid()) {
             $command->identity = $identity->id;
@@ -67,7 +71,6 @@ class SmsController extends Controller
         return array_merge(
             [
                 'form' => $form->createView(),
-                'verifyEmail' => $this->emailVerificationIsRequired(),
             ],
             $viewVariables
         );
