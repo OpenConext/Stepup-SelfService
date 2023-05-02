@@ -565,7 +565,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="28a12bced010e17743538e9eebaab14200e961f0" resname="ss.registration.vetting_type.description.self_asserted_tokens">
         <source>ss.registration.vetting_type.description.self_asserted_tokens</source>
-        <target>Activeer je token zelf. Mogelijk is je token niet voor ieder applicatie bruikbaar</target>
+        <target>Activeer je token zelf. Mogelijk is je token niet voor iedere applicatie bruikbaar</target>
         <jms:reference-file line="57">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d72f763c2ed38cada18ea9e0a56b08f89178a454" resname="ss.registration.vetting_type.description.self_vet">
