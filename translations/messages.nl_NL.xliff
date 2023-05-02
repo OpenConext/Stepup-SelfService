@@ -778,7 +778,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="028fd8373bfb6805a7ab482ebb19b79f725c6887" resname="ss.self_asserted_tokens.second_factor.alert.successful ">
-        <source>ss.self_asserted_tokens.second_factor.alert.successful </source>
+        <source>ss.self_asserted_tokens.second_factor.alert.successful</source>
         <target state="translated">Je herstelmethode is geactiveerd</target>
         <jms:reference-file line="54">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
