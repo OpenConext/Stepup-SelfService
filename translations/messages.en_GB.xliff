@@ -483,7 +483,7 @@ For all devices with a USB port.</target>
       </trans-unit>
       <trans-unit id="1e492ec7a3e13d540bde6fbb9a0bd26b9cf30770" resname="ss.registration.self_asserted.recovery_token.title">
         <source>ss.registration.self_asserted.recovery_token.title</source>
-        <target state="needs-l10n">[Title]</target>
+        <target>Add recovery method</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/registration.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cb8f1be659847e3d5566890256517229aade2389" resname="ss.registration.sms.alert.no_verification_state">
@@ -779,7 +779,7 @@ An e-mail with your activation code has been sent to the e-mail address %email%.
         <target state="translated">The recovery code is not correct, please try again.</target>
         <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="028fd8373bfb6805a7ab482ebb19b79f725c6887" resname="ss.self_asserted_tokens.second_factor.alert.successful ">
+      <trans-unit id="028fd8373bfb6805a7ab482ebb19b79f725c6887" resname="ss.self_asserted_tokens.second_factor.alert.successful">
         <source>ss.self_asserted_tokens.second_factor.alert.successful </source>
         <target state="translated">Your recovery method was activated</target>
         <jms:reference-file line="54">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
