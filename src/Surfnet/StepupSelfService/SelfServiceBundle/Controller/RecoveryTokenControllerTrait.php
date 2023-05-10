@@ -128,6 +128,9 @@ trait RecoveryTokenControllerTrait
         if ($form->isSubmitted() && $form->isValid()) {
             $result = $this->smsService->provePossession($command);
             if ($result->isSuccessful()) {
+                $this->smsService->forgetRecoveryTokenState();
+                $this->smsService->tokenCreatedDuringSecondFactorRegistration();
+
                 $this->smsService->clearSmsVerificationState(SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID);
                 $urlParameter = [];
                 if (isset($secondFactorId)) {

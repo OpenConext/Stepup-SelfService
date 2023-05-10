@@ -19,6 +19,8 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\ReturnTo;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -52,6 +54,7 @@ class RecoveryTokenState
 
     public const RECOVERY_TOKEN_RETURN_TO_CREATE_SMS = 'ss_recovery_token_sms';
 
+    private const SAFE_STORE_SESSION_NAME = 'safe_store_secret';
 
     public function __construct(SessionInterface $session)
     {
@@ -71,7 +74,25 @@ class RecoveryTokenState
         return false;
     }
 
-    public function forgetSafeStoreTokenCreatedDuringSecondFactorRegistration(): void
+    public function retrieveSecret(): SafeStoreSecret
+    {
+        if ($this->session->has(self::SAFE_STORE_SESSION_NAME)) {
+            return $this->session->get(self::SAFE_STORE_SESSION_NAME);
+        }
+        throw new SafeStoreSecretNotFoundException('Unable to retrieve SafeStore secret, it was not found in state');
+    }
+
+    public function store(SafeStoreSecret $secret): void
+    {
+        $this->session->set(self::SAFE_STORE_SESSION_NAME, $secret);
+    }
+
+    public function forget(): void
+    {
+        $this->session->remove(self::SAFE_STORE_SESSION_NAME);
+    }
+
+    public function forgetTokenCreatedDuringSecondFactorRegistration(): void
     {
         $this->session->remove(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER);
     }

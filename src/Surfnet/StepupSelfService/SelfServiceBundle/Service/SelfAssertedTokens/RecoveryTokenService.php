@@ -131,6 +131,9 @@ class RecoveryTokenService
                 unset($tokens['sms']);
             }
         }
+        if (empty($tokens)) {
+            $this->logger->info('No recovery tokens are available for second factor registration');
+        }
         return $tokens;
     }
 
