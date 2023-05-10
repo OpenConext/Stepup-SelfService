@@ -23,6 +23,7 @@ use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreState;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -36,7 +37,7 @@ class SafeStoreServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->state = Mockery::mock(SafeStoreState::class);
+        $this->state = Mockery::mock(RecoveryTokenState::class);
         $commandService = Mockery::mock(CommandService::class);
         $this->service = new SafeStoreService($this->state, $commandService);
     }

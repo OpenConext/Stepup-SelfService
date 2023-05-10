@@ -31,7 +31,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Excep
 class SafeStoreService
 {
     /**
-     * @var SafeStoreState
+     * @var RecoveryTokenState
      */
     private $stateStore;
 
@@ -40,7 +40,7 @@ class SafeStoreService
      */
     private $commandService;
 
-    public function __construct(SafeStoreState $stateStore, CommandService $commandService)
+    public function __construct(RecoveryTokenState $stateStore, CommandService $commandService)
     {
         $this->stateStore = $stateStore;
         $this->commandService = $commandService;
@@ -79,7 +79,7 @@ class SafeStoreService
 
     public function wasSafeStoreTokenCreatedDuringSecondFactorRegistration(): bool
     {
-        return $this->stateStore->wasSafeStoreTokenCreatedDuringSecondFactorRegistration();
+        return $this->stateStore->wasRecoveryTokenCreatedDuringSecondFactorRegistration();
     }
 
     /**
@@ -92,6 +92,6 @@ class SafeStoreService
 
     public function forgetSafeStoreTokenCreatedDuringSecondFactorRegistration(): void
     {
-        $this->stateStore->forgetSafeStoreTokenCreatedDuringSecondFactorRegistration();
+        $this->stateStore->forgetTokenCreatedDuringSecondFactorRegistration();
     }
 }

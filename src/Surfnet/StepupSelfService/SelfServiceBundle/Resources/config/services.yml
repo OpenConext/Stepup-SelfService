@@ -120,6 +120,7 @@ services:
             - '@Surfnet\StepupBundle\Service\SmsRecoveryTokenService'
             - "@translator"
             - "@surfnet_stepup_self_service_self_service.service.command"
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState'
 
     surfnet_stepup_self_service_self_service.service.gssf:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
@@ -162,17 +163,13 @@ services:
             - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenConfig'
             - '@logger'
 
-    Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreState:
-        arguments:
-            - '@session'
-
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState:
         arguments:
             - '@session'
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService:
         arguments:
-            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreState'
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState'
             - '@surfnet_stepup_self_service_self_service.service.command'
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService:
