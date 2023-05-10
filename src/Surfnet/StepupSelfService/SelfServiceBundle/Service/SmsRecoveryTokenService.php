@@ -26,9 +26,11 @@ use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhoneRecoveryTokenPossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsAuthenticationChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsRecoveryTokenChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\ProofOfPossessionResult;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -44,14 +46,18 @@ class SmsRecoveryTokenService
 
     private $commandService;
 
+    private $stateHandler;
+
     public function __construct(
         StepupSmsRecoveryTokenService $smsService,
         TranslatorInterface $translator,
-        CommandService $commandService
+        CommandService $commandService,
+        RecoveryTokenState $stateHandler
     ) {
         $this->smsService = $smsService;
         $this->translator = $translator;
         $this->commandService = $commandService;
+        $this->stateHandler = $stateHandler;
     }
 
     public function getOtpRequestsRemainingCount(string $identifier): int
@@ -72,6 +78,18 @@ class SmsRecoveryTokenService
     public function clearSmsVerificationState(string $secondFactorId): void
     {
         $this->smsService->clearSmsVerificationState($secondFactorId);
+    }
+
+    public function authenticate(SendRecoveryTokenSmsAuthenticationChallengeCommand $command): bool
+    {
+        $stepupCommand = new StepupSendRecoveryTokenSmsChallengeCommand();
+        $stepupCommand->phoneNumber = $command->identifier;
+        $stepupCommand->body = $this->translator->trans('ss.registration.sms.challenge_body');
+        $stepupCommand->identity = $command->identity;
+        $stepupCommand->institution = $command->institution;
+        $stepupCommand->recoveryTokenId = $command->recoveryTokenId;
+
+        return $this->smsService->sendChallenge($stepupCommand);
     }
 
     /**
@@ -125,5 +143,46 @@ class SmsRecoveryTokenService
         }
 
         return ProofOfPossessionResult::recoveryTokenCreated($command->recoveryTokenId);
+    }
+
+    public function wasTokenCreatedDuringSecondFactorRegistration()
+    {
+        return $this->stateHandler->wasRecoveryTokenCreatedDuringSecondFactorRegistration();
+    }
+
+    public function forgetTokenCreatedDuringSecondFactorRegistration()
+    {
+        $this->stateHandler->forgetTokenCreatedDuringSecondFactorRegistration();
+    }
+
+    public function tokenCreatedDuringSecondFactorRegistration()
+    {
+        $this->stateHandler->tokenCreatedDuringSecondFactorRegistration();
+    }
+
+    public function forgetRecoveryTokenState()
+    {
+        $this->stateHandler->forget();
+    }
+
+    public function verifyAuthentication(VerifySmsRecoveryTokenChallengeCommand $command): ProofOfPossessionResult
+    {
+        $stepupCommand = new VerifyPossessionOfPhoneForRecoveryTokenCommand();
+        $stepupCommand->challenge = $command->challenge;
+        $stepupCommand->recoveryTokenId = $command->recoveryTokenId;
+
+        $verification = $this->smsService->verifyPossession($stepupCommand);
+
+        if ($verification->didOtpExpire()) {
+            return ProofOfPossessionResult::challengeExpired();
+        }
+        if ($verification->wasAttemptedTooManyTimes()) {
+            return ProofOfPossessionResult::tooManyAttempts();
+        }
+        if (!$verification->wasSuccessful()) {
+            return ProofOfPossessionResult::incorrectChallenge();
+        }
+
+        return ProofOfPossessionResult::recoveryTokenVerified();
     }
 }

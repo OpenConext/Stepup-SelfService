@@ -22,6 +22,7 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreState;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -35,7 +36,7 @@ class SafeStoreStateTest extends TestCase
     public function test_it_can_store_and_retrieve_secrets()
     {
         $session = Mockery::mock(SessionInterface::class);
-        $store = new SafeStoreState($session);
+        $store = new RecoveryTokenState($session);
 
         $secret = new SafeStoreSecret();
         $session->shouldReceive('set')->with('safe_store_secret', $secret);
@@ -51,7 +52,7 @@ class SafeStoreStateTest extends TestCase
     public function test_it_can_not_retireve_a_non_existant_secret()
     {
         $session = Mockery::mock(SessionInterface::class);
-        $store = new SafeStoreState($session);
+        $store = new RecoveryTokenState($session);
 
         $session->shouldReceive('has')->with('safe_store_secret')->andReturnFalse();
 

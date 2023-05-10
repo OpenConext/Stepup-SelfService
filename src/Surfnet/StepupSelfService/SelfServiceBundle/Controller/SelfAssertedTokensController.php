@@ -20,11 +20,15 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
+use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SafeStoreAuthenticationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfAssertedTokenRegistrationCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsAuthenticationChallengeCommand;
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsRecoveryTokenChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\AuthenticateSafeStoreType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\PromiseSafeStorePossessionType;
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifySmsChallengeType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\AuthenticationRequestFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
@@ -168,20 +172,35 @@ class SelfAssertedTokensController extends Controller
 
         switch ($token->type) {
             case "sms":
-                $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
+                if ($this->smsService->wasTokenCreatedDuringSecondFactorRegistration()) {
+                    // Forget we created the recovery token during token registration. Next time Identity
+                    // must fill its password.
+                    $this->smsService->forgetTokenCreatedDuringSecondFactorRegistration();
+                    $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
 
-                $command = new SelfAssertedTokenRegistrationCommand();
-                $command->identity = $this->getIdentity();
-                $command->secondFactor = $secondFactor;
-                $command->recoveryTokenId = $recoveryTokenId;
+                    $command = new SelfAssertedTokenRegistrationCommand();
+                    $command->identity = $this->getIdentity();
+                    $command->secondFactor = $secondFactor;
+                    $command->recoveryTokenId = $recoveryTokenId;
 
-                if ($this->secondFactorService->registerSelfAssertedToken($command)) {
-                    $this->addFlash('success', 'ss.self_asserted_tokens.second_factor.alert.successful');
-                } else {
-                    $this->addFlash('error', 'ss.self_asserted_tokens.second_factor.alert.failed');
+                    if ($this->secondFactorService->registerSelfAssertedToken($command)) {
+                        $this->addFlash('success', 'ss.self_asserted_tokens.second_factor.alert.successful');
+                    } else {
+                        $this->addFlash('error', 'ss.self_asserted_tokens.second_factor.alert.failed');
+                    }
+                    return $this->redirectToRoute('ss_second_factor_list');
                 }
-
-                return $this->redirectToRoute('ss_second_factor_list');
+                $number = InternationalPhoneNumber::fromStringFormat($token->identifier);
+                $command = new SendRecoveryTokenSmsAuthenticationChallengeCommand();
+                $command->identifier = $number;
+                $command->institution = $identity->institution;
+                $command->recoveryTokenId = $recoveryTokenId;
+                $command->identity = $identity->id;
+                $this->smsService->authenticate($command);
+                return $this->redirectToRoute(
+                    'ss_second_factor_self_asserted_tokens_recovery_token_sms',
+                    ['secondFactorId' => $secondFactorId, 'recoveryTokenId' => $recoveryTokenId]
+                );
             case "safe-store":
                 // No authentication of the safe store token is required if created during SF token registration
                 if ($this->safeStoreService->wasSafeStoreTokenCreatedDuringSecondFactorRegistration()) {
@@ -243,6 +262,75 @@ class SelfAssertedTokensController extends Controller
             [
                 'secondFactorId' => $secondFactorId,
                 'availableRecoveryTokens' => $availableRecoveryTokens
+            ]
+        );
+    }
+
+    /**
+     * Self-asserted token registration: Authenticate a SMS recovery token
+     *
+     * The previous action (selfAssertedTokenRegistrationRecoveryTokenAction)
+     * sent the Identity a OTP via SMS. The Identity must reproduce that OTP
+     * in this action. Proving possession of the recovery token.
+     */
+    public function selfAssertedTokenRecoveryTokenSmsAuthenticationAction(
+        Request $request,
+        string $secondFactorId,
+        string $recoveryTokenId
+    ): Response {
+        $identity = $this->getIdentity();
+        $this->assertSecondFactorInPossession($secondFactorId, $identity);
+        $this->assertRecoveryTokenInPossession($recoveryTokenId, $identity);
+
+        // Then render the authentication (proof of possession screen
+        if (!$this->smsService->hasSmsVerificationState($recoveryTokenId)) {
+            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
+            return $this->redirectToRoute(
+                'ss_second_factor_self_asserted_tokens',
+                ['secondFactorId' => $secondFactorId]
+            );
+        }
+
+        $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
+
+        $command = new VerifySmsRecoveryTokenChallengeCommand();
+        $command->identity = $identity->id;
+        $command->resendRouteParameters = ['secondFactorId' => $secondFactorId, 'recoveryTokenId' => $recoveryTokenId];
+
+        $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $command->recoveryTokenId = $recoveryTokenId;
+            $result = $this->smsService->verifyAuthentication($command);
+            if ($result->authenticated()) {
+                $this->smsService->clearSmsVerificationState($recoveryTokenId);
+
+                $command = new SelfAssertedTokenRegistrationCommand();
+                $command->identity = $this->getIdentity();
+                $command->secondFactor = $secondFactor;
+                $command->recoveryTokenId = $recoveryTokenId;
+
+                if ($this->secondFactorService->registerSelfAssertedToken($command)) {
+                    $this->addFlash('success', 'ss.self_asserted_tokens.second_factor.alert.successful');
+                } else {
+                    $this->addFlash('error', 'ss.self_asserted_tokens.second_factor.alert.failed');
+                }
+
+                return $this->redirectToRoute('ss_second_factor_list');
+            } elseif ($result->wasIncorrectChallengeResponseGiven()) {
+                $this->addFlash('error', 'ss.prove_phone_possession.incorrect_challenge_response');
+            } elseif ($result->hasChallengeExpired()) {
+                $this->addFlash('error', 'ss.prove_phone_possession.challenge_expired');
+            } elseif ($result->wereTooManyAttemptsMade()) {
+                $this->addFlash('error', 'ss.prove_phone_possession.too_many_attempts');
+            } else {
+                $this->addFlash('error', 'ss.prove_phone_possession.proof_of_possession_failed');
+            }
+        }
+        return $this->render(
+            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/registration_sms_prove_possession.html.twig',
+            [
+                'form' => $form->createView(),
             ]
         );
     }
