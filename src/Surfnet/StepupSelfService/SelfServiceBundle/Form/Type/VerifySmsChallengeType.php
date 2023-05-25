@@ -33,7 +33,10 @@ class VerifySmsChallengeType extends AbstractType
         $builder->add('challenge', TextType::class, [
             'label' => 'ss.form.ss_verify_sms_challenge.text.challenge',
             'required' => true,
-            'attr' => ['autofocus' => true],
+            'attr' => [
+                'autofocus' => true,
+                'autocomplete' => 'off',
+            ],
             'label_attr' => ['class' => 'pull-right'],
         ]);
         $builder->add('resendChallenge', AnchorType::class, [

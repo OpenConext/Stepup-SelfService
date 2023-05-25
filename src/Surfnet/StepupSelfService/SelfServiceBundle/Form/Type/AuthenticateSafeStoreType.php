@@ -32,7 +32,10 @@ class AuthenticateSafeStoreType extends AbstractType
         $builder->add('secret', PasswordType::class, [
             'label' => 'ss.form.ss_authenticate_safe_store_type.text.secret',
             'required' => true,
-            'attr' => ['autofocus' => true],
+            'attr' => [
+                'autofocus' => true,
+                'autocomplete' => 'off'
+            ],
         ]);
         $builder->add('verifySecret', SubmitType::class, [
             'label' => 'ss.form.ss_authenticate_safe_store_type.button.continue',
