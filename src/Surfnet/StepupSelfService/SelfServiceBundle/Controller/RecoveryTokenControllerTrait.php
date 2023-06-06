@@ -121,7 +121,14 @@ trait RecoveryTokenControllerTrait
 
         $command = new VerifySmsRecoveryTokenChallengeCommand();
         $command->identity = $identity->id;
-        $command->resendRoute = 'ss_recovery_token_sms';
+
+        $command->resendRoute = 'ss_registration_recovery_token_sms';
+        $command->resendRouteParameters = ['secondFactorId' => $secondFactorId, 'recoveryTokenId' => null];
+
+        if (!$secondFactorId) {
+            $command->resendRoute = 'ss_recovery_token_sms';
+            $command->resendRouteParameters = [];
+        }
 
         $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
 
