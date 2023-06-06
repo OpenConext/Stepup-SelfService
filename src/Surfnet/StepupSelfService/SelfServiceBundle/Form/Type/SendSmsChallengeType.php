@@ -23,7 +23,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommandI
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,7 +39,7 @@ class SendSmsChallengeType extends AbstractType
                 'preferred_choices'              =>
                     ['Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing', 'isPreferredChoice'],
             ])
-            ->add('subscriber', TextType::class, [
+            ->add('subscriber', TelType::class, [
                 'label'                          => /** @Ignore */ 'subscriberNumber',
                 'required'                       => true,
                 'attr'                           => [
