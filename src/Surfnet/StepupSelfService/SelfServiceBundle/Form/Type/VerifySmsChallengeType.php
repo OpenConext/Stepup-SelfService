@@ -35,7 +35,7 @@ class VerifySmsChallengeType extends AbstractType
             'required' => true,
             'attr' => [
                 'autofocus' => true,
-                'autocomplete' => 'off',
+                'autocomplete' => 'one-time-code',
             ],
             'label_attr' => ['class' => 'pull-right'],
         ]);
