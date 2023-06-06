@@ -493,7 +493,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="c50571e9afcd050cbd75609b1334730df8dae3f0" resname="ss.registration.sms.challenge_body">
         <source>ss.registration.sms.challenge_body</source>
-        <target>Uw SMS-code: %challenge%</target>
+        <target>Je sms-code: %challenge%</target>
         <jms:reference-file line="103">/src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php</jms:reference-file>
         <jms:reference-file line="82">/src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php</jms:reference-file>
         <jms:reference-file line="112">/src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
