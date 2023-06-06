@@ -635,7 +635,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="f2169d672913395209ad9a8a46fe850b016d8fe7" resname="ss.second_factor.list.text.no_recovery_tokens">
         <source>ss.second_factor.list.text.no_recovery_tokens</source>
-        <target state="translated">Er zijn geen hersteldmethoden geregistreerd voor jouw account. Klik op 'Toevoegen' om een nieuwe herstelmethode toe te voegen.</target>
+        <target state="translated">Er zijn geen herstelmethoden geregistreerd voor jouw account. Klik op 'Toevoegen' om een nieuwe herstelmethode toe te voegen.</target>
         <jms:reference-file line="40">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="474737f264f9527e93a9f4f4c4c380331b52e759" resname="ss.second_factor.list.text.no_second_factors">
