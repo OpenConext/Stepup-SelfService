@@ -483,7 +483,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="1e492ec7a3e13d540bde6fbb9a0bd26b9cf30770" resname="ss.registration.self_asserted.recovery_token.title">
         <source>ss.registration.self_asserted.recovery_token.title</source>
-        <target state="translated">[Titel]</target>
+        <target state="translated">Herstelmethode toevoegen</target>
         <jms:reference-file line="3">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/self_asserted_tokens/registration.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cb8f1be659847e3d5566890256517229aade2389" resname="ss.registration.sms.alert.no_verification_state">
@@ -493,7 +493,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="c50571e9afcd050cbd75609b1334730df8dae3f0" resname="ss.registration.sms.challenge_body">
         <source>ss.registration.sms.challenge_body</source>
-        <target>Uw SMS-code: %challenge%</target>
+        <target>Je sms-code: %challenge%</target>
         <jms:reference-file line="103">/src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php</jms:reference-file>
         <jms:reference-file line="82">/src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php</jms:reference-file>
         <jms:reference-file line="112">/src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsSecondFactorService.php</jms:reference-file>
@@ -565,7 +565,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="28a12bced010e17743538e9eebaab14200e961f0" resname="ss.registration.vetting_type.description.self_asserted_tokens">
         <source>ss.registration.vetting_type.description.self_asserted_tokens</source>
-        <target>Activeer je token zelf. Mogelijk is je token niet voor ieder applicatie bruikbaar</target>
+        <target>Activeer je token zelf. Mogelijk is je token niet voor iedere applicatie bruikbaar</target>
         <jms:reference-file line="57">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/display_vetting_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d72f763c2ed38cada18ea9e0a56b08f89178a454" resname="ss.registration.vetting_type.description.self_vet">
@@ -635,7 +635,7 @@ Geschikt voor alle devices met een USB-poort.</target>
       </trans-unit>
       <trans-unit id="f2169d672913395209ad9a8a46fe850b016d8fe7" resname="ss.second_factor.list.text.no_recovery_tokens">
         <source>ss.second_factor.list.text.no_recovery_tokens</source>
-        <target state="translated">Er zijn geen hersteldmethoden geregistreerd voor jouw account. Klik op 'Toevoegen' om een nieuwe herstelmethode toe te voegen.</target>
+        <target state="translated">Er zijn geen herstelmethoden geregistreerd voor jouw account. Klik op 'Toevoegen' om een nieuwe herstelmethode toe te voegen.</target>
         <jms:reference-file line="40">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/registration/partial/crud_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="474737f264f9527e93a9f4f4c4c380331b52e759" resname="ss.second_factor.list.text.no_second_factors">
@@ -777,8 +777,8 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
         <target state="translated">De herstelcode is niet correct, probeer het opnieuw.</target>
         <jms:reference-file line="53">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="028fd8373bfb6805a7ab482ebb19b79f725c6887" resname="ss.self_asserted_tokens.second_factor.alert.successful ">
-        <source>ss.self_asserted_tokens.second_factor.alert.successful </source>
+      <trans-unit id="028fd8373bfb6805a7ab482ebb19b79f725c6887" resname="ss.self_asserted_tokens.second_factor.alert.successful">
+        <source>ss.self_asserted_tokens.second_factor.alert.successful</source>
         <target state="translated">Je herstelmethode is geactiveerd</target>
         <jms:reference-file line="54">/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views/translations.twig</jms:reference-file>
       </trans-unit>
@@ -931,7 +931,7 @@ Er is een e-mail met activatiecode gestuurd naar het e-mailadres %email%. Volg d
       </trans-unit>
       <trans-unit id="13cca787752c500356fbd62690001b8cb2a04e9a" resname="stepup.error.support_page.text">
         <source>stepup.error.support_page.text</source>
-        <target><![CDATA[Bezoek <a href="%support_url%" target="_blank">de support pagina</a> als dit je probleem niet oplost. Op deze pagina vind je meer informatie over de mogelijk oorzaken en hoe je contact kan opnemen met het supportteam.]]></target>
+        <target><![CDATA[Bezoek <a href="%support_url%" target="_blank">de support pagina</a> als dit je probleem niet oplost. Op deze pagina vind je meer informatie over de mogelijke oorzaken en hoe je contact kan opnemen met het supportteam.]]></target>
         <jms:reference-file line="12">/vendor/surfnet/stepup-bundle/src/Resources/views/Exception/error404.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="27518086f13a0c4f33e2e1f4c118187a4e41ce53" resname="stepup.error.timestamp">

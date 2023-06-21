@@ -126,8 +126,7 @@ class SecondFactorService
         $apiCommand->authorityId = $command->identity->id;
         $apiCommand->authoringRecoveryTokenId = $command->recoveryTokenId;
 
-        $result = $this->commandService->execute($apiCommand);
-        return $result->isSuccessful();
+        return $this->commandService->execute($apiCommand)->isSuccessful();
     }
 
     /**

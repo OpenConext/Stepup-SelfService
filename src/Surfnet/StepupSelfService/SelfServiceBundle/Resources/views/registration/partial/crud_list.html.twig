@@ -1,4 +1,4 @@
-{% if selfAssertedTokenRegistration %}
+{% if (selfAssertedTokenRegistration and recoveryTokens is not empty) or (selfAssertedTokenRegistration and vettedSecondFactors.elements is not empty) %}
     <hr>
     <h2>{{ 'ss.recovery_token_list.title'|trans }}</h2>
 
@@ -40,7 +40,7 @@
         <p>{{ 'ss.second_factor.list.text.no_recovery_tokens'|trans }}</p>
     {% endif %}
 
-    {% if hasRemainingRecoveryTokens %}
+        {% if hasRemainingRecoveryTokens and vettedSecondFactors.elements is not empty %}
     <p>
         <a href="{{ path('ss_recovery_token_display_types') }}"
            class="btn btn-primary pull-right">
