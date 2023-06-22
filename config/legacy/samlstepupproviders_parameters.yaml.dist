@@ -1,12 +1,12 @@
 # This file is auto-generated during the composer install
 parameters:
-    gssp_azuremfa_sp_publickey: /src/Stepup-SelfService/app/files/sp_gssp.crt
-    gssp_azuremfa_sp_privatekey: /src/Stepup-SelfService/app/files/sp_gssp.key
-    gssp_azuremfa_metadata_publickey: /src/Stepup-SelfService/app/files/sp_gssp.crt
-    gssp_azuremfa_metadata_privatekey: /src/Stepup-SelfService/app/files/sp_gssp.key
-    gssp_azuremfa_remote_entity_id: 'https://gateway.stepup.example.com/gssp/azuremfa/metadata'
-    gssp_azuremfa_remote_sso_url: 'https://gateway.stepup.example.com/gssp/azuremfa/single-sign-on'
-    gssp_azuremfa_remote_certificate: MIID5DCCAkwCCQC5XK3oVEwVcDANBgkqhkiG9w0BAQUFADA0MRkwFwYDVQQDDBBHYXRld2F5IFRpcXIgSWRQMRcwFQYDVQQKDA5EZXZlbG9wbWVudCBWTTAeFw0yMDEwMTkxMDAzMzFaFw0yNTEwMTgxMDAzMzFaMDQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxFzAVBgNVBAoMDkRldmVsb3BtZW50IFZNMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAucLa2a41JqdnLni/Zrftr5o/ylNMazOYuwaQx3qvu36IAysLOq9eLORb1MGa/0UtnNpSiSxJdg6yJmiWOJrTEzPetlBXTfny3Jl5yOL5kaQ1GTSzYvjHMzVa7AwgQQhYa/Au0kHRCrCGfgYvAEgSLzATE6SMoyqka9b+JLfM7H051PG3G0YTIRC8w0dnjTI5ceYyfSr396UoxzDA+cym0wc3XWbwE4Dn8xAdeSBGXLFyueJydf5SJoThOYUwXEsrjKX1tGcQhOsqIgr3fO2h7lhae6hNbgzDWOGWJUUK2RgCkQH9nOOfMGC9g/a2ms46Lmi5BuTrGqVHprUWEWihxRIh+6/AOcjA1fSrA34Fb9k/ysvZFaP9j+pdmw485Mc/3Hgl8F6BEarhK3ZYoT6Bu6wYGDu04wvERBc1aFqsw8MqXkPRDW7U5LbYZ0E/n8nr2AbXxCzV8Keofpi51hvzu8klmBWakB/fNnafqejmsxtizG3yUp6oSW1GNUKeDDGFAgMBAAEwDQYJKoZIhvcNAQEFBQADggGBAKDbik0M7zdg4TcZ8KvRhksujf5k+YOH/qqNWrT3+4X/slhC4r1URJFoOEz5/PqkgremgFXsSvahyIAMnrL8xl32ra0RW/pED/6LYAAWkhuUWcL9vnsPV/OmgaULCmct1qxM+E/XRTO0MLORGDY4EUzWuRfA4sPZ9tXyQ3MA9d0UfrV+wivMIt9oOaTwVj0I+I5TnYHgD9un6OHxbYggnYAb+UlBWaNUVjwQiNf3gDRkD1ph8nbEgEUDlfg8ZiSoC0pUMcFK09zANDaU5X1gHWcQJtFHWI3JSdS0vJLWijpSxABtszsoH5ANsWTyl0xSCaAS+OHXJ9IvIiuARVQcOT57A1hpD5iBj5JTbK9oh+QG6FmtOK0u1uW/PsS6pqjR52fz0+YiDKSkWW1OegbH7RyE8RwJ0X3kEPl4G/VyY8nPsNEGqzOi7efj47Es9PX4jLlh70Jm0jszBWdO/64G5N1MbcnfMInWy8HO8r2VcJ/t3LenFCzQc0cXA+uSfp1hiA==
+    gssp_azuremfa_sp_publickey: /config/selfservice/selfservice_gssp_sp.crt
+    gssp_azuremfa_sp_privatekey: /config/selfservice/selfservice_gssp_sp.key
+    gssp_azuremfa_metadata_publickey: /config/selfservice/selfservice_gssp_sp.crt
+    gssp_azuremfa_metadata_privatekey: /config/selfservice/selfservice_gssp_sp.key
+    gssp_azuremfa_remote_entity_id: 'https://gateway.dev.openconext.local/gssp/azuremfa/metadata'
+    gssp_azuremfa_remote_sso_url: 'https://gateway.dev.openconext.local/gssp/azuremfa/single-sign-on'
+    gssp_azuremfa_remote_certificate: 'MIIEDzCCAncCFCr9IG/lVOUCCSyMnD2Y+p1fqXEpMA0GCSqGSIb3DQEBCwUAMEQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDAeFw0yMzA1MjUwOTMzMTlaFw0yODA1MjMwOTMzMTlaMEQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAKH20RosgtFT3WpCUnVSvdudJDzkSdAv8g16DPIU83g396SjxY7rrJHjLmf/RUChkUpCpV/7iCFhxuOi51sVRWZqdVYOjtAkK2it9CrSPdxx5u8XoDscX26DqC8Ii1RdO66GB0ErdtFcAxDdtzrUdLEJXF8vumEqNFBMmfJ9qZwJeOS9rnpYXHztRBtBANOYyJI5Qexr5I1Tmh8Jdg1h+VCosXBzk+iSAeQNzodnklIyJrlpJWh+FqR+LPK7cltkslX2eut/21uNBuKT5tcI+Uu9badWZWOHBxiaDI1B1eGHfcvG251DV5TvxQhClOrCZUea+ifTa18SMnuCO+8Da3lz7Oh+aNGPBT+Q+ynEr3LR36D+e0ZkzEtQ0aneS/JwHH9mgTGWVKxwbV81fVs6J7RQJtyfmbqkjQYXAad3uBQswMnHnQvHlFsh1Jd80BOM9ptNtNqIkXBcO9BzxAE2KXvSCglLISEj3o3L5N9XSYrnv3cPwxK1CddRR8CSm3S/PwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBgQAciF351BTUE/1XbjXLAZXVUeC6Ss6X5RptK0J9XBqIdYhcHRDws5CjHVkFS11PGtFK8OW+bYWzyygi8d3uGZWq3S7LkK5Eck0O8KHNUf3fnJNN0G3WSZkG95ch/2cy76WVCwYdVZhwGx2sB08N9M2QectrW1rU1VnqkAlzpicBgBtNLwDvvWUj0/h/mG8ExL44ecesPkzhPsBT6en/C8v5zbgYlJmJekBwWJzRDZenhLQZSxiOKxy0VOVpeypeCRleJdrF/m37TevtXfZu5efYl4a4E4qEO03eSU0YJVz/1HIRJ0ojOiKc6pB0aDUbcdbwi5rs5VRAOrTorBwqQAAgsvYSMGC2KVA9YLGDwpwAUqGYn0lFTcDtZkE0NDqXkiExcXPVce1QrKC/sqP0T0z30x71k3cYY4gNRLr8yA1Zu0o3IhvRsw3QiqAS4w5+wb668a+nPqAND1vgljn3L7SE9V7GTHbjwkfYAW6EJwVIA4gGsarZBHiDHloDrvv9QtY='
     gssp_azuremfa_logo: /images/second-factor/azuremfa.png
     gssp_azuremfa_app_android_url: 'https://play.google.com/store/apps/details?id=com.azure.authenticator'
     gssp_azuremfa_app_ios_url: 'https://apps.apple.com/nl/app/microsoft-authenticator/id983156458'
@@ -37,13 +37,13 @@ parameters:
     gssp_azuremfa_pop_failed:
         nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
         en_GB: 'Registration of your token failed. Please try again.'
-    gssp_webauthn_sp_publickey: /src/Stepup-SelfService/app/files/sp_gssp.crt
-    gssp_webauthn_sp_privatekey: /src/Stepup-SelfService/app/files/sp_gssp.key
-    gssp_webauthn_metadata_publickey: /src/Stepup-SelfService/app/files/sp_gssp.crt
-    gssp_webauthn_metadata_privatekey: /src/Stepup-SelfService/app/files/sp_gssp.key
-    gssp_webauthn_remote_entity_id: 'https://gateway.stepup.example.com/gssp/webauthn/metadata'
-    gssp_webauthn_remote_sso_url: 'https://gateway.stepup.example.com/gssp/webauthn/single-sign-on'
-    gssp_webauthn_remote_certificate: MIID5DCCAkwCCQC5XK3oVEwVcDANBgkqhkiG9w0BAQUFADA0MRkwFwYDVQQDDBBHYXRld2F5IFRpcXIgSWRQMRcwFQYDVQQKDA5EZXZlbG9wbWVudCBWTTAeFw0yMDEwMTkxMDAzMzFaFw0yNTEwMTgxMDAzMzFaMDQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxFzAVBgNVBAoMDkRldmVsb3BtZW50IFZNMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAucLa2a41JqdnLni/Zrftr5o/ylNMazOYuwaQx3qvu36IAysLOq9eLORb1MGa/0UtnNpSiSxJdg6yJmiWOJrTEzPetlBXTfny3Jl5yOL5kaQ1GTSzYvjHMzVa7AwgQQhYa/Au0kHRCrCGfgYvAEgSLzATE6SMoyqka9b+JLfM7H051PG3G0YTIRC8w0dnjTI5ceYyfSr396UoxzDA+cym0wc3XWbwE4Dn8xAdeSBGXLFyueJydf5SJoThOYUwXEsrjKX1tGcQhOsqIgr3fO2h7lhae6hNbgzDWOGWJUUK2RgCkQH9nOOfMGC9g/a2ms46Lmi5BuTrGqVHprUWEWihxRIh+6/AOcjA1fSrA34Fb9k/ysvZFaP9j+pdmw485Mc/3Hgl8F6BEarhK3ZYoT6Bu6wYGDu04wvERBc1aFqsw8MqXkPRDW7U5LbYZ0E/n8nr2AbXxCzV8Keofpi51hvzu8klmBWakB/fNnafqejmsxtizG3yUp6oSW1GNUKeDDGFAgMBAAEwDQYJKoZIhvcNAQEFBQADggGBAKDbik0M7zdg4TcZ8KvRhksujf5k+YOH/qqNWrT3+4X/slhC4r1URJFoOEz5/PqkgremgFXsSvahyIAMnrL8xl32ra0RW/pED/6LYAAWkhuUWcL9vnsPV/OmgaULCmct1qxM+E/XRTO0MLORGDY4EUzWuRfA4sPZ9tXyQ3MA9d0UfrV+wivMIt9oOaTwVj0I+I5TnYHgD9un6OHxbYggnYAb+UlBWaNUVjwQiNf3gDRkD1ph8nbEgEUDlfg8ZiSoC0pUMcFK09zANDaU5X1gHWcQJtFHWI3JSdS0vJLWijpSxABtszsoH5ANsWTyl0xSCaAS+OHXJ9IvIiuARVQcOT57A1hpD5iBj5JTbK9oh+QG6FmtOK0u1uW/PsS6pqjR52fz0+YiDKSkWW1OegbH7RyE8RwJ0X3kEPl4G/VyY8nPsNEGqzOi7efj47Es9PX4jLlh70Jm0jszBWdO/64G5N1MbcnfMInWy8HO8r2VcJ/t3LenFCzQc0cXA+uSfp1hiA==
+    gssp_webauthn_sp_publickey: /config/selfservice/selfservice_gssp_sp.crt
+    gssp_webauthn_sp_privatekey: /config/selfservice/selfservice_gssp_sp.key
+    gssp_webauthn_metadata_publickey: /config/selfservice/selfservice_gssp_sp.crt
+    gssp_webauthn_metadata_privatekey: /config/selfservice/selfservice_gssp_sp.key
+    gssp_webauthn_remote_entity_id: 'https://gateway.dev.openconext.local/gssp/webauthn/metadata'
+    gssp_webauthn_remote_sso_url: 'https://gateway.dev.openconext.local/gssp/webauthn/single-sign-on'
+    gssp_webauthn_remote_certificate: 'MIIEDzCCAncCFCr9IG/lVOUCCSyMnD2Y+p1fqXEpMA0GCSqGSIb3DQEBCwUAMEQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDAeFw0yMzA1MjUwOTMzMTlaFw0yODA1MjMwOTMzMTlaMEQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAKH20RosgtFT3WpCUnVSvdudJDzkSdAv8g16DPIU83g396SjxY7rrJHjLmf/RUChkUpCpV/7iCFhxuOi51sVRWZqdVYOjtAkK2it9CrSPdxx5u8XoDscX26DqC8Ii1RdO66GB0ErdtFcAxDdtzrUdLEJXF8vumEqNFBMmfJ9qZwJeOS9rnpYXHztRBtBANOYyJI5Qexr5I1Tmh8Jdg1h+VCosXBzk+iSAeQNzodnklIyJrlpJWh+FqR+LPK7cltkslX2eut/21uNBuKT5tcI+Uu9badWZWOHBxiaDI1B1eGHfcvG251DV5TvxQhClOrCZUea+ifTa18SMnuCO+8Da3lz7Oh+aNGPBT+Q+ynEr3LR36D+e0ZkzEtQ0aneS/JwHH9mgTGWVKxwbV81fVs6J7RQJtyfmbqkjQYXAad3uBQswMnHnQvHlFsh1Jd80BOM9ptNtNqIkXBcO9BzxAE2KXvSCglLISEj3o3L5N9XSYrnv3cPwxK1CddRR8CSm3S/PwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBgQAciF351BTUE/1XbjXLAZXVUeC6Ss6X5RptK0J9XBqIdYhcHRDws5CjHVkFS11PGtFK8OW+bYWzyygi8d3uGZWq3S7LkK5Eck0O8KHNUf3fnJNN0G3WSZkG95ch/2cy76WVCwYdVZhwGx2sB08N9M2QectrW1rU1VnqkAlzpicBgBtNLwDvvWUj0/h/mG8ExL44ecesPkzhPsBT6en/C8v5zbgYlJmJekBwWJzRDZenhLQZSxiOKxy0VOVpeypeCRleJdrF/m37TevtXfZu5efYl4a4E4qEO03eSU0YJVz/1HIRJ0ojOiKc6pB0aDUbcdbwi5rs5VRAOrTorBwqQAAgsvYSMGC2KVA9YLGDwpwAUqGYn0lFTcDtZkE0NDqXkiExcXPVce1QrKC/sqP0T0z30x71k3cYY4gNRLr8yA1Zu0o3IhvRsw3QiqAS4w5+wb668a+nPqAND1vgljn3L7SE9V7GTHbjwkfYAW6EJwVIA4gGsarZBHiDHloDrvv9QtY='
     gssp_webauthn_logo: /images/second-factor/webauthn.png
     gssp_webauthn_app_android_url: ''
     gssp_webauthn_app_ios_url: ''
@@ -74,13 +74,13 @@ parameters:
     gssp_webauthn_pop_failed:
         nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
         en_GB: 'Registration of your token failed. Please try again.'
-    gssp_demo_gssp_2_sp_publickey: /src/Stepup-SelfService/app/files/sp_gssp.crt
-    gssp_demo_gssp_2_sp_privatekey: /src/Stepup-SelfService/app/files/sp_gssp.key
-    gssp_demo_gssp_2_metadata_publickey: /src/Stepup-SelfService/app/files/sp_gssp.crt
-    gssp_demo_gssp_2_metadata_privatekey: /src/Stepup-SelfService/app/files/sp_gssp.key
-    gssp_demo_gssp_2_remote_entity_id: 'https://gateway.stepup.example.com/gssp/demo_gssp_2/metadata'
-    gssp_demo_gssp_2_remote_sso_url: 'https://gateway.stepup.example.com/gssp/demo_gssp_2/single-sign-on'
-    gssp_demo_gssp_2_remote_certificate: MIID5DCCAkwCCQC5XK3oVEwVcDANBgkqhkiG9w0BAQUFADA0MRkwFwYDVQQDDBBHYXRld2F5IFRpcXIgSWRQMRcwFQYDVQQKDA5EZXZlbG9wbWVudCBWTTAeFw0yMDEwMTkxMDAzMzFaFw0yNTEwMTgxMDAzMzFaMDQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxFzAVBgNVBAoMDkRldmVsb3BtZW50IFZNMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAucLa2a41JqdnLni/Zrftr5o/ylNMazOYuwaQx3qvu36IAysLOq9eLORb1MGa/0UtnNpSiSxJdg6yJmiWOJrTEzPetlBXTfny3Jl5yOL5kaQ1GTSzYvjHMzVa7AwgQQhYa/Au0kHRCrCGfgYvAEgSLzATE6SMoyqka9b+JLfM7H051PG3G0YTIRC8w0dnjTI5ceYyfSr396UoxzDA+cym0wc3XWbwE4Dn8xAdeSBGXLFyueJydf5SJoThOYUwXEsrjKX1tGcQhOsqIgr3fO2h7lhae6hNbgzDWOGWJUUK2RgCkQH9nOOfMGC9g/a2ms46Lmi5BuTrGqVHprUWEWihxRIh+6/AOcjA1fSrA34Fb9k/ysvZFaP9j+pdmw485Mc/3Hgl8F6BEarhK3ZYoT6Bu6wYGDu04wvERBc1aFqsw8MqXkPRDW7U5LbYZ0E/n8nr2AbXxCzV8Keofpi51hvzu8klmBWakB/fNnafqejmsxtizG3yUp6oSW1GNUKeDDGFAgMBAAEwDQYJKoZIhvcNAQEFBQADggGBAKDbik0M7zdg4TcZ8KvRhksujf5k+YOH/qqNWrT3+4X/slhC4r1URJFoOEz5/PqkgremgFXsSvahyIAMnrL8xl32ra0RW/pED/6LYAAWkhuUWcL9vnsPV/OmgaULCmct1qxM+E/XRTO0MLORGDY4EUzWuRfA4sPZ9tXyQ3MA9d0UfrV+wivMIt9oOaTwVj0I+I5TnYHgD9un6OHxbYggnYAb+UlBWaNUVjwQiNf3gDRkD1ph8nbEgEUDlfg8ZiSoC0pUMcFK09zANDaU5X1gHWcQJtFHWI3JSdS0vJLWijpSxABtszsoH5ANsWTyl0xSCaAS+OHXJ9IvIiuARVQcOT57A1hpD5iBj5JTbK9oh+QG6FmtOK0u1uW/PsS6pqjR52fz0+YiDKSkWW1OegbH7RyE8RwJ0X3kEPl4G/VyY8nPsNEGqzOi7efj47Es9PX4jLlh70Jm0jszBWdO/64G5N1MbcnfMInWy8HO8r2VcJ/t3LenFCzQc0cXA+uSfp1hiA==
+    gssp_demo_gssp_2_sp_publickey: /config/selfservice/selfservice_gssp_sp.crt
+    gssp_demo_gssp_2_sp_privatekey: /config/selfservice/selfservice_gssp_sp.key
+    gssp_demo_gssp_2_metadata_publickey: /config/selfservice/selfservice_gssp_sp.crt
+    gssp_demo_gssp_2_metadata_privatekey: /config/selfservice/selfservice_gssp_sp.key
+    gssp_demo_gssp_2_remote_entity_id: 'https://gateway.dev.openconext.local/gssp/demo_gssp_2/metadata'
+    gssp_demo_gssp_2_remote_sso_url: 'https://gateway.dev.openconext.local/gssp/demo_gssp_2/single-sign-on'
+    gssp_demo_gssp_2_remote_certificate: 'MIIEDzCCAncCFCr9IG/lVOUCCSyMnD2Y+p1fqXEpMA0GCSqGSIb3DQEBCwUAMEQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDAeFw0yMzA1MjUwOTMzMTlaFw0yODA1MjMwOTMzMTlaMEQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAKH20RosgtFT3WpCUnVSvdudJDzkSdAv8g16DPIU83g396SjxY7rrJHjLmf/RUChkUpCpV/7iCFhxuOi51sVRWZqdVYOjtAkK2it9CrSPdxx5u8XoDscX26DqC8Ii1RdO66GB0ErdtFcAxDdtzrUdLEJXF8vumEqNFBMmfJ9qZwJeOS9rnpYXHztRBtBANOYyJI5Qexr5I1Tmh8Jdg1h+VCosXBzk+iSAeQNzodnklIyJrlpJWh+FqR+LPK7cltkslX2eut/21uNBuKT5tcI+Uu9badWZWOHBxiaDI1B1eGHfcvG251DV5TvxQhClOrCZUea+ifTa18SMnuCO+8Da3lz7Oh+aNGPBT+Q+ynEr3LR36D+e0ZkzEtQ0aneS/JwHH9mgTGWVKxwbV81fVs6J7RQJtyfmbqkjQYXAad3uBQswMnHnQvHlFsh1Jd80BOM9ptNtNqIkXBcO9BzxAE2KXvSCglLISEj3o3L5N9XSYrnv3cPwxK1CddRR8CSm3S/PwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBgQAciF351BTUE/1XbjXLAZXVUeC6Ss6X5RptK0J9XBqIdYhcHRDws5CjHVkFS11PGtFK8OW+bYWzyygi8d3uGZWq3S7LkK5Eck0O8KHNUf3fnJNN0G3WSZkG95ch/2cy76WVCwYdVZhwGx2sB08N9M2QectrW1rU1VnqkAlzpicBgBtNLwDvvWUj0/h/mG8ExL44ecesPkzhPsBT6en/C8v5zbgYlJmJekBwWJzRDZenhLQZSxiOKxy0VOVpeypeCRleJdrF/m37TevtXfZu5efYl4a4E4qEO03eSU0YJVz/1HIRJ0ojOiKc6pB0aDUbcdbwi5rs5VRAOrTorBwqQAAgsvYSMGC2KVA9YLGDwpwAUqGYn0lFTcDtZkE0NDqXkiExcXPVce1QrKC/sqP0T0z30x71k3cYY4gNRLr8yA1Zu0o3IhvRsw3QiqAS4w5+wb668a+nPqAND1vgljn3L7SE9V7GTHbjwkfYAW6EJwVIA4gGsarZBHiDHloDrvv9QtY='
     gssp_demo_gssp_2_logo: /images/demo-gssp.png
     gssp_demo_gssp_2_app_android_url: 'https://example.com/demo-gssp-2-android'
     gssp_demo_gssp_2_app_ios_url: 'https://example.com/demo-gssp-2-ios'
@@ -111,13 +111,13 @@ parameters:
     gssp_demo_gssp_2_pop_failed:
         nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
         en_GB: 'Registration of your token failed. Please try again.'
-    gssp_tiqr_sp_publickey: /src/Stepup-SelfService/app/files/sp_gssp.crt
-    gssp_tiqr_sp_privatekey: /src/Stepup-SelfService/app/files/sp_gssp.key
-    gssp_tiqr_metadata_publickey: /src/Stepup-SelfService/app/files/sp_gssp.crt
-    gssp_tiqr_metadata_privatekey: /src/Stepup-SelfService/app/files/sp_gssp.key
-    gssp_tiqr_remote_entity_id: 'https://gateway.stepup.example.com/gssp/tiqr/metadata'
-    gssp_tiqr_remote_sso_url: 'https://gateway.stepup.example.com/gssp/tiqr/single-sign-on'
-    gssp_tiqr_remote_certificate: MIID5DCCAkwCCQC5XK3oVEwVcDANBgkqhkiG9w0BAQUFADA0MRkwFwYDVQQDDBBHYXRld2F5IFRpcXIgSWRQMRcwFQYDVQQKDA5EZXZlbG9wbWVudCBWTTAeFw0yMDEwMTkxMDAzMzFaFw0yNTEwMTgxMDAzMzFaMDQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxFzAVBgNVBAoMDkRldmVsb3BtZW50IFZNMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAucLa2a41JqdnLni/Zrftr5o/ylNMazOYuwaQx3qvu36IAysLOq9eLORb1MGa/0UtnNpSiSxJdg6yJmiWOJrTEzPetlBXTfny3Jl5yOL5kaQ1GTSzYvjHMzVa7AwgQQhYa/Au0kHRCrCGfgYvAEgSLzATE6SMoyqka9b+JLfM7H051PG3G0YTIRC8w0dnjTI5ceYyfSr396UoxzDA+cym0wc3XWbwE4Dn8xAdeSBGXLFyueJydf5SJoThOYUwXEsrjKX1tGcQhOsqIgr3fO2h7lhae6hNbgzDWOGWJUUK2RgCkQH9nOOfMGC9g/a2ms46Lmi5BuTrGqVHprUWEWihxRIh+6/AOcjA1fSrA34Fb9k/ysvZFaP9j+pdmw485Mc/3Hgl8F6BEarhK3ZYoT6Bu6wYGDu04wvERBc1aFqsw8MqXkPRDW7U5LbYZ0E/n8nr2AbXxCzV8Keofpi51hvzu8klmBWakB/fNnafqejmsxtizG3yUp6oSW1GNUKeDDGFAgMBAAEwDQYJKoZIhvcNAQEFBQADggGBAKDbik0M7zdg4TcZ8KvRhksujf5k+YOH/qqNWrT3+4X/slhC4r1URJFoOEz5/PqkgremgFXsSvahyIAMnrL8xl32ra0RW/pED/6LYAAWkhuUWcL9vnsPV/OmgaULCmct1qxM+E/XRTO0MLORGDY4EUzWuRfA4sPZ9tXyQ3MA9d0UfrV+wivMIt9oOaTwVj0I+I5TnYHgD9un6OHxbYggnYAb+UlBWaNUVjwQiNf3gDRkD1ph8nbEgEUDlfg8ZiSoC0pUMcFK09zANDaU5X1gHWcQJtFHWI3JSdS0vJLWijpSxABtszsoH5ANsWTyl0xSCaAS+OHXJ9IvIiuARVQcOT57A1hpD5iBj5JTbK9oh+QG6FmtOK0u1uW/PsS6pqjR52fz0+YiDKSkWW1OegbH7RyE8RwJ0X3kEPl4G/VyY8nPsNEGqzOi7efj47Es9PX4jLlh70Jm0jszBWdO/64G5N1MbcnfMInWy8HO8r2VcJ/t3LenFCzQc0cXA+uSfp1hiA==
+    gssp_tiqr_sp_publickey: /config/selfservice/selfservice_gssp_sp.crt
+    gssp_tiqr_sp_privatekey: /config/selfservice/selfservice_gssp_sp.key
+    gssp_tiqr_metadata_publickey: /config/selfservice/selfservice_gssp_sp.crt
+    gssp_tiqr_metadata_privatekey: /config/selfservice/selfservice_gssp_sp.key
+    gssp_tiqr_remote_entity_id: 'https://gateway.dev.openconext.local/gssp/tiqr/metadata'
+    gssp_tiqr_remote_sso_url: 'https://gateway.dev.openconext.local/gssp/tiqr/single-sign-on'
+    gssp_tiqr_remote_certificate: 'MIIEDzCCAncCFCr9IG/lVOUCCSyMnD2Y+p1fqXEpMA0GCSqGSIb3DQEBCwUAMEQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDAeFw0yMzA1MjUwOTMzMTlaFw0yODA1MjMwOTMzMTlaMEQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAKH20RosgtFT3WpCUnVSvdudJDzkSdAv8g16DPIU83g396SjxY7rrJHjLmf/RUChkUpCpV/7iCFhxuOi51sVRWZqdVYOjtAkK2it9CrSPdxx5u8XoDscX26DqC8Ii1RdO66GB0ErdtFcAxDdtzrUdLEJXF8vumEqNFBMmfJ9qZwJeOS9rnpYXHztRBtBANOYyJI5Qexr5I1Tmh8Jdg1h+VCosXBzk+iSAeQNzodnklIyJrlpJWh+FqR+LPK7cltkslX2eut/21uNBuKT5tcI+Uu9badWZWOHBxiaDI1B1eGHfcvG251DV5TvxQhClOrCZUea+ifTa18SMnuCO+8Da3lz7Oh+aNGPBT+Q+ynEr3LR36D+e0ZkzEtQ0aneS/JwHH9mgTGWVKxwbV81fVs6J7RQJtyfmbqkjQYXAad3uBQswMnHnQvHlFsh1Jd80BOM9ptNtNqIkXBcO9BzxAE2KXvSCglLISEj3o3L5N9XSYrnv3cPwxK1CddRR8CSm3S/PwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBgQAciF351BTUE/1XbjXLAZXVUeC6Ss6X5RptK0J9XBqIdYhcHRDws5CjHVkFS11PGtFK8OW+bYWzyygi8d3uGZWq3S7LkK5Eck0O8KHNUf3fnJNN0G3WSZkG95ch/2cy76WVCwYdVZhwGx2sB08N9M2QectrW1rU1VnqkAlzpicBgBtNLwDvvWUj0/h/mG8ExL44ecesPkzhPsBT6en/C8v5zbgYlJmJekBwWJzRDZenhLQZSxiOKxy0VOVpeypeCRleJdrF/m37TevtXfZu5efYl4a4E4qEO03eSU0YJVz/1HIRJ0ojOiKc6pB0aDUbcdbwi5rs5VRAOrTorBwqQAAgsvYSMGC2KVA9YLGDwpwAUqGYn0lFTcDtZkE0NDqXkiExcXPVce1QrKC/sqP0T0z30x71k3cYY4gNRLr8yA1Zu0o3IhvRsw3QiqAS4w5+wb668a+nPqAND1vgljn3L7SE9V7GTHbjwkfYAW6EJwVIA4gGsarZBHiDHloDrvv9QtY='
     gssp_tiqr_loa: 3
     gssp_tiqr_logo: /images/second-factor/tiqr.png
     gssp_tiqr_app_android_url: 'https://play.google.com/store/apps/details?id=org.tiqr.authenticator&hl=en'
@@ -150,19 +150,19 @@ parameters:
         nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
         en_GB: 'Registration of your token failed. Please try again.'
     # GSSP Proxy SP used to authenticate to the Real GSSP IdP though GSSP IdP proxy in the gateway
-    gssp_demo_gssp_sp_publickey: '/src/Stepup-SelfService/app/files/sp_gssp.crt'
-    gssp_demo_gssp_sp_privatekey: '/src/Stepup-SelfService/app/files/sp_gssp.key'
+    gssp_demo_gssp_sp_publickey: '/config/selfservice/selfservice_gssp_sp.crt'
+    gssp_demo_gssp_sp_privatekey: '/config/selfservice/selfservice_gssp_sp.key'
 
     # Certificate used to sign metadata of the GSSP Proxy SP on the gateway
-    gssp_demo_gssp_metadata_publickey: '/src/Stepup-SelfService/app/files/sp_gssp.crt'
-    gssp_demo_gssp_metadata_privatekey: '/src/Stepup-SelfService/app/files/sp_gssp.key'
+    gssp_demo_gssp_metadata_publickey: '/config/selfservice/selfservice_gssp_sp.crt'
+    gssp_demo_gssp_metadata_privatekey: '/config/selfservice/selfservice_gssp_sp.key'
 
     # EntityID and SSO Location of the GSSP IdP Proxy on the Gateway
-    gssp_demo_gssp_remote_entity_id: 'https://gateway.stepup.example.com/gssp/demo_gssp/metadata'
-    gssp_demo_gssp_remote_sso_url: 'https://gateway.stepup.example.com/gssp/demo_gssp/single-sign-on'
+    gssp_demo_gssp_remote_entity_id: 'https://gateway.dev.openconext.local/gssp/demo_gssp/metadata'
+    gssp_demo_gssp_remote_sso_url: 'https://gateway.dev.openconext.local/gssp/demo_gssp/single-sign-on'
 
     # base64 without pem headers
-    gssp_demo_gssp_remote_certificate: 'MIID5DCCAkwCCQC5XK3oVEwVcDANBgkqhkiG9w0BAQUFADA0MRkwFwYDVQQDDBBHYXRld2F5IFRpcXIgSWRQMRcwFQYDVQQKDA5EZXZlbG9wbWVudCBWTTAeFw0yMDEwMTkxMDAzMzFaFw0yNTEwMTgxMDAzMzFaMDQxGTAXBgNVBAMMEEdhdGV3YXkgVGlxciBJZFAxFzAVBgNVBAoMDkRldmVsb3BtZW50IFZNMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAucLa2a41JqdnLni/Zrftr5o/ylNMazOYuwaQx3qvu36IAysLOq9eLORb1MGa/0UtnNpSiSxJdg6yJmiWOJrTEzPetlBXTfny3Jl5yOL5kaQ1GTSzYvjHMzVa7AwgQQhYa/Au0kHRCrCGfgYvAEgSLzATE6SMoyqka9b+JLfM7H051PG3G0YTIRC8w0dnjTI5ceYyfSr396UoxzDA+cym0wc3XWbwE4Dn8xAdeSBGXLFyueJydf5SJoThOYUwXEsrjKX1tGcQhOsqIgr3fO2h7lhae6hNbgzDWOGWJUUK2RgCkQH9nOOfMGC9g/a2ms46Lmi5BuTrGqVHprUWEWihxRIh+6/AOcjA1fSrA34Fb9k/ysvZFaP9j+pdmw485Mc/3Hgl8F6BEarhK3ZYoT6Bu6wYGDu04wvERBc1aFqsw8MqXkPRDW7U5LbYZ0E/n8nr2AbXxCzV8Keofpi51hvzu8klmBWakB/fNnafqejmsxtizG3yUp6oSW1GNUKeDDGFAgMBAAEwDQYJKoZIhvcNAQEFBQADggGBAKDbik0M7zdg4TcZ8KvRhksujf5k+YOH/qqNWrT3+4X/slhC4r1URJFoOEz5/PqkgremgFXsSvahyIAMnrL8xl32ra0RW/pED/6LYAAWkhuUWcL9vnsPV/OmgaULCmct1qxM+E/XRTO0MLORGDY4EUzWuRfA4sPZ9tXyQ3MA9d0UfrV+wivMIt9oOaTwVj0I+I5TnYHgD9un6OHxbYggnYAb+UlBWaNUVjwQiNf3gDRkD1ph8nbEgEUDlfg8ZiSoC0pUMcFK09zANDaU5X1gHWcQJtFHWI3JSdS0vJLWijpSxABtszsoH5ANsWTyl0xSCaAS+OHXJ9IvIiuARVQcOT57A1hpD5iBj5JTbK9oh+QG6FmtOK0u1uW/PsS6pqjR52fz0+YiDKSkWW1OegbH7RyE8RwJ0X3kEPl4G/VyY8nPsNEGqzOi7efj47Es9PX4jLlh70Jm0jszBWdO/64G5N1MbcnfMInWy8HO8r2VcJ/t3LenFCzQc0cXA+uSfp1hiA=='
+    gssp_demo_gssp_remote_certificate: 
 
     # GUI
     gssp_demo_gssp_logo: '/images/demo-gssp.png'
@@ -197,41 +197,3 @@ parameters:
     gssp_demo_gssp_pop_failed:
         nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
         en_GB: 'Registration of your token failed. Please try again.'
-
-    gssp_biometric_sp_publickey: /full/path/to/the/gateway-as-sp/public-key-file.cer
-    gssp_biometric_sp_privatekey: /full/path/to/the/gateway-as-sp/private-key-file.pem
-    gssp_biometric_metadata_publickey: /full/path/to/the/gateway-metadata/public-key-file.cer
-    gssp_biometric_metadata_privatekey: /full/path/to/the/gateway-as-sp/private-key-file.pem
-    gssp_biometric_remote_entity_id: 'https://actual-gssp.entity-id.tld'
-    gssp_biometric_remote_sso_url: 'https://actual-gssp.entity-id.tld/single-sign-on/url'
-    gssp_biometric_remote_certificate: 'The contents of the certificate published by the gssp'
-    gssp_biometric_loa: 3
-    gssp_biometric_logo: /images/second-factor/biometric.png
-    gssp_biometric_alt:
-        en_GB: 'Biometric device'
-        nl_NL: 'Biometrisch apparaat'
-    gssp_biometric_title:
-        en_GB: 'Biometric device'
-        nl_NL: 'Biometrisch apparaat'
-    gssp_biometric_description:
-        en_GB: 'Log in using a biometric device.'
-        nl_NL: 'Log in met een biometrisch apparaat.'
-    gssp_biometric_button_use:
-        en_GB: Select
-        nl_NL: Selecteer
-    gssp_biometric_initiate_title:
-        en_GB: 'Register a biometric device'
-        nl_NL: 'Registratie biometrisch apparaat'
-    gssp_biometric_initiate_button:
-        en_GB: 'Register biometric device'
-        nl_NL: 'Registreer biometrisch apparaat'
-    gssp_biometric_explanation:
-        en_GB: 'Click the button below to register a biometric device.'
-        nl_NL: 'Klik op de knop hieronder om je biometrisch apparaat te registreren.'
-    gssp_biometric_authn_failed:
-        en_GB: 'Registration of biometric device has failed. Please try again.'
-        nl_NL: 'Registratie biometrisch apparaat is mislukt. Probeer het nogmaals.'
-    gssp_biometric_pop_failed:
-        en_GB: 'Registration of your token failed. Please try again.'
-        nl_NL: 'De registratie van uw token is mislukt. Probeer het nogmaals.'
-
