@@ -9,38 +9,39 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
 
-    gateway_api_url: https://gw-dev.stepup.coin.surf.net/
+    gateway_api_url: https://gateway.dev.openconext.local/
     gateway_api_username: ss
-    gateway_api_password: ss
+    gateway_api_password: sa_secret
 
-    middleware_credentials_username: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
-    middleware_credentials_password: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
-    middleware_url_command_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
-    middleware_url_api: 'FOR CI ONLY, REPLACE WITH ACTUAL FULL URL http://etc/'
+    middleware_credentials_username: ss
+    middleware_credentials_password: sa_secret
+    middleware_url_command_api: https://middleware.dev.openconext.local/command
+    middleware_url_api: https://middleware.dev.openconext.local/
 
-    sms_originator: SURFStepup
+    sms_originator: OpenConext
     sms_otp_expiry_interval: 900 # 15 minutes
     sms_maximum_otp_requests: 3
 
-    saml_sp_publickey:
-    saml_sp_privatekey:
 
-    saml_metadata_publickey:
-    saml_metadata_privatekey:
+    saml_sp_publickey: /config/selfservice/selfservice_saml_sp.crt
+    saml_sp_privatekey: /config/selfservice/selfservice_saml_sp.key
+    saml_metadata_publickey: /config/selfservice/selfservice_saml_sp.crt
+    saml_metadata_privatekey: /config/selfservice/selfservice_saml_sp.key
 
-    saml_remote_idp_entity_id:
-    saml_remote_idp_sso_url:
-    saml_remote_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    saml_remote_idp_entity_id:  https://gateway.dev.openconext.local/authentication/metadata
+    saml_remote_idp_sso_url:  https://gateway.dev.openconext.local/authentication/single-sign-on
+    saml_remote_idp_certificate: 'MIIDwTCCAqmgAwIBAgIUYuSUugwc4J4NyW9WGqYJ/liwM4owDQYJKoZIhvcNAQELBQAwcDELMAkGA1UEBhMCTkwxEDAOBgNVBAgMB1V0cmVjaHQxEDAOBgNVBAcMB1V0cmVjaHQxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDEUMBIGA1UEAwwLR2F0ZXdheSBJRFAwHhcNMjMwNTE3MTIxNTEyWhcNMzMwNTE0MTIxNTEyWjBwMQswCQYDVQQGEwJOTDEQMA4GA1UECAwHVXRyZWNodDEQMA4GA1UEBwwHVXRyZWNodDEnMCUGA1UECgweRGV2ZWxvcG1lbnQgRG9ja2VyIGVudmlyb25tZW50MRQwEgYDVQQDDAtHYXRld2F5IElEUDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAM2ulQVs5WpbJOAf7Cv/VPDTJqbWHVdUxAmdwZJlcNTRKNFVp4aJzQ3dpiyiGghI5odnzU0/BWBoHZFNYPU/OFr/gzn6iJGxL63L9+mFgE8PR9HpkV5TaRnr21+nZ0EXWjDZk9Px0enERicCItTeQzAUJeA0A9miIcK5IKIz/zSBSR3c802SGD/VelUqY7Z2/UJM97cT92L+4Fz+4zhxxoThbPbrR0CweiROIt82grdwg7zf0+b62MOuVtqFh0yPLRAFfLc4LjHuxFUdUvOHVta7x74dwdmHikqfujM10XN+sNns3LDJde2yPWchU6ktq7cjgbYfIW/vzVzafP1Jk40CAwEAAaNTMFEwHQYDVR0OBBYEFGYn6LWRDZa7+YryUncIlwJB2VorMB8GA1UdIwQYMBaAFGYn6LWRDZa7+YryUncIlwJB2VorMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAJ57lcOF6PWWW56mS2s5gKFImtfRFzlfiyHsF14L7+nQ5NjfOhpU0wRpnTjK91KP0wCwlxzGFXR8yfqfBFJryIV7aDdYPH/RIkwVaNBI0fsD/ozlYb18seieDEGLvQtTlrmc0UNHtWz6FW3L2geM3ENaqpOATl1Ywp4EPML7Dh0CbhhyM8PnPCEsdclouIeP5/B9Swfk3omXehof6bkFbntqA03msFBiW50twkfKeKULcJGXo667hto27KNxZUauqtPbnAGpUQmge8nxSQlN8RPwlvygVM4LVMF9qP9YxloTH0xVNwN4noZUhfMNsKoJ7Hg5Xulaok8oCqmzEiSroEg='
+    
     asset_version: 1
 
-    second_factor_test_idp_entity_id: ~
-    second_factor_test_idp_sso_url: ~
-    second_factor_test_idp_certificate: 'FOR CI ONLY, REPLACE WITH ACTUAL VALUE'
+    second_factor_test_idp_entity_id:  https://gateway.dev.openconext.local/authentication/metadata
+    second_factor_test_idp_sso_url:  https://gateway.dev.openconext.local/authentication/single-sign-on
+    second_factor_test_idp_certificate: 'MIIDwTCCAqmgAwIBAgIUYuSUugwc4J4NyW9WGqYJ/liwM4owDQYJKoZIhvcNAQELBQAwcDELMAkGA1UEBhMCTkwxEDAOBgNVBAgMB1V0cmVjaHQxEDAOBgNVBAcMB1V0cmVjaHQxJzAlBgNVBAoMHkRldmVsb3BtZW50IERvY2tlciBlbnZpcm9ubWVudDEUMBIGA1UEAwwLR2F0ZXdheSBJRFAwHhcNMjMwNTE3MTIxNTEyWhcNMzMwNTE0MTIxNTEyWjBwMQswCQYDVQQGEwJOTDEQMA4GA1UECAwHVXRyZWNodDEQMA4GA1UEBwwHVXRyZWNodDEnMCUGA1UECgweRGV2ZWxvcG1lbnQgRG9ja2VyIGVudmlyb25tZW50MRQwEgYDVQQDDAtHYXRld2F5IElEUDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAM2ulQVs5WpbJOAf7Cv/VPDTJqbWHVdUxAmdwZJlcNTRKNFVp4aJzQ3dpiyiGghI5odnzU0/BWBoHZFNYPU/OFr/gzn6iJGxL63L9+mFgE8PR9HpkV5TaRnr21+nZ0EXWjDZk9Px0enERicCItTeQzAUJeA0A9miIcK5IKIz/zSBSR3c802SGD/VelUqY7Z2/UJM97cT92L+4Fz+4zhxxoThbPbrR0CweiROIt82grdwg7zf0+b62MOuVtqFh0yPLRAFfLc4LjHuxFUdUvOHVta7x74dwdmHikqfujM10XN+sNns3LDJde2yPWchU6ktq7cjgbYfIW/vzVzafP1Jk40CAwEAAaNTMFEwHQYDVR0OBBYEFGYn6LWRDZa7+YryUncIlwJB2VorMB8GA1UdIwQYMBaAFGYn6LWRDZa7+YryUncIlwJB2VorMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAJ57lcOF6PWWW56mS2s5gKFImtfRFzlfiyHsF14L7+nQ5NjfOhpU0wRpnTjK91KP0wCwlxzGFXR8yfqfBFJryIV7aDdYPH/RIkwVaNBI0fsD/ozlYb18seieDEGLvQtTlrmc0UNHtWz6FW3L2geM3ENaqpOATl1Ywp4EPML7Dh0CbhhyM8PnPCEsdclouIeP5/B9Swfk3omXehof6bkFbntqA03msFBiW50twkfKeKULcJGXo667hto27KNxZUauqtPbnAGpUQmge8nxSQlN8RPwlvygVM4LVMF9qP9YxloTH0xVNwN4noZUhfMNsKoJ7Hg5Xulaok8oCqmzEiSroEg='
 
-    stepup_loa_loa1: https://gateway.tld/authentication/loa1
-    stepup_loa_loa2: https://gateway.tld/authentication/loa2
-    stepup_loa_loa3: https://gateway.tld/authentication/loa3
-    stepup_loa_self_asserted: https://gateway.tld/authentication/loa-self-asserted
+    stepup_loa_loa1: https://dev.openconext.local/authentication/loa1
+    stepup_loa_loa2: https://dev.openconext.local/authentication/loa2
+    stepup_loa_loa3: https://dev.openconext.local/authentication/loa3
+    stepup_loa_self_asserted: 'https://dev.openconext.local/assurance/loa-self-asserted'
 
     logout_redirect_url:
         nl_NL: https://www.surf.nl/over-surf/werkmaatschappijen/surfnet
@@ -50,13 +51,11 @@ parameters:
         - sms
         - yubikey
     enabled_generic_second_factors:
-        biometric:
-            loa: 3
         tiqr:
             loa: 3
 
-    irma_app_android_url: https://play.google.com/store/apps/details?id=org.irmacard.cardemu&hl=en
-    irma_app_ios_url: https://itunes.apple.com/us/app/irma-authentication/id1294092994?mt=8
+    tiqr_app_android_url: https://play.google.com/store/apps/details?id=org.tiqr.authenticator&hl=en
+    tiqr_app_ios_url: https://itunes.apple.com/us/app/tiqr/id430838214?mt=8&ls=1
 
     session_max_absolute_lifetime: 3600 # 1 hours * 60 minutes * 60 seconds
     session_max_relative_lifetime: 600  # 10 minutes * 60 seconds
