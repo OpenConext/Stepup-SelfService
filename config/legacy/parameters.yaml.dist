@@ -50,8 +50,11 @@ parameters:
     enabled_second_factors:
         - sms
         - yubikey
+        - demo_gssp
     enabled_generic_second_factors:
         tiqr:
+            loa: 3
+        demo_gssp:
             loa: 3
 
     tiqr_app_android_url: https://play.google.com/store/apps/details?id=org.tiqr.authenticator&hl=en
