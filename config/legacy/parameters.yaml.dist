@@ -41,7 +41,7 @@ parameters:
     stepup_loa_loa1: https://dev.openconext.local/authentication/loa1
     stepup_loa_loa2: https://dev.openconext.local/authentication/loa2
     stepup_loa_loa3: https://dev.openconext.local/authentication/loa3
-    stepup_loa_self_asserted: 'https://dev.openconext.local/assurance/loa-self-asserted'
+    stepup_loa_self_asserted: 'https://dev.openconext.local/assurance/loa1.5'
 
     logout_redirect_url:
         nl_NL: https://www.surf.nl/over-surf/werkmaatschappijen/surfnet
