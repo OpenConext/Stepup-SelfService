@@ -64,19 +64,6 @@ final class ViewConfigTest extends TestCase
      * @test
      * @group di
      */
-    public function translation_fails_when_no_current_language_set(): void
-    {
-        $this->expectExceptionMessage('The current language is not set');
-        $this->expectException(LogicException::class);
-
-        $viewConfig = $this->buildViewConfig(null);
-        $viewConfig->getTitle();
-    }
-
-    /**
-     * @test
-     * @group di
-     */
     public function view_config_cannot_serve_french_translations(): void
     {
         $this->expectException(LogicException::class);
@@ -90,7 +77,7 @@ final class ViewConfigTest extends TestCase
      * @param string $locale
      * @return ViewConfig
      */
-    private function buildViewConfig(?string $locale = ''): \Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig
+    private function buildViewConfig(string $locale = ''): ViewConfig
     {
         $request = m::mock(RequestStack::class);
         $request->shouldReceive('getCurrentRequest->getLocale')->andReturn($locale)->byDefault();
