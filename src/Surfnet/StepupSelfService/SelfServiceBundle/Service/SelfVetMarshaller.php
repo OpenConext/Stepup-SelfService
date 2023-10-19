@@ -28,8 +28,13 @@ use function sprintf;
 
 class SelfVetMarshaller implements VettingMarshaller
 {
-    public function __construct(private readonly SecondFactorService $secondFactorService, private readonly SecondFactorTypeService $secondFactorTypeService, private readonly InstitutionConfigurationOptionsService $institutionConfigurationService, private readonly AuthorizationService $authorizationService, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly SecondFactorService $secondFactorService,
+        private readonly SecondFactorTypeService $secondFactorTypeService,
+        private readonly InstitutionConfigurationOptionsService $institutionConfigurationService,
+        private readonly AuthorizationService $authorizationService,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     /**
@@ -85,7 +90,7 @@ class SelfVetMarshaller implements VettingMarshaller
      * Does the institution allow for self vetting?
      */
 
-    private function isSelfVettingEnabledFor(Identity $identity):bool
+    private function isSelfVettingEnabledFor(Identity $identity): bool
     {
         $this->logger->info('Determine if self vetting is allowed');
         $configurationOptions = $this->institutionConfigurationService->getInstitutionConfigurationOptionsFor(
