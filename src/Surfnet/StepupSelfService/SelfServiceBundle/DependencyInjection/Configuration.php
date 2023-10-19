@@ -24,10 +24,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('surfnet_stepup_self_service_self_service');
+        $treeBuilder = new TreeBuilder('surfnet_stepup_self_service_self_service');
+        $rootNode = $treeBuilder->getRootNode();
 
         $childNodes = $rootNode->children();
         $this->appendEnabledSecondFactorTypesConfiguration($childNodes);
