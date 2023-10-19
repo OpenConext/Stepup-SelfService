@@ -45,7 +45,7 @@ class SafeStoreSecretTest extends TestCase
     private function provideSecrets()
     {
         for ($i=0; $i<25; $i++) {
-            yield new SafeStoreSecret();
+            yield [new SafeStoreSecret()];
         }
     }
 }
