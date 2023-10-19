@@ -42,7 +42,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function the_authentication_moment_can_be_logged()
+    public function the_authentication_moment_can_be_logged(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
 
@@ -56,7 +56,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function the_authentication_moment_cannot_be_logged_twice()
+    public function the_authentication_moment_cannot_be_logged_twice(): void
     {
         $this->expectException(LogicException::class);
 
@@ -71,7 +71,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function whether_or_not_an_authentication_moment_is_logged_can_be_queried()
+    public function whether_or_not_an_authentication_moment_is_logged_can_be_queried(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
 
@@ -87,7 +87,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function a_logged_authentication_moment_can_be_retrieved()
+    public function a_logged_authentication_moment_can_be_retrieved(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
         $now = new DateTime(new CoreDateTime('@1000'));
@@ -105,7 +105,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function attempting_to_retrieve_an_authentication_moment_when_not_yet_logged_causes_an_exception_to_be_thrown()
+    public function attempting_to_retrieve_an_authentication_moment_when_not_yet_logged_causes_an_exception_to_be_thrown(): void
     {
         $this->expectException(LogicException::class);
 
@@ -119,7 +119,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function an_interaction_can_be_logged()
+    public function an_interaction_can_be_logged(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
 
@@ -133,7 +133,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function the_moment_of_interaction_can_be_retrieved()
+    public function the_moment_of_interaction_can_be_retrieved(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
 
@@ -151,7 +151,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function an_interaction_is_logged_when_an_authentication_is_logged()
+    public function an_interaction_is_logged_when_an_authentication_is_logged(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
         // fixate time, just to be sure when comparing the moments...
@@ -175,7 +175,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function the_moment_of_interaction_can_be_updated()
+    public function the_moment_of_interaction_can_be_updated(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
 
@@ -201,7 +201,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function the_existence_of_a_moment_interaction_can_be_queried()
+    public function the_existence_of_a_moment_interaction_can_be_queried(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
 
@@ -217,7 +217,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function the_current_uri_can_be_stored_in_the_session()
+    public function the_current_uri_can_be_stored_in_the_session(): void
     {
         $sessionStorage = new SessionStorage(new FakeSession());
         $originalUri = 'https://selfservice.stepup.test/some/path?with=param#hashvalue';
@@ -233,7 +233,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function a_request_id_can_be_stored_in_the_session()
+    public function a_request_id_can_be_stored_in_the_session(): void
     {
         $sessionStorage    = new SessionStorage(new FakeSession());
         $originalRequestId = '_' . bin2hex(openssl_random_pseudo_bytes(32));
@@ -249,7 +249,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function the_presence_of_a_request_id_can_be_queried()
+    public function the_presence_of_a_request_id_can_be_queried(): void
     {
         $sessionStorage    = new SessionStorage(new FakeSession());
         $originalRequestId = '_' . bin2hex(openssl_random_pseudo_bytes(32));
@@ -266,7 +266,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function a_stored_request_id_can_be_cleared()
+    public function a_stored_request_id_can_be_cleared(): void
     {
         $sessionStorage    = new SessionStorage(new FakeSession());
         $originalRequestId = '_' . bin2hex(openssl_random_pseudo_bytes(32));
@@ -288,7 +288,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function a_session_can_be_invalidated()
+    public function a_session_can_be_invalidated(): void
     {
         $session = Mockery::mock(SessionInterface::class)
             ->shouldReceive('invalidate')
@@ -306,7 +306,7 @@ class SessionStorageTest extends TestCase
      * @group security
      * @group session
      */
-    public function a_session_can_be_migrated()
+    public function a_session_can_be_migrated(): void
     {
         $session = Mockery::mock(SessionInterface::class)
             ->shouldReceive('migrate')
@@ -324,7 +324,7 @@ class SessionStorageTest extends TestCase
      *
      * @param DateTime|null $now
      */
-    private function setCurrentTime(DateTime $now = null)
+    private function setCurrentTime(DateTime $now = null): void
     {
         $nowProperty = new ReflectionProperty(DateTime::class, 'now');
         $nowProperty->setAccessible(true);

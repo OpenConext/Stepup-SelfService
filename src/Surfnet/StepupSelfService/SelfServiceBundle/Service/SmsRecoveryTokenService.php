@@ -38,26 +38,17 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class SmsRecoveryTokenService
 {
-    public const REGISTRATION_RECOVERY_TOKEN_ID = 'registration';
-
-    private $smsService;
+    final public const REGISTRATION_RECOVERY_TOKEN_ID = 'registration';
 
     private $translator;
 
-    private $commandService;
-
-    private $stateHandler;
-
     public function __construct(
-        StepupSmsRecoveryTokenService $smsService,
+        private readonly StepupSmsRecoveryTokenService $smsService,
         TranslatorInterface $translator,
-        CommandService $commandService,
-        RecoveryTokenState $stateHandler
+        private readonly CommandService $commandService,
+        private readonly RecoveryTokenState $stateHandler
     ) {
-        $this->smsService = $smsService;
         $this->translator = $translator;
-        $this->commandService = $commandService;
-        $this->stateHandler = $stateHandler;
     }
 
     public function getOtpRequestsRemainingCount(string $identifier): int
@@ -145,22 +136,22 @@ class SmsRecoveryTokenService
         return ProofOfPossessionResult::recoveryTokenCreated($command->recoveryTokenId);
     }
 
-    public function wasTokenCreatedDuringSecondFactorRegistration()
+    public function wasTokenCreatedDuringSecondFactorRegistration(): bool
     {
         return $this->stateHandler->wasRecoveryTokenCreatedDuringSecondFactorRegistration();
     }
 
-    public function forgetTokenCreatedDuringSecondFactorRegistration()
+    public function forgetTokenCreatedDuringSecondFactorRegistration(): void
     {
         $this->stateHandler->forgetTokenCreatedDuringSecondFactorRegistration();
     }
 
-    public function tokenCreatedDuringSecondFactorRegistration()
+    public function tokenCreatedDuringSecondFactorRegistration(): void
     {
         $this->stateHandler->tokenCreatedDuringSecondFactorRegistration();
     }
 
-    public function forgetRecoveryTokenState()
+    public function forgetRecoveryTokenState(): void
     {
         $this->stateHandler->forget();
     }

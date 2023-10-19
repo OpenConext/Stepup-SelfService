@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProveYubikeyPossessionType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('otp', TextType::class, [
             'label' => /** @Ignore */ false,
@@ -37,10 +37,10 @@ class ProveYubikeyPossessionType extends AbstractType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand',
+            'data_class' => \Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand::class,
         ]);
     }
 

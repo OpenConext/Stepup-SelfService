@@ -57,14 +57,13 @@ class SecondFactorTypeCollection
         return $this->maxNumberOfRegistrations;
     }
 
-    public function getRegistrationsLeft()
+    public function getRegistrationsLeft(): int|float
     {
         $total = $this->maxNumberOfRegistrations;
 
         $total -= $this->unverified->getTotalItems();
         $total -= $this->verified->getTotalItems();
-        $total -= $this->vetted->getTotalItems();
 
-        return $total;
+        return $total - $this->vetted->getTotalItems();
     }
 }

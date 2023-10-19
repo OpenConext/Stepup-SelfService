@@ -26,22 +26,8 @@ use Surfnet\StepupBundle\Value\Loa;
 
 class AuthenticationRequestFactory
 {
-    /**
-     * @var ServiceProvider
-     */
-    private $serviceProvider;
-
-    /**
-     * @var IdentityProvider
-     */
-    private $identityProvider;
-
-    public function __construct(
-        ServiceProvider $serviceProvider,
-        IdentityProvider $identityProvider
-    ) {
-        $this->serviceProvider = $serviceProvider;
-        $this->identityProvider = $identityProvider;
+    public function __construct(private readonly ServiceProvider $serviceProvider, private readonly IdentityProvider $identityProvider)
+    {
     }
 
     public function createSecondFactorRequest(string $nameId, Loa $loa): AuthnRequest

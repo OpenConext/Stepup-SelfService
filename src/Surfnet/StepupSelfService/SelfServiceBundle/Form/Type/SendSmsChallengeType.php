@@ -29,7 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SendSmsChallengeType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('country', ChoiceType::class, [
@@ -37,7 +37,7 @@ class SendSmsChallengeType extends AbstractType
                 'required'                       => true,
                 'choices' => CountryCodeListing::asArray(),
                 'preferred_choices'              =>
-                    ['Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing', 'isPreferredChoice'],
+                    \Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing::isPreferredChoice(...),
             ])
             ->add('subscriber', TelType::class, [
                 'label'                          => /** @Ignore */ 'subscriberNumber',
@@ -54,7 +54,7 @@ class SendSmsChallengeType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['class' => 'form-inline'],

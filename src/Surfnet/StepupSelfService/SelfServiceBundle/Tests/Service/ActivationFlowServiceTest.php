@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
 {
-    private $service;
+    private \Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService $service;
     private $logger;
     private $session;
 
@@ -39,7 +39,7 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @dataProvider generateValidUris
      */
-    public function testItCanParseUris(string $uri, array $logEntries)
+    public function testItCanParseUris(string $uri, array $logEntries): void
     {
         foreach ($logEntries as $entry) {
             $this->logger->shouldReceive($entry['level'])->with($entry['message'])->once();
@@ -48,7 +48,7 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->service->process($uri);
     }
 
-    public function generateValidUris()
+    public function generateValidUris(): \Generator
     {
         yield [
             '/?activate=self',
@@ -68,7 +68,7 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
         ];
     }
 
-    public function testItMustHaveQueryParameter()
+    public function testItMustHaveQueryParameter(): void
     {
         $this->logger->shouldReceive('info')->with('Analysing uri "/" for activation flow query parameter')->once();
         $this->logger->shouldReceive('notice')->with('The configured query string field name "activate" was not found in the uri "/"')->once();
@@ -76,7 +76,7 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->service->process('/');
     }
 
-    public function testParameterNameMustBeValid()
+    public function testParameterNameMustBeValid(): void
     {
         $this->logger->shouldReceive('info')->with('Analysing uri "/?act=ra" for activation flow query parameter')->once();
         $this->logger->shouldReceive('debug')->with('Found a query string in the uri')->once();
@@ -85,7 +85,7 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->service->process('/?act=ra');
     }
 
-    public function testOptionMustBeValid()
+    public function testOptionMustBeValid(): void
     {
         $this->logger->shouldReceive('info')->with('Analysing uri "/?activate=self-ra" for activation flow query parameter')->once();
         $this->logger->shouldReceive('debug')->with('Found a query string in the uri')->once();

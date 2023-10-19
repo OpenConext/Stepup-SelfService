@@ -24,22 +24,8 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 
 class SelfAssertedTokensMarshaller implements VettingMarshaller
 {
-    /**
-     * @var AuthorizationService
-     */
-    private $authorizationService;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        AuthorizationService $authorizationService,
-        LoggerInterface $logger
-    ) {
-        $this->authorizationService = $authorizationService;
-        $this->logger = $logger;
+    public function __construct(private readonly AuthorizationService $authorizationService, private readonly LoggerInterface $logger)
+    {
     }
 
     public function isAllowed(Identity $identity, string $secondFactorId): bool
@@ -54,7 +40,7 @@ class SelfAssertedTokensMarshaller implements VettingMarshaller
         $this->logger->info(
             sprintf(
                 'Self-asserted token registration is %s for %s',
-                $decision === true ? 'allowed' : 'not allowed',
+                $decision ? 'allowed' : 'not allowed',
                 $identity->id
             )
         );

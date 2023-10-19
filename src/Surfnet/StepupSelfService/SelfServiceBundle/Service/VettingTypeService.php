@@ -32,43 +32,8 @@ use function array_key_exists;
 
 class VettingTypeService
 {
-    /**
-     * @var SelfVetMarshaller
-     */
-    private $selfVetMarshaller;
-
-    /**
-     * @var SelfAssertedTokensMarshaller
-     */
-    private $selfAssertedTokensMarshaller;
-
-    /**
-     * @var ActivationFlowService
-     */
-    private $activationFlowService;
-
-    /**
-     * @var VettingTypeHintService
-     */
-    private $vettingTypeHintService;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        SelfVetMarshaller $selfVetMarshaller,
-        SelfAssertedTokensMarshaller $selfAssertedTokensMarshaller,
-        ActivationFlowService $activationFlowService,
-        VettingTypeHintService $vettingTypeHintService,
-        LoggerInterface $logger
-    ) {
-        $this->selfVetMarshaller = $selfVetMarshaller;
-        $this->selfAssertedTokensMarshaller = $selfAssertedTokensMarshaller;
-        $this->activationFlowService = $activationFlowService;
-        $this->vettingTypeHintService = $vettingTypeHintService;
-        $this->logger = $logger;
+    public function __construct(private readonly SelfVetMarshaller $selfVetMarshaller, private readonly SelfAssertedTokensMarshaller $selfAssertedTokensMarshaller, private readonly ActivationFlowService $activationFlowService, private readonly VettingTypeHintService $vettingTypeHintService, private readonly LoggerInterface $logger)
+    {
     }
 
     public function vettingTypes(Identity $identity, string $secondFactorId): VettingTypeCollection
@@ -96,14 +61,12 @@ class VettingTypeService
         try {
             $hint = $this->vettingTypeHintService->findOne($institution);
             if (!empty($hint->hints)) {
-                $hintText = array_filter($hint->hints, function ($hintEntry) use ($locale) {
-                    return $hintEntry['locale'] === $locale;
-                });
-                if ($hintText) {
+                $hintText = array_filter($hint->hints, fn($hintEntry): bool => $hintEntry['locale'] === $locale);
+                if ($hintText !== []) {
                     return reset($hintText)['hint'];
                 }
             }
-        } catch (NotFoundException $e) {
+        } catch (NotFoundException) {
             // Do nothing for now
         }
         return null;

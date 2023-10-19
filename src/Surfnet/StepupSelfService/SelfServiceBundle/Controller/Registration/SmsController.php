@@ -58,7 +58,7 @@ class SmsController extends Controller
 
             if ($otpRequestsRemaining === 0) {
                 $this->addFlash('error', 'ss.prove_phone_possession.challenge_request_limit_reached');
-                return array_merge(['form' => $form->createView()], $viewVariables);
+                return ['form' => $form->createView(), ...$viewVariables];
             }
 
             if ($service->sendChallenge($command)) {
@@ -68,17 +68,11 @@ class SmsController extends Controller
             }
         }
 
-        return array_merge(
-            [
-                'form' => $form->createView(),
-            ],
-            $viewVariables
-        );
+        return ['form' => $form->createView(), ...$viewVariables];
     }
 
     /**
      * @Template
-     * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function provePossessionAction(Request $request)

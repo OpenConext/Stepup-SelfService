@@ -28,10 +28,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokensMarsha
 
 class SelfAssertedTokensMarshallerTest extends TestCase
 {
-    /**
-     * @var SelfAssertedTokensMarshaller
-     */
-    private $marshaller;
+    private \Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokensMarshaller $marshaller;
 
     /**
      * @var InstitutionConfigurationOptionsService
@@ -47,7 +44,7 @@ class SelfAssertedTokensMarshallerTest extends TestCase
         );
     }
 
-    public function test_it_allows_sat_when_institution_is_configured_with_sat()
+    public function test_it_allows_sat_when_institution_is_configured_with_sat(): void
     {
         $identity = new Identity();
         $identity->institution = 'institution-a';
@@ -59,7 +56,7 @@ class SelfAssertedTokensMarshallerTest extends TestCase
         $this->assertTrue($this->marshaller->isAllowed($identity, 'sfid'));
     }
 
-    public function test_it_denies_sat_when_institution_is_configured_without_sat()
+    public function test_it_denies_sat_when_institution_is_configured_without_sat(): void
     {
         $identity = new Identity();
         $identity->institution = 'institution-a';

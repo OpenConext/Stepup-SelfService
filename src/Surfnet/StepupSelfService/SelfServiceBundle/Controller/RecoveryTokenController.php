@@ -63,83 +63,29 @@ class RecoveryTokenController extends Controller
     private $secondFactorService;
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var SafeStoreService
-     */
-    private $safeStoreService;
-
-    /**
      * @var SmsRecoveryTokenService
      */
     private $smsService;
-
-    /**
-     * @var LoaResolutionService
-     */
-    private $loaResolutionService;
-
-    /**
-     * @var AuthenticationRequestFactory
-     */
-    private $authnRequestFactory;
-
-    /**
-     * @var SamlAuthenticationLogger
-     */
-    private $samlLogger;
-
-    /**
-     * @var RedirectBinding
-     */
-    private $redirectBinding;
-
-    /**
-     * @var PostBinding
-     */
-    private $postBinding;
-
-    /**
-     * @var ServiceProvider
-     */
-    private $serviceProvider;
-
-    /**
-     * @var IdentityProvider
-     */
-    private $identityProvider;
 
     /**
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         RecoveryTokenService $recoveryTokenService,
-        SafeStoreService $safeStoreService,
+        private readonly SafeStoreService $safeStoreService,
         SecondFactorService $secondFactorService,
         SmsRecoveryTokenService $smsService,
-        LoaResolutionService $loaResolutionService,
-        AuthenticationRequestFactory $authenticationRequestFactory,
-        RedirectBinding $redirectBinding,
-        PostBinding $postBinding,
-        ServiceProvider $serviceProvider,
-        IdentityProvider $identityProvider,
-        SamlAuthenticationLogger $samlLogger,
-        LoggerInterface $logger
+        private readonly LoaResolutionService $loaResolutionService,
+        private readonly AuthenticationRequestFactory $authnRequestFactory,
+        private readonly RedirectBinding $redirectBinding,
+        private readonly PostBinding $postBinding,
+        private readonly ServiceProvider $serviceProvider,
+        private readonly IdentityProvider $identityProvider,
+        private readonly SamlAuthenticationLogger $samlLogger,
+        private readonly LoggerInterface $logger
     ) {
         $this->recoveryTokenService = $recoveryTokenService;
-        $this->safeStoreService = $safeStoreService;
         $this->secondFactorService = $secondFactorService;
-        $this->loaResolutionService = $loaResolutionService;
-        $this->authnRequestFactory = $authenticationRequestFactory;
-        $this->redirectBinding = $redirectBinding;
-        $this->postBinding = $postBinding;
-        $this->serviceProvider = $serviceProvider;
-        $this->identityProvider = $identityProvider;
-        $this->samlLogger = $samlLogger;
-        $this->logger = $logger;
         // Looks like an unused service, is used in RecoveryTokenControllerTrait
         $this->smsService = $smsService;
     }
@@ -293,7 +239,7 @@ class RecoveryTokenController extends Controller
                 }
                 return $this->redirect($this->generateUrl('ss_second_factor_list'));
             }
-        } catch (NotFoundException $e) {
+        } catch (NotFoundException) {
             throw new LogicException('Identity %s tried to remove an unpossessed recovery token');
         }
         $this->addFlash('success', 'ss.form.recovery_token.delete.success');
@@ -369,7 +315,7 @@ class RecoveryTokenController extends Controller
                 );
                 throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
             }
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->addFlash('error', 'ss.recovery_token.step_up.failed');
         }
         // Store step-up was given in state

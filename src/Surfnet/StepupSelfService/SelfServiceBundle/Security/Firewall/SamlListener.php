@@ -28,32 +28,11 @@ use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
 class SamlListener implements ListenerInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var SamlInteractionProvider
-     */
-    private $samlInteractionProvider;
-
-    /**
-     * @var AuthenticationHandler
-     */
-    private $authenticationHandler;
-
-    public function __construct(
-        AuthenticationHandler $authenticationHandler,
-        SamlInteractionProvider $samlInteractionProvider,
-        LoggerInterface $logger
-    ) {
-        $this->authenticationHandler   = $authenticationHandler;
-        $this->samlInteractionProvider = $samlInteractionProvider;
-        $this->logger                  = $logger;
+    public function __construct(private readonly AuthenticationHandler $authenticationHandler, private readonly SamlInteractionProvider $samlInteractionProvider, private readonly LoggerInterface $logger)
+    {
     }
 
-    public function handle(GetResponseEvent $event)
+    public function handle(GetResponseEvent $event): void
     {
         try {
             $this->authenticationHandler->process($event);
@@ -71,7 +50,7 @@ class SamlListener implements ListenerInterface
 
             $this->logger->error(sprintf(
                 'Could not authenticate, Exception of type "%s" encountered: "%s"',
-                get_class($exception),
+                $exception::class,
                 $exception->getMessage()
             ));
 

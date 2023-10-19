@@ -27,7 +27,7 @@ class SamlToken extends AbstractToken
      */
     public $assertion;
 
-    public function __construct(array $roles = array())
+    public function __construct(array $roles = [])
     {
         parent::__construct($roles);
 
@@ -39,7 +39,7 @@ class SamlToken extends AbstractToken
      *
      * @return mixed The user credentials
      */
-    public function getCredentials()
+    public function getCredentials(): string
     {
         return '';
     }

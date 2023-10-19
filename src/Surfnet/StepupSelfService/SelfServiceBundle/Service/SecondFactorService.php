@@ -44,26 +44,8 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
  */
 class SecondFactorService
 {
-    /**
-     * @var \Surfnet\StepupMiddlewareClientBundle\Identity\Service\SecondFactorService
-     */
-    private $secondFactors;
-
-    /**
-     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
-     */
-    private $commandService;
-
-    /**
-     * @param MiddlewareSecondFactorService $secondFactors
-     * @param CommandService                $commandService
-     */
-    public function __construct(
-        MiddlewareSecondFactorService $secondFactors,
-        CommandService $commandService
-    ) {
-        $this->secondFactors = $secondFactors;
-        $this->commandService = $commandService;
+    public function __construct(private readonly MiddlewareSecondFactorService $secondFactors, private readonly CommandService $commandService)
+    {
     }
 
     /**
@@ -83,7 +65,6 @@ class SecondFactorService
     }
 
     /**
-     * @param RevokeCommand $command
      * @return bool
      */
     public function revoke(RevokeCommand $command)
@@ -136,7 +117,7 @@ class SecondFactorService
      * @param string $identityId
      * @return bool
      */
-    public function doSecondFactorsExistForIdentity($identityId)
+    public function doSecondFactorsExistForIdentity($identityId): bool
     {
         $unverifiedSecondFactors = $this->findUnverifiedByIdentity($identityId);
         $verifiedSecondFactors = $this->findVerifiedByIdentity($identityId);
@@ -147,23 +128,16 @@ class SecondFactorService
                $vettedSecondFactors->getTotalItems() > 0;
     }
 
-    public function identityHasSecondFactorOfStateWithId($identityId, $state, $secondFactorId)
+    public function identityHasSecondFactorOfStateWithId($identityId, $state, $secondFactorId): bool
     {
-        switch ($state) {
-            case 'unverified':
-                $secondFactors = $this->findUnverifiedByIdentity($identityId);
-                break;
-            case 'verified':
-                $secondFactors = $this->findVerifiedByIdentity($identityId);
-                break;
-            case 'vetted':
-                $secondFactors = $this->findVettedByIdentity($identityId);
-                break;
-            default:
-                throw new LogicException(sprintf('Invalid second factor state "%s" given.', $state));
-        }
+        $secondFactors = match ($state) {
+            'unverified' => $this->findUnverifiedByIdentity($identityId),
+            'verified' => $this->findVerifiedByIdentity($identityId),
+            'vetted' => $this->findVettedByIdentity($identityId),
+            default => throw new LogicException(sprintf('Invalid second factor state "%s" given.', $state)),
+        };
 
-        if (count($secondFactors->getElements()) === 0) {
+        if ($secondFactors->getElements() === []) {
             return false;
         }
 
@@ -179,10 +153,9 @@ class SecondFactorService
     /**
      * Returns the given registrant's unverified second factors.
      *
-     * @param string $identityId
      * @return UnverifiedSecondFactorCollection
      */
-    public function findUnverifiedByIdentity($identityId)
+    public function findUnverifiedByIdentity(string $identityId)
     {
         return $this->secondFactors->searchUnverified(
             (new UnverifiedSecondFactorSearchQuery())->setIdentityId($identityId)
@@ -192,10 +165,9 @@ class SecondFactorService
     /**
      * Returns the given registrant's verified second factors.
      *
-     * @param string $identityId
      * @return VerifiedSecondFactorCollection
      */
-    public function findVerifiedByIdentity($identityId)
+    public function findVerifiedByIdentity(string $identityId)
     {
         $query = new VerifiedSecondFactorOfIdentitySearchQuery();
         $query->setIdentityId($identityId);
@@ -205,10 +177,9 @@ class SecondFactorService
     /**
      * Returns the given registrant's verified second factors.
      *
-     * @param string $identityId
      * @return VettedSecondFactorCollection
      */
-    public function findVettedByIdentity($identityId)
+    public function findVettedByIdentity(string $identityId)
     {
         return $this->secondFactors->searchVetted(
             (new VettedSecondFactorSearchQuery())->setIdentityId($identityId)
@@ -243,11 +214,9 @@ class SecondFactorService
     }
 
     /**
-     * @param string $identityId
-     * @param string $verificationNonce
      * @return UnverifiedSecondFactor|null
      */
-    public function findUnverifiedByVerificationNonce($identityId, $verificationNonce)
+    public function findUnverifiedByVerificationNonce(string $identityId, string $verificationNonce)
     {
         $secondFactors = $this->secondFactors->searchUnverified(
             (new UnverifiedSecondFactorSearchQuery())
@@ -257,21 +226,14 @@ class SecondFactorService
 
         $elements = $secondFactors->getElements();
 
-        switch (count($elements)) {
-            case 0:
-                return null;
-            case 1:
-                return reset($elements);
-            default:
-                throw new LogicException('There cannot be more than one unverified second factor with the same nonce');
-        }
+        return match (count($elements)) {
+            0 => null,
+            1 => reset($elements),
+            default => throw new LogicException('There cannot be more than one unverified second factor with the same nonce'),
+        };
     }
 
     /**
-     * @param array $allSecondFactors
-     * @param UnverifiedSecondFactorCollection $unverifiedCollection
-     * @param VerifiedSecondFactorCollection $verifiedCollection
-     * @param VettedSecondFactorCollection $vettedCollection
      * @return array
      */
     private function determineAvailable(
@@ -282,16 +244,13 @@ class SecondFactorService
     ) {
         $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $unverifiedCollection);
         $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $verifiedCollection);
-        $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $vettedCollection);
-        return $allSecondFactors;
+        return $this->filterAvailableSecondFactors($allSecondFactors, $vettedCollection);
     }
 
     /**
-     * @param array $allSecondFactors
-     * @param CollectionDto $collection
      * @return array
      */
-    private function filterAvailableSecondFactors(array $allSecondFactors, CollectionDto $collection)
+    private function filterAvailableSecondFactors(array $allSecondFactors, CollectionDto $collection): array
     {
         foreach ($collection->getElements() as $secondFactor) {
             $keyFound = array_search($secondFactor->type, $allSecondFactors);
@@ -311,10 +270,10 @@ class SecondFactorService
      */
     public function getSecondFactorsForIdentity(
         $identity,
-        $allSecondFactors,
+        array $allSecondFactors,
         $allowedSecondFactors,
         $maximumNumberOfRegistrations
-    ) {
+    ): \Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorTypeCollection {
         $unverified = $this->findUnverifiedByIdentity($identity->id);
         $verified = $this->findVerifiedByIdentity($identity->id);
         $vetted = $this->findVettedByIdentity($identity->id);

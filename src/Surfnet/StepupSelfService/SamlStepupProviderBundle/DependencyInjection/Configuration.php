@@ -35,10 +35,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param ArrayNodeDefinition $rootNode
-     */
-    private function addRoutesSection(ArrayNodeDefinition $rootNode)
+    private function addRoutesSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
@@ -47,18 +44,14 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('consume_assertion')
                         ->isRequired()
                         ->validate()
-                            ->ifTrue(function ($v) {
-                                return !is_string($v) || strlen($v) === 0;
-                            })
+                            ->ifTrue(fn($v): bool => !is_string($v) || $v === '')
                             ->thenInvalid('Consume assertion route must be a non-empty string')
                         ->end()
                     ->end()
                     ->scalarNode('metadata')
                         ->isRequired()
                         ->validate()
-                            ->ifTrue(function ($v) {
-                                return !is_string($v) || strlen($v) === 0;
-                            })
+                            ->ifTrue(fn($v): bool => !is_string($v) || $v === '')
                             ->thenInvalid('Metadata route must be a non-empty string')
                         ->end()
                     ->end()
@@ -67,10 +60,9 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param ArrayNodeDefinition $rootNode
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    private function addProvidersSection(ArrayNodeDefinition $rootNode)
+    private function addProvidersSection(ArrayNodeDefinition $rootNode): void
     {
         /** @var ArrayNodeDefinition $protoType */
         $protoType = $rootNode

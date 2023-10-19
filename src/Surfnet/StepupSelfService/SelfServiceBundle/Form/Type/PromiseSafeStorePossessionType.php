@@ -27,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PromiseSafeStorePossessionType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('promisedPossession', CheckboxType::class, [
             'label' => 'ss.form.recovery_token.checkbox.promise_possession',
@@ -42,7 +42,7 @@ class PromiseSafeStorePossessionType extends AbstractType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => PromiseSafeStorePossessionCommand::class,

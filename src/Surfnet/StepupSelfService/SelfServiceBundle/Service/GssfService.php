@@ -21,16 +21,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProveGssfPossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 
-final class GssfService
+final readonly class GssfService
 {
-    /**
-     * @var \Surfnet\StepupMiddlewareClientBundle\Service\CommandService
-     */
-    private $commandService;
-
-    public function __construct(CommandService $commandService)
+    public function __construct(private CommandService $commandService)
     {
-        $this->commandService = $commandService;
     }
 
     /**
@@ -39,7 +33,7 @@ final class GssfService
      * @param string $gssfId
      * @return string|null
      */
-    public function provePossession($identityId, $stepupProvider, $gssfId)
+    public function provePossession($identityId, $stepupProvider, $gssfId): ?string
     {
         $command = new ProveGssfPossessionCommand();
         $command->identityId = $identityId;

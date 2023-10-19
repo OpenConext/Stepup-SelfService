@@ -24,7 +24,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 
 class AvailableTokenCollectionTest extends TestCase
 {
-    public function test_create_from()
+    public function test_create_from(): void
     {
         $nonGssp = ['sms' => 'sms', 'yubikey' => 'yubikey'];
         $gssp = [
@@ -41,7 +41,7 @@ class AvailableTokenCollectionTest extends TestCase
         $this->assertEquals($expextedSortOrder, array_keys($collection->getData()));
     }
 
-    public function test_create_from_empty_input()
+    public function test_create_from_empty_input(): void
     {
         $nonGssp = [];
         $gssp = [];
@@ -50,7 +50,7 @@ class AvailableTokenCollectionTest extends TestCase
         $this->assertCount(0, $collection->getData());
     }
 
-    public function test_create_from_only_gssp()
+    public function test_create_from_only_gssp(): void
     {
         $nonGssp = [];
         $gssp = [
@@ -69,7 +69,7 @@ class AvailableTokenCollectionTest extends TestCase
         $this->assertEquals($expextedSortOrder, array_keys($collection->getData()));
     }
 
-    private function getViewConfig($tokenType, $loa)
+    private function getViewConfig(string $tokenType, int $loa)
     {
         $mock = \Mockery::mock(ViewConfig::class);
         $mock->shouldReceive('getLoa')->andReturn($loa);

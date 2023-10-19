@@ -29,65 +29,13 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class InitiateSamlAuthenticationHandler implements AuthenticationHandler
 {
-    /**
-     * @var AuthenticationHandler|null
-     */
-    private $nextHandler;
+    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
 
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @var AuthenticatedSessionStateHandler
-     */
-    private $authenticatedSession;
-
-    /**
-     * @var SamlAuthenticationStateHandler
-     */
-    private $samlAuthenticationStateHandler;
-
-    /**
-     * @var SamlInteractionProvider
-     */
-    private $samlInteractionProvider;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var SamlAuthenticationLogger
-     */
-    private $authenticationLogger;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        TokenStorageInterface $tokenStorageInterface,
-        AuthenticatedSessionStateHandler $authenticatedSession,
-        SamlAuthenticationStateHandler $samlAuthenticationStateHandler,
-        SamlInteractionProvider $samlInteractionProvider,
-        RouterInterface $router,
-        SamlAuthenticationLogger $authenticationLogger,
-        LoggerInterface $logger
-    ) {
-        $this->tokenStorage                   = $tokenStorageInterface;
-        $this->authenticatedSession           = $authenticatedSession;
-        $this->samlAuthenticationStateHandler = $samlAuthenticationStateHandler;
-        $this->samlInteractionProvider        = $samlInteractionProvider;
-        $this->router                         = $router;
-        $this->authenticationLogger           = $authenticationLogger;
-        $this->logger                         = $logger;
+    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly AuthenticatedSessionStateHandler $authenticatedSession, private readonly SamlAuthenticationStateHandler $samlAuthenticationStateHandler, private readonly SamlInteractionProvider $samlInteractionProvider, private readonly RouterInterface $router, private readonly SamlAuthenticationLogger $authenticationLogger, private readonly LoggerInterface $logger)
+    {
     }
 
-    public function process(GetResponseEvent $event)
+    public function process(GetResponseEvent $event): void
     {
         $acsUri = $this->router->generate('selfservice_serviceprovider_consume_assertion');
 
@@ -125,12 +73,12 @@ class InitiateSamlAuthenticationHandler implements AuthenticationHandler
             return;
         }
 
-        if ($this->nextHandler) {
+        if ($this->nextHandler !== null) {
             $this->nextHandler->process($event);
         }
     }
 
-    public function setNext(AuthenticationHandler $handler)
+    public function setNext(AuthenticationHandler $handler): void
     {
         $this->nextHandler = $handler;
     }

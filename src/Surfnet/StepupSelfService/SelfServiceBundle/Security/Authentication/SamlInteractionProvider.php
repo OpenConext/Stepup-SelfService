@@ -28,43 +28,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SamlInteractionProvider
 {
-    /**
-     * @var \Surfnet\SamlBundle\Entity\ServiceProvider
-     */
-    private $serviceProvider;
-
-    /**
-     * @var \Surfnet\SamlBundle\Entity\IdentityProvider
-     */
-    private $identityProvider;
-
-    /**
-     * @var \Surfnet\SamlBundle\Http\RedirectBinding
-     */
-    private $redirectBinding;
-
-    /**
-     * @var \Surfnet\SamlBundle\Http\PostBinding
-     */
-    private $postBinding;
-
-    /**
-     * @var SamlAuthenticationStateHandler
-     */
-    private $samlAuthenticationStateHandler;
-
-    public function __construct(
-        ServiceProvider $serviceProvider,
-        IdentityProvider $identityProvider,
-        RedirectBinding $redirectBinding,
-        PostBinding $postBinding,
-        SamlAuthenticationStateHandler $samlAuthenticationStateHandler
-    ) {
-        $this->serviceProvider                = $serviceProvider;
-        $this->identityProvider               = $identityProvider;
-        $this->redirectBinding                = $redirectBinding;
-        $this->postBinding                    = $postBinding;
-        $this->samlAuthenticationStateHandler = $samlAuthenticationStateHandler;
+    public function __construct(private readonly ServiceProvider $serviceProvider, private readonly IdentityProvider $identityProvider, private readonly RedirectBinding $redirectBinding, private readonly PostBinding $postBinding, private readonly SamlAuthenticationStateHandler $samlAuthenticationStateHandler)
+    {
     }
 
     /**
@@ -78,7 +43,7 @@ class SamlInteractionProvider
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function initiateSamlRequest()
+    public function initiateSamlRequest(): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $authnRequest = AuthnRequestFactory::createNewRequest(
             $this->serviceProvider,
@@ -91,7 +56,6 @@ class SamlInteractionProvider
     }
 
     /**
-     * @param Request $request
      * @return \SAML2\Assertion
      */
     public function processSamlResponse(Request $request)
@@ -119,7 +83,7 @@ class SamlInteractionProvider
     /**
      * Resets the SAML flow.
      */
-    public function reset()
+    public function reset(): void
     {
         $this->samlAuthenticationStateHandler->clearRequestId();
     }

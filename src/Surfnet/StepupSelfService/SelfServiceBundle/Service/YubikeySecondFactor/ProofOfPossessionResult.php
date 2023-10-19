@@ -27,22 +27,13 @@ final class ProofOfPossessionResult
      *
      * @var string|null A UUID or null.
      */
-    private $secondFactorId = null;
+    private ?string $secondFactorId = null;
 
-    /**
-     * @var bool
-     */
-    private $otpInvalid = false;
+    private bool $otpInvalid = false;
 
-    /**
-     * @var bool
-     */
-    private $otpVerificationFailed = false;
+    private bool $otpVerificationFailed = false;
 
-    /**
-     * @var bool
-     */
-    private $proofOfPossessionFailed = false;
+    private bool $proofOfPossessionFailed = false;
 
     private function __construct()
     {
@@ -51,7 +42,7 @@ final class ProofOfPossessionResult
     /**
      * @return ProofOfPossessionResult
      */
-    public static function invalidOtp()
+    public static function invalidOtp(): self
     {
         $result = new self();
         $result->otpInvalid = true;
@@ -62,7 +53,7 @@ final class ProofOfPossessionResult
     /**
      * @return ProofOfPossessionResult
      */
-    public static function otpVerificationFailed()
+    public static function otpVerificationFailed(): self
     {
         $result = new self();
         $result->otpVerificationFailed = true;
@@ -73,7 +64,7 @@ final class ProofOfPossessionResult
     /**
      * @return ProofOfPossessionResult
      */
-    public static function proofOfPossessionCommandFailed()
+    public static function proofOfPossessionCommandFailed(): self
     {
         $result = new self();
         $result->proofOfPossessionFailed = true;
@@ -85,7 +76,7 @@ final class ProofOfPossessionResult
      * @param string $secondFactorId
      * @return ProofOfPossessionResult
      */
-    public static function secondFactorCreated($secondFactorId)
+    public static function secondFactorCreated($secondFactorId): self
     {
         if (!is_string($secondFactorId)) {
             throw InvalidArgumentException::invalidType('string', 'secondFactorId', $secondFactorId);
@@ -100,7 +91,7 @@ final class ProofOfPossessionResult
     /**
      * @return bool
      */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return $this->secondFactorId !== null;
     }

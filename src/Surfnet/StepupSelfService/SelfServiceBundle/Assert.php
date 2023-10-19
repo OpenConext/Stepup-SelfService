@@ -23,9 +23,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedExcepti
 
 final class Assert extends Assertion
 {
-    protected static $exceptionClass = '\Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedException';
+    protected static $exceptionClass = '\\' . \Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedException::class;
 
-    public static function keysAre(array $array, array $expectedKeys, $propertyPath = null)
+    public static function keysAre(array $array, array $expectedKeys, $propertyPath = null): void
     {
         $givenKeys = array_keys($array);
         sort($givenKeys);
@@ -49,13 +49,13 @@ final class Assert extends Assertion
             $additional = array_diff($givenKeys, $expectedKeys);
             $required = array_diff($expectedKeys, $givenKeys);
             $message = 'Keys do not match requirements';
-            if (!empty($additional)) {
+            if ($additional !== []) {
                 $message .= sprintf(
                     ', additional keys "%s" found',
                     implode('", "', array_diff($givenKeys, $expectedKeys))
                 );
             }
-            if (!empty($required)) {
+            if ($required !== []) {
                 $message .= sprintf(
                     ', required keys "%s" are missing',
                     implode('", "', array_diff($expectedKeys, $givenKeys))

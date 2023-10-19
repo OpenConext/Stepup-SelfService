@@ -24,11 +24,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class SafeStoreAuthenticationCommand
 {
     /**
-     * @Assert\NotBlank(message="ss.ss_authenticate_safe_store_command.secret.may_not_be_empty")
-     * @Assert\Type(type="string", message="ss.ss_authenticate_safe_store_command.secret.must_be_string")
      *
      * @var string
      */
+    #[Assert\NotBlank(message: 'ss.ss_authenticate_safe_store_command.secret.may_not_be_empty')]
+    #[Assert\Type(type: 'string', message: 'ss.ss_authenticate_safe_store_command.secret.must_be_string')]
     public $secret;
 
     /**

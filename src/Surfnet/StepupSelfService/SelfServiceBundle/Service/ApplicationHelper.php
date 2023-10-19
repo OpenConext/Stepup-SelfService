@@ -41,7 +41,7 @@ class ApplicationHelper
      *
      * @return string
      */
-    public function getApplicationVersion()
+    public function getApplicationVersion(): string
     {
         // The buildPath (version string) is the installation directory of the project. And is derived from the
         // kernel.project_dir (which is the app folder).

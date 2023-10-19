@@ -33,7 +33,7 @@ class SafeStoreStateTest extends TestCase
         Mockery::close();
     }
 
-    public function test_it_can_store_and_retrieve_secrets()
+    public function test_it_can_store_and_retrieve_secrets(): void
     {
         $session = Mockery::mock(SessionInterface::class);
         $store = new RecoveryTokenState($session);
@@ -49,7 +49,7 @@ class SafeStoreStateTest extends TestCase
         $this->assertEquals($secret, $retrievedSecret);
     }
 
-    public function test_it_can_not_retireve_a_non_existant_secret()
+    public function test_it_can_not_retireve_a_non_existant_secret(): void
     {
         $session = Mockery::mock(SessionInterface::class);
         $store = new RecoveryTokenState($session);

@@ -37,13 +37,10 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 
 class SelfVetMarshallerTest extends TestCase
 {
-    const LOA_2_ID = '221cdaa5-1d23-4b01-9fd8-3c810a5c596a';
+    final public const LOA_2_ID = '221cdaa5-1d23-4b01-9fd8-3c810a5c596a';
 
-    const LOA_3_ID = '331cdaa5-1d23-4b01-9fd8-3c810a5c596a';
-    /**
-     * @var SelfVetMarshaller
-     */
-    private $marshaller;
+    final public const LOA_3_ID = '331cdaa5-1d23-4b01-9fd8-3c810a5c596a';
+    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller $marshaller = null;
     /**
      * @var SecondFactorTypeService
      */
@@ -59,9 +56,8 @@ class SelfVetMarshallerTest extends TestCase
 
     /**
      * @param int[] $vettedLoas
-     * @param int $candidateLoa
      */
-    private function buildMarshaller(array $vettedLoas, int $candidateLoa)
+    private function buildMarshaller(array $vettedLoas, float $candidateLoa): void
     {
         $vettedLoaCollection = [];
         foreach ($vettedLoas as $loa) {
@@ -135,7 +131,7 @@ class SelfVetMarshallerTest extends TestCase
         return $verifiedSecondFactor;
     }
 
-    public function test_marshaller_allows_when_suitable_vetted_token_is_present()
+    public function test_marshaller_allows_when_suitable_vetted_token_is_present(): void
     {
         $this->buildMarshaller([Loa::LOA_3], Loa::LOA_2);
         $identity = m::mock(Identity::class);
@@ -147,7 +143,7 @@ class SelfVetMarshallerTest extends TestCase
         $this->assertTrue($this->marshaller->isAllowed($identity, self::LOA_2_ID));
     }
 
-    public function test_marshaller_allows_sat_tokens()
+    public function test_marshaller_allows_sat_tokens(): void
     {
         $this->buildMarshaller([Loa::LOA_2], Loa::LOA_3);
         $identity = m::mock(Identity::class);
@@ -160,7 +156,7 @@ class SelfVetMarshallerTest extends TestCase
         $this->assertTrue($this->marshaller->isAllowed($identity, self::LOA_2_ID));
     }
 
-    public function test_marshaller_rejects_when_no_vetted_token_is_present()
+    public function test_marshaller_rejects_when_no_vetted_token_is_present(): void
     {
         $this->buildMarshaller([], Loa::LOA_2);
         $identity = m::mock(Identity::class);
@@ -171,7 +167,7 @@ class SelfVetMarshallerTest extends TestCase
         $this->assertFalse($this->marshaller->isAllowed($identity, self::LOA_2_ID));
     }
 
-    public function test_marshaller_rejects_when_no_suitable_token_is_present()
+    public function test_marshaller_rejects_when_no_suitable_token_is_present(): void
     {
         $this->buildMarshaller([Loa::LOA_2], Loa::LOA_3);
         $identity = m::mock(Identity::class);
@@ -184,7 +180,7 @@ class SelfVetMarshallerTest extends TestCase
         $this->assertFalse($this->marshaller->isAllowed($identity, self::LOA_2_ID));
     }
 
-    public function test_marshaller_rejects_when_self_vetting_is_disabled_for_institution()
+    public function test_marshaller_rejects_when_self_vetting_is_disabled_for_institution(): void
     {
         $this->buildMarshaller([Loa::LOA_2], Loa::LOA_3);
         $identity = m::mock(Identity::class);

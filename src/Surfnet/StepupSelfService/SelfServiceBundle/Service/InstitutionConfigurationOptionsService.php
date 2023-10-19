@@ -23,14 +23,8 @@ use Surfnet\StepupMiddlewareClientBundle\Configuration\Service\InstitutionConfig
 
 class InstitutionConfigurationOptionsService
 {
-    /**
-     * @var ApiInstitutionConfigurationOptionsService
-     */
-    private $apiInstitutionConfigurationOptionsService;
-
-    public function __construct(ApiInstitutionConfigurationOptionsService $apiInstitutionConfigurationOptionsService)
+    public function __construct(private readonly ApiInstitutionConfigurationOptionsService $apiInstitutionConfigurationOptionsService)
     {
-        $this->apiInstitutionConfigurationOptionsService = $apiInstitutionConfigurationOptionsService;
     }
 
     /**

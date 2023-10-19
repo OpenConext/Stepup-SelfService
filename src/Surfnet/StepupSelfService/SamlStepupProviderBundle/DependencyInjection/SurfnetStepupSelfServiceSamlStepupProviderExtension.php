@@ -31,12 +31,12 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
 {
-    const VIEW_CONFIG_TAG_NAME = 'gssp.view_config';
+    final public const VIEW_CONFIG_TAG_NAME = 'gssp.view_config';
 
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -46,7 +46,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         foreach ($config['providers'] as $provider => $providerConfiguration) {
             // may seem a bit strange, but this prevents casing issue when getting/setting/creating provider
             // service definitions etc.
-            if ($provider !== strtolower($provider)) {
+            if ($provider !== strtolower((string) $provider)) {
                 throw new InvalidConfigurationException('The provider name must be completely lowercase');
             }
 
@@ -55,11 +55,11 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
     }
 
     private function loadProviderConfiguration(
-        $provider,
+        string $provider,
         array $configuration,
         array $routes,
         ContainerBuilder $container
-    ) {
+    ): void {
 
         if ($container->has('gssp.provider.' . $provider)) {
             throw new InvalidConfigurationException(sprintf('Cannot create the same provider "%s" twice', $provider));
@@ -70,7 +70,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $this->createRemoteDefinition($provider, $configuration['remote'], $container);
 
         $stateHandlerDefinition = new Definition(
-            'Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler',
+            \Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler::class,
             [
                 new Reference('gssp.sessionbag'),
                 $provider
@@ -78,7 +78,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         );
         $container->setDefinition('gssp.provider.' . $provider . '.statehandler', $stateHandlerDefinition);
 
-        $providerDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider', [
+        $providerDefinition = new Definition(\Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider::class, [
             $provider,
             new Reference('gssp.provider.' . $provider . '.hosted.sp'),
             new Reference('gssp.provider.' . $provider . '.remote.idp'),
@@ -104,7 +104,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             'ios'
         );
 
-        $viewConfigDefinition = new Definition('Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig', [
+        $viewConfigDefinition = new Definition(\Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig::class, [
             new Reference('request_stack'),
             $configuration['view_config']['loa'],
             $configuration['view_config']['logo'],
@@ -130,23 +130,17 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             ->addMethodCall('addProvider', [new Reference('gssp.provider.' . $provider)]);
     }
 
-    /**
-     * @param string           $provider
-     * @param array            $configuration
-     * @param array            $routes
-     * @param ContainerBuilder $container
-     */
     private function createHostedDefinitions(
-        $provider,
+        string $provider,
         array $configuration,
         array $routes,
         ContainerBuilder $container
-    ) {
+    ): void {
         $hostedDefinition = $this->buildHostedEntityDefinition($provider, $configuration, $routes);
         $container->setDefinition('gssp.provider.' . $provider . '.hosted_entities', $hostedDefinition);
 
         $hostedSpDefinition  = (new Definition())
-            ->setClass('Surfnet\SamlBundle\Entity\ServiceProvider')
+            ->setClass(\Surfnet\SamlBundle\Entity\ServiceProvider::class)
             ->setFactory([
                 new Reference('gssp.provider.' . $provider . '.hosted_entities'),
                 'getServiceProvider'
@@ -157,11 +151,9 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
 
     /**
      * @param string $provider
-     * @param array  $configuration
-     * @param array  $routes
      * @return Definition
      */
-    private function buildHostedEntityDefinition($provider, array $configuration, array $routes)
+    private function buildHostedEntityDefinition($provider, array $configuration, array $routes): \Symfony\Component\DependencyInjection\Definition
     {
         $entityId = ['entity_id_route' => $this->createRouteConfig($provider, $routes['metadata'])];
         $spAdditional = [
@@ -173,9 +165,9 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         ];
 
         $serviceProvider  = array_merge($configuration['service_provider'], $spAdditional, $entityId);
-        $identityProvider = array_merge($idpAdditional, $entityId);
+        $identityProvider = [...$idpAdditional, ...$entityId];
 
-        $hostedDefinition = new Definition('Surfnet\SamlBundle\Entity\HostedEntities', [
+        $hostedDefinition = new Definition(\Surfnet\SamlBundle\Entity\HostedEntities::class, [
             new Reference('router'),
             new Reference('request_stack'),
             $serviceProvider,
@@ -187,14 +179,9 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         return $hostedDefinition;
     }
 
-    /**
-     * @param string           $provider
-     * @param array            $configuration
-     * @param ContainerBuilder $container
-     */
-    private function createRemoteDefinition($provider, array $configuration, ContainerBuilder $container)
+    private function createRemoteDefinition(string $provider, array $configuration, ContainerBuilder $container): void
     {
-        $definition    = new Definition('Surfnet\SamlBundle\Entity\IdentityProvider', [
+        $definition    = new Definition(\Surfnet\SamlBundle\Entity\IdentityProvider::class, [
             [
                 'entityId'        => $configuration['entity_id'],
                 'ssoUrl'          => $configuration['sso_url'],
@@ -207,19 +194,15 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
     }
 
     /**
-     * @param string           $provider
-     * @param array            $configuration
-     * @param array            $routes
-     * @param ContainerBuilder $container
      * @return Definition
      */
     private function createMetadataDefinition(
-        $provider,
+        string $provider,
         array $configuration,
         array $routes,
         ContainerBuilder $container
-    ) {
-        $metadataConfiguration = new Definition('Surfnet\SamlBundle\Metadata\MetadataConfiguration');
+    ): void {
+        $metadataConfiguration = new Definition(\Surfnet\SamlBundle\Metadata\MetadataConfiguration::class);
 
         $propertyMap = [
             'entityIdRoute'          => $this->createRouteConfig($provider, $routes['metadata']),
@@ -234,7 +217,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $metadataConfiguration->setPublic(false);
         $container->setDefinition('gssp.provider.' . $provider . 'metadata.configuration', $metadataConfiguration);
 
-        $metadataFactory = new Definition('Surfnet\SamlBundle\Metadata\MetadataFactory', [
+        $metadataFactory = new Definition(\Surfnet\SamlBundle\Metadata\MetadataFactory::class, [
             new Reference('templating'),
             new Reference('router'),
             new Reference('surfnet_saml.signing_service'),
@@ -243,7 +226,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $container->setDefinition('gssp.provider.' . $provider . '.metadata.factory', $metadataFactory);
     }
 
-    private function createRouteConfig($provider, $routeName)
+    private function createRouteConfig($provider, $routeName): array
     {
         // In the future, we ought to wrap this in an object.
         // https://www.pivotaltracker.com/story/show/90095392
@@ -253,11 +236,11 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         ];
     }
 
-    private function validateDescriptions($descriptions, $appUrl, $provider, $type)
+    private function validateDescriptions($descriptions, $appUrl, $provider, string $type): void
     {
         $regex ="/%%{$type}_link_start%%[a-zA-Z0-9 ]+%%{$type}_link_end%%/";
         foreach ($descriptions as $lang => $description) {
-            if ($appUrl !== false && preg_match($regex, $description) === 0) {
+            if ($appUrl !== false && preg_match($regex, (string) $description) === 0) {
                 throw new InvalidConfigurationException(
                     sprintf(
                         'You have configured a GSSP provider with app URL\'s but the description is not ' .

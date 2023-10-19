@@ -21,29 +21,17 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 class YubikeyVerificationResult
 {
     /**
-     * @var bool
-     */
-    private $clientError;
-
-    /**
-     * @var bool
-     */
-    private $serverError;
-
-    /**
      * @param bool $clientError
      * @param bool $serverError
      */
-    public function __construct($clientError, $serverError)
+    public function __construct(private $clientError, private $serverError)
     {
-        $this->clientError = $clientError;
-        $this->serverError = $serverError;
     }
 
     /**
      * @return bool
      */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return !$this->clientError && !$this->serverError;
     }

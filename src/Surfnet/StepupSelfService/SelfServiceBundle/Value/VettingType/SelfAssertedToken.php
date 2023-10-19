@@ -20,7 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType;
 
 class SelfAssertedToken implements VettingTypeInterface
 {
-    private $isPrefered = false;
+    private bool $isPrefered = false;
 
     public function isPrefered(): bool
     {

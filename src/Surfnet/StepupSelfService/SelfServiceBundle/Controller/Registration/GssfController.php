@@ -47,7 +47,6 @@ final class GssfController extends Controller
      * - proofOfPossessionFailed (default false), will trigger an error message
      *   when possession was not proven, but the SAML response was successful
      *
-     * @param Request $request
      * @param string $provider
      * @return array|Response
      */
@@ -102,7 +101,6 @@ final class GssfController extends Controller
     }
 
     /**
-     * @param Request $httpRequest
      * @param string  $provider
      * @return array|Response
      */

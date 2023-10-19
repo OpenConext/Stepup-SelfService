@@ -38,7 +38,7 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -75,15 +75,11 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
         );
     }
 
-    /**
-     * @param array            $identityProvider
-     * @param ContainerBuilder $container
-     */
     private function parseSecondFactorTestIdentityProviderConfiguration(
         array $identityProvider,
         ContainerBuilder $container
-    ) {
-        $definition = new Definition('Surfnet\SamlBundle\Entity\IdentityProvider');
+    ): void {
+        $definition = new Definition(\Surfnet\SamlBundle\Entity\IdentityProvider::class);
         $configuration = [
             'entityId' => $identityProvider['entity_id'],
             'ssoUrl' => $identityProvider['sso_url'],
@@ -108,7 +104,7 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
     private function parseActivationFlowPreferenceConfiguration(
         array $preferenceConfig,
         ContainerBuilder $container
-    ) {
+    ): void {
         $container->getDefinition(ActivationFlowService::class)
             ->replaceArgument(2, $preferenceConfig['query_string_field_name'])
             ->replaceArgument(3, $preferenceConfig['options']);

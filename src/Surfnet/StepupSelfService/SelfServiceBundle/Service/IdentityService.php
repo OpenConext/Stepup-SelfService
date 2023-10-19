@@ -38,36 +38,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class IdentityService implements UserProviderInterface
 {
-    /**
-     * @var \Surfnet\StepupMiddlewareClientBundle\Identity\Service\IdentityService
-     */
-    private $apiIdentityService;
-
-    /**
-     * @var \Surfnet\StepupMiddlewareClientBundle\Service\CommandService
-     */
-    private $commandService;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        ApiIdentityService $apiIdentityService,
-        CommandService $commandService,
-        TokenStorageInterface $tokenStorage,
-        LoggerInterface $logger
-    ) {
-        $this->apiIdentityService = $apiIdentityService;
-        $this->commandService = $commandService;
-        $this->tokenStorage = $tokenStorage;
-        $this->logger = $logger;
+    public function __construct(private readonly ApiIdentityService $apiIdentityService, private readonly CommandService $commandService, private readonly TokenStorageInterface $tokenStorage, private readonly LoggerInterface $logger)
+    {
     }
 
     /**
@@ -75,7 +47,7 @@ class IdentityService implements UserProviderInterface
      *
      * If needed, the username is the UUID of the identity so it can be fetched rather easy
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username): never
     {
         throw new RuntimeException(sprintf('Cannot Load User By Username "%s"', $username));
     }
@@ -83,7 +55,7 @@ class IdentityService implements UserProviderInterface
     /**
      * For now this functionality is disabled, unsure if actually needed
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): void
     {
         throw new RuntimeException(sprintf('Cannot Refresh User "%s"', $user->getUsername()));
     }
@@ -95,18 +67,16 @@ class IdentityService implements UserProviderInterface
      *
      * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
-        return $class === 'Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity';
+        return $class === \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity::class;
     }
 
     /**
-     * @param string $nameId
-     * @param string $institution
      * @return null|\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity
      * @throws \Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException
      */
-    public function findByNameIdAndInstitution($nameId, $institution)
+    public function findByNameIdAndInstitution(string $nameId, string $institution)
     {
         $searchQuery = new IdentitySearchQuery();
         $searchQuery->setNameId($nameId);
@@ -121,7 +91,7 @@ class IdentityService implements UserProviderInterface
         }
 
         $elements = $result->getElements();
-        if (count($elements) === 0) {
+        if ($elements === []) {
             return null;
         }
 
@@ -137,10 +107,8 @@ class IdentityService implements UserProviderInterface
 
     /**
      * Save or Update an existing Identity
-     *
-     * @param Identity $identity
      */
-    public function createIdentity(Identity $identity)
+    public function createIdentity(Identity $identity): void
     {
         $command = new CreateIdentityCommand();
         $command->id              = $identity->id;
@@ -153,10 +121,7 @@ class IdentityService implements UserProviderInterface
         $this->processCommand($command);
     }
 
-    /**
-     * @param Identity $identity
-     */
-    public function updateIdentity(Identity $identity)
+    public function updateIdentity(Identity $identity): void
     {
         $command = new UpdateIdentityCommand($identity->id, $identity->institution);
         $command->email      = $identity->email;
@@ -167,15 +132,14 @@ class IdentityService implements UserProviderInterface
 
 
     /**
-     * @param SwitchLocaleCommand $command
      * @return bool
      */
-    public function switchLocale(SwitchLocaleCommand $command)
+    public function switchLocale(SwitchLocaleCommand $command): bool
     {
         /** @var TokenInterface|null */
         $token = $this->tokenStorage->getToken();
 
-        if (!$token) {
+        if ($token === null) {
             throw new RuntimeException('Cannot switch locales when unauthenticated');
         }
 
@@ -198,21 +162,21 @@ class IdentityService implements UserProviderInterface
     /**
      * @param $command
      */
-    public function processCommand($command)
+    public function processCommand(\Surfnet\StepupMiddlewareClientBundle\Command\Command $command): void
     {
         $messageTemplate = 'Exception when saving Identity "%s": with command "%s", error: "%s"';
 
         try {
             $result = $this->commandService->execute($command);
         } catch (Exception $e) {
-            $message = sprintf($messageTemplate, $command->id, get_class($command), $e->getMessage());
+            $message = sprintf($messageTemplate, $command->id, $command::class, $e->getMessage());
             $this->logger->critical($message);
 
             throw new RuntimeException($message, 0, $e);
         }
 
         if (!$result->isSuccessful()) {
-            $note = sprintf($messageTemplate, $command->id, get_class($command), implode('", "', $result->getErrors()));
+            $note = sprintf($messageTemplate, $command->id, $command::class, implode('", "', $result->getErrors()));
             $this->logger->critical($note);
 
             throw new RuntimeException($note);

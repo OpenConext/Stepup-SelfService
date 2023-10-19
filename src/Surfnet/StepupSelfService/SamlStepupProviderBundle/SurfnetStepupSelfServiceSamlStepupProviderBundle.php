@@ -28,7 +28,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class SurfnetStepupSelfServiceSamlStepupProviderBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new StateHandlerSessionPass());
         $container->addCompilerPass(new ViewConfigCollectionPass());

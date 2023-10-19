@@ -22,7 +22,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentExcepti
 
 class BuiltInToken implements AvailableTokenInterface
 {
-    private $supportedTypes = [
+    private array $supportedTypes = [
         'sms' => [
             'loaLevel' => 2,
             'route' => 'ss_registration_sms_send_challenge'
@@ -39,7 +39,7 @@ class BuiltInToken implements AvailableTokenInterface
      * @param $type
      * @return BuiltInToken
      */
-    public static function fromSecondFactorType($type)
+    public static function fromSecondFactorType($type): self
     {
         return new self($type);
     }
@@ -79,7 +79,7 @@ class BuiltInToken implements AvailableTokenInterface
     /**
      * @return boolean
      */
-    public function isGssp()
+    public function isGssp(): bool
     {
         return false;
     }

@@ -28,40 +28,8 @@ use function sprintf;
 
 class SelfVetMarshaller implements VettingMarshaller
 {
-    /**
-     * @var SecondFactorService
-     */
-    private $secondFactorService;
-
-    /**
-     * @var SecondFactorTypeService
-     */
-    private $secondFactorTypeService;
-
-    /**
-     * @var InstitutionConfigurationOptionsService
-     */
-    private $institutionConfigurationService;
-
-    private $authorizationService;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        SecondFactorService $secondFactorService,
-        SecondFactorTypeService $secondFactorTypeService,
-        InstitutionConfigurationOptionsService $institutionConfigurationOptionsService,
-        AuthorizationService $authorizationService,
-        LoggerInterface $logger
-    ) {
-        $this->secondFactorService = $secondFactorService;
-        $this->secondFactorTypeService = $secondFactorTypeService;
-        $this->institutionConfigurationService = $institutionConfigurationOptionsService;
-        $this->authorizationService = $authorizationService;
-        $this->logger = $logger;
+    public function __construct(private readonly SecondFactorService $secondFactorService, private readonly SecondFactorTypeService $secondFactorTypeService, private readonly InstitutionConfigurationOptionsService $institutionConfigurationService, private readonly AuthorizationService $authorizationService, private readonly LoggerInterface $logger)
+    {
     }
 
     /**
@@ -86,7 +54,7 @@ class SelfVetMarshaller implements VettingMarshaller
             return false;
         }
         $candidateToken = $this->secondFactorService->findOneVerified($secondFactorId);
-        if ($candidateToken) {
+        if ($candidateToken !== null) {
             /** @var VettedSecondFactor $authoringSecondFactor */
             foreach ($vettedSecondFactors->getElements() as $authoringSecondFactor) {
                 $hasSuitableToken = $this->secondFactorTypeService->hasEqualOrLowerLoaComparedTo(

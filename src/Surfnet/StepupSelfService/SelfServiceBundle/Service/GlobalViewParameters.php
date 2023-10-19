@@ -31,17 +31,15 @@ final class GlobalViewParameters
     /**
      * @var string[]
      */
-    private $locales;
+    private readonly array $locales;
 
     /**
      * @var string[]
      */
-    private $supportUrl;
+    private array $supportUrl;
 
     /**
      * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $supportUrl
      */
     public function __construct(TranslatorInterface $translator, array $locales, array $supportUrl)
     {

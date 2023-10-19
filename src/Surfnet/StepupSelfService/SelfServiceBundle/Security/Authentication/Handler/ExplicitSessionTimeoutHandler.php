@@ -33,25 +33,7 @@ use Symfony\Component\Security\Http\Logout\SessionLogoutHandler;
  */
 class ExplicitSessionTimeoutHandler implements AuthenticationHandler
 {
-    /**
-     * @var AuthenticationHandler|null
-     */
-    private $nextHandler;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @var SessionLifetimeGuard
-     */
-    private $sessionLifetimeGuard;
-
-    /**
-     * @var AuthenticatedSessionStateHandler
-     */
-    private $authenticatedSession;
+    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
 
     /**
      * @var SessionLogoutHandler
@@ -63,34 +45,20 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
      */
     private $cookieClearingLogoutHandler;
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
     public function __construct(
-        TokenStorageInterface $tokenStorageInterface,
-        AuthenticatedSessionStateHandler $authenticatedSessionStateHandler,
-        SessionLifetimeGuard $sessionLifetimeGuard,
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly AuthenticatedSessionStateHandler $authenticatedSession,
+        private readonly SessionLifetimeGuard $sessionLifetimeGuard,
         SessionLogoutHandler $sessionLogoutHandler,
         CookieClearingLogoutHandler $cookieClearingLogoutHandler,
-        RouterInterface $router,
-        LoggerInterface $logger
+        private readonly RouterInterface $router,
+        private readonly LoggerInterface $logger
     ) {
-        $this->tokenStorage                = $tokenStorageInterface;
-        $this->authenticatedSession        = $authenticatedSessionStateHandler;
-        $this->sessionLifetimeGuard        = $sessionLifetimeGuard;
         $this->sessionLogoutHandler        = $sessionLogoutHandler;
         $this->cookieClearingLogoutHandler = $cookieClearingLogoutHandler;
-        $this->router                      = $router;
-        $this->logger                      = $logger;
     }
 
-    public function process(GetResponseEvent $event)
+    public function process(GetResponseEvent $event): void
     {
         if ($this->tokenStorage->getToken() !== null
             && !$this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->authenticatedSession)
@@ -140,7 +108,7 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
         }
     }
 
-    public function setNext(AuthenticationHandler $handler)
+    public function setNext(AuthenticationHandler $handler): void
     {
         $this->nextHandler = $handler;
     }

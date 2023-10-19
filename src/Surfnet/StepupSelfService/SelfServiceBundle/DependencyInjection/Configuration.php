@@ -38,10 +38,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param NodeBuilder $childNodes
-     */
-    private function appendSessionConfiguration(NodeBuilder $childNodes)
+    private function appendSessionConfiguration(NodeBuilder $childNodes): void
     {
         $childNodes
             ->arrayNode('session_lifetimes')
@@ -54,9 +51,7 @@ class Configuration implements ConfigurationInterface
                         ->example('3600 -> 1 hour * 60 minutes * 60 seconds')
                         ->validate()
                             ->ifTrue(
-                                function ($lifetime) {
-                                    return !is_int($lifetime);
-                                }
+                                fn($lifetime): bool => !is_int($lifetime)
                             )
                             ->thenInvalid('max_absolute_lifetime must be an integer')
                         ->end()
@@ -71,9 +66,7 @@ class Configuration implements ConfigurationInterface
                         ->example('600 -> 10 minutes * 60 seconds')
                         ->validate()
                             ->ifTrue(
-                                function ($lifetime) {
-                                    return !is_int($lifetime);
-                                }
+                                fn($lifetime): bool => !is_int($lifetime)
                             )
                             ->thenInvalid('max_relative_lifetime must be an integer')
                         ->end()
@@ -82,7 +75,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    private function appendSecondFactorTestIdentityProvider(NodeBuilder $childNodes)
+    private function appendSecondFactorTestIdentityProvider(NodeBuilder $childNodes): void
     {
         $childNodes
             ->arrayNode('second_factor_test_identity_provider')
@@ -106,10 +99,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @param NodeBuilder $childNodes
-     */
-    private function appendEnabledSecondFactorTypesConfiguration(NodeBuilder $childNodes)
+    private function appendEnabledSecondFactorTypesConfiguration(NodeBuilder $childNodes): void
     {
         $childNodes
             ->arrayNode('enabled_second_factors')
@@ -128,7 +118,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    private function appendActivationFlow(NodeBuilder $childNodes)
+    private function appendActivationFlow(NodeBuilder $childNodes): void
     {
         $childNodes
             ->arrayNode('preferred_activation_flow')

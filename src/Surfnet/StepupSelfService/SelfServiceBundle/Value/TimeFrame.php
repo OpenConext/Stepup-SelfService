@@ -21,26 +21,17 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value;
 use DateInterval;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
-final class TimeFrame
+final readonly class TimeFrame implements \Stringable
 {
-    /**
-     * @var DateInterval
-     */
-    private $timeFrame;
-
-    /**
-     * @param DateInterval $timeFrame
-     */
-    final private function __construct(DateInterval $timeFrame)
+    final private function __construct(private DateInterval $timeFrame)
     {
-        $this->timeFrame = $timeFrame;
     }
 
     /**
      * @param int $seconds
      * @return TimeFrame
      */
-    public static function ofSeconds($seconds)
+    public static function ofSeconds($seconds): self
     {
         if (!is_int($seconds) || $seconds < 1) {
             throw InvalidArgumentException::invalidType('positive integer', 'seconds', $seconds);
@@ -50,7 +41,6 @@ final class TimeFrame
     }
 
     /**
-     * @param DateTime $dateTime
      * @return DateTime
      */
     public function getEndWhenStartingAt(DateTime $dateTime)
@@ -59,15 +49,14 @@ final class TimeFrame
     }
 
     /**
-     * @param TimeFrame $other
      * @return bool
      */
-    public function equals(TimeFrame $other)
+    public function equals(TimeFrame $other): bool
     {
         return $this->timeFrame->s === $other->timeFrame->s;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->timeFrame->format('%S');
     }

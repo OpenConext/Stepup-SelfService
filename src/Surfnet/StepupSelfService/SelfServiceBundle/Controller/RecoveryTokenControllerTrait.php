@@ -73,7 +73,7 @@ trait RecoveryTokenControllerTrait
 
             if ($otpRequestsRemaining === 0) {
                 $this->addFlash('error', 'ss.prove_phone_possession.challenge_request_limit_reached');
-                $parameters = array_merge(['form' => $form->createView()], $viewVariables);
+                $parameters = ['form' => $form->createView(), ...$viewVariables];
                 return $this->render($templateName, $parameters);
             }
 
@@ -88,12 +88,7 @@ trait RecoveryTokenControllerTrait
         }
         return $this->render(
             $templateName,
-            array_merge(
-                [
-                    'form' => $form->createView(),
-                ],
-                $viewVariables
-            )
+            ['form' => $form->createView(), ...$viewVariables]
         );
     }
 
@@ -163,7 +158,7 @@ trait RecoveryTokenControllerTrait
         );
     }
 
-    private function assertRecoveryTokenInPossession(string $recoveryTokenId, Identity $identity)
+    private function assertRecoveryTokenInPossession(string $recoveryTokenId, Identity $identity): void
     {
         $recoveryTokens = $this->recoveryTokenService->getRecoveryTokensForIdentity($identity);
         $found = false;
@@ -184,7 +179,7 @@ trait RecoveryTokenControllerTrait
         }
     }
 
-    private function assertNoRecoveryTokens(Identity $identity)
+    private function assertNoRecoveryTokens(Identity $identity): void
     {
         if ($this->recoveryTokenService->hasRecoveryToken($identity)) {
             throw new LogicException(
@@ -197,7 +192,7 @@ trait RecoveryTokenControllerTrait
         }
     }
 
-    private function assertNoRecoveryTokenOfType(string $type, Identity $identity)
+    private function assertNoRecoveryTokenOfType(string $type, Identity $identity): void
     {
         $tokens = $this->recoveryTokenService->getRecoveryTokensForIdentity($identity);
         if (array_key_exists($type, $tokens)) {
@@ -211,7 +206,7 @@ trait RecoveryTokenControllerTrait
         }
     }
 
-    private function assertMayAddRecoveryToken(Identity $identity)
+    private function assertMayAddRecoveryToken(Identity $identity): void
     {
         $availableTypes = $this->recoveryTokenService->getRemainingTokenTypes($identity);
         if (count($availableTypes) === 0) {
@@ -225,7 +220,7 @@ trait RecoveryTokenControllerTrait
         }
     }
 
-    private function assertSecondFactorInPossession(string $secondFactorId, Identity $identity)
+    private function assertSecondFactorInPossession(string $secondFactorId, Identity $identity): void
     {
         $identityOwnsSecondFactor = $this->secondFactorService->identityHasSecondFactorOfStateWithId(
             $identity->id,

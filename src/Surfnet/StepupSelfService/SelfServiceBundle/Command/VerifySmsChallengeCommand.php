@@ -24,11 +24,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class VerifySmsChallengeCommand implements SmsVerificationCommandInterface
 {
     /**
-     * @Assert\NotBlank(message="ss.verify_sms_challenge_command.challenge.may_not_be_empty")
-     * @Assert\Type(type="string", message="ss.verify_sms_challenge_command.challenge.must_be_string")
      *
      * @var string
      */
+    #[Assert\NotBlank(message: 'ss.verify_sms_challenge_command.challenge.may_not_be_empty')]
+    #[Assert\Type(type: 'string', message: 'ss.verify_sms_challenge_command.challenge.must_be_string')]
     public $challenge;
 
     /**

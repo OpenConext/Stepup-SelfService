@@ -28,28 +28,11 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor\Proo
 
 class YubikeySecondFactorService
 {
-    /**
-     * @var YubikeyService
-     */
-    private $yubikeyService;
-
-    /**
-     * @var CommandService
-     */
-    private $commandService;
-
-    /**
-     * @param YubikeyService $yubikeyService
-     * @param CommandService $commandService
-     */
-    public function __construct(YubikeyService $yubikeyService, CommandService $commandService)
+    public function __construct(private readonly YubikeyService $yubikeyService, private readonly CommandService $commandService)
     {
-        $this->yubikeyService = $yubikeyService;
-        $this->commandService = $commandService;
     }
 
     /**
-     * @param VerifyYubikeyOtpCommand $command
      * @return ProofOfPossessionResult
      */
     public function provePossession(VerifyYubikeyOtpCommand $command)

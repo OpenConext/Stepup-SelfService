@@ -61,7 +61,7 @@ class SecondFactorController extends Controller
         $authorizationService = $this->get(AuthorizationService::class);
         $recoveryTokensAllowed = $authorizationService->mayRegisterRecoveryTokens($identity);
         $selfAssertedTokenRegistration = $options->allowSelfAssertedTokens === true && $recoveryTokensAllowed;
-        $hasRemainingTokenTypes = count($recoveryTokenService->getRemainingTokenTypes($identity)) > 0;
+        $hasRemainingTokenTypes = $recoveryTokenService->getRemainingTokenTypes($identity) !== [];
         $recoveryTokens = [];
         if ($selfAssertedTokenRegistration && $recoveryTokensAllowed) {
             $recoveryTokens = $recoveryTokenService->getRecoveryTokensForIdentity($identity);
@@ -86,7 +86,6 @@ class SecondFactorController extends Controller
 
     /**
      * @Template
-     * @param Request $request
      * @param string $state
      * @param string $secondFactorId
      * @return array|Response
@@ -107,19 +106,12 @@ class SecondFactorController extends Controller
             throw new NotFoundHttpException();
         }
 
-        switch ($state) {
-            case 'unverified':
-                $secondFactor = $service->findOneUnverified($secondFactorId);
-                break;
-            case 'verified':
-                $secondFactor = $service->findOneVerified($secondFactorId);
-                break;
-            case 'vetted':
-                $secondFactor = $service->findOneVetted($secondFactorId);
-                break;
-            default:
-                throw new LogicException('There are no other types of second factor.');
-        }
+        $secondFactor = match ($state) {
+            'unverified' => $service->findOneUnverified($secondFactorId),
+            'verified' => $service->findOneVerified($secondFactorId),
+            'vetted' => $service->findOneVetted($secondFactorId),
+            default => throw new LogicException('There are no other types of second factor.'),
+        };
 
         if ($secondFactor === null) {
             throw new NotFoundHttpException(

@@ -25,29 +25,15 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class CommandService
 {
-    /**
-     * @var \Surfnet\StepupMiddlewareClientBundle\Service\CommandService
-     */
-    private $commandService;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    public function __construct(
-        MiddlewareCommandService $commandService,
-        TokenStorageInterface $tokenStorage
-    ) {
-        $this->commandService = $commandService;
-        $this->tokenStorage = $tokenStorage;
+    public function __construct(private readonly MiddlewareCommandService $commandService, private readonly TokenStorageInterface $tokenStorage)
+    {
     }
 
     public function execute(Command $command)
     {
         $token = $this->tokenStorage->getToken();
 
-        if (!$token) {
+        if ($token === null) {
             return $this->commandService->execute($command, new Metadata(null, null));
         }
 

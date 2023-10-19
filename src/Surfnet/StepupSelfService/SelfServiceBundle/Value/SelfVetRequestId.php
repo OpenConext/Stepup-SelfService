@@ -20,20 +20,8 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value;
 
 class SelfVetRequestId
 {
-    /**
-     * @var string
-     */
-    private $requestId;
-
-    /**
-     * @var string
-     */
-    private $vettingSecondFactorId;
-
-    public function __construct(string $requestId, string $vettingSecondFactorId)
+    public function __construct(private readonly string $requestId, private readonly string $vettingSecondFactorId)
     {
-        $this->requestId = $requestId;
-        $this->vettingSecondFactorId = $vettingSecondFactorId;
     }
 
     public function requestId(): string

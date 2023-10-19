@@ -26,30 +26,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class EntryPointController extends Controller
 {
-    /**
-     * @var SecondFactorService
-     */
-    private $secondFactorService;
-
-    /**
-     * @var RecoveryTokenService
-     */
-    private $recoveryTokenService;
-
-    private $authStateHandler;
-
-    private $activationFlowService;
-
-    public function __construct(
-        SecondFactorService $secondFactorService,
-        RecoveryTokenService $recoveryTokenService,
-        ActivationFlowService $activationFlowService,
-        AuthenticatedSessionStateHandler $authenticatedSessionStateHandler
-    ) {
-        $this->secondFactorService = $secondFactorService;
-        $this->recoveryTokenService = $recoveryTokenService;
-        $this->activationFlowService = $activationFlowService;
-        $this->authStateHandler = $authenticatedSessionStateHandler;
+    public function __construct(private readonly SecondFactorService $secondFactorService, private readonly RecoveryTokenService $recoveryTokenService, private readonly ActivationFlowService $activationFlowService, private readonly AuthenticatedSessionStateHandler $authStateHandler)
+    {
     }
 
     public function decideSecondFactorFlowAction(Request $request)

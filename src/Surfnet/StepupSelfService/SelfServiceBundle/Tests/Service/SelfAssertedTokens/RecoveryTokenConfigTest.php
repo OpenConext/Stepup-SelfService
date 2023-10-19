@@ -24,28 +24,28 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Recov
 
 class RecoveryTokenConfigTest extends TestCase
 {
-    public function test_both_recovery_token_methods_can_be_enabled()
+    public function test_both_recovery_token_methods_can_be_enabled(): void
     {
         $config = new RecoveryTokenConfig(true, true);
         self::assertFalse($config->isSafeStoreCodeDisabled());
         self::assertFalse($config->isSmsDisabled());
     }
 
-    public function test_only_sms_can_be_enabled()
+    public function test_only_sms_can_be_enabled(): void
     {
         $config = new RecoveryTokenConfig(true, false);
         self::assertTrue($config->isSafeStoreCodeDisabled());
         self::assertFalse($config->isSmsDisabled());
     }
 
-    public function test_only_safe_store_can_be_enabled()
+    public function test_only_safe_store_can_be_enabled(): void
     {
         $config = new RecoveryTokenConfig(false, true);
         self::assertFalse($config->isSafeStoreCodeDisabled());
         self::assertTrue($config->isSmsDisabled());
     }
 
-    public function test_not_allowed_to_disable_both()
+    public function test_not_allowed_to_disable_both(): void
     {
         self::expectException(RecoveryTokenConfigurationException::class);
         self::expectExceptionMessage('The SMS or safe-store code recovery token must be enabled');

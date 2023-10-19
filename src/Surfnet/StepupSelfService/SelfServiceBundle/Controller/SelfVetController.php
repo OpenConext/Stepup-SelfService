@@ -50,7 +50,7 @@ use function sprintf;
  */
 class SelfVetController extends Controller
 {
-    public const SELF_VET_SESSION_ID = 'second_factor_self_vet_request_id';
+    final public const SELF_VET_SESSION_ID = 'second_factor_self_vet_request_id';
 
     /** @var TestAuthenticationRequestFactory */
     public $authenticationRequestFactory;
@@ -61,12 +61,6 @@ class SelfVetController extends Controller
     /** @var SecondFactorTypeService */
     public $secondFactorTypeService;
 
-    /** @var ServiceProvider */
-    private $serviceProvider;
-
-    /** @var IdentityProvider */
-    private $identityProvider;
-
     /** @var RedirectBinding */
     public $redirectBinding;
 
@@ -75,11 +69,6 @@ class SelfVetController extends Controller
 
     /** @var LoaResolutionService */
     public $loaResolutionService;
-
-    /**
-     * @var SelfVetMarshaller
-     */
-    private $selfVetMarshaller;
 
     /** @var SamlAuthenticationLogger */
     public $samlLogger;
@@ -90,9 +79,6 @@ class SelfVetController extends Controller
     /** @var LoggerInterface */
     public $logger;
 
-    /** @var AuthorizationService */
-    private $authorizationService;
-
     /**
      * @@SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -100,10 +86,10 @@ class SelfVetController extends Controller
         TestAuthenticationRequestFactory $authenticationRequestFactory,
         SecondFactorService $secondFactorService,
         SecondFactorTypeService $secondFactorTypeService,
-        SelfVetMarshaller $marshaller,
-        AuthorizationService $authorizationService,
-        ServiceProvider $serviceProvider,
-        IdentityProvider $identityProvider,
+        private readonly SelfVetMarshaller $selfVetMarshaller,
+        private readonly AuthorizationService $authorizationService,
+        private readonly ServiceProvider $serviceProvider,
+        private readonly IdentityProvider $identityProvider,
         RedirectBinding $redirectBinding,
         PostBinding $postBinding,
         LoaResolutionService $loaResolutionService,
@@ -114,10 +100,6 @@ class SelfVetController extends Controller
         $this->authenticationRequestFactory = $authenticationRequestFactory;
         $this->secondFactorService = $secondFactorService;
         $this->secondFactorTypeService = $secondFactorTypeService;
-        $this->selfVetMarshaller = $marshaller;
-        $this->authorizationService = $authorizationService;
-        $this->serviceProvider = $serviceProvider;
-        $this->identityProvider = $identityProvider;
         $this->redirectBinding = $redirectBinding;
         $this->postBinding = $postBinding;
         $this->loaResolutionService = $loaResolutionService;
@@ -229,7 +211,7 @@ class SelfVetController extends Controller
             } else {
                 $this->session->getFlashBag()->add('error', 'ss.self_vet.second_factor.alert.failed');
             }
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->session->getFlashBag()->add('error', 'ss.self_vet.second_factor.verification_failed');
         }
         return $this->redirectToRoute('ss_second_factor_list');

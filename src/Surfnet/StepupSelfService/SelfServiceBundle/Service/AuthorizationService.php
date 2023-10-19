@@ -23,14 +23,8 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Service\AuthorizationService a
 
 class AuthorizationService
 {
-    /**
-     * @var MiddlewareAuthorizationService
-     */
-    private $authorizationService;
-
-    public function __construct(MiddlewareAuthorizationService $authorizationService)
+    public function __construct(private readonly MiddlewareAuthorizationService $authorizationService)
     {
-        $this->authorizationService = $authorizationService;
     }
 
     public function mayRegisterSelfAssertedTokens(Identity $identity): bool

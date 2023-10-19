@@ -24,15 +24,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Excep
 
 class RecoveryTokenConfig
 {
-    /**
-     * @var bool
-     */
-    private $smsEnabled;
+    private readonly bool $smsEnabled;
 
-    /**
-     * @var bool
-     */
-    private $safeStoreCodeEnabled;
+    private readonly bool $safeStoreCodeEnabled;
 
     public function __construct(bool $smsEnabled, bool $safeStoreCodeEnabled)
     {

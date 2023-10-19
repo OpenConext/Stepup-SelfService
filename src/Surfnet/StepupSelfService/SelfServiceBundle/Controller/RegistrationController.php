@@ -162,7 +162,6 @@ class RegistrationController extends Controller
     /**
      * @Template
      *
-     * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function verifyEmailAction(Request $request)
@@ -235,9 +234,7 @@ class RegistrationController extends Controller
 
 
         $mpdf = new Mpdf(
-            array(
-                'tempDir' => sys_get_temp_dir(),
-            )
+            ['tempDir' => sys_get_temp_dir()]
         );
         $mpdf->setLogger($this->get('logger'));
 

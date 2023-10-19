@@ -27,17 +27,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class StatusGssfType extends AbstractType
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    public function __construct(RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router)
     {
-        $this->router = $router;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $action = $this->router->generate('ss_registration_gssf_authenticate', ['provider' => $options['provider']]);
         /** @var ViewConfig $secondFactorConfig */
@@ -50,7 +44,7 @@ class StatusGssfType extends AbstractType
             ->setAction($action);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(['provider']);
     }

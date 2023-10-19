@@ -30,20 +30,8 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Excep
 
 class SafeStoreService
 {
-    /**
-     * @var RecoveryTokenState
-     */
-    private $stateStore;
-
-    /**
-     * @var CommandService
-     */
-    private $commandService;
-
-    public function __construct(RecoveryTokenState $stateStore, CommandService $commandService)
+    public function __construct(private readonly RecoveryTokenState $stateStore, private readonly CommandService $commandService)
     {
-        $this->stateStore = $stateStore;
-        $this->commandService = $commandService;
     }
 
     public function produceSecret(): SafeStoreSecret
@@ -51,7 +39,7 @@ class SafeStoreService
         try {
             // On another request, we might have already created a secret, retrieve that
             $secret = $this->stateStore->retrieveSecret();
-        } catch (SafeStoreSecretNotFoundException $e) {
+        } catch (SafeStoreSecretNotFoundException) {
             $secret = new SafeStoreSecret();
             $this->stateStore->store($secret);
         }
@@ -85,7 +73,7 @@ class SafeStoreService
     /**
      * Verifies if the password hash matches the secret that was provided
      */
-    public function authenticate(string $secret, string $passwordHash)
+    public function authenticate(string $secret, string $passwordHash): bool
     {
         return password_verify($secret, $passwordHash);
     }

@@ -21,21 +21,15 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens
 /**
  * @SuppressWarnings(PHPMD.TooManyMethods)
  */
-final class ProofOfPossessionResult
+final readonly class ProofOfPossessionResult
 {
-    const STATUS_CHALLENGE_OK = 0;
-    const STATUS_INCORRECT_CHALLENGE = 1;
-    const STATUS_CHALLENGE_EXPIRED = 2;
-    const STATUS_TOO_MANY_ATTEMPTS = 3;
+    public const STATUS_CHALLENGE_OK = 0;
+    public const STATUS_INCORRECT_CHALLENGE = 1;
+    public const STATUS_CHALLENGE_EXPIRED = 2;
+    public const STATUS_TOO_MANY_ATTEMPTS = 3;
 
-    private $status;
-
-    private $recoveryTokenId;
-
-    private function __construct(int $status, ?string $recoveryTokenId = null)
+    private function __construct(private int $status, private ?string $recoveryTokenId = null)
     {
-        $this->recoveryTokenId = $recoveryTokenId;
-        $this->status = $status;
     }
 
     public static function challengeExpired(): ProofOfPossessionResult

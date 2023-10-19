@@ -22,9 +22,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentExcepti
 
 class ActivationFlowPreference implements ActivationFlowPreferenceInterface
 {
-    private $preference;
+    private readonly string $preference;
 
-    private $allowedPreferences = ['ra', 'self'];
+    private array $allowedPreferences = ['ra', 'self'];
 
     public function __construct(string $preference)
     {

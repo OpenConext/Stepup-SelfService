@@ -20,9 +20,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType;
 
 interface VettingTypeInterface
 {
-    const ON_PREMISE = 'on-premise';
-    const SELF_ASSERTED_TOKENS = 'self-asserted-tokens';
-    const SELF_VET = 'self-vet';
+    public const ON_PREMISE = 'on-premise';
+    public const SELF_ASSERTED_TOKENS = 'self-asserted-tokens';
+    public const SELF_VET = 'self-vet';
 
     public function identifier(): string;
 

@@ -27,7 +27,7 @@ class ProofOfPossessionResultTest extends TestCase
      * @test
      * @group sms
      */
-    public function when_the_challenge_has_expired_the_result_is_unsuccessful_and_without_second_factor_id()
+    public function when_the_challenge_has_expired_the_result_is_unsuccessful_and_without_second_factor_id(): void
     {
         $result = ProofOfPossessionResult::challengeExpired();
 
@@ -43,7 +43,7 @@ class ProofOfPossessionResultTest extends TestCase
      * @test
      * @group sms
      */
-    public function an_incorrect_challenge_response_is_unsuccessful_and_without_second_factor_id()
+    public function an_incorrect_challenge_response_is_unsuccessful_and_without_second_factor_id(): void
     {
         $result = ProofOfPossessionResult::incorrectChallenge();
 
@@ -59,7 +59,7 @@ class ProofOfPossessionResultTest extends TestCase
      * @test
      * @group sms
      */
-    public function when_the_proof_of_possession_command_fails_the_result_is_unsuccessful_and_without_second_factor_id()
+    public function when_the_proof_of_possession_command_fails_the_result_is_unsuccessful_and_without_second_factor_id(): void
     {
         $result = ProofOfPossessionResult::proofOfPossessionCommandFailed();
 
@@ -75,7 +75,7 @@ class ProofOfPossessionResultTest extends TestCase
      * @test
      * @group sms
      */
-    public function a_successful_result_has_a_second_factor_id()
+    public function a_successful_result_has_a_second_factor_id(): void
     {
         // generated once using \Rhumsaa\Uuid\Uuid::uuid4()
         $uuidv4 = 'ba6d20b7-2b9c-494a-926b-d355187b2ddb';

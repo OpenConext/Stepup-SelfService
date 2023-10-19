@@ -24,23 +24,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentExcepti
 class GsspToken implements AvailableTokenInterface
 {
     /**
-     * @var ViewConfig
-     */
-    private $viewConfig;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @param ViewConfig $viewConfig
      * @param $type
      * @return GsspToken
      */
-    public static function fromViewConfig(ViewConfig $viewConfig, $type)
+    public static function fromViewConfig(ViewConfig $viewConfig, $type): self
     {
-        if (!is_string($type) || empty($type)) {
+        if (!is_string($type) || $type === '') {
             throw InvalidArgumentException::invalidType('a non empty string', 'type', $type);
         }
 
@@ -49,19 +38,16 @@ class GsspToken implements AvailableTokenInterface
 
     /**
      * GsspToken constructor.
-     * @param ViewConfig $viewConfig
      * @param string $type
      */
-    private function __construct(ViewConfig $viewConfig, $type)
+    private function __construct(private readonly ViewConfig $viewConfig, private $type)
     {
-        $this->viewConfig = $viewConfig;
-        $this->type = $type;
     }
 
     /**
      * @return string
      */
-    public function getRoute()
+    public function getRoute(): string
     {
         return 'ss_registration_gssf_authenticate';
     }
@@ -77,7 +63,7 @@ class GsspToken implements AvailableTokenInterface
     /**
      * @return int
      */
-    public function getLoaLevel()
+    public function getLoaLevel(): int
     {
         return (int) $this->viewConfig->getLoa();
     }
@@ -85,12 +71,12 @@ class GsspToken implements AvailableTokenInterface
     /**
      * @return boolean
      */
-    public function isGssp()
+    public function isGssp(): bool
     {
         return true;
     }
 
-    public function getRouteParams()
+    public function getRouteParams(): array
     {
         return [
             'provider' => $this->type,

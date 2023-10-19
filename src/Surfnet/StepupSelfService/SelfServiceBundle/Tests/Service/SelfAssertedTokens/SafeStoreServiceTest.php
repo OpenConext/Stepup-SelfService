@@ -32,7 +32,7 @@ use const PASSWORD_BCRYPT;
 
 class SafeStoreServiceTest extends TestCase
 {
-    private $service;
+    private \Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService $service;
     private $state;
 
     protected function setUp(): void
@@ -47,7 +47,7 @@ class SafeStoreServiceTest extends TestCase
         Mockery::close();
     }
 
-    public function test_produce_state_without_previously_stored_secret_in_state()
+    public function test_produce_state_without_previously_stored_secret_in_state(): void
     {
         $this->state->shouldReceive('retrieveSecret')->andThrow(new SafeStoreSecretNotFoundException('Nicht gefunden'));
         $this->state->shouldReceive('store');
@@ -55,7 +55,7 @@ class SafeStoreServiceTest extends TestCase
         $this->assertInstanceOf(SafeStoreSecret::class, $freshSecret);
     }
 
-    public function test_produce_state_with_stored_secret_in_state()
+    public function test_produce_state_with_stored_secret_in_state(): void
     {
         $secret = new SafeStoreSecret();
         $this->state->shouldReceive('retrieveSecret')->andReturn($secret);
@@ -63,7 +63,7 @@ class SafeStoreServiceTest extends TestCase
         $this->assertEquals($retrievedSecret, $secret);
     }
 
-    public function test_it_can_verify_a_safe_store_secret()
+    public function test_it_can_verify_a_safe_store_secret(): void
     {
         $secret = new SafeStoreSecret();
         $passwordHash = password_hash($secret->display(), PASSWORD_BCRYPT);

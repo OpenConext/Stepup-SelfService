@@ -22,23 +22,17 @@ use Surfnet\StepupBundle\Service\LocaleProviderService as StepupLocaleProviderSe
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-final class LocaleProviderService implements StepupLocaleProviderService
+final readonly class LocaleProviderService implements StepupLocaleProviderService
 {
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(private TokenStorageInterface $tokenStorage)
     {
-        $this->tokenStorage = $tokenStorage;
     }
 
     public function determinePreferredLocale()
     {
         $token = $this->tokenStorage->getToken();
 
-        if (!$token) {
+        if ($token === null) {
             return;
         }
 

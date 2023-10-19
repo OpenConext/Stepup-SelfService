@@ -22,14 +22,14 @@ use InvalidArgumentException as CoreInvalidArgumentException;
 
 class InvalidArgumentException extends CoreInvalidArgumentException
 {
-    public static function invalidType($expectedType, $parameter, $value)
+    public static function invalidType($expectedType, $parameter, $value): self
     {
         return new self(
             sprintf(
                 'Invalid Argument, parameter "%s" should be of type "%s", "%s" given',
                 $parameter,
                 $expectedType,
-                is_object($value) ? get_class($value) : gettype($value)
+                get_debug_type($value)
             )
         );
     }
