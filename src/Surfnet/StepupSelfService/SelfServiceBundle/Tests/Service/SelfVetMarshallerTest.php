@@ -33,26 +33,21 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller;
-use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
+use DateTime as CoreDateTime;
 
 class SelfVetMarshallerTest extends TestCase
 {
     final public const LOA_2_ID = '221cdaa5-1d23-4b01-9fd8-3c810a5c596a';
 
     final public const LOA_3_ID = '331cdaa5-1d23-4b01-9fd8-3c810a5c596a';
-    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller $marshaller = null;
-    /**
-     * @var SecondFactorTypeService
-     */
-    private $typeService;
-    /**
-     * @var InstitutionConfigurationOptionsService
-     */
-    private $institutionConfigService;
-    /**
-     * @var AuthorizationService|m\Mock
-     */
-    private $authService;
+    private ?SelfVetMarshaller $marshaller = null;
+
+
+    private SecondFactorTypeService|m\Mock $typeService;
+
+    private InstitutionConfigurationOptionsService|m\Mock $institutionConfigService;
+
+    private m\Mock|AuthorizationService $authService;
 
     /**
      * @param int[] $vettedLoas
@@ -127,7 +122,7 @@ class SelfVetMarshallerTest extends TestCase
         $verifiedSecondFactor->commonName = 'Carrot Ironfoundersson';
         $verifiedSecondFactor->institution = 'the-watchhouse.example.com';
         $verifiedSecondFactor->identityId = 'c.ironfoundersson-thewatchhouse.example.com';
-        $verifiedSecondFactor->registrationRequestedAt = DateTime::now();
+        $verifiedSecondFactor->registrationRequestedAt = new CoreDateTime();
         return $verifiedSecondFactor;
     }
 
@@ -135,6 +130,8 @@ class SelfVetMarshallerTest extends TestCase
     {
         $this->buildMarshaller([Loa::LOA_3], Loa::LOA_2);
         $identity = m::mock(Identity::class);
+        $identity->institution = 'the-watchhouse.example.com';
+        $identity->id = 'c.ironfoundersson-thewatchhouse.example.com';
         $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
         $this->typeService->shouldReceive('hasEqualOrLowerLoaComparedTo')->andReturn(true);
         $option = new InstitutionConfigurationOptions();
@@ -147,6 +144,8 @@ class SelfVetMarshallerTest extends TestCase
     {
         $this->buildMarshaller([Loa::LOA_2], Loa::LOA_3);
         $identity = m::mock(Identity::class);
+        $identity->institution = 'the-watchhouse.example.com';
+        $identity->id = 'c.ironfoundersson-thewatchhouse.example.com';
         $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
         $this->typeService->shouldReceive('hasEqualOrLowerLoaComparedTo')->andReturn(false);
         $this->authService->shouldReceive('maySelfVetSelfAssertedTokens')->andReturn(true)->once();
@@ -160,6 +159,8 @@ class SelfVetMarshallerTest extends TestCase
     {
         $this->buildMarshaller([], Loa::LOA_2);
         $identity = m::mock(Identity::class);
+        $identity->institution = 'the-watchhouse.example.com';
+        $identity->id = 'c.ironfoundersson-thewatchhouse.example.com';
         $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
         $option = new InstitutionConfigurationOptions();
         $option->selfVet = true;
@@ -171,6 +172,8 @@ class SelfVetMarshallerTest extends TestCase
     {
         $this->buildMarshaller([Loa::LOA_2], Loa::LOA_3);
         $identity = m::mock(Identity::class);
+        $identity->institution = 'the-watchhouse.example.com';
+        $identity->id = 'c.ironfoundersson-thewatchhouse.example.com';
         $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
         $this->typeService->shouldReceive('hasEqualOrLowerLoaComparedTo')->andReturn(false);
         $this->authService->shouldReceive('maySelfVetSelfAssertedTokens')->andReturn(false);
@@ -184,6 +187,8 @@ class SelfVetMarshallerTest extends TestCase
     {
         $this->buildMarshaller([Loa::LOA_2], Loa::LOA_3);
         $identity = m::mock(Identity::class);
+        $identity->institution = 'the-watchhouse.example.com';
+        $identity->id = 'c.ironfoundersson-thewatchhouse.example.com';
         $identity->shouldReceive('getId')->andReturn('c.ironfoundersson-thewatchhouse.example.com');
         $this->typeService->shouldReceive('hasEqualOrLowerLoaComparedTo')->andReturn(false);
         $option = new InstitutionConfigurationOptions();
