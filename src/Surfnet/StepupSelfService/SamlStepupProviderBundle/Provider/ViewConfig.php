@@ -33,8 +33,22 @@ class ViewConfig implements ViewConfigInterface
      * @param string $iosUrl
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __construct(private readonly RequestStack $requestStack, private $loa, private $logo, private $androidUrl, private $iosUrl, private readonly array $alt, private readonly array $title, private readonly array $description, private readonly array $buttonUse, private readonly array $initiateTitle, private readonly array $initiateButton, private readonly array $explanation, private readonly array $authnFailed, private readonly array $popFailed)
-    {
+    public function __construct(
+        private readonly RequestStack $requestStack,
+        private $loa,
+        private $logo,
+        private $androidUrl,
+        private $iosUrl,
+        private readonly array $alt,
+        private readonly array $title,
+        private readonly array $description,
+        private readonly array $buttonUse,
+        private readonly array $initiateTitle,
+        private readonly array $initiateButton,
+        private readonly array $explanation,
+        private readonly array $authnFailed,
+        private readonly array $popFailed
+    ) {
     }
 
     /**
@@ -148,9 +162,6 @@ class ViewConfig implements ViewConfigInterface
     private function getTranslation(array $translations)
     {
         $currentLocale = $this->requestStack->getCurrentRequest()->getLocale();
-        if (is_null($currentLocale)) {
-            throw new LogicException('The current language is not set');
-        }
         if (isset($translations[$currentLocale])) {
             return $translations[$currentLocale];
         }
