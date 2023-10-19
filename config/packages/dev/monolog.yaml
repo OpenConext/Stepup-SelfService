@@ -17,3 +17,14 @@ monolog:
       handler: logfile
       level: NOTICE
       path: "%kernel.logs_dir%/%kernel.environment%.log"
+
+    ### Deprecation logs
+    deprecation_stream:
+      type: stream
+      path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+
+    deprecation_filter:
+      type: filter
+      handler: deprecation_stream
+      max_level: info
+      channels: [ "php" ]

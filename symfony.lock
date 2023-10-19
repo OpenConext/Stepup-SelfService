@@ -71,9 +71,6 @@
     "incenteev/composer-parameter-handler": {
         "version": "v2.1.4"
     },
-    "jakub-onderka/php-parallel-lint": {
-        "version": "v1.0.0"
-    },
     "jms/translation-bundle": {
         "version": "1.6.0"
     },
@@ -151,6 +148,18 @@
     },
     "phpspec/prophecy": {
         "version": "1.12.2"
+    },
+    "phpstan/phpstan": {
+        "version": "1.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "f10b8054de1a94a3b9e8806a6453fd5c98491c44"
+        },
+        "files": [
+            "phpstan.dist.neon"
+        ]
     },
     "phpunit/php-code-coverage": {
         "version": "7.0.14"
