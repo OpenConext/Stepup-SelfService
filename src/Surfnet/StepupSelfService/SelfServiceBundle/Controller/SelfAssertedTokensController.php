@@ -56,46 +56,22 @@ class SelfAssertedTokensController extends Controller
     private $secondFactorService;
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var SafeStoreService
-     */
-    private $safeStoreService;
-
-    /**
      * @var SmsRecoveryTokenService
      */
     private $smsService;
 
-    /**
-     * @var LoaResolutionService
-     */
-    private $loaResolutionService;
-
-    /**
-     * @var AuthenticationRequestFactory
-     */
-    private $authnRequestFactory;
-
     public function __construct(
         RecoveryTokenService $recoveryTokenService,
-        SafeStoreService $safeStoreService,
+        private readonly SafeStoreService $safeStoreService,
         SecondFactorService $secondFactorService,
         SmsRecoveryTokenService $smsService,
-        LoaResolutionService $loaResolutionService,
-        AuthenticationRequestFactory $authenticationRequestFactory,
-        LoggerInterface $logger
+        private readonly LoaResolutionService $loaResolutionService,
+        private readonly AuthenticationRequestFactory $authnRequestFactory,
+        private readonly LoggerInterface $logger
     ) {
         $this->recoveryTokenService = $recoveryTokenService;
-        $this->safeStoreService = $safeStoreService;
         $this->secondFactorService = $secondFactorService;
         $this->smsService = $smsService;
-        $this->logger = $logger;
-        $this->loaResolutionService = $loaResolutionService;
-        $this->authnRequestFactory = $authenticationRequestFactory;
     }
 
     /**
@@ -117,7 +93,7 @@ class SelfAssertedTokensController extends Controller
         $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
         if ($this->recoveryTokenService->hasRecoveryToken($identity)) {
             $tokens = $this->recoveryTokenService->getAvailableTokens($identity, $secondFactor);
-            if (count($tokens) === 0) {
+            if ($tokens === []) {
                 // User is in possession of a recovery token, but it is not safe to use here (for example sms recovery
                 // token is not available while activating a SMS second factor)
                 $this->addFlash('error', 'ss.self_asserted_tokens.second_factor.no_available_recovery_token.alert.failed');

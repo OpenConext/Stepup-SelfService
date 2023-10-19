@@ -24,20 +24,8 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RaService as ApiRaServ
 
 class RaService
 {
-    /**
-     * @var ApiRaService
-     */
-    private $api;
-
-    /**
-     * @var CommandService
-     */
-    private $commandService;
-
-    public function __construct(ApiRaService $raService, CommandService $commandService)
+    public function __construct(private readonly ApiRaService $api, private readonly CommandService $commandService)
     {
-        $this->api = $raService;
-        $this->commandService = $commandService;
     }
 
     /**
@@ -49,7 +37,7 @@ class RaService
         return $this->api->listRas($institution);
     }
 
-    public function listRasWithoutRaas($institution)
+    public function listRasWithoutRaas($institution): \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\RegistrationAuthorityCredentialsCollection
     {
         $allRas = $this->api->listRas($institution);
 
@@ -69,7 +57,7 @@ class RaService
         );
     }
 
-    public function sendRegistrationMailMessage(string $identityId, string $secondFactorId)
+    public function sendRegistrationMailMessage(string $identityId, string $secondFactorId): void
     {
         $command = new SendSecondFactorRegistrationEmailCommand();
         $command->identityId = $identityId;

@@ -24,19 +24,10 @@ use Surfnet\SamlBundle\SAML2\Extensions\GsspUserAttributesChunk;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 
-final class GsspUserAttributeService
+final readonly class GsspUserAttributeService
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @param LoggerInterface $logger
-     */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(private LoggerInterface $logger)
     {
-        $this->logger = $logger;
     }
 
     public function addGsspUserAttributes(AuthnRequest $request, Provider $provider, Identity $user): void
@@ -44,20 +35,18 @@ final class GsspUserAttributeService
         $extensions = $request->getExtensions();
         $chunk = new GsspUserAttributesChunk();
 
-        switch ($provider->getName()) {
-            case 'azuremfa':
-                $chunk->addAttribute(
-                    'urn:mace:dir:attribute-def:mail',
-                    'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
-                    $user->email
-                );
-                $this->logger->info(
-                    sprintf(
-                        'Adding GSSP UserAttribute urn:mace:dir:attribute-def:mail for provider %s',
-                        $provider->getName()
-                    )
-                );
-                break;
+        if ($provider->getName() === 'azuremfa') {
+            $chunk->addAttribute(
+                'urn:mace:dir:attribute-def:mail',
+                'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
+                $user->email
+            );
+            $this->logger->info(
+                sprintf(
+                    'Adding GSSP UserAttribute urn:mace:dir:attribute-def:mail for provider %s',
+                    $provider->getName()
+                )
+            );
         }
         $extensions->addChunk($chunk);
         $request->setExtensions($extensions);

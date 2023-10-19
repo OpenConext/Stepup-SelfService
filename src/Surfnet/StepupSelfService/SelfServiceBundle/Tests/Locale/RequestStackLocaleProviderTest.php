@@ -28,12 +28,12 @@ final class RequestStackLocaleProviderTest extends TestCase
     /**
      * @test
      */
-    public function it_uses_the_preferred_locale()
+    public function it_uses_the_preferred_locale(): void
     {
-        $request = m::mock('Symfony\Component\HttpFoundation\Request');
+        $request = m::mock(\Symfony\Component\HttpFoundation\Request::class);
         $request->shouldReceive('getPreferredLanguage')->with(['en_GB', 'nl_NL'])->once()->andReturn('nl_NL');
 
-        $requestStack = m::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = m::mock(\Symfony\Component\HttpFoundation\RequestStack::class);
         $requestStack->shouldReceive('getCurrentRequest')->with()->once()->andReturn($request);
 
         $provider = new RequestStackLocaleProvider($requestStack, 'en_GB', ['en_GB', 'nl_NL']);
@@ -43,22 +43,22 @@ final class RequestStackLocaleProviderTest extends TestCase
     /**
      * @test
      */
-    public function it_falls_back_to_the_default_locale()
+    public function it_falls_back_to_the_default_locale(): void
     {
-        $request = m::mock('Symfony\Component\HttpFoundation\Request');
+        $request = m::mock(\Symfony\Component\HttpFoundation\Request::class);
         $request->shouldReceive('getPreferredLanguage')->with(['en_GB', 'nl_NL'])->once()->andReturn(null);
 
-        $requestStack = m::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = m::mock(\Symfony\Component\HttpFoundation\RequestStack::class);
         $requestStack->shouldReceive('getCurrentRequest')->with()->once()->andReturn($request);
 
         $provider = new RequestStackLocaleProvider($requestStack, 'de_DE', ['en_GB', 'nl_NL']);
         $this->assertEquals('de_DE', $provider->providePreferredLocale());
     }
 
-    public function non_strings()
+    public function non_strings(): array
     {
         return [
-            'array'    => [array()],
+            'array'    => [[]],
             'integer'  => [1],
             'object'   => [new \stdClass()],
             'null'     => [null],
@@ -70,28 +70,26 @@ final class RequestStackLocaleProviderTest extends TestCase
     /**
      * @test
      * @dataProvider non_strings
-     * @param mixed $nonString
      */
-    public function it_requires_the_default_locale_to_be_a_string($nonString)
+    public function it_requires_the_default_locale_to_be_a_string(mixed $nonString): void
     {
         $this->expectExceptionMessageMatches('/given for "defaultLocale"/');
         $this->expectException(InvalidArgumentException::class);
 
-        $requestStack = m::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = m::mock(\Symfony\Component\HttpFoundation\RequestStack::class);
         new RequestStackLocaleProvider($requestStack, $nonString, ['en_GB', 'nl_NL']);
     }
 
     /**
      * @test
      * @dataProvider non_strings
-     * @param mixed $nonString
      */
-    public function it_requires_the_supported_locales_to_be_strings($nonString)
+    public function it_requires_the_supported_locales_to_be_strings(mixed $nonString): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('/given for "supportedLocales\[1\]"/');
 
-        $requestStack = m::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = m::mock(\Symfony\Component\HttpFoundation\RequestStack::class);
         new RequestStackLocaleProvider($requestStack, 'nl_NL', ['en_GB', $nonString]);
     }
 }

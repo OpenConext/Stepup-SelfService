@@ -26,42 +26,13 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AuthenticatedUserHandler implements AuthenticationHandler
 {
-    /**
-     * @var AuthenticationHandler
-     */
-    private $nextHandler;
+    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
 
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @var AuthenticatedSessionStateHandler
-     */
-    private $sessionStateHandler;
-    /**
-     * @var SessionLifetimeGuard
-     */
-    private $sessionLifetimeGuard;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        TokenStorageInterface $tokenStorage,
-        SessionLifetimeGuard $sessionLifetimeGuard,
-        AuthenticatedSessionStateHandler $sessionStateHandler,
-        LoggerInterface $logger
-    ) {
-        $this->tokenStorage         = $tokenStorage;
-        $this->sessionLifetimeGuard = $sessionLifetimeGuard;
-        $this->sessionStateHandler  = $sessionStateHandler;
-        $this->logger               = $logger;
+    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly SessionLifetimeGuard $sessionLifetimeGuard, private readonly AuthenticatedSessionStateHandler $sessionStateHandler, private readonly LoggerInterface $logger)
+    {
     }
 
-    public function process(GetResponseEvent $event)
+    public function process(GetResponseEvent $event): void
     {
         if ($this->tokenStorage->getToken() !== null
             && $this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->sessionStateHandler)
@@ -82,7 +53,7 @@ class AuthenticatedUserHandler implements AuthenticationHandler
         }
     }
 
-    public function setNext(AuthenticationHandler $next)
+    public function setNext(AuthenticationHandler $next): void
     {
         $this->nextHandler = $next;
     }

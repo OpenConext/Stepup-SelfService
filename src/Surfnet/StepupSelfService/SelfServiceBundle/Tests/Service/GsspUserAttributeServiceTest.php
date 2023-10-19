@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
 
 class GsspUserAttributeServiceTest extends m\Adapter\Phpunit\MockeryTestCase
 {
-    private $identity;
+    private \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity $identity;
 
     public function setUp(): void
     {
@@ -48,7 +48,7 @@ class GsspUserAttributeServiceTest extends m\Adapter\Phpunit\MockeryTestCase
         parent::setUp();
     }
 
-    public function test_if_it_adds_extensions()
+    public function test_if_it_adds_extensions(): void
     {
         $provider = new Provider(
             'azuremfa',
@@ -78,7 +78,7 @@ class GsspUserAttributeServiceTest extends m\Adapter\Phpunit\MockeryTestCase
         $service->addGsspUserAttributes($authnRequest, $provider, $this->identity);
     }
 
-    public function test_if_it_skips_extensions()
+    public function test_if_it_skips_extensions(): void
     {
         $provider = new Provider(
             'tiqr',

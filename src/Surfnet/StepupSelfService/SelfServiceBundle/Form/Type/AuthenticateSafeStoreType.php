@@ -27,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AuthenticateSafeStoreType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('secret', PasswordType::class, [
             'label' => 'ss.form.ss_authenticate_safe_store_type.text.secret',
@@ -43,7 +43,7 @@ class AuthenticateSafeStoreType extends AbstractType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => SafeStoreAuthenticationCommand::class,

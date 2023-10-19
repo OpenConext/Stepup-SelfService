@@ -28,43 +28,8 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\R
 
 class RecoveryTokenService
 {
-    /**
-     * @var MiddlewareRecoveryTokenService
-     */
-    private $recoveryTokenService;
-
-    /**
-     * @var SafeStoreService
-     */
-    private $safeStoreService;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var RecoveryTokenState
-     */
-    private $stateStore;
-
-    /**
-     * @var RecoveryTokenConfig
-     */
-    private $config;
-
-    public function __construct(
-        MiddlewareRecoveryTokenService $recoveryTokenService,
-        SafeStoreService $safeStoreService,
-        RecoveryTokenState $recoveryTokenState,
-        RecoveryTokenConfig $config,
-        LoggerInterface $logger
-    ) {
-        $this->recoveryTokenService = $recoveryTokenService;
-        $this->safeStoreService = $safeStoreService;
-        $this->stateStore = $recoveryTokenState;
-        $this->config = $config;
-        $this->logger = $logger;
+    public function __construct(private readonly MiddlewareRecoveryTokenService $recoveryTokenService, private readonly SafeStoreService $safeStoreService, private readonly RecoveryTokenState $stateStore, private readonly RecoveryTokenConfig $config, private readonly LoggerInterface $logger)
+    {
     }
 
     public function hasRecoveryToken(Identity $identity): bool
@@ -101,7 +66,7 @@ class RecoveryTokenService
         return $tokenTypes;
     }
 
-    public function delete(RecoveryToken $recoveryToken)
+    public function delete(RecoveryToken $recoveryToken): void
     {
         $this->recoveryTokenService->delete($recoveryToken);
     }
@@ -131,7 +96,7 @@ class RecoveryTokenService
                 unset($tokens['sms']);
             }
         }
-        if (empty($tokens)) {
+        if ($tokens === []) {
             $this->logger->info('No recovery tokens are available for second factor registration');
         }
         return $tokens;
@@ -167,7 +132,7 @@ class RecoveryTokenService
         $this->stateStore->setStepUpGiven(true);
     }
 
-    public function setReturnTo(string $route, array $parameters = [])
+    public function setReturnTo(string $route, array $parameters = []): void
     {
         $this->stateStore->setReturnTo($route, $parameters);
     }
@@ -182,7 +147,7 @@ class RecoveryTokenService
         $this->stateStore->resetReturnTo();
     }
 
-    public function resetStepUpGiven()
+    public function resetStepUpGiven(): void
     {
         $this->stateStore->resetStepUpGiven();
     }

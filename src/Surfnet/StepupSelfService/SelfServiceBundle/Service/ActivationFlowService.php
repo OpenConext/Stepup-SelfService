@@ -28,25 +28,6 @@ use function sprintf;
 class ActivationFlowService
 {
     private const ACTIVATION_FLOW_PREFERENCE_SESSION_NAME = 'self_service_activation_flow_preference';
-    /**
-     * @var string
-     */
-    private $fieldName;
-
-    /**
-     * @var array
-     */
-    private $options;
-
-    /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * Handle preferred activation flow logic
@@ -61,12 +42,8 @@ class ActivationFlowService
      * Note that:
      * - fieldName and options are configured in the SelfServiceExtension
      */
-    public function __construct(SessionInterface $session, LoggerInterface $logger, string $fieldName, array $options)
+    public function __construct(private readonly SessionInterface $session, private readonly LoggerInterface $logger, private readonly string $fieldName, private readonly array $options)
     {
-        $this->session = $session;
-        $this->logger = $logger;
-        $this->fieldName = $fieldName;
-        $this->options = $options;
     }
 
 

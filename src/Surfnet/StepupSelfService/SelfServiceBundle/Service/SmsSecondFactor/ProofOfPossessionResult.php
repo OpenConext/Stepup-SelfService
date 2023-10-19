@@ -25,35 +25,23 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentExcepti
  */
 final class ProofOfPossessionResult
 {
-    const STATUS_CHALLENGE_OK = 0;
-    const STATUS_INCORRECT_CHALLENGE = 1;
-    const STATUS_CHALLENGE_EXPIRED = 2;
-    const STATUS_TOO_MANY_ATTEMPTS = 3;
-
-    /**
-     * @var int
-     */
-    private $status;
-
-    /**
-     * @var string|null
-     */
-    private $secondFactorId;
+    public const STATUS_CHALLENGE_OK = 0;
+    public const STATUS_INCORRECT_CHALLENGE = 1;
+    public const STATUS_CHALLENGE_EXPIRED = 2;
+    public const STATUS_TOO_MANY_ATTEMPTS = 3;
 
     /**
      * @param int $status One of
      * @param string|null $secondFactorId
      */
-    private function __construct($status, $secondFactorId = null)
+    private function __construct(private $status, private $secondFactorId = null)
     {
-        $this->secondFactorId = $secondFactorId;
-        $this->status = $status;
     }
 
     /**
      * @return ProofOfPossessionResult
      */
-    public static function challengeExpired()
+    public static function challengeExpired(): self
     {
         return new self(self::STATUS_CHALLENGE_EXPIRED);
     }
@@ -61,7 +49,7 @@ final class ProofOfPossessionResult
     /**
      * @return ProofOfPossessionResult
      */
-    public static function incorrectChallenge()
+    public static function incorrectChallenge(): self
     {
         return new self(self::STATUS_INCORRECT_CHALLENGE);
     }
@@ -69,7 +57,7 @@ final class ProofOfPossessionResult
     /**
      * @return ProofOfPossessionResult
      */
-    public static function proofOfPossessionCommandFailed()
+    public static function proofOfPossessionCommandFailed(): self
     {
         return new self(self::STATUS_CHALLENGE_OK);
     }
@@ -78,7 +66,7 @@ final class ProofOfPossessionResult
      * @param string $secondFactorId
      * @return ProofOfPossessionResult
      */
-    public static function secondFactorCreated($secondFactorId)
+    public static function secondFactorCreated($secondFactorId): self
     {
         if (!is_string($secondFactorId)) {
             throw InvalidArgumentException::invalidType('string', 'secondFactorId', $secondFactorId);
@@ -90,7 +78,7 @@ final class ProofOfPossessionResult
     /**
      * @return ProofOfPossessionResult
      */
-    public static function tooManyAttempts()
+    public static function tooManyAttempts(): self
     {
         return new self(self::STATUS_TOO_MANY_ATTEMPTS);
     }
@@ -98,7 +86,7 @@ final class ProofOfPossessionResult
     /**
      * @return bool
      */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return $this->status === self::STATUS_CHALLENGE_OK && $this->secondFactorId !== null;
     }
@@ -111,7 +99,7 @@ final class ProofOfPossessionResult
         return $this->secondFactorId;
     }
 
-    public function didProofOfPossessionFail()
+    public function didProofOfPossessionFail(): bool
     {
         return $this->status === self::STATUS_CHALLENGE_OK && $this->secondFactorId === null;
     }
@@ -119,7 +107,7 @@ final class ProofOfPossessionResult
     /**
      * @return boolean
      */
-    public function wasIncorrectChallengeResponseGiven()
+    public function wasIncorrectChallengeResponseGiven(): bool
     {
         return $this->status === self::STATUS_INCORRECT_CHALLENGE;
     }
@@ -127,7 +115,7 @@ final class ProofOfPossessionResult
     /**
      * @return boolean
      */
-    public function hasChallengeExpired()
+    public function hasChallengeExpired(): bool
     {
         return $this->status === self::STATUS_CHALLENGE_EXPIRED;
     }
@@ -135,7 +123,7 @@ final class ProofOfPossessionResult
     /**
      * @return boolean
      */
-    public function wereTooManyAttemptsMade()
+    public function wereTooManyAttemptsMade(): bool
     {
         return $this->status === self::STATUS_TOO_MANY_ATTEMPTS;
     }

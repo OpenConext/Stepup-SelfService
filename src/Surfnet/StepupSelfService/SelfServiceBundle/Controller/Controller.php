@@ -28,7 +28,7 @@ class Controller extends FrameworkController
     /**
      * Default verify email option as defined by middleware.
      */
-    const DEFAULT_VERIFY_EMAIL_OPTION = true;
+    final public const DEFAULT_VERIFY_EMAIL_OPTION = true;
 
     /**
      * @return Identity
@@ -40,12 +40,12 @@ class Controller extends FrameworkController
         $user  = $token->getUser();
 
         if (!$user instanceof Identity) {
-            $actualType = is_object($token) ? get_class($token) : gettype($token);
+            $actualType = get_debug_type($token);
 
             throw new UnexpectedValueException(
                 sprintf(
                     "Token did not contain user of type '%s', but one of type '%s'",
-                    'Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity',
+                    \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity::class,
                     $actualType
                 )
             );

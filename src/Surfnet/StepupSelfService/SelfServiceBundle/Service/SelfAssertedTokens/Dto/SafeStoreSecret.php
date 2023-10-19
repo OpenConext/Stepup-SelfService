@@ -23,7 +23,7 @@ use function chunk_split;
 
 class SafeStoreSecret
 {
-    private $secret;
+    private readonly string $secret;
 
     /**
      * Length of the secret
@@ -39,7 +39,7 @@ class SafeStoreSecret
      * The output format, %s-%s-%s results in something like:
      * 3K1A-5CQ9-YCPE
      */
-    public function display()
+    public function display(): string
     {
         $split = chunk_split($this->secret, 4, '-');
         return substr($split, 0, -1);

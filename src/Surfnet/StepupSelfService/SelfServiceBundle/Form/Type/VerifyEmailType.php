@@ -26,15 +26,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VerifyEmailType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('verificationCode', TextType::class, [
             'label' => 'ss.form.ss_verify_email.text.verification_code',
             'required' => true,
-            'attr' => array(
-                'autofocus' => true,
-                'autocomplete' => 'off',
-            )
+            'attr' => ['autofocus' => true, 'autocomplete' => 'off']
         ]);
         $builder->add('verifyEmail', SubmitType::class, [
             'label' => 'ss.form.ss_verify_email.button.verify_email',
@@ -42,7 +39,7 @@ class VerifyEmailType extends AbstractType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => 'Surfnet\StepupSelfService\SelfServiceBundle\Identity\Command\VerifyEmailCommand',

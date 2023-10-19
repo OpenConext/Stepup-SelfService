@@ -32,7 +32,7 @@ class TimeFrameTest extends TestCase
      *
      * @param mixed $notPositiveInteger
      */
-    public function it_cannot_be_given_an_non_positive_amount_of_seconds($notPositiveInteger)
+    public function it_cannot_be_given_an_non_positive_amount_of_seconds(string|float|int|\stdClass|array $notPositiveInteger): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -43,7 +43,7 @@ class TimeFrameTest extends TestCase
      * @test
      * @group value
      */
-    public function to_string_output_matches_amount_of_seconds_as_string()
+    public function to_string_output_matches_amount_of_seconds_as_string(): void
     {
         $seconds = 1000;
 
@@ -59,7 +59,7 @@ class TimeFrameTest extends TestCase
     /**
      * @return array
      */
-    public function notPositiveIntegerProvider()
+    public function notPositiveIntegerProvider(): array
     {
         return [
             'empty string' => [''],

@@ -28,7 +28,7 @@ use function array_key_exists;
 
 class VerifySmsChallengeType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('challenge', TextType::class, [
             'label' => 'ss.form.ss_verify_sms_challenge.text.challenge',
@@ -51,7 +51,7 @@ class VerifySmsChallengeType extends AbstractType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => SmsVerificationCommandInterface::class,

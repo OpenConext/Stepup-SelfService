@@ -39,12 +39,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class RecoveryTokenState
 {
-    /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    public const RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER = 'recovery_token_step_up_request_id';
+    final public const RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER = 'recovery_token_step_up_request_id';
 
     private const RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER = 'recovery_token_step_up_given';
 
@@ -52,15 +47,14 @@ class RecoveryTokenState
 
     private const RECOVERY_TOKEN_RETURN_TO_IDENTIFIER = 'recovery_token_return_to';
 
-    public const RECOVERY_TOKEN_RETURN_TO_CREATE_SAFE_STORE = 'ss_recovery_token_safe_store';
+    final public const RECOVERY_TOKEN_RETURN_TO_CREATE_SAFE_STORE = 'ss_recovery_token_safe_store';
 
-    public const RECOVERY_TOKEN_RETURN_TO_CREATE_SMS = 'ss_recovery_token_sms';
+    final public const RECOVERY_TOKEN_RETURN_TO_CREATE_SMS = 'ss_recovery_token_sms';
 
     private const SAFE_STORE_SESSION_NAME = 'safe_store_secret';
 
-    public function __construct(SessionInterface $session)
+    public function __construct(private readonly SessionInterface $session)
     {
-        $this->session = $session;
     }
 
     public function tokenCreatedDuringSecondFactorRegistration(): void
@@ -119,7 +113,7 @@ class RecoveryTokenState
         $this->session->remove(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER);
     }
 
-    public function setReturnTo(string $route, array $parameters)
+    public function setReturnTo(string $route, array $parameters): void
     {
         $this->session->set(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER, new ReturnTo($route, $parameters));
     }
@@ -129,7 +123,7 @@ class RecoveryTokenState
         return $this->session->get(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER);
     }
 
-    public function resetReturnTo()
+    public function resetReturnTo(): void
     {
         $this->session->remove(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER);
     }
@@ -142,12 +136,12 @@ class RecoveryTokenState
         return $this->session->get(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER);
     }
 
-    public function setStepUpGiven(bool $given)
+    public function setStepUpGiven(bool $given): void
     {
         $this->session->set(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER, $given);
     }
 
-    public function resetStepUpGiven()
+    public function resetStepUpGiven(): void
     {
         $this->session->remove(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER);
     }

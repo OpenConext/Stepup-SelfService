@@ -29,23 +29,14 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
     /**
      * Session keys
      */
-    const AUTH_SESSION_KEY = '__auth/';
-    const SAML_SESSION_KEY = '__saml/';
+    final public const AUTH_SESSION_KEY = '__auth/';
+    final public const SAML_SESSION_KEY = '__saml/';
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    private $session;
-
-    /**
-     * @param SessionInterface $session
-     */
-    public function __construct(SessionInterface $session)
+    public function __construct(private readonly SessionInterface $session)
     {
-        $this->session = $session;
     }
 
-    public function logAuthenticationMoment()
+    public function logAuthenticationMoment(): void
     {
         if ($this->isAuthenticationMomentLogged()) {
             throw new LogicException('Cannot log authentication moment as an authentication moment is already logged');
@@ -55,7 +46,7 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
         $this->updateLastInteractionMoment();
     }
 
-    public function isAuthenticationMomentLogged()
+    public function isAuthenticationMomentLogged(): bool
     {
         return $this->session->get(self::AUTH_SESSION_KEY . 'authenticated_at', null) !== null;
     }
@@ -69,12 +60,12 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
         return DateTime::fromString($this->session->get(self::AUTH_SESSION_KEY . 'authenticated_at'));
     }
 
-    public function updateLastInteractionMoment()
+    public function updateLastInteractionMoment(): void
     {
         $this->session->set(self::AUTH_SESSION_KEY . 'last_interaction', DateTime::now()->format(DateTime::FORMAT));
     }
 
-    public function hasSeenInteraction()
+    public function hasSeenInteraction(): bool
     {
         return $this->session->get(self::AUTH_SESSION_KEY . 'last_interaction', null) !== null;
     }
@@ -88,7 +79,7 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
         return DateTime::fromString($this->session->get(self::AUTH_SESSION_KEY . 'last_interaction'));
     }
 
-    public function setCurrentRequestUri($uri)
+    public function setCurrentRequestUri($uri): void
     {
         $this->session->set(self::AUTH_SESSION_KEY . 'current_uri', $uri);
     }
@@ -106,27 +97,27 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
         return $this->session->get(self::SAML_SESSION_KEY . 'request_id');
     }
 
-    public function setRequestId($requestId)
+    public function setRequestId($requestId): void
     {
         $this->session->set(self::SAML_SESSION_KEY . 'request_id', $requestId);
     }
 
-    public function hasRequestId()
+    public function hasRequestId(): bool
     {
         return $this->session->has(self::SAML_SESSION_KEY. 'request_id');
     }
 
-    public function clearRequestId()
+    public function clearRequestId(): void
     {
         $this->session->remove(self::SAML_SESSION_KEY . 'request_id');
     }
 
-    public function invalidate()
+    public function invalidate(): void
     {
         $this->session->invalidate();
     }
 
-    public function migrate()
+    public function migrate(): void
     {
         $this->session->migrate();
     }

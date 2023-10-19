@@ -23,33 +23,17 @@ use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\StepupBundle\Value\Loa;
 
-final class TestAuthenticationRequestFactory
+final readonly class TestAuthenticationRequestFactory
 {
-    /**
-     * @var ServiceProvider
-     */
-    private $serviceProvider;
-
-    /**
-     * @var IdentityProvider
-     */
-    private $identityProvider;
-
-    public function __construct(
-        ServiceProvider $serviceProvider,
-        IdentityProvider $identityProvider
-    ) {
-        $this->serviceProvider = $serviceProvider;
-        $this->identityProvider = $identityProvider;
+    public function __construct(private ServiceProvider $serviceProvider, private IdentityProvider $identityProvider)
+    {
     }
 
     /**
-     * @param string $nameId
-     * @param Loa    $loa
      *
      * @return \Surfnet\SamlBundle\SAML2\AuthnRequest
      */
-    public function createSecondFactorTestRequest($nameId, Loa $loa)
+    public function createSecondFactorTestRequest(string $nameId, Loa $loa)
     {
         $authenticationRequest = AuthnRequestFactory::createNewRequest(
             $this->serviceProvider,

@@ -20,11 +20,11 @@ namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Exception;
 
 class UnknownProviderException extends RuntimeException
 {
-    public static function create($unknownProvider, array $knownProviders)
+    public static function create($unknownProvider, array $knownProviders): static
     {
         return new static(sprintf(
             'Unknown Generic SAML Stepup Provider requested "%s", known providers: "%s"',
-            is_object($unknownProvider) ? '(object)' . get_class($unknownProvider) : $unknownProvider,
+            is_object($unknownProvider) ? '(object)' . $unknownProvider::class : $unknownProvider,
             implode('", "', $knownProviders)
         ));
     }

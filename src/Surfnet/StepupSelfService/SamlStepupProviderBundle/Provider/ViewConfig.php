@@ -25,124 +25,16 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class ViewConfig implements ViewConfigInterface
 {
     /**
-     * @var string
-     */
-    private $loa;
-
-    /**
-     * @var string
-     */
-    private $logo;
-
-    /**
-     * @var array
-     */
-    private $alt;
-
-    /**
-     * @var array
-     */
-    private $title;
-
-    /**
-     * @var array
-     */
-    private $description;
-
-    /**
-     * @var array
-     */
-    private $buttonUse;
-
-    /**
-     * @var array
-     */
-    private $initiateTitle;
-
-    /**
-     * @var array
-     */
-    private $initiateButton;
-
-    /**
-     * @var array
-     */
-    private $explanation;
-
-    /**
-     * @var array
-     */
-    private $authnFailed;
-
-    /**
-     * @var array
-     */
-    private $popFailed;
-
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
-     * @var string
-     */
-    private $androidUrl;
-
-    /**
-     * @var string
-     */
-    private $iosUrl;
-
-    /**
      * The arrays are arrays of translated text, indexed on locale.
      *
-     * @param RequestStack $requestStack
      * @param string $loa
      * @param string $logo
      * @param string $androidUrl
      * @param string $iosUrl
-     * @param array $alt
-     * @param array $title
-     * @param array $description
-     * @param array $buttonUse
-     * @param array $initiateTitle
-     * @param array $initiateButton
-     * @param array $explanation
-     * @param array $authnFailed
-     * @param array $popFailed
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __construct(
-        RequestStack $requestStack,
-        $loa,
-        $logo,
-        $androidUrl,
-        $iosUrl,
-        array $alt,
-        array $title,
-        array $description,
-        array $buttonUse,
-        array $initiateTitle,
-        array $initiateButton,
-        array $explanation,
-        array $authnFailed,
-        array $popFailed
-    ) {
-        $this->loa = $loa;
-        $this->logo = $logo;
-        $this->androidUrl = $androidUrl;
-        $this->iosUrl = $iosUrl;
-        $this->alt = $alt;
-        $this->title = $title;
-        $this->description = $description;
-        $this->buttonUse = $buttonUse;
-        $this->initiateTitle = $initiateTitle;
-        $this->initiateButton = $initiateButton;
-        $this->explanation = $explanation;
-        $this->authnFailed = $authnFailed;
-        $this->popFailed = $popFailed;
-        $this->requestStack = $requestStack;
+    public function __construct(private readonly RequestStack $requestStack, private $loa, private $logo, private $androidUrl, private $iosUrl, private readonly array $alt, private readonly array $title, private readonly array $description, private readonly array $buttonUse, private readonly array $initiateTitle, private readonly array $initiateButton, private readonly array $explanation, private readonly array $authnFailed, private readonly array $popFailed)
+    {
     }
 
     /**
@@ -164,7 +56,7 @@ class ViewConfig implements ViewConfigInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getTranslation($this->title);
     }
@@ -250,7 +142,6 @@ class ViewConfig implements ViewConfigInterface
     }
 
     /**
-     * @param array $translations
      * @return mixed
      * @throws LogicException
      */

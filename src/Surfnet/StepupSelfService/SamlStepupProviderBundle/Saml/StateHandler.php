@@ -24,26 +24,23 @@ use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
 final class StateHandler
 {
     /**
-     * @var string
-     */
-    private $provider;
-
-    /**
      * @var NamespacedAttributeBag
      */
     private $attributeBag;
 
-    public function __construct(NamespacedAttributeBag $attributeBag, $provider)
+    /**
+     * @param string $provider
+     */
+    public function __construct(NamespacedAttributeBag $attributeBag, private $provider)
     {
         $this->attributeBag = $attributeBag;
-        $this->provider = $provider;
     }
 
     /**
      * @param string $originalRequestId
      * @return $this
      */
-    public function setRequestId($originalRequestId)
+    public function setRequestId($originalRequestId): self
     {
         $this->set('request_id', $originalRequestId);
 
@@ -58,17 +55,17 @@ final class StateHandler
         return $this->get('request_id');
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->attributeBag->remove($this->provider);
     }
 
-    protected function set($key, $value)
+    protected function set(string $key, $value): void
     {
         $this->attributeBag->set($this->provider . '/' . $key, $value);
     }
 
-    protected function get($key)
+    protected function get(string $key)
     {
         return $this->attributeBag->get($this->provider . '/' . $key);
     }

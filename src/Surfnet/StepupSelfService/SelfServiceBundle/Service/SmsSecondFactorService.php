@@ -37,33 +37,19 @@ use Symfony\Component\Translation\TranslatorInterface;
 class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 {
     /**
-     * @var \Surfnet\StepupBundle\Service\SmsSecondFactorService
-     */
-    private $smsSecondFactorService;
-
-    /**
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
     private $translator;
 
     /**
-     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
-     */
-    private $commandService;
-
-    /**
-     * @param StepupSmsSecondFactorService $smsSecondFactorService
      * @param TranslatorInterface $translator
-     * @param CommandService $commandService
      */
     public function __construct(
-        StepupSmsSecondFactorService $smsSecondFactorService,
+        private readonly StepupSmsSecondFactorService $smsSecondFactorService,
         TranslatorInterface $translator,
-        CommandService $commandService
+        private readonly CommandService $commandService
     ) {
-        $this->smsSecondFactorService = $smsSecondFactorService;
         $this->translator = $translator;
-        $this->commandService = $commandService;
     }
 
     /**
@@ -90,7 +76,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
         return $this->smsSecondFactorService->hasSmsVerificationState($secondFactorId);
     }
 
-    public function clearSmsVerificationState(string $secondFactorId)
+    public function clearSmsVerificationState(string $secondFactorId): void
     {
         $this->smsSecondFactorService->clearSmsVerificationState($secondFactorId);
     }

@@ -33,43 +33,15 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class SamlProvider implements AuthenticationProviderInterface
 {
-    /**
-     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
-     */
-    private $identityService;
-
-    /**
-     * @var \Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary
-     */
-    private $attributeDictionary;
-
-    /**
-     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider
-     */
-    private $preferredLocaleProvider;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        IdentityService $identityService,
-        AttributeDictionary $attributeDictionary,
-        PreferredLocaleProvider $preferredLocaleProvider,
-        LoggerInterface $logger
-    ) {
-        $this->identityService = $identityService;
-        $this->attributeDictionary = $attributeDictionary;
-        $this->preferredLocaleProvider = $preferredLocaleProvider;
-        $this->logger = $logger;
+    public function __construct(private readonly IdentityService $identityService, private readonly AttributeDictionary $attributeDictionary, private readonly PreferredLocaleProvider $preferredLocaleProvider, private readonly LoggerInterface $logger)
+    {
     }
 
     /**
      * @param  SamlToken|TokenInterface $token
      * @return TokenInterface|void
      */
-    public function authenticate(TokenInterface $token)
+    public function authenticate(TokenInterface $token): \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken
     {
         $translatedAssertion = $this->attributeDictionary->translate($token->assertion);
 
@@ -104,17 +76,15 @@ class SamlProvider implements AuthenticationProviderInterface
         return $authenticatedToken;
     }
 
-    public function supports(TokenInterface $token)
+    public function supports(TokenInterface $token): bool
     {
         return $token instanceof SamlToken;
     }
 
     /**
-     * @param string           $attribute
-     * @param AssertionAdapter $translatedAssertion
      * @return string
      */
-    private function getSingleStringValue($attribute, AssertionAdapter $translatedAssertion)
+    private function getSingleStringValue(string $attribute, AssertionAdapter $translatedAssertion): string
     {
         $values = $translatedAssertion->getAttributeValue($attribute);
 
@@ -137,7 +107,7 @@ class SamlProvider implements AuthenticationProviderInterface
             $message = sprintf(
                 'First value of attribute "%s" must be a string, "%s" given',
                 $attribute,
-                is_object($value) ? get_class($value) : gettype($value)
+                get_debug_type($value)
             );
 
             $this->logger->warning($message);

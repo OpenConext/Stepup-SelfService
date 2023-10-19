@@ -29,15 +29,13 @@ final class ExceptionController extends BaseExceptionController
      * @param Exception $exception
      * @return array View parameters 'title' and 'description'
      */
-    protected function getPageTitleAndDescription(Exception $exception)
+    protected function getPageTitleAndDescription(Exception $exception): array
     {
         $translator = $this->getTranslator();
 
-        if ($exception instanceof HttpException) {
-            if ($exception instanceof MissingRequiredAttributeException) {
-                $title = $translator->trans('stepup.error.missing_required_attribute.title');
-                $description = $exception->getMessage();
-            }
+        if ($exception instanceof HttpException && $exception instanceof MissingRequiredAttributeException) {
+            $title = $translator->trans('stepup.error.missing_required_attribute.title');
+            $description = $exception->getMessage();
         }
 
         if (isset($title) && isset($description)) {

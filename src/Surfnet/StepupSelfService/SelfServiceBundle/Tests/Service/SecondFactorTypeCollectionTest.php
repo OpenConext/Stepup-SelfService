@@ -27,7 +27,7 @@ use Mockery as m;
 
 class SecondFactorTypeCollectionTest extends TestCase
 {
-    public function test_it_calculates_number_of_registrations_left()
+    public function test_it_calculates_number_of_registrations_left(): void
     {
         $collection = new SecondFactorTypeCollection();
 

@@ -24,36 +24,23 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\TimeFrame;
 
 class SessionLifetimeGuard
 {
-    /**
-     * @var TimeFrame
-     */
-    private $relativeTimeoutLimit;
-    /**
-     * @var TimeFrame
-     */
-    private $absoluteTimeoutLimit;
-
-    public function __construct(TimeFrame $absoluteTimeoutLimit, TimeFrame $relativeTimeoutLimit)
+    public function __construct(private readonly TimeFrame $absoluteTimeoutLimit, private readonly TimeFrame $relativeTimeoutLimit)
     {
-        $this->absoluteTimeoutLimit = $absoluteTimeoutLimit;
-        $this->relativeTimeoutLimit = $relativeTimeoutLimit;
     }
 
     /**
-     * @param AuthenticatedSessionStateHandler $sessionStateHandler
      * @return bool
      */
-    public function sessionLifetimeWithinLimits(AuthenticatedSessionStateHandler $sessionStateHandler)
+    public function sessionLifetimeWithinLimits(AuthenticatedSessionStateHandler $sessionStateHandler): bool
     {
         return $this->sessionLifetimeWithinAbsoluteLimit($sessionStateHandler)
                 && $this->sessionLifetimeWithinRelativeLimit($sessionStateHandler);
     }
 
     /**
-     * @param AuthenticatedSessionStateHandler $sessionStateHandler
      * @return bool
      */
-    public function sessionLifetimeWithinAbsoluteLimit(AuthenticatedSessionStateHandler $sessionStateHandler)
+    public function sessionLifetimeWithinAbsoluteLimit(AuthenticatedSessionStateHandler $sessionStateHandler): bool
     {
         if (!$sessionStateHandler->isAuthenticationMomentLogged()) {
             return true;
@@ -62,19 +49,13 @@ class SessionLifetimeGuard
         $authenticationMoment = $sessionStateHandler->getAuthenticationMoment();
         $sessionTimeoutMoment = $this->absoluteTimeoutLimit->getEndWhenStartingAt($authenticationMoment);
         $now = DateTime::now();
-
-        if ($now->comesBeforeOrIsEqual($sessionTimeoutMoment)) {
-            return true;
-        }
-
-        return false;
+        return $now->comesBeforeOrIsEqual($sessionTimeoutMoment);
     }
 
     /**
-     * @param AuthenticatedSessionStateHandler $sessionStateHandler
      * @return bool
      */
-    public function sessionLifetimeWithinRelativeLimit(AuthenticatedSessionStateHandler $sessionStateHandler)
+    public function sessionLifetimeWithinRelativeLimit(AuthenticatedSessionStateHandler $sessionStateHandler): bool
     {
         if (!$sessionStateHandler->hasSeenInteraction()) {
             return true;
@@ -83,11 +64,6 @@ class SessionLifetimeGuard
         $lastInteractionMoment = $sessionStateHandler->getLastInteractionMoment();
         $sessionTimeoutMoment = $this->relativeTimeoutLimit->getEndWhenStartingAt($lastInteractionMoment);
         $now = DateTime::now();
-
-        if ($now->comesBeforeOrIsEqual($sessionTimeoutMoment)) {
-            return true;
-        }
-
-        return false;
+        return $now->comesBeforeOrIsEqual($sessionTimeoutMoment);
     }
 }

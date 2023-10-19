@@ -27,14 +27,12 @@ class AvailableTokenCollection
     /**
      * @var AvailableTokenInterface[]
      */
-    private $collection = [];
+    private array $collection = [];
 
     /**
-     * @param array $builtInTokens
-     * @param array $gsspTokens
      * @return AvailableTokenCollection
      */
-    public static function from(array $builtInTokens, array $gsspTokens)
+    public static function from(array $builtInTokens, array $gsspTokens): self
     {
         $collection = new self();
 
@@ -59,12 +57,12 @@ class AvailableTokenCollection
         return $this->collection;
     }
 
-    private function sortCollection()
+    private function sortCollection(): void
     {
         // The collection is first sorted by LoA level and then in alphabetic order.
-        uasort($this->collection, function (AvailableTokenInterface $a, AvailableTokenInterface $b) {
+        uasort($this->collection, function (AvailableTokenInterface $a, AvailableTokenInterface $b): int {
             if ($a->getLoaLevel() === $b->getLoaLevel()) {
-                return strcmp($a->getType(), $b->getType());
+                return strcmp((string) $a->getType(), (string) $b->getType());
             }
             return $a->getLoaLevel() > $b->getLoaLevel() ? 1 : -1;
         });

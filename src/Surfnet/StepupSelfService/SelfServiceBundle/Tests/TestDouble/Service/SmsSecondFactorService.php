@@ -36,18 +36,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceIn
  */
 class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 {
-    /**
-     * @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
-     */
-    private $commandService;
+    private int $maxOtpRequestCount = 3;
+    private int $maxOtpRequestRemaining = 3;
+    private bool $verificationState = true;
 
-    private $maxOtpRequestCount = 3;
-    private $maxOtpRequestRemaining = 3;
-    private $verificationState = true;
-
-    public function __construct(CommandService $commandService)
+    public function __construct(private readonly CommandService $commandService)
     {
-        $this->commandService = $commandService;
     }
 
     /**
@@ -74,7 +68,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
         return $this->verificationState;
     }
 
-    public function clearSmsVerificationState(string $secondFactorId)
+    public function clearSmsVerificationState(string $secondFactorId): bool
     {
         return $this->verificationState = true;
     }
@@ -86,7 +80,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
      * @return bool Whether SMS sending did not fail.
      * @throws TooManyChallengesRequestedException
      */
-    public function sendChallenge(SendSmsChallengeCommand $command)
+    public function sendChallenge(SendSmsChallengeCommand $command): bool
     {
         --$this->maxOtpRequestRemaining;
 
@@ -98,7 +92,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
      * @param VerifySmsChallengeCommand $challengeCommand
      * @return ProofOfPossessionResult
      */
-    public function provePossession(VerifySmsChallengeCommand $challengeCommand)
+    public function provePossession(VerifySmsChallengeCommand $challengeCommand): \Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult
     {
 
         OtpVerification::foundMatch($challengeCommand->identity);

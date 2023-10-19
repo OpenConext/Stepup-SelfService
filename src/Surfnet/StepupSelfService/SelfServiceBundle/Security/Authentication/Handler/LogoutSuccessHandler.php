@@ -26,26 +26,13 @@ use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 final class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
 {
     /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @var string[]
-     */
-    private $logoutRedirectUrl;
-
-    /**
-     * @param TokenStorageInterface $tokenStorage
      * @param string[] $logoutRedirectUrl
      */
-    public function __construct(TokenStorageInterface $tokenStorage, array $logoutRedirectUrl)
+    public function __construct(private readonly TokenStorageInterface $tokenStorage, private array $logoutRedirectUrl)
     {
-        $this->tokenStorage = $tokenStorage;
-        $this->logoutRedirectUrl = $logoutRedirectUrl;
     }
 
-    public function onLogoutSuccess(Request $request)
+    public function onLogoutSuccess(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $token    = $this->tokenStorage->getToken();
         $identity = $token->getUser();

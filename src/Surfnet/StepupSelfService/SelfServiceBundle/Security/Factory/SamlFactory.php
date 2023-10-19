@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ChildDefinition;
 
 class SamlFactory implements SecurityFactoryInterface
 {
-    public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+    public function create(ContainerBuilder $container, string $id, $config, $userProvider, $defaultEntryPoint): array
     {
         $providerId = 'security.authentication.provider.saml.' . $id;
         $container->setDefinition(
@@ -46,20 +46,20 @@ class SamlFactory implements SecurityFactoryInterface
         );
         $cookieHandler->addArgument([]);
 
-        return array($providerId, $listenerId, $defaultEntryPoint);
+        return [$providerId, $listenerId, $defaultEntryPoint];
     }
 
-    public function getPosition()
+    public function getPosition(): string
     {
         return 'pre_auth';
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return 'saml';
     }
 
-    public function addConfiguration(NodeDefinition $builder)
+    public function addConfiguration(NodeDefinition $builder): void
     {
     }
 }

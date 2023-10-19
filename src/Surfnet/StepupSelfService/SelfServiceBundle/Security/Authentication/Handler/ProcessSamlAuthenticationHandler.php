@@ -37,30 +37,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 class ProcessSamlAuthenticationHandler implements AuthenticationHandler
 {
-    /**
-     * @var AuthenticationHandler
-     */
-    private $nextHandler;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @var SamlInteractionProvider
-     */
-    private $samlInteractionProvider;
-
-    /**
-     * @var SamlAuthenticationStateHandler
-     */
-    private $authenticationStateHandler;
-
-    /**
-     * @var AuthenticatedSessionStateHandler
-     */
-    private $authenticatedSession;
+    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
 
     /**
      * @var AuthenticationManagerInterface
@@ -68,34 +45,24 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
     private $authenticationManager;
 
     /**
-     * @var SamlAuthenticationLogger
-     */
-    private $authenticationLogger;
-
-    /**
      * @var EngineInterface
      */
     private $templating;
 
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        SamlInteractionProvider $samlInteractionProvider,
-        SamlAuthenticationStateHandler $authenticationStateHandler,
-        AuthenticatedSessionStateHandler $authenticatedSession,
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly SamlInteractionProvider $samlInteractionProvider,
+        private readonly SamlAuthenticationStateHandler $authenticationStateHandler,
+        private readonly AuthenticatedSessionStateHandler $authenticatedSession,
         AuthenticationManagerInterface $authenticationManager,
-        SamlAuthenticationLogger $authenticationLogger,
+        private readonly SamlAuthenticationLogger $authenticationLogger,
         EngineInterface $templating
     ) {
-        $this->tokenStorage               = $tokenStorage;
-        $this->samlInteractionProvider    = $samlInteractionProvider;
-        $this->authenticationStateHandler = $authenticationStateHandler;
-        $this->authenticatedSession       = $authenticatedSession;
         $this->authenticationManager      = $authenticationManager;
-        $this->authenticationLogger       = $authenticationLogger;
         $this->templating                 = $templating;
     }
 
-    public function process(GetResponseEvent $event)
+    public function process(GetResponseEvent $event): void
     {
         if ($this->tokenStorage->getToken() === null
             && $this->samlInteractionProvider->isSamlAuthenticationInitiated()
@@ -136,7 +103,7 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
         }
     }
 
-    public function setNext(AuthenticationHandler $handler)
+    public function setNext(AuthenticationHandler $handler): void
     {
         $this->nextHandler = $handler;
     }

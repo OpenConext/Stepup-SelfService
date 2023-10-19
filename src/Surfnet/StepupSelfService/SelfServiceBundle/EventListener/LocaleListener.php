@@ -28,26 +28,20 @@ use Symfony\Component\Translation\TranslatorInterface;
 final class LocaleListener implements EventSubscriberInterface
 {
     /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
      * @var TranslatorInterface
      */
     private $translator;
 
-    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator)
+    public function __construct(private readonly TokenStorageInterface $tokenStorage, TranslatorInterface $translator)
     {
-        $this->tokenStorage = $tokenStorage;
         $this->translator = $translator;
     }
 
-    public function setRequestLocale(GetResponseEvent $event)
+    public function setRequestLocale(GetResponseEvent $event): void
     {
         $token = $this->tokenStorage->getToken();
 
-        if (!$token) {
+        if ($token === null) {
             return;
         }
 
@@ -64,7 +58,7 @@ final class LocaleListener implements EventSubscriberInterface
         // As per \Symfony\Component\HttpKernel\EventListener\TranslatorListener::setLocale()
         try {
             $this->translator->setLocale($request->getLocale());
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException) {
             $this->translator->setLocale($request->getDefaultLocale());
         }
     }

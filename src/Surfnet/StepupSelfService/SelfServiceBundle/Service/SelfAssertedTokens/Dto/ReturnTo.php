@@ -20,14 +20,8 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens
 
 class ReturnTo
 {
-    private $route;
-
-    private $parameters;
-
-    public function __construct(string $route, array $parameters)
+    public function __construct(private readonly string $route, private readonly array $parameters)
     {
-        $this->route = $route;
-        $this->parameters = $parameters;
     }
 
     public function getRoute(): string

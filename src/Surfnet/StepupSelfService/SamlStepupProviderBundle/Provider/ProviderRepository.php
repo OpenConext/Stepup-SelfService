@@ -26,17 +26,13 @@ final class ProviderRepository
     /**
      * @var []]Provider
      */
-    private $providers;
+    private array $providers = [];
 
     public function __construct()
     {
-        $this->providers = [];
     }
 
-    /**
-     * @param Provider $provider
-     */
-    public function addProvider(Provider $provider)
+    public function addProvider(Provider $provider): void
     {
         if ($this->has($provider->getName())) {
             throw new InvalidConfigurationException(sprintf(
@@ -52,7 +48,7 @@ final class ProviderRepository
      * @param string $providerName
      * @return bool
      */
-    public function has($providerName)
+    public function has($providerName): bool
     {
         return array_key_exists($providerName, $this->providers);
     }

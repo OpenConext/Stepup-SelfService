@@ -22,16 +22,10 @@ use Surfnet\StepupMiddlewareClient\Configuration\Dto\RaLocationSearchQuery;
 use Surfnet\StepupMiddlewareClientBundle\Configuration\Dto\RaLocationCollection;
 use Surfnet\StepupMiddlewareClientBundle\Configuration\Service\RaLocationService as ApiRaLocationService;
 
-final class RaLocationService
+final readonly class RaLocationService
 {
-    /**
-     * @var ApiRaLocationService
-     */
-    private $apiService;
-
-    public function __construct(ApiRaLocationService $apiService)
+    public function __construct(private ApiRaLocationService $apiService)
     {
-        $this->apiService = $apiService;
     }
 
     /**

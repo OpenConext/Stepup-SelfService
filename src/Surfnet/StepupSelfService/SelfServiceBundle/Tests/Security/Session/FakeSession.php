@@ -24,57 +24,45 @@ use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 class FakeSession implements SessionInterface
 {
-    /**
-     * @var array
-     */
-    private $sessionContent = [];
+    private array $sessionContent = [];
 
-    /**
-     * @var string
-     */
-    private $sessionId = 'fake_session';
+    private string $sessionId = 'fake_session';
 
-    /**
-     * @var string
-     */
-    private $sessionName = 'fake_session';
+    private string $sessionName = 'fake_session';
 
-    /**
-     * @var array
-     */
-    private $bags = [];
+    private array $bags = [];
 
     public function __construct()
     {
         $this->sessionId = bin2hex(openssl_random_pseudo_bytes(16));
     }
 
-    public function start()
+    public function start(): bool
     {
         return true;
     }
 
-    public function getId()
+    public function getId(): string
     {
         return $this->sessionId;
     }
 
-    public function setId($id)
+    public function setId($id): void
     {
         $this->sessionId = $id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->sessionName;
     }
 
-    public function setName($name)
+    public function setName($name): void
     {
         $this->sessionName = $name;
     }
 
-    public function invalidate($lifetime = null)
+    public function invalidate($lifetime = null): bool
     {
         $this->sessionContent = [];
         $this->bags = [];
@@ -83,7 +71,7 @@ class FakeSession implements SessionInterface
         return true;
     }
 
-    public function migrate($destroy = false, $lifetime = null)
+    public function migrate($destroy = false, $lifetime = null): bool
     {
         if ($destroy) {
             $this->sessionContent = [];
@@ -95,37 +83,37 @@ class FakeSession implements SessionInterface
         return true;
     }
 
-    public function save()
+    public function save(): void
     {
         // noop
     }
 
-    public function has($name)
+    public function has($name): bool
     {
         return array_key_exists($name, $this->sessionContent);
     }
 
-    public function get($name, $default = null)
+    public function get($name, $default = null): mixed
     {
         return $this->has($name) ? $this->sessionContent[$name] : $default;
     }
 
-    public function set($name, $value)
+    public function set($name, $value): void
     {
         $this->sessionContent[$name] = $value;
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->sessionContent;
     }
 
-    public function replace(array $attributes)
+    public function replace(array $attributes): void
     {
         $this->sessionContent = $attributes;
     }
 
-    public function remove($name)
+    public function remove($name): mixed
     {
         $return = null;
         if ($this->has($name)) {
@@ -137,22 +125,22 @@ class FakeSession implements SessionInterface
         return $return;
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->sessionContent = [];
     }
 
-    public function isStarted()
+    public function isStarted(): bool
     {
         return true;
     }
 
-    public function registerBag(SessionBagInterface $bag)
+    public function registerBag(SessionBagInterface $bag): void
     {
         $this->bags[$bag->getName()] = $bag;
     }
 
-    public function getBag($name)
+    public function getBag($name): \Symfony\Component\HttpFoundation\Session\SessionBagInterface
     {
         if (array_key_exists($name, $this->bags)) {
             return $this->bags[$name];
@@ -161,12 +149,8 @@ class FakeSession implements SessionInterface
         return null;
     }
 
-    public function getMetadataBag()
+    public function getMetadataBag(): \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
     {
-        if (isset($this->bags['_sf_meta'])) {
-            return $this->bags['_sf_meta'];
-        }
-
-        return $this->bags['_sf_meta'] = new MetadataBag();
+        return $this->bags['_sf_meta'] ?? ($this->bags['_sf_meta'] = new MetadataBag());
     }
 }

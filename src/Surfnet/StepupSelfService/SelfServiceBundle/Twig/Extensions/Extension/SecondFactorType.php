@@ -25,22 +25,16 @@ use function intval;
 
 final class SecondFactorType extends Twig_Extension
 {
-    /**
-     * @var SecondFactorTypeTranslationService
-     */
-    private $translator;
-
-    public function __construct(SecondFactorTypeTranslationService $translator)
+    public function __construct(private readonly SecondFactorTypeTranslationService $translator)
     {
-        $this->translator = $translator;
     }
 
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('trans_second_factor_type', [$this, 'translateSecondFactorType']),
-            new Twig_SimpleFilter('number_of_whole_stars', [$this, 'numberOfWholeStars']),
-            new Twig_SimpleFilter('half_star', [$this, 'halfStar']),
+            new Twig_SimpleFilter('trans_second_factor_type', $this->translateSecondFactorType(...)),
+            new Twig_SimpleFilter('number_of_whole_stars', $this->numberOfWholeStars(...)),
+            new Twig_SimpleFilter('half_star', $this->halfStar(...)),
         ];
     }
 

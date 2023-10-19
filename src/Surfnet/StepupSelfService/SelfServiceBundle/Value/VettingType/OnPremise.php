@@ -20,7 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType;
 
 class OnPremise implements VettingTypeInterface
 {
-    private $isPrefered = false;
+    private bool $isPrefered = false;
 
     public function identifier(): string
     {

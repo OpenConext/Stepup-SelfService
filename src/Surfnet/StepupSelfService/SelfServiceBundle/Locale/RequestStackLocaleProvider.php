@@ -28,15 +28,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 final class RequestStackLocaleProvider implements PreferredLocaleProvider
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
-
-    /**
-     * @var string
-     */
-    private $defaultLocale;
+    private readonly string $defaultLocale;
 
     /**
      * @var string[]
@@ -44,12 +36,11 @@ final class RequestStackLocaleProvider implements PreferredLocaleProvider
     private $supportedLocales;
 
     /**
-     * @param RequestStack $requestStack
      * @param string $defaultLocale
      * @param string[] $supportedLocales
      */
     public function __construct(
-        RequestStack $requestStack,
+        private readonly RequestStack $requestStack,
         $defaultLocale,
         $supportedLocales
     ) {
@@ -63,8 +54,6 @@ final class RequestStackLocaleProvider implements PreferredLocaleProvider
                 throw InvalidArgumentException::invalidType('string', $parameterName, $supportedLocale);
             }
         }
-
-        $this->requestStack = $requestStack;
         $this->defaultLocale = $defaultLocale;
         $this->supportedLocales = $supportedLocales;
     }

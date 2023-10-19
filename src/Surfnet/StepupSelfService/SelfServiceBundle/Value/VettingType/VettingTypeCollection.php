@@ -26,7 +26,7 @@ class VettingTypeCollection
     /**
      * @var VettingTypeInterface[]
      */
-    private $collection = [];
+    private array $collection = [];
 
     public function add(VettingTypeInterface $vettingType): void
     {
@@ -49,12 +49,12 @@ class VettingTypeCollection
         }
     }
 
-    public function allowSelfVetting()
+    public function allowSelfVetting(): bool
     {
         return array_key_exists(VettingTypeInterface::SELF_VET, $this->collection);
     }
 
-    public function allowSelfAssertedTokens()
+    public function allowSelfAssertedTokens(): bool
     {
         return array_key_exists(VettingTypeInterface::SELF_ASSERTED_TOKENS, $this->collection);
     }
