@@ -130,7 +130,7 @@ final class ConfigurationTest extends TestCase
             ]
         ];
 
-        $this->assertConfigurationIsInvalid([$configuration], 'Expected int, but got string');
+        $this->assertConfigurationIsInvalid([$configuration], 'Expected "int", but got "string"');
     }
 
     /**
@@ -146,7 +146,7 @@ final class ConfigurationTest extends TestCase
             ]
         ];
 
-        $this->assertConfigurationIsInvalid([$configuration], 'Expected int, but got string');
+        $this->assertConfigurationIsInvalid([$configuration], 'Expected "int", but got "string"');
     }
 
     protected function getConfiguration(): \Surfnet\StepupSelfService\SelfServiceBundle\DependencyInjection\Configuration
