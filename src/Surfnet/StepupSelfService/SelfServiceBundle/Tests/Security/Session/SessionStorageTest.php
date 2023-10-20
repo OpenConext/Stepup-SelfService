@@ -20,6 +20,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Security\Session;
 
 use DateTime as CoreDateTime;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
@@ -29,6 +30,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionStorageTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     /**
      * Ensures that any modifications to the time do not bleed through to other tests
      */

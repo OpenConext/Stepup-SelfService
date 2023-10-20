@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Mockery as m;
 use Psr\Log\LoggerInterface;
@@ -28,6 +29,8 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokensMarsha
 
 class SelfAssertedTokensMarshallerTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     private \Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokensMarshaller $marshaller;
 
     /**

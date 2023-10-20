@@ -18,12 +18,15 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\SelfAssertedTokens;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\RecoveryTokenConfigurationException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenConfig;
 
 class RecoveryTokenConfigTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     public function test_both_recovery_token_methods_can_be_enabled(): void
     {
         $config = new RecoveryTokenConfig(true, true);

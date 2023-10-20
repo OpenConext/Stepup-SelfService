@@ -18,12 +18,15 @@
 
 namespace Surfnet\Stepup\Tests;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 
 class AvailableTokenCollectionTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     public function test_create_from(): void
     {
         $nonGssp = ['sms' => 'sms', 'yubikey' => 'yubikey'];

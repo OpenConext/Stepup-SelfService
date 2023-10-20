@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection;
@@ -27,6 +28,8 @@ use Mockery as m;
 
 class SecondFactorTypeCollectionTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     public function test_it_calculates_number_of_registrations_left(): void
     {
         $collection = new SecondFactorTypeCollection();

@@ -19,12 +19,15 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Locale;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Locale\RequestStackLocaleProvider;
 
 final class RequestStackLocaleProviderTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     /**
      * @test
      */
