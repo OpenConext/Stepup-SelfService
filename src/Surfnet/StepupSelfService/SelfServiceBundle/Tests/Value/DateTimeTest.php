@@ -20,11 +20,13 @@ namespace Surfnet\Stepup\Tests\DateTime;
 
 use DateInterval;
 use DateTime as CoreDateTime;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 
 class DateTimeTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
     /**
      * Might seem a bit overdone, but we rely on this specific format in quite a bit of places. If the format changes
      * this might lead to some unforeseen errors. This ensures that if the format is changed, this test fails and

@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Mockery as m;
 use Psr\Log\LoggerInterface;
@@ -37,6 +38,8 @@ use DateTime as CoreDateTime;
 
 class SelfVetMarshallerTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     final public const LOA_2_ID = '221cdaa5-1d23-4b01-9fd8-3c810a5c596a';
 
     final public const LOA_3_ID = '331cdaa5-1d23-4b01-9fd8-3c810a5c596a';

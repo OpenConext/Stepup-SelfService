@@ -18,11 +18,14 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service\SelfAssertedTokens\Dto;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 
 class SafeStoreSecretTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     public function test_it_creates_asecret(): void
     {
         $secret = new SafeStoreSecret();

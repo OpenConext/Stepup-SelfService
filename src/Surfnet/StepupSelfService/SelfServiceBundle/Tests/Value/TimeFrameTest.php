@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Value;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
@@ -25,6 +26,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\TimeFrame;
 
 class TimeFrameTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
     /**
      * @test
      * @group value
