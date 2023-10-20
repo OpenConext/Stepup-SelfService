@@ -39,7 +39,7 @@ class SafeStoreSecretTest extends TestCase
     {
         $secretString = $secret->display();
         $this->assertIsString($secretString);
-        $this->assertRegExp('/[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}/', $secretString);
+        $this->assertMatchesRegularExpression('/[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}/', $secretString);
 
         // Verify the secret is idempotent, e.g. secret is generated during construction time.
         $this->assertEquals($secret->display(), $secretString);
