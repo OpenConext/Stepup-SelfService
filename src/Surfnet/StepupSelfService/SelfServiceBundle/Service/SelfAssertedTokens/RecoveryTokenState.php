@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\ReturnTo;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -53,8 +54,11 @@ class RecoveryTokenState
 
     private const SAFE_STORE_SESSION_NAME = 'safe_store_secret';
 
-    public function __construct(private readonly SessionInterface $session)
+    private SessionInterface $session;
+
+    public function __construct(private readonly RequestStack $requestStack)
     {
+        $this->session = $this->requestStack->getSession();
     }
 
     public function tokenCreatedDuringSecondFactorRegistration(): void

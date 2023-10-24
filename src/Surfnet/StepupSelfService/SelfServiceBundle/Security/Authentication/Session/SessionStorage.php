@@ -22,6 +22,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlAuthenticationStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthenticationStateHandler
@@ -31,9 +32,11 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
      */
     final public const AUTH_SESSION_KEY = '__auth/';
     final public const SAML_SESSION_KEY = '__saml/';
+    private SessionInterface $session;
 
-    public function __construct(private readonly SessionInterface $session)
+    public function __construct(private readonly RequestStack $requestStack)
     {
+        $this->session = $this->requestStack->getSession();
     }
 
     public function logAuthenticationMoment(): void

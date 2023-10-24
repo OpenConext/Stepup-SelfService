@@ -25,7 +25,7 @@ services:
             - "@surfnet_saml.http.post_binding"
             - "@surfnet_stepup.service.loa_resolution"
             - "@surfnet_saml.logger"
-            - "@session"
+            - "@request_stack"
             - "@logger"
 
     Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController:
@@ -165,7 +165,7 @@ services:
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState:
         arguments:
-            - '@session'
+            - '@request_stack'
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService:
         arguments:
@@ -178,7 +178,7 @@ services:
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService:
         arguments:
-            - "@session"
+            - '@request_stack'
             - "@logger"
             - '' # See extension
             - [] # See extension
