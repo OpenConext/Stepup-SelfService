@@ -21,6 +21,8 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service;
 use Mockery as m;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Tests\Security\Session\FakeRequestStack;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
@@ -31,9 +33,12 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
 
     protected function setUp(): void
     {
+
         $this->session = m::mock(Session::class);
+        $requestStack = new FakeRequestStack($this->session);
+
         $this->logger = m::mock(LoggerInterface::class);
-        $this->service = new ActivationFlowService($this->session, $this->logger, 'activate', ['self', 'ra']);
+        $this->service = new ActivationFlowService($requestStack, $this->logger, 'activate', ['self', 'ra']);
     }
 
     /**
