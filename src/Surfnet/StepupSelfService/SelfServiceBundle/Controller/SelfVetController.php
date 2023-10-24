@@ -39,6 +39,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor\TestAut
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -94,7 +95,7 @@ class SelfVetController extends Controller
         PostBinding $postBinding,
         LoaResolutionService $loaResolutionService,
         SamlAuthenticationLogger $samlAuthenticationLogger,
-        SessionInterface $session,
+        RequestStack $requestStack,
         LoggerInterface $logger
     ) {
         $this->authenticationRequestFactory = $authenticationRequestFactory;
@@ -104,7 +105,7 @@ class SelfVetController extends Controller
         $this->postBinding = $postBinding;
         $this->loaResolutionService = $loaResolutionService;
         $this->samlLogger = $samlAuthenticationLogger;
-        $this->session = $session;
+        $this->session = $this->requestStack->getSession();;
         $this->logger = $logger;
     }
 
