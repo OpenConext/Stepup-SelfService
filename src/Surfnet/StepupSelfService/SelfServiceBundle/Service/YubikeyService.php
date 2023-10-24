@@ -35,7 +35,7 @@ class YubikeyService
     /**
      * @return YubikeyVerificationResult
      */
-    public function verify(VerifyYubikeyOtpCommand $command): \Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyVerificationResult
+    public function verify(VerifyYubikeyOtpCommand $command): YubikeyVerificationResult
     {
         $this->logger->info('Verifying Yubikey OTP');
 
@@ -54,7 +54,7 @@ class YubikeyService
                 $statusCode,
                 $response->getReasonPhrase()
             ));
-            $this->logger->warn((string) $response->getBody());
+            $this->logger->warning((string) $response->getBody());
 
             return new YubikeyVerificationResult(true, false);
         }
