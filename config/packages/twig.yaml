@@ -7,4 +7,5 @@ twig:
         global_view_parameters: "@self_service.service.global_view_parameters"
         root_path: "%kernel.project_dir%"
     paths:
-        "%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views": 'SurfnetStepupSelfServiceSelfServiceBundle'
+        '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views': 'SurfnetStepupSelfServiceSelfServiceBundle'
+        '%kernel.project_dir%/vendor/surfnet/stepup-saml-bundle/templates': 'SurfnetSaml'
