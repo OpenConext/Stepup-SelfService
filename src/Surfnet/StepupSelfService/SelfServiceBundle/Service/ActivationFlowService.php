@@ -22,12 +22,15 @@ use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use function sprintf;
 
 class ActivationFlowService
 {
     private const ACTIVATION_FLOW_PREFERENCE_SESSION_NAME = 'self_service_activation_flow_preference';
+
+    private SessionInterface $session;
 
     /**
      * Handle preferred activation flow logic
@@ -42,8 +45,13 @@ class ActivationFlowService
      * Note that:
      * - fieldName and options are configured in the SelfServiceExtension
      */
-    public function __construct(private readonly SessionInterface $session, private readonly LoggerInterface $logger, private readonly string $fieldName, private readonly array $options)
+    public function __construct(
+        private readonly RequestStack $requestStack,
+        private readonly LoggerInterface $logger,
+        private readonly string $fieldName,
+        private readonly array $options)
     {
+        $this->session = $this->requestStack->getSession();
     }
 
 
