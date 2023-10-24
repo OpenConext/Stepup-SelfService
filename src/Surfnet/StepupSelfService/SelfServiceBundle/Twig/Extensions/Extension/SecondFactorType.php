@@ -19,11 +19,11 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Twig\Extensions\Extension;
 
 use Surfnet\StepupBundle\Service\SecondFactorTypeTranslationService;
-use Twig_Extension;
-use Twig_SimpleFilter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use function intval;
 
-final class SecondFactorType extends Twig_Extension
+final class SecondFactorType extends AbstractExtension
 {
     public function __construct(private readonly SecondFactorTypeTranslationService $translator)
     {
@@ -32,13 +32,13 @@ final class SecondFactorType extends Twig_Extension
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('trans_second_factor_type', $this->translateSecondFactorType(...)),
-            new Twig_SimpleFilter('number_of_whole_stars', $this->numberOfWholeStars(...)),
-            new Twig_SimpleFilter('half_star', $this->halfStar(...)),
+            new TwigFilter('trans_second_factor_type', $this->translateSecondFactorType(...)),
+            new TwigFilter('number_of_whole_stars', $this->numberOfWholeStars(...)),
+            new TwigFilter('half_star', $this->halfStar(...)),
         ];
     }
 
-    public function translateSecondFactorType($secondFactorType)
+    public function translateSecondFactorType($secondFactorType): string
     {
         return $this->translator->translate($secondFactorType, 'ss.second_factor.type.%s');
     }
