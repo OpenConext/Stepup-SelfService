@@ -19,11 +19,11 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller as FrameworkController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use UnexpectedValueException;
 
-class Controller extends FrameworkController
+class Controller extends AbstractController
 {
     /**
      * Default verify email option as defined by middleware.
@@ -34,9 +34,9 @@ class Controller extends FrameworkController
      * @return Identity
      * @throws AccessDeniedException When the registrant isn't registered using a SAML token.
      */
-    protected function getIdentity()
+    protected function getIdentity(): Identity
     {
-        $token = $this->get('security.token_storage')->getToken();
+        $token = $this->container->get('security.token_storage')->getToken();
         $user  = $token->getUser();
 
         if (!$user instanceof Identity) {
@@ -57,10 +57,10 @@ class Controller extends FrameworkController
     /**
      * @param string $type
      */
-    protected function assertSecondFactorEnabled($type)
+    protected function assertSecondFactorEnabled(string $type): void
     {
         if (!in_array($type, $this->getParameter('ss.enabled_second_factors'))) {
-            $this->get('logger')->warning('A controller action was called for a disabled second factor');
+            $this->container->get('logger')->warning('A controller action was called for a disabled second factor');
 
             throw $this->createNotFoundException();
         }
@@ -69,9 +69,9 @@ class Controller extends FrameworkController
     /**
      * @return bool
      */
-    protected function emailVerificationIsRequired()
+    protected function emailVerificationIsRequired(): bool
     {
-        $config = $this->get('self_service.service.institution_configuration_options')
+        $config = $this->container->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
 
         if ($config === null) {
