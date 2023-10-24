@@ -18,7 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 interface AuthenticationHandler
 {
@@ -29,7 +29,7 @@ interface AuthenticationHandler
      * @param GetResponseEvent $event
      * @return void
      */
-    public function process(GetResponseEvent $event);
+    public function process(RequestEvent $event): void;
 
     /**
      * Allows setting the optional next handler
@@ -37,5 +37,5 @@ interface AuthenticationHandler
      * @param AuthenticationHandler $handler
      * @return void
      */
-    public function setNext(AuthenticationHandler $handler);
+    public function setNext(AuthenticationHandler $handler): void;
 }
