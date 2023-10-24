@@ -22,17 +22,19 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
-class SamlListener implements ListenerInterface
+class SamlListener
 {
-    public function __construct(private readonly AuthenticationHandler $authenticationHandler, private readonly SamlInteractionProvider $samlInteractionProvider, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly AuthenticationHandler $authenticationHandler,
+        private readonly SamlInteractionProvider $samlInteractionProvider,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
-    public function handle(GetResponseEvent $event): void
+    public function __invoke(RequestEvent $event): void
     {
         try {
             $this->authenticationHandler->process($event);
