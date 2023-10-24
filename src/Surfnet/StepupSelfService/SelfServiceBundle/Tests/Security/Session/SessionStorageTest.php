@@ -47,7 +47,8 @@ class SessionStorageTest extends TestCase
      */
     public function the_authentication_moment_can_be_logged(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $sessionStorage->logAuthenticationMoment();
 
@@ -63,7 +64,8 @@ class SessionStorageTest extends TestCase
     {
         $this->expectException(LogicException::class);
 
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $sessionStorage->logAuthenticationMoment();
         $sessionStorage->logAuthenticationMoment();
@@ -76,7 +78,8 @@ class SessionStorageTest extends TestCase
      */
     public function whether_or_not_an_authentication_moment_is_logged_can_be_queried(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $this->assertFalse($sessionStorage->isAuthenticationMomentLogged());
 
@@ -92,7 +95,9 @@ class SessionStorageTest extends TestCase
      */
     public function a_logged_authentication_moment_can_be_retrieved(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
+
         $now = new DateTime(new CoreDateTime('@1000'));
         $this->setCurrentTime($now);
 
@@ -112,7 +117,8 @@ class SessionStorageTest extends TestCase
     {
         $this->expectException(LogicException::class);
 
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $sessionStorage->getAuthenticationMoment();
     }
@@ -124,7 +130,8 @@ class SessionStorageTest extends TestCase
      */
     public function an_interaction_can_be_logged(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $sessionStorage->updateLastInteractionMoment();
 
@@ -138,7 +145,8 @@ class SessionStorageTest extends TestCase
      */
     public function the_moment_of_interaction_can_be_retrieved(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $now = new DateTime(new CoreDateTime('@1000'));
         $this->setCurrentTime($now);
@@ -156,7 +164,8 @@ class SessionStorageTest extends TestCase
      */
     public function an_interaction_is_logged_when_an_authentication_is_logged(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
         // fixate time, just to be sure when comparing the moments...
         $now = new DateTime(new CoreDateTime('@1000'));
         $this->setCurrentTime($now);
@@ -180,7 +189,8 @@ class SessionStorageTest extends TestCase
      */
     public function the_moment_of_interaction_can_be_updated(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $now   = new DateTime(new CoreDateTime('@1000'));
         $later = new DateTime(new CoreDateTime('@2000'));
@@ -206,7 +216,8 @@ class SessionStorageTest extends TestCase
      */
     public function the_existence_of_a_moment_interaction_can_be_queried(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $this->assertFalse($sessionStorage->hasSeenInteraction());
 
@@ -222,7 +233,8 @@ class SessionStorageTest extends TestCase
      */
     public function the_current_uri_can_be_stored_in_the_session(): void
     {
-        $sessionStorage = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
         $originalUri = 'https://selfservice.stepup.test/some/path?with=param#hashvalue';
 
         $sessionStorage->setCurrentRequestUri($originalUri);
@@ -238,7 +250,8 @@ class SessionStorageTest extends TestCase
      */
     public function a_request_id_can_be_stored_in_the_session(): void
     {
-        $sessionStorage    = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
         $originalRequestId = '_' . bin2hex(openssl_random_pseudo_bytes(32));
 
         $sessionStorage->setRequestId($originalRequestId);
@@ -254,7 +267,8 @@ class SessionStorageTest extends TestCase
      */
     public function the_presence_of_a_request_id_can_be_queried(): void
     {
-        $sessionStorage    = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
         $originalRequestId = '_' . bin2hex(openssl_random_pseudo_bytes(32));
 
         $this->assertFalse($sessionStorage->hasRequestId());
@@ -271,7 +285,8 @@ class SessionStorageTest extends TestCase
      */
     public function a_stored_request_id_can_be_cleared(): void
     {
-        $sessionStorage    = new SessionStorage(new FakeSession());
+        $fakeRequestStack = new FakeRequestStack();
+        $sessionStorage = new SessionStorage($fakeRequestStack);
         $originalRequestId = '_' . bin2hex(openssl_random_pseudo_bytes(32));
 
         $this->assertFalse($sessionStorage->hasRequestId());
@@ -297,7 +312,8 @@ class SessionStorageTest extends TestCase
             ->shouldReceive('invalidate')
             ->once()
             ->getMock();
-        $sessionStorage = new SessionStorage($session);
+        $fakeRequestStack = new FakeRequestStack($session);
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $sessionStorage->invalidate();
 
@@ -315,7 +331,8 @@ class SessionStorageTest extends TestCase
             ->shouldReceive('migrate')
             ->once()
             ->getMock();
-        $sessionStorage = new SessionStorage($session);
+        $fakeRequestStack = new FakeRequestStack($session);
+        $sessionStorage = new SessionStorage($fakeRequestStack);
 
         $sessionStorage->migrate();
 
