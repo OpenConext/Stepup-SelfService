@@ -105,7 +105,7 @@ class SelfVetController extends Controller
         $this->postBinding = $postBinding;
         $this->loaResolutionService = $loaResolutionService;
         $this->samlLogger = $samlAuthenticationLogger;
-        $this->session = $this->requestStack->getSession();;
+        $this->session = $requestStack->getSession();
         $this->logger = $logger;
     }
 
