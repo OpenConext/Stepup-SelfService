@@ -1,0 +1,9 @@
+includes:
+    - ./phpstan-baseline.neon
+parameters:
+    level: 9
+    paths:
+        - ../../src
+    excludePaths:
+        - ../../src/Surfnet/StepupSelfService/SelfServiceBundle/Tests
+        - ../../src/Surfnet/StepupSelfService/SamlStepupProviderBundle/Tests
