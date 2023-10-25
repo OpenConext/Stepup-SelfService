@@ -26,7 +26,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInte
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -62,7 +62,7 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
         $this->templating                 = $templating;
     }
 
-    public function process(GetResponseEvent $event): void
+    public function process(RequestEvent $event): void
     {
         if ($this->tokenStorage->getToken() === null
             && $this->samlInteractionProvider->isSamlAuthenticationInitiated()
