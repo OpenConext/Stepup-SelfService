@@ -21,7 +21,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Ha
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionLifetimeGuard;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AuthenticatedUserHandler implements AuthenticationHandler
@@ -32,7 +32,7 @@ class AuthenticatedUserHandler implements AuthenticationHandler
     {
     }
 
-    public function process(GetResponseEvent $event): void
+    public function process(RequestEvent $event): void
     {
         if ($this->tokenStorage->getToken() !== null
             && $this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->sessionStateHandler)

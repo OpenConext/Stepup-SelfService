@@ -26,7 +26,7 @@ interface AuthenticationHandler
      * Checks if it can process the event and if so does so. Also determines if there
      * is a next handler to be called if it cannot process the event itself.
      *
-     * @param GetResponseEvent $event
+     * @param RequestEvent $event
      * @return void
      */
     public function process(RequestEvent $event): void;

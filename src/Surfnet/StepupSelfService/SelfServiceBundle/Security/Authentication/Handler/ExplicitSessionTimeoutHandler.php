@@ -22,7 +22,7 @@ use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionLifetimeGuard;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Logout\CookieClearingLogoutHandler;
@@ -58,7 +58,7 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
         $this->cookieClearingLogoutHandler = $cookieClearingLogoutHandler;
     }
 
-    public function process(GetResponseEvent $event): void
+    public function process(RequestEvent $event): void
     {
         if ($this->tokenStorage->getToken() !== null
             && !$this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->authenticatedSession)
