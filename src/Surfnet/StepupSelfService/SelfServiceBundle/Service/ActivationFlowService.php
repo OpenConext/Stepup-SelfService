@@ -49,8 +49,8 @@ class ActivationFlowService
         private readonly RequestStack $requestStack,
         private readonly LoggerInterface $logger,
         private readonly string $fieldName,
-        private readonly array $options)
-    {
+        private readonly array $options
+    ) {
         $this->session = $this->requestStack->getSession();
     }
 
