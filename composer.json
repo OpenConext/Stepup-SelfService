@@ -90,6 +90,8 @@
         "phplint": "./ci/qa/phplint",
         "license-headers": "vendor/bin/docheader check src/",
         "phpmd": "./ci/qa/phpmd",
+        "phpcs": "./ci/qa/phpcs",
+        "phpcpd": "./ci/qa/phpcpd",
         "phpstan": "./ci/qa/phpstan",
         "phpstan-baseline": "./ci/qa/phpstan-update-baseline",
         "phpcbf": "./ci/qa/phpcbf",
