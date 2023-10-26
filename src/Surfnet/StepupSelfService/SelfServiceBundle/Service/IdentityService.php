@@ -36,10 +36,14 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
  */
-class IdentityService implements UserProviderInterface
+readonly class IdentityService implements UserProviderInterface
 {
-    public function __construct(private readonly ApiIdentityService $apiIdentityService, private readonly CommandService $commandService, private readonly TokenStorageInterface $tokenStorage, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private ApiIdentityService $apiIdentityService,
+        private CommandService $commandService,
+        private TokenStorageInterface $tokenStorage,
+        private LoggerInterface $logger
+    ) {
     }
 
     /**

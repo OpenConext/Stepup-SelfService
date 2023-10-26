@@ -28,8 +28,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SamlInteractionProvider
 {
-    public function __construct(private readonly ServiceProvider $serviceProvider, private readonly IdentityProvider $identityProvider, private readonly RedirectBinding $redirectBinding, private readonly PostBinding $postBinding, private readonly SamlAuthenticationStateHandler $samlAuthenticationStateHandler)
-    {
+    public function __construct(
+        private readonly ServiceProvider $serviceProvider,
+        private readonly IdentityProvider $identityProvider,
+        private readonly RedirectBinding $redirectBinding,
+        private readonly PostBinding $postBinding,
+        private readonly SamlAuthenticationStateHandler $samlAuthenticationStateHandler
+    ) {
     }
 
     /**

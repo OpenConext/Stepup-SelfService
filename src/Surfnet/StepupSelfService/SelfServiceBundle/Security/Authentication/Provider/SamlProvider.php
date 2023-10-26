@@ -33,8 +33,12 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class SamlProvider implements AuthenticationProviderInterface
 {
-    public function __construct(private readonly IdentityService $identityService, private readonly AttributeDictionary $attributeDictionary, private readonly PreferredLocaleProvider $preferredLocaleProvider, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly IdentityService $identityService,
+        private readonly AttributeDictionary $attributeDictionary,
+        private readonly PreferredLocaleProvider $preferredLocaleProvider,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     /**

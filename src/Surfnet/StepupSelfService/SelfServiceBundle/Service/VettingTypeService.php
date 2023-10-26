@@ -30,10 +30,15 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeCol
 use function array_filter;
 use function array_key_exists;
 
-class VettingTypeService
+readonly class VettingTypeService
 {
-    public function __construct(private readonly SelfVetMarshaller $selfVetMarshaller, private readonly SelfAssertedTokensMarshaller $selfAssertedTokensMarshaller, private readonly ActivationFlowService $activationFlowService, private readonly VettingTypeHintService $vettingTypeHintService, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private SelfVetMarshaller $selfVetMarshaller,
+        private SelfAssertedTokensMarshaller $selfAssertedTokensMarshaller,
+        private ActivationFlowService $activationFlowService,
+        private VettingTypeHintService $vettingTypeHintService,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function vettingTypes(Identity $identity, string $secondFactorId): VettingTypeCollection
