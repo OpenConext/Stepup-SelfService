@@ -23,19 +23,26 @@ use Surfnet\SamlBundle\Monolog\SamlAuthenticationLogger;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlAuthenticationStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class InitiateSamlAuthenticationHandler implements AuthenticationHandler
 {
-    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
+    private ?AuthenticationHandler $nextHandler = null;
 
-    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly AuthenticatedSessionStateHandler $authenticatedSession, private readonly SamlAuthenticationStateHandler $samlAuthenticationStateHandler, private readonly SamlInteractionProvider $samlInteractionProvider, private readonly RouterInterface $router, private readonly SamlAuthenticationLogger $authenticationLogger, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly AuthenticatedSessionStateHandler $authenticatedSession,
+        private readonly SamlAuthenticationStateHandler $samlAuthenticationStateHandler,
+        private readonly SamlInteractionProvider $samlInteractionProvider,
+        private readonly RouterInterface $router,
+        private readonly SamlAuthenticationLogger $authenticationLogger,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
-    public function process(GetResponseEvent $event): void
+    public function process(RequestEvent $event): void
     {
         $acsUri = $this->router->generate('selfservice_serviceprovider_consume_assertion');
 

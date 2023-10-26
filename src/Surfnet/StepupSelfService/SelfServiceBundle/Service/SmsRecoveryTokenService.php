@@ -31,7 +31,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendRecoveryTokenSmsChal
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsRecoveryTokenChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\ProofOfPossessionResult;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)

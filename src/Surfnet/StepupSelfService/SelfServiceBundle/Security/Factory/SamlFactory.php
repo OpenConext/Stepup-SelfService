@@ -18,12 +18,12 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Factory;
 
-use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AuthenticatorFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 
-class SamlFactory implements SecurityFactoryInterface
+class SamlFactory implements AuthenticatorFactoryInterface
 {
     public function create(ContainerBuilder $container, string $id, $config, $userProvider, $defaultEntryPoint): array
     {
@@ -49,11 +49,6 @@ class SamlFactory implements SecurityFactoryInterface
         return [$providerId, $listenerId, $defaultEntryPoint];
     }
 
-    public function getPosition(): string
-    {
-        return 'pre_auth';
-    }
-
     public function getKey(): string
     {
         return 'saml';
@@ -61,5 +56,15 @@ class SamlFactory implements SecurityFactoryInterface
 
     public function addConfiguration(NodeDefinition $builder): void
     {
+    }
+
+    public function getPriority(): int
+    {
+        return -10;
+    }
+
+    public function createAuthenticator(ContainerBuilder $container, string $firewallName, array $config, string $userProviderId): string|array
+    {
+        return $config;
     }
 }

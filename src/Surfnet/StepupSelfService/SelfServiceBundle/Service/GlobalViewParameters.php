@@ -19,7 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Assert;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class GlobalViewParameters
 {

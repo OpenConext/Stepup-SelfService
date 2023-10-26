@@ -88,7 +88,7 @@ services:
         public: true
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage
         arguments:
-            - "@session"
+            - "@request_stack"
 
     Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler:
         alias: "self_service.security.authentication.session.session_storage"

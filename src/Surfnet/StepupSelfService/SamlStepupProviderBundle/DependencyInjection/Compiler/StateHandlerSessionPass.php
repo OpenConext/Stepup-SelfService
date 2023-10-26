@@ -21,6 +21,7 @@ namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\DependencyInjection
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class StateHandlerSessionPass implements CompilerPassInterface
 {
@@ -30,8 +31,10 @@ class StateHandlerSessionPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        $container
-            ->getDefinition('session')
-            ->addMethodCall('registerBag', [new Reference('gssp.session.namespaced_attribute_bag')]);
+
+        // https://stackoverflow.com/questions/70577264/register-custom-attributebag-through-compilerpass
+//        $container
+//            ->getDefinition('session')
+//            ->addMethodCall('registerBag', [new Reference('gssp.session.namespaced_attribute_bag')]);
     }
 }

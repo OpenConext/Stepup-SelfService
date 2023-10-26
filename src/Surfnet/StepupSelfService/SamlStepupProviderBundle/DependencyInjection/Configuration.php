@@ -26,8 +26,8 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('surfnet_stepup_self_service_saml_stepup_provider');
+        $treeBuilder = new TreeBuilder('surfnet_stepup_self_service_saml_stepup_provider');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->addRoutesSection($rootNode);
         $this->addProvidersSection($rootNode);

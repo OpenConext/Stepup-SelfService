@@ -23,11 +23,16 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 
 class EntryPointController extends Controller
 {
-    public function __construct(private readonly SecondFactorService $secondFactorService, private readonly RecoveryTokenService $recoveryTokenService, private readonly ActivationFlowService $activationFlowService, private readonly AuthenticatedSessionStateHandler $authStateHandler)
-    {
+    public function __construct(
+        private readonly SecondFactorService $secondFactorService,
+        private readonly RecoveryTokenService $recoveryTokenService,
+        private readonly ActivationFlowService $activationFlowService,
+        private readonly AuthenticatedSessionStateHandler $authStateHandler
+    ) {
     }
 
     public function decideSecondFactorFlowAction(Request $request)
