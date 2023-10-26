@@ -26,10 +26,15 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RecoveryTokenService a
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SafeStoreAuthenticationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\ReturnTo;
 
-class RecoveryTokenService
+readonly class RecoveryTokenService
 {
-    public function __construct(private readonly MiddlewareRecoveryTokenService $recoveryTokenService, private readonly SafeStoreService $safeStoreService, private readonly RecoveryTokenState $stateStore, private readonly RecoveryTokenConfig $config, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private MiddlewareRecoveryTokenService $recoveryTokenService,
+        private SafeStoreService $safeStoreService,
+        private RecoveryTokenState $stateStore,
+        private RecoveryTokenConfig $config,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function hasRecoveryToken(Identity $identity): bool

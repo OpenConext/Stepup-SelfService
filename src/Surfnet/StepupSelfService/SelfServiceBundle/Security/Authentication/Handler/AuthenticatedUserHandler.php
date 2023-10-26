@@ -28,8 +28,12 @@ class AuthenticatedUserHandler implements AuthenticationHandler
 {
     private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
 
-    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly SessionLifetimeGuard $sessionLifetimeGuard, private readonly AuthenticatedSessionStateHandler $sessionStateHandler, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly SessionLifetimeGuard $sessionLifetimeGuard,
+        private readonly AuthenticatedSessionStateHandler $sessionStateHandler,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     public function process(RequestEvent $event): void
