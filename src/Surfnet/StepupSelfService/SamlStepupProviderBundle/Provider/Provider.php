@@ -27,8 +27,12 @@ final class Provider
     /**
      * @param string           $name
      */
-    public function __construct(private $name, private readonly ServiceProvider $serviceProvider, private readonly IdentityProvider $remoteIdentityProvider, private readonly StateHandler $stateHandler)
-    {
+    public function __construct(
+        private $name,
+        private readonly ServiceProvider $serviceProvider,
+        private readonly IdentityProvider $remoteIdentityProvider,
+        private readonly StateHandler $stateHandler
+    ) {
     }
 
     /**
