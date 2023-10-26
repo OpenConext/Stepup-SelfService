@@ -3204,12 +3204,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-saml-bundle.git",
-                "reference": "42c5ffb3aa44a6f50a5a7df1475f4335277997a3"
+                "reference": "c54c806d0baa02e07cb3c63ec3dc9d36944c2e10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-saml-bundle/zipball/42c5ffb3aa44a6f50a5a7df1475f4335277997a3",
-                "reference": "42c5ffb3aa44a6f50a5a7df1475f4335277997a3",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-saml-bundle/zipball/c54c806d0baa02e07cb3c63ec3dc9d36944c2e10",
+                "reference": "c54c806d0baa02e07cb3c63ec3dc9d36944c2e10",
                 "shasum": ""
             },
             "require": {
@@ -3305,7 +3305,7 @@
                 "source": "https://github.com/OpenConext/Stepup-saml-bundle/tree/feature/kill-off-travis",
                 "issues": "https://github.com/OpenConext/Stepup-saml-bundle/issues"
             },
-            "time": "2023-10-24T10:18:03+00:00"
+            "time": "2023-10-26T11:17:23+00:00"
         },
         {
             "name": "symfony/asset",
