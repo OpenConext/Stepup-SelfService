@@ -27,7 +27,7 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
 // are present and app_env is not prod, then engage smoketest mode.
 if ($_SERVER['APP_ENV'] !== 'prod' &&
     isset($_COOKIE['testcookie']) &&
-    strpos($_SERVER['HTTP_USER_AGENT'], 'GuzzleHttp') !== false
+    str_contains($_SERVER['HTTP_USER_AGENT'], 'GuzzleHttp')
 ) {
     $_SERVER['APP_ENV'] = 'smoketest';
     $_SERVER['APP_DEBUG'] = true;
