@@ -1,4 +1,5 @@
-FROM ghcr.io/openconext/openconext-basecontainers/php72-apache2:latest AS php-build
+FROM ghcr.io/openconext/openconext-basecontainers/php82-apache2:latest AS php-build
+
 COPY *.tar.bz2 /tmp/
 RUN tar -xvjf /tmp/*.tar.bz2 -C /var/www/html/ && \
   rm -rf /tmp/*.tar.bz2

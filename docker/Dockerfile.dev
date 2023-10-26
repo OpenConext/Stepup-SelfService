@@ -1,4 +1,4 @@
-FROM ghcr.io/openconext/openconext-basecontainers/php72-apache2-node14-composer2:latest
+FROM ghcr.io/openconext/openconext-basecontainers/php82-apache2-node16-composer2:latest
 
 RUN rm -rf /etc/apache2/sites-enabled/*
 COPY ./docker/conf/apache2.conf /etc/apache2/sites-enabled/apache2.conf
