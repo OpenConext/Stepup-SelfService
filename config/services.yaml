@@ -5,14 +5,28 @@ imports:
   - { resource: 'legacy/samlstepupproviders.yaml' }
 
 services:
+
+  Surfnet\StepupSelfService\SelfServiceBundle\Controller\:
+    # Setting class is redundant, but adds autocompletions for the IDE.
+    resource: '../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/'
+    public: true
+#    class: Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller
+#    arguments:
+    # Add this tag to inject services into controller actions.
+    tags: ['controller.service_arguments']
+    # Call the setContainer method to get access to the services via
+    # $this->get() method.
+    calls:
+      - setContainer: ['@service_container']
+
   logger:
     alias: 'monolog.logger'
     public: true
 
-  twig.extension.text: # Required by JMSTranslationBundle
-    class: Twig_Extensions_Extension_Text
-    tags: [{ name: twig.extension }]
-
-  twig.extension.intl:
-    class: Twig_Extensions_Extension_Intl
-    tags: [{ name: twig.extension }]
+#  twig.extension.text: # Required by JMSTranslationBundle
+#    class: Twig_Extensions_Extension_Text
+#    tags: [{ name: twig.extension }]
+#
+#  twig.extension.intl:
+#    class: Twig_Extensions_Extension_Intl
+#    tags: [{ name: twig.extension }]

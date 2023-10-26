@@ -54,7 +54,7 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
         return $this->session->get(self::AUTH_SESSION_KEY . 'authenticated_at', null) !== null;
     }
 
-    public function getAuthenticationMoment()
+    public function getAuthenticationMoment(): DateTime
     {
         if (!$this->isAuthenticationMomentLogged()) {
             throw new LogicException('Cannot get last authentication moment as no authentication has been set');
@@ -73,7 +73,7 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
         return $this->session->get(self::AUTH_SESSION_KEY . 'last_interaction', null) !== null;
     }
 
-    public function getLastInteractionMoment()
+    public function getLastInteractionMoment(): DateTime
     {
         if (!$this->hasSeenInteraction()) {
             throw new LogicException('Cannot get last interaction moment as we have not seen any interaction');

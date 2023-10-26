@@ -76,7 +76,7 @@ class IdentityService implements UserProviderInterface
      * @return null|\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity
      * @throws \Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException
      */
-    public function findByNameIdAndInstitution(string $nameId, string $institution)
+    public function findByNameIdAndInstitution(string $nameId, string $institution): ?Identity
     {
         $searchQuery = new IdentitySearchQuery();
         $searchQuery->setNameId($nameId);
@@ -181,5 +181,10 @@ class IdentityService implements UserProviderInterface
 
             throw new RuntimeException($note);
         }
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        // TODO: Implement loadUserByIdentifier() method.
     }
 }

@@ -3000,12 +3000,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-bundle.git",
-                "reference": "90c50a700f3b4387ad4e189198847daf45f99838"
+                "reference": "42205c9768ad8d3d097ed7e31bd9e6006d022d36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/90c50a700f3b4387ad4e189198847daf45f99838",
-                "reference": "90c50a700f3b4387ad4e189198847daf45f99838",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/42205c9768ad8d3d097ed7e31bd9e6006d022d36",
+                "reference": "42205c9768ad8d3d097ed7e31bd9e6006d022d36",
                 "shasum": ""
             },
             "require": {
@@ -3097,10 +3097,10 @@
                 "surf secure id"
             ],
             "support": {
-                "source": "https://github.com/OpenConext/Stepup-bundle/tree/6.0.7",
+                "source": "https://github.com/OpenConext/Stepup-bundle/tree/feature/sf6-upgrade",
                 "issues": "https://github.com/OpenConext/Stepup-bundle/issues"
             },
-            "time": "2023-10-24T08:58:35+00:00"
+            "time": "2023-10-25T11:52:47+00:00"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
@@ -4357,16 +4357,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.21.0",
+            "version": "v1.21.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "5529871fa173c74cf76eaeaed69c9a52e408b2c5"
+                "reference": "7c191ea3c4cd40d074810b2f4750eac2c241396c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/5529871fa173c74cf76eaeaed69c9a52e408b2c5",
-                "reference": "5529871fa173c74cf76eaeaed69c9a52e408b2c5",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/7c191ea3c4cd40d074810b2f4750eac2c241396c",
+                "reference": "7c191ea3c4cd40d074810b2f4750eac2c241396c",
                 "shasum": ""
             },
             "require": {
@@ -4402,7 +4402,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v1.21.0"
+                "source": "https://github.com/symfony/flex/tree/v1.21.1"
             },
             "funding": [
                 {
@@ -4418,7 +4418,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-22T18:04:44+00:00"
+            "time": "2023-10-24T13:32:04+00:00"
         },
         {
             "name": "symfony/form",
@@ -9140,16 +9140,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.18.5",
+            "version": "0.18.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "2a3b82f317e431fc142d21f3303891a4e64c96eb"
+                "reference": "02041b220704b9cbe075f0310d0954b2fda5c40c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/2a3b82f317e431fc142d21f3303891a4e64c96eb",
-                "reference": "2a3b82f317e431fc142d21f3303891a4e64c96eb",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/02041b220704b9cbe075f0310d0954b2fda5c40c",
+                "reference": "02041b220704b9cbe075f0310d0954b2fda5c40c",
                 "shasum": ""
             },
             "require": {
@@ -9184,7 +9184,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.18.5"
+                "source": "https://github.com/rectorphp/rector/tree/0.18.6"
             },
             "funding": [
                 {
@@ -9192,7 +9192,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-05T11:25:40+00:00"
+            "time": "2023-10-24T15:00:59+00:00"
         },
         {
             "name": "roave/security-advisories",

@@ -18,10 +18,13 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use Psr\Log\LoggerInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use UnexpectedValueException;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class Controller extends AbstractController
 {
@@ -30,22 +33,26 @@ class Controller extends AbstractController
      */
     final public const DEFAULT_VERIFY_EMAIL_OPTION = true;
 
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly InstitutionConfigurationOptionsService $configurationOptionsService
+    ) {
+    }
+
     /**
-     * @return Identity
      * @throws AccessDeniedException When the registrant isn't registered using a SAML token.
      */
     protected function getIdentity(): Identity
     {
-        $token = $this->container->get('security.token_storage')->getToken();
-        $user  = $token->getUser();
+        $user = $this->getUser();
 
         if (!$user instanceof Identity) {
-            $actualType = get_debug_type($token);
+            $actualType = get_debug_type($user);
 
             throw new UnexpectedValueException(
                 sprintf(
                     "Token did not contain user of type '%s', but one of type '%s'",
-                    \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity::class,
+                    Identity::class,
                     $actualType
                 )
             );
@@ -60,7 +67,7 @@ class Controller extends AbstractController
     protected function assertSecondFactorEnabled(string $type): void
     {
         if (!in_array($type, $this->getParameter('ss.enabled_second_factors'))) {
-            $this->container->get('logger')->warning('A controller action was called for a disabled second factor');
+            $this->logger->warning('A controller action was called for a disabled second factor');
 
             throw $this->createNotFoundException();
         }
@@ -71,7 +78,7 @@ class Controller extends AbstractController
      */
     protected function emailVerificationIsRequired(): bool
     {
-        $config = $this->container->get('self_service.service.institution_configuration_options')
+        $config = $this->configurationOptionsService
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
 
         if ($config === null) {

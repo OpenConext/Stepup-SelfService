@@ -7,15 +7,14 @@ services:
         class: Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository
 
     gssp.sessionbag:
-        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
-        factory: ['@session', 'getBag']
+        class: Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag
+#        factory: ['@session', 'getBag']
         arguments: ['gssp']
 
-    gssp.session.namespaced_attribute_bag:
+    gssp.session.attribute_bag:
         public: false
-        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+        class: Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag
         arguments:
             - '__gssp__'
-            - '/'
         calls:
             - [setName, ['gssp']]
