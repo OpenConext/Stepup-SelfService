@@ -19,11 +19,11 @@ security:
             pattern: ^/csp/report$
             security: false
 
-        saml_based:
-            custom_authenticators:
-                - Surfnet\SamlBundle\Security\Authentication\SamlAuthenticator
+#        saml_based:
+#            custom_authenticators:
+#                - Surfnet\SamlBundle\Security\Authentication\SamlAuthenticator
 
     access_control:
         - { path: ^/saml, roles: PUBLIC_ACCESS, requires_channel: https }
         - { path: ^/authentication, roles: PUBLIC_ACCESS, requires_channel: https }
-        - { path: ^/, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/, roles: PUBLIC_ACCESS, requires_channel: https }
