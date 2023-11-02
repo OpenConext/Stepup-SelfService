@@ -5,10 +5,7 @@
     "autoload": {
         "psr-4": {
             "Surfnet\\": "src\\Surfnet"
-        },
-        "classmap": [
-            "src/Kernel.php"
-        ]
+        }
     },
     "repositories": [
         {
@@ -123,6 +120,9 @@
         "optimize-autoloader": true,
         "sort-packages": true
     },
+    "platform": {
+        "php": "8.2"
+    },
     "archive": {
         "exclude": [
             "*",
@@ -147,7 +147,7 @@
         },
         "symfony": {
             "allow-contrib": false,
-            "require": "4.4.* || 6.3.*"
+            "require": "6.*.*"
         },
         "symfony-app-dir": "app",
         "symfony-var-dir": "app",
