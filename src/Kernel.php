@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace App;
+namespace Surfnet\StepupSelfService;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
