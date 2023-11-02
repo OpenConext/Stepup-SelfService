@@ -32,6 +32,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
+        "doctrine/annotations": "^2.0",
         "guzzlehttp/guzzle": "^7",
         "incenteev/composer-parameter-handler": "~2.0",
         "jms/translation-bundle": "^2.0.0",

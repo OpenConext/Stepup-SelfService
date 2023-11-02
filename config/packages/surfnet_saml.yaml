@@ -1,5 +1,5 @@
 surfnet_saml:
-  enable_authentication: false
+  enable_authentication: true
   hosted:
     attribute_dictionary:
       ignore_unknown_attributes: true
