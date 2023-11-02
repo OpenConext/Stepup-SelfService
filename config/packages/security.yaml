@@ -20,15 +20,10 @@ security:
             security: false
 
         saml_based:
-            saml: true
-            logout:
-                path: /logout
-                #        success_handler: "self_service.security.authentication.handler.logout_success"
-                invalidate_session: true
-                csrf_token_generator: security.csrf.token_manager
-                csrf_parameter: 't'
-                csrf_token_id: 'self_service_logout_token'
+            custom_authenticators:
+                - Surfnet\SamlBundle\Security\Authentication\SamlAuthenticator
 
     access_control:
-        - { path: ^/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/saml, roles: PUBLIC_ACCESS, requires_channel: https }
+        - { path: ^/authentication, roles: PUBLIC_ACCESS, requires_channel: https }
         - { path: ^/, roles: ROLE_USER, requires_channel: https }

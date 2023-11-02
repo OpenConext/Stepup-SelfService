@@ -25,12 +25,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInte
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
-class SamlListener
+readonly class SamlListener
 {
     public function __construct(
-        private readonly AuthenticationHandler $authenticationHandler,
-        private readonly SamlInteractionProvider $samlInteractionProvider,
-        private readonly LoggerInterface $logger
+        private AuthenticationHandler   $authenticationHandler,
+        private SamlInteractionProvider $samlInteractionProvider,
+        private LoggerInterface         $logger
     ) {
     }
 
