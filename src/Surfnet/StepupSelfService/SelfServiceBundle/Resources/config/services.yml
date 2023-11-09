@@ -1,11 +1,14 @@
 services:
     # To be compatible with loading services from the container instead of using DI, TODO, Utilize DI throughout the
     # application.
-    _defaults: { public: true }
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
 
     logger:
-      alias: 'monolog.logger'
-      public: true
+        alias: 'monolog.logger'
+        public: true
 
     Surfnet\StepupSelfService\SelfServiceBundle\Controller\:
         resource: '../../Controller'
@@ -185,11 +188,11 @@ services:
 
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
-        arguments:
-            - "@surfnet_stepup_middleware_client.identity.service.identity"
-            - "@surfnet_stepup_self_service_self_service.service.command"
-            - "@security.token_storage"
-            - "@logger"
+#        arguments:
+#            - "@surfnet_stepup_middleware_client.identity.service.identity"
+#            - "@surfnet_stepup_self_service_self_service.service.command"
+#            - "@security.token_storage"
+#            - "@logger"
 
     self_service.service.locale_provider:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\LocaleProviderService

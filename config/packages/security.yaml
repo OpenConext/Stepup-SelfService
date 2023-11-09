@@ -1,29 +1,31 @@
 security:
+
+    enable_authenticator_manager: true
+
     providers:
-        middleware:
-            id: self_service.service.identity
+        saml-provider:
+            id: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/|^/_trans(/|$)
+            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
 
-        default:
-            pattern: ^/authentication/(metadata|session-expired)$
+        login_firewall:
+            pattern:    ^/saml/metadata
+
+        published_metadata:
+            pattern:    ^/entity/metadata/*
 
         monitor:
             pattern: ^/(info|health)$
             security: false
 
-        csp_report:
-            pattern: ^/csp/report$
-            security: false
-
-#        saml_based:
-#            custom_authenticators:
-#                - Surfnet\SamlBundle\Security\Authentication\SamlAuthenticator
+        saml_based:
+            custom_authenticators:
+                - Surfnet\SamlBundle\Security\Authentication\SamlAuthenticator
 
     access_control:
         - { path: ^/saml, roles: PUBLIC_ACCESS, requires_channel: https }
         - { path: ^/authentication, roles: PUBLIC_ACCESS, requires_channel: https }
-        - { path: ^/, roles: PUBLIC_ACCESS, requires_channel: https }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }

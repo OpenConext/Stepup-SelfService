@@ -1,14 +1,15 @@
 services:
-    # To be compatible with loading services from the container instead of using DI, TODO, Utilize DI throughout the
-    # application.
-    _defaults: { public: true }
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: true
 
     gssp.provider_repository:
         class: Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository
 
     gssp.sessionbag:
         class: Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag
-#        factory: ['@session', 'getBag']
+        #        factory: ['@session', 'getBag']
         arguments: ['gssp']
 
     gssp.session.attribute_bag:

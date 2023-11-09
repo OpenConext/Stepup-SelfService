@@ -24,7 +24,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('surfnet_stepup_self_service_saml_stepup_provider');
         $rootNode = $treeBuilder->getRootNode();
