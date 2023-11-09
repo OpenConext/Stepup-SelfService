@@ -188,11 +188,11 @@ services:
 
     self_service.service.identity:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService
-#        arguments:
-#            - "@surfnet_stepup_middleware_client.identity.service.identity"
-#            - "@surfnet_stepup_self_service_self_service.service.command"
-#            - "@security.token_storage"
-#            - "@logger"
+        arguments:
+            - "@surfnet_stepup_middleware_client.identity.service.identity"
+            - "@surfnet_stepup_self_service_self_service.service.command"
+            - "@security.token_storage"
+            - "@logger"
 
     self_service.service.locale_provider:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\LocaleProviderService

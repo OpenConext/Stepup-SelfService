@@ -39,6 +39,11 @@ services:
 #    # Firewall
   surfnet_saml.saml_provider:
     class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
+    arguments:
+      $identityService: '@self_service.service.identity'
+      $preferredLocaleProvider: '@self_service.locale.request_stack_locale_provider'
+
+
 #    arguments:
 #      - '@request_stack'
 #      - '@Surfnet\SamlBundle\Entity\HostedEntities'
