@@ -9,6 +9,7 @@ services:
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    public: true
 
   Surfnet\StepupSelfService\SelfServiceBundle\Controller\:
     # Setting class is redundant, but adds autocompletions for the IDE.
@@ -35,17 +36,16 @@ services:
 #    class: Twig_Extensions_Extension_Intl
 #    tags: [{ name: twig.extension }]
 
-    # Firewall
+#    # Firewall
   surfnet_saml.saml_provider:
-    class: Surfnet\Controller\Security\AcsInitController
-    arguments:
-      - '@request_stack'
-      - '@Surfnet\SamlBundle\Entity\HostedEntities'
-      - '@Surfnet\SamlBundle\Entity\IdentityProvider'
-      - '@Surfnet\SamlBundle\Entity\IdentityProvider'
-      - '@logger'
+    class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
+#    arguments:
+#      - '@request_stack'
+#      - '@Surfnet\SamlBundle\Entity\HostedEntities'
+#      - '@Surfnet\SamlBundle\Entity\IdentityProvider'
+#      - '@logger'
 
-  Surfnet\Controller\Security\AcsInitController:
+  Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider:
     alias: surfnet_saml.saml_provider
 
   Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService:
@@ -61,3 +61,4 @@ services:
 #    arguments:
 #      - "@surfnet_stepup_middleware_client.configuration.service.institution_configuration_options"
 #    public: true
+

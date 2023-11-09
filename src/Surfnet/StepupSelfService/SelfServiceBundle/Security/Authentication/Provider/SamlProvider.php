@@ -19,8 +19,11 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider;
 
 use Psr\Log\LoggerInterface;
+use SAML2\Assertion;
+use Surfnet\SamlBundle\Exception\RuntimeException;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
 use Surfnet\SamlBundle\SAML2\Response\AssertionAdapter;
+use Surfnet\SamlBundle\Security\Authentication\Provider\SamlProviderInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\MissingRequiredAttributeException;
@@ -30,8 +33,10 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class SamlProvider implements AuthenticationProviderInterface
+class SamlProvider implements SamlProviderInterface, UserProviderInterface //AuthenticationProviderInterface
 {
     public function __construct(
         private readonly IdentityService $identityService,
@@ -120,5 +125,75 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         return $value;
+    }
+
+    public function getNameId(Assertion $assertion): string
+    {
+        return $this->attributeDictionary->translate($assertion)->getNameID();
+    }
+
+    public function getUser(Assertion $assertion): UserInterface
+    {
+        $translatedAssertion = $this->attributeDictionary->translate($assertion);
+
+        $nameId = $this->getNameId($assertion);
+        try {
+            $email = $this->getSingleStringValue('mail', $translatedAssertion);
+        } catch (MissingSamlAttributeException $e) {
+            throw new BadCredentialsException($e->getMessage());
+        }
+
+        try {
+            $commonName = $this->getSingleStringValue('commonName', $translatedAssertion);
+        } catch (MissingSamlAttributeException $e) {
+            $commonName = '';
+        }
+
+        // Default to the ROLE_USER role for services.
+        $role = 'ROLE_USER';
+
+        try {
+            // An exception is thrown when isMemberOf is empty.
+            $teamNames = (array)$translatedAssertion->getAttributeValue('isMemberOf');
+        } catch (RuntimeException $e) {
+            $teamNames = [];
+        }
+
+        if (!empty(array_intersect($this->administratorTeams, $teamNames))) {
+            $role = 'ROLE_ADMINISTRATOR';
+        }
+
+        $contact = $this->contacts->findByNameId($nameId);
+
+        if ($contact === null) {
+            $contact = new Contact($nameId, $email, $commonName);
+        } elseif ($contact->getEmailAddress() !== $email || $contact->getDisplayName() !== $commonName) {
+            $contact->setEmailAddress($email);
+            $contact->setDisplayName($commonName);
+        }
+
+        if ($role === 'ROLE_USER') {
+            $this->assignServicesToContact($contact, $teamNames);
+            $this->contacts->save($contact);
+        }
+        $contact->assignRole($role);
+
+        return new Identity($contact);
+    }
+
+
+    public function refreshUser(UserInterface $user)
+    {
+        // TODO: Implement refreshUser() method.
+    }
+
+    public function supportsClass(string $class)
+    {
+        // TODO: Implement supportsClass() method.
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        // TODO: Implement loadUserByIdentifier() method.
     }
 }

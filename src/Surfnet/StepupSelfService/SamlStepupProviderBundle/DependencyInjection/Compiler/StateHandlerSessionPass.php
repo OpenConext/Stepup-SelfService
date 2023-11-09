@@ -32,6 +32,7 @@ class StateHandlerSessionPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
 
+        // TODO: Get a fix how to use name spaces attribute bags?
         // https://stackoverflow.com/questions/70577264/register-custom-attributebag-through-compilerpass
 //        $container
 //            ->getDefinition('session')

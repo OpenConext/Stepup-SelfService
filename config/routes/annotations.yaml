@@ -1,5 +1,6 @@
 controllers:
-    resource: ../../src/Controller/
+#    resource: ../../src/Controller/
+    resource: ../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller
     type: annotation
 
 kernel:
