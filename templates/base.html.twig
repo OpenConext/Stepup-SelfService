@@ -45,12 +45,12 @@
         </div>
         {% if app.user %}
             <div class="clearfix page-header-user">
-                <form method="post" action="{{ logout_url('saml_based') }}" class="pull-right">
+                <a href="{{ logout_url('saml_based') }}" class="pull-right">
                     <button type="submit" class="btn btn-link">
                         <i class="fa fa-sign-out"></i>
                         {{ 'button.logout'|trans }}
                     </button>
-                </form>
+                </a>
                 {% set locale_switcher = stepup_locale_switcher(app.request.locale, 'ss_switch_locale', {'return-url': app.request.uri}) %}
                 {{ form_start(locale_switcher, { attr: { class: 'form-inline' }}) }}
                 {{ form_widget(locale_switcher.locale) }}
