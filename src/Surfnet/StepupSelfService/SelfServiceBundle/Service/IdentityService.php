@@ -47,13 +47,13 @@ readonly class IdentityService implements UserProviderInterface
     }
 
     /**
-     * For now this functionality is disabled, unsure if actually needed
-     *
-     * If needed, the username is the UUID of the identity so it can be fetched rather easy
+     * For now this functionality is disabled, unsure if actually needed.
+     * If needed, the userIdentifier is the UUID
+     * of the identity, so it can be fetched rather easy
      */
-    public function loadUserByUsername($username): never
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        throw new RuntimeException(sprintf('Cannot Load User By Username "%s"', $username));
+        throw new RuntimeException(sprintf('Cannot Load User By Identifier "%s"', $identifier));
     }
 
     /**
@@ -64,20 +64,13 @@ readonly class IdentityService implements UserProviderInterface
         throw new RuntimeException(sprintf('Cannot Refresh User "%s"', $user->getUsername()));
     }
 
-    /**
-     * Whether this provider supports the given user class
-     *
-     * @param string $class
-     *
-     * @return bool
-     */
-    public function supportsClass($class): bool
+    public function supportsClass(string $class): bool
     {
-        return $class === \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity::class;
+        return $class === Identity::class;
     }
 
     /**
-     * @return null|\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity
+     * @return null|Identity
      * @throws \Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException
      */
     public function findByNameIdAndInstitution(string $nameId, string $institution): ?Identity
@@ -185,10 +178,5 @@ readonly class IdentityService implements UserProviderInterface
 
             throw new RuntimeException($note);
         }
-    }
-
-    public function loadUserByIdentifier(string $identifier): UserInterface
-    {
-        // TODO: Implement loadUserByIdentifier() method.
     }
 }

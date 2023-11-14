@@ -3,7 +3,7 @@ framework:
     secret: "%secret%"
     form: ~
     csrf_protection: ~
-    error_controller: SurfnetStepupSelfServiceSelfServiceBundle:Exception:show
+#    error_controller: Surfnet\StepupBundle\Controller\ExceptionController::show
     validation: { enable_annotations: true }
     trusted_hosts: ~
     session:

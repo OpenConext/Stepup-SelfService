@@ -18,6 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider;
 
+use BadMethodCallException;
 use Psr\Log\LoggerInterface;
 use SAML2\Assertion;
 use Surfnet\SamlBundle\Exception\RuntimeException;
@@ -30,13 +31,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\MissingRequiredAttribu
 use Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
-use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class SamlProvider implements SamlProviderInterface, UserProviderInterface //AuthenticationProviderInterface
+class SamlProvider implements SamlProviderInterface, UserProviderInterface
 {
     public function __construct(
         private readonly IdentityService $identityService,
@@ -47,50 +47,6 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface //Aut
     }
 
     /**
-     * @param  SamlToken|TokenInterface $token
-     * @return TokenInterface|void
-     */
-    public function authenticate(TokenInterface $token): \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken
-    {
-        $translatedAssertion = $this->attributeDictionary->translate($token->assertion);
-
-        $nameId         = $translatedAssertion->getNameID();
-        $institution    = $this->getSingleStringValue('schacHomeOrganization', $translatedAssertion);
-        $email          = $this->getSingleStringValue('mail', $translatedAssertion);
-        $commonName     = $this->getSingleStringValue('commonName', $translatedAssertion);
-
-        $identity = $this->identityService->findByNameIdAndInstitution($nameId, $institution);
-
-        if ($identity === null) {
-            $identity                  = new Identity();
-            $identity->id              = Uuid::generate();
-            $identity->nameId          = $nameId;
-            $identity->institution     = $institution;
-            $identity->email           = $email;
-            $identity->commonName      = $commonName;
-            $identity->preferredLocale = $this->preferredLocaleProvider->providePreferredLocale();
-
-            $this->identityService->createIdentity($identity);
-        } elseif ($identity->email !== $email || $identity->commonName !== $commonName) {
-            $identity->email = $email;
-            $identity->commonName = $commonName;
-
-            $this->identityService->updateIdentity($identity);
-        }
-
-        $authenticatedToken = new SamlToken(['ROLE_USER']);
-
-        $authenticatedToken->setUser($identity);
-
-        return $authenticatedToken;
-    }
-
-    public function supports(TokenInterface $token): bool
-    {
-        return $token instanceof SamlToken;
-    }
-
-    /**
      * @return string
      */
     private function getSingleStringValue(string $attribute, AssertionAdapter $translatedAssertion): string
@@ -98,7 +54,9 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface //Aut
         $values = $translatedAssertion->getAttributeValue($attribute);
 
         if (empty($values)) {
-            throw new MissingRequiredAttributeException(sprintf('Missing value for required attribute "%s"', $attribute));
+            throw new MissingRequiredAttributeException(
+                sprintf('Missing value for required attribute "%s"', $attribute)
+            );
         }
 
         // see https://www.pivotaltracker.com/story/show/121296389
@@ -136,49 +94,35 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface //Aut
     {
         $translatedAssertion = $this->attributeDictionary->translate($assertion);
 
-        $nameId = $this->getNameId($assertion);
-        try {
-            $email = $this->getSingleStringValue('mail', $translatedAssertion);
-        } catch (MissingSamlAttributeException $e) {
-            throw new BadCredentialsException($e->getMessage());
+        $nameId         = $translatedAssertion->getNameID();
+        $institution    = $this->getSingleStringValue('schacHomeOrganization', $translatedAssertion);
+        $email          = $this->getSingleStringValue('mail', $translatedAssertion);
+        $commonName     = $this->getSingleStringValue('commonName', $translatedAssertion);
+
+        $identity = $this->identityService->findByNameIdAndInstitution($nameId, $institution);
+
+        if ($identity === null) {
+            $identity                  = new Identity();
+            $identity->id              = Uuid::generate();
+            $identity->nameId          = $nameId;
+            $identity->institution     = $institution;
+            $identity->email           = $email;
+            $identity->commonName      = $commonName;
+            $identity->preferredLocale = $this->preferredLocaleProvider->providePreferredLocale();
+
+            $this->identityService->createIdentity($identity);
+        } elseif ($identity->email !== $email || $identity->commonName !== $commonName) {
+            $identity->email = $email;
+            $identity->commonName = $commonName;
+
+            $this->identityService->updateIdentity($identity);
         }
 
-        try {
-            $commonName = $this->getSingleStringValue('commonName', $translatedAssertion);
-        } catch (MissingSamlAttributeException $e) {
-            $commonName = '';
-        }
+        $authenticatedToken = new SamlToken(['ROLE_USER']);
 
-        // Default to the ROLE_USER role for services.
-        $role = 'ROLE_USER';
+        $authenticatedToken->setUser($identity);
 
-        try {
-            // An exception is thrown when isMemberOf is empty.
-            $teamNames = (array)$translatedAssertion->getAttributeValue('isMemberOf');
-        } catch (RuntimeException $e) {
-            $teamNames = [];
-        }
-
-        if (!empty(array_intersect($this->administratorTeams, $teamNames))) {
-            $role = 'ROLE_ADMINISTRATOR';
-        }
-
-        $contact = $this->contacts->findByNameId($nameId);
-
-        if ($contact === null) {
-            $contact = new Contact($nameId, $email, $commonName);
-        } elseif ($contact->getEmailAddress() !== $email || $contact->getDisplayName() !== $commonName) {
-            $contact->setEmailAddress($email);
-            $contact->setDisplayName($commonName);
-        }
-
-        if ($role === 'ROLE_USER') {
-            $this->assignServicesToContact($contact, $teamNames);
-            $this->contacts->save($contact);
-        }
-        $contact->assignRole($role);
-
-        return new Identity($contact);
+        return $authenticatedToken;
     }
 
 
@@ -194,6 +138,6 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface //Aut
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        // TODO: Implement loadUserByIdentifier() method.
+        throw new BadMethodCallException('Use `getUser` to load a user by username');
     }
 }
