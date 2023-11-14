@@ -18,37 +18,39 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 
+use SAML2\Assertion;
 use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
 use Surfnet\SamlBundle\Http\RedirectBinding;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\UnexpectedIssuerException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class SamlInteractionProvider
+readonly class SamlInteractionProvider
 {
     public function __construct(
-        private readonly ServiceProvider $serviceProvider,
-        private readonly IdentityProvider $identityProvider,
-        private readonly RedirectBinding $redirectBinding,
-        private readonly PostBinding $postBinding,
-        private readonly SamlAuthenticationStateHandler $samlAuthenticationStateHandler
+        private ServiceProvider                $serviceProvider,
+        private IdentityProvider               $identityProvider,
+        private RedirectBinding                $redirectBinding,
+        private PostBinding                    $postBinding,
+        private SamlAuthenticationStateHandler $samlAuthenticationStateHandler
     ) {
     }
 
     /**
      * @return bool
      */
-    public function isSamlAuthenticationInitiated()
+    public function isSamlAuthenticationInitiated(): bool
     {
         return $this->samlAuthenticationStateHandler->hasRequestId();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
-    public function initiateSamlRequest(): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function initiateSamlRequest(): RedirectResponse
     {
         $authnRequest = AuthnRequestFactory::createNewRequest(
             $this->serviceProvider,
@@ -61,11 +63,11 @@ class SamlInteractionProvider
     }
 
     /**
-     * @return \SAML2\Assertion
+     * @return Assertion
      */
-    public function processSamlResponse(Request $request)
+    public function processSamlResponse(Request $request): Assertion
     {
-        /** @var \SAML2\Assertion $assertion */
+        /** @var Assertion $assertion */
         $assertion = $this->postBinding->processResponse(
             $request,
             $this->identityProvider,
