@@ -3,7 +3,6 @@ twig:
     form_themes: [ 'bootstrap_4_layout.html.twig','@SurfnetStepupSelfServiceSelfService/form/fields.html.twig' ]
     debug: "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    exception_controller: null
     globals:
         global_view_parameters: "@self_service.service.global_view_parameters"
         root_path: "%kernel.project_dir%"

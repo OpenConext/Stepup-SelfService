@@ -24,9 +24,12 @@ use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Value\Loa;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class SamlController extends Controller
@@ -34,11 +37,11 @@ class SamlController extends Controller
     /**
      * A SelfService user is able to test it's token in this endpoint
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @return RedirectResponse
+     * @throws NotFoundHttpException
+     * @throws AccessDeniedException
      */
-    public function testSecondFactorAction()
+    public function testSecondFactorAction(): RedirectResponse
     {
         $logger = $this->get('logger');
         $logger->notice('Starting second factor test');
@@ -75,7 +78,7 @@ class SamlController extends Controller
         return $this->get('surfnet_saml.http.redirect_binding')->createRedirectResponseFor($authenticationRequest);
     }
 
-    public function consumeAssertionAction(Request $httpRequest)
+    public function consumeAssertionAction(Request $httpRequest): Response
     {
         $logger = $this->get('logger');
 
@@ -133,7 +136,7 @@ class SamlController extends Controller
         return $this->redirectToRoute('ss_second_factor_list');
     }
 
-    public function metadataAction()
+    public function metadataAction(): XMLResponse
     {
         /** @var \Surfnet\SamlBundle\Metadata\MetadataFactory $metadataFactory */
         $metadataFactory = $this->get('surfnet_saml.metadata_factory');
