@@ -29,6 +29,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\MissingRequiredAttributeException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedIdentity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -118,11 +119,13 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface
             $this->identityService->updateIdentity($identity);
         }
 
+        $authenticatedIdentity = new AuthenticatedIdentity($identity);
         $authenticatedToken = new SamlToken(['ROLE_USER']);
 
-        $authenticatedToken->setUser($identity);
+        $authenticatedToken->setUser($authenticatedIdentity);
 
-        return $authenticatedToken;
+//        return $authenticatedToken;
+        return $authenticatedIdentity;
     }
 
 
@@ -133,7 +136,7 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface
 
     public function supportsClass(string $class)
     {
-        // TODO: Implement supportsClass() method.
+        return $class = AuthenticatedIdentity::class;
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
