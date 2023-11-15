@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AuthenticatedUserHandler implements AuthenticationHandler
 {
-    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
+    private ?AuthenticationHandler $nextHandler = null;
 
     public function __construct(
         private readonly TokenStorageInterface $tokenStorage,
@@ -52,13 +52,11 @@ class AuthenticatedUserHandler implements AuthenticationHandler
             return;
         }
 
-        if ($this->nextHandler !== null) {
-            $this->nextHandler->process($event);
-        }
+        $this->nextHandler?->process($event);
     }
 
-    public function setNext(AuthenticationHandler $next): void
+    public function setNext(AuthenticationHandler $handler): void
     {
-        $this->nextHandler = $next;
+        $this->nextHandler = $handler;
     }
 }

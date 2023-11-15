@@ -18,27 +18,18 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token;
 
+use SAML2\Assertion;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
 class SamlToken extends AbstractToken
 {
-    /**
-     * @var \SAML2\Assertion
-     */
-    public $assertion;
+    public Assertion $assertion;
 
     public function __construct(array $roles = [])
     {
         parent::__construct($roles);
-
-        $this->setAuthenticated(count($roles));
     }
 
-    /**
-     * Returns the user credentials.
-     *
-     * @return mixed The user credentials
-     */
     public function getCredentials(): string
     {
         return '';
