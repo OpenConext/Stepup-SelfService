@@ -44,7 +44,7 @@ class ProveYubikeyPossessionType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ss_prove_yubikey_possession';
     }

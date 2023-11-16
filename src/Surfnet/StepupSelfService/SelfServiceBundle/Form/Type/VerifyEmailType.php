@@ -46,7 +46,7 @@ class VerifyEmailType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ss_verify_email';
     }

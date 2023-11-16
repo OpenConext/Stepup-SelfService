@@ -49,7 +49,7 @@ class PromiseSafeStorePossessionType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ss_promise_recovery_token_possession';
     }
