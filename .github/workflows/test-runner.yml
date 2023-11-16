@@ -1,4 +1,4 @@
-name: PHP CI
+name: PHP Unit Test Runner
 
 on:
   push:
