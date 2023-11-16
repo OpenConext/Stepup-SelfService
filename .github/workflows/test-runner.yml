@@ -28,7 +28,7 @@ jobs:
     name: PHP ${{ matrix.php-versions }} on Ubuntu latest. Experimental == ${{ matrix.experimental }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
