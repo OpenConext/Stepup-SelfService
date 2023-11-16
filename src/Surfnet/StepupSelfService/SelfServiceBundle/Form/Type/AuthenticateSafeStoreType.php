@@ -50,7 +50,7 @@ class AuthenticateSafeStoreType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ss_authenticate_safe_store';
     }

@@ -45,7 +45,7 @@ class RevokeSecondFactorType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ss_revoke_second_factor';
     }

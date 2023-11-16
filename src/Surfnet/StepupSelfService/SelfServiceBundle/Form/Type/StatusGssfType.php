@@ -49,7 +49,7 @@ class StatusGssfType extends AbstractType
         $resolver->setRequired(['provider']);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ss_status_gssf';
     }
