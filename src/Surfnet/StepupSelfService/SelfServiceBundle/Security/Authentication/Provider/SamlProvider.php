@@ -37,6 +37,9 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
+ */
 class SamlProvider implements SamlProviderInterface, UserProviderInterface
 {
     public function __construct(
@@ -129,14 +132,14 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface
     }
 
 
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         // TODO: Implement refreshUser() method.
     }
 
-    public function supportsClass(string $class)
+    public function supportsClass(string $class): bool
     {
-        return $class = AuthenticatedIdentity::class;
+        return $class === AuthenticatedIdentity::class;
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
