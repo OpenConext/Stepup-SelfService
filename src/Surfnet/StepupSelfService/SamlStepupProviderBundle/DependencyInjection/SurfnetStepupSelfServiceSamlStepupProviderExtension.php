@@ -266,5 +266,4 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             }
         }
     }
-
 }
