@@ -6,6 +6,7 @@ on:
       - master
       - develop
       - feature/self-asserted-tokens
+      - feature/symfony6-upgrade
       - 'feature/sat-*'
 
 jobs:
