@@ -35,7 +35,7 @@
         "doctrine/annotations": "^2.0",
         "guzzlehttp/guzzle": "^7",
         "incenteev/composer-parameter-handler": "~2.0",
-        "jms/translation-bundle": "*",
+        "jms/translation-bundle": "^2.0.0",
         "mpdf/mpdf": "^8.2",
         "nelmio/security-bundle": "^2",
         "openconext/monitor-bundle": "^3.1",
@@ -124,11 +124,11 @@
             "symfony/flex": true,
             "symfony/runtime": true
         },
+        "platform": {
+            "php": "8.2"
+        },
         "optimize-autoloader": true,
         "sort-packages": true
-    },
-    "platform": {
-        "php": "8.2"
     },
     "archive": {
         "exclude": [
