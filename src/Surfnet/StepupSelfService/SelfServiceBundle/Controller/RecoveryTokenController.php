@@ -43,6 +43,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
@@ -94,6 +95,11 @@ class RecoveryTokenController extends Controller
      * Recovery Tokens: Select the token type to add
      * Shows an overview of the available token types for this Identity
      */
+    #[Route(
+        path: '/recovery-token/select-recovery-token',
+        name: 'ss_recovery_token_display_types',
+        methods: ['GET'],
+    )]
     public function selectTokenTypeAction(): Response
     {
         $this->logger->info('Determining which recovery token are available');
@@ -139,6 +145,11 @@ class RecoveryTokenController extends Controller
      *
      * Note: A stepup authentication is required to perform this action.
      */
+    #[Route(
+        path: '/recovery-token/create-safe-store',
+        name: 'ss_recovery_token_safe_store',
+        methods: ['GET', 'POST'],
+    )]
     public function createSafeStoreAction(Request $request): Response
     {
         if (!$this->recoveryTokenService->wasStepUpGiven()) {
@@ -184,6 +195,11 @@ class RecoveryTokenController extends Controller
      * Note: Shares logic with the registration SMS recovery token send challenge action
      * Note: A stepup authentication is required to perform this action.
      */
+    #[Route(
+        path: '/recovery-token/create-sms',
+        name: 'ss_recovery_token_sms',
+        methods: ['GET', 'POST'],
+    )]
     public function createSmsAction(Request $request): Response
     {
         if (!$this->recoveryTokenService->wasStepUpGiven()) {
@@ -205,6 +221,11 @@ class RecoveryTokenController extends Controller
      *
      * Note: Shares logic with the registration SMS recovery token send challenge action
      */
+    #[Route(
+        path: '/recovery-token/prove-sms-possession',
+        name: 'ss_recovery_token_prove_sms_possession',
+        methods: ['GET', 'POST'],
+    )]
     public function proveSmsPossessionAction(Request $request): Response
     {
         $this->recoveryTokenService->resetStepUpGiven();
@@ -223,6 +244,11 @@ class RecoveryTokenController extends Controller
      *
      * Note: A stepup authentication is required to perform this action.
      */
+    #[Route(
+        path: '/recovery-token/delete/{recoveryTokenId}',
+        name: 'ss_recovery_token_delete',
+        methods: ['GET'],
+    )]
     public function deleteAction(string $recoveryTokenId): Response
     {
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $this->getIdentity());

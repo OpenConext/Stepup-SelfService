@@ -29,12 +29,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SecondFactorController extends Controller
 {
     /**
      * @Template
      */
+    #[Route(path: '/overview', name: 'ss_second_factor_list', methods:  ['GET'])]
     public function listAction()
     {
         $identity = $this->getIdentity();
@@ -86,11 +88,14 @@ class SecondFactorController extends Controller
 
     /**
      * @Template
-     * @param string $state
-     * @param string $secondFactorId
-     * @return array|Response
      */
-    public function revokeAction(Request $request, $state, $secondFactorId)
+    #[Route(
+        path: '/second-factor/{state}/{secondFactorId}/revoke',
+        name: 'ss_second_factor_revoke',
+        requirements: ['state' => '^(unverified|verified|vetted)$'],
+        methods: ['GET','POST']
+    )]
+    public function revokeAction(Request $request, string $state, string $secondFactorId): array|Response
     {
         $identity = $this->getIdentity();
 

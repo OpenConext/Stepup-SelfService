@@ -33,12 +33,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends Controller
 {
     /**
      * @Template
      */
+    #[Route(
+        path: '/registration/select-token',
+        name: 'ss_registration_display_types',
+        methods: ['GET'],
+    )]
     public function displaySecondFactorTypesAction()
     {
         $institution = $this->getIdentity()->institution;
@@ -90,9 +96,13 @@ class RegistrationController extends Controller
 
     /**
      * @Template
-     * @param string $secondFactorId
      */
-    public function displayVettingTypesAction(Request $request, $secondFactorId)
+    #[Route(
+        path: '/second-factor/{secondFactorId}/vetting-types',
+        name: 'ss_second_factor_vetting_types',
+        methods:  ['GET'],
+    )]
+    public function displayVettingTypesAction(Request $request, string $secondFactorId): array|Response
     {
         /**
          * @var VettingTypeService
@@ -154,6 +164,11 @@ class RegistrationController extends Controller
     /**
      * @Template
      */
+    #[Route(
+        path: '/registration/{secondFactorId}/email-verification-email-sent',
+        name: 'ss_registration_email_verification_email_sent',
+        methods: ['GET'],
+    )]
     public function emailVerificationEmailSentAction()
     {
         return ['email' => $this->getIdentity()->email];
@@ -164,6 +179,11 @@ class RegistrationController extends Controller
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(
+        path: '/verify-email',
+        name: 'ss_registration_verify_email',
+        methods: ['GET'],
+    )]
     public function verifyEmailAction(Request $request)
     {
         $nonce = $request->query->get('n', '');
@@ -193,6 +213,12 @@ class RegistrationController extends Controller
      * email-sent page is displayed. Preventing the mail message from being sent
      * over and over again when the user performs a page reload.
      */
+    #[Route(
+        path: '/registration/{secondFactorId}/send-registration-email',
+        name: 'ss_registration_send_registration_email',
+        methods: ['GET'],
+    )]
+
     public function sendRegistrationEmailAction(string $secondFactorId)
     {
         // Send the registration email
@@ -208,6 +234,11 @@ class RegistrationController extends Controller
      * @param $secondFactorId
      * @return Response
      */
+    #[Route(
+        path: '/registration/{secondFactorId}/registration-email-sent',
+        name: 'ss_registration_registration_email_sent',
+        methods: ['GET'],
+    )]
     public function registrationEmailSentAction($secondFactorId)
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
@@ -222,6 +253,11 @@ class RegistrationController extends Controller
      * @param $secondFactorId
      * @return Response
      */
+    #[Route(
+        path: '/registration/{secondFactorId}/registration-pdf',
+        name: 'ss_registration_registration_pdf',
+        methods: ['GET'],
+    )]
     public function registrationPdfAction($secondFactorId)
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);

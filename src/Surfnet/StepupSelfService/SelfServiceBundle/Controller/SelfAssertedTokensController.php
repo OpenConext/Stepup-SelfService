@@ -36,6 +36,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeS
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  *
@@ -85,6 +86,11 @@ class SelfAssertedTokensController extends Controller
      * 2. Selects the one and only available recovery token and redirects to the recovery token authentication route
      * 3. Starts registration of a recovery token if non are in possession
      */
+    #[Route(
+        path: '/second-factor/{secondFactorId}/self-asserted-token-registration',
+        name: 'ss_second_factor_self_asserted_tokens',
+        methods: ['GET'],
+    )]
     public function selfAssertedTokenRegistrationAction($secondFactorId): Response
     {
         $this->logger->info('Checking if Identity has a recovery token');
@@ -135,6 +141,11 @@ class SelfAssertedTokensController extends Controller
      * registration of a recovery token in the self-asserted token registration
      * flow, authentication is not required.
      */
+    #[Route(
+        path: '/second-factor/{secondFactorId}/self-asserted-token-registration/{recoveryTokenId}',
+        name: 'ss_second_factor_self_asserted_tokens_recovery_token',
+        methods: ['GET','POST']
+    )]
     public function selfAssertedTokenRegistrationRecoveryTokenAction(
         Request $request,
         string $secondFactorId,
@@ -219,6 +230,11 @@ class SelfAssertedTokensController extends Controller
      * apply. For example, using a SMS Recovery Token for registration of an
      * SMS Second Factor is only allowed when different phone numbers are used.
      */
+    #[Route(
+        path: '/second-factor/{secondFactorId}/new-recovery-token',
+        name: 'ss_second_factor_new_recovery_token',
+        methods: ['GET']
+    )]
     public function newRecoveryTokenAction($secondFactorId)
     {
         $this->logger->info('Determining which recovery token are available');
@@ -249,6 +265,11 @@ class SelfAssertedTokensController extends Controller
      * sent the Identity a OTP via SMS. The Identity must reproduce that OTP
      * in this action. Proving possession of the recovery token.
      */
+    #[Route(
+        path: '/second-factor/{secondFactorId}/self-asserted-token-registration/{recoveryTokenId}/authenticate',
+        name: 'ss_second_factor_self_asserted_tokens_recovery_token_sms',
+        methods: ['GET','POST']
+    )]
     public function selfAssertedTokenRecoveryTokenSmsAuthenticationAction(
         Request $request,
         string $secondFactorId,
@@ -317,6 +338,11 @@ class SelfAssertedTokensController extends Controller
      * Shows the one-time secret and asks the Identity to store the
      * password in a safe location.
      */
+    #[Route(
+        path: '/second-factor/{secondFactorId}/safe-store',
+        name: 'ss_registration_recovery_token_safe_store',
+        methods: ['GET','POST']
+    )]
     public function registerCreateRecoveryTokenSafeStoreAction(Request $request, $secondFactorId)
     {
         $identity = $this->getIdentity();
@@ -357,6 +383,11 @@ class SelfAssertedTokensController extends Controller
      *
      * Note: Shares logic with the recovery token SMS send challenge action
      */
+    #[Route(
+        path: '/second-factor/{secondFactorId}/sms',
+        name: 'ss_registration_recovery_token_sms',
+        methods: ['GET','POST'],
+    )]
     public function registerRecoveryTokenSmsAction(Request $request, string $secondFactorId)
     {
         return $this->handleSmsChallenge(
@@ -373,6 +404,11 @@ class SelfAssertedTokensController extends Controller
      *
      * Note: Shares logic with the recovery token SMS send challenge action
      */
+    #[Route(
+        path: '/recovery-token/{secondFactorId}/prove-sms-possession',
+        name: 'ss_registration_recovery_token_sms_proof_of_possession',
+        methods: ['GET', 'POST']
+    )]
     public function registerRecoveryTokenSmsProofOfPossessionAction(Request $request, string $secondFactorId)
     {
         return $this->handleSmsProofOfPossession(
