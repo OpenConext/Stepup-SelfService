@@ -60,7 +60,7 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
 
     public function process(RequestEvent $event): void
     {
-        if ($this->tokenStorage->getToken() !== null
+        if ($this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
             && !$this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->authenticatedSession)
         ) {
             $invalidatedBy = [];
@@ -103,7 +103,7 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
             return;
         }
 
-        if ($this->nextHandler !== null) {
+        if ($this->nextHandler instanceof \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler) {
             $this->nextHandler->process($event);
         }
     }

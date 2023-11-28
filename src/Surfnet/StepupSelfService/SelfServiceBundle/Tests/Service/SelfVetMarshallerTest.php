@@ -103,7 +103,7 @@ class SelfVetMarshallerTest extends TestCase
 
         throw new RuntimeException(sprintf('This Loa (%d) is not yet supported for vetted second factor', $loa));
     }
-    private function buildVerifiedTokenFromLoa(int $loa): VerifiedSecondFactor
+    private function buildVerifiedTokenFromLoa(float $loa): VerifiedSecondFactor
     {
         $verifiedSecondFactor = new VerifiedSecondFactor();
         switch ($loa) {

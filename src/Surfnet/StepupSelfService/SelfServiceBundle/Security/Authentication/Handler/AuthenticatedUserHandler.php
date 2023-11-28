@@ -38,7 +38,7 @@ class AuthenticatedUserHandler implements AuthenticationHandler
 
     public function process(RequestEvent $event): void
     {
-        if ($this->tokenStorage->getToken() !== null
+        if ($this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
             && $this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->sessionStateHandler)
         ) {
             $this->logger->notice('Logged in user with a session within time limits detected, updating session state');

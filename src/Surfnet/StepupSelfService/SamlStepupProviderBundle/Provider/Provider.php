@@ -38,7 +38,7 @@ final class Provider
     /**
      * @return StateHandler
      */
-    public function getStateHandler()
+    public function getStateHandler(): \Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler
     {
         return $this->stateHandler;
     }
@@ -46,7 +46,7 @@ final class Provider
     /**
      * @return IdentityProvider
      */
-    public function getRemoteIdentityProvider()
+    public function getRemoteIdentityProvider(): \Surfnet\SamlBundle\Entity\IdentityProvider
     {
         return $this->remoteIdentityProvider;
     }
@@ -54,7 +54,7 @@ final class Provider
     /**
      * @return ServiceProvider
      */
-    public function getServiceProvider()
+    public function getServiceProvider(): \Surfnet\SamlBundle\Entity\ServiceProvider
     {
         return $this->serviceProvider;
     }

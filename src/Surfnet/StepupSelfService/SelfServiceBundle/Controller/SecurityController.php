@@ -28,12 +28,11 @@ class SecurityController extends Controller
         name: 'selfservice_security_session_expired',
         methods: ['GET']
     )]
-    public function sessionExpiredAction(Request $request)
+    public function sessionExpired() : \Symfony\Component\HttpFoundation\Response
     {
         $redirectToUrl = $this
             ->get('self_service.security.authentication.session.session_storage')
             ->getCurrentRequestUri();
-
         return $this->render(
             'SurfnetStepupSelfServiceSelfServiceBundle:security:session_expired.html.twig',
             ['redirect_to_url' => $redirectToUrl]

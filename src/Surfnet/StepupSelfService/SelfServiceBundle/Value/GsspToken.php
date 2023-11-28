@@ -83,7 +83,7 @@ class GsspToken implements AvailableTokenInterface
         ];
     }
 
-    public function getViewConfig()
+    public function getViewConfig(): \Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig
     {
         return $this->viewConfig;
     }

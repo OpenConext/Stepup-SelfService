@@ -40,15 +40,8 @@ class SmsRecoveryTokenService
 {
     final public const REGISTRATION_RECOVERY_TOKEN_ID = 'registration';
 
-    private $translator;
-
-    public function __construct(
-        private readonly StepupSmsRecoveryTokenService $smsService,
-        TranslatorInterface $translator,
-        private readonly CommandService $commandService,
-        private readonly RecoveryTokenState $stateHandler
-    ) {
-        $this->translator = $translator;
+    public function __construct(private readonly StepupSmsRecoveryTokenService $smsService, private readonly TranslatorInterface $translator, private readonly CommandService $commandService, private readonly RecoveryTokenState $stateHandler)
+    {
     }
 
     public function getOtpRequestsRemainingCount(string $identifier): int

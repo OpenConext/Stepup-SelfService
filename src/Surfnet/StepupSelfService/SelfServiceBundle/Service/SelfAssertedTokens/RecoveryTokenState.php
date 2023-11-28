@@ -54,7 +54,7 @@ class RecoveryTokenState
 
     private const SAFE_STORE_SESSION_NAME = 'safe_store_secret';
 
-    private SessionInterface $session;
+    private readonly SessionInterface $session;
 
     public function __construct(private readonly RequestStack $requestStack)
     {

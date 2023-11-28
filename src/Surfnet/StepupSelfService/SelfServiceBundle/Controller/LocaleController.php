@@ -34,7 +34,7 @@ final class LocaleController extends Controller
         requirements: ['return-url' => '.+'],
         methods: ['POST']
     )]
-    public function switchLocaleAction(Request $request)
+    public function switchLocale(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $returnUrl = $request->query->get('return-url');
 

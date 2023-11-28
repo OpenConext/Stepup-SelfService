@@ -51,7 +51,7 @@ class AvailableTokenCollection
      * Sorts and returns the available tokens
      * @return AvailableTokenInterface[]
      */
-    public function getData()
+    public function getData(): array
     {
         $this->sortCollection();
         return $this->collection;

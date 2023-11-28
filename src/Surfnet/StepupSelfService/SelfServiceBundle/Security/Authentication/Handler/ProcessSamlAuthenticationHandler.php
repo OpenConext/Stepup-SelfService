@@ -64,7 +64,7 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
 
     public function process(RequestEvent $event): void
     {
-        if ($this->tokenStorage->getToken() === null
+        if (!$this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
             && $this->samlInteractionProvider->isSamlAuthenticationInitiated()
         ) {
             $expectedInResponseTo = $this->authenticationStateHandler->getRequestId();
@@ -98,7 +98,7 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
             return;
         }
 
-        if ($this->nextHandler) {
+        if ($this->nextHandler instanceof \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler) {
             $this->nextHandler->process($event);
         }
     }

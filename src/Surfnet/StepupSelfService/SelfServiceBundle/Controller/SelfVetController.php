@@ -115,7 +115,7 @@ class SelfVetController extends Controller
         name: 'ss_second_factor_self_vet',
         methods: ['GET'],
     )]
-    public function selfVetAction(string $secondFactorId): RedirectResponse
+    public function selfVet(string $secondFactorId): RedirectResponse
     {
         $this->logger->notice('Starting self vet proof of possession using higher or equal LoA token');
         $identity = $this->getIdentity();
@@ -172,7 +172,7 @@ class SelfVetController extends Controller
         name: 'ss_second_factor_self_vet_consume_assertion',
         methods: ['POST'],
     )]
-    public function consumeSelfVetAssertionAction(Request $httpRequest, string $secondFactorId)
+    public function consumeSelfVetAssertion(Request $httpRequest, string $secondFactorId): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $identity = $this->getIdentity();
         if (!$this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {

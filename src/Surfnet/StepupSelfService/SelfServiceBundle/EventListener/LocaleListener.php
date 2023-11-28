@@ -25,23 +25,17 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class LocaleListener implements EventSubscriberInterface
+final readonly class LocaleListener implements EventSubscriberInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(private readonly TokenStorageInterface $tokenStorage, TranslatorInterface $translator)
+    public function __construct(private TokenStorageInterface $tokenStorage, private TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     public function setRequestLocale(RequestEvent $event): void
     {
         $token = $this->tokenStorage->getToken();
 
-        if ($token === null) {
+        if (!$token instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface) {
             return;
         }
 

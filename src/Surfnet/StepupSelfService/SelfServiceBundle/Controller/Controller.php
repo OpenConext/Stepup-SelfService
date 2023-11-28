@@ -61,9 +61,6 @@ class Controller extends AbstractController
         return $user;
     }
 
-    /**
-     * @param string $type
-     */
     protected function assertSecondFactorEnabled(string $type): void
     {
         if (!in_array($type, $this->getParameter('ss.enabled_second_factors'))) {
@@ -81,7 +78,7 @@ class Controller extends AbstractController
         $config = $this->configurationOptionsService
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
 
-        if ($config === null) {
+        if (!$config instanceof \Surfnet\StepupMiddlewareClientBundle\Configuration\Dto\InstitutionConfigurationOptions) {
             return self::DEFAULT_VERIFY_EMAIL_OPTION;
         }
 

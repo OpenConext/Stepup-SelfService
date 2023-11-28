@@ -32,7 +32,7 @@ final readonly class LocaleProviderService implements StepupLocaleProviderServic
     {
         $token = $this->tokenStorage->getToken();
 
-        if ($token === null) {
+        if (!$token instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface) {
             return;
         }
 

@@ -30,7 +30,7 @@ class ActivationFlowService
 {
     private const ACTIVATION_FLOW_PREFERENCE_SESSION_NAME = 'self_service_activation_flow_preference';
 
-    private SessionInterface $session;
+    private readonly SessionInterface $session;
 
     /**
      * Handle preferred activation flow logic

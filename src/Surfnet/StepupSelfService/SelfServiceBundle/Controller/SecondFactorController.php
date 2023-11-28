@@ -33,11 +33,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SecondFactorController extends Controller
 {
+    public function __construct(private \Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService $recoveryTokenService, private \Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService $authorizationService, private \Surfnet\StepupBundle\Service\SecondFactorTypeService $secondFactorTypeService)
+    {
+    }
     /**
      * @Template
      */
     #[Route(path: '/overview', name: 'ss_second_factor_list', methods:  ['GET'])]
-    public function listAction()
+    public function list(): array
     {
         $identity = $this->getIdentity();
         $institution = $this->getIdentity()->institution;
@@ -58,9 +61,9 @@ class SecondFactorController extends Controller
         );
 
         /** @var RecoveryTokenService $recoveryTokenService */
-        $recoveryTokenService = $this->get(RecoveryTokenService::class);
+        $recoveryTokenService = $this->recoveryTokenService;
         /** @var AuthorizationService $authorizationService */
-        $authorizationService = $this->get(AuthorizationService::class);
+        $authorizationService = $this->authorizationService;
         $recoveryTokensAllowed = $authorizationService->mayRegisterRecoveryTokens($identity);
         $selfAssertedTokenRegistration = $options->allowSelfAssertedTokens === true && $recoveryTokensAllowed;
         $hasRemainingTokenTypes = $recoveryTokenService->getRemainingTokenTypes($identity) !== [];
@@ -68,7 +71,7 @@ class SecondFactorController extends Controller
         if ($selfAssertedTokenRegistration && $recoveryTokensAllowed) {
             $recoveryTokens = $recoveryTokenService->getRecoveryTokensForIdentity($identity);
         }
-        $loaService = $this->get(SecondFactorTypeService::class);
+        $loaService = $this->secondFactorTypeService;
 
         return [
             'loaService' => $loaService,
@@ -95,7 +98,7 @@ class SecondFactorController extends Controller
         requirements: ['state' => '^(unverified|verified|vetted)$'],
         methods: ['GET','POST']
     )]
-    public function revokeAction(Request $request, string $state, string $secondFactorId): array|Response
+    public function revoke(Request $request, string $state, string $secondFactorId): array|Response
     {
         $identity = $this->getIdentity();
 

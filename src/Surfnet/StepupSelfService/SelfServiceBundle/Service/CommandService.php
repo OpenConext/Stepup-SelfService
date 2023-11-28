@@ -33,7 +33,7 @@ class CommandService
     {
         $token = $this->tokenStorage->getToken();
 
-        if ($token === null) {
+        if (!$token instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface) {
             return $this->commandService->execute($command, new Metadata(null, null));
         }
 

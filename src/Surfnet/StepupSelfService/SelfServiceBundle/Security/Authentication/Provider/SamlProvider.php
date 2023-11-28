@@ -105,7 +105,7 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface
 
         $identity = $this->identityService->findByNameIdAndInstitution($nameId, $institution);
 
-        if ($identity === null) {
+        if (!$identity instanceof \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity) {
             $identity                  = new Identity();
             $identity->id              = Uuid::generate();
             $identity->nameId          = $nameId;

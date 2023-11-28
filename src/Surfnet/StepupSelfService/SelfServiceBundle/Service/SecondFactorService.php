@@ -114,10 +114,9 @@ class SecondFactorService
      * Returns whether the given registrant has registered second factors with Step-up. The state of the second factor
      * is irrelevant.
      *
-     * @param string $identityId
      * @return bool
      */
-    public function doSecondFactorsExistForIdentity($identityId): bool
+    public function doSecondFactorsExistForIdentity(string $identityId): bool
     {
         $unverifiedSecondFactors = $this->findUnverifiedByIdentity($identityId);
         $verifiedSecondFactors = $this->findVerifiedByIdentity($identityId);
@@ -128,7 +127,7 @@ class SecondFactorService
                $vettedSecondFactors->getTotalItems() > 0;
     }
 
-    public function identityHasSecondFactorOfStateWithId($identityId, $state, $secondFactorId): bool
+    public function identityHasSecondFactorOfStateWithId(string $identityId, $state, $secondFactorId): bool
     {
         $secondFactors = match ($state) {
             'unverified' => $this->findUnverifiedByIdentity($identityId),
@@ -155,7 +154,7 @@ class SecondFactorService
      *
      * @return UnverifiedSecondFactorCollection
      */
-    public function findUnverifiedByIdentity(string $identityId)
+    public function findUnverifiedByIdentity(string $identityId): ?\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactorCollection
     {
         return $this->secondFactors->searchUnverified(
             (new UnverifiedSecondFactorSearchQuery())->setIdentityId($identityId)
@@ -167,7 +166,7 @@ class SecondFactorService
      *
      * @return VerifiedSecondFactorCollection
      */
-    public function findVerifiedByIdentity(string $identityId)
+    public function findVerifiedByIdentity(string $identityId): ?\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactorCollection
     {
         $query = new VerifiedSecondFactorOfIdentitySearchQuery();
         $query->setIdentityId($identityId);
@@ -179,7 +178,7 @@ class SecondFactorService
      *
      * @return VettedSecondFactorCollection
      */
-    public function findVettedByIdentity(string $identityId)
+    public function findVettedByIdentity(string $identityId): ?\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollection
     {
         return $this->secondFactors->searchVetted(
             (new VettedSecondFactorSearchQuery())->setIdentityId($identityId)
@@ -190,7 +189,7 @@ class SecondFactorService
      * @param string $secondFactorId
      * @return null|UnverifiedSecondFactor
      */
-    public function findOneUnverified($secondFactorId)
+    public function findOneUnverified($secondFactorId): ?\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor
     {
         return $this->secondFactors->getUnverified($secondFactorId);
     }
@@ -199,7 +198,7 @@ class SecondFactorService
      * @param string $secondFactorId
      * @return null|VerifiedSecondFactor
      */
-    public function findOneVerified($secondFactorId)
+    public function findOneVerified($secondFactorId): ?\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor
     {
         return $this->secondFactors->getVerified($secondFactorId);
     }
@@ -208,7 +207,7 @@ class SecondFactorService
      * @param string $secondFactorId
      * @return null|VettedSecondFactor
      */
-    public function findOneVetted($secondFactorId)
+    public function findOneVetted($secondFactorId): ?\Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor
     {
         return $this->secondFactors->getVetted($secondFactorId);
     }
@@ -241,7 +240,7 @@ class SecondFactorService
         UnverifiedSecondFactorCollection $unverifiedCollection,
         VerifiedSecondFactorCollection $verifiedCollection,
         VettedSecondFactorCollection $vettedCollection
-    ) {
+    ): array {
         $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $unverifiedCollection);
         $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $verifiedCollection);
         return $this->filterAvailableSecondFactors($allSecondFactors, $vettedCollection);

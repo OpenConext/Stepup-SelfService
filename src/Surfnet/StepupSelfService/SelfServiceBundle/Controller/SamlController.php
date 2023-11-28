@@ -46,7 +46,7 @@ class SamlController extends Controller
      * @throws AccessDeniedException
      */
 #[Route(path:'/second-factor/test', name:'ss_second_factor_test', methods:  ['GET'])]
-public function testSecondFactorAction(): RedirectResponse
+public function testSecondFactor(): RedirectResponse
     {
         $logger = $this->get('logger');
         $logger->notice('Starting second factor test');
@@ -88,7 +88,7 @@ public function testSecondFactorAction(): RedirectResponse
         name: 'selfservice_serviceprovider_consume_assertion',
         methods: ['POST'],
     )]
-    public function consumeAssertionAction(Request $httpRequest): Response
+    public function consumeAssertion(Request $httpRequest): Response
     {
         $logger = $this->get('logger');
 
@@ -151,7 +151,7 @@ public function testSecondFactorAction(): RedirectResponse
         name: 'selfservice_saml_metadata',
         methods: ['GET'],
     )]
-    public function metadataAction(): XMLResponse
+    public function metadata(): XMLResponse
     {
         /** @var \Surfnet\SamlBundle\Metadata\MetadataFactory $metadataFactory */
         $metadataFactory = $this->get('surfnet_saml.metadata_factory');

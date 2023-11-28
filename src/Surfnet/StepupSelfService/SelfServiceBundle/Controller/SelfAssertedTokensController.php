@@ -91,7 +91,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_second_factor_self_asserted_tokens',
         methods: ['GET'],
     )]
-    public function selfAssertedTokenRegistrationAction($secondFactorId): Response
+    public function selfAssertedTokenRegistration(string $secondFactorId): Response
     {
         $this->logger->info('Checking if Identity has a recovery token');
         $identity = $this->getIdentity();
@@ -146,7 +146,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_second_factor_self_asserted_tokens_recovery_token',
         methods: ['GET','POST']
     )]
-    public function selfAssertedTokenRegistrationRecoveryTokenAction(
+    public function selfAssertedTokenRegistrationRecoveryToken(
         Request $request,
         string $secondFactorId,
         string $recoveryTokenId
@@ -235,7 +235,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_second_factor_new_recovery_token',
         methods: ['GET']
     )]
-    public function newRecoveryTokenAction($secondFactorId)
+    public function newRecoveryToken(string $secondFactorId): \Symfony\Component\HttpFoundation\Response
     {
         $this->logger->info('Determining which recovery token are available');
         $identity = $this->getIdentity();
@@ -270,7 +270,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_second_factor_self_asserted_tokens_recovery_token_sms',
         methods: ['GET','POST']
     )]
-    public function selfAssertedTokenRecoveryTokenSmsAuthenticationAction(
+    public function selfAssertedTokenRecoveryTokenSmsAuthentication(
         Request $request,
         string $secondFactorId,
         string $recoveryTokenId
@@ -343,7 +343,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_registration_recovery_token_safe_store',
         methods: ['GET','POST']
     )]
-    public function registerCreateRecoveryTokenSafeStoreAction(Request $request, $secondFactorId)
+    public function registerCreateRecoveryTokenSafeStore(Request $request, string $secondFactorId): \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         $identity = $this->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
@@ -388,7 +388,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_registration_recovery_token_sms',
         methods: ['GET','POST'],
     )]
-    public function registerRecoveryTokenSmsAction(Request $request, string $secondFactorId)
+    public function registerRecoveryTokenSms(Request $request, string $secondFactorId): \Symfony\Component\HttpFoundation\Response
     {
         return $this->handleSmsChallenge(
             $request,
@@ -409,7 +409,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_registration_recovery_token_sms_proof_of_possession',
         methods: ['GET', 'POST']
     )]
-    public function registerRecoveryTokenSmsProofOfPossessionAction(Request $request, string $secondFactorId)
+    public function registerRecoveryTokenSmsProofOfPossession(Request $request, string $secondFactorId)
     {
         return $this->handleSmsProofOfPossession(
             $request,
