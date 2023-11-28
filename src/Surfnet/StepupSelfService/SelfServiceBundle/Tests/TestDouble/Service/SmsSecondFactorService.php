@@ -47,7 +47,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     /**
      * @return int
      */
-    public function getOtpRequestsRemainingCount($identifier)
+    public function getOtpRequestsRemainingCount($identifier): int
     {
         return $this->maxOtpRequestRemaining;
     }
@@ -55,7 +55,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     /**
      * @return int
      */
-    public function getMaximumOtpRequestsCount()
+    public function getMaximumOtpRequestsCount(): int
     {
         return $this->maxOtpRequestCount;
     }
@@ -63,7 +63,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     /**
      * @return bool
      */
-    public function hasSmsVerificationState(string $secondFactorId)
+    public function hasSmsVerificationState(string $secondFactorId): bool
     {
         return $this->verificationState;
     }

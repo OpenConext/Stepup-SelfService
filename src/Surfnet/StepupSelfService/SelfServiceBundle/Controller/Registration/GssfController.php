@@ -48,7 +48,6 @@ final class GssfController extends Controller
      * - proofOfPossessionFailed (default false), will trigger an error message
      *   when possession was not proven, but the SAML response was successful
      *
-     * @param string $provider
      * @return array|Response
      */
     #[Route(
@@ -58,7 +57,7 @@ final class GssfController extends Controller
         methods: ['GET'],
     )]
 
-    public function statusAction(Request $request, $provider)
+    public function status(Request $request, string $provider): \Symfony\Component\HttpFoundation\Response
     {
         $this->assertSecondFactorEnabled($provider);
 
@@ -80,7 +79,7 @@ final class GssfController extends Controller
         name: 'ss_registration_gssf_authenticate',
         methods: ['POST'],
     )]
-    public function authenticateAction($provider)
+    public function authenticate($provider)
     {
         $this->assertSecondFactorEnabled($provider);
 
@@ -122,7 +121,7 @@ final class GssfController extends Controller
         name: 'ss_registration_gssf_consume_assertion',
         methods: ['POST'],
     )]
-    public function consumeAssertionAction(Request $httpRequest, $provider)
+    public function consumeAssertion(Request $httpRequest, $provider)
     {
         $this->assertSecondFactorEnabled($provider);
 
@@ -204,7 +203,7 @@ final class GssfController extends Controller
         );
     }
 
-    private function redirectToStatusReportForm(Provider $provider, array $options)
+    private function redirectToStatusReportForm(Provider $provider, array $options): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->redirectToRoute(
             'ss_registration_gssf_status_report',
@@ -223,7 +222,7 @@ final class GssfController extends Controller
         name: 'ss_registration_gssf_saml_metadata',
         methods: ['GET'],
     )]
-    public function metadataAction($provider)
+    public function metadata($provider): \Surfnet\SamlBundle\Http\XMLResponse
     {
         $this->assertSecondFactorEnabled($provider);
 

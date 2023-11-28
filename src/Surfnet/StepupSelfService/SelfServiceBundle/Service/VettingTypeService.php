@@ -65,7 +65,7 @@ readonly class VettingTypeService
     {
         try {
             $hint = $this->vettingTypeHintService->findOne($institution);
-            if (!empty($hint->hints)) {
+            if ($hint->hints !== []) {
                 $hintText = array_filter($hint->hints, fn($hintEntry): bool => $hintEntry['locale'] === $locale);
                 if ($hintText !== []) {
                     return reset($hintText)['hint'];

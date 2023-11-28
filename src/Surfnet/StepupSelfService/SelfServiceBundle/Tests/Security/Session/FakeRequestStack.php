@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class FakeRequestStack extends RequestStack
 {
-    public function __construct(private SessionInterface $session = new FakeSession())
+    public function __construct(private readonly SessionInterface $session = new FakeSession())
     {
     }
 

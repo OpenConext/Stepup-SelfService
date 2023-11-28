@@ -35,7 +35,7 @@ class YubikeySecondFactorService
     /**
      * @return ProofOfPossessionResult
      */
-    public function provePossession(VerifyYubikeyOtpCommand $command)
+    public function provePossession(VerifyYubikeyOtpCommand $command): \Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor\ProofOfPossessionResult
     {
         $verificationResult = $this->yubikeyService->verify($command);
 

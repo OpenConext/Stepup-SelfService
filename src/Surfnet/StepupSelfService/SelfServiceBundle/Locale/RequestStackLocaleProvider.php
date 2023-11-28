@@ -58,7 +58,7 @@ final class RequestStackLocaleProvider implements PreferredLocaleProvider
         $this->supportedLocales = $supportedLocales;
     }
 
-    public function providePreferredLocale()
+    public function providePreferredLocale(): string
     {
         $preferredLocale = $this->requestStack->getCurrentRequest()->getPreferredLanguage($this->supportedLocales);
 

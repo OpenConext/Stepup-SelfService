@@ -50,7 +50,7 @@ class InitiateSamlAuthenticationHandler implements AuthenticationHandler
         // back to our ACS. This means that a user may have inadvertedly triggered the sending of an AuthnRequest
         // one of the common causes of this is the prefetching of pages by browsers to give users the illusion of speed.
         // In any case, we reset the login and send a new AuthnRequest.
-        if ($this->tokenStorage->getToken() === null
+        if (!$this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
             && $this->samlInteractionProvider->isSamlAuthenticationInitiated()
             && $event->getRequest()->getMethod() !== 'POST'
             && $event->getRequest()->getRequestUri() !== $acsUri
@@ -64,7 +64,7 @@ class InitiateSamlAuthenticationHandler implements AuthenticationHandler
             $this->samlInteractionProvider->reset();
         }
 
-        if ($this->tokenStorage->getToken() === null
+        if (!$this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
             && !$this->samlInteractionProvider->isSamlAuthenticationInitiated()
         ) {
             $this->logger->notice('No authenticated user, no saml AuthnRequest pending, sending new AuthnRequest');
@@ -80,7 +80,7 @@ class InitiateSamlAuthenticationHandler implements AuthenticationHandler
             return;
         }
 
-        if ($this->nextHandler !== null) {
+        if ($this->nextHandler instanceof \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler) {
             $this->nextHandler->process($event);
         }
     }

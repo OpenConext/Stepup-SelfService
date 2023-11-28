@@ -39,7 +39,7 @@ class SmsController extends Controller
         name: 'ss_registration_sms_send_challenge',
         methods: ['GET','POST'],
     )]
-    public function sendChallengeAction(Request $request)
+    public function sendChallenge(Request $request): array|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         $this->assertSecondFactorEnabled('sms');
 
@@ -86,7 +86,7 @@ class SmsController extends Controller
         name: 'ss_registration_sms_prove_possession',
         methods: ['GET','POST'],
     )]
-    public function provePossessionAction(Request $request)
+    public function provePossession(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|array
     {
         $this->assertSecondFactorEnabled('sms');
 

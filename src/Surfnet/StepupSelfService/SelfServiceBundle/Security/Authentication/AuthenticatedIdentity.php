@@ -25,11 +25,8 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 
 class AuthenticatedIdentity implements UserInterface
 {
-    private Identity $originalIdentity;
-
-    public function __construct(Identity $originalIdentity)
+    public function __construct(private readonly Identity $originalIdentity)
     {
-        $this->originalIdentity = $originalIdentity;
     }
 
     public function getUsername(): string

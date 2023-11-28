@@ -100,7 +100,7 @@ class RecoveryTokenController extends Controller
         name: 'ss_recovery_token_display_types',
         methods: ['GET'],
     )]
-    public function selectTokenTypeAction(): Response
+    public function selectTokenType(): Response
     {
         $this->logger->info('Determining which recovery token are available');
         $identity = $this->getIdentity();
@@ -114,7 +114,7 @@ class RecoveryTokenController extends Controller
         );
     }
 
-    public function newRecoveryTokenAction($secondFactorId): Response
+    public function newRecoveryToken(string $secondFactorId): Response
     {
         $this->logger->info('Determining which recovery token are available');
         $identity = $this->getIdentity();
@@ -150,7 +150,7 @@ class RecoveryTokenController extends Controller
         name: 'ss_recovery_token_safe_store',
         methods: ['GET', 'POST'],
     )]
-    public function createSafeStoreAction(Request $request): Response
+    public function createSafeStore(Request $request): Response
     {
         if (!$this->recoveryTokenService->wasStepUpGiven()) {
             $this->recoveryTokenService->setReturnTo(RecoveryTokenState::RECOVERY_TOKEN_RETURN_TO_CREATE_SAFE_STORE);
@@ -200,7 +200,7 @@ class RecoveryTokenController extends Controller
         name: 'ss_recovery_token_sms',
         methods: ['GET', 'POST'],
     )]
-    public function createSmsAction(Request $request): Response
+    public function createSms(Request $request): Response
     {
         if (!$this->recoveryTokenService->wasStepUpGiven()) {
             $this->recoveryTokenService->setReturnTo(RecoveryTokenState::RECOVERY_TOKEN_RETURN_TO_CREATE_SMS);
@@ -226,7 +226,7 @@ class RecoveryTokenController extends Controller
         name: 'ss_recovery_token_prove_sms_possession',
         methods: ['GET', 'POST'],
     )]
-    public function proveSmsPossessionAction(Request $request): Response
+    public function proveSmsPossession(Request $request): Response
     {
         $this->recoveryTokenService->resetStepUpGiven();
         return $this->handleSmsProofOfPossession(
@@ -249,7 +249,7 @@ class RecoveryTokenController extends Controller
         name: 'ss_recovery_token_delete',
         methods: ['GET'],
     )]
-    public function deleteAction(string $recoveryTokenId): Response
+    public function delete(string $recoveryTokenId): Response
     {
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $this->getIdentity());
         try {
@@ -258,7 +258,7 @@ class RecoveryTokenController extends Controller
             $command->identity = $this->getIdentity();
             $command->recoveryToken = $recoveryToken;
             $executionResult = $this->safeStoreService->revokeRecoveryToken($command);
-            if (!empty($executionResult->getErrors())) {
+            if ($executionResult->getErrors() !== []) {
                 $this->addFlash('error', 'ss.form.recovery_token.delete.success');
                 foreach ($executionResult->getErrors() as $error) {
                     $this->logger->error(sprintf('Recovery Token revocation failed with message: "%s"', $error));
@@ -278,7 +278,7 @@ class RecoveryTokenController extends Controller
      * This request is sent to the Gateway (using the SF test endpoint)
      * LoA 1.5 is requested, allowing use of self-asserted tokens.
      */
-    public function stepUpAction(): Response
+    public function stepUp(): Response
     {
         $this->logger->notice('Starting step up authentication for a recovery token action');
 
@@ -314,7 +314,7 @@ class RecoveryTokenController extends Controller
      * Consume the Saml Response from the Step Up authentication
      * We need this step-up auth for adding and deleting recovery tokens.
      */
-    public function stepUpConsumeAssertionAction(Request $httpRequest): Response
+    public function stepUpConsumeAssertion(Request $httpRequest): Response
     {
         if (!$this->recoveryTokenService->hasStepUpRequest()) {
             $this->logger->error(

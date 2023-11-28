@@ -37,6 +37,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends Controller
 {
+    public function __construct(private \Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService $vettingTypeService)
+    {
+    }
     /**
      * @Template
      */
@@ -45,7 +48,7 @@ class RegistrationController extends Controller
         name: 'ss_registration_display_types',
         methods: ['GET'],
     )]
-    public function displaySecondFactorTypesAction()
+    public function displaySecondFactorTypes(): \Symfony\Component\HttpFoundation\Response|array
     {
         $institution = $this->getIdentity()->institution;
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
@@ -102,12 +105,12 @@ class RegistrationController extends Controller
         name: 'ss_second_factor_vetting_types',
         methods:  ['GET'],
     )]
-    public function displayVettingTypesAction(Request $request, string $secondFactorId): array|Response
+    public function displayVettingTypes(Request $request, string $secondFactorId): array|Response
     {
         /**
          * @var VettingTypeService
          */
-        $vettingTypeService = $this->get(VettingTypeService::class);
+        $vettingTypeService = $this->vettingTypeService;
         $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getIdentity(), $secondFactorId);
 
         $logger = $this->get('logger');
@@ -169,7 +172,7 @@ class RegistrationController extends Controller
         name: 'ss_registration_email_verification_email_sent',
         methods: ['GET'],
     )]
-    public function emailVerificationEmailSentAction()
+    public function emailVerificationEmailSent(): array
     {
         return ['email' => $this->getIdentity()->email];
     }
@@ -184,7 +187,7 @@ class RegistrationController extends Controller
         name: 'ss_registration_verify_email',
         methods: ['GET'],
     )]
-    public function verifyEmailAction(Request $request)
+    public function verifyEmail(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|array
     {
         $nonce = $request->query->get('n', '');
         $identityId = $this->getIdentity()->id;
@@ -219,7 +222,7 @@ class RegistrationController extends Controller
         methods: ['GET'],
     )]
 
-    public function sendRegistrationEmailAction(string $secondFactorId)
+    public function sendRegistrationEmail(string $secondFactorId): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         // Send the registration email
         $this->get('self_service.service.ra')
@@ -239,7 +242,7 @@ class RegistrationController extends Controller
         name: 'ss_registration_registration_email_sent',
         methods: ['GET'],
     )]
-    public function registrationEmailSentAction($secondFactorId)
+    public function registrationEmailSent($secondFactorId): \Symfony\Component\HttpFoundation\Response
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
         // Report that it was sent
@@ -258,7 +261,7 @@ class RegistrationController extends Controller
         name: 'ss_registration_registration_pdf',
         methods: ['GET'],
     )]
-    public function registrationPdfAction($secondFactorId)
+    public function registrationPdf($secondFactorId): \Symfony\Component\HttpFoundation\Response
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 
@@ -296,7 +299,7 @@ class RegistrationController extends Controller
     }
 
 
-    private function buildRegistrationActionParameters($secondFactorId)
+    private function buildRegistrationActionParameters($secondFactorId): array
     {
         $identity = $this->getIdentity();
 

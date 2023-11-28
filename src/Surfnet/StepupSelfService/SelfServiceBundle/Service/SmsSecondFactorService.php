@@ -36,26 +36,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 {
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(
-        private readonly StepupSmsSecondFactorService $smsSecondFactorService,
-        TranslatorInterface $translator,
-        private readonly CommandService $commandService
-    ) {
-        $this->translator = $translator;
+    public function __construct(private readonly StepupSmsSecondFactorService $smsSecondFactorService, private readonly TranslatorInterface $translator, private readonly CommandService $commandService)
+    {
     }
 
     /**
      * @return int
      */
-    public function getOtpRequestsRemainingCount(string $identifier)
+    public function getOtpRequestsRemainingCount(string $identifier): int
     {
         return $this->smsSecondFactorService->getOtpRequestsRemainingCount($identifier);
     }
@@ -63,7 +51,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     /**
      * @return int
      */
-    public function getMaximumOtpRequestsCount()
+    public function getMaximumOtpRequestsCount(): int
     {
         return $this->smsSecondFactorService->getMaximumOtpRequestsCount();
     }
@@ -71,7 +59,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     /**
      * @return bool
      */
-    public function hasSmsVerificationState(string $secondFactorId)
+    public function hasSmsVerificationState(string $secondFactorId): bool
     {
         return $this->smsSecondFactorService->hasSmsVerificationState($secondFactorId);
     }
@@ -86,7 +74,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
      * @return bool Whether SMS sending did not fail.
      * @throws TooManyChallengesRequestedException
      */
-    public function sendChallenge(SendSmsChallengeCommand $command)
+    public function sendChallenge(SendSmsChallengeCommand $command): bool
     {
         $phoneNumber = new InternationalPhoneNumber(
             $command->country->getCountryCode(),
@@ -107,7 +95,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
      * @param VerifySmsChallengeCommand $challengeCommand
      * @return ProofOfPossessionResult
      */
-    public function provePossession(VerifySmsChallengeCommand $challengeCommand)
+    public function provePossession(VerifySmsChallengeCommand $challengeCommand): \Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult
     {
         $stepupCommand = new VerifyPossessionOfPhoneCommand();
         $stepupCommand->challenge = $challengeCommand->challenge;

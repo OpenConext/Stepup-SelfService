@@ -99,7 +99,7 @@ final class ProofOfPossessionResult
     /**
      * @return string
      */
-    public function getSecondFactorId()
+    public function getSecondFactorId(): ?string
     {
         return $this->secondFactorId;
     }
@@ -107,7 +107,7 @@ final class ProofOfPossessionResult
     /**
      * @return bool
      */
-    public function isOtpInvalid()
+    public function isOtpInvalid(): bool
     {
         return $this->otpInvalid;
     }
@@ -115,7 +115,7 @@ final class ProofOfPossessionResult
     /**
      * @return boolean
      */
-    public function didOtpVerificationFail()
+    public function didOtpVerificationFail(): bool
     {
         return $this->otpVerificationFailed;
     }
@@ -123,7 +123,7 @@ final class ProofOfPossessionResult
     /**
      * @return boolean
      */
-    public function didProofOfPossessionCommandFail()
+    public function didProofOfPossessionCommandFail(): bool
     {
         return $this->proofOfPossessionFailed;
     }

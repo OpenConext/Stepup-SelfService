@@ -37,7 +37,7 @@ class YubikeyController extends Controller
         name: 'ss_registration_yubikey_prove_possession',
         methods: ['GET','POST'],
     )]
-    public function provePossessionAction(Request $request)
+    public function provePossession(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|array
     {
         $this->assertSecondFactorEnabled('yubikey');
 

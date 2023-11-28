@@ -43,7 +43,7 @@ final readonly class TimeFrame implements \Stringable
     /**
      * @return DateTime
      */
-    public function getEndWhenStartingAt(DateTime $dateTime)
+    public function getEndWhenStartingAt(DateTime $dateTime): \Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime
     {
         return $dateTime->add($this->timeFrame);
     }

@@ -45,7 +45,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -237,7 +237,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $container->setDefinition('gssp.provider.' . $provider . '.metadata.factory', $metadataFactory);
     }
 
-    private function createRouteConfig($provider, $routeName): array
+    private function createRouteConfig(string $provider, $routeName): array
     {
         // In the future, we ought to wrap this in an object.
         // https://www.pivotaltracker.com/story/show/90095392
@@ -247,7 +247,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         ];
     }
 
-    private function validateDescriptions($descriptions, $appUrl, $provider, string $type): void
+    private function validateDescriptions($descriptions, $appUrl, string $provider, string $type): void
     {
         $regex ="/%%{$type}_link_start%%[a-zA-Z0-9 ]+%%{$type}_link_end%%/";
         foreach ($descriptions as $lang => $description) {
