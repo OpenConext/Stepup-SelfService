@@ -39,9 +39,9 @@
                   <h3>{{ 'ss.registration.vetting_type.title.self_vet'|trans }}</h3>
                   <hr>
                   <p>{{ 'ss.registration.vetting_type.description.self_vet'|trans }}</p>
-                  <form action="{{ url('ss_second_factor_self_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                  <a href="{{ url('ss_second_factor_self_vet', {'secondFactorId': secondFactorId}) }}">
                       <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_vet'|trans }}</button>
-                  </form>
+                  </a>
               </div>
           </div>
         {% endif %}
@@ -53,9 +53,9 @@
                     <h3>{{ 'ss.registration.vetting_type.title.self_asserted_tokens'|trans }}</h3>
                     <hr>
                     <p>{{ 'ss.registration.vetting_type.description.self_asserted_tokens'|trans }}</p>
-                    <form action="{{ url('ss_second_factor_self_asserted_tokens', {'secondFactorId': secondFactorId}) }}" method="get">
+                    <a href="{{ url('ss_second_factor_self_asserted_tokens', {'secondFactorId': secondFactorId}) }}">
                         <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_asserted_tokens'|trans }}</button>
-                    </form>
+                    </a>
                 </div>
             </div>
         {% endif %}
@@ -66,9 +66,9 @@
                 <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
                 <hr>
                 <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
-                <form action="{{ url('ss_registration_send_registration_email', {'secondFactorId': secondFactorId}) }}" method="get">
+                <a href="{{ url('ss_registration_send_registration_email', {'secondFactorId': secondFactorId}) }}">
                     <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
-                </form>
+                </a>
             </div>
         </div>
     </div>
