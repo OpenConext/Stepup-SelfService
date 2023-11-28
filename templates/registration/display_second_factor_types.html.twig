@@ -5,7 +5,7 @@
 {% block page_header %}
     {{ parent() }}
 
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress': 1, 'step': 1, verifyEmail: verifyEmail} only %}
+    {% include 'registration/partial:progress_bar.html.twig' with {'progress': 1, 'step': 1, verifyEmail: verifyEmail} only %}
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
     <div class="row second-factors">
         {% for type, secondFactor in availableSecondFactors.data %}
             {% if secondFactor.isGssp %}
-                {% include 'SurfnetStepupSelfServiceSelfServiceBundle::registration/partial/generic_second_factor.html.twig' with {
+                {% include 'registration/partial/generic_second_factor.html.twig' with {
                     'type': type,
                     'security': secondFactor.loaLevel,
                     'url': path(secondFactor.route, secondFactor.routeParams),
@@ -23,7 +23,7 @@
                     'secondFactor': secondFactor.viewConfig
                 } only %}
             {% else %}
-                {% include 'SurfnetStepupSelfServiceSelfServiceBundle::registration/partial/second_factor.html.twig' with {
+                {% include 'registration/partial/second_factor.html.twig' with {
                     'type': type,
                     'security': secondFactor.loaLevel,
                     'url': path(secondFactor.route),
