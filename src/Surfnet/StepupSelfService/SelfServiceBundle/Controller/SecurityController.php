@@ -19,9 +19,15 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SecurityController extends Controller
 {
+    #[Route(
+        path: '/authentication/session-expired',
+        name: 'selfservice_security_session_expired',
+        methods: ['GET']
+    )]
     public function sessionExpiredAction(Request $request)
     {
         $redirectToUrl = $this

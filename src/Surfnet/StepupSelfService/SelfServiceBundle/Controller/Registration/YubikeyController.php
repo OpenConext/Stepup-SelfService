@@ -25,12 +25,18 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossession
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class YubikeyController extends Controller
 {
     /**
      * @Template
      */
+    #[Route(
+        path: '/registration/yubikey/prove-possession',
+        name: 'ss_registration_yubikey_prove_possession',
+        methods: ['GET','POST'],
+    )]
     public function provePossessionAction(Request $request)
     {
         $this->assertSecondFactorEnabled('yubikey');

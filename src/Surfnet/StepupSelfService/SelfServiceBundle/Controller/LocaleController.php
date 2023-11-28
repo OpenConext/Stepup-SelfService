@@ -24,9 +24,16 @@ use Surfnet\StepupBundle\Form\Type\SwitchLocaleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 final class LocaleController extends Controller
 {
+    #[Route(
+        path: '/switch-locale',
+        name: 'ss_switch_locale',
+        requirements: ['return-url' => '.+'],
+        methods: ['POST']
+    )]
     public function switchLocaleAction(Request $request)
     {
         $returnUrl = $request->query->get('return-url');

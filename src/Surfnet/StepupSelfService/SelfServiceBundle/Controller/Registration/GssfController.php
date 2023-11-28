@@ -29,6 +29,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\StatusGssfType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controls registration with Generic SAML Stepup Providers (GSSPs), yielding Generic SAML Second Factors (GSSFs).
@@ -50,6 +51,13 @@ final class GssfController extends Controller
      * @param string $provider
      * @return array|Response
      */
+    #[Route(
+        path: '/registration/gssf/{provider}/status',
+        name: 'ss_registration_gssf_status_report',
+        defaults: ['authenticationFailed' => false, 'proofOfPossessionFailed'=> false ],
+        methods: ['GET'],
+    )]
+
     public function statusAction(Request $request, $provider)
     {
         $this->assertSecondFactorEnabled($provider);
@@ -67,6 +75,11 @@ final class GssfController extends Controller
      * @param string $provider
      * @return array|Response
      */
+    #[Route(
+        path: '/registration/gssf/{provider}/authenticate',
+        name: 'ss_registration_gssf_authenticate',
+        methods: ['POST'],
+    )]
     public function authenticateAction($provider)
     {
         $this->assertSecondFactorEnabled($provider);
@@ -104,6 +117,11 @@ final class GssfController extends Controller
      * @param string  $provider
      * @return array|Response
      */
+    #[Route(
+        path: '/registration/gssf/{provider}/consume-assertion',
+        name: 'ss_registration_gssf_consume_assertion',
+        methods: ['POST'],
+    )]
     public function consumeAssertionAction(Request $httpRequest, $provider)
     {
         $this->assertSecondFactorEnabled($provider);
@@ -200,6 +218,11 @@ final class GssfController extends Controller
      * @param string $provider
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(
+        path: '/registration/gssf/{provider}/metadata',
+        name: 'ss_registration_gssf_saml_metadata',
+        methods: ['GET'],
+    )]
     public function metadataAction($provider)
     {
         $this->assertSecondFactorEnabled($provider);

@@ -24,6 +24,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class EntryPointController extends Controller
 {
@@ -35,7 +36,13 @@ class EntryPointController extends Controller
     ) {
     }
 
-    public function decideSecondFactorFlowAction(Request $request)
+//ss_entry_point:
+//path:     /
+//methods:  [GET]
+//defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:EntryPoint:decideSecondFactorFlow }
+
+#[Route(path: '/', name: 'ss_entry_point', methods:['GET'] )]
+public function decideSecondFactorFlow(Request $request)
     {
         $identity = $this->getIdentity();
         $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);

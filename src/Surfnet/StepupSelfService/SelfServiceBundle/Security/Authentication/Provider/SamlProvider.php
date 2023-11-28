@@ -135,6 +135,7 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface
     public function refreshUser(UserInterface $user): UserInterface
     {
         // TODO: Implement refreshUser() method.
+        return $user;
     }
 
     public function supportsClass(string $class): bool

@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
@@ -44,7 +45,8 @@ class SamlController extends Controller
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
      */
-    public function testSecondFactorAction(): RedirectResponse
+#[Route(path:'/second-factor/test', name:'ss_second_factor_test', methods:  ['GET'])]
+public function testSecondFactorAction(): RedirectResponse
     {
         $logger = $this->get('logger');
         $logger->notice('Starting second factor test');
@@ -81,6 +83,11 @@ class SamlController extends Controller
         return $this->get('surfnet_saml.http.redirect_binding')->createRedirectResponseFor($authenticationRequest);
     }
 
+    #[Route(
+        path: '/authentication/consume-assertion',
+        name: 'selfservice_serviceprovider_consume_assertion',
+        methods: ['POST'],
+    )]
     public function consumeAssertionAction(Request $httpRequest): Response
     {
         $logger = $this->get('logger');
@@ -139,6 +146,11 @@ class SamlController extends Controller
         return $this->redirectToRoute('ss_second_factor_list');
     }
 
+    #[Route(
+        path: '/authentication/metadata',
+        name: 'selfservice_saml_metadata',
+        methods: ['GET'],
+    )]
     public function metadataAction(): XMLResponse
     {
         /** @var \Surfnet\SamlBundle\Metadata\MetadataFactory $metadataFactory */

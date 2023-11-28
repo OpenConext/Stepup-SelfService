@@ -27,12 +27,18 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifySmsChallengeType
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SmsController extends Controller
 {
     /**
      * @Template
      */
+    #[Route(
+        path: '/registration/sms/send-challenge',
+        name: 'ss_registration_sms_send_challenge',
+        methods: ['GET','POST'],
+    )]
     public function sendChallengeAction(Request $request)
     {
         $this->assertSecondFactorEnabled('sms');
@@ -75,6 +81,11 @@ class SmsController extends Controller
      * @Template
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(
+        path: '/registration/sms/prove-possession',
+        name: 'ss_registration_sms_prove_possession',
+        methods: ['GET','POST'],
+    )]
     public function provePossessionAction(Request $request)
     {
         $this->assertSecondFactorEnabled('sms');

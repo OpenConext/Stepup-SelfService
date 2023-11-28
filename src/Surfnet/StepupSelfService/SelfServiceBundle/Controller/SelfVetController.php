@@ -43,6 +43,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use function sprintf;
 
@@ -109,6 +110,11 @@ class SelfVetController extends Controller
         $this->logger = $logger;
     }
 
+    #[Route(
+        path: '/second-factor/{secondFactorId}/self-vet',
+        name: 'ss_second_factor_self_vet',
+        methods: ['GET'],
+    )]
     public function selfVetAction(string $secondFactorId): RedirectResponse
     {
         $this->logger->notice('Starting self vet proof of possession using higher or equal LoA token');
@@ -161,6 +167,11 @@ class SelfVetController extends Controller
         return $this->redirectBinding->createRedirectResponseFor($authenticationRequest);
     }
 
+    #[Route(
+        path: '/second-factor/{secondFactorId}/self-vet-consume-assertion',
+        name: 'ss_second_factor_self_vet_consume_assertion',
+        methods: ['POST'],
+    )]
     public function consumeSelfVetAssertionAction(Request $httpRequest, string $secondFactorId)
     {
         $identity = $this->getIdentity();
