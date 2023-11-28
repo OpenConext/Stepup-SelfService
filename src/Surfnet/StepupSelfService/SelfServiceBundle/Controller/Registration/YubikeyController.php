@@ -29,9 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class YubikeyController extends Controller
 {
-    /**
-     * @Template
-     */
+    #[Template('registration/yubikey/prove_possession.html.twig')]
     #[Route(
         path: '/registration/yubikey/prove-possession',
         name: 'ss_registration_yubikey_prove_possession',

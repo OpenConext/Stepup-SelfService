@@ -1,10 +1,10 @@
-{% extends "base.html.twig" %}
+{% extends "../../base.html.twig" %}
 
 {% block page_title %}{{ 'ss.registration.recovery_token.safe-store.promise_possession_title'|trans }}{% endblock %}
 
 {% block page_header %}
     {{ parent() }}
-    {% include 'SurfnetStepupSelfServiceSelfServiceBundle:registration/partial:progress_bar.html.twig' with {'progress':82, 'step': 5, verifyEmail: false} only %}
+    {% include 'registration/partial:progress_bar.html.twig' with {'progress':82, 'step': 5, verifyEmail: false} only %}
 {% endblock %}
 
 {% block content %}

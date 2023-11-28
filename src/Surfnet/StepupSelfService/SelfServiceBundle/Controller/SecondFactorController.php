@@ -33,12 +33,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SecondFactorController extends Controller
 {
-    public function __construct(private \Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService $recoveryTokenService, private \Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService $authorizationService, private \Surfnet\StepupBundle\Service\SecondFactorTypeService $secondFactorTypeService)
+    public function __construct(
+        private readonly RecoveryTokenService    $recoveryTokenService,
+        private readonly AuthorizationService    $authorizationService,
+        private readonly SecondFactorTypeService $secondFactorTypeService,
+    )
     {
     }
-    /**
-     * @Template
-     */
+    #[Template('second_factor/list.html.twig')]
     #[Route(path: '/overview', name: 'ss_second_factor_list', methods:  ['GET'])]
     public function list(): array
     {
@@ -89,9 +91,7 @@ class SecondFactorController extends Controller
         ];
     }
 
-    /**
-     * @Template
-     */
+    #[Template('second_factor/revoke.html.twig')]
     #[Route(
         path: '/second-factor/{state}/{secondFactorId}/revoke',
         name: 'ss_second_factor_revoke',

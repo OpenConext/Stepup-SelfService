@@ -29,6 +29,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -37,18 +38,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends Controller
 {
-    public function __construct(private \Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService $vettingTypeService)
+    public function __construct(private VettingTypeService $vettingTypeService)
     {
     }
-    /**
-     * @Template
-     */
+
+    #[Template('registration/display_vetting_types.html.twig')]
     #[Route(
         path: '/registration/select-token',
         name: 'ss_registration_display_types',
         methods: ['GET'],
     )]
-    public function displaySecondFactorTypes(): \Symfony\Component\HttpFoundation\Response|array
+    public function displaySecondFactorTypes(): Response|array
     {
         $institution = $this->getIdentity()->institution;
         $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
@@ -97,9 +97,7 @@ class RegistrationController extends Controller
         ];
     }
 
-    /**
-     * @Template
-     */
+    #[Template('registration/display_second_factor_types.html.twig')]
     #[Route(
         path: '/second-factor/{secondFactorId}/vetting-types',
         name: 'ss_second_factor_vetting_types',
@@ -164,9 +162,7 @@ class RegistrationController extends Controller
         ];
     }
 
-    /**
-     * @Template
-     */
+    #[Template('registration/email_verification_email_sent.html.twig')]
     #[Route(
         path: '/registration/{secondFactorId}/email-verification-email-sent',
         name: 'ss_registration_email_verification_email_sent',
@@ -177,17 +173,14 @@ class RegistrationController extends Controller
         return ['email' => $this->getIdentity()->email];
     }
 
-    /**
-     * @Template
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
+
+    #[Template('registration/verify_email.html.twig')]
     #[Route(
         path: '/verify-email',
         name: 'ss_registration_verify_email',
         methods: ['GET'],
     )]
-    public function verifyEmail(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|array
+    public function verifyEmail(Request $request): RedirectResponse|array
     {
         $nonce = $request->query->get('n', '');
         $identityId = $this->getIdentity()->id;
@@ -222,7 +215,7 @@ class RegistrationController extends Controller
         methods: ['GET'],
     )]
 
-    public function sendRegistrationEmail(string $secondFactorId): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function sendRegistrationEmail(string $secondFactorId): RedirectResponse
     {
         // Send the registration email
         $this->get('self_service.service.ra')
@@ -242,7 +235,7 @@ class RegistrationController extends Controller
         name: 'ss_registration_registration_email_sent',
         methods: ['GET'],
     )]
-    public function registrationEmailSent($secondFactorId): \Symfony\Component\HttpFoundation\Response
+    public function registrationEmailSent($secondFactorId): Response
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
         // Report that it was sent
@@ -261,7 +254,7 @@ class RegistrationController extends Controller
         name: 'ss_registration_registration_pdf',
         methods: ['GET'],
     )]
-    public function registrationPdf($secondFactorId): \Symfony\Component\HttpFoundation\Response
+    public function registrationPdf($secondFactorId): Response
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 

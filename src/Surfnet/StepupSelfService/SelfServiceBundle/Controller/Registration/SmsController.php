@@ -31,9 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SmsController extends Controller
 {
-    /**
-     * @Template
-     */
+    #[Template('registration/sms/send_challenge.html.twig')]
     #[Route(
         path: '/registration/sms/send-challenge',
         name: 'ss_registration_sms_send_challenge',
@@ -78,9 +76,9 @@ class SmsController extends Controller
     }
 
     /**
-     * @Template
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Template('registration/sms/prove_possession.html.twig')]
     #[Route(
         path: '/registration/sms/prove-possession',
         name: 'ss_registration_sms_prove_possession',
