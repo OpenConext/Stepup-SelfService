@@ -29,7 +29,7 @@ final class SecondFactorType extends AbstractExtension
     {
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('trans_second_factor_type', $this->translateSecondFactorType(...)),
