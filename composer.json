@@ -120,6 +120,9 @@
         ]
     },
     "config": {
+        "audit": {
+            "abandoned": "report"
+        },
         "allow-plugins": {
             "symfony/flex": true,
             "symfony/runtime": true
