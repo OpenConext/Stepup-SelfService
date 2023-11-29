@@ -1,7 +1,3 @@
-#surfnet_stepup_self_service_self_service:
-#    resource: "@SurfnetStepupSelfServiceSelfServiceBundle/Resources/config/routing.yml"
-#    prefix:   /
-
 openconext_monitor:
     resource: "@OpenConextMonitorBundle/Resources/config/routing.yml"
     prefix: /
