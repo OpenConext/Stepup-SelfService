@@ -34,6 +34,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Authe
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -108,7 +109,7 @@ class SelfAssertedTokensController extends Controller
             if (count($tokens) > 1) {
                 $this->logger->info('Show recovery token selection screen');
                 return $this->render(
-                    '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/select_available_recovery_token.html.twig',
+                    'registration/self_asserted_tokens/select_available_recovery_token.html.twig',
                     [
                         'secondFactorId' => $secondFactorId,
                         'showAvailable' => true,
@@ -217,7 +218,7 @@ class SelfAssertedTokensController extends Controller
                     }
                 }
                 return $this->render(
-                    '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/authenticate_safe_store.html.twig',
+                    'registration/self_asserted_tokens/authenticate_safe_store.html.twig',
                     ['form' => $form->createView()]
                 );
         }
@@ -235,7 +236,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_second_factor_new_recovery_token',
         methods: ['GET']
     )]
-    public function newRecoveryToken(string $secondFactorId): \Symfony\Component\HttpFoundation\Response
+    public function newRecoveryToken(string $secondFactorId): Response
     {
         $this->logger->info('Determining which recovery token are available');
         $identity = $this->getIdentity();
@@ -250,7 +251,7 @@ class SelfAssertedTokensController extends Controller
         }
 
         return $this->render(
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/new_recovery_token.html.twig',
+            'registration/self_asserted_tokens/new_recovery_token.html.twig',
             [
                 'secondFactorId' => $secondFactorId,
                 'availableRecoveryTokens' => $availableRecoveryTokens
@@ -325,7 +326,7 @@ class SelfAssertedTokensController extends Controller
             }
         }
         return $this->render(
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/registration_sms_prove_possession.html.twig',
+            'registration/self_asserted_tokens/registration_sms_prove_possession.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -343,7 +344,7 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_registration_recovery_token_safe_store',
         methods: ['GET','POST']
     )]
-    public function registerCreateRecoveryTokenSafeStore(Request $request, string $secondFactorId): \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    public function registerCreateRecoveryTokenSafeStore(Request $request, string $secondFactorId): Response
     {
         $identity = $this->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
@@ -368,7 +369,7 @@ class SelfAssertedTokensController extends Controller
         }
 
         return $this->render(
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/recovery_token_safe_store.html.twig',
+            'registration/self_asserted_tokens/recovery_token_safe_store.html.twig',
             [
                 'form' => $form->createView(),
                 'secondFactorId' => $secondFactorId,
@@ -388,11 +389,11 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_registration_recovery_token_sms',
         methods: ['GET','POST'],
     )]
-    public function registerRecoveryTokenSms(Request $request, string $secondFactorId): \Symfony\Component\HttpFoundation\Response
+    public function registerRecoveryTokenSms(Request $request, string $secondFactorId): Response
     {
         return $this->handleSmsChallenge(
             $request,
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/recovery_token_sms.html.twig',
+            'registration/self_asserted_tokens/recovery_token_sms.html.twig',
             'ss_registration_recovery_token_sms_proof_of_possession',
             $secondFactorId
         );
@@ -409,11 +410,11 @@ class SelfAssertedTokensController extends Controller
         name: 'ss_registration_recovery_token_sms_proof_of_possession',
         methods: ['GET', 'POST']
     )]
-    public function registerRecoveryTokenSmsProofOfPossession(Request $request, string $secondFactorId)
+    public function registerRecoveryTokenSmsProofOfPossession(Request $request, string $secondFactorId): Response
     {
         return $this->handleSmsProofOfPossession(
             $request,
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/registration_sms_prove_possession.html.twig',
+            'registration/self_asserted_tokens/registration_sms_prove_possession.html.twig',
             'ss_second_factor_self_asserted_tokens',
             $secondFactorId
         );
