@@ -36,29 +36,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 {
-    public function __construct(private readonly StepupSmsSecondFactorService $smsSecondFactorService, private readonly TranslatorInterface $translator, private readonly CommandService $commandService)
-    {
+    public function __construct(
+        private readonly StepupSmsSecondFactorService $smsSecondFactorService,
+        private readonly TranslatorInterface $translator,
+        private readonly CommandService $commandService,
+    ) {
     }
 
-    /**
-     * @return int
-     */
     public function getOtpRequestsRemainingCount(string $identifier): int
     {
         return $this->smsSecondFactorService->getOtpRequestsRemainingCount($identifier);
     }
 
-    /**
-     * @return int
-     */
     public function getMaximumOtpRequestsCount(): int
     {
         return $this->smsSecondFactorService->getMaximumOtpRequestsCount();
     }
 
-    /**
-     * @return bool
-     */
     public function hasSmsVerificationState(string $secondFactorId): bool
     {
         return $this->smsSecondFactorService->hasSmsVerificationState($secondFactorId);
@@ -70,8 +64,6 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     }
 
     /**
-     * @param SendSmsChallengeCommand $command
-     * @return bool Whether SMS sending did not fail.
      * @throws TooManyChallengesRequestedException
      */
     public function sendChallenge(SendSmsChallengeCommand $command): bool
@@ -91,11 +83,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
         return $this->smsSecondFactorService->sendChallenge($stepupCommand);
     }
 
-    /**
-     * @param VerifySmsChallengeCommand $challengeCommand
-     * @return ProofOfPossessionResult
-     */
-    public function provePossession(VerifySmsChallengeCommand $challengeCommand): \Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult
+    public function provePossession(VerifySmsChallengeCommand $challengeCommand): ProofOfPossessionResult
     {
         $stepupCommand = new VerifyPossessionOfPhoneCommand();
         $stepupCommand->challenge = $challengeCommand->challenge;
