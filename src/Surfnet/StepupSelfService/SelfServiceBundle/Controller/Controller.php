@@ -44,8 +44,11 @@ class Controller extends AbstractController
      */
     protected function getIdentity(): Identity
     {
-        $user = $this->getUser();
-
+        $authenticatedIdentity = $this->getUser();
+        // During authentication, an AuthenticatedIdentity is created, a decorated Identity.
+        // The app wants to work with the 'regular' Identity DTO from Middleware (client bundle)
+        // So we extract the entity here
+        $user = $authenticatedIdentity->getIdentity();
         if (!$user instanceof Identity) {
             $actualType = get_debug_type($user);
 

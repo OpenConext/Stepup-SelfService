@@ -29,6 +29,11 @@ class AuthenticatedIdentity implements UserInterface
     {
     }
 
+    public function getIdentity(): Identity
+    {
+        return $this->originalIdentity;
+    }
+
     public function getUsername(): string
     {
         return $this->originalIdentity->id ?: '';
