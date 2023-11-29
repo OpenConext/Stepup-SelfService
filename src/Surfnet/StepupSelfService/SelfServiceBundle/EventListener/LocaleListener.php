@@ -57,7 +57,7 @@ final readonly class LocaleListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             // Default locale listener listens at P16
