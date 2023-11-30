@@ -13,3 +13,60 @@ monolog:
       ident: stepup-selfservice
       facility: user
       formatter: surfnet_stepup.monolog.json_formatter
+
+when@dev:
+  monolog:
+    handlers:
+      prod-signaler:
+        type: fingers_crossed
+        action_level: ERROR
+        passthru_level: DEBUG # DEV setting: this means that all message of level DEBUG or higher are always logged
+        #passthru_level: NOTICE # PROD setting this means that all message of level NOTICE or higher are always logged
+        handler: main_syslog
+        bubble: true
+      main_syslog:
+        type: syslog
+        ident: stepup-selfservice
+        facility: user
+        formatter: surfnet_stepup.monolog.json_formatter
+      main_logfile:
+        type: stream
+        handler: logfile
+        level: NOTICE
+        path: "%kernel.logs_dir%/%kernel.environment%.log"
+
+      ### Deprecation logs
+      deprecation_stream:
+        type: stream
+        path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+
+      deprecation_filter:
+        type: filter
+        handler: deprecation_stream
+        max_level: info
+        channels: [ "php" ]
+
+when@test:
+  monolog:
+    handlers:
+      main:
+        type: fingers_crossed
+        action_level: error
+        handler: nested
+        excluded_http_codes: [ 404, 405 ]
+        channels: [ "!event" ]
+      nested:
+        type: stream
+        path: "%kernel.logs_dir%/%kernel.environment%.log"
+        level: debug
+
+      ### Deprecation logs
+      deprecation_stream:
+        type: stream
+        path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+
+      deprecation_filter:
+        type: filter
+        handler: deprecation_stream
+        max_level: info
+        channels: [ "php" ]
