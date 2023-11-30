@@ -14,3 +14,18 @@ framework:
         cookie_secure: true
     fragments: false
     http_method_override: true
+
+when@dev:
+    framework:
+        router:
+            strict_requirements: true
+        profiler: { only_exceptions: false }
+
+when@test:
+    framework:
+        test: ~
+        session:
+            #storage_id: session.storage.mock_file
+            storage_factory_id: session.storage.factory.mock_file
+        profiler:
+            collect: false
