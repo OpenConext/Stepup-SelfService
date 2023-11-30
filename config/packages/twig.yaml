@@ -9,3 +9,7 @@ twig:
     paths:
         '%kernel.project_dir%/src/Surfnet/StepupSelfService/SelfServiceBundle/Resources/views': 'SurfnetStepupSelfServiceSelfServiceBundle'
         '%kernel.project_dir%/vendor/surfnet/stepup-saml-bundle/templates': 'SurfnetSaml'
+
+when@test:
+    twig:
+        strict_variables: true

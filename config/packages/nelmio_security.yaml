@@ -22,3 +22,13 @@ nelmio_security:
     enabled: true
     hsts_max_age: 31536000 # 365 days
     hsts_subdomains: true
+
+when@dev: &webpack_dev
+  nelmio_security:
+    csp:
+      enforce:
+        img-src: [ self, 'data:' ]
+        script-src: [ self, unsafe-inline ]
+        style-src: [ self, unsafe-inline ]
+
+when@test: *webpack_dev # use same config as dev
