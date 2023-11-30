@@ -1,19 +1,28 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     esi: false
     secret: "%secret%"
     form: ~
     csrf_protection: ~
-#    error_controller: Surfnet\StepupBundle\Controller\ExceptionController::show
     validation: { enable_annotations: true }
     trusted_hosts: ~
+    annotations: false
+    handle_all_throwables: true
+
+    # Enables session support. Note that the session will ONLY be started if you read or write from it.
+    # Remove or comment this section to explicitly disable session support.
     session:
         # handler_id set to null will use default session handler from php.ini
         handler_id: ~
         name: sess_selfservice
         cookie_httponly: true
         cookie_secure: true
+        cookie_samesite: lax
+
     fragments: false
     http_method_override: true
+    php_errors:
+        log: true
 
 when@dev:
     framework:
