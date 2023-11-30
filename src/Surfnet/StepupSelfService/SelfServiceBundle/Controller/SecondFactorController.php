@@ -37,8 +37,7 @@ class SecondFactorController extends Controller
         private readonly RecoveryTokenService    $recoveryTokenService,
         private readonly AuthorizationService    $authorizationService,
         private readonly SecondFactorTypeService $secondFactorTypeService,
-    )
-    {
+    ) {
     }
     #[Template('second_factor/list.html.twig')]
     #[Route(path: '/overview', name: 'ss_second_factor_list', methods:  ['GET'])]

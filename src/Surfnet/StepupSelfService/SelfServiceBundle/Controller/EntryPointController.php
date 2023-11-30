@@ -22,6 +22,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Authenti
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,25 +36,19 @@ class EntryPointController extends Controller
         private readonly AuthenticatedSessionStateHandler $authStateHandler
     ) {
     }
-
-//ss_entry_point:
-//path:     /
-//methods:  [GET]
-//defaults: { _controller: SurfnetStepupSelfServiceSelfServiceBundle:EntryPoint:decideSecondFactorFlow }
-
-#[Route(path: '/', name: 'ss_entry_point', methods:['GET'] )]
-public function decideSecondFactorFlow() : \Symfony\Component\HttpFoundation\RedirectResponse
-{
-    $identity = $this->getIdentity();
-    $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
-    $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
-    $this->activationFlowService->process($this->authStateHandler->getCurrentRequestUri());
-    if ($hasSecondFactor || $hasRecoveryToken) {
-        return $this->redirect($this->generateUrl('ss_second_factor_list'));
-    } else {
-        return $this->redirect(
-            $this->generateUrl('ss_registration_display_types')
-        );
+    #[Route(path: '/', name: 'ss_entry_point', methods:['GET'])]
+    public function decideSecondFactorFlow() : RedirectResponse
+    {
+        $identity = $this->getIdentity();
+        $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
+        $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
+        $this->activationFlowService->process($this->authStateHandler->getCurrentRequestUri());
+        if ($hasSecondFactor || $hasRecoveryToken) {
+            return $this->redirect($this->generateUrl('ss_second_factor_list'));
+        } else {
+            return $this->redirect(
+                $this->generateUrl('ss_registration_display_types')
+            );
+        }
     }
-}
 }

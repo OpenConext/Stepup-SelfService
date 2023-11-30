@@ -45,8 +45,8 @@ class SamlController extends Controller
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
      */
-#[Route(path:'/second-factor/test', name:'ss_second_factor_test', methods:  ['GET'])]
-public function testSecondFactor(): RedirectResponse
+    #[Route(path:'/second-factor/test', name:'ss_second_factor_test', methods:  ['GET'])]
+    public function testSecondFactor(): RedirectResponse
     {
         $logger = $this->get('logger');
         $logger->notice('Starting second factor test');
