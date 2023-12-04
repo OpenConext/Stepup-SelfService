@@ -1,6 +1,6 @@
 security:
 
-#    enable_authenticator_manager: true
+    enable_authenticator_manager: true
 
     providers:
         saml-provider:

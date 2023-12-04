@@ -24,11 +24,11 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Authenti
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlAuthenticationStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
@@ -37,17 +37,12 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 class ProcessSamlAuthenticationHandler implements AuthenticationHandler
 {
-    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
+    private ?AuthenticationHandler $nextHandler = null;
 
     /**
      * @var AuthenticationManagerInterface
      */
     private $authenticationManager;
-
-    /**
-     * @var EngineInterface
-     */
-    private $templating;
 
     public function __construct(
         private readonly TokenStorageInterface $tokenStorage,
@@ -56,15 +51,13 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
         private readonly AuthenticatedSessionStateHandler $authenticatedSession,
         AuthenticationManagerInterface $authenticationManager,
         private readonly SamlAuthenticationLogger $authenticationLogger,
-        EngineInterface $templating
     ) {
         $this->authenticationManager      = $authenticationManager;
-        $this->templating                 = $templating;
     }
 
     public function process(RequestEvent $event): void
     {
-        if (!$this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
+        if (!$this->tokenStorage->getToken() instanceof TokenInterface
             && $this->samlInteractionProvider->isSamlAuthenticationInitiated()
         ) {
             $expectedInResponseTo = $this->authenticationStateHandler->getRequestId();
@@ -98,7 +91,7 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
             return;
         }
 
-        if ($this->nextHandler instanceof \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler) {
+        if ($this->nextHandler instanceof AuthenticationHandler) {
             $this->nextHandler->process($event);
         }
     }

@@ -44,8 +44,6 @@ services:
             - "@security.token_storage"
             - "@self_service.security.authentication.session.session_storage"
             - "@self_service.security.authentication.session.session_lifetime_guard"
-            - "@security.logout.handler.session"
-            - "@security.logout.handler.cookie_clearing.saml_based"
             - "@router"
             - "@logger"
         calls:
