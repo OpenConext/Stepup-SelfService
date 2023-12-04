@@ -18,39 +18,24 @@
 
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml;
 
-use Surfnet\StepupSelfService\GatewayBundle\Saml\Proxy\ProxyStateHandler;
-use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 
-final class StateHandler
+final readonly class StateHandler
 {
-    /**
-     * @var NamespacedAttributeBag
-     */
-    private $attributeBag;
-
-    /**
-     * @param string $provider
-     */
-    public function __construct(NamespacedAttributeBag $attributeBag, private $provider)
-    {
-        $this->attributeBag = $attributeBag;
+    public function __construct(
+        private AttributeBagInterface $attributeBag,
+        private string                $provider,
+    ) {
     }
 
-    /**
-     * @param string $originalRequestId
-     * @return $this
-     */
-    public function setRequestId($originalRequestId): self
+    public function setRequestId(string $originalRequestId): self
     {
         $this->set('request_id', $originalRequestId);
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRequestId()
+    public function getRequestId(): ?string
     {
         return $this->get('request_id');
     }

@@ -23,6 +23,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Authenti
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionLifetimeGuard;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class AuthenticatedUserHandler implements AuthenticationHandler
 {
@@ -38,7 +39,7 @@ class AuthenticatedUserHandler implements AuthenticationHandler
 
     public function process(RequestEvent $event): void
     {
-        if ($this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
+        if ($this->tokenStorage->getToken() instanceof TokenInterface
             && $this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->sessionStateHandler)
         ) {
             $this->logger->notice('Logged in user with a session within time limits detected, updating session state');

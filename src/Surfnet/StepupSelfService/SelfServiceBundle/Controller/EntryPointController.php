@@ -23,8 +23,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EntryPointController extends Controller

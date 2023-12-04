@@ -22,10 +22,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Authenti
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\TimeFrame;
 
-class SessionLifetimeGuard
+readonly class SessionLifetimeGuard
 {
-    public function __construct(private readonly TimeFrame $absoluteTimeoutLimit, private readonly TimeFrame $relativeTimeoutLimit)
-    {
+    public function __construct(
+        private TimeFrame $absoluteTimeoutLimit,
+        private TimeFrame $relativeTimeoutLimit,
+    ) {
     }
 
     /**

@@ -25,42 +25,27 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Http\Logout\CookieClearingLogoutHandler;
-use Symfony\Component\Security\Http\Logout\SessionLogoutHandler;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ExplicitSessionTimeoutHandler implements AuthenticationHandler
 {
-    private ?\Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler $nextHandler = null;
-
-    /**
-     * @var SessionLogoutHandler
-     */
-    private $sessionLogoutHandler;
-
-    /**
-     * @var CookieClearingLogoutHandler
-     */
-    private $cookieClearingLogoutHandler;
+    private ?AuthenticationHandler $nextHandler = null;
 
     public function __construct(
         private readonly TokenStorageInterface $tokenStorage,
         private readonly AuthenticatedSessionStateHandler $authenticatedSession,
         private readonly SessionLifetimeGuard $sessionLifetimeGuard,
-        SessionLogoutHandler $sessionLogoutHandler,
-        CookieClearingLogoutHandler $cookieClearingLogoutHandler,
         private readonly RouterInterface $router,
         private readonly LoggerInterface $logger
     ) {
-        $this->sessionLogoutHandler        = $sessionLogoutHandler;
-        $this->cookieClearingLogoutHandler = $cookieClearingLogoutHandler;
     }
 
     public function process(RequestEvent $event): void
     {
-        if ($this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
+        if ($this->tokenStorage->getToken() instanceof TokenInterface
             && !$this->sessionLifetimeGuard->sessionLifetimeWithinLimits($this->authenticatedSession)
         ) {
             $invalidatedBy = [];
@@ -78,10 +63,6 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
                 implode(' and ', $invalidatedBy)
             ));
 
-
-            $token   = $this->tokenStorage->getToken();
-            $request = $event->getRequest();
-
             // if the current request was not a GET request we cannot safely redirect to that page after login as it
             // may require a form resubmit for instance. Therefor, we redirect to the last GET request (either current
             // or previous).
@@ -93,8 +74,6 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
             // log the user out using Symfony methodology, see the LogoutListener
             $event->setResponse(new RedirectResponse($this->router->generate('selfservice_security_session_expired')));
 
-            $this->sessionLogoutHandler->logout($request, $event->getResponse(), $token);
-            $this->cookieClearingLogoutHandler->logout($request, $event->getResponse(), $token);
             $this->tokenStorage->setToken(null);
 
             // the session is restarted after invalidation during the logout, so we can (re)store the last GET request
@@ -103,7 +82,7 @@ class ExplicitSessionTimeoutHandler implements AuthenticationHandler
             return;
         }
 
-        if ($this->nextHandler instanceof \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler) {
+        if ($this->nextHandler instanceof AuthenticationHandler) {
             $this->nextHandler->process($event);
         }
     }
