@@ -28,11 +28,11 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService;
-use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 
 class GsspUserAttributeServiceTest extends m\Adapter\Phpunit\MockeryTestCase
 {
-    private \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity $identity;
+    private Identity $identity;
 
     public function setUp(): void
     {
@@ -54,7 +54,7 @@ class GsspUserAttributeServiceTest extends m\Adapter\Phpunit\MockeryTestCase
             'azuremfa',
             m::spy(ServiceProvider::class),
             m::spy(IdentityProvider::class),
-            new StateHandler(m::mock(NamespacedAttributeBag::class), 'test')
+            new StateHandler(m::mock(AttributeBagInterface::class), 'test')
         );
 
         $extensions = m::mock(Extensions::class);
@@ -84,7 +84,7 @@ class GsspUserAttributeServiceTest extends m\Adapter\Phpunit\MockeryTestCase
             'tiqr',
             m::spy(ServiceProvider::class),
             m::spy(IdentityProvider::class),
-            new StateHandler(m::mock(NamespacedAttributeBag::class), 'test')
+            new StateHandler(m::mock(AttributeBagInterface::class), 'test')
         );
 
         $extensions = m::mock(Extensions::class);
