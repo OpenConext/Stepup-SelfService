@@ -23,23 +23,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class SafeStoreAuthenticationCommand
 {
-    /**
-     *
-     * @var string
-     */
     #[Assert\NotBlank(message: 'ss.ss_authenticate_safe_store_command.secret.may_not_be_empty')]
     #[Assert\Type(type: 'string', message: 'ss.ss_authenticate_safe_store_command.secret.must_be_string')]
-    public $secret;
+    public string $secret;
 
     /**
      * The requesting identity's ID (not name ID).
-     *
-     * @var string
      */
-    public $identity;
+    public string $identity;
 
-    /**
-     * @var RecoveryToken
-     */
-    public $recoveryToken;
+    public RecoveryToken $recoveryToken;
 }
