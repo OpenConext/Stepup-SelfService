@@ -1,7 +1,4 @@
 security:
-
-    enable_authenticator_manager: true
-
     providers:
         saml-provider:
             id: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
