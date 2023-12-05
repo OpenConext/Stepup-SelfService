@@ -54,3 +54,12 @@ services:
 #      - "@surfnet_stepup_middleware_client.configuration.service.institution_configuration_options"
 #    public: true
 
+#  Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticatedSessionStateHandler:
+#    alias: security.authentication.custom_success_handler
+
+  Surfnet\SamlBundle\Security\Authentication\Handler\SuccessHandler:
+    class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationSuccessHandler
+    arguments:
+      - '@Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler'
+      - []
+      - '@logger'
