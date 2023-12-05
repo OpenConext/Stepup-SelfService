@@ -21,14 +21,17 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 use DateInterval;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Psr\Log\LoggerInterface;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeInterface;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,8 +41,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends Controller
 {
-    public function __construct(private VettingTypeService $vettingTypeService)
-    {
+    public function __construct(
+        private readonly VettingTypeService $vettingTypeService,
+        private readonly InstitutionConfigurationOptionsService $configurationOptionsService,
+        private readonly SecondFactorService $secondFactorService,
+        private readonly LoggerInterface $logger,
+    ) {
+        parent::__construct($logger, $configurationOptionsService);
     }
 
     #[Template('registration/display_vetting_types.html.twig')]
@@ -51,18 +59,15 @@ class RegistrationController extends Controller
     public function displaySecondFactorTypes(): Response|array
     {
         $institution = $this->getIdentity()->institution;
-        $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
+        $institutionConfigurationOptions = $this->configurationOptionsService
             ->getInstitutionConfigurationOptionsFor($institution);
 
         $identity = $this->getIdentity();
 
-        /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-
         // Get all available second factors from the config.
         $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
 
-        $secondFactors = $service->getSecondFactorsForIdentity(
+        $secondFactors = $this->secondFactorService->getSecondFactorsForIdentity(
             $identity,
             $allSecondFactors,
             $institutionConfigurationOptions->allowedSecondFactors,
@@ -70,7 +75,7 @@ class RegistrationController extends Controller
         );
 
         if ($secondFactors->getRegistrationsLeft() <= 0) {
-            $this->get('logger')->notice(
+            $this->logger->notice(
                 'User tried to register a new token but maximum number of tokens is reached. Redirecting to overview'
             );
             return $this->forward('SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list');
@@ -111,8 +116,6 @@ class RegistrationController extends Controller
         $vettingTypeService = $this->vettingTypeService;
         $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getIdentity(), $secondFactorId);
 
-        $logger = $this->get('logger');
-
         $nudgeSelfAssertedTokens = $vettingTypeCollection->isPreferred(VettingTypeInterface::SELF_ASSERTED_TOKENS);
         $nudgeRaVetting = $vettingTypeCollection->isPreferred(VettingTypeInterface::ON_PREMISE);
 
@@ -120,7 +123,7 @@ class RegistrationController extends Controller
 
         // Option 1: A self-asserted token registration nudge was requested via query string (?activate=self)
         if ($nudgeSelfAssertedTokens && $vettingTypeCollection->allowSelfAssertedTokens()) {
-            $logger->notice('Nudging (forcing) self-asserted token registration');
+            $this->logger->notice('Nudging (forcing) self-asserted token registration');
             return $this->forward(
                 'SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistration',
                 ['secondFactorId' => $secondFactorId]
@@ -129,7 +132,7 @@ class RegistrationController extends Controller
 
         // Option 2: A ra-vetting nudge was requested via query string (?activate=ra)
         if ($nudgeRaVetting) {
-            $logger->notice('Nudging (forcing) RA vetting');
+            $this->logger->notice('Nudging (forcing) RA vetting');
             return $this->forward(
                 'SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail',
                 ['secondFactorId' => $secondFactorId]
@@ -138,7 +141,7 @@ class RegistrationController extends Controller
 
         // Option 3: non-formal nudge, skip over selection screen. As only ra vetting is available.
         if (!$vettingTypeCollection->allowSelfVetting() && !$vettingTypeCollection->allowSelfAssertedTokens()) {
-            $logger
+            $this->logger
                 ->notice(
                     'Skipping ahead to the RA vetting option as self vetting or self-asserted tokens are not allowed'
                 );
@@ -185,16 +188,15 @@ class RegistrationController extends Controller
         $nonce = $request->query->get('n', '');
         $identityId = $this->getIdentity()->id;
 
-        /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
 
-        $secondFactor = $service->findUnverifiedByVerificationNonce($identityId, $nonce);
+
+        $secondFactor = $this->secondFactorService->findUnverifiedByVerificationNonce($identityId, $nonce);
 
         if ($secondFactor === null) {
             throw new NotFoundHttpException('No second factor can be verified using this URL.');
         }
 
-        if ($service->verifyEmail($identityId, $nonce)) {
+        if ($this->secondFactorService->verifyEmail($identityId, $nonce)) {
             return $this->redirectToRoute(
                 'ss_second_factor_vetting_types',
                 ['secondFactorId' => $secondFactor->id]
@@ -240,7 +242,7 @@ class RegistrationController extends Controller
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
         // Report that it was sent
         return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:registration:registration_email_sent.html.twig',
+            'registration:registration_email_sent.html.twig',
             $parameters
         );
     }
@@ -259,7 +261,7 @@ class RegistrationController extends Controller
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 
         $response = $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:registration:registration_email_sent_pdf.html.twig',
+            'registration:registration_email_sent_pdf.html.twig',
             $parameters
         );
         $content = $response->getContent();
@@ -296,7 +298,7 @@ class RegistrationController extends Controller
     {
         $identity = $this->getIdentity();
 
-        /** @var \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor $secondFactor */
+        /** @var VerifiedSecondFactor $secondFactor */
         $secondFactor = $this->get('surfnet_stepup_self_service_self_service.service.second_factor')
             ->findOneVerified($secondFactorId);
 
