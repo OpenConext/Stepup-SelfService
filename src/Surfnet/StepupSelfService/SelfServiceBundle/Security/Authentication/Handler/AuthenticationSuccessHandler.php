@@ -7,9 +7,8 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Authenti
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
-class AuthenticationSuccessHandler extends SuccessHandler implements AuthenticationSuccessHandlerInterface
+class AuthenticationSuccessHandler extends SuccessHandler
 {
 
     public function __construct(
@@ -21,7 +20,6 @@ class AuthenticationSuccessHandler extends SuccessHandler implements Authenticat
     {
         $this->authenticatedSessionStateHandler->setCurrentRequestUri($request->getUri());
 
-        // TODO: probably more functionality needed
-
+        return null;
     }
 }

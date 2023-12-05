@@ -19,45 +19,68 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Exception;
+use Surfnet\SamlBundle\Metadata\MetadataFactory;
+use Surfnet\StepupBundle\Service\LoaResolutionService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
+use Psr\Log\LoggerInterface;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Value\Loa;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Surfnet\SamlBundle\Monolog\SamlAuthenticationLogger;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor\TestAuthenticationRequestFactory;
+use Surfnet\SamlBundle\Http\RedirectBinding;
+use Surfnet\SamlBundle\Http\PostBinding;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
  */
 class SamlController extends Controller
 {
+
+    public function __construct(
+        private readonly LoggerInterface                  $logger,
+        InstitutionConfigurationOptionsService            $configurationOptionsService,
+        private readonly SecondFactorService              $secondFactorService,
+        private readonly RequestStack                     $requestStack,
+        private readonly LoaResolutionService             $loaResolutionService,
+        private readonly MetadataFactory                  $metadataFactory,
+        private readonly SamlAuthenticationLogger         $samlAuthenticationLogger,
+        private readonly TestAuthenticationRequestFactory $testAuthenticationRequestFactory,
+        private readonly RedirectBinding                  $redirectBinding,
+        private readonly PostBinding                      $postBinding,
+    ) {
+        parent::__construct($logger, $configurationOptionsService);
+    }
+
     /**
      * A SelfService user is able to test it's token in this endpoint
      *
-     * @return RedirectResponse
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
      */
     #[Route(path:'/second-factor/test', name:'ss_second_factor_test', methods:  ['GET'])]
     public function testSecondFactor(): RedirectResponse
     {
-        $logger = $this->get('logger');
-        $logger->notice('Starting second factor test');
+        $this->logger->notice('Starting second factor test');
 
-        $secondFactorService = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
-        $loaResolutionService = $this->get('surfnet_stepup.service.loa_resolution');
+
         $identity = $this->getIdentity();
 
-        $vettedSecondFactors = $secondFactorService->findVettedByIdentity($identity->id);
+        $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);
         if (!$vettedSecondFactors || $vettedSecondFactors->getTotalItems() === 0) {
-            $logger->error(
+            $this->logger->error(
                 sprintf(
                     'Identity "%s" tried to test a second factor, but does not own a suitable vetted token.',
                     $identity->id
@@ -67,20 +90,19 @@ class SamlController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $authenticationRequestFactory = $this->get('self_service.test_second_factor_authentication_request_factory');
 
         // By requesting LoA 1.5 any relevant token can be tested (LoA 2 and 3)
-        $authenticationRequest = $authenticationRequestFactory->createSecondFactorTestRequest(
+        $authenticationRequest = $this->testAuthenticationRequestFactory->createSecondFactorTestRequest(
             $identity->nameId,
-            $loaResolutionService->getLoaByLevel(Loa::LOA_SELF_VETTED)
+            $this->loaResolutionService->getLoaByLevel(Loa::LOA_SELF_VETTED)
         );
 
-        $this->get('session')->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
+        $this->requestStack->getSession()->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
 
-        $samlLogger = $this->get('surfnet_saml.logger')->forAuthentication($authenticationRequest->getRequestId());
+        $samlLogger = $this->samlAuthenticationLogger->forAuthentication($authenticationRequest->getRequestId());
         $samlLogger->notice('Sending authentication request to the second factor test IDP');
 
-        return $this->get('surfnet_saml.http.redirect_binding')->createRedirectResponseFor($authenticationRequest);
+        return $this->redirectBinding->createResponseFor($authenticationRequest);
     }
 
     #[Route(
@@ -90,9 +112,7 @@ class SamlController extends Controller
     )]
     public function consumeAssertion(Request $httpRequest): Response
     {
-        $logger = $this->get('logger');
-
-        $session = $this->get('session');
+        $session = $this->requestStack->getSession();
         if ($session->has(SelfVetController::SELF_VET_SESSION_ID)) {
             // The test authentication IdP is also used for self vetting, a different session id is
             // used to mark a self vet command
@@ -110,22 +130,21 @@ class SamlController extends Controller
             return $this->forward('SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:stepUpConsumeAssertion');
         }
         if (!$session->has('second_factor_test_request_id')) {
-            $logger->error(
+            $this->logger->error(
                 'Received an authentication response for testing a second factor, but no second factor test response was expected'
             );
 
             throw new AccessDeniedHttpException('Did not expect an authentication response');
         }
-        $logger->notice('Received an authentication response for testing a second factor');
+        $this->logger->notice('Received an authentication response for testing a second factor');
         $initiatedRequestId = $session->get('second_factor_test_request_id');
-        $samlLogger = $this->get('surfnet_saml.logger')->forAuthentication($initiatedRequestId);
+        $samlLogger = $this->samlAuthenticationLogger->forAuthentication($initiatedRequestId);
         $session->remove('second_factor_test_request_id');
-        $postBinding = $this->get('surfnet_saml.http.post_binding');
         try {
-            $assertion = $postBinding->processResponse(
+            $assertion = $this->postBinding->processResponse(
                 $httpRequest,
-                $this->get('self_service.second_factor_test_idp'),
-                $this->get('surfnet_saml.hosted.service_provider')
+                $this->container->get('self_service.second_factor_test_idp'),
+                $this->container->get('surfnet_saml.hosted.service_provider')
             );
 
             if (!InResponseTo::assertEquals($assertion, $initiatedRequestId)) {
@@ -153,9 +172,7 @@ class SamlController extends Controller
     )]
     public function metadata(): XMLResponse
     {
-        /** @var \Surfnet\SamlBundle\Metadata\MetadataFactory $metadataFactory */
-        $metadataFactory = $this->get('surfnet_saml.metadata_factory');
 
-        return new XMLResponse($metadataFactory->generate());
+        return new XMLResponse($this->metadataFactory->generate());
     }
 }
