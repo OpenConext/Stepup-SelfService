@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupMiddlewareClientBundle\Configuration\Dto\InstitutionConfigurationOptions;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,6 +38,11 @@ class Controller extends AbstractController
         private readonly LoggerInterface $logger,
         private readonly InstitutionConfigurationOptionsService $configurationOptionsService
     ) {
+    }
+
+    protected function has(string $id): bool
+    {
+        return $this->container->has($id);
     }
 
     /**
@@ -81,7 +87,7 @@ class Controller extends AbstractController
         $config = $this->configurationOptionsService
             ->getInstitutionConfigurationOptionsFor($this->getIdentity()->institution);
 
-        if (!$config instanceof \Surfnet\StepupMiddlewareClientBundle\Configuration\Dto\InstitutionConfigurationOptions) {
+        if (!$config instanceof InstitutionConfigurationOptions) {
             return self::DEFAULT_VERIFY_EMAIL_OPTION;
         }
 
