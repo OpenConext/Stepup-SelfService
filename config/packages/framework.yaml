@@ -4,7 +4,6 @@ framework:
     secret: "%secret%"
     form: ~
     csrf_protection: ~
-    validation: { enable_attributes: true }
     trusted_hosts: ~
     annotations: false
     handle_all_throwables: true
