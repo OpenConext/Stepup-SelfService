@@ -33,6 +33,7 @@ use Surfnet\StepupBundle\Value\SecondFactorType;
 use Surfnet\StepupBundle\Value\VettingType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor\TestAuthenticationRequestFactory;
@@ -40,9 +41,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use function sprintf;
@@ -54,60 +53,94 @@ class SelfVetController extends Controller
 {
     final public const SELF_VET_SESSION_ID = 'second_factor_self_vet_request_id';
 
-    /** @var TestAuthenticationRequestFactory */
-    public $authenticationRequestFactory;
-
-    /** @var SecondFactorService */
-    public $secondFactorService;
-
-    /** @var SecondFactorTypeService */
-    public $secondFactorTypeService;
-
-    /** @var RedirectBinding */
-    public $redirectBinding;
-
-    /** @var PostBinding */
-    public $postBinding;
-
-    /** @var LoaResolutionService */
-    public $loaResolutionService;
-
-    /** @var SamlAuthenticationLogger */
-    public $samlLogger;
-
-    /** @var SessionInterface */
-    public $session;
-
-    /** @var LoggerInterface */
-    public $logger;
-
-    /**
-     * @@SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
     public function __construct(
-        TestAuthenticationRequestFactory $authenticationRequestFactory,
-        SecondFactorService $secondFactorService,
-        SecondFactorTypeService $secondFactorTypeService,
-        private readonly SelfVetMarshaller $selfVetMarshaller,
-        private readonly AuthorizationService $authorizationService,
-        private readonly ServiceProvider $serviceProvider,
-        private readonly IdentityProvider $identityProvider,
-        RedirectBinding $redirectBinding,
-        PostBinding $postBinding,
-        LoaResolutionService $loaResolutionService,
-        SamlAuthenticationLogger $samlAuthenticationLogger,
-        RequestStack $requestStack,
-        LoggerInterface $logger
+        private readonly LoggerInterface                  $logger,
+        InstitutionConfigurationOptionsService            $configurationOptionsService,
+        private readonly TestAuthenticationRequestFactory $authenticationRequestFactory,
+        private readonly SecondFactorService      $secondFactorService,
+        private readonly SecondFactorTypeService  $secondFactorTypeService,
+        private readonly SelfVetMarshaller        $selfVetMarshaller,
+        private readonly AuthorizationService     $authorizationService,
+        private readonly ServiceProvider          $serviceProvider,
+        private readonly IdentityProvider         $identityProvider,
+        private readonly RedirectBinding          $redirectBinding,
+        private readonly PostBinding              $postBinding,
+        private readonly LoaResolutionService     $loaResolutionService,
+        private readonly SamlAuthenticationLogger $samlAuthenticationLogger,
+        private readonly RequestStack             $requestStack,
     ) {
-        $this->authenticationRequestFactory = $authenticationRequestFactory;
-        $this->secondFactorService = $secondFactorService;
-        $this->secondFactorTypeService = $secondFactorTypeService;
-        $this->redirectBinding = $redirectBinding;
-        $this->postBinding = $postBinding;
-        $this->loaResolutionService = $loaResolutionService;
-        $this->samlLogger = $samlAuthenticationLogger;
-        $this->session = $requestStack->getSession();
-        $this->logger = $logger;
+        parent::__construct($logger, $configurationOptionsService);
+    }
+
+    #[Route(
+        path: '/second-factor/{secondFactorId}/self-vet-consume-assertion',
+        name: 'ss_second_factor_self_vet_consume_assertion',
+        methods: ['POST'],
+    )]
+    public function consumeSelfVetAssertion(Request $httpRequest, string $secondFactorId): RedirectResponse
+    {
+        $identity = $this->getIdentity();
+        if (!$this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {
+            throw $this->createNotFoundException();
+        }
+
+        if (!$this->requestStack->getSession()->has(self::SELF_VET_SESSION_ID)) {
+            $this->logger->error(
+                'Received an authentication response for self vetting a second factor, but no response was expected'
+            );
+            throw new AccessDeniedHttpException('Did not expect an authentication response');
+        }
+
+        $this->logger->notice('Received an authentication response for self vetting a second factor');
+
+        /** @var SelfVetRequestId $initiatedRequestId */
+        $initiatedRequestId = $this->requestStack->getSession()->get(self::SELF_VET_SESSION_ID);
+
+        $samlLogger = $this->samlAuthenticationLogger->forAuthentication($initiatedRequestId->requestId());
+
+        $this->requestStack->getSession()->remove(self::SELF_VET_SESSION_ID);
+
+        try {
+            $assertion = $this->postBinding->processResponse(
+                $httpRequest,
+                $this->identityProvider,
+                $this->serviceProvider
+            );
+
+            if (!InResponseTo::assertEquals($assertion, $initiatedRequestId->requestId())) {
+                $samlLogger->error(
+                    sprintf(
+                        'Expected a response to the request with ID "%s", but the SAMLResponse was a response to a different request',
+                        $initiatedRequestId
+                    )
+                );
+                throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
+            }
+            $candidateSecondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
+            // Proof of possession of higher/equal LoA was successful, now apply the self vet command on Middleware
+            $command = new SelfVetCommand();
+            $command->identity = $this->getIdentity();
+            $command->secondFactor = $candidateSecondFactor;
+            $command->authoringLoa = $assertion->getAuthnContextClassRef();
+
+            if ($this->secondFactorService->selfVet($command)) {
+                $this->requestStack
+                    ->getSession()
+                    ->getFlashBag()
+                    ->add('success', 'ss.self_vet.second_factor.alert.successful');
+            } else {
+                $this->requestStack
+                    ->getSession()
+                    ->getFlashBag()
+                    ->add('error', 'ss.self_vet.second_factor.alert.failed');
+            }
+        } catch (Exception) {
+            $this->requestStack
+                ->getSession()
+                ->getFlashBag()
+                ->add('error', 'ss.self_vet.second_factor.verification_failed');
+        }
+        return $this->redirectToRoute('ss_second_factor_list');
     }
 
     #[Route(
@@ -121,7 +154,7 @@ class SelfVetController extends Controller
         $identity = $this->getIdentity();
 
         if (!$this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {
-            throw new NotFoundHttpException();
+            throw $this->createNotFoundException();
         }
 
 
@@ -156,76 +189,14 @@ class SelfVetController extends Controller
             $candidateSecondFactorLoa
         );
 
-        $this->session->set(
+        $this->requestStack->getSession()->set(
             self::SELF_VET_SESSION_ID,
             new SelfVetRequestId($authenticationRequest->getRequestId(), $secondFactorId)
         );
 
-        $samlLogger = $this->samlLogger->forAuthentication($authenticationRequest->getRequestId());
+        $samlLogger = $this->samlAuthenticationLogger->forAuthentication($authenticationRequest->getRequestId());
         $samlLogger->notice('Sending authentication request to the second factor only IdP');
 
-        return $this->redirectBinding->createRedirectResponseFor($authenticationRequest);
-    }
-
-    #[Route(
-        path: '/second-factor/{secondFactorId}/self-vet-consume-assertion',
-        name: 'ss_second_factor_self_vet_consume_assertion',
-        methods: ['POST'],
-    )]
-    public function consumeSelfVetAssertion(Request $httpRequest, string $secondFactorId): \Symfony\Component\HttpFoundation\RedirectResponse
-    {
-        $identity = $this->getIdentity();
-        if (!$this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {
-            throw new NotFoundHttpException();
-        }
-
-        if (!$this->session->has(self::SELF_VET_SESSION_ID)) {
-            $this->logger->error(
-                'Received an authentication response for self vetting a second factor, but no response was expected'
-            );
-            throw new AccessDeniedHttpException('Did not expect an authentication response');
-        }
-
-        $this->logger->notice('Received an authentication response for self vetting a second factor');
-
-        /** @var SelfVetRequestId $initiatedRequestId */
-        $initiatedRequestId = $this->session->get(self::SELF_VET_SESSION_ID);
-
-        $samlLogger = $this->samlLogger->forAuthentication($initiatedRequestId->requestId());
-
-        $this->session->remove(self::SELF_VET_SESSION_ID);
-
-        try {
-            $assertion = $this->postBinding->processResponse(
-                $httpRequest,
-                $this->identityProvider,
-                $this->serviceProvider
-            );
-
-            if (!InResponseTo::assertEquals($assertion, $initiatedRequestId->requestId())) {
-                $samlLogger->error(
-                    sprintf(
-                        'Expected a response to the request with ID "%s", but the SAMLResponse was a response to a different request',
-                        $initiatedRequestId
-                    )
-                );
-                throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
-            }
-            $candidateSecondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
-            // Proof of possession of higher/equal LoA was successful, now apply the self vet command on Middleware
-            $command = new SelfVetCommand();
-            $command->identity = $this->getIdentity();
-            $command->secondFactor = $candidateSecondFactor;
-            $command->authoringLoa = $assertion->getAuthnContextClassRef();
-
-            if ($this->secondFactorService->selfVet($command)) {
-                $this->session->getFlashBag()->add('success', 'ss.self_vet.second_factor.alert.successful');
-            } else {
-                $this->session->getFlashBag()->add('error', 'ss.self_vet.second_factor.alert.failed');
-            }
-        } catch (Exception) {
-            $this->session->getFlashBag()->add('error', 'ss.self_vet.second_factor.verification_failed');
-        }
-        return $this->redirectToRoute('ss_second_factor_list');
+        return $this->redirectBinding->createResponseFor($authenticationRequest);
     }
 }
