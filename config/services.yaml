@@ -15,27 +15,11 @@ services:
     alias: 'monolog.logger'
     public: true
 
-#  twig.extension.text: # Required by JMSTranslationBundle
-#    class: Twig_Extensions_Extension_Text
-#    tags: [{ name: twig.extension }]
-#
-#  twig.extension.intl:
-#    class: Twig_Extensions_Extension_Intl
-#    tags: [{ name: twig.extension }]
-
-#    # Firewall
   surfnet_saml.saml_provider:
     class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
     arguments:
-      $identityService: '@self_service.service.identity'
+      $identityService: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService'
       $preferredLocaleProvider: '@self_service.locale.request_stack_locale_provider'
-
-
-#    arguments:
-#      - '@request_stack'
-#      - '@Surfnet\SamlBundle\Entity\HostedEntities'
-#      - '@Surfnet\SamlBundle\Entity\IdentityProvider'
-#      - '@logger'
 
   Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider:
     alias: surfnet_saml.saml_provider

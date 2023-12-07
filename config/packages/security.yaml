@@ -18,6 +18,8 @@ security:
         saml_based:
             custom_authenticators:
                 - Surfnet\SamlBundle\Security\Authentication\SamlAuthenticator
+            logout:
+                path: /logout
 
     access_control:
         - { path: ^/saml, roles: PUBLIC_ACCESS, requires_channel: https }

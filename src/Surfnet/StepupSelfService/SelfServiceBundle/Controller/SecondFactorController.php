@@ -19,6 +19,7 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Surfnet\StepupBundle\DateTime\RegistrationExpirationHelper;
+use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType;
@@ -36,13 +37,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class SecondFactorController extends Controller
 {
     public function __construct(
-        private readonly SecondFactorService    $secondFactorService,
+        LoggerInterface $logger,
+        private readonly InstitutionConfigurationOptionsService $configurationOptionsService,
         private readonly RecoveryTokenService    $recoveryTokenService,
         private readonly AuthorizationService    $authorizationService,
         private readonly SecondFactorTypeService $secondFactorTypeService,
-        private readonly InstitutionConfigurationOptionsService $institutionConfigurationOptionsService,
-        private readonly RegistrationExpirationHelper $expirationHelper
+        private readonly SecondFactorService $secondFactorService,
+        private readonly RegistrationExpirationHelper $registrationExpirationHelper,
     ) {
+        parent::__construct($logger, $configurationOptionsService);
     }
     #[Template('second_factor/list.html.twig')]
     #[Route(path: '/overview', name: 'ss_second_factor_list', methods:  ['GET'])]
@@ -50,15 +53,13 @@ class SecondFactorController extends Controller
     {
         $identity = $this->getIdentity();
         $institution = $this->getIdentity()->institution;
-        $options = $this->institutionConfigurationOptionsService
+        $options = $this->configurationOptionsService
             ->getInstitutionConfigurationOptionsFor($institution);
-        $service = $this->secondFactorService;
+
         // Get all available second factors from the config.
         $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
 
-        $expirationHelper = $this->expirationHelper;
-
-        $secondFactors = $service->getSecondFactorsForIdentity(
+        $secondFactors = $this->secondFactorService->getSecondFactorsForIdentity(
             $identity,
             $allSecondFactors,
             $options->allowedSecondFactors,
@@ -87,7 +88,7 @@ class SecondFactorController extends Controller
             'verifiedSecondFactors' => $secondFactors->verified,
             'vettedSecondFactors' => $secondFactors->vetted,
             'availableSecondFactors' => $secondFactors->available,
-            'expirationHelper' => $expirationHelper,
+            'expirationHelper' => $this->registrationExpirationHelper,
             'selfAssertedTokenRegistration' => $selfAssertedTokenRegistration,
             'recoveryTokens' => $recoveryTokens,
             'hasRemainingRecoveryTokens' => $hasRemainingTokenTypes,
@@ -106,9 +107,9 @@ class SecondFactorController extends Controller
         $identity = $this->getIdentity();
 
         /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+        $service = $this->container->get('surfnet_stepup_self_service_self_service.service.second_factor');
         if (!$service->identityHasSecondFactorOfStateWithId($identity->id, $state, $secondFactorId)) {
-            $this->get('logger')->error(sprintf(
+            $this->container->get('logger')->error(sprintf(
                 'Identity "%s" tried to revoke "%s" second factor "%s", but does not own that second factor',
                 $identity->id,
                 $state,
@@ -138,7 +139,7 @@ class SecondFactorController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var FlashBagInterface $flashBag */
-            $flashBag = $this->get('session')->getFlashBag();
+            $flashBag = $this->container->get('session')->getFlashBag();
 
             if ($service->revoke($command)) {
                 $flashBag->add('success', 'ss.second_factor.revoke.alert.revocation_successful');

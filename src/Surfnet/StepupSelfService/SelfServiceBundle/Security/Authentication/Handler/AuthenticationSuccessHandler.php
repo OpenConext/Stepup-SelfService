@@ -22,6 +22,6 @@ class AuthenticationSuccessHandler extends SuccessHandler
         $this->authenticatedSessionStateHandler->setCurrentRequestUri($request->getUri());
 
         // @TODO Paul, denk dat je hier naar de /overview of / route moet gaan
-        return new RedirectResponse('/');
+        return new RedirectResponse('/overview');
     }
 }
