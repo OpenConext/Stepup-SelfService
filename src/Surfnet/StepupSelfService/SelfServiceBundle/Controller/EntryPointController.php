@@ -40,7 +40,11 @@ class EntryPointController extends Controller
         $identity = $this->getIdentity();
         $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
         $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
-        $this->activationFlowService->process($this->authStateHandler->getCurrentRequestUri());
+        $current = '/';
+        if (!is_null($this->authStateHandler->getCurrentRequestUri())) {
+            $current = $this->authStateHandler->getCurrentRequestUri();
+        }
+        $this->activationFlowService->process($current);
         if ($hasSecondFactor || $hasRecoveryToken) {
             return $this->redirect($this->generateUrl('ss_second_factor_list'));
         } else {
