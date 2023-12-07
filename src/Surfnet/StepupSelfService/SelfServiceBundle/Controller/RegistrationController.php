@@ -27,9 +27,9 @@ use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorAvailabilityHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -46,6 +46,7 @@ class RegistrationController extends Controller
         private readonly InstitutionConfigurationOptionsService $configurationOptionsService,
         private readonly SecondFactorService $secondFactorService,
         private readonly LoggerInterface $logger,
+        private readonly SecondFactorAvailabilityHelper $secondFactorAvailabilityHelper
     ) {
         parent::__construct($logger, $configurationOptionsService);
     }
@@ -81,18 +82,7 @@ class RegistrationController extends Controller
             return $this->forward('SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list');
         }
 
-        $availableGsspSecondFactors = [];
-        foreach ($secondFactors->available as $index => $secondFactor) {
-            if ($this->container->has("gssp.view_config.{$secondFactor}")) {
-                /** @var ViewConfig $secondFactorConfig */
-                $secondFactorConfig = $this->container->get("gssp.view_config.{$secondFactor}");
-                $availableGsspSecondFactors[$index] = $secondFactorConfig;
-                // Remove the gssp second factors from the regular second factors.
-                unset($secondFactors->available[$index]);
-            }
-        }
-
-        $availableTokens = AvailableTokenCollection::from($secondFactors->available, $availableGsspSecondFactors);
+        $availableTokens = $this->secondFactorAvailabilityHelper->filter($secondFactors);
 
         return [
             'commonName' => $this->getIdentity()->commonName,

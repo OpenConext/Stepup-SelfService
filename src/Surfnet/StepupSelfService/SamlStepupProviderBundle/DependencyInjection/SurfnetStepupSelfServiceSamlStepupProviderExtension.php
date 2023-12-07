@@ -97,7 +97,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             ]
         );
 
-        $providerDefinition->setPublic(false);
+        $providerDefinition->setPublic(true);
         $container->setDefinition('gssp.provider.' . $provider, $providerDefinition);
 
         // When the android url is set, the description should contain the android play store url parameter.
