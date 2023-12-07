@@ -18,10 +18,12 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use Surfnet\StepupBundle\DateTime\RegistrationExpirationHelper;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Symfony\Bridge\Twig\Attribute\Template;
@@ -34,9 +36,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class SecondFactorController extends Controller
 {
     public function __construct(
+        private readonly SecondFactorService    $secondFactorService,
         private readonly RecoveryTokenService    $recoveryTokenService,
         private readonly AuthorizationService    $authorizationService,
         private readonly SecondFactorTypeService $secondFactorTypeService,
+        private readonly InstitutionConfigurationOptionsService $institutionConfigurationOptionsService,
+        private readonly RegistrationExpirationHelper $expirationHelper
     ) {
     }
     #[Template('second_factor/list.html.twig')]
@@ -45,14 +50,13 @@ class SecondFactorController extends Controller
     {
         $identity = $this->getIdentity();
         $institution = $this->getIdentity()->institution;
-        $options = $this->get('self_service.service.institution_configuration_options')
+        $options = $this->institutionConfigurationOptionsService
             ->getInstitutionConfigurationOptionsFor($institution);
-        /** @var SecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.second_factor');
+        $service = $this->secondFactorService;
         // Get all available second factors from the config.
         $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
 
-        $expirationHelper = $this->get('surfnet_stepup.registration_expiration_helper');
+        $expirationHelper = $this->expirationHelper;
 
         $secondFactors = $service->getSecondFactorsForIdentity(
             $identity,

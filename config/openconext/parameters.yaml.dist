@@ -1,6 +1,10 @@
 parameters:
     trusted_proxies:   ~
 
+    app_env: dev
+    app_debug: true
+    app_secret: NotSoSecretReplaceMe!
+
     default_locale:         en_GB
     locales:                [nl_NL, en_GB]
     locale_cookie_domain:   example.org
