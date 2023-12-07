@@ -194,6 +194,10 @@ services:
             - "@security.token_storage"
             - "@logger"
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorAvailabilityHelper:
+        arguments:
+            $providerRepository: '@gssp.provider_repository'
+
     self_service.service.locale_provider:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\LocaleProviderService
         arguments:
