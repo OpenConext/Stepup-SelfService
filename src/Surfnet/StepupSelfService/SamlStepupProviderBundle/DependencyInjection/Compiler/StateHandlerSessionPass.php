@@ -25,6 +25,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class StateHandlerSessionPass implements CompilerPassInterface
 {
+    public function __construct(
+    ) {
+    }
+
     /**
      * {@inheritdoc} This is required to ensure that our NamespacedAttributeBag is registered in the session handler
      * before the session is started.
@@ -37,5 +41,8 @@ class StateHandlerSessionPass implements CompilerPassInterface
 //        $container
 //            ->getDefinition('session')
 //            ->addMethodCall('registerBag', [new Reference('gssp.session.namespaced_attribute_bag')]);
+
+
     }
+
 }

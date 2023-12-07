@@ -140,7 +140,7 @@ readonly class IdentityService implements UserProviderInterface
         }
 
         /** @var Identity $identity */
-        $identity = $token->getUser();
+        $identity = $token->getUser()->getIdentity();
 
         $expressLocalePreferenceCommand = new ExpressLocalePreferenceCommand();
         $expressLocalePreferenceCommand->identityId = $command->identityId;

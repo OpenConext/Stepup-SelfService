@@ -21,20 +21,34 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Command\SwitchLocaleCommand;
 use Surfnet\StepupBundle\Form\Type\SwitchLocaleType;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class LocaleController extends Controller
 {
+    
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        InstitutionConfigurationOptionsService $configurationOptionsService,
+        private readonly TranslatorInterface $translator,
+        private readonly IdentityService $identityService,
+    ) {
+        parent::__construct($logger, $configurationOptionsService);
+    }
+
     #[Route(
         path: '/switch-locale',
         name: 'ss_switch_locale',
         requirements: ['return-url' => '.+'],
         methods: ['POST']
     )]
-    public function switchLocale(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function switchLocale(Request $request): RedirectResponse
     {
         $returnUrl = $request->query->get('return-url');
 
@@ -42,7 +56,7 @@ final class LocaleController extends Controller
         // @see https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpFoundation/Request.php#L878
         $domain = $request->getSchemeAndHttpHost() . '/';
         if (!str_starts_with($returnUrl, $domain)) {
-            $this->get('logger')->error(sprintf(
+            $this->logger->error(sprintf(
                 'Identity "%s" used illegal return-url for redirection after changing locale, aborting request',
                 $this->getIdentity()->id
             ));
@@ -50,9 +64,7 @@ final class LocaleController extends Controller
             throw new BadRequestHttpException('Invalid return-url given');
         }
 
-        /** @var LoggerInterface $logger */
-        $logger = $this->get('logger');
-        $logger->info('Switching locale...');
+        $this->logger->info('Switching locale...');
 
         $identity = $this->getIdentity();
         if (!$identity) {
@@ -70,19 +82,19 @@ final class LocaleController extends Controller
         $form->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->addFlash('error', $this->get('translator')->trans('ss.flash.invalid_switch_locale_form'));
-            $logger->error('The switch locale form unexpectedly contained invalid data');
+            $this->addFlash('error', $this->translator->trans('ss.flash.invalid_switch_locale_form'));
+            $this->logger->error('The switch locale form unexpectedly contained invalid data');
             return $this->redirect($returnUrl);
         }
 
-        $service = $this->get('self_service.service.identity');
-        if (!$service->switchLocale($command)) {
-            $this->addFlash('error', $this->get('translator')->trans('ss.flash.error_while_switching_locale'));
-            $logger->error('An error occurred while switching locales');
+
+        if (!$this->identityService->switchLocale($command)) {
+            $this->addFlash('error', $this->translator->trans('ss.flash.error_while_switching_locale'));
+            $this->logger->error('An error occurred while switching locales');
             return $this->redirect($returnUrl);
         }
 
-        $logger->info('Successfully switched locale');
+        $this->logger->info('Successfully switched locale');
 
         return $this->redirect($returnUrl);
     }

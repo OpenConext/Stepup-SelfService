@@ -18,27 +18,32 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
+use Surfnet\StepupMiddlewareClient\Service\ExecutionResult;
 use Surfnet\StepupMiddlewareClientBundle\Command\Command;
 use Surfnet\StepupMiddlewareClientBundle\Command\Metadata;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Service\CommandService as MiddlewareCommandService;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class CommandService
 {
-    public function __construct(private readonly MiddlewareCommandService $commandService, private readonly TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(
+        private readonly MiddlewareCommandService $commandService,
+        private readonly TokenStorageInterface $tokenStorage,
+    ) {
     }
 
-    public function execute(Command $command)
+    public function execute(Command $command): ExecutionResult
     {
         $token = $this->tokenStorage->getToken();
 
-        if (!$token instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface) {
+        if (!$token instanceof TokenInterface) {
             return $this->commandService->execute($command, new Metadata(null, null));
         }
 
-        /** @var \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity $identity */
-        $identity = $token->getUser();
+        /** @var Identity $identity */
+        $identity = $token->getUser()->getIdentity();
 
         return $this->commandService->execute($command, new Metadata($identity->id, $identity->institution));
     }
