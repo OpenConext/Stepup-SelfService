@@ -22,13 +22,13 @@ use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler;
 
-final class Provider
+final readonly class Provider
 {
     public function __construct(
-        private readonly string           $name,
-        private readonly ServiceProvider  $serviceProvider,
-        private readonly IdentityProvider $remoteIdentityProvider,
-        private readonly StateHandler     $stateHandler
+        private string           $name,
+        private ServiceProvider  $serviceProvider,
+        private IdentityProvider $remoteIdentityProvider,
+        private StateHandler     $stateHandler
     ) {
     }
 
