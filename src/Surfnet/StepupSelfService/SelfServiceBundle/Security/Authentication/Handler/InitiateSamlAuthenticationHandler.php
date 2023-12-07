@@ -26,6 +26,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInte
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class InitiateSamlAuthenticationHandler implements AuthenticationHandler
 {
@@ -50,7 +51,7 @@ class InitiateSamlAuthenticationHandler implements AuthenticationHandler
         // back to our ACS. This means that a user may have inadvertedly triggered the sending of an AuthnRequest
         // one of the common causes of this is the prefetching of pages by browsers to give users the illusion of speed.
         // In any case, we reset the login and send a new AuthnRequest.
-        if (!$this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
+        if (!$this->tokenStorage->getToken() instanceof TokenInterface
             && $this->samlInteractionProvider->isSamlAuthenticationInitiated()
             && $event->getRequest()->getMethod() !== 'POST'
             && $event->getRequest()->getRequestUri() !== $acsUri
@@ -64,7 +65,7 @@ class InitiateSamlAuthenticationHandler implements AuthenticationHandler
             $this->samlInteractionProvider->reset();
         }
 
-        if (!$this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
+        if (!$this->tokenStorage->getToken() instanceof TokenInterface
             && !$this->samlInteractionProvider->isSamlAuthenticationInitiated()
         ) {
             $this->logger->notice('No authenticated user, no saml AuthnRequest pending, sending new AuthnRequest');
@@ -80,7 +81,7 @@ class InitiateSamlAuthenticationHandler implements AuthenticationHandler
             return;
         }
 
-        if ($this->nextHandler instanceof \Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticationHandler) {
+        if ($this->nextHandler instanceof AuthenticationHandler) {
             $this->nextHandler->process($event);
         }
     }
