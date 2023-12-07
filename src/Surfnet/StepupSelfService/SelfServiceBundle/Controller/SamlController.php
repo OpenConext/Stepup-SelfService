@@ -75,7 +75,6 @@ class SamlController extends Controller
     {
         $this->logger->notice('Starting second factor test');
 
-
         $identity = $this->getIdentity();
 
         $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);

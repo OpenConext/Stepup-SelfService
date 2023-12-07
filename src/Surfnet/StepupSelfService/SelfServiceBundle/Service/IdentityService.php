@@ -70,7 +70,6 @@ readonly class IdentityService implements UserProviderInterface
     }
 
     /**
-     * @return null|Identity
      * @throws \Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException
      */
     public function findByNameIdAndInstitution(string $nameId, string $institution): ?Identity

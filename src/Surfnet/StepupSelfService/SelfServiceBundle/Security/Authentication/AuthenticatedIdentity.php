@@ -23,9 +23,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 
-class AuthenticatedIdentity implements UserInterface
+readonly class AuthenticatedIdentity implements UserInterface
 {
-    public function __construct(private readonly Identity $originalIdentity)
+    public function __construct(private Identity $originalIdentity)
     {
     }
 

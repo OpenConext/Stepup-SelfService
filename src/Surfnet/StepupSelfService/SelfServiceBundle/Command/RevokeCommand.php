@@ -22,17 +22,16 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\UnverifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class RevokeCommand
 {
     /**
      * @var Identity
      */
-    public $identity;
+    public Identity $identity;
 
     /**
      * @var UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor
      */
-    public $secondFactor;
+    public UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor $secondFactor;
 }

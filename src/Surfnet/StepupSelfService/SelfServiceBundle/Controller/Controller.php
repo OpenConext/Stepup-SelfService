@@ -45,29 +45,13 @@ class Controller extends AbstractController
         return $this->container->has($id);
     }
 
-    /**
-     * @throws AccessDeniedException When the registrant isn't registered using a SAML token.
-     */
     protected function getIdentity(): Identity
     {
-        $authenticatedIdentity = $this->getUser();
         // During authentication, an AuthenticatedIdentity is created, a decorated Identity.
         // The app wants to work with the 'regular' Identity DTO from Middleware (client bundle)
         // So we extract the entity here
-        $user = $authenticatedIdentity->getIdentity();
-        if (!$user instanceof Identity) {
-            $actualType = get_debug_type($user);
 
-            throw new UnexpectedValueException(
-                sprintf(
-                    "Token did not contain user of type '%s', but one of type '%s'",
-                    Identity::class,
-                    $actualType
-                )
-            );
-        }
-
-        return $user;
+        return $this->getUser()->getIdentity();
     }
 
     protected function assertSecondFactorEnabled(string $type): void
@@ -79,9 +63,6 @@ class Controller extends AbstractController
         }
     }
 
-    /**
-     * @return bool
-     */
     protected function emailVerificationIsRequired(): bool
     {
         $config = $this->configurationOptionsService
