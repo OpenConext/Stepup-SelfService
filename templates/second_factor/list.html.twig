@@ -31,7 +31,7 @@
     {% endif %}
     </div>
 
-    {% include 'registration/partial:crud_list.html.twig' %}
+    {% include 'registration/partial/crud_list.html.twig' %}
 
 {% endblock %}
 
@@ -62,7 +62,7 @@
                             <td>{{ secondFactor.secondFactorIdentifier }}</td>
                             {% if state == 'verified' %}
                             <td>
-                                {{ expirationHelper.expiresAt(secondFactor.registrationRequestedAt)|format_datetime('full', 'none', locale) }}
+                                {{ expirationHelper.expiresAt(secondFactor.registrationRequestedAt)|format_date('full', 'none', locale) }}
                                 {% if expirationHelper.hasExpired(secondFactor.registrationRequestedAt) %}
                                     {% set hasExpired = true %}
                                     <span class="label label-danger">{{ 'ss.second_factor_list.header.expired_warning'|trans }}</span>
