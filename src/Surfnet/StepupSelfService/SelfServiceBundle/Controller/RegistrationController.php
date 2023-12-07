@@ -81,12 +81,11 @@ class RegistrationController extends Controller
             return $this->forward('SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list');
         }
 
-
         $availableGsspSecondFactors = [];
         foreach ($secondFactors->available as $index => $secondFactor) {
-            if ($this->has("gssp.view_config.{$secondFactor}")) {
+            if ($this->container->has("gssp.view_config.{$secondFactor}")) {
                 /** @var ViewConfig $secondFactorConfig */
-                $secondFactorConfig = $this->get("gssp.view_config.{$secondFactor}");
+                $secondFactorConfig = $this->container->get("gssp.view_config.{$secondFactor}");
                 $availableGsspSecondFactors[$index] = $secondFactorConfig;
                 // Remove the gssp second factors from the regular second factors.
                 unset($secondFactors->available[$index]);
@@ -220,7 +219,7 @@ class RegistrationController extends Controller
     public function sendRegistrationEmail(string $secondFactorId): RedirectResponse
     {
         // Send the registration email
-        $this->get('self_service.service.ra')
+        $this->container->get('self_service.service.ra')
             ->sendRegistrationMailMessage($this->getIdentity()->id, $secondFactorId);
         return $this->redirectToRoute(
             'ss_registration_registration_email_sent',
@@ -270,7 +269,7 @@ class RegistrationController extends Controller
         $mpdf = new Mpdf(
             ['tempDir' => sys_get_temp_dir()]
         );
-        $mpdf->setLogger($this->get('logger'));
+        $mpdf->setLogger($this->container->get('logger'));
 
         $mpdf->WriteHTML($content);
         $output = $mpdf->Output('registration-code.pdf', MpdfDestination::STRING_RETURN);
@@ -299,7 +298,7 @@ class RegistrationController extends Controller
         $identity = $this->getIdentity();
 
         /** @var VerifiedSecondFactor $secondFactor */
-        $secondFactor = $this->get('surfnet_stepup_self_service_self_service.service.second_factor')
+        $secondFactor = $this->container->get('surfnet_stepup_self_service_self_service.service.second_factor')
             ->findOneVerified($secondFactorId);
 
         $parameters = [
@@ -314,11 +313,11 @@ class RegistrationController extends Controller
         ];
 
         /** @var RaService $raService */
-        $raService         = $this->get('self_service.service.ra');
+        $raService         = $this->container->get('self_service.service.ra');
         /** @var RaLocationService $raLocationService */
-        $raLocationService = $this->get('self_service.service.ra_location');
+        $raLocationService = $this->container->get('self_service.service.ra_location');
 
-        $institutionConfigurationOptions = $this->get('self_service.service.institution_configuration_options')
+        $institutionConfigurationOptions = $this->container->get('self_service.service.institution_configuration_options')
             ->getInstitutionConfigurationOptionsFor($identity->institution);
 
         if ($institutionConfigurationOptions->useRaLocations) {
