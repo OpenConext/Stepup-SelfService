@@ -24,45 +24,30 @@ use Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler;
 
 final class Provider
 {
-    /**
-     * @param string           $name
-     */
     public function __construct(
-        private $name,
-        private readonly ServiceProvider $serviceProvider,
+        private readonly string           $name,
+        private readonly ServiceProvider  $serviceProvider,
         private readonly IdentityProvider $remoteIdentityProvider,
-        private readonly StateHandler $stateHandler
+        private readonly StateHandler     $stateHandler
     ) {
     }
 
-    /**
-     * @return StateHandler
-     */
-    public function getStateHandler(): \Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler
+    public function getStateHandler(): StateHandler
     {
         return $this->stateHandler;
     }
 
-    /**
-     * @return IdentityProvider
-     */
-    public function getRemoteIdentityProvider(): \Surfnet\SamlBundle\Entity\IdentityProvider
+    public function getRemoteIdentityProvider(): IdentityProvider
     {
         return $this->remoteIdentityProvider;
     }
 
-    /**
-     * @return ServiceProvider
-     */
-    public function getServiceProvider(): \Surfnet\SamlBundle\Entity\ServiceProvider
+    public function getServiceProvider(): ServiceProvider
     {
         return $this->serviceProvider;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
