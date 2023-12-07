@@ -83,3 +83,12 @@ parameters:
     # Self-asserted token registration process.
     recovery_method_sms_enabled: true
     recovery_method_safe_store_code_enabled: true
+
+    app_secret: 5519bc170dc3dc6e9ed78d87458cf2de
+    app_env: dev
+    app_debug: true
+
+when@test:
+    parameters:
+        app_secret: $ecretf0rt3st
+        app_env: test
