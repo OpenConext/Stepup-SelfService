@@ -22,6 +22,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Command\SwitchLocaleCommand;
 use Surfnet\StepupMiddlewareClient\Identity\Dto\IdentitySearchQuery;
+use Surfnet\StepupMiddlewareClientBundle\Command\Command;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\CreateIdentityCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ExpressLocalePreferenceCommand;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\UpdateIdentityCommand;
@@ -42,7 +43,7 @@ readonly class IdentityService implements UserProviderInterface
         private ApiIdentityService $apiIdentityService,
         private CommandService $commandService,
         private TokenStorageInterface $tokenStorage,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -70,7 +71,7 @@ readonly class IdentityService implements UserProviderInterface
     }
 
     /**
-     * @throws \Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function findByNameIdAndInstitution(string $nameId, string $institution): ?Identity
     {
@@ -126,10 +127,6 @@ readonly class IdentityService implements UserProviderInterface
         $this->processCommand($command);
     }
 
-
-    /**
-     * @return bool
-     */
     public function switchLocale(SwitchLocaleCommand $command): bool
     {
         /** @var TokenInterface|null */
@@ -155,10 +152,7 @@ readonly class IdentityService implements UserProviderInterface
         return $result->isSuccessful();
     }
 
-    /**
-     * @param $command
-     */
-    public function processCommand(\Surfnet\StepupMiddlewareClientBundle\Command\Command $command): void
+    public function processCommand(Command $command): void
     {
         $messageTemplate = 'Exception when saving Identity "%s": with command "%s", error: "%s"';
 
