@@ -18,7 +18,7 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
-use Exception;
+use Throwable;
 use Surfnet\StepupBundle\Controller\ExceptionController as BaseExceptionController;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\MissingRequiredAttributeException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,10 +26,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 final class ExceptionController extends BaseExceptionController
 {
     /**
-     * @param Exception $exception
      * @return array View parameters 'title' and 'description'
      */
-    protected function getPageTitleAndDescription(Exception $exception): array
+    protected function getPageTitleAndDescription(Throwable $exception): array
     {
         $translator = $this->getTranslator();
 
