@@ -51,7 +51,8 @@ class RegistrationController extends Controller
         parent::__construct($logger, $configurationOptionsService);
     }
 
-    #[Template('registration/display_vetting_types.html.twig')]
+
+    #[Template('registration/display_second_factor_types.html.twig')]
     #[Route(
         path: '/registration/select-token',
         name: 'ss_registration_display_types',
@@ -91,7 +92,7 @@ class RegistrationController extends Controller
         ];
     }
 
-    #[Template('registration/display_second_factor_types.html.twig')]
+    #[Template('registration/display_vetting_types.html.twig')]
     #[Route(
         path: '/second-factor/{secondFactorId}/vetting-types',
         name: 'ss_second_factor_vetting_types',
