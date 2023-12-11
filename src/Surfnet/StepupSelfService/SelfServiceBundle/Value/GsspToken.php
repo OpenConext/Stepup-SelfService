@@ -37,7 +37,6 @@ readonly class GsspToken implements AvailableTokenInterface
     {
     }
 
-
     public function getRoute(): string
     {
         return 'ss_registration_gssf_authenticate';
@@ -48,17 +47,11 @@ readonly class GsspToken implements AvailableTokenInterface
         return $this->type;
     }
 
-    /**
-     * @return int
-     */
     public function getLoaLevel(): int
     {
         return (int) $this->viewConfig->getLoa();
     }
 
-    /**
-     * @return boolean
-     */
     public function isGssp(): bool
     {
         return true;
