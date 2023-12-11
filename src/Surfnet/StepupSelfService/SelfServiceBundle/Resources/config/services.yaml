@@ -103,6 +103,8 @@ services:
       class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService
       arguments:
         - "@logger"
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService:
+        alias: surfnet_stepup_self_service_self_service.service.gsspuserattributes
 
     surfnet_stepup_self_service_self_service.service.yubikey_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
@@ -117,6 +119,8 @@ services:
             - "@surfnet_stepup.service.sms_second_factor"
             - "@translator"
             - "@surfnet_stepup_self_service_self_service.service.command"
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService:
+        alias: surfnet_stepup_self_service_self_service.service.sms_second_factor
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService:
         arguments:
@@ -129,6 +133,8 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService
         arguments:
             - "@surfnet_stepup_self_service_self_service.service.command"
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService:
+        alias: surfnet_stepup_self_service_self_service.service.gssf
 
     self_service.service.self_vet_marshaller:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller
