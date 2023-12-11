@@ -18,6 +18,8 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
+use Psr\Log\LoggerInterface;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
@@ -26,18 +28,27 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\SendSmsChallengeType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifySmsChallengeType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SmsController extends Controller
 {
+    public function __construct(
+        LoggerInterface                         $logger,
+        InstitutionConfigurationOptionsService  $configurationOptionsService,
+        private readonly SmsSecondFactorService $smsSecondFactorService,
+    ) {
+        parent::__construct($logger, $configurationOptionsService);
+    }
+
     #[Template('registration/sms/send_challenge.html.twig')]
     #[Route(
         path: '/registration/sms/send-challenge',
         name: 'ss_registration_sms_send_challenge',
         methods: ['GET','POST'],
     )]
-    public function sendChallenge(Request $request): array|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function sendChallenge(Request $request): array|RedirectResponse
     {
         $this->assertSecondFactorEnabled('sms');
 
@@ -46,10 +57,10 @@ class SmsController extends Controller
         $command = new SendSmsChallengeCommand();
         $form = $this->createForm(SendSmsChallengeType::class, $command)->handleRequest($request);
 
-        /** @var SmsSecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-        $otpRequestsRemaining = $service->getOtpRequestsRemainingCount(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
-        $maximumOtpRequests = $service->getMaximumOtpRequestsCount();
+        $otpRequestsRemaining = $this->smsSecondFactorService->getOtpRequestsRemainingCount(
+            SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID
+        );
+        $maximumOtpRequests = $this->smsSecondFactorService->getMaximumOtpRequestsCount();
         $viewVariables = [
             'otpRequestsRemaining' => $otpRequestsRemaining,
             'maximumOtpRequests' => $maximumOtpRequests,
@@ -65,7 +76,7 @@ class SmsController extends Controller
                 return ['form' => $form->createView(), ...$viewVariables];
             }
 
-            if ($service->sendChallenge($command)) {
+            if ($this->smsSecondFactorService->sendChallenge($command)) {
                 return $this->redirect($this->generateUrl('ss_registration_sms_prove_possession'));
             } else {
                 $this->addFlash('error', 'ss.prove_phone_possession.send_sms_challenge_failed');
@@ -75,16 +86,13 @@ class SmsController extends Controller
         return ['form' => $form->createView(), ...$viewVariables];
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     #[Template('registration/sms/prove_possession.html.twig')]
     #[Route(
         path: '/registration/sms/prove-possession',
         name: 'ss_registration_sms_prove_possession',
         methods: ['GET','POST'],
     )]
-    public function provePossession(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|array
+    public function provePossession(Request $request): RedirectResponse|array
     {
         $this->assertSecondFactorEnabled('sms');
 
