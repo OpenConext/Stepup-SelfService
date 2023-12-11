@@ -26,11 +26,11 @@ use Surfnet\StepupMiddlewareClientBundle\Service\CommandService as MiddlewareCom
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class CommandService
+readonly class CommandService
 {
     public function __construct(
-        private readonly MiddlewareCommandService $commandService,
-        private readonly TokenStorageInterface $tokenStorage,
+        private MiddlewareCommandService $commandService,
+        private TokenStorageInterface    $tokenStorage,
     ) {
     }
 
