@@ -18,12 +18,14 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository;
+
+use Surfnet\StepupBundle\Value\Provider\ViewConfigCollection;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\AvailableTokenCollection;
 
 readonly class SecondFactorAvailabilityHelper
 {
-    public function __construct(private ProviderRepository $providerRepository)
+    public function __construct(private ViewConfigCollection $viewConfigCollection)
     {
     }
     // Based on a list of available SF types for the current identity
@@ -33,9 +35,9 @@ readonly class SecondFactorAvailabilityHelper
     {
         $availableGsspSecondFactors = [];
         foreach ($secondFactors->available as $index => $secondFactor) {
-            if ($this->providerRepository->has($secondFactor)) {
+            if ($this->viewConfigCollection->isGssp($secondFactor)) {
                 /** @var ViewConfig $secondFactorConfig */
-                $secondFactorConfig = $this->providerRepository->get($secondFactor);
+                $secondFactorConfig = $this->viewConfigCollection->getByIdentifier($secondFactor);
                 $availableGsspSecondFactors[$index] = $secondFactorConfig;
                 // Remove the gssp second factors from the regular second factors.
                 unset($secondFactors->available[$index]);
