@@ -197,7 +197,7 @@ services:
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorAvailabilityHelper:
         arguments:
-            $providerRepository: '@gssp.provider_repository'
+            $viewConfigCollection: '@Surfnet\StepupBundle\Value\Provider\ViewConfigCollection'
 
     self_service.service.locale_provider:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\LocaleProviderService
