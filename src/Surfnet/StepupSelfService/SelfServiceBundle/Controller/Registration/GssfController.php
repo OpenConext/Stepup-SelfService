@@ -19,23 +19,53 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Exception;
+use Psr\Log\LoggerInterface;
 use Surfnet\SamlBundle\Http\XMLResponse;
+use Surfnet\SamlBundle\Metadata\MetadataFactory;
+use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\StatusGssfType;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Surfnet\SamlBundle\Http\RedirectBinding;
+use \Surfnet\SamlBundle\Http\PostBinding;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 
 /**
  * Controls registration with Generic SAML Stepup Providers (GSSPs), yielding Generic SAML Second Factors (GSSFs).
  */
 final class GssfController extends Controller
 {
+    public function __construct(
+        private readonly LoggerInterface       $logger,
+        InstitutionConfigurationOptionsService $configurationOptionsService,
+        private readonly ProviderRepository    $providerRepository,
+        private readonly RedirectBinding       $redirectBinding,
+        private readonly PostBinding           $postBinding,
+        private GsspUserAttributeService      $gsspUserAttributeService,
+        private TokenStorageInterface                $tokenStorage,
+        private GssfService                   $gssfService,
+        private AttributeDictionary $attributeDictionary,
+
+
+        
+    )
+    {
+        parent::__construct($logger, $configurationOptionsService);
+    }
+
     /**
      * Render the status form.
      *
@@ -70,16 +100,12 @@ final class GssfController extends Controller
         );
     }
 
-    /**
-     * @param string $provider
-     * @return array|Response
-     */
     #[Route(
         path: '/registration/gssf/{provider}/authenticate',
         name: 'ss_registration_gssf_authenticate',
         methods: ['POST'],
     )]
-    public function authenticate($provider)
+    public function authenticate(string $provider): array|Response
     {
         $this->assertSecondFactorEnabled($provider);
 
@@ -90,51 +116,41 @@ final class GssfController extends Controller
             $provider->getRemoteIdentityProvider()
         );
 
-        $attributeService = $this->get('surfnet_stepup_self_service_self_service.service.gsspuserattributes');
-        $attributeService->addGsspUserAttributes(
+        $this->gsspUserAttributeService->addGsspUserAttributes(
             $authnRequest,
             $provider,
-            $this->get('security.token_storage')->getToken()->getUser()
+            $this->getIdentity()
         );
         $stateHandler = $provider->getStateHandler();
         $stateHandler->setRequestId($authnRequest->getRequestId());
 
-        /** @var \Surfnet\SamlBundle\Http\RedirectBinding $redirectBinding */
-        $redirectBinding = $this->get('surfnet_saml.http.redirect_binding');
-
-        $this->getLogger()->notice(sprintf(
+        $this->logger->notice(sprintf(
             'Sending AuthnRequest with request ID: "%s" to GSSP "%s" at "%s"',
             $authnRequest->getRequestId(),
             $provider->getName(),
             $provider->getRemoteIdentityProvider()->getSsoUrl()
         ));
 
-        return $redirectBinding->createRedirectResponseFor($authnRequest);
+        return $this->redirectBinding->createResponseFor($authnRequest);
     }
 
-    /**
-     * @param string  $provider
-     * @return array|Response
-     */
     #[Route(
         path: '/registration/gssf/{provider}/consume-assertion',
         name: 'ss_registration_gssf_consume_assertion',
         methods: ['POST'],
     )]
-    public function consumeAssertion(Request $httpRequest, $provider)
+    public function consumeAssertion(Request $httpRequest, string $provider): array|Response
     {
         $this->assertSecondFactorEnabled($provider);
 
         $provider = $this->getProvider($provider);
 
-        $this->get('logger')->notice(
+        $this->logger->notice(
             sprintf('Received GSSP "%s" SAMLResponse through Gateway, attempting to process', $provider->getName())
         );
 
         try {
-            /** @var \Surfnet\SamlBundle\Http\PostBinding $postBinding */
-            $postBinding = $this->get('surfnet_saml.http.post_binding');
-            $assertion = $postBinding->processResponse(
+            $assertion = $this->postBinding->processResponse(
                 $httpRequest,
                 $provider->getRemoteIdentityProvider(),
                 $provider->getServiceProvider()
@@ -142,7 +158,7 @@ final class GssfController extends Controller
         } catch (Exception $exception) {
             $provider->getStateHandler()->clear();
 
-            $this->getLogger()->error(
+            $this->logger->error(
                 sprintf('Could not process received Response, error: "%s"', $exception->getMessage())
             );
 
@@ -156,7 +172,7 @@ final class GssfController extends Controller
         $provider->getStateHandler()->clear();
 
         if (!InResponseTo::assertEquals($assertion, $expectedResponseTo)) {
-            $this->getLogger()->critical(sprintf(
+            $this->logger->critical(sprintf(
                 'Received Response with unexpected InResponseTo, %s',
                 ($expectedResponseTo ? 'expected "' . $expectedResponseTo . '"' : ' no response expected')
             ));
@@ -167,20 +183,16 @@ final class GssfController extends Controller
             );
         }
 
-        $this->get('logger')->notice(
+        $this->logger->notice(
             sprintf('Processed GSSP "%s" SAMLResponse received through Gateway successfully', $provider->getName())
         );
 
-        /** @var \Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.gssf');
-        /** @var \Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary $attributeDictionary */
-        $attributeDictionary = $this->get('surfnet_saml.saml.attribute_dictionary');
-        $gssfId = $attributeDictionary->translate($assertion)->getNameID();
+        $gssfId = $this->attributeDictionary->translate($assertion)->getNameID();
 
-        $secondFactorId = $service->provePossession($this->getIdentity()->id, $provider->getName(), $gssfId);
+        $secondFactorId = $this->gssfService->provePossession($this->getIdentity()->id, $provider->getName(), $gssfId);
 
         if ($secondFactorId) {
-            $this->getLogger()->notice('GSSF possession has been proven successfully');
+            $this->logger->notice('GSSF possession has been proven successfully');
 
             if ($this->emailVerificationIsRequired()) {
                 return $this->redirectToRoute(
@@ -195,7 +207,7 @@ final class GssfController extends Controller
             }
         }
 
-        $this->getLogger()->error('Unable to prove GSSF possession');
+        $this->logger->error('Unable to prove GSSF possession');
 
         return $this->redirectToStatusReportForm(
             $provider,
@@ -203,7 +215,7 @@ final class GssfController extends Controller
         );
     }
 
-    private function redirectToStatusReportForm(Provider $provider, array $options): \Symfony\Component\HttpFoundation\RedirectResponse
+    private function redirectToStatusReportForm(Provider $provider, array $options): RedirectResponse
     {
         return $this->redirectToRoute(
             'ss_registration_gssf_status_report',
@@ -213,58 +225,41 @@ final class GssfController extends Controller
         );
     }
 
-    /**
-     * @param string $provider
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     #[Route(
         path: '/registration/gssf/{provider}/metadata',
         name: 'ss_registration_gssf_saml_metadata',
         methods: ['GET'],
     )]
-    public function metadata($provider): \Surfnet\SamlBundle\Http\XMLResponse
+    public function metadata(string $provider): XMLResponse
     {
         $this->assertSecondFactorEnabled($provider);
 
         $provider = $this->getProvider($provider);
 
-        /** @var \Surfnet\SamlBundle\Metadata\MetadataFactory $factory */
-        $factory = $this->get('gssp.provider.' . $provider->getName() . '.metadata.factory');
+        /** @var MetadataFactory $factory */
+        $factory = $this->container->get('gssp.provider.' . $provider->getName() . '.metadata.factory');
 
         return new XMLResponse($factory->generate());
     }
 
     /**
-     * @param string $provider
-     * @return \Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
-    private function getProvider($provider)
+    private function getProvider(string $provider): Provider
     {
-        /** @var \Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository $providerRepository */
-        $providerRepository = $this->get('gssp.provider_repository');
-
-        if (!$providerRepository->has($provider)) {
-            $this->get('logger')->info(sprintf('Requested GSSP "%s" does not exist or is not registered', $provider));
+        if (!$this->providerRepository->has($provider)) {
+            $this->logger->info(sprintf('Requested GSSP "%s" does not exist or is not registered', $provider));
 
             throw new NotFoundHttpException('Requested provider does not exist');
         }
 
-        return $providerRepository->get($provider);
-    }
-
-    /**
-     * @return \Psr\Log\LoggerInterface
-     */
-    private function getLogger()
-    {
-        return $this->get('logger');
+        return $this->providerRepository->get($provider);
     }
 
     private function renderStatusForm(string $provider, array $parameters = []): Response
     {
         /** @var ViewConfig $secondFactorConfig */
-        $secondFactorConfig = $this->get("gssp.view_config.{$provider}");
+        $secondFactorConfig = $this->container->get("gssp.view_config.{$provider}");
 
         $form = $this->createForm(
             StatusGssfType::class,
@@ -286,7 +281,7 @@ final class GssfController extends Controller
             ]
         );
         return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:registration/gssf:status.html.twig',
+            'registration/gssf/status.html.twig',
             $templateParameters
         );
     }
