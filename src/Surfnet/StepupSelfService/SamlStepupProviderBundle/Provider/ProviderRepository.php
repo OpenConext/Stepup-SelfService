@@ -24,7 +24,7 @@ use Surfnet\StepupSelfService\SamlStepupProviderBundle\Exception\UnknownProvider
 final class ProviderRepository
 {
     /**
-     * @var []]Provider
+     * @var Provider[]
      */
     private array $providers = [];
 
@@ -44,20 +44,12 @@ final class ProviderRepository
         $this->providers[$provider->getName()] = $provider;
     }
 
-    /**
-     * @param string $providerName
-     * @return bool
-     */
-    public function has($providerName): bool
+    public function has(string $providerName): bool
     {
         return array_key_exists($providerName, $this->providers);
     }
 
-    /**
-     * @param string $providerName
-     * @return Provider
-     */
-    public function get($providerName)
+    public function get(string $providerName): Provider
     {
         if (!$this->has($providerName)) {
             throw UnknownProviderException::create($providerName, array_keys($this->providers));
