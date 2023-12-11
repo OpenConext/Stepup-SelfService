@@ -29,9 +29,6 @@ class AvailableTokenCollection
      */
     private array $collection = [];
 
-    /**
-     * @return AvailableTokenCollection
-     */
     public static function from(array $builtInTokens, array $gsspTokens): self
     {
         $collection = new self();
