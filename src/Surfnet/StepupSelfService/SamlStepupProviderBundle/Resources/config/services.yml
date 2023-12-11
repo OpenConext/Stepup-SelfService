@@ -6,10 +6,12 @@ services:
 
     gssp.provider_repository:
         class: Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository
+    Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository:
+        alias: gssp.provider_repository
 
     gssp.sessionbag:
         class: Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag
-        factory: ['@request_stack', 'getSession']
+#        factory: ['@request_stack', 'getSession']
         arguments: ['gssp']
 
     gssp.session.attribute_bag:
