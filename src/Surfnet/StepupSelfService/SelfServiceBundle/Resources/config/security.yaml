@@ -10,42 +10,42 @@ services:
     self_service.security.authentication.provider.saml:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
         arguments:
-            - "@self_service.service.identity"
-            - "@surfnet_saml.saml.attribute_dictionary"
-            - "@self_service.locale.request_stack_locale_provider"
-            - "@logger"
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService'
+            - '@surfnet_saml.saml.attribute_dictionary'
+            - '@self_service.locale.request_stack_locale_provider'
+            - '@logger'
 
     self_service.security.authentication.saml_interaction:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlInteractionProvider
         arguments:
-            - "@surfnet_saml.hosted.service_provider"
-            - "@surfnet_saml.remote.idp"
-            - "@surfnet_saml.http.redirect_binding"
-            - "@surfnet_saml.http.post_binding"
-            - "@self_service.security.authentication.session.session_storage"
+            - '@surfnet_saml.hosted.service_provider'
+            - '@surfnet_saml.remote.idp'
+            - '@surfnet_saml.http.redirect_binding'
+            - '@surfnet_saml.http.post_binding'
+            - '@self_service.security.authentication.session.session_storage'
 
     # Authentication Handlers
     self_service.security.authentication.handler.authenticated_user_handler:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\AuthenticatedUserHandler
         arguments:
-            - "@security.token_storage"
-            - "@self_service.security.authentication.session.session_lifetime_guard"
-            - "@self_service.security.authentication.session.session_storage"
-            - "@logger"
+            - '@security.token_storage'
+            - '@self_service.security.authentication.session.session_lifetime_guard'
+            - '@self_service.security.authentication.session.session_storage'
+            - '@logger'
         calls:
-            - ["setNext", ["@self_service.security.authentication.handler.explicit_session_timeout"]]
+            - ['setNext', ['@self_service.security.authentication.handler.explicit_session_timeout']]
 
     self_service.security.authentication.handler.explicit_session_timeout:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\ExplicitSessionTimeoutHandler
         arguments:
-            - "@security.token_storage"
-            - "@self_service.security.authentication.session.session_storage"
-            - "@self_service.security.authentication.session.session_lifetime_guard"
-            - "@router"
-            - "@logger"
+            - '@security.token_storage'
+            - '@self_service.security.authentication.session.session_storage'
+            - '@self_service.security.authentication.session.session_lifetime_guard'
+            - '@router'
+            - '@logger'
         calls:
             - ["setNext", ["@self_service.security.authentication.handler.initiate_saml_request"]]
 
@@ -53,13 +53,13 @@ services:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\InitiateSamlAuthenticationHandler
         arguments:
-            - "@security.token_storage"
-            - "@self_service.security.authentication.session.session_storage"
-            - "@self_service.security.authentication.session.session_storage"
-            - "@self_service.security.authentication.saml_interaction"
-            - "@router"
-            - "@surfnet_saml.logger"
-            - "@logger"
+            - '@security.token_storage'
+            - '@self_service.security.authentication.session.session_storage'
+            - '@self_service.security.authentication.session.session_storage'
+            - '@self_service.security.authentication.saml_interaction'
+            - '@router'
+            - '@surfnet_saml.logger'
+            - '@logger'
         calls:
             - ["setNext", ["@self_service.security.authentication.handler.process_saml_response"]]
 
@@ -73,7 +73,6 @@ services:
             - "@self_service.security.authentication.session.session_storage"
             - "@security.authentication.manager"
             - "@surfnet_saml.logger"
-            - "@templating"
 
     self_service.security.authentication.handler.logout_success:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler\LogoutSuccessHandler
