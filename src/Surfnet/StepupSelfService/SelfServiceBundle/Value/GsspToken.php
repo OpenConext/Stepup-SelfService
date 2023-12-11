@@ -21,41 +21,29 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
-class GsspToken implements AvailableTokenInterface
+readonly class GsspToken implements AvailableTokenInterface
 {
-    /**
-     * @param $type
-     * @return GsspToken
-     */
-    public static function fromViewConfig(ViewConfig $viewConfig, $type): self
+    public static function fromViewConfig(ViewConfig $viewConfig, string $type): self
     {
-        if (!is_string($type) || $type === '') {
+        if ($type === '') {
             throw InvalidArgumentException::invalidType('a non empty string', 'type', $type);
         }
 
         return new self($viewConfig, $type);
     }
 
-    /**
-     * GsspToken constructor.
-     * @param string $type
-     */
-    private function __construct(private readonly ViewConfig $viewConfig, private $type)
+
+    private function __construct(private ViewConfig $viewConfig, private string $type)
     {
     }
 
-    /**
-     * @return string
-     */
+
     public function getRoute(): string
     {
         return 'ss_registration_gssf_authenticate';
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -83,7 +71,7 @@ class GsspToken implements AvailableTokenInterface
         ];
     }
 
-    public function getViewConfig(): \Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig
+    public function getViewConfig(): ViewConfig
     {
         return $this->viewConfig;
     }
