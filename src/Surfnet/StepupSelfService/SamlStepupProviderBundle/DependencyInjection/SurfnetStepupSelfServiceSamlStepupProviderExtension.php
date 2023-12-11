@@ -204,9 +204,6 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $container->setDefinition('gssp.provider.' . $provider . '.remote.idp', $definition);
     }
 
-    /**
-     * @return Definition
-     */
     private function createMetadataDefinition(
         string $provider,
         array $configuration,
