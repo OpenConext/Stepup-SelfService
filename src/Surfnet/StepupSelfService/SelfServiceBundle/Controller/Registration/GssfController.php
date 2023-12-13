@@ -21,10 +21,11 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Surfnet\SamlBundle\Http\XMLResponse;
-use Surfnet\SamlBundle\Metadata\MetadataFactory;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
+use Surfnet\StepupBundle\Value\Provider\ViewConfigCollection;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\MetadataFactoryCollection;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
@@ -42,7 +43,6 @@ use Surfnet\SamlBundle\Http\RedirectBinding;
 use \Surfnet\SamlBundle\Http\PostBinding;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-
 /**
  * Controls registration with Generic SAML Stepup Providers (GSSPs), yielding Generic SAML Second Factors (GSSFs).
  */
@@ -58,11 +58,9 @@ final class GssfController extends Controller
         private TokenStorageInterface                $tokenStorage,
         private GssfService                   $gssfService,
         private AttributeDictionary $attributeDictionary,
-
-
-        
-    )
-    {
+        private readonly MetadataFactoryCollection $metadataFactoryCollection,
+        private readonly ViewConfigCollection $viewConfigCollection
+    ) {
         parent::__construct($logger, $configurationOptionsService);
     }
 
@@ -235,9 +233,7 @@ final class GssfController extends Controller
         $this->assertSecondFactorEnabled($provider);
 
         $provider = $this->getProvider($provider);
-
-        /** @var MetadataFactory $factory */
-        $factory = $this->container->get('gssp.provider.' . $provider->getName() . '.metadata.factory');
+        $factory = $this->metadataFactoryCollection->getByIdentifier($provider->getName());
 
         return new XMLResponse($factory->generate());
     }
@@ -259,7 +255,7 @@ final class GssfController extends Controller
     private function renderStatusForm(string $provider, array $parameters = []): Response
     {
         /** @var ViewConfig $secondFactorConfig */
-        $secondFactorConfig = $this->container->get("gssp.view_config.{$provider}");
+        $secondFactorConfig = $this->viewConfigCollection->getByIdentifier($provider);
 
         $form = $this->createForm(
             StatusGssfType::class,
