@@ -22,6 +22,7 @@ use Surfnet\SamlBundle\Entity\HostedEntities;
 use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Metadata\MetadataConfiguration;
 use Surfnet\SamlBundle\Metadata\MetadataFactory;
+use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\MetadataFactoryCollection;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml\StateHandler;
@@ -136,7 +137,8 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
             ]
         );
         $viewConfigDefinition->addTag(self::VIEW_CONFIG_TAG_NAME);
-        $viewConfigDefinition->setPublic(true);
+        // Stop making the service public, use the ViewConfigContainer instead
+        $viewConfigDefinition->setPublic(false);
 
         $container->setDefinition('gssp.view_config.' . $provider, $viewConfigDefinition);
 
@@ -226,12 +228,19 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $container->setDefinition('gssp.provider.' . $provider . 'metadata.configuration', $metadataConfiguration);
 
         $metadataFactory = new Definition(MetadataFactory::class, [
-            new Reference('templating'),
+            new Reference('twig'),
             new Reference('router'),
             new Reference('surfnet_saml.signing_service'),
             new Reference('gssp.provider.' . $provider . 'metadata.configuration')
         ]);
-        $container->setDefinition('gssp.provider.' . $provider . '.metadata.factory', $metadataFactory);
+        $metadataFactoryServiceId = 'gssp.provider.' . $provider . '.metadata.factory';
+        $container->setDefinition($metadataFactoryServiceId, $metadataFactory);
+        // Should not be read from container directly, use MetadataFactoryCollection instead
+        // @deprecated: this service should not be used anymore
+        $metadataFactory->setPublic(false);
+
+        $container = $container->getDefinition(MetadataFactoryCollection::class);
+        $container->addMethodCall('add', [$provider, new Reference($metadataFactoryServiceId)]);
     }
 
     private function createRouteConfig(string $provider, $routeName): array
