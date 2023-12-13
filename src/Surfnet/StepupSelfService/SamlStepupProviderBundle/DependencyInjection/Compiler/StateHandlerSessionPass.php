@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Copyright 2014 SURFnet bv
  *
@@ -25,8 +27,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class StateHandlerSessionPass implements CompilerPassInterface
 {
-    public function __construct(
-    ) {
+    public function __construct()
+    {
     }
 
     /**
@@ -41,8 +43,5 @@ class StateHandlerSessionPass implements CompilerPassInterface
 //        $container
 //            ->getDefinition('session')
 //            ->addMethodCall('registerBag', [new Reference('gssp.session.namespaced_attribute_bag')]);
-
-
     }
-
 }

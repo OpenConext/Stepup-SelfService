@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Copyright 2023 SURFnet bv
  *
@@ -15,8 +17,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-declare(strict_types=1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 

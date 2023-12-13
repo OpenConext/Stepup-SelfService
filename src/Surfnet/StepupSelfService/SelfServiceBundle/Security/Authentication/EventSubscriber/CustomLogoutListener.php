@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\EventSubscriber;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,5 +30,4 @@ readonly class CustomLogoutListener implements EventSubscriberInterface
 
         return new RedirectResponse($this->logoutRedirectUrl[$identity->preferredLocale]);
     }
-
 }

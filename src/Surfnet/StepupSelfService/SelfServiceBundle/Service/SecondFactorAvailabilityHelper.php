@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Copyright 2023 SURFnet bv
  *
@@ -17,7 +19,6 @@
  */
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
-
 
 use Surfnet\StepupBundle\Value\Provider\ViewConfigCollection;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
