@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Handler;
 
 use Surfnet\SamlBundle\Security\Authentication\Handler\SuccessHandler;
