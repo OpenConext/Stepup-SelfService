@@ -8,7 +8,7 @@
     {% if verifyEmail %}
         {% include 'registration/partial/progress_bar.html.twig' with {'progress':75, 'step': 4, verifyEmail: true} only %}
     {% else %}
-        {% include '/registration/partial:progress_bar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
+        {% include '/registration/partial/progress_bar.html.twig' with {'progress': 65, 'step': 3, verifyEmail: false} only %}
     {% endif %}
 {% endblock %}
 

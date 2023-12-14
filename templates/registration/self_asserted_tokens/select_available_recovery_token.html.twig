@@ -4,7 +4,7 @@
 
 {% block page_header %}
     {{ parent() }}
-    {% include 'registration/partial:progress_bar.html.twig' with {'progress':87, 'step': 5, verifyEmail: false} only %}
+    {% include 'registration/partial/progress_bar.html.twig' with {'progress':87, 'step': 5, verifyEmail: false} only %}
 
 {% endblock %}
 
