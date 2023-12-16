@@ -47,7 +47,7 @@ final class SecondFactorType extends AbstractExtension
 
     public function numberOfWholeStars(float $loaLevel): int
     {
-        return floor($loaLevel);
+        return (int) floor($loaLevel);
     }
 
     public function halfStar(float $loaLevel): bool
