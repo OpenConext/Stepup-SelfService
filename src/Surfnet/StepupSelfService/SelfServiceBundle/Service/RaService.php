@@ -24,22 +24,20 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Command\SendSecondFactorRegist
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\RegistrationAuthorityCredentialsCollection;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\RaService as ApiRaService;
 
-class RaService
+readonly class RaService
 {
-    public function __construct(private readonly ApiRaService $api, private readonly CommandService $commandService)
-    {
+    public function __construct(
+        private ApiRaService   $api,
+        private CommandService $commandService,
+    ) {
     }
 
-    /**
-     * @param string $institution
-     * @return RegistrationAuthorityCredentialsCollection
-     */
-    public function listRas($institution)
+    public function listRas(string $institution): RegistrationAuthorityCredentialsCollection
     {
         return $this->api->listRas($institution);
     }
 
-    public function listRasWithoutRaas($institution): \Surfnet\StepupMiddlewareClientBundle\Identity\Dto\RegistrationAuthorityCredentialsCollection
+    public function listRasWithoutRaas(string $institution): RegistrationAuthorityCredentialsCollection
     {
         $allRas = $this->api->listRas($institution);
 
