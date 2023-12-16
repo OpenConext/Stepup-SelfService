@@ -75,22 +75,6 @@ readonly class AuthenticatedIdentity implements UserInterface
     }
 
     /**
-     * Implement the methods from AuthenticatedIdentityInterface by delegating to the originalIdentity.
-     */
-
-    public function isAuthenticated(): bool
-    {
-        // Implement the logic based on your requirements.
-    }
-
-    public function getLastAuthenticationTimestamp(): ?\DateTimeImmutable
-    {
-        // Implement the logic based on your requirements.
-    }
-
-    // ... implement other methods from AuthenticatedIdentityInterface ...
-
-    /**
      * Allow access to the original Identity instance if needed.
      */
     public function getOriginalIdentity(): Identity
@@ -100,6 +84,7 @@ readonly class AuthenticatedIdentity implements UserInterface
 
     public function getUserIdentifier(): string
     {
-        return '';
+        $parts = explode(':', $this->originalIdentity->nameId);
+        return end($parts);
     }
 }
