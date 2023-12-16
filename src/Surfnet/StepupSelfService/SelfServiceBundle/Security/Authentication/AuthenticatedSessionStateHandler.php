@@ -51,19 +51,10 @@ interface AuthenticatedSessionStateHandler
      */
     public function getLastInteractionMoment(): DateTime;
 
-    /**
-     * @return bool
-     */
     public function hasSeenInteraction(): bool;
 
-    /**
-     * @param string $uri
-     */
     public function setCurrentRequestUri(string $uri): void;
 
-    /**
-     * @return string
-     */
     public function getCurrentRequestUri(): string;
 
     /**
