@@ -59,6 +59,9 @@ readonly class GsspToken implements AvailableTokenInterface
         return true;
     }
 
+    /**
+     * @return array<string, string> The route parameters for the GSSP token.
+     */
     public function getRouteParams(): array
     {
         return [

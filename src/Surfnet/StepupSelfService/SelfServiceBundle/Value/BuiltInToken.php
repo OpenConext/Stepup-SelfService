@@ -24,6 +24,9 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentExcepti
 
 class BuiltInToken implements AvailableTokenInterface
 {
+    /**
+     * @var array<string, array<string, int|string>>
+     */
     private array $supportedTypes = [
         'sms' => [
             'loaLevel' => 2,
@@ -35,52 +38,34 @@ class BuiltInToken implements AvailableTokenInterface
         ],
     ];
 
-    private $type;
-
-    /**
-     * @param $type
-     * @return BuiltInToken
-     */
-    public static function fromSecondFactorType($type): self
+    public static function fromSecondFactorType(string $type): self
     {
         return new self($type);
     }
 
-    private function __construct($type)
+    private function __construct(private readonly string $type)
     {
         if (!isset($this->supportedTypes[$type])) {
             throw InvalidArgumentException::invalidType('Invalid second factor type', 'type', $type);
         }
-        $this->type = $type;
-    }
 
-    /**
-     * @return string
-     */
-    public function getRoute()
+    }
+    public function getRoute(): string
     {
         return $this->supportedTypes[$this->type]['route'];
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType()
+
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return int
-     */
-    public function getLoaLevel()
+    public function getLoaLevel(): int
     {
         return $this->supportedTypes[$this->type]['loaLevel'];
     }
 
-    /**
-     * @return boolean
-     */
     public function isGssp(): bool
     {
         return false;
