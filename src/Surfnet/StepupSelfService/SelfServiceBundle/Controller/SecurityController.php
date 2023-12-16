@@ -20,23 +20,33 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use Psr\Log\LoggerInterface;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage;
 
 class SecurityController extends Controller
 {
+    public function __construct(
+        LoggerInterface $logger,
+        InstitutionConfigurationOptionsService $configurationOptionsService,
+        private readonly SessionStorage $sessionStorage
+    ) {
+        parent::__construct($logger, $configurationOptionsService);
+    }
+
     #[Route(
         path: '/authentication/session-expired',
         name: 'selfservice_security_session_expired',
         methods: ['GET']
     )]
-    public function sessionExpired() : \Symfony\Component\HttpFoundation\Response
+    public function sessionExpired() : Response
     {
-        $redirectToUrl = $this
-            ->get('self_service.security.authentication.session.session_storage')
-            ->getCurrentRequestUri();
+        $redirectToUrl = $this->sessionStorage->getCurrentRequestUri();
+
         return $this->render(
-            'SurfnetStepupSelfServiceSelfServiceBundle:security:session_expired.html.twig',
+            'security/session_expired.html.twig',
             ['redirect_to_url' => $redirectToUrl]
         );
     }
