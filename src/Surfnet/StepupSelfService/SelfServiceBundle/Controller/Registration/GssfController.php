@@ -258,7 +258,9 @@ final class GssfController extends Controller
         $templateParameters = array_merge(
             $parameters,
             [
-                'form' => $form->createView(), //TODO: createView() is deprecated?
+                'form' => $form->createView(),
+                // TODO: createView() is deprecated?
+                // see https://symfony.com/doc/6.4/forms.html#rendering-forms
                 'provider' => $provider,
                 'secondFactorConfig' => $secondFactorConfig,
                 'verifyEmail' => $this->emailVerificationIsRequired(),
