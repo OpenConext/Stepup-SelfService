@@ -43,7 +43,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Surfnet\SamlBundle\Http\RedirectBinding;
 use \Surfnet\SamlBundle\Http\PostBinding;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Controls registration with Generic SAML Stepup Providers (GSSPs), yielding Generic SAML Second Factors (GSSFs).
@@ -51,17 +50,16 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 final class GssfController extends Controller
 {
     public function __construct(
-        private readonly LoggerInterface       $logger,
-        InstitutionConfigurationOptionsService $configurationOptionsService,
-        private readonly ProviderRepository    $providerRepository,
-        private readonly RedirectBinding       $redirectBinding,
-        private readonly PostBinding           $postBinding,
-        private GsspUserAttributeService      $gsspUserAttributeService,
-        private TokenStorageInterface                $tokenStorage,
-        private GssfService                   $gssfService,
-        private AttributeDictionary $attributeDictionary,
+        private readonly LoggerInterface           $logger,
+        InstitutionConfigurationOptionsService     $configurationOptionsService,
+        private readonly ProviderRepository        $providerRepository,
+        private readonly RedirectBinding           $redirectBinding,
+        private readonly PostBinding               $postBinding,
+        private readonly GsspUserAttributeService  $gsspUserAttributeService,
+        private readonly GssfService               $gssfService,
+        private readonly AttributeDictionary       $attributeDictionary,
         private readonly MetadataFactoryCollection $metadataFactoryCollection,
-        private readonly ViewConfigCollection $viewConfigCollection
+        private readonly ViewConfigCollection      $viewConfigCollection
     ) {
         parent::__construct($logger, $configurationOptionsService);
     }
@@ -237,7 +235,7 @@ final class GssfController extends Controller
         $provider = $this->getProvider($provider);
         $factory = $this->metadataFactoryCollection->getByIdentifier($provider->getName());
 
-        return new XMLResponse($factory->generate());
+        return new XMLResponse($factory->generate()->__toString());
     }
 
     /**
