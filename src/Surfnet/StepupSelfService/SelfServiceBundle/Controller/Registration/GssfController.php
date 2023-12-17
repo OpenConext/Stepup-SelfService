@@ -40,7 +40,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfiguration
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Surfnet\SamlBundle\Http\RedirectBinding;
 use \Surfnet\SamlBundle\Http\PostBinding;
@@ -76,8 +75,6 @@ final class GssfController extends Controller
      *
      * - proofOfPossessionFailed (default false), will trigger an error message
      *   when possession was not proven, but the SAML response was successful
-     *
-     * @return array|Response
      */
     #[Route(
         path: '/registration/gssf/{provider}/status',
@@ -86,7 +83,7 @@ final class GssfController extends Controller
         methods: ['GET'],
     )]
 
-    public function status(Request $request, string $provider): \Symfony\Component\HttpFoundation\Response
+    public function status(Request $request, string $provider): Response
     {
         $this->assertSecondFactorEnabled($provider);
 
@@ -261,7 +258,7 @@ final class GssfController extends Controller
         $templateParameters = array_merge(
             $parameters,
             [
-                'form' => $form->createView(),
+                'form' => $form->createView(), //TODO: createView() is deprecated?
                 'provider' => $provider,
                 'secondFactorConfig' => $secondFactorConfig,
                 'verifyEmail' => $this->emailVerificationIsRequired(),
