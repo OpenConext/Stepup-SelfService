@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
 use Exception;
+use JMS\TranslationBundle\Annotation\Ignore;
 use Psr\Log\LoggerInterface;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
@@ -238,17 +239,8 @@ final class GssfController extends Controller
         return new XMLResponse($factory->generate()->__toString());
     }
 
-    /**
-     * @throws NotFoundHttpException
-     */
     private function getProvider(string $provider): Provider
     {
-        if (!$this->providerRepository->has($provider)) {
-            $this->logger->info(sprintf('Requested GSSP "%s" does not exist or is not registered', $provider));
-
-            throw new NotFoundHttpException('Requested provider does not exist');
-        }
-
         return $this->providerRepository->get($provider);
     }
 
@@ -266,7 +258,6 @@ final class GssfController extends Controller
                 'label' => $secondFactorConfig->getInitiateButton()
             ]
         );
-        /** @var ViewConfig $secondFactorConfig */
         $templateParameters = array_merge(
             $parameters,
             [
