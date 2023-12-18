@@ -32,8 +32,6 @@ class ActivationFlowService
 {
     private const ACTIVATION_FLOW_PREFERENCE_SESSION_NAME = 'self_service_activation_flow_preference';
 
-    private readonly SessionInterface $session;
-
     /**
      * Handle preferred activation flow logic
      *
@@ -53,19 +51,19 @@ class ActivationFlowService
         private readonly string $fieldName,
         private readonly array $options
     ) {
-        $this->session = $this->requestStack->getSession();
     }
-
 
     public function process(string $uri): void
     {
         $this->logger->info(sprintf('Analysing uri "%s" for activation flow query parameter', $uri));
         $parts = parse_url($uri);
         $parameters = [];
+
         if (array_key_exists('query', $parts)) {
             $this->logger->debug('Found a query string in the uri');
             parse_str($parts['query'], $parameters);
         }
+
         // Is the configured field name in the querystring?
         if (!array_key_exists($this->fieldName, $parameters)) {
             $this->logger->notice(
@@ -77,6 +75,7 @@ class ActivationFlowService
             );
             return;
         }
+
         $option = $parameters[$this->fieldName];
         if (!in_array($option, $this->options)) {
             $this->logger->notice(
@@ -90,7 +89,7 @@ class ActivationFlowService
             return;
         }
         $this->logger->info('Storing the preference in session');
-        $this->session->set(
+        $this->requestStack->getSession()->set(
             self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME,
             new ActivationFlowPreference($option)
         );
@@ -98,7 +97,7 @@ class ActivationFlowService
 
     public function hasActivationFlowPreference(): bool
     {
-        return $this->session->has(self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME);
+        return $this->requestStack->getSession()->has(self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME);
     }
 
     public function getPreference(): ActivationFlowPreferenceInterface
@@ -106,6 +105,6 @@ class ActivationFlowService
         if (!$this->hasActivationFlowPreference()) {
             return new ActivationFlowPreferenceNotExpressed();
         }
-        return $this->session->get(self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME);
+        return $this->requestStack->getSession()->get(self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME);
     }
 }

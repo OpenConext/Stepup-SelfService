@@ -32,6 +32,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SmsController extends Controller
@@ -40,6 +41,7 @@ class SmsController extends Controller
         LoggerInterface                         $logger,
         InstitutionConfigurationOptionsService  $configurationOptionsService,
         private readonly SmsSecondFactorService $smsSecondFactorService,
+        private readonly RequestStack $requestStack,
     ) {
         parent::__construct($logger, $configurationOptionsService);
     }
@@ -98,11 +100,8 @@ class SmsController extends Controller
     {
         $this->assertSecondFactorEnabled('sms');
 
-        /** @var SmsSecondFactorService $service */
-        $service = $this->get('surfnet_stepup_self_service_self_service.service.sms_second_factor');
-
-        if (!$service->hasSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID)) {
-            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
+        if (!$this->smsSecondFactorService->hasSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID)) {
+            $this->addFlash('notice', 'ss.registration.sms.alert.no_verification_state');
 
             return $this->redirectToRoute('ss_registration_sms_send_challenge');
         }
@@ -115,10 +114,10 @@ class SmsController extends Controller
         $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $result = $service->provePossession($command);
+            $result = $this->smsSecondFactorService->provePossession($command);
 
             if ($result->isSuccessful()) {
-                $service->clearSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
+                $this->smsSecondFactorService->clearSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
 
                 if ($this->emailVerificationIsRequired()) {
                     return $this->redirectToRoute(

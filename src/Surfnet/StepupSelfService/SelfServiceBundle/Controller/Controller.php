@@ -42,11 +42,6 @@ class Controller extends AbstractController
     ) {
     }
 
-    protected function has(string $id): bool
-    {
-        return $this->container->has($id);
-    }
-
     protected function getIdentity(): Identity
     {
         // During authentication, an AuthenticatedIdentity is created, a decorated Identity.

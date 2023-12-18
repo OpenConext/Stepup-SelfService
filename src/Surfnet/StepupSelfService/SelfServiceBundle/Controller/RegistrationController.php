@@ -48,7 +48,9 @@ class RegistrationController extends Controller
         private readonly InstitutionConfigurationOptionsService $configurationOptionsService,
         private readonly SecondFactorService $secondFactorService,
         private readonly LoggerInterface $logger,
-        private readonly SecondFactorAvailabilityHelper $secondFactorAvailabilityHelper
+        private readonly SecondFactorAvailabilityHelper $secondFactorAvailabilityHelper,
+        private readonly RaService $raService,
+        private readonly RaLocationService $raLocationService,
     ) {
         parent::__construct($logger, $configurationOptionsService);
     }
@@ -212,7 +214,7 @@ class RegistrationController extends Controller
     public function sendRegistrationEmail(string $secondFactorId): RedirectResponse
     {
         // Send the registration email
-        $this->container->get('self_service.service.ra')
+        $this->raService
             ->sendRegistrationMailMessage($this->getIdentity()->id, $secondFactorId);
         return $this->redirectToRoute(
             'ss_registration_registration_email_sent',
@@ -234,7 +236,7 @@ class RegistrationController extends Controller
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
         // Report that it was sent
         return $this->render(
-            'registration:registration_email_sent.html.twig',
+            'registration/registration_email_sent.html.twig',
             $parameters
         );
     }
@@ -253,7 +255,7 @@ class RegistrationController extends Controller
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 
         $response = $this->render(
-            'registration:registration_email_sent_pdf.html.twig',
+            'registration/registration_email_sent_pdf.html.twig',
             $parameters
         );
         $content = $response->getContent();
@@ -262,7 +264,7 @@ class RegistrationController extends Controller
         $mpdf = new Mpdf(
             ['tempDir' => sys_get_temp_dir()]
         );
-        $mpdf->setLogger($this->container->get('logger'));
+        $mpdf->setLogger($this->logger);
 
         $mpdf->WriteHTML($content);
         $output = $mpdf->Output('registration-code.pdf', MpdfDestination::STRING_RETURN);
@@ -291,8 +293,7 @@ class RegistrationController extends Controller
         $identity = $this->getIdentity();
 
         /** @var VerifiedSecondFactor $secondFactor */
-        $secondFactor = $this->container->get('surfnet_stepup_self_service_self_service.service.second_factor')
-            ->findOneVerified($secondFactorId);
+        $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
 
         $parameters = [
             'email'            => $identity->email,
@@ -305,20 +306,15 @@ class RegistrationController extends Controller
             'verifyEmail'      => $this->emailVerificationIsRequired(),
         ];
 
-        /** @var RaService $raService */
-        $raService         = $this->container->get('self_service.service.ra');
-        /** @var RaLocationService $raLocationService */
-        $raLocationService = $this->container->get('self_service.service.ra_location');
-
-        $institutionConfigurationOptions = $this->container->get('self_service.service.institution_configuration_options')
+        $institutionConfigurationOptions = $this->configurationOptionsService
             ->getInstitutionConfigurationOptionsFor($identity->institution);
 
         if ($institutionConfigurationOptions->useRaLocations) {
-            $parameters['raLocations'] = $raLocationService->listRaLocationsFor($identity->institution);
+            $parameters['raLocations'] = $this->raLocationService->listRaLocationsFor($identity->institution);
         } elseif (!$institutionConfigurationOptions->showRaaContactInformation) {
-            $parameters['ras'] = $raService->listRasWithoutRaas($identity->institution);
+            $parameters['ras'] = $this->raService->listRasWithoutRaas($identity->institution);
         } else {
-            $parameters['ras'] = $raService->listRas($identity->institution);
+            $parameters['ras'] = $this->raService->listRas($identity->institution);
         }
 
         return $parameters;

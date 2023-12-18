@@ -101,7 +101,7 @@ final class GssfController extends Controller
         name: 'ss_registration_gssf_authenticate',
         methods: ['POST'],
     )]
-    public function authenticate(string $provider): array|Response
+    public function authenticate(string $provider): Response
     {
         $this->assertSecondFactorEnabled($provider);
 
