@@ -22,20 +22,19 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor;
 
 use Surfnet\SamlBundle\Entity\IdentityProvider;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
+use Surfnet\SamlBundle\SAML2\AuthnRequest;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\StepupBundle\Value\Loa;
 
 final readonly class TestAuthenticationRequestFactory
 {
-    public function __construct(private ServiceProvider $serviceProvider, private IdentityProvider $identityProvider)
-    {
+    public function __construct(
+        private ServiceProvider $serviceProvider,
+        private IdentityProvider $identityProvider,
+    ) {
     }
 
-    /**
-     *
-     * @return \Surfnet\SamlBundle\SAML2\AuthnRequest
-     */
-    public function createSecondFactorTestRequest(string $nameId, Loa $loa)
+    public function createSecondFactorTestRequest(string $nameId, Loa $loa): AuthnRequest
     {
         $authenticationRequest = AuthnRequestFactory::createNewRequest(
             $this->serviceProvider,
