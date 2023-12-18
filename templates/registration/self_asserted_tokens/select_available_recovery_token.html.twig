@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    {% include '@SurfnetStepupSelfServiceSelfService/registration/partial/select_recovery_token_type.twig' with
+    {% include 'registration/partial/select_recovery_token_type.twig' with
         {
             'page_title': block('page_title'),
             'secondFactorId': secondFactorId,
