@@ -50,47 +50,28 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
-
  */
 class RecoveryTokenController extends Controller
 {
     use RecoveryTokenControllerTrait;
-    /**
-     * @var RecoveryTokenService
-     */
-    private $recoveryTokenService;
-
-    /**
-     * @var SecondFactorService
-     */
-    private $secondFactorService;
-
-    /**
-     * @var SmsRecoveryTokenService
-     */
-    private $smsService;
 
     /**
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        RecoveryTokenService $recoveryTokenService,
-        private readonly SafeStoreService $safeStoreService,
-        SecondFactorService $secondFactorService,
-        SmsRecoveryTokenService $smsService,
-        private readonly LoaResolutionService $loaResolutionService,
+        private readonly RecoveryTokenService         $recoveryTokenService,
+        private readonly SafeStoreService             $safeStoreService,
+        private readonly SecondFactorService          $secondFactorService,
+        private readonly SmsRecoveryTokenService      $smsService,
+        private readonly LoaResolutionService         $loaResolutionService,
         private readonly AuthenticationRequestFactory $authnRequestFactory,
-        private readonly RedirectBinding $redirectBinding,
-        private readonly PostBinding $postBinding,
-        private readonly ServiceProvider $serviceProvider,
-        private readonly IdentityProvider $identityProvider,
-        private readonly SamlAuthenticationLogger $samlLogger,
-        private readonly LoggerInterface $logger
+        private readonly RedirectBinding              $redirectBinding,
+        private readonly PostBinding                  $postBinding,
+        private readonly ServiceProvider              $serviceProvider,
+        private readonly IdentityProvider             $identityProvider,
+        private readonly SamlAuthenticationLogger     $samlLogger,
+        private readonly LoggerInterface              $logger
     ) {
-        $this->recoveryTokenService = $recoveryTokenService;
-        $this->secondFactorService = $secondFactorService;
-        // Looks like an unused service, is used in RecoveryTokenControllerTrait
-        $this->smsService = $smsService;
     }
 
     /**
@@ -111,7 +92,7 @@ class RecoveryTokenController extends Controller
         $availableRecoveryTokens = $this->recoveryTokenService->getRemainingTokenTypes($identity);
 
         return $this->render(
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/select_recovery_token.html.twig',
+            'registration/self_asserted_tokens/select_recovery_token.html.twig',
             ['availableRecoveryTokens' => $availableRecoveryTokens]
         );
     }
@@ -131,7 +112,7 @@ class RecoveryTokenController extends Controller
         }
 
         return $this->render(
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/new_recovery_token.html.twig',
+            'registration/self_asserted_tokens/new_recovery_token.html.twig',
             [
                 'secondFactorId' => $secondFactorId,
                 'availableRecoveryTokens' => $availableRecoveryTokens
@@ -182,7 +163,7 @@ class RecoveryTokenController extends Controller
         }
 
         return $this->render(
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/create_safe_store.html.twig',
+            'registration/self_asserted_tokens/create_safe_store.html.twig',
             [
                 'form' => $form->createView(),
                 'secret' => $secret,
@@ -212,7 +193,7 @@ class RecoveryTokenController extends Controller
 
         return $this->handleSmsChallenge(
             $request,
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/create_sms.html.twig',
+            'registration/self_asserted_tokens/create_sms.html.twig',
             'ss_recovery_token_prove_sms_possession'
         );
     }
@@ -233,7 +214,7 @@ class RecoveryTokenController extends Controller
         $this->recoveryTokenService->resetStepUpGiven();
         return $this->handleSmsProofOfPossession(
             $request,
-            '@SurfnetStepupSelfServiceSelfService/registration/self_asserted_tokens/sms_prove_possession.html.twig',
+            'registration/self_asserted_tokens/sms_prove_possession.html.twig',
             'ss_second_factor_list'
         );
     }
@@ -309,7 +290,7 @@ class RecoveryTokenController extends Controller
         $samlLogger = $this->samlLogger->forAuthentication($authenticationRequest->getRequestId());
         $samlLogger->notice('Sending authentication request to the second factor test IDP');
 
-        return $this->redirectBinding->createRedirectResponseFor($authenticationRequest);
+        return $this->redirectBinding->createResponseFor($authenticationRequest);
     }
 
     /**
