@@ -11,6 +11,7 @@ services:
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     public: true
 
+
     # TODO: find the exact configuration for this
 #  Surfnet\:
 #    resource: '../src/'

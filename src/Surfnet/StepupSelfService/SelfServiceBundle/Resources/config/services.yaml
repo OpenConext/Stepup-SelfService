@@ -215,11 +215,15 @@ services:
         arguments:
             - "@surfnet_stepup_middleware_client.identity.service.ra"
             - "@surfnet_stepup_self_service_self_service.service.command"
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService:
+        alias: self_service.service.ra
 
     self_service.service.ra_location:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService
         arguments:
             - "@surfnet_stepup_middleware_client.configuration.service.ra_location"
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService:
+        alias: self_service.service.ra_location
 
     self_service.service.institution_configuration_options:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService

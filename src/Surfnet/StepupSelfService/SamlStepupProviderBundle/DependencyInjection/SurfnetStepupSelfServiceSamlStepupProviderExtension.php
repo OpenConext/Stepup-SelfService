@@ -93,10 +93,10 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $providerDefinition = new Definition(
             Provider::class,
             [
-            $provider,
-            new Reference('gssp.provider.' . $provider . '.hosted.sp'),
-            new Reference('gssp.provider.' . $provider . '.remote.idp'),
-            new Reference('gssp.provider.' . $provider . '.statehandler')
+                $provider,
+                new Reference('gssp.provider.' . $provider . '.hosted.sp'),
+                new Reference('gssp.provider.' . $provider . '.remote.idp'),
+                new Reference('gssp.provider.' . $provider . '.statehandler')
             ]
         );
 
