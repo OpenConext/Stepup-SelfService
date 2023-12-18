@@ -104,9 +104,10 @@ trait RecoveryTokenControllerTrait
         string $templateName,
         string $exitRoute,
         ?string $secondFactorId = null
-    ) {
+    ): Response
+    {
         if (!$this->smsService->hasSmsVerificationState(SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID)) {
-            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
+            $this->addFlash('notice', 'ss.registration.sms.alert.no_verification_state');
             return $this->redirectToRoute('ss_recovery_token_sms');
         }
         $identity = $this->getIdentity();
