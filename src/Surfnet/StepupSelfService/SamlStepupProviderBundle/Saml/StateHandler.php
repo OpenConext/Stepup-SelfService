@@ -24,6 +24,8 @@ use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 
 final readonly class StateHandler
 {
+    const REQUEST_ID = 'request_id';
+
     public function __construct(
         private AttributeBagInterface $attributeBag,
         private string                $provider,
@@ -32,14 +34,14 @@ final readonly class StateHandler
 
     public function setRequestId(string $originalRequestId): self
     {
-        $this->set('request_id', $originalRequestId);
+        $this->set(self::REQUEST_ID, $originalRequestId);
 
         return $this;
     }
 
     public function getRequestId(): ?string
     {
-        return $this->get('request_id');
+        return $this->get(self::REQUEST_ID);
     }
 
     public function clear(): void
