@@ -27,7 +27,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossession
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class YubikeyController extends Controller
 {
