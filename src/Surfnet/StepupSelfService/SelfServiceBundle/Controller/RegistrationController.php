@@ -25,7 +25,6 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
@@ -33,13 +32,12 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorAvailability
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeInterface;
-use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends Controller
 {
@@ -55,14 +53,12 @@ class RegistrationController extends Controller
         parent::__construct($logger, $configurationOptionsService);
     }
 
-
-    #[Template('registration/display_second_factor_types.html.twig')]
     #[Route(
         path: '/registration/select-token',
         name: 'ss_registration_display_types',
         methods: ['GET'],
     )]
-    public function displaySecondFactorTypes(): Response|array
+    public function displaySecondFactorTypes(): Response
     {
         $institution = $this->getIdentity()->institution;
         $institutionConfigurationOptions = $this->configurationOptionsService
@@ -89,20 +85,22 @@ class RegistrationController extends Controller
 
         $availableTokens = $this->secondFactorAvailabilityHelper->filter($secondFactors);
 
-        return [
-            'commonName' => $this->getIdentity()->commonName,
-            'availableSecondFactors' => $availableTokens,
-            'verifyEmail' => $this->emailVerificationIsRequired(),
-        ];
+        return $this->render(
+            'registration/display_second_factor_types.html.twig',
+            [
+                'commonName' => $this->getIdentity()->commonName,
+                'availableSecondFactors' => $availableTokens,
+                'verifyEmail' => $this->emailVerificationIsRequired(),
+            ]
+        );
     }
 
-    #[Template('registration/display_vetting_types.html.twig')]
     #[Route(
         path: '/second-factor/{secondFactorId}/vetting-types',
         name: 'ss_second_factor_vetting_types',
         methods:  ['GET'],
     )]
-    public function displayVettingTypes(Request $request, string $secondFactorId): array|Response
+    public function displayVettingTypes(Request $request, string $secondFactorId): Response
     {
         /**
          * @var VettingTypeService
@@ -149,41 +147,41 @@ class RegistrationController extends Controller
         $currentLocale = $request->getLocale();
         $vettingTypeHint = $vettingTypeService->vettingTypeHint($institution, $currentLocale);
 
-        return [
-            'allowSelfVetting' => $vettingTypeCollection->allowSelfVetting(),
-            'allowSelfAssertedTokens' => $vettingTypeCollection->allowSelfAssertedTokens(),
-            'hasVettingTypeHint' => !is_null($vettingTypeHint),
-            'vettingTypeHint' => $vettingTypeHint,
-            'verifyEmail' => $this->emailVerificationIsRequired(),
-            'secondFactorId' => $secondFactorId,
-        ];
+        return $this->render(
+            'registration/display_vetting_types.html.twig',
+            [
+                'allowSelfVetting' => $vettingTypeCollection->allowSelfVetting(),
+                'allowSelfAssertedTokens' => $vettingTypeCollection->allowSelfAssertedTokens(),
+                'hasVettingTypeHint' => !is_null($vettingTypeHint),
+                'vettingTypeHint' => $vettingTypeHint,
+                'verifyEmail' => $this->emailVerificationIsRequired(),
+                'secondFactorId' => $secondFactorId,
+            ]
+        );
     }
 
-    #[Template('registration/email_verification_email_sent.html.twig')]
+
     #[Route(
         path: '/registration/{secondFactorId}/email-verification-email-sent',
         name: 'ss_registration_email_verification_email_sent',
         methods: ['GET'],
     )]
-    public function emailVerificationEmailSent(): array
+    public function emailVerificationEmailSent(): Response
     {
-        return ['email' => $this->getIdentity()->email];
+        return $this->render(
+            view: 'registration/email_verification_email_sent.html.twig',
+            parameters: ['email' => $this->getIdentity()->email]);
     }
 
-
-    #[Template('registration/verify_email.html.twig')]
     #[Route(
         path: '/verify-email',
         name: 'ss_registration_verify_email',
         methods: ['GET'],
     )]
-    public function verifyEmail(Request $request): RedirectResponse|array
+    public function verifyEmail(Request $request): Response
     {
         $nonce = $request->query->get('n', '');
         $identityId = $this->getIdentity()->id;
-
-
-
         $secondFactor = $this->secondFactorService->findUnverifiedByVerificationNonce($identityId, $nonce);
 
         if ($secondFactor === null) {
@@ -197,7 +195,7 @@ class RegistrationController extends Controller
             );
         }
 
-        return [];
+        return $this->render('registration/verify_email.html.twig');
     }
 
     /**
@@ -260,7 +258,6 @@ class RegistrationController extends Controller
         );
         $content = $response->getContent();
 
-
         $mpdf = new Mpdf(
             ['tempDir' => sys_get_temp_dir()]
         );
@@ -286,7 +283,6 @@ class RegistrationController extends Controller
 
         return $response;
     }
-
 
     private function buildRegistrationActionParameters($secondFactorId): array
     {
