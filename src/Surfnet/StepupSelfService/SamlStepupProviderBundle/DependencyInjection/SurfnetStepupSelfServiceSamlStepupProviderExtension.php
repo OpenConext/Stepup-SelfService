@@ -84,10 +84,11 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $stateHandlerDefinition = new Definition(
             StateHandler::class,
             [
-                new Reference('gssp.sessionbag'),
+                new Reference('request_stack'),
                 $provider
             ]
         );
+
         $container->setDefinition('gssp.provider.' . $provider . '.statehandler', $stateHandlerDefinition);
 
         $providerDefinition = new Definition(

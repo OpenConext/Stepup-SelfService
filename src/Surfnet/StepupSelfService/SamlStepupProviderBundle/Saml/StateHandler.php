@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml;
 
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 
 final readonly class StateHandler
@@ -27,8 +28,8 @@ final readonly class StateHandler
     const REQUEST_ID = 'request_id';
 
     public function __construct(
-        private AttributeBagInterface $attributeBag,
-        private string                $provider,
+        private RequestStack $requestStack,
+        private string $provider,
     ) {
     }
 
@@ -46,16 +47,22 @@ final readonly class StateHandler
 
     public function clear(): void
     {
-        $this->attributeBag->remove($this->provider);
+        $session = $this->requestStack->getSession();
+
+        $session->getBag('gssp.provider.' . $this->provider)->clear();
+
+        $this->requestStack->getSession()->remove($this->provider);
     }
 
     protected function set(string $key, $value): void
     {
-        $this->attributeBag->set($this->provider . '/' . $key, $value);
+        $session = $this->requestStack->getSession();
+        $session->getBag('gssp.provider.' . $this->provider)->set($key, $value);
     }
 
     protected function get(string $key)
     {
-        return $this->attributeBag->get($this->provider . '/' . $key);
+        $session = $this->requestStack->getSession();
+        return $session->getBag('gssp.provider.' . $this->provider)->get($key);
     }
 }
