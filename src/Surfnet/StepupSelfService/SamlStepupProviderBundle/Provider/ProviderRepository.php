@@ -59,4 +59,12 @@ final class ProviderRepository
 
         return $this->providers[$providerName];
     }
+
+    /**
+     * @return Provider[]
+     */
+    public function getAll(): array
+    {
+        return $this->providers;
+    }
 }
