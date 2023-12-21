@@ -159,9 +159,9 @@ class SamlController extends Controller
                 throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
             }
 
-            $session->getFlashBag()->add('success', 'ss.test_second_factor.verification_successful');
+            $this->addFlash('success', 'ss.test_second_factor.verification_successful');
         } catch (Exception) {
-            $session->getFlashBag()->add('error', 'ss.test_second_factor.verification_failed');
+            $this->addFlash('error', 'ss.test_second_factor.verification_failed');
         }
         return $this->redirectToRoute('ss_second_factor_list');
     }
@@ -173,7 +173,6 @@ class SamlController extends Controller
     )]
     public function metadata(): XMLResponse
     {
-
-        return new XMLResponse($this->metadataFactory->generate());
+        return new XMLResponse($this->metadataFactory->generate()->__toString());
     }
 }
