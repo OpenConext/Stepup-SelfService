@@ -28,9 +28,9 @@ use Psr\Log\LoggerInterface;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Value\Loa;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -47,13 +47,12 @@ use Surfnet\SamlBundle\Http\PostBinding;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
+ * TODO: Split op in smaller controllers
  */
-class SamlController extends Controller
+class SamlController extends AbstractController
 {
-
     public function __construct(
         private readonly LoggerInterface                  $logger,
-        InstitutionConfigurationOptionsService            $configurationOptionsService,
         private readonly SecondFactorService              $secondFactorService,
         private readonly RequestStack                     $requestStack,
         private readonly LoaResolutionService             $loaResolutionService,
@@ -63,7 +62,6 @@ class SamlController extends Controller
         private readonly RedirectBinding                  $redirectBinding,
         private readonly PostBinding                      $postBinding,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
 
     /**
@@ -77,7 +75,7 @@ class SamlController extends Controller
     {
         $this->logger->notice('Starting second factor test');
 
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
 
         $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);
         if (!$vettedSecondFactors || $vettedSecondFactors->getTotalItems() === 0) {
