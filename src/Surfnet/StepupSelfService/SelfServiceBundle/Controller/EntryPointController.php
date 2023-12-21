@@ -24,10 +24,11 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Authenti
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-class EntryPointController extends Controller
+class EntryPointController extends AbstractController
 {
     public function __construct(
         private readonly SecondFactorService $secondFactorService,
@@ -39,7 +40,7 @@ class EntryPointController extends Controller
     #[Route(path: '/', name: 'ss_entry_point', methods:['GET'])]
     public function decideSecondFactorFlow() : RedirectResponse
     {
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
         $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
         $this->activationFlowService->process($this->authStateHandler->getCurrentRequestUri());
