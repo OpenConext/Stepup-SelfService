@@ -20,21 +20,19 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\SecondFactor;
 
-use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\DateTime\RegistrationExpirationHelper;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
-use Symfony\Bridge\Twig\Attribute\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class SecondFactorListController extends Controller
+class SecondFactorListController extends AbstractController
 {
     public function __construct(
-        LoggerInterface $logger,
         private readonly InstitutionConfigurationOptionsService $configurationOptionsService,
         private readonly RecoveryTokenService    $recoveryTokenService,
         private readonly AuthorizationService    $authorizationService,
@@ -42,14 +40,13 @@ class SecondFactorListController extends Controller
         private readonly SecondFactorService $secondFactorService,
         private readonly RegistrationExpirationHelper $registrationExpirationHelper,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
-    #[Template('second_factor/list.html.twig')]
+
     #[Route(path: '/overview', name: 'ss_second_factor_list', methods:  ['GET'])]
-    public function __invoke(): array
+    public function __invoke(): Response
     {
-        $identity = $this->getIdentity();
-        $institution = $this->getIdentity()->institution;
+        $identity = $this->getUser()->getIdentity();
+        $institution = $identity->institution;
         $options = $this->configurationOptionsService
             ->getInstitutionConfigurationOptionsFor($institution);
 
@@ -72,19 +69,21 @@ class SecondFactorListController extends Controller
         }
         $loaService = $this->secondFactorTypeService;
 
-        return [
-            'loaService' => $loaService,
-            'email' => $identity->email,
-            'maxNumberOfTokens' => $secondFactors->getMaximumNumberOfRegistrations(),
-            'registrationsLeft' => $secondFactors->getRegistrationsLeft(),
-            'unverifiedSecondFactors' => $secondFactors->unverified,
-            'verifiedSecondFactors' => $secondFactors->verified,
-            'vettedSecondFactors' => $secondFactors->vetted,
-            'availableSecondFactors' => $secondFactors->available,
-            'expirationHelper' => $this->registrationExpirationHelper,
-            'selfAssertedTokenRegistration' => $selfAssertedTokenRegistration,
-            'recoveryTokens' => $recoveryTokens,
-            'hasRemainingRecoveryTokens' => $hasRemainingTokenTypes,
-        ];
+        return $this->render('second_factor/list.html.twig',
+            [
+                'loaService' => $loaService,
+                'email' => $identity->email,
+                'maxNumberOfTokens' => $secondFactors->getMaximumNumberOfRegistrations(),
+                'registrationsLeft' => $secondFactors->getRegistrationsLeft(),
+                'unverifiedSecondFactors' => $secondFactors->unverified,
+                'verifiedSecondFactors' => $secondFactors->verified,
+                'vettedSecondFactors' => $secondFactors->vetted,
+                'availableSecondFactors' => $secondFactors->available,
+                'expirationHelper' => $this->registrationExpirationHelper,
+                'selfAssertedTokenRegistration' => $selfAssertedTokenRegistration,
+                'recoveryTokens' => $recoveryTokens,
+                'hasRemainingRecoveryTokens' => $hasRemainingTokenTypes,
+            ]
+        );
     }
 }
