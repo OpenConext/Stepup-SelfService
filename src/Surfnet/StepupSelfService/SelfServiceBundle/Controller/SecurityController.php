@@ -22,18 +22,16 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage;
 
-class SecurityController extends Controller
+class SecurityController extends AbstractController
 {
     public function __construct(
-        LoggerInterface $logger,
-        InstitutionConfigurationOptionsService $configurationOptionsService,
         private readonly SessionStorage $sessionStorage
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
 
     #[Route(
