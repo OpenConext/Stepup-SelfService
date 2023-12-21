@@ -20,26 +20,23 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration\Gssf;
 
-use Psr\Log\LoggerInterface;
 use Surfnet\SamlBundle\Http\XMLResponse;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\MetadataFactoryCollection;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controls registration with Generic SAML Stepup Providers (GSSPs), yielding Generic SAML Second Factors (GSSFs).
  */
-final class GssfMetadataController extends Controller
+final class GssfMetadataController extends AbstractController
 {
     public function __construct(
-        LoggerInterface           $logger,
-        InstitutionConfigurationOptionsService     $configurationOptionsService,
         private readonly ProviderRepository        $providerRepository,
         private readonly MetadataFactoryCollection $metadataFactoryCollection,
+        private readonly ControllerCheckerService $checkerService,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
      #[Route(
         path: '/registration/gssf/{provider}/metadata',
@@ -48,7 +45,7 @@ final class GssfMetadataController extends Controller
     )]
     public function metadata(string $provider): XMLResponse
     {
-        $this->assertSecondFactorEnabled($provider);
+        $this->checkerService->assertSecondFactorEnabled($provider);
 
         $provider = $this->providerRepository->get($provider);
         $factory = $this->metadataFactoryCollection->getByIdentifier($provider->getName());
