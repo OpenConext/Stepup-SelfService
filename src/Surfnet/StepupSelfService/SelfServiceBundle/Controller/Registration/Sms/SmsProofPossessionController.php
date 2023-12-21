@@ -20,25 +20,22 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration\Sms;
 
-use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifySmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\VerifySmsChallengeType;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class SmsProofPossessionController extends Controller
+class SmsProofPossessionController extends AbstractController
 {
     public function __construct(
-        LoggerInterface                         $logger,
-        InstitutionConfigurationOptionsService  $configurationOptionsService,
         private readonly SmsSecondFactorService $smsSecondFactorService,
+        private readonly ControllerCheckerService $checkerService,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
 
     #[Route(
@@ -48,7 +45,7 @@ class SmsProofPossessionController extends Controller
     )]
     public function __invoke(Request $request): Response
     {
-        $this->assertSecondFactorEnabled('sms');
+        $this->checkerService->assertSecondFactorEnabled('sms');
 
         if (!$this->smsSecondFactorService->hasSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID)) {
             $this->addFlash('notice', 'ss.registration.sms.alert.no_verification_state');
@@ -58,7 +55,7 @@ class SmsProofPossessionController extends Controller
 
         $command = new VerifySmsChallengeCommand();
 
-        $command->identity = $this->getIdentity()->id;
+        $command->identity = $this->getUser()->getIdentity()->id;
 
         $form = $this->createForm(VerifySmsChallengeType::class, $command)->handleRequest($request);
 
@@ -67,7 +64,7 @@ class SmsProofPossessionController extends Controller
 
             if ($result->isSuccessful()) {
                 $this->smsSecondFactorService->clearSmsVerificationState(SmsSecondFactorServiceInterface::REGISTRATION_SECOND_FACTOR_ID);
-                $route = $this->emailVerificationIsRequired()
+                $route = $this->checkerService->emailVerificationIsRequired()
                     ? 'ss_registration_email_verification_email_sent'
                     : 'ss_second_factor_vetting_types';
 
@@ -86,7 +83,7 @@ class SmsProofPossessionController extends Controller
             'registration/sms/prove_possession.html.twig',
             [
                 'form' => $form->createView(),
-                'verifyEmail' => $this->emailVerificationIsRequired(),
+                'verifyEmail' => $this->checkerService->emailVerificationIsRequired(),
             ]
         );
     }
