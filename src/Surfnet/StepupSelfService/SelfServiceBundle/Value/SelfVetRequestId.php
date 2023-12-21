@@ -22,8 +22,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value;
 
 class SelfVetRequestId
 {
-    public function __construct(private readonly string $requestId, private readonly string $vettingSecondFactorId)
-    {
+    public function __construct(
+        private readonly string $requestId,
+        private readonly string $vettingSecondFactorId
+    ) {
     }
 
     public function requestId(): string
@@ -35,4 +37,5 @@ class SelfVetRequestId
     {
         return $this->vettingSecondFactorId;
     }
+
 }
