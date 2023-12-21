@@ -32,7 +32,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Attribute\Route;
 
 class SmsController extends Controller
@@ -41,7 +40,6 @@ class SmsController extends Controller
         LoggerInterface                         $logger,
         InstitutionConfigurationOptionsService  $configurationOptionsService,
         private readonly SmsSecondFactorService $smsSecondFactorService,
-        private readonly RequestStack $requestStack,
     ) {
         parent::__construct($logger, $configurationOptionsService);
     }
