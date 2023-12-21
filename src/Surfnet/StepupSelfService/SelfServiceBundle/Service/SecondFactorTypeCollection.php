@@ -26,40 +26,22 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactorCollecti
 
 class SecondFactorTypeCollection
 {
-    /**
-     * @var int
-     */
-    public $maxNumberOfRegistrations;
+    public int $maxNumberOfRegistrations;
+    public UnverifiedSecondFactorCollection $unverified;
+    public VerifiedSecondFactorCollection $verified;
+    public VettedSecondFactorCollection $vetted;
 
     /**
-     * @var UnverifiedSecondFactorCollection
+     * @var array<string>
      */
-    public $unverified;
+    public array $available;
 
-    /**
-     * @var VerifiedSecondFactorCollection
-     */
-    public $verified;
-
-    /**
-     * @var VettedSecondFactorCollection
-     */
-    public $vetted;
-
-    /**
-     * @var array
-     */
-    public $available;
-
-    /**
-     * @return int
-     */
-    public function getMaximumNumberOfRegistrations()
+    public function getMaximumNumberOfRegistrations(): int
     {
         return $this->maxNumberOfRegistrations;
     }
 
-    public function getRegistrationsLeft(): int|float
+    public function getRegistrationsLeft(): int
     {
         $total = $this->maxNumberOfRegistrations;
 
