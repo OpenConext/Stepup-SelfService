@@ -20,27 +20,23 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration\Sms;
 
-use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\SendSmsChallengeType;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class SmsSendChallengeController extends Controller
+class SmsSendChallengeController extends AbstractController
 {
     public function __construct(
-        LoggerInterface                         $logger,
-        InstitutionConfigurationOptionsService  $configurationOptionsService,
         private readonly SmsSecondFactorService $smsSecondFactorService,
+        private readonly ControllerCheckerService $checkerService,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
-
     #[Route(
         path: '/registration/sms/send-challenge',
         name: 'ss_registration_sms_send_challenge',
@@ -48,7 +44,7 @@ class SmsSendChallengeController extends Controller
     )]
     public function __invoke(Request $request): Response
     {
-        $this->assertSecondFactorEnabled('sms');
+        $this->checkerService->assertSecondFactorEnabled('sms');
 
         $command = new SendSmsChallengeCommand();
         $form = $this->createForm(SendSmsChallengeType::class, $command)->handleRequest($request);
@@ -60,12 +56,12 @@ class SmsSendChallengeController extends Controller
         $viewVariables = [
             'otpRequestsRemaining' => $otpRequestsRemaining,
             'maximumOtpRequests' => $maximumOtpRequests,
-            'verifyEmail' => $this->emailVerificationIsRequired(),
+            'verifyEmail' => $this->checkerService->emailVerificationIsRequired(),
         ];
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $command->identity = $this->getIdentity()->id;
-            $command->institution = $this->getIdentity()->institution;
+            $command->identity = $this->getUser()->getIdentity()->id;
+            $command->institution = $this->getUser()->getIdentity()->institution;
 
             if ($otpRequestsRemaining === 0) {
                 $this->addFlash('error', 'ss.prove_phone_possession.challenge_request_limit_reached');
