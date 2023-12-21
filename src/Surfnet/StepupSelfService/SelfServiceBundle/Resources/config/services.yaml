@@ -115,6 +115,9 @@ services:
             - "@surfnet_stepup_self_service_self_service.service.command"
         public: true
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService:
+        alias: surfnet_stepup_self_service_self_service.service.yubikey_second_factor
+
     surfnet_stepup_self_service_self_service.service.sms_second_factor:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
         arguments:
