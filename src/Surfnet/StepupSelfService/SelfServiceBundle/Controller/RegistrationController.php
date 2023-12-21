@@ -25,6 +25,7 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaService;
@@ -32,6 +33,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorAvailability
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\VettingTypeService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +41,11 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
-class RegistrationController extends Controller
+/**
+ * TODO: split into smaller controllers
+ * TODO: create PDF generation in dedicated service
+ */
+class RegistrationController extends AbstractController
 {
     public function __construct(
         private readonly VettingTypeService $vettingTypeService,
@@ -49,8 +55,8 @@ class RegistrationController extends Controller
         private readonly SecondFactorAvailabilityHelper $secondFactorAvailabilityHelper,
         private readonly RaService $raService,
         private readonly RaLocationService $raLocationService,
+        private readonly ControllerCheckerService $checkerService,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
 
     #[Route(
@@ -60,11 +66,11 @@ class RegistrationController extends Controller
     )]
     public function displaySecondFactorTypes(): Response
     {
-        $institution = $this->getIdentity()->institution;
+        $institution = $this->getUser()->getIdentity()->institution;
         $institutionConfigurationOptions = $this->configurationOptionsService
             ->getInstitutionConfigurationOptionsFor($institution);
 
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
 
         // Get all available second factors from the config.
         $allSecondFactors = $this->getParameter('ss.enabled_second_factors');
@@ -88,9 +94,9 @@ class RegistrationController extends Controller
         return $this->render(
             'registration/display_second_factor_types.html.twig',
             [
-                'commonName' => $this->getIdentity()->commonName,
+                'commonName' => $this->getUser()->getIdentity()->commonName,
                 'availableSecondFactors' => $availableTokens,
-                'verifyEmail' => $this->emailVerificationIsRequired(),
+                'verifyEmail' => $this->checkerService->emailVerificationIsRequired(),
             ]
         );
     }
@@ -106,7 +112,7 @@ class RegistrationController extends Controller
          * @var VettingTypeService
          */
         $vettingTypeService = $this->vettingTypeService;
-        $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getIdentity(), $secondFactorId);
+        $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getUser()->getIdentity(), $secondFactorId);
 
         $nudgeSelfAssertedTokens = $vettingTypeCollection->isPreferred(VettingTypeInterface::SELF_ASSERTED_TOKENS);
         $nudgeRaVetting = $vettingTypeCollection->isPreferred(VettingTypeInterface::ON_PREMISE);
@@ -143,7 +149,7 @@ class RegistrationController extends Controller
             );
         }
 
-        $institution = $this->getIdentity()->institution;
+        $institution = $this->getUser()->getIdentity()->institution;
         $currentLocale = $request->getLocale();
         $vettingTypeHint = $vettingTypeService->vettingTypeHint($institution, $currentLocale);
 
@@ -154,7 +160,7 @@ class RegistrationController extends Controller
                 'allowSelfAssertedTokens' => $vettingTypeCollection->allowSelfAssertedTokens(),
                 'hasVettingTypeHint' => !is_null($vettingTypeHint),
                 'vettingTypeHint' => $vettingTypeHint,
-                'verifyEmail' => $this->emailVerificationIsRequired(),
+                'verifyEmail' => $this->checkerService->emailVerificationIsRequired(),
                 'secondFactorId' => $secondFactorId,
             ]
         );
@@ -170,7 +176,7 @@ class RegistrationController extends Controller
     {
         return $this->render(
             view: 'registration/email_verification_email_sent.html.twig',
-            parameters: ['email' => $this->getIdentity()->email]);
+            parameters: ['email' => $this->getUser()->getIdentity()->email]);
     }
 
     #[Route(
@@ -181,7 +187,7 @@ class RegistrationController extends Controller
     public function verifyEmail(Request $request): Response
     {
         $nonce = $request->query->get('n', '');
-        $identityId = $this->getIdentity()->id;
+        $identityId = $this->getUser()->getIdentity()->id;
         $secondFactor = $this->secondFactorService->findUnverifiedByVerificationNonce($identityId, $nonce);
 
         if ($secondFactor === null) {
@@ -213,7 +219,7 @@ class RegistrationController extends Controller
     {
         // Send the registration email
         $this->raService
-            ->sendRegistrationMailMessage($this->getIdentity()->id, $secondFactorId);
+            ->sendRegistrationMailMessage($this->getUser()->getIdentity()->id, $secondFactorId);
         return $this->redirectToRoute(
             'ss_registration_registration_email_sent',
             ['secondFactorId' => $secondFactorId]
@@ -286,7 +292,7 @@ class RegistrationController extends Controller
 
     private function buildRegistrationActionParameters($secondFactorId): array
     {
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
 
         /** @var VerifiedSecondFactor $secondFactor */
         $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
@@ -299,7 +305,7 @@ class RegistrationController extends Controller
                 new DateInterval('P14D')
             ),
             'locale'           => $identity->preferredLocale,
-            'verifyEmail'      => $this->emailVerificationIsRequired(),
+            'verifyEmail'      => $this->checkerService->emailVerificationIsRequired(),
         ];
 
         $institutionConfigurationOptions = $this->configurationOptionsService
