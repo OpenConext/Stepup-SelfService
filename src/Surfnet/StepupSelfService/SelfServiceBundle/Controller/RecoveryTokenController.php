@@ -41,17 +41,17 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Recov
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class RecoveryTokenController extends Controller
+class RecoveryTokenController extends AbstractController
 {
     use RecoveryTokenControllerTrait;
 
@@ -86,7 +86,7 @@ class RecoveryTokenController extends Controller
     public function selectTokenType(): Response
     {
         $this->logger->info('Determining which recovery token are available');
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertMayAddRecoveryToken($identity);
 
         $availableRecoveryTokens = $this->recoveryTokenService->getRemainingTokenTypes($identity);
@@ -100,7 +100,7 @@ class RecoveryTokenController extends Controller
     public function newRecoveryToken(string $secondFactorId): Response
     {
         $this->logger->info('Determining which recovery token are available');
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
         $this->assertNoRecoveryTokens($identity);
 
@@ -137,11 +137,11 @@ class RecoveryTokenController extends Controller
     {
         if (!$this->recoveryTokenService->wasStepUpGiven()) {
             $this->recoveryTokenService->setReturnTo(RecoveryTokenState::RECOVERY_TOKEN_RETURN_TO_CREATE_SAFE_STORE);
-            return $this->forward("Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUpAction");
+            return $this->forward("Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUp");
         }
         $this->recoveryTokenService->resetReturnTo();
 
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertNoRecoveryTokenOfType('safe-store', $identity);
         $secret = $this->safeStoreService->produceSecret();
         $command = new PromiseSafeStorePossessionCommand();
@@ -187,7 +187,7 @@ class RecoveryTokenController extends Controller
     {
         if (!$this->recoveryTokenService->wasStepUpGiven()) {
             $this->recoveryTokenService->setReturnTo(RecoveryTokenState::RECOVERY_TOKEN_RETURN_TO_CREATE_SMS);
-            return $this->forward("Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUpAction");
+            return $this->forward("Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUp");
         }
         $this->recoveryTokenService->resetReturnTo();
 
@@ -234,11 +234,11 @@ class RecoveryTokenController extends Controller
     )]
     public function delete(string $recoveryTokenId): Response
     {
-        $this->assertRecoveryTokenInPossession($recoveryTokenId, $this->getIdentity());
+        $this->assertRecoveryTokenInPossession($recoveryTokenId, $this->getUser()->getIdentity());
         try {
             $recoveryToken = $this->recoveryTokenService->getRecoveryToken($recoveryTokenId);
             $command = new RevokeRecoveryTokenCommand();
-            $command->identity = $this->getIdentity();
+            $command->identity = $this->getUser()->getIdentity();
             $command->recoveryToken = $recoveryToken;
             $executionResult = $this->safeStoreService->revokeRecoveryToken($command);
             if ($executionResult->getErrors() !== []) {
@@ -265,7 +265,7 @@ class RecoveryTokenController extends Controller
     {
         $this->logger->notice('Starting step up authentication for a recovery token action');
 
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
 
         $vettedSecondFactors = $this->secondFactorService->findVettedByIdentity($identity->id);
         if (!$vettedSecondFactors || $vettedSecondFactors->getTotalItems() === 0) {
