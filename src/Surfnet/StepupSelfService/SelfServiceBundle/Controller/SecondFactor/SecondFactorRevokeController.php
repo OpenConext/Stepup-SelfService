@@ -23,25 +23,22 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\SecondFactor;
 use LogicException;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeSecondFactorType;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Symfony\Bridge\Twig\Attribute\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
-class SecondFactorRevokeController extends Controller
+class SecondFactorRevokeController extends AbstractController
 {
     public function __construct(
         private readonly LoggerInterface $logger,
-        InstitutionConfigurationOptionsService $configurationOptionsService,
         private readonly SecondFactorService $secondFactorService,
 
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
 
     #[Template('second_factor/revoke.html.twig')]
@@ -53,7 +50,7 @@ class SecondFactorRevokeController extends Controller
     )]
     public function __invoke(Request $request, string $state, string $secondFactorId): array|Response
     {
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
 
         if (!$this->secondFactorService->identityHasSecondFactorOfStateWithId($identity->id, $state, $secondFactorId)) {
             $this->logger->error(sprintf(
