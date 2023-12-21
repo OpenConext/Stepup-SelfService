@@ -206,7 +206,7 @@ class SelfAssertedTokensController extends Controller
                 }
                 $command = new SafeStoreAuthenticationCommand();
                 $command->recoveryToken = $token;
-                $command->identity = $identity;
+                $command->identity = $identity->id;
                 $form = $this->createForm(AuthenticateSafeStoreType::class, $command)->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
                     if ($this->recoveryTokenService->authenticateSafeStore($command)) {
