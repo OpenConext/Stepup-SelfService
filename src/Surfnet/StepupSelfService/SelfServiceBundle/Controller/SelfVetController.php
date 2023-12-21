@@ -126,21 +126,12 @@ class SelfVetController extends Controller
             $command->authoringLoa = $assertion->getAuthnContextClassRef();
 
             if ($this->secondFactorService->selfVet($command)) {
-                $this->requestStack
-                    ->getSession()
-                    ->getFlashBag()
-                    ->add('success', 'ss.self_vet.second_factor.alert.successful');
+                $this->addFlash('success', 'ss.self_vet.second_factor.alert.successful');
             } else {
-                $this->requestStack
-                    ->getSession()
-                    ->getFlashBag()
-                    ->add('error', 'ss.self_vet.second_factor.alert.failed');
+                $this->addFlash('error', 'ss.self_vet.second_factor.alert.failed');
             }
         } catch (Exception) {
-            $this->requestStack
-                ->getSession()
-                ->getFlashBag()
-                ->add('error', 'ss.self_vet.second_factor.verification_failed');
+            $this->addFlash('error', 'ss.self_vet.second_factor.verification_failed');
         }
         return $this->redirectToRoute('ss_second_factor_list');
     }
