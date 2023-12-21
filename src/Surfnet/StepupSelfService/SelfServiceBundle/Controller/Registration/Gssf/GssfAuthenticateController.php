@@ -23,29 +23,26 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration\Gs
 use Psr\Log\LoggerInterface;
 use Surfnet\SamlBundle\Http\RedirectBinding;
 use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controls registration with Generic SAML Stepup Providers (GSSPs), yielding Generic SAML Second Factors (GSSFs).
  */
-final class GssfAuthenticateController extends Controller
+final class GssfAuthenticateController extends AbstractController
 {
     public function __construct(
         private readonly LoggerInterface           $logger,
-        InstitutionConfigurationOptionsService     $configurationOptionsService,
         private readonly ProviderRepository        $providerRepository,
         private readonly RedirectBinding           $redirectBinding,
         private readonly GsspUserAttributeService  $gsspUserAttributeService,
+        private readonly ControllerCheckerService  $checkerService,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
-
 
     #[Route(
         path: '/registration/gssf/{provider}/authenticate',
@@ -54,9 +51,9 @@ final class GssfAuthenticateController extends Controller
     )]
     public function authenticate(string $provider): Response
     {
-        $this->assertSecondFactorEnabled($provider);
+        $this->checkerService->assertSecondFactorEnabled($provider);
 
-        $provider = $this->getProvider($provider);
+        $provider = $this->providerRepository->get($provider);
 
         $authnRequest = AuthnRequestFactory::createNewRequest(
             $provider->getServiceProvider(),
@@ -66,7 +63,7 @@ final class GssfAuthenticateController extends Controller
         $this->gsspUserAttributeService->addGsspUserAttributes(
             $authnRequest,
             $provider,
-            $this->getIdentity()
+            $this->getUser()->getIdentity()
         );
         $stateHandler = $provider->getStateHandler();
         $stateHandler->setRequestId($authnRequest->getRequestId());
@@ -79,11 +76,6 @@ final class GssfAuthenticateController extends Controller
         ));
 
         return $this->redirectBinding->createResponseFor($authnRequest);
-    }
-
-    private function getProvider(string $provider): Provider
-    {
-        return $this->providerRepository->get($provider);
     }
 
 }
