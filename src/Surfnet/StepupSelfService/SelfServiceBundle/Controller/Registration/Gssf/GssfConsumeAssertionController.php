@@ -27,9 +27,9 @@ use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,17 +38,16 @@ use Symfony\Component\Routing\Attribute\Route;
 /**
  * Controls registration with Generic SAML Stepup Providers (GSSPs), yielding Generic SAML Second Factors (GSSFs).
  */
-final class GssfConsumeAssertionController extends Controller
+final class GssfConsumeAssertionController extends AbstractController
 {
     public function __construct(
         private readonly LoggerInterface           $logger,
-        InstitutionConfigurationOptionsService     $configurationOptionsService,
         private readonly ProviderRepository        $providerRepository,
         private readonly PostBinding               $postBinding,
         private readonly GssfService               $gssfService,
         private readonly AttributeDictionary       $attributeDictionary,
+        private readonly ControllerCheckerService $checkerService,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
 
     #[Route(
@@ -58,7 +57,7 @@ final class GssfConsumeAssertionController extends Controller
     )]
     public function consumeAssertion(Request $httpRequest, string $provider): array|Response
     {
-        $this->assertSecondFactorEnabled($provider);
+        $this->checkerService->assertSecondFactorEnabled($provider);
 
         $provider = $this->providerRepository->get($provider);
 
@@ -106,12 +105,12 @@ final class GssfConsumeAssertionController extends Controller
 
         $gssfId = $this->attributeDictionary->translate($assertion)->getNameID();
 
-        $secondFactorId = $this->gssfService->provePossession($this->getIdentity()->id, $provider->getName(), $gssfId);
+        $secondFactorId = $this->gssfService->provePossession($this->getUser()->getIdentity()->id, $provider->getName(), $gssfId);
 
         if ($secondFactorId) {
             $this->logger->notice('GSSF possession has been proven successfully');
 
-            if ($this->emailVerificationIsRequired()) {
+            if ($this->checkerService->emailVerificationIsRequired()) {
                 return $this->redirectToRoute(
                     'ss_registration_email_verification_email_sent',
                     ['secondFactorId' => $secondFactorId]
