@@ -56,7 +56,7 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
         $gssfSecondFactors = array_keys($config['enabled_generic_second_factors']);
         $container->setParameter(
             'ss.enabled_second_factors',
-            array_merge($config['enabled_second_factors'], $gssfSecondFactors)
+            array_unique(array_merge($config['enabled_second_factors'], $gssfSecondFactors))
         );
 
         $container->setParameter(
