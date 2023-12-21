@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use LogicException;
 use Surfnet\StepupBundle\DateTime\RegistrationExpirationHelper;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Service\SecondFactorTypeService;
@@ -39,7 +40,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class SecondFactorController extends Controller
 {
     public function __construct(
-        LoggerInterface $logger,
+        private readonly LoggerInterface $logger,
         private readonly InstitutionConfigurationOptionsService $configurationOptionsService,
         private readonly RecoveryTokenService    $recoveryTokenService,
         private readonly AuthorizationService    $authorizationService,
@@ -108,10 +109,8 @@ class SecondFactorController extends Controller
     {
         $identity = $this->getIdentity();
 
-        /** @var SecondFactorService $service */
-        $service = $this->container->get('surfnet_stepup_self_service_self_service.service.second_factor');
-        if (!$service->identityHasSecondFactorOfStateWithId($identity->id, $state, $secondFactorId)) {
-            $this->container->get('logger')->error(sprintf(
+        if (!$this->secondFactorService->identityHasSecondFactorOfStateWithId($identity->id, $state, $secondFactorId)) {
+            $this->logger->error(sprintf(
                 'Identity "%s" tried to revoke "%s" second factor "%s", but does not own that second factor',
                 $identity->id,
                 $state,
@@ -121,9 +120,9 @@ class SecondFactorController extends Controller
         }
 
         $secondFactor = match ($state) {
-            'unverified' => $service->findOneUnverified($secondFactorId),
-            'verified' => $service->findOneVerified($secondFactorId),
-            'vetted' => $service->findOneVetted($secondFactorId),
+            'unverified' => $this->secondFactorService->findOneUnverified($secondFactorId),
+            'verified' => $this->secondFactorService->findOneVerified($secondFactorId),
+            'vetted' => $this->secondFactorService->findOneVetted($secondFactorId),
             default => throw new LogicException('There are no other types of second factor.'),
         };
 
@@ -140,13 +139,11 @@ class SecondFactorController extends Controller
         $form = $this->createForm(RevokeSecondFactorType::class, $command)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var FlashBagInterface $flashBag */
-            $flashBag = $this->container->get('session')->getFlashBag();
-
-            if ($service->revoke($command)) {
-                $flashBag->add('success', 'ss.second_factor.revoke.alert.revocation_successful');
+            
+            if ($this->secondFactorService->revoke($command)) {
+                $this->addFlash('success', 'ss.second_factor.revoke.alert.revocation_successful');
             } else {
-                $flashBag->add('error', 'ss.second_factor.revoke.alert.revocation_failed');
+                $this->addFlash('error', 'ss.second_factor.revoke.alert.revocation_failed');
             }
 
             return $this->redirectToRoute('ss_second_factor_list');
