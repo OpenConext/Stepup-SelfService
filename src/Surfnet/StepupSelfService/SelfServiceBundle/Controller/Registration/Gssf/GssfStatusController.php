@@ -21,22 +21,11 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration\Gssf;
 
 use JMS\TranslationBundle\Annotation\Ignore;
-use Psr\Log\LoggerInterface;
-use Surfnet\SamlBundle\Http\PostBinding;
-use Surfnet\SamlBundle\Http\RedirectBinding;
-use Surfnet\SamlBundle\Http\XMLResponse;
-use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
-use Surfnet\SamlBundle\SAML2\AuthnRequestFactory;
 use Surfnet\StepupBundle\Value\Provider\ViewConfigCollection;
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\MetadataFactoryCollection;
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\Provider;
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository;
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\StatusGssfType;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\GssfService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -44,14 +33,12 @@ use Symfony\Component\Routing\Attribute\Route;
 /**
  * Controls registration with Generic SAML Stepup Providers (GSSPs), yielding Generic SAML Second Factors (GSSFs).
  */
-final class GssfStatusController extends Controller
+final class GssfStatusController extends AbstractController
 {
     public function __construct(
-        LoggerInterface           $logger,
-        InstitutionConfigurationOptionsService     $configurationOptionsService,
-        private readonly ViewConfigCollection      $viewConfigCollection
+        private readonly ViewConfigCollection     $viewConfigCollection,
+        private readonly ControllerCheckerService $checkerService,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
 
     /**
@@ -74,7 +61,7 @@ final class GssfStatusController extends Controller
     )]
     public function status(Request $request, string $provider): Response
     {
-        $this->assertSecondFactorEnabled($provider);
+        $this->checkerService->assertSecondFactorEnabled($provider);
 
         return $this->renderStatusForm(
             $provider,
@@ -105,7 +92,7 @@ final class GssfStatusController extends Controller
                 'form' => $form->createView(),
                 'provider' => $provider,
                 'secondFactorConfig' => $secondFactorConfig,
-                'verifyEmail' => $this->emailVerificationIsRequired(),
+                'verifyEmail' => $this->checkerService->emailVerificationIsRequired(),
             ]
         );
         return $this->render(
