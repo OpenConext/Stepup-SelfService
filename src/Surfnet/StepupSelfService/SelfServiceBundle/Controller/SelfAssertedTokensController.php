@@ -36,7 +36,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Authe
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -45,37 +45,21 @@ use Symfony\Component\Routing\Attribute\Route;
  *
  * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * TODO: Split up into smaller controllers
  */
-class SelfAssertedTokensController extends Controller
+class SelfAssertedTokensController extends AbstractController
 {
     use RecoveryTokenControllerTrait;
-    /**
-     * @var RecoveryTokenService
-     */
-    private $recoveryTokenService;
-
-    /**
-     * @var SecondFactorService
-     */
-    private $secondFactorService;
-
-    /**
-     * @var SmsRecoveryTokenService
-     */
-    private $smsService;
 
     public function __construct(
-        RecoveryTokenService $recoveryTokenService,
+        private readonly RecoveryTokenService $recoveryTokenService,
         private readonly SafeStoreService $safeStoreService,
-        SecondFactorService $secondFactorService,
-        SmsRecoveryTokenService $smsService,
+        private readonly SecondFactorService $secondFactorService,
+        private readonly SmsRecoveryTokenService $smsService,
         private readonly LoaResolutionService $loaResolutionService,
         private readonly AuthenticationRequestFactory $authnRequestFactory,
         private readonly LoggerInterface $logger
     ) {
-        $this->recoveryTokenService = $recoveryTokenService;
-        $this->secondFactorService = $secondFactorService;
-        $this->smsService = $smsService;
     }
 
     /**
@@ -97,7 +81,7 @@ class SelfAssertedTokensController extends Controller
     public function selfAssertedTokenRegistration(string $secondFactorId): Response
     {
         $this->logger->info('Checking if Identity has a recovery token');
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
         $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
         if ($this->recoveryTokenService->hasRecoveryToken($identity)) {
@@ -155,7 +139,7 @@ class SelfAssertedTokensController extends Controller
         string $recoveryTokenId
     ): Response {
         $this->logger->info('Start authentication of recovery token to perform self-asserted token registration');
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $identity);
         $token = $this->recoveryTokenService->getRecoveryToken($recoveryTokenId);
@@ -169,7 +153,7 @@ class SelfAssertedTokensController extends Controller
                     $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
 
                     $command = new SelfAssertedTokenRegistrationCommand();
-                    $command->identity = $this->getIdentity();
+                    $command->identity = $this->getUser()->getIdentity();
                     $command->secondFactor = $secondFactor;
                     $command->recoveryTokenId = $recoveryTokenId;
 
@@ -241,7 +225,7 @@ class SelfAssertedTokensController extends Controller
     public function newRecoveryToken(string $secondFactorId): Response
     {
         $this->logger->info('Determining which recovery token are available');
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
         $this->assertNoRecoveryTokens($identity);
 
@@ -278,7 +262,7 @@ class SelfAssertedTokensController extends Controller
         string $secondFactorId,
         string $recoveryTokenId
     ): Response {
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $identity);
 
@@ -306,7 +290,7 @@ class SelfAssertedTokensController extends Controller
                 $this->smsService->clearSmsVerificationState($recoveryTokenId);
 
                 $command = new SelfAssertedTokenRegistrationCommand();
-                $command->identity = $this->getIdentity();
+                $command->identity = $this->getUser()->getIdentity();
                 $command->secondFactor = $secondFactor;
                 $command->recoveryTokenId = $recoveryTokenId;
 
@@ -348,7 +332,7 @@ class SelfAssertedTokensController extends Controller
     )]
     public function registerCreateRecoveryTokenSafeStore(Request $request, string $secondFactorId): Response
     {
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
         $this->assertNoRecoveryTokenOfType('safe-store', $identity);
 
@@ -359,7 +343,7 @@ class SelfAssertedTokensController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $command->secret = $secret;
-            $command->identity = $this->getIdentity();
+            $command->identity = $this->getUser()->getIdentity();
 
             $executionResult = $this->safeStoreService->promisePossession($command);
             if (!$executionResult->getErrors()) {
@@ -426,7 +410,7 @@ class SelfAssertedTokensController extends Controller
     {
         $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
         $command = new SelfAssertedTokenRegistrationCommand();
-        $command->identity = $this->getIdentity();
+        $command->identity = $this->getUser()->getIdentity();
         $command->secondFactor = $secondFactor;
         $command->recoveryTokenId = $recoveryTokenId;
         return $this->secondFactorService->registerSelfAssertedToken($command);
