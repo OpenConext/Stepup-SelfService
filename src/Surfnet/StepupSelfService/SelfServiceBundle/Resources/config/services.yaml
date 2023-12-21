@@ -15,7 +15,9 @@ services:
         autowire: true
         tags: [ 'controller.service_arguments' ]
 
-#    Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVetController:
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService:
+
+    #    Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVetController:
 #        arguments:
 #            - "@self_service.test_second_factor_authentication_request_factory"
 #            - "@surfnet_stepup_self_service_self_service.service.second_factor"
