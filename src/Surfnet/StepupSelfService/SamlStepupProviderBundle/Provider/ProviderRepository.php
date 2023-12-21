@@ -61,7 +61,7 @@ final class ProviderRepository
     }
 
     /**
-     * @return Provider[]
+     * @return array<string, Provider>
      */
     public function getAll(): array
     {
