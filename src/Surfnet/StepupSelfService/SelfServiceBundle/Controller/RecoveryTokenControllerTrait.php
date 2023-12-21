@@ -49,7 +49,7 @@ trait RecoveryTokenControllerTrait
         string $exitRoute,
         ?string $secondFactorId = null
     ): Response {
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertNoRecoveryTokenOfType('sms', $identity);
         if ($secondFactorId) {
             $this->assertSecondFactorInPossession($secondFactorId, $identity);
@@ -110,7 +110,7 @@ trait RecoveryTokenControllerTrait
             $this->addFlash('notice', 'ss.registration.sms.alert.no_verification_state');
             return $this->redirectToRoute('ss_recovery_token_sms');
         }
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         $this->assertNoRecoveryTokenOfType('sms', $identity);
 
         if ($secondFactorId) {
