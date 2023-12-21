@@ -69,16 +69,12 @@ class SecondFactorController extends Controller
             $options->numberOfTokensPerIdentity
         );
 
-        /** @var RecoveryTokenService $recoveryTokenService */
-        $recoveryTokenService = $this->recoveryTokenService;
-        /** @var AuthorizationService $authorizationService */
-        $authorizationService = $this->authorizationService;
-        $recoveryTokensAllowed = $authorizationService->mayRegisterRecoveryTokens($identity);
+        $recoveryTokensAllowed = $this->authorizationService->mayRegisterRecoveryTokens($identity);
         $selfAssertedTokenRegistration = $options->allowSelfAssertedTokens === true && $recoveryTokensAllowed;
-        $hasRemainingTokenTypes = $recoveryTokenService->getRemainingTokenTypes($identity) !== [];
+        $hasRemainingTokenTypes = $this->recoveryTokenService->getRemainingTokenTypes($identity) !== [];
         $recoveryTokens = [];
         if ($selfAssertedTokenRegistration && $recoveryTokensAllowed) {
-            $recoveryTokens = $recoveryTokenService->getRecoveryTokensForIdentity($identity);
+            $recoveryTokens = $this->recoveryTokenService->getRecoveryTokensForIdentity($identity);
         }
         $loaService = $this->secondFactorTypeService;
 
