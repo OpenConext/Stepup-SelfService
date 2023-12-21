@@ -39,9 +39,6 @@ class EntryPointController extends Controller
     #[Route(path: '/', name: 'ss_entry_point', methods:['GET'])]
     public function decideSecondFactorFlow() : RedirectResponse
     {
-        $requestStack = $this->container->get('request_stack');
-        $value =     $requestStack->getSession()->get('test');
-        $requestStack->getSession()->set('test', 'proeftest');
         $identity = $this->getIdentity();
         $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
         $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
