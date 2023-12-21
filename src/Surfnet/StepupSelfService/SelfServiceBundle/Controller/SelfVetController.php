@@ -35,11 +35,11 @@ use Surfnet\StepupBundle\Value\SecondFactorType;
 use Surfnet\StepupBundle\Value\VettingType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfVetCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfVetMarshaller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor\TestAuthenticationRequestFactory;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\SelfVetRequestId;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -50,14 +50,14 @@ use function sprintf;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) - Controllers are prone to higher coupling. This one is no exception
+ * TODO: Split up into smaller controllers
  */
-class SelfVetController extends Controller
+class SelfVetController extends AbstractController
 {
     final public const SELF_VET_SESSION_ID = 'second_factor_self_vet_request_id';
 
     public function __construct(
         private readonly LoggerInterface                  $logger,
-        InstitutionConfigurationOptionsService            $configurationOptionsService,
         private readonly TestAuthenticationRequestFactory $authenticationRequestFactory,
         private readonly SecondFactorService      $secondFactorService,
         private readonly SecondFactorTypeService  $secondFactorTypeService,
@@ -71,7 +71,6 @@ class SelfVetController extends Controller
         private readonly SamlAuthenticationLogger $samlAuthenticationLogger,
         private readonly RequestStack             $requestStack,
     ) {
-        parent::__construct($logger, $configurationOptionsService);
     }
 
     #[Route(
@@ -81,7 +80,7 @@ class SelfVetController extends Controller
     )]
     public function consumeSelfVetAssertion(Request $httpRequest, string $secondFactorId): RedirectResponse
     {
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
         if (!$this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {
             throw $this->createNotFoundException();
         }
@@ -121,7 +120,7 @@ class SelfVetController extends Controller
             $candidateSecondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
             // Proof of possession of higher/equal LoA was successful, now apply the self vet command on Middleware
             $command = new SelfVetCommand();
-            $command->identity = $this->getIdentity();
+            $command->identity = $this->getUser()->getIdentity();
             $command->secondFactor = $candidateSecondFactor;
             $command->authoringLoa = $assertion->getAuthnContextClassRef();
 
@@ -144,7 +143,7 @@ class SelfVetController extends Controller
     public function selfVet(string $secondFactorId): RedirectResponse
     {
         $this->logger->notice('Starting self vet proof of possession using higher or equal LoA token');
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
 
         if (!$this->selfVetMarshaller->isAllowed($identity, $secondFactorId)) {
             throw $this->createNotFoundException();
