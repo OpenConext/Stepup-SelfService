@@ -20,28 +20,33 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration;
 
-use Symfony\Bridge\Twig\Attribute\Template;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
-use Surfnet\StepupSelfService\SelfServiceBundle\Controller\Controller;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
-use Symfony\Component\Form\FormError;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class YubikeyController extends Controller
+class YubikeyController extends AbstractController
 {
-    #[Template('registration/yubikey/prove_possession.html.twig')]
+    public function __construct(
+        private readonly ControllerCheckerService   $checkerService,
+        private readonly YubikeySecondFactorService $yubikeySecondFactorService,
+    ) {
+    }
+
     #[Route(
         path: '/registration/yubikey/prove-possession',
         name: 'ss_registration_yubikey_prove_possession',
         methods: ['GET','POST'],
     )]
-    public function provePossession(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse|array
+    public function provePossession(Request $request): Response
     {
-        $this->assertSecondFactorEnabled('yubikey');
+        $this->checkerService->assertSecondFactorEnabled('yubikey');
 
-        $identity = $this->getIdentity();
+        $identity = $this->getUser()->getIdentity();
 
         $command = new VerifyYubikeyOtpCommand();
         $command->identity = $identity->id;
@@ -50,12 +55,11 @@ class YubikeyController extends Controller
         $form = $this->createForm(ProveYubikeyPossessionType::class, $command)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var YubikeySecondFactorService $service */
-            $service = $this->get('surfnet_stepup_self_service_self_service.service.yubikey_second_factor');
-            $result = $service->provePossession($command);
+
+            $result = $this->yubikeySecondFactorService->provePossession($command);
 
             if ($result->isSuccessful()) {
-                if ($this->emailVerificationIsRequired()) {
+                if ($this->checkerService->emailVerificationIsRequired()) {
                     return $this->redirectToRoute(
                         'ss_registration_email_verification_email_sent',
                         ['secondFactorId' => $result->getSecondFactorId()]
@@ -76,9 +80,11 @@ class YubikeyController extends Controller
         }
 
         // OTP field is rendered empty in the template.
-        return [
-            'form' => $form->createView(),
-            'verifyEmail' => $this->emailVerificationIsRequired(),
-        ];
+        return $this->render(
+            'registration/yubikey/prove_possession.html.twig',
+            [
+                'form' => $form->createView(),
+                'verifyEmail' => $this->checkerService->emailVerificationIsRequired(),
+            ]);
     }
 }
