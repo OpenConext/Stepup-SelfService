@@ -41,7 +41,7 @@ final readonly class LocaleListener implements EventSubscriberInterface
             return;
         }
 
-        $identity = $token->getUser();
+        $identity = $token->getUser()->getIdentity();
 
         // Anonymous usage like /authentication/metadata has just "anonymous" as identity.
         if (!$identity instanceof Identity) {
