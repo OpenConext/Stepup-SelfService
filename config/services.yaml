@@ -11,7 +11,6 @@ services:
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     public: true
 
-
     # TODO: find the exact configuration for this
 #  Surfnet\:
 #    resource: '../src/'
@@ -60,3 +59,8 @@ services:
   Surfnet\StepupSelfService\SamlStepupProviderBundle\Session\SessionFactoryWithAttributeBag:
     decorates: session.factory
     arguments: [ '@.inner' ]
+
+  Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\EventSubscriber\CustomLogoutListener:
+    arguments:
+      - '@security.helper'
+      - "%logout_redirect_url%"

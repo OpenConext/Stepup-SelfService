@@ -4,30 +4,31 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\EventSubscriber;
 
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-readonly class CustomLogoutListener implements EventSubscriberInterface
+readonly class CustomLogoutListener
 {
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            LogoutEvent::class => 'onLogout',
-        ];
-    }
-
     public function __construct(
-        private TokenStorageInterface $tokenStorage,
+        private Security $security,
         private array $logoutRedirectUrl,
     ) {
     }
-    public function onLogout(): RedirectResponse
-    {
-        $token    = $this->tokenStorage->getToken();
-        $identity = $token->getUser();
 
-        return new RedirectResponse($this->logoutRedirectUrl[$identity->preferredLocale]);
+    #[AsEventListener(event: LogoutEvent::class, priority: 127)]
+    public function onLogout(LogoutEvent $event): void
+    {
+        $identity = $this->security->getUser()->getIdentity();
+
+        $logoutRedirectUrl = $this->logoutRedirectUrl[$identity->preferredLocale];
+
+        $response = $event->getResponse();
+
+        $response = new RedirectResponse($logoutRedirectUrl);
+
+        $event->setResponse($response);
     }
 }
