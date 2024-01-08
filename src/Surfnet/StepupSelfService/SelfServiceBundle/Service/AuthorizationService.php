@@ -36,7 +36,7 @@ class AuthorizationService
 
     public function maySelfVetSelfAssertedTokens(Identity $identity): bool
     {
-        return $this->authorizationService->assertSelfVettingOfSelfAssertedTokensIsAllowed($identity);
+        return $this->authorizationService->assertRegistrationOfSelfAssertedTokensIsAllowed($identity);
     }
 
     public function mayRegisterRecoveryTokens(Identity $identity): bool
