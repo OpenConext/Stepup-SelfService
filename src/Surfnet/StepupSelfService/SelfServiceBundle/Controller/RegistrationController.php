@@ -86,7 +86,9 @@ class RegistrationController extends AbstractController
             $this->logger->notice(
                 'User tried to register a new token but maximum number of tokens is reached. Redirecting to overview'
             );
-            return $this->forward('SurfnetStepupSelfServiceSelfServiceBundle:SecondFactor:list');
+            return $this->forward(
+                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\SecondFactor\SecondFactorListController'
+            );
         }
 
         $availableTokens = $this->secondFactorAvailabilityHelper->filter($secondFactors);
@@ -132,7 +134,7 @@ class RegistrationController extends AbstractController
         if ($nudgeRaVetting) {
             $this->logger->notice('Nudging (forcing) RA vetting');
             return $this->forward(
-                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration::sendRegistrationEmail',
+                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\RegistrationController::sendRegistrationEmail',
                 ['secondFactorId' => $secondFactorId]
             );
         }
