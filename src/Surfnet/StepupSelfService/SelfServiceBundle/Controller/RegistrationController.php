@@ -123,7 +123,7 @@ class RegistrationController extends AbstractController
         if ($nudgeSelfAssertedTokens && $vettingTypeCollection->allowSelfAssertedTokens()) {
             $this->logger->notice('Nudging (forcing) self-asserted token registration');
             return $this->forward(
-                'SurfnetStepupSelfServiceSelfServiceBundle:SelfAssertedTokens:selfAssertedTokenRegistration',
+                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfAssertedTokensController::selfAssertedTokenRegistration',
                 ['secondFactorId' => $secondFactorId]
             );
         }
@@ -132,7 +132,7 @@ class RegistrationController extends AbstractController
         if ($nudgeRaVetting) {
             $this->logger->notice('Nudging (forcing) RA vetting');
             return $this->forward(
-                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail',
+                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\Registration::sendRegistrationEmail',
                 ['secondFactorId' => $secondFactorId]
             );
         }
@@ -144,7 +144,7 @@ class RegistrationController extends AbstractController
                     'Skipping ahead to the RA vetting option as self vetting or self-asserted tokens are not allowed'
                 );
             return $this->forward(
-                'SurfnetStepupSelfServiceSelfServiceBundle:Registration:sendRegistrationEmail',
+                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\RegistrationController::sendRegistrationEmail',
                 ['secondFactorId' => $secondFactorId]
             );
         }
