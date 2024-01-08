@@ -25,8 +25,6 @@ readonly class CustomLogoutListener
 
         $logoutRedirectUrl = $this->logoutRedirectUrl[$identity->preferredLocale];
 
-        $response = $event->getResponse();
-
         $response = new RedirectResponse($logoutRedirectUrl);
 
         $event->setResponse($response);
