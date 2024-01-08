@@ -119,14 +119,14 @@ class SamlController extends AbstractController
             $selfVetRequestId = $session->get(SelfVetController::SELF_VET_SESSION_ID);
             $secondFactorId = $selfVetRequestId->vettingSecondFactorId();
             return $this->forward(
-                'SurfnetStepupSelfServiceSelfServiceBundle:SelfVet:consumeSelfVetAssertion',
+                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVetController::consumeSelfVetAssertion',
                 ['secondFactorId' => $secondFactorId]
             );
         }
         if ($session->has(RecoveryTokenState::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER)) {
             // The test authentication IdP is also used for self-asserted recovery token
             // verification a different session id is used to mark the authentication.
-            return $this->forward('SurfnetStepupSelfServiceSelfServiceBundle:RecoveryToken:stepUpConsumeAssertion');
+            return $this->forward('Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUpConsumeAssertion');
         }
         if (!$session->has('second_factor_test_request_id')) {
             $this->logger->error(
