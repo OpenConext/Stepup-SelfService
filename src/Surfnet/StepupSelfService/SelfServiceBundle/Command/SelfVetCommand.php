@@ -25,12 +25,8 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
 
 class SelfVetCommand
 {
-    /** @var Identity */
-    public $identity;
+    public Identity $identity;
 
-    /** @var VerifiedSecondFactor */
-    public $secondFactor;
-
-    /** @var string */
-    public $authoringLoa;
+    public VerifiedSecondFactor $secondFactor;
+    public string $authoringLoa;
 }
