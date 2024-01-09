@@ -20,7 +20,7 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
-use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ViewConfig;
+use JMS\TranslationBundle\Annotation\Ignore;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,7 +36,7 @@ class StatusGssfType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $action = $this->router->generate('ss_registration_gssf_authenticate', ['provider' => $options['provider']]);
-        /** @var ViewConfig $secondFactorConfig */
+
         $builder
             ->add('submit', SubmitType::class, [
                 'attr'  => ['class' => 'btn btn-primary'],
