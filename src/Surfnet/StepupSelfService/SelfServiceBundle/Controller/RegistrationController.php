@@ -110,11 +110,7 @@ class RegistrationController extends AbstractController
     )]
     public function displayVettingTypes(Request $request, string $secondFactorId): Response
     {
-        /**
-         * @var VettingTypeService
-         */
-        $vettingTypeService = $this->vettingTypeService;
-        $vettingTypeCollection = $vettingTypeService->vettingTypes($this->getUser()->getIdentity(), $secondFactorId);
+        $vettingTypeCollection = $this->vettingTypeService->vettingTypes($this->getUser()->getIdentity(), $secondFactorId);
 
         $nudgeSelfAssertedTokens = $vettingTypeCollection->isPreferred(VettingTypeInterface::SELF_ASSERTED_TOKENS);
         $nudgeRaVetting = $vettingTypeCollection->isPreferred(VettingTypeInterface::ON_PREMISE);
@@ -153,7 +149,7 @@ class RegistrationController extends AbstractController
 
         $institution = $this->getUser()->getIdentity()->institution;
         $currentLocale = $request->getLocale();
-        $vettingTypeHint = $vettingTypeService->vettingTypeHint($institution, $currentLocale);
+        $vettingTypeHint = $this->vettingTypeService->vettingTypeHint($institution, $currentLocale);
 
         return $this->render(
             'registration/display_vetting_types.html.twig',
@@ -260,11 +256,7 @@ class RegistrationController extends AbstractController
     {
         $parameters = $this->buildRegistrationActionParameters($secondFactorId);
 
-        $response = $this->render(
-            'registration/registration_email_sent_pdf.html.twig',
-            $parameters
-        );
-        $content = $response->getContent();
+        $content = $this->renderView('registration/registration_email_sent_pdf.html.twig', $parameters);
 
         $mpdf = new Mpdf(
             ['tempDir' => sys_get_temp_dir()]

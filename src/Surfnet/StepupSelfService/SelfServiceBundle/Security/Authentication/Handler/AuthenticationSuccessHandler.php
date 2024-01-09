@@ -15,7 +15,7 @@ class AuthenticationSuccessHandler extends SuccessHandler
 {
 
     public function __construct(
-        private AuthenticatedSessionStateHandler $authenticatedSessionStateHandler,
+        private readonly AuthenticatedSessionStateHandler $authenticatedSessionStateHandler,
     ) {
     }
 
