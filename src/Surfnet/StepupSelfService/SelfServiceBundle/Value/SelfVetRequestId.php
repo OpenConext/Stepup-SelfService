@@ -37,5 +37,4 @@ class SelfVetRequestId
     {
         return $this->vettingSecondFactorId;
     }
-
 }

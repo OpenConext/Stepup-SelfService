@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Session;
 
 use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\ProviderRepository;

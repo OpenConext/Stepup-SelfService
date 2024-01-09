@@ -21,7 +21,6 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
-use Surfnet\StepupMiddlewareClient\Identity\Dto\VettingTypeHint;
 use Surfnet\StepupMiddlewareClientBundle\Exception\NotFoundException;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Service\VettingTypeHintService;
@@ -30,7 +29,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\SelfAssertedTo
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\SelfVet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeCollection;
 use function array_filter;
-use function array_key_exists;
 
 readonly class VettingTypeService
 {

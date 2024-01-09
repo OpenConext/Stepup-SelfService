@@ -140,5 +140,4 @@ final class GssfConsumeAssertionController extends AbstractController
             ]
         );
     }
-
 }

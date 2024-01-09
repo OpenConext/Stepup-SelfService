@@ -69,5 +69,4 @@ class ControllerCheckerService
 
         return $config->verifyEmail;
     }
-
 }

@@ -174,7 +174,8 @@ class RegistrationController extends AbstractController
     {
         return $this->render(
             view: 'registration/email_verification_email_sent.html.twig',
-            parameters: ['email' => $this->getUser()->getIdentity()->email]);
+            parameters: ['email' => $this->getUser()->getIdentity()->email]
+        );
     }
 
     #[Route(

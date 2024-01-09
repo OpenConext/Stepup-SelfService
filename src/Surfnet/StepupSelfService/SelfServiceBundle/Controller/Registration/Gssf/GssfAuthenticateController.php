@@ -77,5 +77,4 @@ final class GssfAuthenticateController extends AbstractController
 
         return $this->redirectBinding->createResponseFor($authnRequest);
     }
-
 }

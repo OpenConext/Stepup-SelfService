@@ -55,7 +55,6 @@ class YubikeyController extends AbstractController
         $form = $this->createForm(ProveYubikeyPossessionType::class, $command)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $result = $this->yubikeySecondFactorService->provePossession($command);
 
             if ($result->isSuccessful()) {
@@ -85,6 +84,7 @@ class YubikeyController extends AbstractController
             [
                 'form' => $form->createView(),
                 'verifyEmail' => $this->checkerService->emailVerificationIsRequired(),
-            ]);
+            ]
+        );
     }
 }

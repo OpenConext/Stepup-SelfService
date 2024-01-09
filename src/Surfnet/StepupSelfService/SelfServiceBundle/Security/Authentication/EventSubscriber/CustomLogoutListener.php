@@ -8,7 +8,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 readonly class CustomLogoutListener
 {
