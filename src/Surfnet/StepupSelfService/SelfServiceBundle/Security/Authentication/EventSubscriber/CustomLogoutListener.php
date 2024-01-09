@@ -18,12 +18,14 @@ readonly class CustomLogoutListener
     ) {
     }
 
-    #[AsEventListener(event: LogoutEvent::class, priority: 127)]
+    #[AsEventListener(event: LogoutEvent::class)]
     public function onLogout(LogoutEvent $event): void
     {
         $identity = $this->security->getUser()->getIdentity();
 
         $logoutRedirectUrl = $this->logoutRedirectUrl[$identity->preferredLocale];
+
+        $event->getRequest()->getSession()->invalidate();
 
         $response = new RedirectResponse($logoutRedirectUrl);
 
