@@ -83,5 +83,4 @@ class SmsSendChallengeController extends AbstractController
             ['form' => $form->createView(), ...$viewVariables]
         );
     }
-
 }

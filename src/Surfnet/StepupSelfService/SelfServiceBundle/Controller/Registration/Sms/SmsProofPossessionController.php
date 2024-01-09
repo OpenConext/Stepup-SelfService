@@ -71,7 +71,7 @@ class SmsProofPossessionController extends AbstractController
                 return $this->redirectToRoute($route, ['secondFactorId' => $result->getSecondFactorId()]);
             }
 
-            match(true) {
+            match (true) {
                 $result->wasIncorrectChallengeResponseGiven() => $this->addFlash('error', 'ss.prove_phone_possession.incorrect_challenge_response'),
                 $result->hasChallengeExpired() => $this->addFlash('error', 'ss.prove_phone_possession.challenge_expired'),
                 $result->wereTooManyAttemptsMade() => $this->addFlash('error', 'ss.prove_phone_possession.too_many_attempts'),

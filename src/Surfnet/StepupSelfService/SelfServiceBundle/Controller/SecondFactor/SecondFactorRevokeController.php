@@ -37,7 +37,6 @@ class SecondFactorRevokeController extends AbstractController
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly SecondFactorService $secondFactorService,
-
     ) {
     }
 
@@ -82,7 +81,6 @@ class SecondFactorRevokeController extends AbstractController
         $form = $this->createForm(RevokeSecondFactorType::class, $command)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
             if ($this->secondFactorService->revoke($command)) {
                 $this->addFlash('success', 'ss.second_factor.revoke.alert.revocation_successful');
             } else {

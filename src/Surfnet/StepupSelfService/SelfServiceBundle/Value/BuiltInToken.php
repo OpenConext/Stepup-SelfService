@@ -48,7 +48,6 @@ class BuiltInToken implements AvailableTokenInterface
         if (!isset($this->supportedTypes[$type])) {
             throw InvalidArgumentException::invalidType('Invalid second factor type', 'type', $type);
         }
-
     }
     public function getRoute(): string
     {

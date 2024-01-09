@@ -69,7 +69,8 @@ class SecondFactorListController extends AbstractController
         }
         $loaService = $this->secondFactorTypeService;
 
-        return $this->render('second_factor/list.html.twig',
+        return $this->render(
+            'second_factor/list.html.twig',
             [
                 'loaService' => $loaService,
                 'email' => $identity->email,

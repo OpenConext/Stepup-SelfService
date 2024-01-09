@@ -23,7 +23,6 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Twig\Extensions\Extension;
 use Surfnet\StepupBundle\Service\SecondFactorTypeTranslationService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use function intval;
 
 final class SecondFactorType extends AbstractExtension
 {

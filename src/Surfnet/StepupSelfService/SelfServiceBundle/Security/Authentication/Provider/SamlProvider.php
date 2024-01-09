@@ -23,7 +23,6 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Pr
 use BadMethodCallException;
 use Psr\Log\LoggerInterface;
 use SAML2\Assertion;
-use Surfnet\SamlBundle\Exception\RuntimeException;
 use Surfnet\SamlBundle\SAML2\Attribute\AttributeDictionary;
 use Surfnet\SamlBundle\SAML2\Response\AssertionAdapter;
 use Surfnet\SamlBundle\Security\Authentication\Provider\SamlProviderInterface;
@@ -34,8 +33,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedIdentity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 

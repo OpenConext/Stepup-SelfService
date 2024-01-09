@@ -21,7 +21,6 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Saml;
 
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 
 final readonly class StateHandler
 {

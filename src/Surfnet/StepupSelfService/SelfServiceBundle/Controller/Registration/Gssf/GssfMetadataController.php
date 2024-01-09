@@ -39,10 +39,10 @@ final class GssfMetadataController extends AbstractController
     ) {
     }
      #[Route(
-        path: '/registration/gssf/{provider}/metadata',
-        name: 'ss_registration_gssf_saml_metadata',
-        methods: ['GET'],
-    )]
+         path: '/registration/gssf/{provider}/metadata',
+         name: 'ss_registration_gssf_saml_metadata',
+         methods: ['GET'],
+     )]
     public function metadata(string $provider): XMLResponse
     {
         $this->checkerService->assertSecondFactorEnabled($provider);
@@ -52,5 +52,4 @@ final class GssfMetadataController extends AbstractController
 
         return new XMLResponse($factory->generate()->__toString());
     }
-
 }
