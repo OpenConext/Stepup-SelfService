@@ -135,6 +135,8 @@ class SessionStorageTest extends TestCase
 
         $sessionStorage->updateLastInteractionMoment();
 
+        $this->assertTrue($sessionStorage->hasSeenInteraction());
+
         $this->assertInstanceOf(SessionStorage::class, $sessionStorage);
     }
 

@@ -9,4 +9,4 @@ nelmio_security_report:
 
 logout:
     path: /logout
-    methods: [POST]
+    methods: [GET, POST]
