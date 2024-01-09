@@ -28,29 +28,21 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
  */
 class SendRecoveryTokenSmsAuthenticationChallengeCommand implements SendSmsChallengeCommandInterface
 {
-    /**
-     * @var InternationalPhoneNumber
-     */
-    public $identifier;
+    public InternationalPhoneNumber $identifier;
 
     /**
      * The requesting identity's ID (not name ID).
-     *
-     * @var string
      */
-    public $identity;
+    public string $identity;
 
     /**
      * The requesting identity's institution.
-     *
-     * @var string
      */
-    public $institution;
+    public string $institution;
 
     /**
      * An arbitrary token id, not recorded in Middleware.
      * This is used to do a preliminary proof of phone possession.
-     * @var string
      */
-    public $recoveryTokenId = SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID;
+    public string $recoveryTokenId = SmsRecoveryTokenService::REGISTRATION_RECOVERY_TOKEN_ID;
 }
