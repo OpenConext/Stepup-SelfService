@@ -55,7 +55,7 @@ interface AuthenticatedSessionStateHandler
 
     public function setCurrentRequestUri(string $uri): void;
 
-    public function getCurrentRequestUri(): string;
+    public function getCurrentRequestUri(): ?string;
 
     /**
      * Migrates the current session to a new session id while maintaining all

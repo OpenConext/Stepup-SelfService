@@ -96,7 +96,7 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
         return $uri;
     }
 
-    public function getRequestId(): string
+    public function getRequestId(): ?string
     {
         return $this->requestStack->getSession()->get(self::SAML_SESSION_KEY . 'request_id');
     }
