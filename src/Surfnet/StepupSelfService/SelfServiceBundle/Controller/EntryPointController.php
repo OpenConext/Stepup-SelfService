@@ -43,6 +43,7 @@ class EntryPointController extends AbstractController
         $identity = $this->getUser()->getIdentity();
         $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
         $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
+        // Check if we need to do a registration flow nudge
         $this->activationFlowService->process($this->authStateHandler->getCurrentRequestUri());
 
         return $hasSecondFactor || $hasRecoveryToken
