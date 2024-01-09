@@ -20,12 +20,10 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
-use Psr\Log\LoggerInterface;
-use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage;
 
 class SecurityController extends AbstractController
 {
