@@ -1,5 +1,4 @@
 controllers:
-#    resource: ../../src/Controller/
     resource: ../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller
     type: attribute
 
