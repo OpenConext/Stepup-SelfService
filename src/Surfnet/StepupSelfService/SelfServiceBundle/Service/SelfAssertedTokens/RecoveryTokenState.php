@@ -55,100 +55,98 @@ class RecoveryTokenState
     final public const RECOVERY_TOKEN_RETURN_TO_CREATE_SMS = 'ss_recovery_token_sms';
 
     private const SAFE_STORE_SESSION_NAME = 'safe_store_secret';
-
-    private readonly SessionInterface $session;
+    
 
     public function __construct(private readonly RequestStack $requestStack)
     {
-        $this->session = $this->requestStack->getSession();
     }
 
     public function tokenCreatedDuringSecondFactorRegistration(): void
     {
-        $this->session->set(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER, true);
+        $this->requestStack->getSession()->set(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER, true);
     }
 
     public function wasRecoveryTokenCreatedDuringSecondFactorRegistration(): bool
     {
-        if ($this->session->has(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER)) {
-            return $this->session->get(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER);
+        if ($this->requestStack->getSession()->has(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER)) {
+            return $this->requestStack->getSession()->get(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER);
         }
         return false;
     }
 
     public function retrieveSecret(): SafeStoreSecret
     {
-        if ($this->session->has(self::SAFE_STORE_SESSION_NAME)) {
-            return $this->session->get(self::SAFE_STORE_SESSION_NAME);
+        if ($this->requestStack->getSession()->has(self::SAFE_STORE_SESSION_NAME)) {
+            return $this->requestStack->getSession()->get(self::SAFE_STORE_SESSION_NAME);
         }
         throw new SafeStoreSecretNotFoundException('Unable to retrieve SafeStore secret, it was not found in state');
     }
 
     public function store(SafeStoreSecret $secret): void
     {
-        $this->session->set(self::SAFE_STORE_SESSION_NAME, $secret);
+        $this->requestStack->getSession()->set(self::SAFE_STORE_SESSION_NAME, $secret);
     }
 
     public function forget(): void
     {
-        $this->session->remove(self::SAFE_STORE_SESSION_NAME);
+        $this->requestStack->getSession()->remove(self::SAFE_STORE_SESSION_NAME);
     }
 
     public function forgetTokenCreatedDuringSecondFactorRegistration(): void
     {
-        $this->session->remove(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER);
+        $this->requestStack->getSession()->remove(self::RECOVERY_TOKEN_REGISTRATION_IDENTIFIER);
     }
 
     public function startStepUpRequest(string $requestId): void
     {
-        $this->session->set(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER, $requestId);
+        $this->requestStack->getSession()->set(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER, $requestId);
     }
 
     public function hasStepUpRequest(): bool
     {
-        return $this->session->has(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER);
+        return $this->requestStack->getSession()->has(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER);
     }
 
     public function getStepUpRequest(): string
     {
-        return $this->session->get(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER);
+        return $this->requestStack->getSession()->get(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER);
     }
 
     public function deleteStepUpRequest(): void
     {
-        $this->session->remove(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER);
+        $this->requestStack->getSession()->remove(self::RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER);
     }
 
     public function setReturnTo(string $route, array $parameters): void
     {
-        $this->session->set(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER, new ReturnTo($route, $parameters));
+        $this->requestStack->getSession()->set(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER, new ReturnTo($route, $parameters));
     }
 
     public function returnTo(): ReturnTo
     {
-        return $this->session->get(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER);
+        return $this->requestStack->getSession()->get(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER);
     }
 
     public function resetReturnTo(): void
     {
-        $this->session->remove(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER);
+        $this->requestStack->getSession()->remove(self::RECOVERY_TOKEN_RETURN_TO_IDENTIFIER);
     }
 
     public function getStepUpGiven(): bool
     {
-        if (!$this->session->has(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER)) {
+        if (!$this->requestStack->getSession()->has(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER)) {
             return false;
         }
-        return $this->session->get(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER);
+        return $this->requestStack->getSession()->get(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER);
     }
 
     public function setStepUpGiven(bool $given): void
     {
-        $this->session->set(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER, $given);
+        $this->requestStack->getSession()->set(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER, $given);
     }
 
     public function resetStepUpGiven(): void
     {
-        $this->session->remove(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER);
+        $this->requestStack->getSession()->remove(self::RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER);
     }
 }
