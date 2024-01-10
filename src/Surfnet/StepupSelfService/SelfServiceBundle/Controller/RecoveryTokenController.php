@@ -97,29 +97,6 @@ class RecoveryTokenController extends AbstractController
         );
     }
 
-    public function newRecoveryToken(string $secondFactorId): Response
-    {
-        $this->logger->info('Determining which recovery token are available');
-        $identity = $this->getUser()->getIdentity();
-        $this->assertSecondFactorInPossession($secondFactorId, $identity);
-        $this->assertNoRecoveryTokens($identity);
-
-        $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
-        $availableRecoveryTokens = $this->recoveryTokenService->getRemainingTokenTypes($identity);
-        if ($secondFactor && $secondFactor->type === 'sms') {
-            $this->logger->notice('SMS recovery token type is not allowed as we are vetting a SMS second factor');
-            unset($availableRecoveryTokens['sms']);
-        }
-
-        return $this->render(
-            'registration/self_asserted_tokens/new_recovery_token.html.twig',
-            [
-                'secondFactorId' => $secondFactorId,
-                'availableRecoveryTokens' => $availableRecoveryTokens
-            ]
-        );
-    }
-
     /**
      * Reovery Tokens: create a token of safe-store type
      *
