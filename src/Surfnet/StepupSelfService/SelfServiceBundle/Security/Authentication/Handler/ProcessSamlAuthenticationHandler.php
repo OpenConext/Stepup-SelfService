@@ -41,20 +41,14 @@ class ProcessSamlAuthenticationHandler implements AuthenticationHandler
 {
     private ?AuthenticationHandler $nextHandler = null;
 
-    /**
-     * @var AuthenticationManagerInterface
-     */
-    private $authenticationManager;
-
     public function __construct(
         private readonly TokenStorageInterface $tokenStorage,
         private readonly SamlInteractionProvider $samlInteractionProvider,
         private readonly SamlAuthenticationStateHandler $authenticationStateHandler,
         private readonly AuthenticatedSessionStateHandler $authenticatedSession,
-        AuthenticationManagerInterface $authenticationManager,
+        private AuthenticationManagerInterface $authenticationManager,
         private readonly SamlAuthenticationLogger $authenticationLogger,
     ) {
-        $this->authenticationManager      = $authenticationManager;
     }
 
     public function process(RequestEvent $event): void

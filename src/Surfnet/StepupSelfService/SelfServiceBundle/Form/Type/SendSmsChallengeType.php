@@ -39,7 +39,7 @@ class SendSmsChallengeType extends AbstractType
                 'required'                       => true,
                 'choices' => CountryCodeListing::asArray(),
                 'preferred_choices'              =>
-                    \Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing::isPreferredChoice(...),
+                    CountryCodeListing::isPreferredChoice(...),
             ])
             ->add('subscriber', TelType::class, [
                 'label'                          => /** @Ignore */ 'subscriberNumber',

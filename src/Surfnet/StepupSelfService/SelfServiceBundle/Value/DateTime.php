@@ -23,11 +23,12 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value;
 use DateInterval;
 use DateTime as CoreDateTime;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
+use Stringable;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods) due to comparison methods
  */
-class DateTime implements \Stringable
+class DateTime implements Stringable
 {
     /**
      * This string can also be used with `DateTime::createFromString()`.
@@ -41,7 +42,7 @@ class DateTime implements \Stringable
      */
     private static $now;
 
-    private readonly \DateTime $dateTime;
+    private readonly CoreDateTime $dateTime;
 
     /**
      * @return self

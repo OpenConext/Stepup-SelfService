@@ -27,6 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Surfnet\SamlBundle\Entity\IdentityProvider;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -81,7 +82,7 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
         array $identityProvider,
         ContainerBuilder $container
     ): void {
-        $definition = new Definition(\Surfnet\SamlBundle\Entity\IdentityProvider::class);
+        $definition = new Definition(IdentityProvider::class);
         $configuration = [
             'entityId' => $identityProvider['entity_id'],
             'ssoUrl' => $identityProvider['sso_url'],

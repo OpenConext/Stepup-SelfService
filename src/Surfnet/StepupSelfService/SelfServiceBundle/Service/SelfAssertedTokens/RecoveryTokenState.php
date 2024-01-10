@@ -24,7 +24,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\R
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto\SafeStoreSecret;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Exception\SafeStoreSecretNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * State manager for Recovery Tokens

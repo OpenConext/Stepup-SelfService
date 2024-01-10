@@ -22,8 +22,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value;
 
 use DateInterval;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
+use Stringable;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 
-final readonly class TimeFrame implements \Stringable
+final readonly class TimeFrame implements Stringable
 {
     final private function __construct(private DateInterval $timeFrame)
     {
@@ -45,7 +47,7 @@ final readonly class TimeFrame implements \Stringable
     /**
      * @return DateTime
      */
-    public function getEndWhenStartingAt(DateTime $dateTime): \Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime
+    public function getEndWhenStartingAt(DateTime $dateTime): DateTime
     {
         return $dateTime->add($this->timeFrame);
     }
