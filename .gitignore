@@ -18,7 +18,6 @@ yarn-error.log
 .phpunit.result.cache
 /.phpcs-cache
 .phpunit
-.phpunit.result.cache
 config/preload.php
 local-php-security-checker
 .env.*
