@@ -24,6 +24,7 @@ use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Http\JsonHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
+use RuntimeException;
 
 class YubikeyService
 {
@@ -63,7 +64,7 @@ class YubikeyService
 
         try {
             $result = JsonHelper::decode((string) $response->getBody());
-        } catch (\RuntimeException) {
+        } catch (RuntimeException) {
             $this->logger->error('Yubikey OTP verification failed; server responded with malformed JSON.');
 
             return new YubikeyVerificationResult(false, true);

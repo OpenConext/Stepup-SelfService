@@ -35,6 +35,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Surfnet\SamlBundle\Entity\ServiceProvider;
 
 /**
  * @SuppressWarnings(PHPMD.LongClassName)
@@ -160,7 +161,7 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         $container->setDefinition('gssp.provider.' . $provider . '.hosted_entities', $hostedDefinition);
 
         $hostedSpDefinition  = (new Definition())
-            ->setClass(\Surfnet\SamlBundle\Entity\ServiceProvider::class)
+            ->setClass(ServiceProvider::class)
             ->setFactory([
                 new Reference('gssp.provider.' . $provider . '.hosted_entities'),
                 'getServiceProvider'

@@ -64,12 +64,8 @@ readonly class SamlInteractionProvider
         return $this->redirectBinding->createResponseFor($authnRequest);
     }
 
-    /**
-     * @return Assertion
-     */
     public function processSamlResponse(Request $request): Assertion
     {
-        /** @var Assertion $assertion */
         $assertion = $this->postBinding->processResponse(
             $request,
             $this->identityProvider,

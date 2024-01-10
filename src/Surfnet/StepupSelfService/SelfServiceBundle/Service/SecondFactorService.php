@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 /**
  * Copyright 2014 SURFnet bv
@@ -215,8 +215,7 @@ class SecondFactorService
         array $allSecondFactors,
         $allowedSecondFactors,
         $maximumNumberOfRegistrations,
-    ): SecondFactorTypeCollection
-    {
+    ): SecondFactorTypeCollection {
         $unverified = $this->findUnverifiedByIdentity($identity->id);
         $verified = $this->findVerifiedByIdentity($identity->id);
         $vetted = $this->findVettedByIdentity($identity->id);
@@ -245,8 +244,7 @@ class SecondFactorService
         UnverifiedSecondFactorCollection $unverifiedCollection,
         VerifiedSecondFactorCollection   $verifiedCollection,
         VettedSecondFactorCollection     $vettedCollection,
-    ): array
-    {
+    ): array {
         $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $unverifiedCollection);
         $allSecondFactors = $this->filterAvailableSecondFactors($allSecondFactors, $verifiedCollection);
         return $this->filterAvailableSecondFactors($allSecondFactors, $vettedCollection);

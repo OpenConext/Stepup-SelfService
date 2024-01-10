@@ -25,7 +25,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedExcepti
 
 final class Assert extends Assertion
 {
-    protected static $exceptionClass = '\\' . \Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedException::class;
+    protected static $exceptionClass = '\\' . AssertionFailedException::class;
 
     public static function keysAre(array $array, array $expectedKeys, $propertyPath = null): void
     {

@@ -20,7 +20,9 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Exception;
 
-class InvalidArgumentException extends \InvalidArgumentException
+use InvalidArgumentException as BaseInvalidArgumentException;
+
+class InvalidArgumentException extends BaseInvalidArgumentException
 {
     /**
      * @param string $expected description of expected type

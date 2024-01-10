@@ -23,6 +23,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 use Surfnet\StepupBundle\Service\LocaleProviderService as StepupLocaleProviderService;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 final readonly class LocaleProviderService implements StepupLocaleProviderService
 {
@@ -34,7 +35,7 @@ final readonly class LocaleProviderService implements StepupLocaleProviderServic
     {
         $token = $this->tokenStorage->getToken();
 
-        if (!$token instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface) {
+        if (!$token instanceof TokenInterface) {
             return;
         }
 

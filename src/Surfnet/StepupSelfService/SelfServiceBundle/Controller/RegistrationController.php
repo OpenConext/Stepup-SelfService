@@ -42,8 +42,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
- * TODO: split into smaller controllers
- * TODO: create PDF generation in dedicated service
+ *  @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * /
  */
 class RegistrationController extends AbstractController
 {
