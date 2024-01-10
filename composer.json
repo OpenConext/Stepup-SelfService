@@ -162,7 +162,7 @@
         },
         "symfony": {
             "allow-contrib": false,
-            "require": "6.*.*"
+            "require": "6.4.*"
         },
         "symfony-app-dir": "app",
         "symfony-var-dir": "app",
