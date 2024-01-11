@@ -26,6 +26,7 @@ parameters:
     sms_otp_expiry_interval: 900 # 15 minutes
     sms_maximum_otp_requests: 3
 
+    acs_location_route_name: selfservice_serviceprovider_consume_assertion
 
     saml_sp_publickey: /config/selfservice/selfservice_saml_sp.crt
     saml_sp_privatekey: /config/selfservice/selfservice_saml_sp.key
