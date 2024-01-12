@@ -22,6 +22,7 @@ namespace Surfnet\StepupSelfService;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+use function dirname;
 
 class Kernel extends BaseKernel
 {
@@ -30,7 +31,6 @@ class Kernel extends BaseKernel
     // see https://symfony.com/doc/current/reference/configuration/kernel.html#kernel-project-dir
     public function getProjectDir(): string
     {
-        return \dirname(__DIR__);
+        return dirname(__DIR__);
     }
-
 }
