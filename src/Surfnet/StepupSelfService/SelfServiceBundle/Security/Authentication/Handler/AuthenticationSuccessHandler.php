@@ -39,6 +39,6 @@ class AuthenticationSuccessHandler extends SuccessHandler
     {
         $this->authenticatedSessionStateHandler->setCurrentRequestUri($request->getUri());
 
-        return new RedirectResponse('/overview');
+        return new RedirectResponse('/');
     }
 }
