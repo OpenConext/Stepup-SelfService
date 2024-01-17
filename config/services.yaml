@@ -11,14 +11,6 @@ services:
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     public: true
 
-    # TODO: find the exact configuration for this
-#  Surfnet\:
-#    resource: '../src/'
-#    exclude:
-#      - '../src/Surfnet/StepupSelfService/SamlStepupProviderBundle/{DependencyInjection,Resources,Entity,Repository,Tests}'
-#      - '../src/Surfnet/StepupSelfService/SamlStepupBundle/{DependencyInjection,Resources,Entity,Repository,Tests}'
-#      - '../src/Kernel.php'
-
   logger:
     alias: 'monolog.logger'
     public: true
