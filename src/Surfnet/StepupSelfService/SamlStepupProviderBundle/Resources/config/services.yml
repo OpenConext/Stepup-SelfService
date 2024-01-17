@@ -4,8 +4,6 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: true
 
-
-    # Todo Paul: why is this not aoutwired in the extention?
     Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\MetadataFactoryCollection:
 
     gssp.provider_repository:
