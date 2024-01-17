@@ -26,7 +26,6 @@ use Surfnet\StepupBundle\Value\SecondFactorType;
 use Surfnet\StepupBundle\Value\VettingType;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
-use function sprintf;
 
 class SelfVetMarshaller implements VettingMarshaller
 {

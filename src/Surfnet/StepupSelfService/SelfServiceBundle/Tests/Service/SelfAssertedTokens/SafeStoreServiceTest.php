@@ -26,8 +26,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Excep
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\SafeStoreState;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use function password_hash;
 use const PASSWORD_BCRYPT;
 
 class SafeStoreServiceTest extends TestCase

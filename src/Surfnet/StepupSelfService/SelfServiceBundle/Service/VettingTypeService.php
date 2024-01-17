@@ -28,7 +28,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\OnPremise;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\SelfAssertedToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\SelfVet;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType\VettingTypeCollection;
-use function array_filter;
 
 readonly class VettingTypeService
 {
