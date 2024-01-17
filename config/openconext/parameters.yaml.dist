@@ -1,8 +1,8 @@
 parameters:
     trusted_proxies:   ~
 
-    app_env: dev
-    app_debug: true
+    app_env: prod
+    app_debug: false
     app_secret: NotSoSecretReplaceMe!
 
     default_locale:         en_GB
