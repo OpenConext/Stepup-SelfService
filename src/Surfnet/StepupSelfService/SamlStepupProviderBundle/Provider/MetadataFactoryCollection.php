@@ -26,7 +26,7 @@ use Surfnet\StepupSelfService\SamlStepupProviderBundle\Exception\MetadataFactory
 class MetadataFactoryCollection
 {
     /**
-     * @var MetadataFactory[]
+     * @var array<string, MetadataFactory>
      */
     private array $metadataFactoryCollection = [];
 
