@@ -91,7 +91,7 @@
         ],
         "composer-validate": "./ci/qa/validate",
         "phplint": "./ci/qa/phplint",
-        "license-headers": "vendor/bin/docheader check src/",
+        "license-headers": "./ci/qa/docheader",
         "phpmd": "./ci/qa/phpmd",
         "phpcs": "./ci/qa/phpcs",
         "phpcpd": "./ci/qa/phpcpd",
