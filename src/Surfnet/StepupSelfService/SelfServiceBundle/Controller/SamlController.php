@@ -48,7 +48,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
- * TODO: Split op in smaller controllers
  */
 class SamlController extends AbstractController
 {
