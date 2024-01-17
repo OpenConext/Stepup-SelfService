@@ -27,13 +27,7 @@ use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VettedSecondFactor;
 
 class RevokeCommand
 {
-    /**
-     * @var Identity
-     */
     public Identity $identity;
 
-    /**
-     * @var UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor
-     */
     public UnverifiedSecondFactor|VerifiedSecondFactor|VettedSecondFactor $secondFactor;
 }
