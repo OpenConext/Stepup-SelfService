@@ -25,7 +25,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
 use Symfony\Component\HttpFoundation\RequestStack;
-use function sprintf;
 
 class ActivationFlowService
 {

@@ -21,7 +21,6 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Value\VettingType;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceInterface;
-use function array_key_exists;
 
 class VettingTypeCollection
 {

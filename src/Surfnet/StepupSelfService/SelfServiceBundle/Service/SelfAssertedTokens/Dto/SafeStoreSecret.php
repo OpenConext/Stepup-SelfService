@@ -21,7 +21,6 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Dto;
 
 use Surfnet\StepupBundle\Security\OtpGenerator;
-use function chunk_split;
 
 class SafeStoreSecret
 {
