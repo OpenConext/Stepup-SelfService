@@ -59,7 +59,9 @@ class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
         foreach ($config['providers'] as $provider => $providerConfiguration) {
             // may seem a bit strange, but this prevents casing issue when getting/setting/creating provider
             // service definitions etc.
-            if ($provider !== strtolower((string) $provider)) {
+
+            assert(is_string($provider));
+            if ($provider !== strtolower($provider)) {
                 throw new InvalidConfigurationException('The provider name must be completely lowercase');
             }
 
