@@ -26,7 +26,7 @@ use Surfnet\StepupSelfService\SamlStepupProviderBundle\Exception\UnknownProvider
 final class ProviderRepository
 {
     /**
-     * @var Provider[]
+     * @var array<string, Provider>
      */
     private array $providers = [];
 
