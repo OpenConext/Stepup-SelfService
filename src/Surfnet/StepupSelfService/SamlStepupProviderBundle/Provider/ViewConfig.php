@@ -28,140 +28,95 @@ class ViewConfig implements ViewConfigInterface
 {
     /**
      * The arrays are arrays of translated text, indexed on locale.
-     *
-     * @param string $loa
-     * @param string $logo
-     * @param string $androidUrl
-     * @param string $iosUrl
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         private readonly RequestStack $requestStack,
-        private $loa,
-        private $logo,
-        private $androidUrl,
-        private $iosUrl,
-        private readonly array $alt,
-        private readonly array $title,
-        private readonly array $description,
-        private readonly array $buttonUse,
-        private readonly array $initiateTitle,
-        private readonly array $initiateButton,
-        private readonly array $explanation,
-        private readonly array $authnFailed,
-        private readonly array $popFailed
+        private readonly string       $loa,
+        private readonly string       $logo,
+        private readonly string       $androidUrl,
+        private readonly string       $iosUrl,
+        private readonly array        $alt,
+        private readonly array        $title,
+        private readonly array        $description,
+        private readonly array        $buttonUse,
+        private readonly array        $initiateTitle,
+        private readonly array        $initiateButton,
+        private readonly array        $explanation,
+        private readonly array        $authnFailed,
+        private readonly array        $popFailed
     ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getLogo()
+    public function getLogo(): string
     {
         return $this->logo;
     }
 
-    /**
-     * @return string
-     */
-    public function getLoa()
+    public function getLoa(): string
     {
         return $this->loa;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->getTranslation($this->title);
     }
 
-    /**
-     * @return string
-     */
-    public function getAlt()
+    public function getAlt(): string
     {
         return $this->getTranslation($this->alt);
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->getTranslation($this->description);
     }
 
-    /**
-     * @return string
-     */
-    public function getButtonUse()
+    public function getButtonUse(): string
     {
         return $this->getTranslation($this->buttonUse);
     }
 
-    /**
-     * @return string
-     */
-    public function getInitiateTitle()
+    public function getInitiateTitle(): string
     {
         return $this->getTranslation($this->initiateTitle);
     }
 
-    /**
-     * @return string
-     */
-    public function getInitiateButton()
+    public function getInitiateButton(): string
     {
         return $this->getTranslation($this->initiateButton);
     }
 
-    /**
-     * @return string
-     */
-    public function getExplanation()
+    public function getExplanation(): string
     {
         return $this->getTranslation($this->explanation);
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthnFailed()
+    public function getAuthnFailed(): string
     {
         return $this->getTranslation($this->authnFailed);
     }
 
-    /**
-     * @return string
-     */
-    public function getPopFailed()
+    public function getPopFailed(): string
     {
         return $this->getTranslation($this->popFailed);
     }
 
-    /**
-     * @return string
-     */
-    public function getAndroidUrl()
+    public function getAndroidUrl(): string
     {
         return $this->androidUrl;
     }
 
-    /**
-     * @return string
-     */
-    public function getIosUrl()
+    public function getIosUrl(): string
     {
         return $this->iosUrl;
     }
 
     /**
-     * @return mixed
      * @throws LogicException
      */
-    private function getTranslation(array $translations)
+    private function getTranslation(array $translations): mixed
     {
         $currentLocale = $this->requestStack->getCurrentRequest()->getLocale();
         if (isset($translations[$currentLocale])) {
