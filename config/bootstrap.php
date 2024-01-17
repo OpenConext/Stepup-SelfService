@@ -22,4 +22,9 @@ $_SERVER['APP_ENV'] = $parameters['app_env'];
 $_SERVER['APP_DEBUG'] = $parameters['app_debug'];
 $_SERVER['APP_SECRET'] = $parameters['app_secret'];
 
+// Allow the application environment (dev/test/prod) to change via the APP_ENV environment variable.
+if (array_key_exists('APP_ENV', $_ENV)) {
+    $_SERVER['APP_ENV'] = $_ENV['APP_ENV'];
+}
+
 filter_var($_SERVER['APP_DEBUG'], FILTER_VALIDATE_BOOLEAN) ? '1' : '0';
