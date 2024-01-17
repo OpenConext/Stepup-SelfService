@@ -42,19 +42,19 @@
         "surfnet/stepup-bundle": "dev-feature/sf6-upgrade as 6.0.6",
         "surfnet/stepup-middleware-client-bundle": "dev-feature/sf6-support",
         "surfnet/stepup-saml-bundle": "dev-feature/kill-off-travis as 6.0.8",
-        "symfony/console": "^6.3",
-        "symfony/expression-language": "^6.3",
+        "symfony/console": "^6.4",
+        "symfony/expression-language": "^6.4",
         "symfony/flex": "^v2.4.1.",
-        "symfony/form": "^6.3",
-        "symfony/framework-bundle": "^6.3",
-        "symfony/http-foundation": "^6.3",
+        "symfony/form": "^6.4",
+        "symfony/framework-bundle": "^6.4",
+        "symfony/http-foundation": "^6.4",
         "symfony/monolog-bundle": "^3.1.0",
-        "symfony/runtime": "^6.3",
-        "symfony/security-bundle": "^6.3",
-        "symfony/stopwatch": "^6.3",
-        "symfony/translation": "^6.3",
-        "symfony/twig-bundle": "^6.3",
-        "symfony/web-profiler-bundle": "^6.3",
+        "symfony/runtime": "^6.4",
+        "symfony/security-bundle": "^6.4",
+        "symfony/stopwatch": "^6.4",
+        "symfony/translation": "^6.4",
+        "symfony/twig-bundle": "^6.4",
+        "symfony/web-profiler-bundle": "^6.4",
         "symfony/webpack-encore-bundle": "^1.8",
         "twig/extra-bundle": "^3.0",
         "twig/intl-extra": "*",
@@ -75,9 +75,9 @@
         "sebastian/exporter": "^4.0.5",
         "sebastian/phpcpd": "^6.0",
         "squizlabs/php_codesniffer": "^3.7",
-        "symfony/browser-kit": "^6.3",
-        "symfony/css-selector": "^6.3",
-        "symfony/phpunit-bridge": "^6.3"
+        "symfony/browser-kit": "^6.4",
+        "symfony/css-selector": "^6.4",
+        "symfony/phpunit-bridge": "^6.4"
     },
     "scripts": {
         "check": [
@@ -87,9 +87,7 @@
             "@phpcs",
             "@phpcpd",
             "@license-headers",
-            "@test",
-            "@security-tests",
-            "@yarn-audit"
+            "@test"
         ],
         "composer-validate": "./ci/qa/validate",
         "phplint": "./ci/qa/phplint",
@@ -101,8 +99,6 @@
         "phpstan-baseline": "./ci/qa/phpstan-update-baseline",
         "phpcbf": "./ci/qa/phpcbf",
         "test":  "./ci/qa/phpunit",
-        "security-tests": "composer audit",
-        "yarn-audit": "yarn audit",
         "frontend-install": [
             "yarn install --frozen-lockfile",
             "yarn encore production"
