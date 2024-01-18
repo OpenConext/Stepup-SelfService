@@ -26,7 +26,7 @@ use Surfnet\StepupBundle\Http\JsonHelper;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
 use RuntimeException;
 
-class YubikeyService
+class YubikeyService implements YubikeyServiceInterface
 {
     /**
      * @param Client $guzzleClient A Guzzle client configured with the Yubikey API base URL and authentication.

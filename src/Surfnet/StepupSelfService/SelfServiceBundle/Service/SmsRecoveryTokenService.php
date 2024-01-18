@@ -21,9 +21,10 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Surfnet\StepupBundle\Command\SendRecoveryTokenSmsChallengeCommand as StepupSendRecoveryTokenSmsChallengeCommand;
+use Surfnet\StepupBundle\Command\SendSmsChallengeCommandInterface;
 use Surfnet\StepupBundle\Command\VerifyPossessionOfPhoneForRecoveryTokenCommand;
 use Surfnet\StepupBundle\Service\Exception\TooManyChallengesRequestedException;
-use Surfnet\StepupBundle\Service\SmsRecoveryTokenService as StepupSmsRecoveryTokenService;
+use Surfnet\StepupBundle\Service\SmsRecoveryTokenServiceInterface;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupBundle\Value\PhoneNumber\PhoneNumber;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhoneRecoveryTokenPossessionCommand;
@@ -36,6 +37,13 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\Recov
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
+ * Directs the different state keeping for SMS based
+ * Recovery Tokens. This means it communicates with the
+ * Middleware via the command service to register RT's,
+ * Keeps state of SMS verifications (RecoveryTokenState).
+ * And it tracks the overall registration state of
+ * a RT via SmsRecoveryTokenServiceInterface
+ *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class SmsRecoveryTokenService
@@ -43,7 +51,7 @@ class SmsRecoveryTokenService
     final public const REGISTRATION_RECOVERY_TOKEN_ID = 'registration';
 
     public function __construct(
-        private readonly StepupSmsRecoveryTokenService $smsService,
+        private readonly SmsRecoveryTokenServiceInterface $smsService,
         private readonly TranslatorInterface $translator,
         private readonly CommandService $commandService,
         private readonly RecoveryTokenState $stateHandler,
@@ -86,7 +94,7 @@ class SmsRecoveryTokenService
      * @return bool Whether SMS sending did not fail.
      * @throws TooManyChallengesRequestedException
      */
-    public function sendChallenge(SendRecoveryTokenSmsChallengeCommand $command): bool
+    public function sendChallenge(SendRecoveryTokenSmsChallengeCommand|SendSmsChallengeCommandInterface $command): bool
     {
         $phoneNumber = new InternationalPhoneNumber(
             $command->country->getCountryCode(),

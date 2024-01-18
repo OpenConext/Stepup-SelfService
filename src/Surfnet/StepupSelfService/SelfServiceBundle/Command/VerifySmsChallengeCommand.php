@@ -20,10 +20,11 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
+use Surfnet\StepupBundle\Command\VerifyPossessionOfPhoneCommandInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class VerifySmsChallengeCommand implements SmsVerificationCommandInterface
+class VerifySmsChallengeCommand implements VerifyPossessionOfPhoneCommandInterface
 {
     /**
      *

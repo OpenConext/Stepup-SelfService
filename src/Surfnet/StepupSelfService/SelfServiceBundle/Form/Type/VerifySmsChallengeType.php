@@ -20,7 +20,7 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\SmsVerificationCommandInterface;
+use Surfnet\StepupBundle\Command\VerifyPossessionOfPhoneCommandInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -55,7 +55,7 @@ class VerifySmsChallengeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => SmsVerificationCommandInterface::class,
+            'data_class' => VerifyPossessionOfPhoneCommandInterface::class,
         ]);
     }
 
