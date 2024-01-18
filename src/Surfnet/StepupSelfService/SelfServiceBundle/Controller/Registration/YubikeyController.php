@@ -24,6 +24,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\ProveYubikeyPossessionType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +34,7 @@ class YubikeyController extends AbstractController
 {
     public function __construct(
         private readonly ControllerCheckerService   $checkerService,
-        private readonly YubikeySecondFactorService $yubikeySecondFactorService,
+        private readonly YubikeySecondFactorServiceInterface $yubikeySecondFactorService,
     ) {
     }
 
