@@ -28,6 +28,7 @@
                 <p>{{ 'ss.registration.recovery_token.description.safe-store'|trans }}</p>
                 <p>
                 <form action="{{ safeStoreUrl }}"
+                      name="safe-store"
                       method="get">
                     <button type="submit"
                             class="btn btn-primary">{{ 'ss.registration.recovery_token.button.continue'|trans }}</button>
@@ -47,6 +48,7 @@
                 <p>{{ 'ss.registration.recovery_token.description.sms'|trans }}</p>
                 <p>
                 <form action="{{ smsUrl }}"
+                      name="sms"
                       method="get">
                     <button type="submit"
                             class="btn btn-primary">{{ 'ss.registration.recovery_token.button.continue'|trans }}</button>

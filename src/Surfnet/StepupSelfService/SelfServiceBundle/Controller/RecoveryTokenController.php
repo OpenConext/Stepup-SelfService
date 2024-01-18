@@ -29,6 +29,7 @@ use Surfnet\SamlBundle\Http\RedirectBinding;
 use Surfnet\SamlBundle\Monolog\SamlAuthenticationLogger;
 use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
+use Surfnet\StepupBundle\Service\SmsRecoveryTokenServiceInterface;
 use Surfnet\StepupBundle\Value\Loa;
 use Surfnet\StepupMiddlewareClientBundle\Exception\NotFoundException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
@@ -62,7 +63,7 @@ class RecoveryTokenController extends AbstractController
         private readonly RecoveryTokenService         $recoveryTokenService,
         private readonly SafeStoreService             $safeStoreService,
         private readonly SecondFactorService          $secondFactorService,
-        private readonly SmsRecoveryTokenService      $smsService,
+        private readonly SmsRecoveryTokenService $smsService,
         private readonly LoaResolutionService         $loaResolutionService,
         private readonly AuthenticationRequestFactory $authnRequestFactory,
         private readonly RedirectBinding              $redirectBinding,

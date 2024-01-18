@@ -1,9 +1,7 @@
 <?php
 
-declare(strict_types = 1);
-
 /**
- * Copyright 2014 SURFnet bv
+ * Copyright 2024 SURFnet bv
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +16,14 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
-interface SmsVerificationCommandInterface
+use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
+
+interface YubikeyServiceInterface
 {
+    /**
+     * Verifies the OTP result status
+     */
+    public function verify(VerifyYubikeyOtpCommand $command): YubikeyVerificationResult;
 }
