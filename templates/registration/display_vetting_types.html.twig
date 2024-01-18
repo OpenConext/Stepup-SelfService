@@ -39,8 +39,8 @@
                   <h3>{{ 'ss.registration.vetting_type.title.self_vet'|trans }}</h3>
                   <hr>
                   <p>{{ 'ss.registration.vetting_type.description.self_vet'|trans }}</p>
-                  <form action="{{ url('ss_second_factor_self_vet', {'secondFactorId': secondFactorId}) }}" method="get">
-                      <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_vet'|trans }}</button>
+                  <form name="self-vet" action="{{ url('ss_second_factor_self_vet', {'secondFactorId': secondFactorId}) }}" method="get">
+                      <button type="submit" id="self-vet-button" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_vet'|trans }}</button>
                   </form>
               </div>
           </div>
@@ -53,8 +53,8 @@
                     <h3>{{ 'ss.registration.vetting_type.title.self_asserted_tokens'|trans }}</h3>
                     <hr>
                     <p>{{ 'ss.registration.vetting_type.description.self_asserted_tokens'|trans }}</p>
-                    <form action="{{ url('ss_second_factor_self_asserted_tokens', {'secondFactorId': secondFactorId}) }}" method="get">
-                        <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_asserted_tokens'|trans }}</button>
+                    <form name="sat" action="{{ url('ss_second_factor_self_asserted_tokens', {'secondFactorId': secondFactorId}) }}" method="get">
+                        <button type="submit" id="sat-button" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.self_asserted_tokens'|trans }}</button>
                     </form>
                 </div>
             </div>
@@ -66,8 +66,8 @@
                 <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
                 <hr>
                 <p>{{ 'ss.registration.vetting_type.description.ra_vetting'|trans }}</p>
-                <form action="{{ url('ss_registration_send_registration_email', {'secondFactorId': secondFactorId}) }}" method="get">
-                    <button type="submit" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
+                <form name="ra-vetting" action="{{ url('ss_registration_send_registration_email', {'secondFactorId': secondFactorId}) }}" method="get">
+                    <button type="submit" id="ra-vetting-button" class="btn btn-primary">{{ 'ss.registration.vetting_type.button.ra_vetting'|trans }}</button>
                 </form>
             </div>
         </div>

@@ -40,6 +40,11 @@ services:
       - []
       - '@logger'
 
+  Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceInterface:
+    class: Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorService
+    arguments:
+      $commandService: '@surfnet_stepup_self_service_self_service.service.command'
+
   Surfnet\StepupSelfService\SamlStepupProviderBundle\Session\SessionFactoryWithAttributeBag:
     decorates: session.factory
     arguments: [ '@.inner' ]

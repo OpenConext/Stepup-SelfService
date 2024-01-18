@@ -20,8 +20,8 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Form\Type;
 
+use Surfnet\StepupBundle\Command\SendSmsChallengeCommandInterface;
 use Surfnet\StepupBundle\Value\PhoneNumber\CountryCodeListing;
-use Surfnet\StepupSelfService\SelfServiceBundle\Command\SendSmsChallengeCommandInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

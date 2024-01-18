@@ -4,18 +4,18 @@
 <span class="loa-star-rating">
 {% if wholeStars > 0 %}
     {% for star in 1..wholeStars %}
-        <img class="star" src="{{ asset('images/star.svg') }}">
+        <img class="star" src="{{ asset('build/images/star.svg') }}">
     {% endfor %}
 {% endif %}
 
 {% if halfStar %}
-<img class="star star-half" src="{{ asset('images/star-half.svg') }}">
+<img class="star star-half" src="{{ asset('build/images/star-half.svg') }}">
 {% set remainingStars = remainingStars - 1 %}
 {% endif %}
 
 {% if remainingStars > 0 %}
 {% for star in 1..remainingStars %}
-    <img class="star star-open" src="{{ asset('images/star-open.svg') }}">
+    <img class="star star-open" src="{{ asset('build/images/star-open.svg') }}">
 {% endfor %}
 {% endif %}
 </span>

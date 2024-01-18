@@ -131,7 +131,7 @@ services:
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService:
         arguments:
-            - '@Surfnet\StepupBundle\Service\SmsRecoveryTokenService'
+            - '@Surfnet\StepupBundle\Service\SmsRecoveryTokenServiceInterface'
             - "@translator"
             - "@surfnet_stepup_self_service_self_service.service.command"
             - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState'
