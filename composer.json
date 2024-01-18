@@ -14,6 +14,14 @@
         {
             "type": "vcs",
             "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/OpenConext/Stepup-saml-bundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/OpenConext/Stepup-bundle"
         }
     ],
     "minimum-stability": "dev",
@@ -32,6 +40,8 @@
         "nelmio/security-bundle": "^3",
         "openconext/monitor-bundle": "^3.1",
         "surfnet/stepup-bundle": "^6.0",
+        "openconext/monitor-bundle": "^4.1",
+        "surfnet/stepup-bundle": "dev-feature/sf6-upgrade as 6.0.6",
         "surfnet/stepup-middleware-client-bundle": "dev-feature/sf6-support",
         "surfnet/stepup-saml-bundle": "^6.0",
         "symfony/console": "^6.4",

@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
+use Surfnet\StepupBundle\Command\SendSmsChallengeCommandInterface;
 use Surfnet\StepupBundle\Value\PhoneNumber\Country;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
 use Symfony\Component\Validator\Constraints as Assert;

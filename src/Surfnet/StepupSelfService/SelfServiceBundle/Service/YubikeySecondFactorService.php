@@ -28,10 +28,10 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Command\VerifyYubikeyOtpCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\RuntimeException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactor\ProofOfPossessionResult;
 
-class YubikeySecondFactorService
+class YubikeySecondFactorService implements YubikeySecondFactorServiceInterface
 {
     public function __construct(
-        private readonly YubikeyService $yubikeyService,
+        private readonly YubikeyServiceInterface $yubikeyService,
         private readonly CommandService $commandService,
     ) {
     }

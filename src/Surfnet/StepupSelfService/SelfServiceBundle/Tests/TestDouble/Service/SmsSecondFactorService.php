@@ -18,7 +18,6 @@
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\TestDouble\Service;
 
-use Surfnet\StepupBundle\Service\Exception\TooManyChallengesRequestedException;
 use Surfnet\StepupBundle\Service\SmsSecondFactor\OtpVerification;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Command\ProvePhonePossessionCommand;
 use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
@@ -32,7 +31,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactorServiceIn
  * A test stand in for the SmsSecondFactorService
  *
  * This class should only be used in test context!
- *
  */
 class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 {
@@ -44,25 +42,16 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     {
     }
 
-    /**
-     * @return int
-     */
     public function getOtpRequestsRemainingCount($identifier): int
     {
         return $this->maxOtpRequestRemaining;
     }
 
-    /**
-     * @return int
-     */
     public function getMaximumOtpRequestsCount(): int
     {
         return $this->maxOtpRequestCount;
     }
 
-    /**
-     * @return bool
-     */
     public function hasSmsVerificationState(string $secondFactorId): bool
     {
         return $this->verificationState;
@@ -74,11 +63,7 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
     }
 
     /**
-     * Always returns true, indicating sending did not fail.
-     *
-     * @param SendSmsChallengeCommand $command
-     * @return bool Whether SMS sending did not fail.
-     * @throws TooManyChallengesRequestedException
+     * Always returns true, indicating sending did not fail
      */
     public function sendChallenge(SendSmsChallengeCommand $command): bool
     {
@@ -87,14 +72,8 @@ class SmsSecondFactorService implements SmsSecondFactorServiceInterface
         return true;
     }
 
-    /**
-     *
-     * @param VerifySmsChallengeCommand $challengeCommand
-     * @return ProofOfPossessionResult
-     */
-    public function provePossession(VerifySmsChallengeCommand $challengeCommand): \Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfPossessionResult
+    public function provePossession(VerifySmsChallengeCommand $challengeCommand): ProofOfPossessionResult
     {
-
         OtpVerification::foundMatch($challengeCommand->identity);
 
         $command = new ProvePhonePossessionCommand();
