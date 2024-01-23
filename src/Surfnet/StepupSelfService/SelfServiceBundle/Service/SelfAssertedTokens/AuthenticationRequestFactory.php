@@ -36,7 +36,9 @@ class AuthenticationRequestFactory
     {
         $authenticationRequest = AuthnRequestFactory::createNewRequest(
             $this->serviceProvider,
-            $this->identityProvider
+            $this->identityProvider,
+            false,
+            'isSatRequest'
         );
 
         $authenticationRequest->setSubject($nameId);
