@@ -22,6 +22,8 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Surfnet\SamlBundle\Entity\IdentityProvider;
+use Surfnet\SamlBundle\Entity\ServiceProvider;
 use Surfnet\SamlBundle\Http\PostBinding;
 use Surfnet\SamlBundle\Http\RedirectBinding;
 use Surfnet\SamlBundle\Http\XMLResponse;
@@ -61,6 +63,8 @@ class SamlController extends AbstractController
         private readonly TestAuthenticationRequestFactory $testAuthenticationRequestFactory,
         private readonly RedirectBinding                  $redirectBinding,
         private readonly PostBinding                      $postBinding,
+        private readonly ServiceProvider $serviceProvider,
+        private readonly IdentityProvider $testIdentityProvider,
     ) {
     }
 
@@ -142,8 +146,8 @@ class SamlController extends AbstractController
         try {
             $assertion = $this->postBinding->processResponse(
                 $httpRequest,
-                $this->container->get('self_service.second_factor_test_idp'),
-                $this->container->get('surfnet_saml.hosted.service_provider'),
+                $this->testIdentityProvider,
+                $this->serviceProvider,
             );
 
             if (!InResponseTo::assertEquals($assertion, $initiatedRequestId)) {
@@ -158,7 +162,8 @@ class SamlController extends AbstractController
             }
 
             $this->addFlash('success', 'ss.test_second_factor.verification_successful');
-        } catch (Exception) {
+        } catch (Exception $e) {
+            $this->logger->info('Receiving the test second factor assertion failed, see context for details', ['context' => $e->getMessage()]);
             $this->addFlash('error', 'ss.test_second_factor.verification_failed');
         }
         return $this->redirectToRoute('ss_second_factor_list');

@@ -38,7 +38,9 @@ final readonly class TestAuthenticationRequestFactory
     {
         $authenticationRequest = AuthnRequestFactory::createNewRequest(
             $this->serviceProvider,
-            $this->identityProvider
+            $this->identityProvider,
+            false,
+            'isTestRequest'
         );
 
         $authenticationRequest->setSubject($nameId);

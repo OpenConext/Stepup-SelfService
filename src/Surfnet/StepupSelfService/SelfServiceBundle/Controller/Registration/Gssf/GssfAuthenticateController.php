@@ -57,7 +57,9 @@ final class GssfAuthenticateController extends AbstractController
 
         $authnRequest = AuthnRequestFactory::createNewRequest(
             $provider->getServiceProvider(),
-            $provider->getRemoteIdentityProvider()
+            $provider->getRemoteIdentityProvider(),
+            false,
+            'isGssfRequest'
         );
 
         $this->gsspUserAttributeService->addGsspUserAttributes(
