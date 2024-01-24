@@ -22,18 +22,21 @@
     https://foshttpcachebundle.readthedocs.io/en/latest/features/helpers/flash-message.html
     #}
     {% if app.request.hasPreviousSession %}
+        {% set flash_messages = app.flashes %}
+        {% if flash_messages|length > 0 %}
         <div class="row-fluid">
-            <div id="flash" class="span12">
-                {% for type, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ type }} alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            {{ message | trans }}
-                        </div>
+                <div id="flash" class="span12">
+                    {% for type, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ message | trans }}
+                            </div>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
+                </div>
             </div>
-        </div>
+        {% endif %}
     {% endif %}
 {% endblock flashes %}
 
