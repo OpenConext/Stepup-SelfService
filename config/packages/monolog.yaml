@@ -7,6 +7,7 @@ monolog:
       action_level: ERROR
       passthru_level: NOTICE # this means that all message of level NOTICE or higher are always logged
       handler: main_stdout
+      channels: [ "!event" ]
       bubble: false # if we handle it, nothing else should
     main_stdout:
       type: stream
@@ -20,6 +21,7 @@ when@dev:
       prod-signaler:
         action_level: ERROR
         passthru_level: DEBUG # DEV setting: this means that all message of level DEBUG or higher are always logged
+        channels: [ "!event" ]
         bubble: true
       main_logfile:
         type: stream

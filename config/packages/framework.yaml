@@ -19,6 +19,7 @@ framework:
         cookie_samesite: lax
 
     fragments: false
+    error_controller: Surfnet\StepupSelfService\SelfServiceBundle\Controller\ExceptionController::show
     http_method_override: true
     php_errors:
         log: true
