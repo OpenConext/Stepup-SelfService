@@ -16,7 +16,7 @@ framework:
         name: sess_selfservice
         cookie_httponly: true
         cookie_secure: true
-        cookie_samesite: lax
+        cookie_samesite: none
 
     fragments: false
     error_controller: Surfnet\StepupSelfService\SelfServiceBundle\Controller\ExceptionController::show
