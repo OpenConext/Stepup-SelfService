@@ -14,10 +14,10 @@
 <body>
 
 {% block flashes %}
-    {% if app.session.flashbag.peekAll|length > 0 %}
+    {% if app.flashes.peekAll|length > 0 %}
         <div class="row-fluid">
             <div id="flash" class="span12">
-                {% for type, messages in app.session.flashbag.all() %}
+                {% for type, messages in app.flashes.all() %}
                     {% for message in messages %}
                         <div class="alert alert-{{ type }} alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
