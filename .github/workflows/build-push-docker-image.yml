@@ -1,8 +1,6 @@
 name: build-push-docker-image
 
 on:
-  push:
-    branches: feature/docker_configs
   workflow_dispatch:
 
 jobs:
@@ -33,25 +31,27 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+ 
+      - name: Set docker labels and tags
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/openconext/stepup-selfservice/stepup-selfservice
+          tags: |
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=sha
+            type=raw,value=prod
 
       - name: Build and push the Production image
         uses: docker/build-push-action@v4
         with:
           context: .
+          build-args: |
+            APP_VERSION=${{ steps.release.outputs.tag_name }}
+            GIT_SHA=${{ github.sha }}
           file: docker/Dockerfile.prod
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: |
-            ghcr.io/openconext/stepup-selfservice/stepup-selfservice:prod
-            ghcr.io/openconext/stepup-selfservice/stepup-selfservice:${{ github.sha }}
-            ghcr.io/openconext/stepup-selfservice/stepup-selfservice:${{ steps.release.outputs.tag_name }}
-
-      - name: Build and push the Development image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: docker/Dockerfile.dev
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ghcr.io/openconext/stepup-selfservice/stepup-selfservice:dev
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

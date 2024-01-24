@@ -1,4 +1,9 @@
-FROM ghcr.io/openconext/openconext-basecontainers/php82-apache2:latest AS php-build
+FROM ghcr.io/openconext/openconext-basecontainers/php82-apache2:latest
+ARG APP_VERSION
+ARG GIT_SHA
+ENV OPENCONEXT_APP_VERSION=${APP_VERSION}
+ENV OPENCONEXT_GIT_SHA=${GIT_SHA}
+
 # Set the default workdir
 WORKDIR /var/www/html
 COPY *.tar.bz2 /tmp/
