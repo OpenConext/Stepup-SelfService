@@ -50,6 +50,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
+ * @SuppressWarnings(PHPMD.ExcessiveParameterList) -- Many fields/dependencies are required in controllers. Previously they were yanked from the container via $this->get(), implicit coupling has been made explicit with this change
  */
 class SamlController extends AbstractController
 {
