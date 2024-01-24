@@ -20,6 +20,11 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use DateTime;
+use DateTimeInterface;
+use Surfnet\StepupBundle\Exception\Art;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use Surfnet\StepupBundle\Controller\ExceptionController as BaseExceptionController;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\MissingRequiredAttributeException;
@@ -47,5 +52,37 @@ final class ExceptionController extends BaseExceptionController
         }
 
         return parent::getPageTitleAndDescription($exception);
+    }
+
+    public function show(Request $request, Throwable $exception): Response
+    {
+        $statusCode = $this->getStatusCode($exception);
+
+        $template = '@default/bundles/TwigBundle/Exception/error.html.twig';
+        if ($statusCode == 404) {
+            $template = '@default/bundles/TwigBundle/Exception/error404.html.twig';
+        }
+
+        $response = new Response('', $statusCode);
+
+        $timestamp = (new DateTime)->format(DateTimeInterface::ATOM);
+        $hostname  = $request->getHost();
+        $requestId = $this->requestId;
+        $errorCode = Art::forException($exception);
+        $userAgent = $request->headers->get('User-Agent');
+        $ipAddress = $request->getClientIp();
+
+        return $this->render(
+            $template,
+            [
+                'timestamp'   => $timestamp,
+                'hostname'    => $hostname,
+                'request_id'  => $requestId->get(),
+                'error_code'  => $errorCode,
+                'user_agent'  => $userAgent,
+                'ip_address'  => $ipAddress,
+            ] + $this->getPageTitleAndDescription($exception),
+            $response
+        );
     }
 }
