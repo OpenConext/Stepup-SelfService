@@ -1,8 +1,7 @@
 Step-up Self-Service
 ====================
 
-[![Build Status](https://travis-ci.org/OpenConext/Stepup-SelfService.svg)](https://travis-ci.org/OpenConext/Stepup-SelfService) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/OpenConext/Stepup-SelfService/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/OpenConext/Stepup-SelfService/?branch=develop) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d3edfdf9-2619-49d2-8f6f-cacc5492ce83/mini.png)](https://insight.sensiolabs.com/projects/d3edfdf9-2619-49d2-8f6f-cacc5492ce83)
-
+[![Run QA tests (static analysis, lint and unit tests)](https://github.com/OpenConext/Stepup-SelfService//actions/workflows/test-integration.yml/badge.svg)](https://github.com/OpenConext/Stepup-SelfService/actions/workflows/test-integration.yml)  
 This component is part of "Step-up Authentication as-a Service" and requires other supporting components to function. See [Stepup-Deploy](https://github.com/OpenConext/Stepup-Deploy) for an overview.
 
 ## Requirements
