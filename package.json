@@ -9,6 +9,7 @@
         "@types/node": "^10",
         "compass-mixins": "^0.12.10",
         "css-loader": "^6.7",
+        "file-loader": "^6.0.0",
         "eslint": "^7",
         "eslint-config-airbnb": "^19.0",
         "eslint-plugin-import": "^2.26.0",

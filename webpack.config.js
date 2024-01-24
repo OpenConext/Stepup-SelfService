@@ -1,19 +1,23 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
 
 Encore
     .setOutputPath('public/build/')
+    .copyFiles({
+        from: './assets/openconext/images',
+        to: './images/[path][name].[ext]',
+    })
     .setPublicPath('/build')
     .cleanupOutputBeforeBuild()
     // Convert typescript files.
     .enableTypeScriptLoader()
     .enableLessLoader()
     .addStyleEntry('global', [
-        './public/scss/application.scss',
+        './assets/scss/application.scss',
         './vendor/surfnet/stepup-bundle/src/Resources/public/less/stepup.less'
     ])
-    .addEntry('registration-print', './public/typescript/registration-print.ts')
+    .addEntry('registration-print', './assets/typescript/registration-print.ts')
     .addEntry('app', [
-        './public/typescript/app.ts',
+        './assets/typescript/app.ts',
         './vendor/surfnet/stepup-bundle/src/Resources/public/js/stepup.js'
     ])
 
