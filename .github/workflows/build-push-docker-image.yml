@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          tags: true
 
       - name: Get the latest release
         id: release
@@ -18,6 +21,14 @@ jobs:
         with:
           latest: true
           fileName: "*.tar.bz2"
+
+      - name: Get commit details for the tag from the latest release
+        id: commit_details
+        run: |
+          GIT_SHA=$(git rev-list -n 1 ${{ steps.release.outputs.tag_name }})
+          GIT_COMMIT_TIME=$(git show -s --format=%ci ${{ steps.release.outputs.tag_name }})
+          echo "::set-output name=sha::$GIT_SHA"
+          echo "::set-output name=commit_time::$GIT_COMMIT_TIME"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -49,7 +60,8 @@ jobs:
           context: .
           build-args: |
             APP_VERSION=${{ steps.release.outputs.tag_name }}
-            GIT_SHA=${{ github.sha }}
+            GIT_SHA=${{ steps.commit_details.outputs.sha }}
+            GIT_COMMIT_TIME=${{ steps.commit_details.outputs.commit_time }}
           file: docker/Dockerfile.prod
           platforms: linux/amd64,linux/arm64
           push: true
