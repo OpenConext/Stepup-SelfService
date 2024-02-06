@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
@@ -207,6 +208,8 @@ class SelfAssertedTokensController extends AbstractController
                     'registration/self_asserted_tokens/authenticate_safe_store.html.twig',
                     ['form' => $form->createView()]
                 );
+            default:
+                throw new LogicException("The token type {$token->type} is not implemented");
         }
     }
 
@@ -268,7 +271,7 @@ class SelfAssertedTokensController extends AbstractController
 
         // Then render the authentication (proof of possession screen
         if (!$this->smsService->hasSmsVerificationState($recoveryTokenId)) {
-            $this->get('session')->getFlashBag()->add('notice', 'ss.registration.sms.alert.no_verification_state');
+            $this->addFlash('notice', 'ss.registration.sms.alert.no_verification_state');
             return $this->redirectToRoute(
                 'ss_second_factor_self_asserted_tokens',
                 ['secondFactorId' => $secondFactorId]
