@@ -542,11 +542,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SecondFactor/SecondFactorRevokeController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to an undefined method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Controller\\\\SelfAssertedTokensController\\:\\:get\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SelfAssertedTokensController.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Cannot call method getIdentity\\(\\) on Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\|null\\.$#',
 	'count' => 11,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SelfAssertedTokensController.php',
@@ -725,66 +720,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\EventSubscriber\\\\CustomLogoutListener\\:\\:__construct\\(\\) has parameter \\$logoutRedirectUrl with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/EventSubscriber/CustomLogoutListener.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to method process\\(\\) on an unknown class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/AuthenticatedUserHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\$handler of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticatedUserHandler\\:\\:setNext\\(\\) has invalid type Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/AuthenticatedUserHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticatedUserHandler\\:\\:\\$nextHandler has unknown class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler as its type\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/AuthenticatedUserHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to method process\\(\\) on an unknown class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/ExplicitSessionTimeoutHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler not found\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/ExplicitSessionTimeoutHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$uri of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\AuthenticatedSessionStateHandler\\:\\:setCurrentRequestUri\\(\\) expects string, string\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/ExplicitSessionTimeoutHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\$handler of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\ExplicitSessionTimeoutHandler\\:\\:setNext\\(\\) has invalid type Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/ExplicitSessionTimeoutHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\ExplicitSessionTimeoutHandler\\:\\:\\$nextHandler has unknown class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler as its type\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/ExplicitSessionTimeoutHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to method process\\(\\) on an unknown class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/InitiateSamlAuthenticationHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler not found\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/InitiateSamlAuthenticationHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\$handler of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\InitiateSamlAuthenticationHandler\\:\\:setNext\\(\\) has invalid type Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/InitiateSamlAuthenticationHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\InitiateSamlAuthenticationHandler\\:\\:\\$nextHandler has unknown class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler as its type\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/Handler/InitiateSamlAuthenticationHandler.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Provider\\\\SamlProvider implements generic interface Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserProviderInterface but does not specify its types\\: TUser$#',
