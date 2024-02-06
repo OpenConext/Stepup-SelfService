@@ -79,7 +79,8 @@
             "@phpcs",
             "@phpcpd",
             "@license-headers",
-            "@test"
+            "@test",
+            "@phpstan"
         ],
         "composer-validate": "./ci/qa/validate",
         "phplint": "./ci/qa/phplint",
