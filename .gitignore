@@ -8,6 +8,7 @@
 /cache.properties
 /bin/*
 !/bin/extract-translations.sh
+!/bin/copyright-correction.sh
 !/bin/console
 .idea
 node_modules
