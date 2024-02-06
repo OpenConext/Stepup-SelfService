@@ -14,14 +14,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/OpenConext/Stepup-saml-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/OpenConext/Stepup-bundle"
         }
     ],
     "minimum-stability": "dev",
@@ -39,9 +31,9 @@
         "mpdf/mpdf": "^8.2",
         "nelmio/security-bundle": "^3",
         "openconext/monitor-bundle": "^3.1",
-        "surfnet/stepup-bundle": "dev-feature/sf6-upgrade as 6.0.6",
+        "surfnet/stepup-bundle": "^6.0",
         "surfnet/stepup-middleware-client-bundle": "dev-feature/sf6-support",
-        "surfnet/stepup-saml-bundle": "dev-feature/kill-off-travis as 6.0.8",
+        "surfnet/stepup-saml-bundle": "^6.0",
         "symfony/console": "^6.4",
         "symfony/expression-language": "^6.4",
         "symfony/flex": "^v2.4.1.",
@@ -160,11 +152,6 @@
             "allow-contrib": false,
             "require": "6.4.*"
         },
-        "symfony-app-dir": "app",
-        "symfony-var-dir": "app",
-        "symfony-bin-dir": "app",
-        "symfony-web-dir": "web",
-        "symfony-assets-install": "symlink",
         "incenteev-parameters": [
             {
                 "file": "config/openconext/parameters.yaml"
