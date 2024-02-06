@@ -802,21 +802,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Factory/SamlFactory.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to method process\\(\\) on an unknown class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Firewall/SamlListener.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\$authenticationHandler of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Firewall\\\\SamlListener\\:\\:__construct\\(\\) has invalid type Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Firewall/SamlListener.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Firewall\\\\SamlListener\\:\\:\\$authenticationHandler has unknown class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\Handler\\\\AuthenticationHandler as its type\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Firewall/SamlListener.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\ActivationFlowService\\:\\:__construct\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/ActivationFlowService.php',
