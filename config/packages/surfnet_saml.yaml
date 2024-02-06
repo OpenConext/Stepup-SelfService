@@ -26,16 +26,3 @@ surfnet_saml:
       entity_id: "%saml_remote_idp_entity_id%"
       sso_url: "%saml_remote_idp_sso_url%"
       certificate: "%saml_remote_idp_certificate%"
-
-when@test:
-  surfnet_saml:
-    hosted:
-      service_provider:
-        public_key: /vagrant/deploy/tests/behat/fixtures/test_public_key.crt
-        private_key: /vagrant/deploy/tests/behat/fixtures/test_private_key.key
-      metadata:
-        public_key: /vagrant/deploy/tests/behat/fixtures/test_public_key.crt
-        private_key: /vagrant/deploy/tests/behat/fixtures/test_private_key.key
-    remote:
-      identity_provider:
-        certificate: "%saml_remote_idp_certificate%"
