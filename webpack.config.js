@@ -2,10 +2,16 @@ const Encore = require('@symfony/webpack-encore');
 
 Encore
     .setOutputPath('public/build/')
-    .copyFiles({
-        from: './assets/openconext/images',
-        to: './images/[path][name].[ext]',
-    })
+    .copyFiles([
+        {
+            from: './assets/images',
+            to: './images/[path][name].[ext]',
+        },
+        {
+            from: './assets/openconext/images',
+            to: './images/logo/[path][name].[ext]',
+        }
+    ])
     .setPublicPath('/build')
     .cleanupOutputBeforeBuild()
     // Convert typescript files.

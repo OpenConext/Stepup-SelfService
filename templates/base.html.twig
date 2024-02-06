@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('build/images/logo/favicon.ico') }}">
 
     <title>{% block title %}{{ 'app.name'|trans }}{% endblock %}</title>
     {% block stylesheets %}
@@ -50,7 +50,7 @@
 
     {% block page_header %}
         <div class="page-header clearfix">
-            <img src="{{ asset('build/images/header-logo.png') }}" class="pull-right logo" alt="OpenConext Stepup">
+            <img src="{{ asset('build/images/logo/header-logo.png') }}" class="pull-right logo" alt="OpenConext Stepup">
             <h1>{{ 'app.name'|trans }}</h1>
         </div>
         {% if app.user %}
