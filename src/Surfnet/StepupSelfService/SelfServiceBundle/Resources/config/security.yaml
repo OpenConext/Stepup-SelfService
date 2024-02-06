@@ -1,12 +1,5 @@
 services:
     # Firewall
-    self_service.security.authentication.listener:
-        class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Firewall\SamlListener
-        arguments:
-            - "@self_service.security.authentication.handler.authenticated_user_handler"
-            - "@self_service.security.authentication.saml_interaction"
-            - "@logger"
-
     self_service.security.authentication.provider.saml:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider
         arguments:
