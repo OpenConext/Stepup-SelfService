@@ -96,12 +96,15 @@ services:
             - "@router"
         tags: [{ name: form.type, alias: ss_status_gssf }]
 
-    surfnet_stepup_self_service_self_service.service.yubikey:
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyServiceInterface:
         public: false
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyService
         arguments:
             - "@surfnet_stepup.guzzle.gateway_api"
             - "@logger"
+
+    surfnet_stepup_self_service_self_service.service.yubikey:
+        alias: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeyServiceInterface
 
     surfnet_stepup_self_service_self_service.service.gsspuserattributes:
       class: Surfnet\StepupSelfService\SelfServiceBundle\Service\GsspUserAttributeService
@@ -285,3 +288,7 @@ services:
         tags:
             - { name : twig.extension }
 
+    Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorServiceInterface:
+        class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService
+        arguments:
+            $commandService: "@surfnet_stepup_self_service_self_service.service.command"

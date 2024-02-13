@@ -1152,6 +1152,31 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SelfVetMarshaller.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Access to an undefined property Surfnet\\\\StepupBundle\\\\Command\\\\SendSmsChallengeCommandInterface\\:\\:\\$country\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property Surfnet\\\\StepupBundle\\\\Command\\\\SendSmsChallengeCommandInterface\\:\\:\\$identity\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property Surfnet\\\\StepupBundle\\\\Command\\\\SendSmsChallengeCommandInterface\\:\\:\\$institution\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property Surfnet\\\\StepupBundle\\\\Command\\\\SendSmsChallengeCommandInterface\\:\\:\\$recoveryTokenId\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property Surfnet\\\\StepupBundle\\\\Command\\\\SendSmsChallengeCommandInterface\\:\\:\\$subscriber\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property Surfnet\\\\StepupMiddlewareClientBundle\\\\Identity\\\\Command\\\\ProvePhoneRecoveryTokenPossessionCommand\\:\\:\\$phoneNumber \\(string\\) does not accept string\\|null\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SmsRecoveryTokenService.php',

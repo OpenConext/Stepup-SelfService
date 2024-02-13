@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Command;
 
+use Surfnet\StepupBundle\Command\SendSmsChallengeCommandInterface;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
 
