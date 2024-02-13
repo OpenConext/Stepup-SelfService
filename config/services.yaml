@@ -21,6 +21,9 @@ services:
       $identityService: '@Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService'
       $preferredLocaleProvider: '@self_service.locale.request_stack_locale_provider'
 
+  Surfnet\StepupBundle\Service\SmsRecoveryTokenServiceInterface:
+    alias: 'Surfnet\StepupBundle\Service\SmsRecoveryTokenService'
+
   Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Provider\SamlProvider:
     alias: surfnet_saml.saml_provider
 
