@@ -34,7 +34,7 @@
         {% if allowSelfVetting %}
           <div class="col-xs-12 col-md-3">
               <div class="thumbnail vetting-selector">
-                  <img src="{{ asset('images/token.png') }}" width="70%"
+                  <img src="{{ asset('build/images/token.png') }}" width="70%"
                        alt="{{ ('ss.registration.selector.self_vet.alt')|trans }}">
                   <h3>{{ 'ss.registration.vetting_type.title.self_vet'|trans }}</h3>
                   <hr>
@@ -48,7 +48,7 @@
         {% if allowSelfAssertedTokens %}
             <div class="col-xs-12 col-md-3">
                 <div class="thumbnail vetting-selector">
-                    <img src="{{ asset('images/self-asserted-token-registration.png') }}"
+                    <img src="{{ asset('build/images/self-asserted-token-registration.png') }}"
                          alt="{{ ('ss.registration.selector.self_asserted_tokens.alt')|trans }}">
                     <h3>{{ 'ss.registration.vetting_type.title.self_asserted_tokens'|trans }}</h3>
                     <hr>
@@ -61,7 +61,7 @@
         {% endif %}
         <div class="col-xs-12 col-md-3">
             <div class="thumbnail vetting-selector">
-                <img src="{{ asset('images/frontdesk.svg') }}" width="70%"
+                <img src="{{ asset('build/images/frontdesk.svg') }}" width="70%"
                      alt="{{ ('ss.registration.selector.on-premise.alt')|trans }}">
                 <h3>{{ 'ss.registration.vetting_type.title.ra_vetting'|trans }}</h3>
                 <hr>
