@@ -1,5 +1,8 @@
 # Changelog
 
+# 5.0.1
+- Removed a piece of dead authentication code #312
+
 # 5.0.0
 - Upgrade code to run on Symfony 6.4
 - Updated code to be PHP 8.2 compatible
