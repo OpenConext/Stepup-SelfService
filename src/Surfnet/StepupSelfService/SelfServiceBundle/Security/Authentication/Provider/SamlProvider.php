@@ -31,7 +31,6 @@ use Surfnet\StepupMiddlewareClientBundle\Uuid\Uuid;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\MissingRequiredAttributeException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Locale\PreferredLocaleProvider;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedIdentity;
-use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\IdentityService;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -121,19 +120,12 @@ class SamlProvider implements SamlProviderInterface, UserProviderInterface
             $this->identityService->updateIdentity($identity);
         }
 
-        $authenticatedIdentity = new AuthenticatedIdentity($identity);
-        $authenticatedToken = new SamlToken(['ROLE_USER']);
-
-        $authenticatedToken->setUser($authenticatedIdentity);
-
-//        return $authenticatedToken;
-        return $authenticatedIdentity;
+        return new AuthenticatedIdentity($identity);
     }
 
 
     public function refreshUser(UserInterface $user): UserInterface
     {
-        // TODO: Implement refreshUser() method.
         return $user;
     }
 
