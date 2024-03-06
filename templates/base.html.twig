@@ -14,6 +14,7 @@
 <body>
 
 {% block flashes %}
+
     {#
     The check is needed to prevent starting the session when looking for "flash messages":
     https://symfony.com/doc/current/session.html#avoid-starting-sessions-for-anonymous-users
@@ -26,7 +27,7 @@
         {% if flash_messages|length > 0 %}
         <div class="row-fluid">
                 <div id="flash" class="span12">
-                    {% for type, messages in app.flashes %}
+                    {% for type, messages in flash_messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ type }} alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
