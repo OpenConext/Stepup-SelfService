@@ -28,7 +28,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use Surfnet\StepupBundle\Controller\ExceptionController as BaseExceptionController;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\MissingRequiredAttributeException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final class ExceptionController extends BaseExceptionController
 {
@@ -39,7 +38,7 @@ final class ExceptionController extends BaseExceptionController
     {
         $translator = $this->getTranslator();
 
-        if ($exception instanceof HttpException && $exception instanceof MissingRequiredAttributeException) {
+        if ($exception instanceof MissingRequiredAttributeException) {
             $title = $translator->trans('stepup.error.missing_required_attribute.title');
             $description = $exception->getMessage();
         }

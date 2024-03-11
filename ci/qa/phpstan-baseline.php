@@ -302,37 +302,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/EntryPointController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Instanceof between Symfony\\\\Component\\\\HttpKernel\\\\Exception\\\\HttpException and Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Exception\\\\MissingRequiredAttributeException will always evaluate to false\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Controller\\\\ExceptionController\\:\\:getPageTitleAndDescription\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Result of && is always false\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Undefined variable\\: \\$description$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Undefined variable\\: \\$title$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Variable \\$description in isset\\(\\) is never defined\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Variable \\$title in isset\\(\\) is never defined\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',
 ];
