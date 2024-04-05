@@ -1,5 +1,9 @@
 # Changelog
 
+# 5.0.3
+- Repair exeption screens
+- Fix flash messages
+
 # 5.0.1
 - Removed a piece of dead authentication code #312
 
