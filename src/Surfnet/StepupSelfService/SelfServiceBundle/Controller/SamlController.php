@@ -126,7 +126,7 @@ class SamlController extends AbstractController
             $selfVetRequestId = $session->get(SelfVetController::SELF_VET_SESSION_ID);
             $secondFactorId = $selfVetRequestId->vettingSecondFactorId();
             return $this->forward(
-                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVetController::consumeSelfVetAssertion',
+                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVet\SelfVetConsumeController::consumeSelfVetAssertion',
                 ['secondFactorId' => $secondFactorId],
             );
         }
