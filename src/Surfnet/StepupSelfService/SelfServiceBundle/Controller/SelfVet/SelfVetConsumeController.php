@@ -97,7 +97,7 @@ class SelfVetConsumeController extends AbstractController
                 $samlLogger->error(
                     sprintf(
                         'Expected a response to the request with ID "%s", but the SAMLResponse was a response to a different request',
-                        $initiatedRequestId
+                        $initiatedRequestId->requestId()
                     )
                 );
                 throw new AuthenticationException('Unexpected InResponseTo in SAMLResponse');
