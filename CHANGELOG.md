@@ -1,8 +1,16 @@
 # Changelog
 
+# 5.0.4
+- Correct a route name with a missing namespace part (self vetting acs) #320
+
 # 5.0.3
 - Repair exeption screens
 - Fix flash messages
+
+# 5.0.2
+- Read flash messages from the correct bag #314 
+- Simplify exception logical condition, showing the attribute missing error message once again #315
+- Multiple updates of Composer/Node dependencies 
 
 # 5.0.1
 - Removed a piece of dead authentication code #312
