@@ -41,7 +41,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) - Controllers are prone to higher coupling. This one is no exception
- * TODO: Split up into smaller controllers
  */
 class SelfVetConsumeController extends AbstractController
 {
