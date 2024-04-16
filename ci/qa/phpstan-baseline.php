@@ -547,11 +547,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SelfVet/SelfVetConsumeController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Value\\\\SelfVetRequestId given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SelfVet/SelfVetConsumeController.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Command\\\\SelfVetCommand\\:\\:\\$authoringLoa \\(string\\) does not accept string\\|null\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SelfVet/SelfVetConsumeController.php',
@@ -885,11 +880,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\RaLocationService\\:\\:listRaLocationsFor\\(\\) has parameter \\$institution with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/RaLocationService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to an undefined property Surfnet\\\\StepupMiddlewareClientBundle\\\\Identity\\\\Command\\\\SelfVetSecondFactorCommand\\:\\:\\$authoringSecondFactorLoa\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/SecondFactorService.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Cannot call method getElements\\(\\) on Surfnet\\\\StepupMiddlewareClientBundle\\\\Identity\\\\Dto\\\\UnverifiedSecondFactorCollection\\|Surfnet\\\\StepupMiddlewareClientBundle\\\\Identity\\\\Dto\\\\VerifiedSecondFactorCollection\\|Surfnet\\\\StepupMiddlewareClientBundle\\\\Identity\\\\Dto\\\\VettedSecondFactorCollection\\|null\\.$#',

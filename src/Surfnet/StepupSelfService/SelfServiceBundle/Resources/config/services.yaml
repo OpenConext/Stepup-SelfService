@@ -30,9 +30,20 @@ services:
             - '@surfnet_saml.http.redirect_binding'
             - '@surfnet_saml.http.post_binding'
             - '@surfnet_saml.hosted.service_provider'
-            - '@self_service.second_factor_test_idp'
+            - '@surfnet_saml.remote.idp'
             - '@surfnet_saml.logger'
             - '@logger'
+
+    Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVet\SelfVetConsumeController:
+        arguments:
+            - "@logger"
+            - "@surfnet_stepup_self_service_self_service.service.second_factor"
+            - "@self_service.service.self_vet_marshaller"
+            - "@surfnet_saml.hosted.service_provider"
+            - '@surfnet_saml.remote.idp'
+            - "@surfnet_saml.http.post_binding"
+            - "@surfnet_saml.logger"
+            - "@request_stack"
 
     surfnet_stepup_self_service_self_service.service.command:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\CommandService
