@@ -19,22 +19,6 @@ services:
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService:
 
-    #    Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVetController:
-#        arguments:
-#            - "@self_service.test_second_factor_authentication_request_factory"
-#            - "@surfnet_stepup_self_service_self_service.service.second_factor"
-#            - "@surfnet_stepup.service.second_factor_type"
-#            - "@self_service.service.self_vet_marshaller"
-#            - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService'
-#            - "@surfnet_saml.hosted.service_provider"
-#            - "@self_service.second_factor_test_idp"
-#            - "@surfnet_saml.http.redirect_binding"
-#            - "@surfnet_saml.http.post_binding"
-#            - "@surfnet_stepup.service.loa_resolution"
-#            - "@surfnet_saml.logger"
-#            - "@request_stack"
-#            - "@logger"
-
     Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController:
         arguments:
             - '@Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService'
