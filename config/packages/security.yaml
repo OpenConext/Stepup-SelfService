@@ -12,7 +12,7 @@ security:
             pattern:    ^/saml/metadata
 
         monitor:
-            pattern: ^/(info|health)$
+            pattern: ^/(internal/)?(info|health)$
             security: false
 
         saml_based:
