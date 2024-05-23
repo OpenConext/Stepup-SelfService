@@ -297,11 +297,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/EntryPointController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$uri of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\ActivationFlowService\\:\\:process\\(\\) expects string, string\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/EntryPointController.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Controller\\\\ExceptionController\\:\\:getPageTitleAndDescription\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',

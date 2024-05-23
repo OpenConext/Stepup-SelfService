@@ -19,8 +19,9 @@ framework:
         cookie_httponly: true
         cookie_secure: true
         cookie_samesite: none
-        cookie_lifetime: '%session_max_absolute_lifetime%'
-        gc_maxlifetime: '%session_max_relative_lifetime%'
+        cookie_lifetime: 0
+        gc_maxlifetime: 0
+
 
     fragments: false
     error_controller: Surfnet\StepupSelfService\SelfServiceBundle\Controller\ExceptionController::show
