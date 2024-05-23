@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 /**
  * Copyright 2014 SURFnet bv
@@ -70,8 +70,7 @@ class SamlController extends AbstractController
         private readonly PostBinding                      $postBinding,
         private readonly ServiceProvider                  $serviceProvider,
         private readonly IdentityProvider                 $testIdentityProvider,
-    )
-    {
+    ) {
     }
 
     /**
