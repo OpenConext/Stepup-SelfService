@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Copyright 2014 SURFnet bv
@@ -33,7 +33,6 @@ use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
 use Surfnet\StepupBundle\Value\Loa;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVet\SelfVetController;
-use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlAuthenticationStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
@@ -65,13 +64,14 @@ class SamlController extends AbstractController
         private readonly LoaResolutionService             $loaResolutionService,
         private readonly MetadataFactory                  $metadataFactory,
         private readonly SamlAuthenticationLogger         $samlAuthenticationLogger,
-        private readonly SessionStorage $authenticationStateHandler,
+        private readonly SessionStorage                   $authenticationStateHandler,
         private readonly TestAuthenticationRequestFactory $testAuthenticationRequestFactory,
         private readonly RedirectBinding                  $redirectBinding,
         private readonly PostBinding                      $postBinding,
-        private readonly ServiceProvider $serviceProvider,
-        private readonly IdentityProvider $testIdentityProvider,
-    ) {
+        private readonly ServiceProvider                  $serviceProvider,
+        private readonly IdentityProvider                 $testIdentityProvider,
+    )
+    {
     }
 
     /**
