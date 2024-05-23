@@ -33,6 +33,8 @@ use Surfnet\SamlBundle\SAML2\Response\Assertion\InResponseTo;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
 use Surfnet\StepupBundle\Value\Loa;
 use Surfnet\StepupSelfService\SelfServiceBundle\Controller\SelfVet\SelfVetController;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlAuthenticationStateHandler;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Session\SessionStorage;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenState;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\TestSecondFactor\TestAuthenticationRequestFactory;
@@ -63,6 +65,7 @@ class SamlController extends AbstractController
         private readonly LoaResolutionService             $loaResolutionService,
         private readonly MetadataFactory                  $metadataFactory,
         private readonly SamlAuthenticationLogger         $samlAuthenticationLogger,
+        private readonly SessionStorage $authenticationStateHandler,
         private readonly TestAuthenticationRequestFactory $testAuthenticationRequestFactory,
         private readonly RedirectBinding                  $redirectBinding,
         private readonly PostBinding                      $postBinding,
@@ -103,7 +106,7 @@ class SamlController extends AbstractController
             $this->loaResolutionService->getLoaByLevel(Loa::LOA_SELF_VETTED),
         );
 
-        $this->requestStack->getSession()->set('second_factor_test_request_id', $authenticationRequest->getRequestId());
+        $this->authenticationStateHandler->setRequestId($authenticationRequest->getRequestId());
 
         $samlLogger = $this->samlAuthenticationLogger->forAuthentication($authenticationRequest->getRequestId());
         $samlLogger->notice('Sending authentication request to the second factor test IDP');
@@ -135,7 +138,7 @@ class SamlController extends AbstractController
             // verification a different session id is used to mark the authentication.
             return $this->forward('Surfnet\StepupSelfService\SelfServiceBundle\Controller\RecoveryTokenController::stepUpConsumeAssertion');
         }
-        if (!$session->has('second_factor_test_request_id')) {
+        if (!$this->authenticationStateHandler->hasRequestId()) {
             $this->logger->error(
                 'Received an authentication response for testing a second factor, but no second factor test response was expected',
             );
@@ -143,9 +146,9 @@ class SamlController extends AbstractController
             throw new AccessDeniedHttpException('Did not expect an authentication response');
         }
         $this->logger->notice('Received an authentication response for testing a second factor');
-        $initiatedRequestId = $session->get('second_factor_test_request_id');
+        $initiatedRequestId = $this->authenticationStateHandler->getRequestId();
         $samlLogger = $this->samlAuthenticationLogger->forAuthentication($initiatedRequestId);
-        $session->remove('second_factor_test_request_id');
+        $this->authenticationStateHandler->clearRequestId();
         try {
             $assertion = $this->postBinding->processResponse(
                 $httpRequest,
