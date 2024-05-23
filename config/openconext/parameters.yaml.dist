@@ -83,6 +83,8 @@ parameters:
     recovery_method_sms_enabled: true
     recovery_method_safe_store_code_enabled: true
 
+    authentication_context_class_ref: ~
+
 when@test:
     parameters:
         app_secret: $ecretf0rt3st

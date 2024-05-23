@@ -297,11 +297,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/EntryPointController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$uri of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\ActivationFlowService\\:\\:process\\(\\) expects string, string\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/EntryPointController.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Controller\\\\ExceptionController\\:\\:getPageTitleAndDescription\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/ExceptionController.php',
@@ -328,11 +323,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$identityId of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\SecondFactorService\\:\\:identityHasSecondFactorOfStateWithId\\(\\) expects string, string\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/RecoveryTokenController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$loaLevel of method Surfnet\\\\StepupBundle\\\\Service\\\\LoaResolutionService\\:\\:getLoaByLevel\\(\\) expects int, float given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/RecoveryTokenController.php',
 ];
@@ -452,22 +442,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SamlController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$loaLevel of method Surfnet\\\\StepupBundle\\\\Service\\\\LoaResolutionService\\:\\:getLoaByLevel\\(\\) expects int, float given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SamlController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$requestId of method Surfnet\\\\SamlBundle\\\\Monolog\\\\SamlAuthenticationLogger\\:\\:forAuthentication\\(\\) expects string, mixed given\\.$#',
+	'message' => '#^Parameter \\#1 \\$requestId of method Surfnet\\\\SamlBundle\\\\Monolog\\\\SamlAuthenticationLogger\\:\\:forAuthentication\\(\\) expects string, string\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SamlController.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$loa of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\TestSecondFactor\\\\TestAuthenticationRequestFactory\\:\\:createSecondFactorTestRequest\\(\\) expects Surfnet\\\\StepupBundle\\\\Value\\\\Loa, Surfnet\\\\StepupBundle\\\\Value\\\\Loa\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SamlController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SamlController.php',
 ];
@@ -564,11 +544,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Cannot call method getIdentity\\(\\) on Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\|null\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SelfVet/SelfVetController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$loaLevel of method Surfnet\\\\StepupBundle\\\\Service\\\\LoaResolutionService\\:\\:getLoaByLevel\\(\\) expects int, float given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SelfVet/SelfVetController.php',
 ];
 $ignoreErrors[] = [

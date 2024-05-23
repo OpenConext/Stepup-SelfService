@@ -3080,16 +3080,16 @@
         },
         {
             "name": "surfnet/stepup-bundle",
-            "version": "6.0.12",
+            "version": "6.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-bundle.git",
-                "reference": "1a1a14f17de55f5ac1b3076a078f194710528135"
+                "reference": "0565138f262cc8c33864d1635ee90386f389cdc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/1a1a14f17de55f5ac1b3076a078f194710528135",
-                "reference": "1a1a14f17de55f5ac1b3076a078f194710528135",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-bundle/zipball/0565138f262cc8c33864d1635ee90386f389cdc0",
+                "reference": "0565138f262cc8c33864d1635ee90386f389cdc0",
                 "shasum": ""
             },
             "require": {
@@ -3145,9 +3145,9 @@
             ],
             "support": {
                 "issues": "https://github.com/OpenConext/Stepup-bundle/issues",
-                "source": "https://github.com/OpenConext/Stepup-bundle/tree/6.0.12"
+                "source": "https://github.com/OpenConext/Stepup-bundle/tree/6.0.17"
             },
-            "time": "2024-02-08T08:35:20+00:00"
+            "time": "2024-05-24T13:37:46+00:00"
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",

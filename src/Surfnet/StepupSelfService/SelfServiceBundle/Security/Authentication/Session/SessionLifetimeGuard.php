@@ -38,7 +38,6 @@ readonly class SessionLifetimeGuard
                 && $this->sessionLifetimeWithinRelativeLimit($sessionStateHandler);
     }
 
-
     public function sessionLifetimeWithinAbsoluteLimit(AuthenticatedSessionStateHandler $sessionStateHandler): bool
     {
         if (!$sessionStateHandler->isAuthenticationMomentLogged()) {
