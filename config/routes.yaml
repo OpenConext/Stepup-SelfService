@@ -1,7 +1,3 @@
-openconext_monitor:
-    resource: "@OpenConextMonitorBundle/Resources/config/routing.yml"
-    prefix: /
-
 nelmio_security_report:
     path: /csp/report
     defaults: { _controller: nelmio_security.csp_reporter_controller:indexAction }

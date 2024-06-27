@@ -110,7 +110,8 @@
         "allow-plugins": {
             "symfony/flex": true,
             "symfony/runtime": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "endroid/installer": false
         },
         "platform": {
             "php": "8.2"
