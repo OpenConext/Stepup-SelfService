@@ -742,17 +742,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Factory/SamlFactory.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\ActivationFlowService\\:\\:__construct\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/ActivationFlowService.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\ActivationFlowService\\:\\:getPreference\\(\\) should return Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Value\\\\ActivationFlowPreferenceInterface but returns mixed\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/ActivationFlowService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$preference of class Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Value\\\\ActivationFlowPreference constructor expects string, array\\|string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/ActivationFlowService.php',
 ];
@@ -1125,11 +1115,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Twig\\\\Extensions\\\\Extension\\\\SecondFactorType\\:\\:translateSecondFactorType\\(\\) has parameter \\$secondFactorType with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Twig/Extensions/Extension/SecondFactorType.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Value\\\\ActivationFlowPreference\\:\\:\\$allowedPreferences type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Value/ActivationFlowPreference.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Cannot cast mixed to string\\.$#',

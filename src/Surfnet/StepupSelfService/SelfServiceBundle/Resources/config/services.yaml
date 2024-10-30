@@ -193,8 +193,10 @@ services:
     Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService:
         arguments:
             - '@request_stack'
+            - "@security.token_storage"
             - "@logger"
             - '' # See extension
+            - [] # See extension
             - [] # See extension
 
 

@@ -19,26 +19,41 @@
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Service;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Psr\Log\LoggerInterface;
+use Surfnet\SamlBundle\Security\Authentication\Token\SamlToken;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Tests\Security\Session\FakeRequestStack;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
+class ActivationFlowServiceTest extends MockeryTestCase
 {
-    private \Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService $service;
-    private $logger;
-    private $session;
+    private ActivationFlowService $service;
+    private LoggerInterface $logger;
+    private TokenStorageInterface $tokenStorage;
+    private Session $session;
 
     protected function setUp(): void
     {
-
         $this->session = m::mock(Session::class);
         $requestStack = new FakeRequestStack($this->session);
 
         $this->logger = m::mock(LoggerInterface::class);
-        $this->service = new ActivationFlowService($requestStack, $this->logger, 'activate', ['self', 'ra']);
+
+        $this->tokenStorage = m::mock(TokenStorageInterface::class);
+
+        $this->service = new ActivationFlowService(
+            $requestStack,
+            $this->tokenStorage,
+            $this->logger,
+            'activate', ['self', 'ra'],
+            [
+                'self' =>'urn:mace:surf.nl:surfsecureid:activation:self',
+                'ra' => 'urn:mace:surf.nl:surfsecureid:activation:ra',
+            ],
+        );
     }
 
     /**
@@ -50,6 +65,7 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
             $this->logger->shouldReceive($entry['level'])->with($entry['message'])->once();
         }
         $this->session->shouldReceive('set');
+        $this->mockToken();
         $this->service->process($uri);
     }
 
@@ -61,6 +77,8 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
                 ['level' => 'info', 'message' => 'Analysing uri "/?activate=self" for activation flow query parameter'],
                 ['level' => 'debug', 'message' => 'Found a query string in the uri'],
                 ['level' => 'info', 'message' => 'Storing the preference in session'],
+                ['level' => 'info', 'message' => 'Analysing saml entitlement attributes for allowed activation flows'],
+                ['level' => 'info', 'message' => 'No entitlement attributes found to determine the allowed flow, allowing all flows'],
             ]
         ];
         yield [
@@ -69,6 +87,8 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
                 ['level' => 'info', 'message' => 'Analysing uri "/?activate=ra" for activation flow query parameter'],
                 ['level' => 'debug', 'message' => 'Found a query string in the uri'],
                 ['level' => 'info', 'message' => 'Storing the preference in session'],
+                ['level' => 'info', 'message' => 'Analysing saml entitlement attributes for allowed activation flows'],
+                ['level' => 'info', 'message' => 'No entitlement attributes found to determine the allowed flow, allowing all flows'],
             ]
         ];
     }
@@ -97,5 +117,53 @@ class ActivationFlowServiceTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->logger->shouldReceive('notice')->with('Field "activate" contained an invalid option "self-ra", must be one of: self, ra')->once();
         $this->session->shouldNotReceive('set');
         $this->service->process('/?activate=self-ra');
+    }
+
+    public function testSamlAttributeMustNotUseUnsupportedAttribute(): void {
+        $this->mockToken(['urn:mace:unsupported:attribute']);
+        $this->logger->shouldReceive('info')->with('Analysing uri "/?activate=self" for activation flow query parameter')->once();
+        $this->logger->shouldReceive('debug')->with('Found a query string in the uri')->once();
+        $this->logger->shouldReceive('info')->with('Analysing saml entitlement attributes for allowed activation flows')->once();
+        $this->logger->shouldReceive('debug')->with('Found entitlement saml attributes')->once();
+        $this->logger->shouldReceive('info')->with('No entitlement attributes found to determine the allowed flow, allowing all flows')->once();
+        $this->logger->shouldReceive('info')->with('Storing the preference in session')->once();
+
+        $this->session->shouldReceive('set');
+        $this->service->process('/?activate=self');
+    }
+
+    public function testSamlAttributeMustOverruleTheQueryParameterForRaFlow(): void {
+        $this->mockToken(['urn:mace:surf.nl:surfsecureid:activation:ra']);
+        $this->logger->shouldReceive('info')->with('Analysing uri "/?activate=self" for activation flow query parameter')->once();
+        $this->logger->shouldReceive('debug')->with('Found a query string in the uri')->once();
+        $this->logger->shouldReceive('info')->with('Analysing saml entitlement attributes for allowed activation flows')->once();
+        $this->logger->shouldReceive('debug')->with('Found entitlement saml attributes')->once();
+
+        $this->session->shouldNotReceive('set');
+        $this->service->process('/?activate=self');
+    }
+
+    public function testSamlAttributeMustOverruleTheQueryParameterForSelfFlow(): void {
+        $this->mockToken(['urn:mace:surf.nl:surfsecureid:activation:self']);
+        $this->logger->shouldReceive('info')->with('Analysing uri "/?activate=ra" for activation flow query parameter')->once();
+        $this->logger->shouldReceive('debug')->with('Found a query string in the uri')->once();
+        $this->logger->shouldReceive('info')->with('Analysing saml entitlement attributes for allowed activation flows')->once();
+        $this->logger->shouldReceive('debug')->with('Found entitlement saml attributes')->once();
+
+        $this->session->shouldNotReceive('set');
+        $this->service->process('/?activate=ra');
+    }
+
+    private function mockToken(array $entitlements = null) {
+        $attributes = $entitlements != null ? ['urn:mace:dir:attribute-def:eduPersonEntitlement' => $entitlements] : [];
+        $this->tokenStorage->shouldReceive('getToken')
+            ->once()
+            ->andReturn(new SamlToken(
+                    m::mock(UserInterface::class),
+                    'firewall',
+                    [],
+                    $attributes,
+                )
+            );
     }
 }
