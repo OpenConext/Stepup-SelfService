@@ -22,25 +22,38 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Value;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
-class ActivationFlowPreference implements ActivationFlowPreferenceInterface
+readonly class ActivationFlowPreference implements ActivationFlowPreferenceInterface
 {
-    private readonly string $preference;
+    private string $preference;
 
-    private array $allowedPreferences = ['ra', 'self'];
-
-    public function __construct(string $preference)
+    private function __construct(string $preference)
     {
-        if (!in_array($preference, $this->allowedPreferences)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Unknown ActivationFlowPreference: %s, known types: %s',
-                    $preference,
-                    implode(',', $this->allowedPreferences)
-                )
-            );
-        }
         $this->preference = $preference;
     }
+
+    public static function createRa(): self
+    {
+        return new self('ra');
+    }
+
+    public static function createSelf(): self
+    {
+        return new self('self');
+    }
+
+    public static function fromString(string $preference): self
+    {
+        return match ($preference) {
+            'ra', 'self' => new self($preference),
+            default => throw new InvalidArgumentException(
+                sprintf(
+                    'Unknown ActivationFlowPreference: %s',
+                    $preference,
+                )
+            )
+        };
+    }
+
 
     public function __toString(): string
     {

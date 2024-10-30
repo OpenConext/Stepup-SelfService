@@ -192,8 +192,11 @@ services:
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService:
         arguments:
-            - '@request_stack'
+            - '@Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler'
+            - "@security.token_storage"
             - "@logger"
+            - '' # See extension
+            - [] # See extension
             - '' # See extension
             - [] # See extension
 

@@ -132,10 +132,29 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->arrayNode('options')
                         ->prototype('scalar')
-                        ->isRequired()
-                        ->info('The options describing the preferred activation flow. Example: ra, self')
+                            ->isRequired()
+                            ->info('The options describing the preferred activation flow. Example: ra, self')
+                        ->end()
                     ->end()
-                ->end()
-            ->end();
+                    ->scalarNode('saml_attribute_field_name')
+                        ->isRequired()
+                        ->info('The name of the entitlement attribute (in SAML assertion) that is read to determine the preferred activation flow')
+                    ->end()
+                    ->arrayNode('saml_attributes')
+                        ->isRequired()
+                        ->children()
+                            ->scalarNode('ra')
+                                ->isRequired()
+                                ->info('The entitlement attribute name for the ra vetting flow')
+                            ->end()
+                            ->scalarNode('self')
+                                ->isRequired()
+                                ->info('The entitlement attribute name for the self vetting flow')
+                            ->end()
+                        ->end()
+                    ->end()
+
+            ->end()
+        ;
     }
 }
