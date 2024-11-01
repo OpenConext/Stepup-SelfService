@@ -56,7 +56,7 @@ class AuthenticatedUserListener implements EventSubscriberInterface
         }
         $this->logger->notice('Logged in user with a session within time limits detected, updating session state');
 
-        // see ExplicitSessionTimeoutHandler for the rationale
+        // see ExplicitSessionTimeoutListener for the rationale
         if ($event->getRequest()->getMethod() === 'GET') {
             $this->sessionStateHandler->setCurrentRequestUri($event->getRequest()->getRequestUri());
         }

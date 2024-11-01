@@ -57,6 +57,7 @@ services:
       - '@security.helper'
       - "%logout_redirect_url%"
 
+  Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlAuthenticator:
 
   Surfnet\StepupSelfService\SelfServiceBundle\EventListener\AuthenticatedUserListener:
   Surfnet\StepupSelfService\SelfServiceBundle\EventListener\ExplicitSessionTimeoutListener:

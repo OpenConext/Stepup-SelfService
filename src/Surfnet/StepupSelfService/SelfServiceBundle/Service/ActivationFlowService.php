@@ -22,16 +22,15 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class ActivationFlowService
 {
-    private const ACTIVATION_FLOW_PREFERENCE_SESSION_NAME = 'self_service_activation_flow_preference';
     private const ACTIVATION_FLOW_ENTITLEMENT_SAML_ATTRIBUTE = 'urn:mace:dir:attribute-def:eduPersonEntitlement';
 
     /**
@@ -51,7 +50,7 @@ class ActivationFlowService
      * @param array<string, string> $attributes
      */
     public function __construct(
-        private readonly RequestStack $requestStack,
+        private readonly AuthenticatedSessionStateHandler $sessionState,
         private readonly TokenStorageInterface $tokenStorage,
         private readonly LoggerInterface $logger,
         private readonly string $fieldName,
@@ -60,13 +59,20 @@ class ActivationFlowService
     ) {
     }
 
-    public function process(string $uri): void
+    public function processPreferenceFromUri(string $uri): void
     {
         $requestedActivationPreference = $this->getFlowPreferenceFromUri($uri);
         if ($requestedActivationPreference instanceof ActivationFlowPreferenceNotExpressed) {
             return;
         }
 
+        $this->logger->info('Storing the preference in session');
+        $this->sessionState->setRequestedActivationFlowPreference($requestedActivationPreference);
+    }
+
+    public function getPreference(): ActivationFlowPreferenceInterface
+    {
+        $requestedActivationPreference = $this->sessionState->getRequestedActivationFlowPreference();
         $availableActivationPreferences = $this->getFlowPreferencesFromSamlAttributes();
 
         if (count($availableActivationPreferences) == 0) {
@@ -77,25 +83,13 @@ class ActivationFlowService
         }
 
         if (in_array($requestedActivationPreference, $availableActivationPreferences)) {
-            $this->logger->info('Storing the preference in session');
-            $this->requestStack->getSession()->set(
-                self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME,
-                $requestedActivationPreference
-            );
+            $this->logger->info('Found allowed activation flow');
+            return $requestedActivationPreference;
         }
-    }
 
-    public function hasActivationFlowPreference(): bool
-    {
-        return $this->requestStack->getSession()->has(self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME);
-    }
+        $this->logger->info('Not found allowed activation flow');
 
-    public function getPreference(): ActivationFlowPreferenceInterface
-    {
-        if (!$this->hasActivationFlowPreference()) {
-            return new ActivationFlowPreferenceNotExpressed();
-        }
-        return $this->requestStack->getSession()->get(self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME);
+        return new ActivationFlowPreferenceNotExpressed();
     }
 
     private function getFlowPreferenceFromUri(string $uri): ActivationFlowPreferenceInterface
