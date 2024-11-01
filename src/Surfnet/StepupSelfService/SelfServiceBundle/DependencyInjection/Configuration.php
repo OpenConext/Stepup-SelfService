@@ -132,10 +132,25 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->arrayNode('options')
                         ->prototype('scalar')
-                        ->isRequired()
-                        ->info('The options describing the preferred activation flow. Example: ra, self')
+                            ->isRequired()
+                            ->info('The options describing the preferred activation flow. Example: ra, self')
+                        ->end()
                     ->end()
-                ->end()
-            ->end();
+                    ->arrayNode('attributes')
+                        ->isRequired()
+                        ->children()
+                            ->scalarNode('ra')
+                                ->isRequired()
+                                ->info('The entitlement attribute name for the ra vetting flow')
+                            ->end()
+                            ->scalarNode('self')
+                                ->isRequired()
+                                ->info('The entitlement attribute name for the self vetting flow')
+                            ->end()
+                        ->end()
+                    ->end()
+
+            ->end()
+        ;
     }
 }

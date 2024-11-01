@@ -20,12 +20,12 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
-use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\ActivationFlowService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\RecoveryTokenService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 class EntryPointController extends AbstractController
@@ -34,17 +34,17 @@ class EntryPointController extends AbstractController
         private readonly SecondFactorService $secondFactorService,
         private readonly RecoveryTokenService $recoveryTokenService,
         private readonly ActivationFlowService $activationFlowService,
-        private readonly AuthenticatedSessionStateHandler $authStateHandler
     ) {
     }
     #[Route(path: '/', name: 'ss_entry_point', methods:['GET'])]
-    public function decideSecondFactorFlow() : RedirectResponse
+    public function decideSecondFactorFlow(Request $request) : RedirectResponse
     {
         $identity = $this->getUser()->getIdentity();
         $hasSecondFactor = $this->secondFactorService->doSecondFactorsExistForIdentity($identity->id);
         $hasRecoveryToken = $this->recoveryTokenService->hasRecoveryToken($identity);
         // Check if we need to do a registration flow nudge
-        $this->activationFlowService->process($this->authStateHandler->getCurrentRequestUri());
+        // This is only used when already logged in
+        $this->activationFlowService->processPreferenceFromUri($request->getUri());
 
         return $hasSecondFactor || $hasRecoveryToken
             ? $this->redirectToRoute('ss_second_factor_list')

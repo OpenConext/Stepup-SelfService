@@ -21,14 +21,17 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service;
 
 use Psr\Log\LoggerInterface;
+use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class ActivationFlowService
 {
-    private const ACTIVATION_FLOW_PREFERENCE_SESSION_NAME = 'self_service_activation_flow_preference';
+    private const ACTIVATION_FLOW_ENTITLEMENT_SAML_ATTRIBUTE = 'urn:mace:dir:attribute-def:eduPersonEntitlement';
 
     /**
      * Handle preferred activation flow logic
@@ -42,19 +45,59 @@ class ActivationFlowService
      *
      * Note that:
      * - fieldName and options are configured in the SelfServiceExtension
+     *
+     * @param string[] $options
+     * @param array<string, string> $attributes
      */
     public function __construct(
-        private readonly RequestStack $requestStack,
+        private readonly AuthenticatedSessionStateHandler $sessionState,
+        private readonly TokenStorageInterface $tokenStorage,
         private readonly LoggerInterface $logger,
         private readonly string $fieldName,
-        private readonly array $options
+        private readonly array $options,
+        private readonly array $attributes
     ) {
     }
 
-    public function process(string $uri): void
+    public function processPreferenceFromUri(string $uri): void
+    {
+        $requestedActivationPreference = $this->getFlowPreferenceFromUri($uri);
+        if ($requestedActivationPreference instanceof ActivationFlowPreferenceNotExpressed) {
+            return;
+        }
+
+        $this->logger->info('Storing the preference in session');
+        $this->sessionState->setRequestedActivationFlowPreference($requestedActivationPreference);
+    }
+
+    public function getPreference(): ActivationFlowPreferenceInterface
+    {
+        $requestedActivationPreference = $this->sessionState->getRequestedActivationFlowPreference();
+        $availableActivationPreferences = $this->getFlowPreferencesFromSamlAttributes();
+
+        if (count($availableActivationPreferences) == 0) {
+            $this->logger->info('No entitlement attributes found to determine the allowed flow, allowing all flows');
+            $availableActivationPreferences = [
+                'ra', 'self'
+            ];
+        }
+
+        if (in_array($requestedActivationPreference, $availableActivationPreferences)) {
+            $this->logger->info('Found allowed activation flow');
+            return $requestedActivationPreference;
+        }
+
+        $this->logger->info('Not found allowed activation flow');
+
+        return new ActivationFlowPreferenceNotExpressed();
+    }
+
+    private function getFlowPreferenceFromUri(string $uri): ActivationFlowPreferenceInterface
     {
         $this->logger->info(sprintf('Analysing uri "%s" for activation flow query parameter', $uri));
+
         $parts = parse_url($uri);
+        /** @var array<string, string> $parameters */
         $parameters = [];
 
         if (array_key_exists('query', $parts)) {
@@ -71,38 +114,52 @@ class ActivationFlowService
                     $uri
                 )
             );
-            return;
+            return new ActivationFlowPreferenceNotExpressed();
         }
 
         $option = $parameters[$this->fieldName];
-        if (!in_array($option, $this->options)) {
-            $this->logger->notice(
-                sprintf(
-                    'Field "%s" contained an invalid option "%s", must be one of: %s',
-                    $this->fieldName,
-                    $option,
-                    implode(', ', $this->options)
-                )
-            );
-            return;
+        switch ($option) {
+            case 'ra':
+                return ActivationFlowPreference::createRa();
+            case 'self':
+                return ActivationFlowPreference::createSelf();
         }
-        $this->logger->info('Storing the preference in session');
-        $this->requestStack->getSession()->set(
-            self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME,
-            new ActivationFlowPreference($option)
+
+
+        $this->logger->notice(
+            sprintf(
+                'Field "%s" contained an invalid option "%s", must be one of: %s',
+                $this->fieldName,
+                $option,
+                implode(', ', $this->options)
+            )
         );
+        return new ActivationFlowPreferenceNotExpressed();
     }
 
-    public function hasActivationFlowPreference(): bool
+    /**
+     * @return ActivationFlowPreferenceInterface[]
+     */
+    private function getFlowPreferencesFromSamlAttributes(): array
     {
-        return $this->requestStack->getSession()->has(self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME);
-    }
+        $this->logger->info('Analysing saml entitlement attributes for allowed activation flows');
 
-    public function getPreference(): ActivationFlowPreferenceInterface
-    {
-        if (!$this->hasActivationFlowPreference()) {
-            return new ActivationFlowPreferenceNotExpressed();
+        $token = $this->tokenStorage->getToken();
+        if (!$token instanceof TokenInterface) {
+            throw new LogicException("A authentication token should be set at this point");
         }
-        return $this->requestStack->getSession()->get(self::ACTIVATION_FLOW_PREFERENCE_SESSION_NAME);
+
+        $activationFlows = [];
+        $attributes = $token->getAttributes();
+        if (array_key_exists(self::ACTIVATION_FLOW_ENTITLEMENT_SAML_ATTRIBUTE, $attributes)) {
+            $this->logger->debug('Found entitlement saml attributes');
+            if (in_array($this->attributes['ra'], $attributes[self::ACTIVATION_FLOW_ENTITLEMENT_SAML_ATTRIBUTE])) {
+                $activationFlows[] = ActivationFlowPreference::createRa();
+            }
+            if (in_array($this->attributes['self'], $attributes[self::ACTIVATION_FLOW_ENTITLEMENT_SAML_ATTRIBUTE])) {
+                $activationFlows[] = ActivationFlowPreference::createSelf();
+            }
+        }
+        return $activationFlows;
     }
 }

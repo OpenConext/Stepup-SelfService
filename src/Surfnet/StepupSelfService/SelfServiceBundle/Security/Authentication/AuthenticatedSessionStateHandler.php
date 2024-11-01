@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceInterface;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 
 interface AuthenticatedSessionStateHandler
@@ -56,6 +57,10 @@ interface AuthenticatedSessionStateHandler
     public function setCurrentRequestUri(string $uri): void;
 
     public function getCurrentRequestUri(): string;
+
+    public function setRequestedActivationFlowPreference(ActivationFlowPreferenceInterface $preference): void;
+
+    public function getRequestedActivationFlowPreference(): ActivationFlowPreferenceInterface;
 
     /**
      * Migrates the current session to a new session id while maintaining all
