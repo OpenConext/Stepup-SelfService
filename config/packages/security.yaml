@@ -17,7 +17,7 @@ security:
 
         saml_based:
             custom_authenticators:
-                - Surfnet\SamlBundle\Security\Authentication\SamlAuthenticator
+                - Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlAuthenticator
             logout:
                 path: /logout
 

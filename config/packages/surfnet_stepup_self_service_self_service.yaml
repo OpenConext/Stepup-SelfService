@@ -11,3 +11,5 @@ surfnet_stepup_self_service_self_service:
   preferred_activation_flow:
     query_string_field_name: "%preferred_activation_flow_name%"
     options: "%preferred_activation_flow_options%"
+    saml_attribute_field_name: "%activation_flow_attribute_name%"
+    saml_attributes: "%activation_flow_attributes%"

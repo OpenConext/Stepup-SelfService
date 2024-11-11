@@ -23,6 +23,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\Se
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\SamlAuthenticationStateHandler;
 use Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication\AuthenticatedSessionStateHandler;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceInterface;
+use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\DateTime;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -114,6 +117,21 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
     public function clearRequestId(): void
     {
         $this->requestStack->getSession()->remove(self::SAML_SESSION_KEY . 'request_id');
+    }
+
+    public function setRequestedActivationFlowPreference(ActivationFlowPreferenceInterface $preference): void
+    {
+        $this->requestStack->getSession()->set(self::SAML_SESSION_KEY . 'activation_preference', $preference->__toString());
+    }
+
+    public function getRequestedActivationFlowPreference(): ActivationFlowPreferenceInterface
+    {
+        if ($this->requestStack->getSession()->has(self::SAML_SESSION_KEY . 'activation_preference')) {
+            /** @var string $preference */
+            $preference = $this->requestStack->getSession()->get(self::SAML_SESSION_KEY . 'activation_preference');
+            return ActivationFlowPreference::fromString($preference);
+        }
+        return new ActivationFlowPreferenceNotExpressed();
     }
 
     public function invalidate(): void

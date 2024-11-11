@@ -109,7 +109,9 @@ class SurfnetStepupSelfServiceSelfServiceExtension extends Extension
         ContainerBuilder $container
     ): void {
         $container->getDefinition(ActivationFlowService::class)
-            ->replaceArgument(2, $preferenceConfig['query_string_field_name'])
-            ->replaceArgument(3, $preferenceConfig['options']);
+            ->replaceArgument(3, $preferenceConfig['query_string_field_name'])
+            ->replaceArgument(4, $preferenceConfig['options'])
+            ->replaceArgument(5, $preferenceConfig['saml_attribute_field_name'])
+            ->replaceArgument(6, $preferenceConfig['saml_attributes']);
     }
 }
