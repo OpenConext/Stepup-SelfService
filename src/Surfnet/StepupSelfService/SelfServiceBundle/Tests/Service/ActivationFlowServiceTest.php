@@ -185,6 +185,21 @@ class ActivationFlowServiceTest extends MockeryTestCase
         $this->assertEquals($preference, new ActivationFlowPreferenceNotExpressed());
     }
 
+
+    public function testSamlAttributeMustUseTheAllowTheOnlyAttributeWhenNoQueryParameterIsSet(): void {
+        $this->mockToken(['urn:mace:surf.nl:surfsecureid:activation:ra']);
+        $this->stateHandler->shouldReceive('getRequestedActivationFlowPreference')
+            ->andReturn(new ActivationFlowPreferenceNotExpressed());
+
+        $this->logger->shouldReceive('info')->with('Analysing saml entitlement attributes for allowed activation flows')->once();
+        $this->logger->shouldReceive('debug')->with('Found entitlement saml attributes')->once();
+        $this->logger->shouldReceive('info')->with('Only one activation flow allowed')->once();
+
+        $preference = $this->service->getPreference();
+        $this->assertEquals($preference, ActivationFlowPreference::createRa());
+    }
+
+
     private function mockToken(array $entitlements = null) {
         $attributes = $entitlements != null ? ['urn:mace:dir:attribute-def:eduPersonEntitlement' => $entitlements] : [];
         $this->tokenStorage->shouldReceive('getToken')
