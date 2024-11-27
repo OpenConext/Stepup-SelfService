@@ -83,6 +83,11 @@ class ActivationFlowService
             ];
         }
 
+        if ($requestedActivationPreference instanceof ActivationFlowPreferenceNotExpressed && count($availableActivationPreferences) === 1) {
+            $this->logger->info('Only one activation flow allowed');
+            return $availableActivationPreferences[0];
+        }
+
         if (in_array($requestedActivationPreference, $availableActivationPreferences)) {
             $this->logger->info('Found allowed activation flow');
             return $requestedActivationPreference;
@@ -148,6 +153,7 @@ class ActivationFlowService
 
         $activationFlows = [];
         $attributes = $token->getAttributes();
+
         if (array_key_exists($this->attributeName, $attributes)) {
             $this->logger->debug('Found entitlement saml attributes');
             if (in_array($this->attributes['ra'], $attributes[$this->attributeName])) {
