@@ -35,6 +35,7 @@ class SamlAuthenticator implements InteractiveAuthenticatorInterface, Authentica
     public function __construct(
         readonly private StepupSamlAuthenticator $authenticator,
         private readonly ActivationFlowService $activationFlowService,
+        private readonly AuthenticatedSessionStateHandler $authenticatedSessionStateHandler
     ) {
     }
 
@@ -43,6 +44,10 @@ class SamlAuthenticator implements InteractiveAuthenticatorInterface, Authentica
         // Check if we need to do a registration flow nudge
         // This is used for when we are not logged in yet because the authentication is done in the Stepup-SAML-bundle
         $this->activationFlowService->processPreferenceFromUri($request->getUri());
+
+        // Set url to redirect to after successful login
+        $this->authenticatedSessionStateHandler->setCurrentRequestUri($request->getUri());
+
         return $this->authenticator->start($request, $authException);
     }
 

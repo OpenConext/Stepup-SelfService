@@ -37,8 +37,8 @@ class AuthenticationSuccessHandler extends SuccessHandler
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
     {
-        $this->authenticatedSessionStateHandler->setCurrentRequestUri($request->getUri());
+        $redirectUri = $this->authenticatedSessionStateHandler->getCurrentRequestUri();
 
-        return new RedirectResponse('/');
+        return new RedirectResponse($redirectUri);
     }
 }
