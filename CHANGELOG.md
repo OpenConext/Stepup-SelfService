@@ -3,6 +3,7 @@
 # 5.0.5
 - Use a SAML (entitlement) attribute to decide what activation flows
   a user may use #336
+- Redirect to initial uri after successful login #443
 
 # 5.0.4
 - Correct a route name with a missing namespace part (self vetting acs) #320
