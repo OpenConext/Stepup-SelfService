@@ -93,7 +93,7 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
 
     public function getCurrentRequestUri(): string
     {
-        $uri = $this->requestStack->getSession()->get(self::AUTH_SESSION_KEY . 'current_uri', '');
+        $uri = $this->requestStack->getSession()->get(self::AUTH_SESSION_KEY . 'current_uri', '/');
         $this->requestStack->getSession()->remove(self::AUTH_SESSION_KEY . 'current_uri');
 
         return $uri;
