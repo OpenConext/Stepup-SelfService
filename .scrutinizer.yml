@@ -2,6 +2,7 @@ build:
     environment:
         php:
             version: 8.2
+        node: "v20.18.3"
 
 filter:
     excluded_paths:
