@@ -2487,16 +2487,16 @@
         },
         {
             "name": "surfnet/stepup-middleware-client-bundle",
-            "version": "5.1.0",
+            "version": "5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OpenConext/Stepup-Middleware-clientbundle.git",
-                "reference": "ef18b536caaff91da938ff9d4f29729bec3fb593"
+                "reference": "3301e98999986ddf16b63480fe404e8aae582f77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/ef18b536caaff91da938ff9d4f29729bec3fb593",
-                "reference": "ef18b536caaff91da938ff9d4f29729bec3fb593",
+                "url": "https://api.github.com/repos/OpenConext/Stepup-Middleware-clientbundle/zipball/3301e98999986ddf16b63480fe404e8aae582f77",
+                "reference": "3301e98999986ddf16b63480fe404e8aae582f77",
                 "shasum": ""
             },
             "require": {
@@ -2540,9 +2540,9 @@
             "description": "Symfony 5|6 bundle for consuming the Step-up Middleware API.",
             "support": {
                 "issues": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/issues",
-                "source": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/tree/5.1.0"
+                "source": "https://github.com/OpenConext/Stepup-Middleware-clientbundle/tree/5.2.0"
             },
-            "time": "2024-06-24T14:02:39+00:00"
+            "time": "2025-04-16T14:07:56+00:00"
         },
         {
             "name": "surfnet/stepup-saml-bundle",
@@ -11338,9 +11338,9 @@
         "ext-mbstring": "*",
         "ext-openssl": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.2"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
