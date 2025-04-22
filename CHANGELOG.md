@@ -1,5 +1,9 @@
 # Changelog
 
+# 5.0.6
+- Fix: Vetting with a self asserted token is not allowed when adding a token, the user is always
+  directed to the RA vetting page #466
+
 # 5.0.5
 - Use a SAML (entitlement) attribute to decide what activation flows
   a user may use #336
