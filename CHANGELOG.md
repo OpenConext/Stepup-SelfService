@@ -13,7 +13,7 @@
 - Correct a route name with a missing namespace part (self vetting acs) #320
 
 # 5.0.3
-- Repair exeption screens
+- Repair exception screens
 - Fix flash messages
 
 # 5.0.2
