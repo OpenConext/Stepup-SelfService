@@ -1,4 +1,6 @@
 build:
+    # Use Ubuntu 22.04.5 LTS (Jammy Jellyfish)
+    image: default-jammy
     environment:
         php:
             version: 8.2
