@@ -1,5 +1,8 @@
 # Changelog
 
+# 5.0.5.1
+- Update xmlseclibs to 3.1.4 to fix canonicalization bypass error (security)
+
 # 5.0.5
 - Use a SAML (entitlement) attribute to decide what activation flows
   a user may use #336
