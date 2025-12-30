@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+{% import _self as macro %}
+
+{% block page_title %}{{ 'ss.recovery_token.revoke.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h2>{{ block('page_title') }}</h2>
+
+    <p>{{ 'ss.recovery_token.revoke.text.are_you_sure'|trans }}</p>
+
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th scope="row">{{ 'ss.recovery_token.revoke.table_header.recovery_token.method'|trans }}</th>
+            <th scope="row">{{ 'ss.recovery_token.revoke.table_header.recovery_token.identifier'|trans }}</th>
+
+        </tr>
+        <tr>
+            <td>{{ recoveryToken.type|trans }}</td>
+            <td>{% if recoveryToken.type == 'sms' %}{{ recoveryToken.identifier }}{% else %}-{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {{ form(form) }}
+{% endblock %}

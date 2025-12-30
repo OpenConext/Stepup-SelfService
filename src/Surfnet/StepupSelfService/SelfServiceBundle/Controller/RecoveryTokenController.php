@@ -34,6 +34,7 @@ use Surfnet\StepupMiddlewareClientBundle\Exception\NotFoundException;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\RevokeRecoveryTokenCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
+use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\RevokeRecoveryTokenType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Form\Type\PromiseSafeStorePossessionType;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SecondFactorService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens\AuthenticationRequestFactory;
@@ -47,6 +48,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use function sprintf;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -207,9 +209,9 @@ class RecoveryTokenController extends AbstractController
     #[Route(
         path: '/recovery-token/delete/{recoveryTokenId}',
         name: 'ss_recovery_token_delete',
-        methods: ['GET'],
+        methods: ['GET', 'POST'],
     )]
-    public function delete(string $recoveryTokenId): Response
+    public function delete(Request $request, string $recoveryTokenId): Response
     {
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $this->getUser()->getIdentity());
         try {
@@ -217,19 +219,32 @@ class RecoveryTokenController extends AbstractController
             $command = new RevokeRecoveryTokenCommand();
             $command->identity = $this->getUser()->getIdentity();
             $command->recoveryToken = $recoveryToken;
-            $executionResult = $this->safeStoreService->revokeRecoveryToken($command);
-            if ($executionResult->getErrors() !== []) {
-                $this->addFlash('error', 'ss.form.recovery_token.delete.success');
-                foreach ($executionResult->getErrors() as $error) {
-                    $this->logger->error(sprintf('Recovery Token revocation failed with message: "%s"', $error));
+
+            $form = $this->createForm(RevokeRecoveryTokenType::class, $command)->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $executionResult = $this->safeStoreService->revokeRecoveryToken($command);
+
+                if ($executionResult->isSuccessful()) {
+                    $this->addFlash('error', 'ss.form.recovery_token.delete.success');
+                } else {
+                    foreach ($executionResult->getErrors() as $error) {
+                        $this->logger->error(sprintf('Recovery Token revocation failed with message: "%s"', $error));
+                    }
+                    $this->addFlash('error', 'ss.form.recovery_token.delete.failed');
                 }
-                return $this->redirect($this->generateUrl('ss_second_factor_list'));
+                return $this->redirectToRoute('ss_second_factor_list');
             }
         } catch (NotFoundException) {
             throw new LogicException('Identity %s tried to remove an unpossessed recovery token');
         }
-        $this->addFlash('success', 'ss.form.recovery_token.delete.success');
-        return $this->redirect($this->generateUrl('ss_second_factor_list'));
+        return $this->render(
+            'second_factor/revoke-recovery-token.html.twig',
+            [
+                'form'         => $form->createView(),
+                'recoveryToken' => $recoveryToken,
+            ]
+        );
     }
 
     /**
