@@ -1,2 +1,2 @@
 #!/bin/bash
-bin/console translation:extract --config=default --env=dev
+bin/console jms:translation:extract --config=default --env=dev
