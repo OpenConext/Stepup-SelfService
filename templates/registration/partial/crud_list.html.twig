@@ -24,6 +24,7 @@
                             <td>
                                 <div class="btn-group pull-right" role="group">
                                     <a class="btn btn-mini btn-warning"
+                                       data-test_revoketokentype="{{ recoveryToken.type }}"
                                        href="{{ path('ss_recovery_token_delete', {'recoveryTokenId': recoveryToken.recoveryTokenId}) }}">
                                         {{ 'ss.second_factor.revoke.button.revoke'|trans }}
                                     </a>
