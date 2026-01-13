@@ -10,7 +10,6 @@ filter:
         - "*/Tests/*"
 
 checks:
-    javascript: false
     php:
         verify_property_names: true
         verify_argument_usable_as_reference: true
