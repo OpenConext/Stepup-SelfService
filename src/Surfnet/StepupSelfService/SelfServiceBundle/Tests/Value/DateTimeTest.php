@@ -34,8 +34,8 @@ class DateTimeTest extends TestCase
      * compatibility with the new format. Think about log(-processors), (de-)serializers, etc.
      *
      * @test
-     * @group value
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
     public function the_configured_format_is_what_is_needed_for_correct_application_behavior(): void
     {
         $this->assertEquals('Y-m-d\\TH:i:sP', DateTime::FORMAT);
@@ -46,8 +46,8 @@ class DateTimeTest extends TestCase
      * docblock above the {@see the_configured_format_is_what_is_needed_for_correct_application_behavior()} test
      *
      * @test
-     * @group value
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
     public function to_string_returns_the_time_in_the_correct_format(): void
     {
         $coreDateTimeObject = new CoreDateTime('@1000');
@@ -58,8 +58,8 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
-     * @group value
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
     public function add_returns_a_different_object_that_has_the_interval_added(): void
     {
         $base     = new DateTime(new CoreDateTime('@1000'));
@@ -73,8 +73,8 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
-     * @group value
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
     public function sub_returns_a_different_object_that_has_the_interval_substracted(): void
     {
         $base     = new DateTime(new CoreDateTime('@1000'));
@@ -88,8 +88,8 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
-     * @group value
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
     public function comes_before_works_with_exclusive_comparison(): void
     {
         $base   = new DateTime(new CoreDateTime('@1000'));
@@ -104,8 +104,8 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
-     * @group value
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
     public function comes_before_or_is_equal_works_with_inclusive_comparison(): void
     {
         $base   = new DateTime(new CoreDateTime('@1000'));
@@ -120,8 +120,8 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
-     * @group value
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
     public function comes_after_works_with_exclusive_comparison(): void
     {
         $base   = new DateTime(new CoreDateTime('@1000'));
@@ -136,8 +136,8 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
-     * @group value
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
     public function comes_after_or_is_equal_works_with_inclusive_comparison(): void
     {
         $base   = new DateTime(new CoreDateTime('@1000'));

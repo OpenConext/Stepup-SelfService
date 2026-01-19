@@ -28,8 +28,8 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @test
-     * @group configuration
      */
+    #[\PHPUnit\Framework\Attributes\Group('configuration')]
     public function it_requires_second_factors_to_be_configured(): void
     {
         $configuration = [
@@ -44,8 +44,8 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @test
-     * @group configuration
      */
+    #[\PHPUnit\Framework\Attributes\Group('configuration')]
     public function it_requires_session_timeout_configuration(): void
     {
         $configuration = ['enabled_second_factors' => ['sms']];
@@ -55,8 +55,8 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @test
-     * @group configuration
      */
+    #[\PHPUnit\Framework\Attributes\Group('configuration')]
     public function it_requires_maximum_absolute_timeout_to_be_configured(): void
     {
         $configuration = [
@@ -69,8 +69,8 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @test
-     * @group configuration
      */
+    #[\PHPUnit\Framework\Attributes\Group('configuration')]
     public function it_requires_maximum_relative_timeout_to_be_configured(): void
     {
         $configuration = [
@@ -83,8 +83,8 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @test
-     * @group configuration
      */
+    #[\PHPUnit\Framework\Attributes\Group('configuration')]
     public function it_allows_one_enabled_second_factor(): void
     {
         $configuration = ['enabled_second_factors' => ['sms']];
@@ -101,8 +101,8 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @test
-     * @group configuration
      */
+    #[\PHPUnit\Framework\Attributes\Group('configuration')]
     public function it_allows_two_enabled_second_factors(): void
     {
         $configuration = ['enabled_second_factors' => ['sms', 'yubikey']];
@@ -119,8 +119,8 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @test
-     * @group configuration
      */
+    #[\PHPUnit\Framework\Attributes\Group('configuration')]
     public function session_lifetimes_max_absolute_lifetime_must_be_an_integer(): void
     {
         $configuration = [
@@ -135,8 +135,8 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @test
-     * @group configuration
      */
+    #[\PHPUnit\Framework\Attributes\Group('configuration')]
     public function session_lifetimes_max_relative_lifetime_must_be_an_integer(): void
     {
         $configuration = [

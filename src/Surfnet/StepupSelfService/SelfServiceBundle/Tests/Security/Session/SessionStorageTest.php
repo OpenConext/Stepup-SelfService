@@ -42,9 +42,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function the_authentication_moment_can_be_logged(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -57,9 +57,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function the_authentication_moment_cannot_be_logged_twice(): void
     {
         $this->expectException(LogicException::class);
@@ -73,9 +73,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function whether_or_not_an_authentication_moment_is_logged_can_be_queried(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -90,9 +90,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function a_logged_authentication_moment_can_be_retrieved(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -110,9 +110,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function attempting_to_retrieve_an_authentication_moment_when_not_yet_logged_causes_an_exception_to_be_thrown(): void
     {
         $this->expectException(LogicException::class);
@@ -125,9 +125,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function an_interaction_can_be_logged(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -142,9 +142,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function the_moment_of_interaction_can_be_retrieved(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -161,9 +161,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function an_interaction_is_logged_when_an_authentication_is_logged(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -186,9 +186,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function the_moment_of_interaction_can_be_updated(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -213,9 +213,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function the_existence_of_a_moment_interaction_can_be_queried(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -230,9 +230,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function the_current_uri_can_be_stored_in_the_session(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -247,9 +247,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function a_request_id_can_be_stored_in_the_session(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -264,9 +264,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function the_presence_of_a_request_id_can_be_queried(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -282,9 +282,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function a_stored_request_id_can_be_cleared(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -305,9 +305,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function a_session_can_be_invalidated(): void
     {
         $session = Mockery::mock(SessionInterface::class)
@@ -324,9 +324,9 @@ class SessionStorageTest extends TestCase
 
     /**
      * @test
-     * @group security
-     * @group session
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
     public function a_session_can_be_migrated(): void
     {
         $session = Mockery::mock(SessionInterface::class)

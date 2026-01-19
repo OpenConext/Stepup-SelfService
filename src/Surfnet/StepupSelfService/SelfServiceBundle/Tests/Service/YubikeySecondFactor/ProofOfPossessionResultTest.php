@@ -25,8 +25,8 @@ class ProofOfPossessionResultTest extends TestCase
 {
     /**
      * @test
-     * @group yubikey
      */
+    #[\PHPUnit\Framework\Attributes\Group('yubikey')]
     public function an_invalid_otp_gives_an_unsuccessful_result_without_second_factor_id(): void
     {
         $result = ProofOfPossessionResult::invalidOtp();
@@ -41,8 +41,8 @@ class ProofOfPossessionResultTest extends TestCase
 
     /**
      * @test
-     * @group yubikey
      */
+    #[\PHPUnit\Framework\Attributes\Group('yubikey')]
     public function otp_verification_failure_gives_an_unsuccessful_result_without_second_factor_id(): void
     {
         $result = ProofOfPossessionResult::otpVerificationFailed();
@@ -57,8 +57,8 @@ class ProofOfPossessionResultTest extends TestCase
 
     /**
      * @test
-     * @group yubikey
      */
+    #[\PHPUnit\Framework\Attributes\Group('yubikey')]
     public function a_failed_proof_of_possession_command_gives_an_unsuccessful_result_without_second_factor_id(): void
     {
         $result = ProofOfPossessionResult::proofOfPossessionCommandFailed();
@@ -73,8 +73,8 @@ class ProofOfPossessionResultTest extends TestCase
 
     /**
      * @test
-     * @group yubikey
      */
+    #[\PHPUnit\Framework\Attributes\Group('yubikey')]
     public function when_the_second_factor_has_been_created_the_result_is_successful_with_second_factor_id(): void
     {
         // generated once using \Rhumsaa\Uuid\Uuid::uuid4()
