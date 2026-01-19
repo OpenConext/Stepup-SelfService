@@ -23,4 +23,4 @@ jobs:
         run: yarn
 
       - name: Run QA tests
-        run: composer check
+        run: composer check-ci

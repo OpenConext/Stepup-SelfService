@@ -67,6 +67,10 @@
     },
     "scripts": {
         "check": [
+            "@check-ci",
+            "@rector"
+        ],
+        "check-ci": [
             "@composer-validate",
             "@phplint",
             "@phpmd",
@@ -79,6 +83,8 @@
         "composer-validate": "./ci/qa/validate",
         "phplint": "./ci/qa/phplint",
         "license-headers": "./ci/qa/docheader",
+        "rector": "./ci/qa/rector.sh --dry-run",
+        "rector-fix": "./ci/qa/rector.sh",
         "phpmd": "./ci/qa/phpmd",
         "phpcs": "./ci/qa/phpcs",
         "phpcpd": "./ci/qa/phpcpd",

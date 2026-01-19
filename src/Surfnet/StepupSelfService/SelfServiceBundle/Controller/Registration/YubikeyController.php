@@ -82,7 +82,7 @@ class YubikeyController extends AbstractController
         return $this->render(
             'registration/yubikey/prove_possession.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
                 'verifyEmail' => $this->checkerService->emailVerificationIsRequired(),
             ]
         );

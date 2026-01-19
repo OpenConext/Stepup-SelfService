@@ -206,7 +206,7 @@ class SelfAssertedTokensController extends AbstractController
                 }
                 return $this->render(
                     'registration/self_asserted_tokens/authenticate_safe_store.html.twig',
-                    ['form' => $form->createView()]
+                    ['form' => $form]
                 );
             default:
                 throw new LogicException("The token type {$token->type} is not implemented");
@@ -317,7 +317,7 @@ class SelfAssertedTokensController extends AbstractController
         return $this->render(
             'registration/self_asserted_tokens/registration_sms_prove_possession.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
             ]
         );
     }
@@ -360,7 +360,7 @@ class SelfAssertedTokensController extends AbstractController
         return $this->render(
             'registration/self_asserted_tokens/recovery_token_safe_store.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
                 'secondFactorId' => $secondFactorId,
                 'secret' => $secret,
             ]

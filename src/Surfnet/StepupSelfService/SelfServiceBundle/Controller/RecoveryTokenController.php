@@ -144,7 +144,7 @@ class RecoveryTokenController extends AbstractController
         return $this->render(
             'registration/self_asserted_tokens/create_safe_store.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
                 'secret' => $secret,
             ]
         );
@@ -241,7 +241,7 @@ class RecoveryTokenController extends AbstractController
         return $this->render(
             'second_factor/revoke-recovery-token.html.twig',
             [
-                'form'         => $form->createView(),
+                'form'         => $form,
                 'recoveryToken' => $recoveryToken,
             ]
         );
