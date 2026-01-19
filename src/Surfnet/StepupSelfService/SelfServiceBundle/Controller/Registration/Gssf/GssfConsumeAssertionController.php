@@ -55,7 +55,7 @@ final class GssfConsumeAssertionController extends AbstractController
         name: 'ss_registration_gssf_consume_assertion',
         methods: ['POST'],
     )]
-    public function consumeAssertion(Request $httpRequest, string $provider): array|Response
+    public function consumeAssertion(Request $httpRequest, string $provider): Response
     {
         $this->checkerService->assertSecondFactorEnabled($provider);
 

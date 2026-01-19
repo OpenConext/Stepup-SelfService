@@ -7,3 +7,4 @@ parameters:
     excludePaths:
         - ../../src/Surfnet/StepupSelfService/SelfServiceBundle/Tests
         - ../../src/Surfnet/StepupSelfService/SamlStepupProviderBundle/Tests
+    treatPhpDocTypesAsCertain: false

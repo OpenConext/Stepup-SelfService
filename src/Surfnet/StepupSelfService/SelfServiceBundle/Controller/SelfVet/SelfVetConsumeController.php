@@ -40,7 +40,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects) - Controllers are prone to higher coupling. This one is no exception
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects") - Controllers are prone to higher coupling. This one is no exception
  */
 class SelfVetConsumeController extends AbstractController
 {

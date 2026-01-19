@@ -28,7 +28,7 @@ class ViewConfig implements ViewConfigInterface
 {
     /**
      * The arrays are arrays of translated text, indexed on locale.
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public function __construct(
         private readonly RequestStack $requestStack,

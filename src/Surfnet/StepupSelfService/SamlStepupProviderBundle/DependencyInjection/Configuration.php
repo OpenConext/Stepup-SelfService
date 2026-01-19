@@ -62,7 +62,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
      */
     private function addProvidersSection(ArrayNodeDefinition $rootNode): void
     {

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\Stepup\Tests\DateTime;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Value;
 
 use DateInterval;
 use DateTime as CoreDateTime;

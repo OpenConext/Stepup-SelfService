@@ -44,8 +44,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 /**
  *
- * @SuppressWarnings(PHPMD.CyclomaticComplexity)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CyclomaticComplexity")
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  * TODO: Split up into smaller controllers
  */
 class SelfAssertedTokensController extends AbstractController

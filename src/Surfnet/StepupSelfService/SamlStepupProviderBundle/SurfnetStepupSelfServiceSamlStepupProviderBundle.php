@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * @SuppressWarnings(PHPMD.LongClassName)
+ * @SuppressWarnings("PHPMD.LongClassName")
  */
 class SurfnetStepupSelfServiceSamlStepupProviderBundle extends Bundle
 {

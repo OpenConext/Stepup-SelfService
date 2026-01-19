@@ -32,7 +32,7 @@ use Surfnet\SamlBundle\Entity\IdentityProvider;
 /**
  * This is the class that loads and manages your bundle configuration
  *
- * @SuppressWarnings(PHPMD.LongClassName)
+ * @SuppressWarnings("PHPMD.LongClassName")
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */

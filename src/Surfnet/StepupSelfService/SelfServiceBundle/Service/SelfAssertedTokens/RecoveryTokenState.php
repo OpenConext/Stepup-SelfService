@@ -37,7 +37,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * 3. Remember the route where to return to after giving step up
  * 4. Store the fact if step up was given for a given Recovery Token action.
  *
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class RecoveryTokenState
 {

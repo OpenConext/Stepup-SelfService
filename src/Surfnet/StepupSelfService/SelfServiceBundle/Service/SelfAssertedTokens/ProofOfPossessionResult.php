@@ -21,7 +21,7 @@ declare(strict_types = 1);
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens;
 
 /**
- * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings("PHPMD.TooManyMethods")
  */
 final readonly class ProofOfPossessionResult
 {

@@ -42,7 +42,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
- *  @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ *  @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  * /
  */
 class RegistrationController extends AbstractController

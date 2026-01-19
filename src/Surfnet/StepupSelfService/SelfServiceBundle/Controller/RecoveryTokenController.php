@@ -51,14 +51,14 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use function sprintf;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 class RecoveryTokenController extends AbstractController
 {
     use RecoveryTokenControllerTrait;
 
     /**
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public function __construct(
         private readonly RecoveryTokenService         $recoveryTokenService,
