@@ -28,9 +28,7 @@ final class RequestStackLocaleProviderTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_uses_the_preferred_locale(): void
     {
         $request = m::mock(\Symfony\Component\HttpFoundation\Request::class);
@@ -43,9 +41,7 @@ final class RequestStackLocaleProviderTest extends TestCase
         $this->assertEquals('nl_NL', $provider->providePreferredLocale());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_falls_back_to_the_default_locale(): void
     {
         $request = m::mock(\Symfony\Component\HttpFoundation\Request::class);
@@ -58,7 +54,7 @@ final class RequestStackLocaleProviderTest extends TestCase
         $this->assertEquals('de_DE', $provider->providePreferredLocale());
     }
 
-    public function non_strings(): array
+    public static function non_strings(): array
     {
         return [
             'array'    => [[]],
@@ -70,10 +66,8 @@ final class RequestStackLocaleProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider non_strings
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
+    #[\PHPUnit\Framework\Attributes\DataProvider('non_strings')]
     public function it_requires_the_default_locale_to_be_a_string(mixed $nonString): void
     {
         $this->expectExceptionMessageMatches('/given for "defaultLocale"/');
@@ -83,10 +77,8 @@ final class RequestStackLocaleProviderTest extends TestCase
         new RequestStackLocaleProvider($requestStack, $nonString, ['en_GB', 'nl_NL']);
     }
 
-    /**
-     * @test
-     * @dataProvider non_strings
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
+    #[\PHPUnit\Framework\Attributes\DataProvider('non_strings')]
     public function it_requires_the_supported_locales_to_be_strings(mixed $nonString): void
     {
         $this->expectException(InvalidArgumentException::class);

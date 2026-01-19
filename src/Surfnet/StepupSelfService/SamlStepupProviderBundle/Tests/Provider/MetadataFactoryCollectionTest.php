@@ -25,9 +25,7 @@ use Surfnet\StepupSelfService\SamlStepupProviderBundle\Provider\MetadataFactoryC
 
 class MetadataFactoryCollectionTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function metadata_factory_can_be_added_and_retrieved(): void
     {
         $identifier = 'provider1';
@@ -39,9 +37,7 @@ class MetadataFactoryCollectionTest extends TestCase
         $this->assertSame($factory, $collection->getByIdentifier($identifier));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function exception_is_thrown_when_retrieving_non_existent_provider(): void
     {
         $identifier = 'provider1';

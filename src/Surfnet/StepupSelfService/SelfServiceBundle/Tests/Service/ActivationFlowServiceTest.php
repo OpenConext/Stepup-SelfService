@@ -55,9 +55,7 @@ class ActivationFlowServiceTest extends MockeryTestCase
         );
     }
 
-    /**
-     * @dataProvider generateValidUris
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('generateValidUris')]
     public function testItCanParseUris(string $uri, string $value, array $logEntries): void
     {
         foreach ($logEntries as $entry) {
@@ -69,7 +67,7 @@ class ActivationFlowServiceTest extends MockeryTestCase
         $this->service->processPreferenceFromUri($uri);
     }
 
-    public function generateValidUris(): \Generator
+    public static function generateValidUris(): \Generator
     {
         yield [
             '/?activate=self',
