@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 
+use Deprecated;
 use LogicException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
@@ -70,6 +71,7 @@ readonly class AuthenticatedIdentity implements UserInterface
     /**
      * @inheritDoc
      */
+    #[Deprecated]
     public function eraseCredentials(): void
     {
     }
