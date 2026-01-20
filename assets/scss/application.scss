@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@import "vars";
+@use "vars";
 @import "~bootstrap";
 
 .nav-header {
@@ -21,7 +21,7 @@
 
 .remote-vetting {
 
-  @media (min-width: $medium) {
+  @media (min-width: vars.$medium) {
     > div:nth-child(3n+4) {
       clear: left;
     }
@@ -35,7 +35,7 @@
       }
     }
   }
-  @media (min-width: $large) {
+  @media (min-width: vars.$large) {
     .vetting-selector{
       min-height: 360px;
 
@@ -57,12 +57,12 @@
 
 }
 .vetting-selector.highlighted {
-    border-color: $blue;
+    border-color: vars.$blue;
 }
 
 .second-factors {
 
-  @media (min-width: $medium) {
+  @media (min-width: vars.$medium) {
     > div:nth-child(3n+4) {
       clear: left;
     }
@@ -201,6 +201,6 @@ span.label {
 .loa-star-rating {
   img {
     height: 1em;
-    filter: $star-color;
+    filter: vars.$star-color;
   }
 }
