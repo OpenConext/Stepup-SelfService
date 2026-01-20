@@ -1,5 +1,10 @@
 name: Run QA tests (static analysis, lint and unit tests)
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   run-qa-tests:

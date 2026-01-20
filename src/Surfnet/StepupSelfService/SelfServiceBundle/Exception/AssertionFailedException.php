@@ -41,7 +41,10 @@ class AssertionFailedException extends InvalidArgumentException implements Asser
         return $this->value;
     }
 
-    public function getConstraints()
+    /**
+     * @return array<mixed>
+     */
+    public function getConstraints(): array
     {
         return $this->constraints;
     }

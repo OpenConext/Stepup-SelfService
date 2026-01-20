@@ -2,24 +2,6 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
-	'message' => '#^Cannot call method scalarNode\\(\\) on Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeParentInterface\\|null\\.$#',
-	'identifier' => 'method.nonObject',
-	'count' => 2,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SamlStepupProviderBundle/DependencyInjection/Configuration.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$rootNode of method Surfnet\\\\StepupSelfService\\\\SamlStepupProviderBundle\\\\DependencyInjection\\\\Configuration\\:\\:addProvidersSection\\(\\) expects Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\ArrayNodeDefinition, Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeDefinition given\\.$#',
-	'identifier' => 'argument.type',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SamlStepupProviderBundle/DependencyInjection/Configuration.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$rootNode of method Surfnet\\\\StepupSelfService\\\\SamlStepupProviderBundle\\\\DependencyInjection\\\\Configuration\\:\\:addRoutesSection\\(\\) expects Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\ArrayNodeDefinition, Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeDefinition given\\.$#',
-	'identifier' => 'argument.type',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SamlStepupProviderBundle/DependencyInjection/Configuration.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SamlStepupProviderBundle\\\\DependencyInjection\\\\SurfnetStepupSelfServiceSamlStepupProviderExtension\\:\\:buildHostedEntityDefinition\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#',
 	'identifier' => 'missingType.iterableValue',
 	'count' => 1,
@@ -362,18 +344,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/LocaleController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$haystack of function str_starts_with expects string, bool\\|float\\|int\\|string\\|null given\\.$#',
-	'identifier' => 'argument.type',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/LocaleController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$url of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Controller\\\\AbstractController\\:\\:redirect\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#',
-	'identifier' => 'argument.type',
-	'count' => 3,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/LocaleController.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Cannot call method getIdentity\\(\\) on Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\|null\\.$#',
 	'identifier' => 'method.nonObject',
 	'count' => 7,
@@ -495,18 +465,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$allSecondFactors of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\SecondFactorService\\:\\:getSecondFactorsForIdentity\\(\\) expects array, array\\|bool\\|float\\|int\\|string\\|UnitEnum\\|null given\\.$#',
-	'identifier' => 'argument.type',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/RegistrationController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$nonce of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\SecondFactorService\\:\\:verifyEmail\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#',
-	'identifier' => 'argument.type',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/RegistrationController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$verificationNonce of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\SecondFactorService\\:\\:findUnverifiedByVerificationNonce\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#',
 	'identifier' => 'argument.type',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/RegistrationController.php',
@@ -644,30 +602,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Controller/SelfVet/SelfVetController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to an undefined method Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeDefinition\\:\\:children\\(\\)\\.$#',
-	'identifier' => 'method.notFound',
-	'count' => 2,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/DependencyInjection/Configuration.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Cannot call method arrayNode\\(\\) on Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeParentInterface\\|null\\.$#',
-	'identifier' => 'method.nonObject',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/DependencyInjection/Configuration.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Cannot call method integerNode\\(\\) on Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeParentInterface\\|null\\.$#',
-	'identifier' => 'method.nonObject',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/DependencyInjection/Configuration.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Cannot call method scalarNode\\(\\) on Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeParentInterface\\|null\\.$#',
-	'identifier' => 'method.nonObject',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/DependencyInjection/Configuration.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\DependencyInjection\\\\SurfnetStepupSelfServiceSelfServiceExtension\\:\\:parseActivationFlowPreferenceConfiguration\\(\\) has parameter \\$preferenceConfig with no value type specified in iterable type array\\.$#',
 	'identifier' => 'missingType.iterableValue',
 	'count' => 1,
@@ -722,24 +656,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Exception/AssertionFailedException.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Exception\\\\AssertionFailedException\\:\\:getConstraints\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Exception/AssertionFailedException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Exception\\\\AssertionFailedException\\:\\:getPropertyPath\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Exception/AssertionFailedException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Exception\\\\AssertionFailedException\\:\\:getValue\\(\\) has no return type specified\\.$#',
-	'identifier' => 'missingType.return',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Exception/AssertionFailedException.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Cannot access property \\$resendRoute on mixed\\.$#',
 	'identifier' => 'property.nonObject',
 	'count' => 1,
@@ -756,12 +672,6 @@ $ignoreErrors[] = [
 	'identifier' => 'method.nonObject',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Locale/RequestStackLocaleProvider.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Security\\\\Authentication\\\\AuthenticatedIdentity\\:\\:eraseCredentials\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Security/Authentication/AuthenticatedIdentity.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Cannot call method getIdentity\\(\\) on Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\|null\\.$#',
@@ -932,12 +842,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/IdentityService.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to an undefined method Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\:\\:getUsername\\(\\)\\.$#',
-	'identifier' => 'method.notFound',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/IdentityService.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Cannot call method getIdentity\\(\\) on Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\|null\\.$#',
 	'identifier' => 'method.nonObject',
 	'count' => 1,
@@ -958,12 +862,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Property Surfnet\\\\StepupMiddlewareClientBundle\\\\Identity\\\\Command\\\\CreateIdentityCommand\\:\\:\\$id \\(string\\) does not accept string\\|null\\.$#',
 	'identifier' => 'assign.propertyType',
-	'count' => 1,
-	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/IdentityService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(void\\) of method Surfnet\\\\StepupSelfService\\\\SelfServiceBundle\\\\Service\\\\IdentityService\\:\\:refreshUser\\(\\) should be compatible with return type \\(Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserProviderInterface\\<Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\>\\:\\:refreshUser\\(\\)$#',
-	'identifier' => 'method.childReturnType',
 	'count' => 1,
 	'path' => __DIR__ . '/../../src/Surfnet/StepupSelfService/SelfServiceBundle/Service/IdentityService.php',
 ];
