@@ -24,11 +24,8 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentExcepti
 
 readonly class ActivationFlowPreference implements ActivationFlowPreferenceInterface
 {
-    private string $preference;
-
-    private function __construct(string $preference)
+    private function __construct(private string $preference)
     {
-        $this->preference = $preference;
     }
 
     public static function createRa(): self

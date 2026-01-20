@@ -126,7 +126,7 @@ class ActivationFlowService
             $option = $parameters[$this->fieldName];
             $option = is_string($option) ? $option : "";
             return ActivationFlowPreference::fromString($option);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             $option = is_string($option) ? $option : "unknown";
             $this->logger->notice(
                 sprintf(

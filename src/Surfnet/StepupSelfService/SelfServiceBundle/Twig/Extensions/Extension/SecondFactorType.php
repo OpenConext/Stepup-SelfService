@@ -23,9 +23,9 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Twig\Extensions\Extension;
 use Surfnet\StepupBundle\Service\SecondFactorTypeTranslationService;
 use Twig\Attribute\AsTwigFilter;
 
-final class SecondFactorType
+final readonly class SecondFactorType
 {
-    public function __construct(private readonly SecondFactorTypeTranslationService $translator)
+    public function __construct(private SecondFactorTypeTranslationService $translator)
     {
     }
 

@@ -25,6 +25,7 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination as MpdfDestination;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\VerifiedSecondFactor;
+use Surfnet\StepupSelfService\SelfServiceBundle\Controller\SecondFactor\SecondFactorListController;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\ControllerCheckerService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\InstitutionConfigurationOptionsService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\RaLocationService;
@@ -87,7 +88,7 @@ class RegistrationController extends AbstractController
                 'User tried to register a new token but maximum number of tokens is reached. Redirecting to overview'
             );
             return $this->forward(
-                'Surfnet\StepupSelfService\SelfServiceBundle\Controller\SecondFactor\SecondFactorListController'
+                SecondFactorListController::class
             );
         }
 
