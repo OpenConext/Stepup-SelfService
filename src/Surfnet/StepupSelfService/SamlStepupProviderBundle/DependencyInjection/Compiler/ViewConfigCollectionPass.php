@@ -45,9 +45,7 @@ class ViewConfigCollectionPass implements CompilerPassInterface
         $taggedServices = array_keys($taggedServices);
 
         foreach ($taggedServices as $id) {
-            $gsspIdMatches = null;
-            preg_match('/^gssp\.view_config\.(\w+)$/', $id, $gsspIdMatches);
-            if (!is_array($gsspIdMatches)) {
+            if (preg_match('/^gssp\.view_config\.(\w+)$/', $id, $gsspIdMatches) !== 1) {
                 throw new InvalidConfigurationException('A manually tagged view config service was named incorrectly.');
             }
             $definition->addMethodCall('addViewConfig', [new Reference($id), end($gsspIdMatches)]);

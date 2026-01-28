@@ -41,9 +41,6 @@
     "doctrine/inflector": {
         "version": "2.0.4"
     },
-    "doctrine/instantiator": {
-        "version": "1.4.0"
-    },
     "doctrine/lexer": {
         "version": "1.2.1"
     },
@@ -235,14 +232,8 @@
     "sebastian/object-reflector": {
         "version": "1.1.2"
     },
-    "sebastian/phpcpd": {
-        "version": "4.1.0"
-    },
     "sebastian/recursion-context": {
         "version": "3.0.1"
-    },
-    "sebastian/resource-operations": {
-        "version": "2.0.2"
     },
     "sebastian/type": {
         "version": "1.1.4"
@@ -452,11 +443,20 @@
     "symfony/polyfill-php80": {
         "version": "v1.22.1"
     },
-    "symfony/polyfill-php81": {
-        "version": "v1.23.0"
-    },
     "symfony/property-access": {
         "version": "v4.4.19"
+    },
+    "symfony/property-info": {
+        "version": "7.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.3",
+            "ref": "dae70df71978ae9226ae915ffd5fad817f5ca1f7"
+        },
+        "files": [
+            "config/packages/property_info.yaml"
+        ]
     },
     "symfony/routing": {
         "version": "6.3",

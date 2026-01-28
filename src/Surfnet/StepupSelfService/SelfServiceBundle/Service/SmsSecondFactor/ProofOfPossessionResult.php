@@ -23,7 +23,7 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentException;
 
 /**
- * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings("PHPMD.TooManyMethods")
  */
 final class ProofOfPossessionResult
 {

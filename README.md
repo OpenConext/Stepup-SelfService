@@ -9,13 +9,12 @@ This component is part of "Step-up Authentication as-a Service" and requires oth
  * PHP 8.2
  * [Composer](https://getcomposer.org/)
  * A web server (Apache, Nginx)
- * Graylog2 (or disable this Monolog handler)
  * A working [Gateway](https://github.com/OpenConext/Stepup-Gateway)
  * Working [Middleware](https://github.com/OpenConext/Stepup-Middleware)
 
 ## Installation
 
-Clone the repository or download the archive to a directory. Install the dependencies by running `composer install && yarn install`.
+Clone the repository or download the archive to a directory. Install the dependencies by running `composer install && composer frontend-install`.
 
 ## Updating translations
 
@@ -30,4 +29,4 @@ Then, translate the strings using the web interface available at: https://ss-dev
 For more information about the JMSTranslationBundle, see http://jmsyst.com/bundles/JMSTranslationBundle
 
 ## Release strategy
-Please read: https://github.com/OpenConext/Stepup-Deploy/wiki/Release-Management fro more information on the release strategy used in Stepup projects.
+Please read: https://github.com/OpenConext/Stepup-Deploy/wiki/Release-Management for more information on the release strategy used in Stepup projects.

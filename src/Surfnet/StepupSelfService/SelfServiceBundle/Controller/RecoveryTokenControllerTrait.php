@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings("PHPMD.CyclomaticComplexity")
  */
 trait RecoveryTokenControllerTrait
 {

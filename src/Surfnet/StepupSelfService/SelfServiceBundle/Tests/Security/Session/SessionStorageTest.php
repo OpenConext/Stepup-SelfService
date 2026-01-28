@@ -40,11 +40,9 @@ class SessionStorageTest extends TestCase
         $this->setCurrentTime(null);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function the_authentication_moment_can_be_logged(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -55,11 +53,9 @@ class SessionStorageTest extends TestCase
         $this->assertInstanceOf(SessionStorage::class, $sessionStorage);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function the_authentication_moment_cannot_be_logged_twice(): void
     {
         $this->expectException(LogicException::class);
@@ -71,11 +67,9 @@ class SessionStorageTest extends TestCase
         $sessionStorage->logAuthenticationMoment();
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function whether_or_not_an_authentication_moment_is_logged_can_be_queried(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -88,11 +82,9 @@ class SessionStorageTest extends TestCase
         $this->assertTrue($sessionStorage->isAuthenticationMomentLogged());
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function a_logged_authentication_moment_can_be_retrieved(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -108,11 +100,9 @@ class SessionStorageTest extends TestCase
         $this->assertEquals($now, $authenticationMoment);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function attempting_to_retrieve_an_authentication_moment_when_not_yet_logged_causes_an_exception_to_be_thrown(): void
     {
         $this->expectException(LogicException::class);
@@ -123,11 +113,9 @@ class SessionStorageTest extends TestCase
         $sessionStorage->getAuthenticationMoment();
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_interaction_can_be_logged(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -140,11 +128,9 @@ class SessionStorageTest extends TestCase
         $this->assertInstanceOf(SessionStorage::class, $sessionStorage);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function the_moment_of_interaction_can_be_retrieved(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -159,11 +145,9 @@ class SessionStorageTest extends TestCase
         $this->assertEquals($now, $interactionMoment);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_interaction_is_logged_when_an_authentication_is_logged(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -184,11 +168,9 @@ class SessionStorageTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function the_moment_of_interaction_can_be_updated(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -211,11 +193,9 @@ class SessionStorageTest extends TestCase
         $this->assertEquals($later, $secondInteraction);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function the_existence_of_a_moment_interaction_can_be_queried(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -228,11 +208,9 @@ class SessionStorageTest extends TestCase
         $this->assertTrue($sessionStorage->hasSeenInteraction());
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function the_current_uri_can_be_stored_in_the_session(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -245,11 +223,9 @@ class SessionStorageTest extends TestCase
         $this->assertSame($originalUri, $retrievedUri);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function a_request_id_can_be_stored_in_the_session(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -262,11 +238,9 @@ class SessionStorageTest extends TestCase
         $this->assertSame($originalRequestId, $retrievedRequestId);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function the_presence_of_a_request_id_can_be_queried(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -280,11 +254,9 @@ class SessionStorageTest extends TestCase
         $this->assertTrue($sessionStorage->hasRequestId());
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function a_stored_request_id_can_be_cleared(): void
     {
         $fakeRequestStack = new FakeRequestStack();
@@ -303,11 +275,9 @@ class SessionStorageTest extends TestCase
         $this->assertNull($sessionStorage->getRequestId());
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function a_session_can_be_invalidated(): void
     {
         $session = Mockery::mock(SessionInterface::class)
@@ -322,11 +292,9 @@ class SessionStorageTest extends TestCase
         $this->assertInstanceOf(SessionStorage::class, $sessionStorage);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function a_session_can_be_migrated(): void
     {
         $session = Mockery::mock(SessionInterface::class)
@@ -349,7 +317,6 @@ class SessionStorageTest extends TestCase
     private function setCurrentTime(DateTime $now = null): void
     {
         $nowProperty = new ReflectionProperty(DateTime::class, 'now');
-        $nowProperty->setAccessible(true);
         $nowProperty->setValue($now);
     }
 }

@@ -66,7 +66,7 @@ class SmsSendChallengeController extends AbstractController
                 $this->addFlash('error', 'ss.prove_phone_possession.challenge_request_limit_reached');
                 return $this->render(
                     'registration/sms/send_challenge.html.twig',
-                    ['form' => $form->createView(), ...$viewVariables]
+                    ['form' => $form, ...$viewVariables]
                 );
             }
 
@@ -79,7 +79,7 @@ class SmsSendChallengeController extends AbstractController
 
         return $this->render(
             'registration/sms/send_challenge.html.twig',
-            ['form' => $form->createView(), ...$viewVariables]
+            ['form' => $form, ...$viewVariables]
         );
     }
 }

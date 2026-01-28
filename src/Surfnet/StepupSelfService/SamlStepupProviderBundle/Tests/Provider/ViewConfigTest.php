@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\DependencyInjection;
+namespace Surfnet\StepupSelfService\SamlStepupProviderBundle\Tests\Provider;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -33,10 +33,8 @@ final class ViewConfigTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    /**
-     * @test
-     * @group di
-     */
+    #[\PHPUnit\Framework\Attributes\Group('di')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function view_config_translates_correctly(): void
     {
         $viewConfig = $this->buildViewConfig('nl_NL');
@@ -63,10 +61,8 @@ final class ViewConfigTest extends TestCase
         $this->assertEquals('EN initiateButton', $viewConfig->getInitiateButton());
     }
 
-    /**
-     * @test
-     * @group di
-     */
+    #[\PHPUnit\Framework\Attributes\Group('di')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function view_config_cannot_serve_french_translations(): void
     {
         $this->expectException(LogicException::class);

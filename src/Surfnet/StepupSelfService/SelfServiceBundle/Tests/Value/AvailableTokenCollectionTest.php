@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Surfnet\Stepup\Tests;
+namespace Surfnet\StepupSelfService\SelfServiceBundle\Tests\Value;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;

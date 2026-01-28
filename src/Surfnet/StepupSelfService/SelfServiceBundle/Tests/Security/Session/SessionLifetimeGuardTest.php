@@ -39,11 +39,9 @@ class SessionLifetimeGuardTest extends TestCase
         $this->setCurrentTime(null);
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_without_logged_authentication_is_within_absolute_limit(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1000), TimeFrame::ofSeconds(100));
@@ -53,11 +51,9 @@ class SessionLifetimeGuardTest extends TestCase
         $this->assertTrue($sessionLifetimeGuard->sessionLifetimeWithinAbsoluteLimit($sessionWithoutAuthentication));
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_without_logged_authentication_is_within_relative_limit(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1000), TimeFrame::ofSeconds(100));
@@ -67,11 +63,9 @@ class SessionLifetimeGuardTest extends TestCase
         $this->assertTrue($sessionLifetimeGuard->sessionLifetimeWithinRelativeLimit($sessionWithoutAuthentication));
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_without_logged_authentication_is_within_limits(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1000), TimeFrame::ofSeconds(100));
@@ -81,11 +75,9 @@ class SessionLifetimeGuardTest extends TestCase
         $this->assertTrue($sessionLifetimeGuard->sessionLifetimeWithinLimits($sessionWithoutAuthentication));
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_with_a_lifetime_within_the_absolute_timeframe_is_within_the_absolute_limit(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1000), TimeFrame::ofSeconds(1));
@@ -97,11 +89,9 @@ class SessionLifetimeGuardTest extends TestCase
         $this->assertTrue($sessionLifetimeGuard->sessionLifetimeWithinAbsoluteLimit($sessionWithinTimeFrame));
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_with_a_lifetime_of_exactly_the_absolute_timeframe_is_within_the_absolute_limit(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1000), TimeFrame::ofSeconds(1));
@@ -114,11 +104,9 @@ class SessionLifetimeGuardTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_with_a_lifetime_longer_than_the_absolute_timeframe_is_outside_the_absolute_limit(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1000), TimeFrame::ofSeconds(1));
@@ -130,11 +118,9 @@ class SessionLifetimeGuardTest extends TestCase
         $this->assertFalse($sessionLifetimeGuard->sessionLifetimeWithinAbsoluteLimit($sessionWithinTimeFrame));
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_with_an_interaction_within_the_relative_timeframe_is_within_the_relative_limit(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1), TimeFrame::ofSeconds(1000));
@@ -146,11 +132,9 @@ class SessionLifetimeGuardTest extends TestCase
         $this->assertTrue($sessionLifetimeGuard->sessionLifetimeWithinRelativeLimit($sessionWithinTimeFrame));
     }
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_with_an_interaction_after_exactly_the_relative_timeframe_is_within_the_relative_limit(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1), TimeFrame::ofSeconds(1000));
@@ -163,11 +147,9 @@ class SessionLifetimeGuardTest extends TestCase
     }
 
 
-    /**
-     * @test
-     * @group security
-     * @group session
-     */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function an_authentication_session_with_an_interaction_after_the_relative_timeframe_is_outside_the_relative_limit(): void
     {
         $sessionLifetimeGuard = new SessionLifetimeGuard(TimeFrame::ofSeconds(1000), TimeFrame::ofSeconds(1));
@@ -180,14 +162,13 @@ class SessionLifetimeGuardTest extends TestCase
     }
 
     /**
-     * @test
-     * @group        security
-     * @group        session
-     * @dataProvider bothLimitsVerificationProvider
-     *
      * @param null|DateTime $authenticationMoment
      * @param null|DateTime $interactionMoment
      */
+    #[\PHPUnit\Framework\Attributes\Group('security')]
+    #[\PHPUnit\Framework\Attributes\Group('session')]
+    #[\PHPUnit\Framework\Attributes\Test]
+    #[\PHPUnit\Framework\Attributes\DataProvider('bothLimitsVerificationProvider')]
     public function an_authentication_session_is_verified_against_both_limits(
         bool $isValid,
         DateTime $authenticationMoment = null,
@@ -219,7 +200,7 @@ class SessionLifetimeGuardTest extends TestCase
     /**
      * @return array
      */
-    public function bothLimitsVerificationProvider(): array
+    public static function bothLimitsVerificationProvider(): array
     {
         $withinLimit = new DateTime(new CoreDateTime('@1001'));
         $overLimit   = new DateTime(new CoreDateTime('@999'));
@@ -241,7 +222,6 @@ class SessionLifetimeGuardTest extends TestCase
     private function setCurrentTime(DateTime $now = null): void
     {
         $nowProperty = new ReflectionProperty(DateTime::class, 'now');
-        $nowProperty->setAccessible(true);
         $nowProperty->setValue($now);
     }
 

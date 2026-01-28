@@ -25,7 +25,7 @@ use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
 use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsRecoveryTokenService;
 
 /**
- * @SuppressWarnings(PHPMD.LongClassName)
+ * @SuppressWarnings("PHPMD.LongClassName")
  */
 class SendRecoveryTokenSmsAuthenticationChallengeCommand implements SendSmsChallengeCommandInterface
 {

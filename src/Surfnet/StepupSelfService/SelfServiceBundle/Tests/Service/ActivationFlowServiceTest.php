@@ -28,7 +28,6 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreference;
 use Surfnet\StepupSelfService\SelfServiceBundle\Value\ActivationFlowPreferenceNotExpressed;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Hamcrest\Core\IsEqual;
 
 class ActivationFlowServiceTest extends MockeryTestCase
 {
@@ -56,21 +55,19 @@ class ActivationFlowServiceTest extends MockeryTestCase
         );
     }
 
-    /**
-     * @dataProvider generateValidUris
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('generateValidUris')]
     public function testItCanParseUris(string $uri, string $value, array $logEntries): void
     {
         foreach ($logEntries as $entry) {
             $this->logger->shouldReceive($entry['level'])->with($entry['message'])->once();
         }
         $this->stateHandler->shouldReceive('setRequestedActivationFlowPreference')
-            ->with(IsEqual::equalTo(ActivationFlowPreference::fromString($value)));
+            ->with(m::on(static fn ($preference) => $preference instanceof ActivationFlowPreference && (string) $preference === $value));
 
         $this->service->processPreferenceFromUri($uri);
     }
 
-    public function generateValidUris(): \Generator
+    public static function generateValidUris(): \Generator
     {
         yield [
             '/?activate=self',

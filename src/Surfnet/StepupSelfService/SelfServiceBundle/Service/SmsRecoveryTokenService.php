@@ -44,7 +44,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * And it tracks the overall registration state of
  * a RT via SmsRecoveryTokenServiceInterface
  *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 class SmsRecoveryTokenService
 {

@@ -38,8 +38,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Surfnet\SamlBundle\Entity\ServiceProvider;
 
 /**
- * @SuppressWarnings(PHPMD.LongClassName)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.LongClassName")
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
 {

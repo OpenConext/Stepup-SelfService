@@ -32,9 +32,7 @@ class SafeStoreSecretTest extends TestCase
         $this->assertIsString($secret->display());
     }
 
-    /**
-     * @dataProvider provideSecrets
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSecrets')]
     public function test_it_creates_an_expected_secret_format(SafeStoreSecret $secret): void
     {
         $secretString = $secret->display();
@@ -45,7 +43,7 @@ class SafeStoreSecretTest extends TestCase
         $this->assertEquals($secret->display(), $secretString);
     }
 
-    private function provideSecrets()
+    public static function provideSecrets()
     {
         for ($i=0; $i<25; $i++) {
             yield [new SafeStoreSecret()];

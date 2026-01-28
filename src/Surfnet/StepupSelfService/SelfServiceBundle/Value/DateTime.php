@@ -26,7 +26,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Exception\InvalidArgumentExcepti
 use Stringable;
 
 /**
- * @SuppressWarnings(PHPMD.TooManyPublicMethods) due to comparison methods
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods") due to comparison methods
  */
 class DateTime implements Stringable
 {
@@ -36,11 +36,11 @@ class DateTime implements Stringable
     final public const FORMAT = DATE_ATOM;
 
     /**
-     * Allows for mocking of time.
+     * Allows for mocking of time via reflection.
      *
-     * @var self|null
+     * @phpstan-ignore-next-line property.unusedType
      */
-    private static $now;
+    private static ?self $now = null;
 
     private readonly CoreDateTime $dateTime;
 
@@ -49,7 +49,7 @@ class DateTime implements Stringable
      */
     public static function now()
     {
-        return self::$now ?: new self(new CoreDateTime);
+        return self::$now ?? new self(new CoreDateTime);
     }
 
     /**

@@ -37,7 +37,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects") -- Hard to reduce due to different commands and queries used.
  */
 readonly class IdentityService implements UserProviderInterface
 {
@@ -62,9 +62,9 @@ readonly class IdentityService implements UserProviderInterface
     /**
      * For now this functionality is disabled, unsure if actually needed
      */
-    public function refreshUser(UserInterface $user): void
+    public function refreshUser(UserInterface $user): UserInterface
     {
-        throw new RuntimeException(sprintf('Cannot Refresh User "%s"', $user->getUsername()));
+        throw new RuntimeException(sprintf('Cannot Refresh User "%s"', $user->getUserIdentifier()));
     }
 
     public function supportsClass(string $class): bool

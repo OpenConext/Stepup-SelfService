@@ -1,4 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 Encore
     .setOutputPath('public/build/')
@@ -34,10 +35,10 @@ Encore
             includePaths: ['public'],
         };
     })
-    .addLoader({test: /\.scss$/, loader: 'webpack-import-glob-loader'})
-    .configureLoaderRule('eslint', loaderRule => {
-        loaderRule.test = /\.(jsx?|vue)$/
-    })
+    .addLoader({test: /\.scss$/, loader: 'webpack-import-glob-loader', enforce: 'pre'})
+    .addPlugin(new ESLintPlugin({
+        extensions: ['js', 'jsx', 'ts', 'tsx', 'vue'],
+    }))
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)

@@ -31,8 +31,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 class CommandService
 {
     public function __construct(
-        private MiddlewareCommandService $commandService,
-        private TokenStorageInterface    $tokenStorage,
+        private readonly MiddlewareCommandService $commandService,
+        private readonly TokenStorageInterface    $tokenStorage,
     ) {
     }
 

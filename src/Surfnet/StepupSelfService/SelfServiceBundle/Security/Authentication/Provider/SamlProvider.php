@@ -36,7 +36,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects) -- Hard to reduce due to different commands and queries used.
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects") -- Hard to reduce due to different commands and queries used.
  */
 class SamlProvider implements SamlProviderInterface, UserProviderInterface
 {

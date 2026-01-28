@@ -20,6 +20,8 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Security\Authentication;
 
+use Deprecated;
+use LogicException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 
@@ -69,9 +71,9 @@ readonly class AuthenticatedIdentity implements UserInterface
     /**
      * @inheritDoc
      */
-    public function eraseCredentials(): array
+    #[Deprecated]
+    public function eraseCredentials(): void
     {
-        return [];
     }
 
     /**
@@ -85,6 +87,12 @@ readonly class AuthenticatedIdentity implements UserInterface
     public function getUserIdentifier(): string
     {
         $parts = explode(':', $this->originalIdentity->nameId);
-        return end($parts);
+        $identifier = end($parts);
+
+        if ($identifier === false || $identifier === '') {
+            throw new LogicException('Cannot determine user identifier from nameId');
+        }
+
+        return $identifier;
     }
 }

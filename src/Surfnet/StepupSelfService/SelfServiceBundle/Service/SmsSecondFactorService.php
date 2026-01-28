@@ -34,7 +34,7 @@ use Surfnet\StepupSelfService\SelfServiceBundle\Service\SmsSecondFactor\ProofOfP
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects) - Quite some commands and VOs are used here.
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects") - Quite some commands and VOs are used here.
  */
 class SmsSecondFactorService implements SmsSecondFactorServiceInterface
 {

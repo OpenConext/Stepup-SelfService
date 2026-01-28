@@ -283,8 +283,6 @@ services:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Twig\Extensions\Extension\SecondFactorType
         arguments:
             - "@surfnet_stepup.service.second_factor_type_translator"
-        tags:
-            - { name : twig.extension }
 
     Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorServiceInterface:
         class: Surfnet\StepupSelfService\SelfServiceBundle\Service\YubikeySecondFactorService

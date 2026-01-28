@@ -28,12 +28,11 @@ class TimeFrameTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
     /**
-     * @test
-     * @group value
-     * @dataProvider notPositiveIntegerProvider
-     *
      * @param mixed $notPositiveInteger
      */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
+    #[\PHPUnit\Framework\Attributes\Test]
+    #[\PHPUnit\Framework\Attributes\DataProvider('notPositiveIntegerProvider')]
     public function it_cannot_be_given_an_non_positive_amount_of_seconds(string|float|int|\stdClass|array $notPositiveInteger): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -41,10 +40,8 @@ class TimeFrameTest extends TestCase
         TimeFrame::ofSeconds($notPositiveInteger);
     }
 
-    /**
-     * @test
-     * @group value
-     */
+    #[\PHPUnit\Framework\Attributes\Group('value')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function to_string_output_matches_amount_of_seconds_as_string(): void
     {
         $seconds = 1000;
@@ -61,7 +58,7 @@ class TimeFrameTest extends TestCase
     /**
      * @return array
      */
-    public function notPositiveIntegerProvider(): array
+    public static function notPositiveIntegerProvider(): array
     {
         return [
             'empty string' => [''],
