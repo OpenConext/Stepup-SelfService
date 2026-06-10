@@ -29,3 +29,6 @@ jobs:
 
       - name: Run QA tests
         run: composer check-ci
+
+      - name: Build frontend assets
+        run: yarn encore production
