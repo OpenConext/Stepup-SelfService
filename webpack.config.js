@@ -37,7 +37,10 @@ Encore
     })
     .addLoader({test: /\.scss$/, loader: 'webpack-import-glob-loader', enforce: 'pre'})
     .addPlugin(new ESLintPlugin({
-        extensions: ['js', 'jsx', 'ts', 'tsx', 'vue'],
+        extensions: ['ts', 'js'],
+        files: 'assets/typescript',
+        emitWarning: true,
+        failOnError: Encore.isProduction(),
     }))
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())

@@ -1,3 +1,3 @@
 import jQuery from 'jquery';
-(window as any).jQuery = jQuery;
+(window as unknown as { jQuery: typeof jQuery }).jQuery = jQuery;
 import 'bootstrap';

@@ -15,7 +15,7 @@ import jQuery from 'jquery';
  * limitations under the License.
  */
 
-document.addEventListener('DOMContentLoaded', (_) => {
+document.addEventListener('DOMContentLoaded', () => {
   jQuery('a.registration-print').on('click', (e) => {
     e.preventDefault();
 
