@@ -13,7 +13,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.2",
+        "php": "^8.5",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -122,7 +122,7 @@
             "endroid/installer": false
         },
         "platform": {
-            "php": "8.2"
+            "php": "8.5"
         },
         "optimize-autoloader": true,
         "sort-packages": true
