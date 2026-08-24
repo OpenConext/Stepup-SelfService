@@ -55,7 +55,7 @@
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpunit/phpunit": "^11.5.48",
-        "rector/rector": "^2.3",
+        "rector/rector": "^2.4",
         "roave/security-advisories": "dev-latest",
         "slevomat/coding-standard": "^8.26",
         "squizlabs/php_codesniffer": "^4.0",

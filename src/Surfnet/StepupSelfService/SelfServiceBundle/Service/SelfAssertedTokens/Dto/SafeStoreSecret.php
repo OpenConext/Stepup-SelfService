@@ -29,7 +29,7 @@ class SafeStoreSecret
     /**
      * Length of the secret
      */
-    private const LENGTH = 12;
+    private const int LENGTH = 12;
 
     public function __construct()
     {

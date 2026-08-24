@@ -44,7 +44,7 @@ use Surfnet\SamlBundle\Entity\ServiceProvider;
 class SurfnetStepupSelfServiceSamlStepupProviderExtension extends Extension
 {
 
-    final public const VIEW_CONFIG_TAG_NAME = 'gssp.view_config';
+    final public const string VIEW_CONFIG_TAG_NAME = 'gssp.view_config';
 
     /**
      * {@inheritdoc}

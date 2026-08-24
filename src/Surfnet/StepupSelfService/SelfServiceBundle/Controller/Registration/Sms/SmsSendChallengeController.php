@@ -71,7 +71,7 @@ class SmsSendChallengeController extends AbstractController
             }
 
             if ($this->smsSecondFactorService->sendChallenge($command)) {
-                return $this->redirect($this->generateUrl('ss_registration_sms_prove_possession'));
+                return $this->redirectToRoute('ss_registration_sms_prove_possession');
             } else {
                 $this->addFlash('error', 'ss.prove_phone_possession.send_sms_challenge_failed');
             }

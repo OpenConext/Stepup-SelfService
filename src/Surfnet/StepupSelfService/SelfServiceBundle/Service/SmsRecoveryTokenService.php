@@ -48,7 +48,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SmsRecoveryTokenService
 {
-    final public const REGISTRATION_RECOVERY_TOKEN_ID = 'registration';
+    final public const string REGISTRATION_RECOVERY_TOKEN_ID = 'registration';
 
     public function __construct(
         private readonly SmsRecoveryTokenServiceInterface $smsService,

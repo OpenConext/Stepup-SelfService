@@ -134,9 +134,7 @@ class RecoveryTokenController extends AbstractController
             $executionResult = $this->safeStoreService->promisePossession($command);
             if (!$executionResult->getErrors()) {
                 $this->recoveryTokenService->resetStepUpGiven();
-                return $this->redirect(
-                    $this->generateUrl('ss_second_factor_list')
-                );
+                return $this->redirectToRoute('ss_second_factor_list');
             }
             $this->addFlash('error', 'ss.form.recovery_token.error.error_message');
         }
@@ -268,7 +266,7 @@ class RecoveryTokenController extends AbstractController
                 )
             );
             $this->addFlash('error', 'ss.recovery_token.step_up.no_tokens_available.failed');
-            return $this->redirect($this->generateUrl('ss_second_factor_list'));
+            return $this->redirectToRoute('ss_second_factor_list');
         }
 
         // By requesting LoA 1.5 any relevant token can be tested (LoA self asserted, 2 and 3)

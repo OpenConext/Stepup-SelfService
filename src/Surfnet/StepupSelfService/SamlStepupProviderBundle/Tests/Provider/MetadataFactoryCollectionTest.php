@@ -30,7 +30,7 @@ class MetadataFactoryCollectionTest extends TestCase
     {
         $identifier = 'provider1';
         $collection = new MetadataFactoryCollection();
-        $factory = $this->createMock(MetadataFactory::class);
+        $factory = $this->createStub(MetadataFactory::class);
 
         $collection->add($identifier, $factory);
 

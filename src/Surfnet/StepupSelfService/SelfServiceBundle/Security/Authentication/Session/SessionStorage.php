@@ -34,8 +34,8 @@ class SessionStorage implements AuthenticatedSessionStateHandler, SamlAuthentica
     /**
      * Session keys
      */
-    final public const AUTH_SESSION_KEY = '__auth/';
-    final public const SAML_SESSION_KEY = '__saml/';
+    final public const string AUTH_SESSION_KEY = '__auth/';
+    final public const string SAML_SESSION_KEY = '__saml/';
 
     public function __construct(private readonly RequestStack $requestStack)
     {

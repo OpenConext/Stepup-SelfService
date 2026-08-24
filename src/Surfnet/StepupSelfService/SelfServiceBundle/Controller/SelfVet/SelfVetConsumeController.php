@@ -44,7 +44,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 class SelfVetConsumeController extends AbstractController
 {
-    final public const SELF_VET_SESSION_ID = 'second_factor_self_vet_request_id';
+    final public const string SELF_VET_SESSION_ID = 'second_factor_self_vet_request_id';
 
     public function __construct(
         private readonly LoggerInterface          $logger,

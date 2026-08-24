@@ -106,18 +106,13 @@ class SelfAssertedTokensController extends AbstractController
             }
             $this->logger->info('Continue to recovery token authentication screen for the one available recovery token');
             $token = reset($tokens);
-            return $this->redirect($this->generateUrl(
-                'ss_second_factor_self_asserted_tokens_recovery_token',
-                [
-                    'secondFactorId' => $secondFactorId,
-                    'recoveryTokenId' => $token->recoveryTokenId
-                ]
-            ));
+            return $this->redirectToRoute('ss_second_factor_self_asserted_tokens_recovery_token', [
+                'secondFactorId' => $secondFactorId,
+                'recoveryTokenId' => $token->recoveryTokenId
+            ]);
         }
         $this->logger->info('Start registration of a recovery token (none are available yet)');
-        return $this->redirect(
-            $this->generateUrl('ss_second_factor_new_recovery_token', ['secondFactorId' => $secondFactorId])
-        );
+        return $this->redirectToRoute('ss_second_factor_new_recovery_token', ['secondFactorId' => $secondFactorId]);
     }
 
     /**
@@ -350,9 +345,7 @@ class SelfAssertedTokensController extends AbstractController
 
             $executionResult = $this->safeStoreService->promisePossession($command);
             if (!$executionResult->getErrors()) {
-                return $this->redirect(
-                    $this->generateUrl('ss_second_factor_self_asserted_tokens', ['secondFactorId' => $secondFactorId])
-                );
+                return $this->redirectToRoute('ss_second_factor_self_asserted_tokens', ['secondFactorId' => $secondFactorId]);
             }
             $this->addFlash('error', 'ss.form.recovery_token.error.error_message');
         }

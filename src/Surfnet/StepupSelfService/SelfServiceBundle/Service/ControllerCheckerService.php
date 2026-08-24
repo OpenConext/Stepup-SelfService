@@ -35,7 +35,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class ControllerCheckerService
 {
-    final public const DEFAULT_VERIFY_EMAIL_OPTION = true;
+    final public const bool DEFAULT_VERIFY_EMAIL_OPTION = true;
 
     public function __construct(
         private readonly LoggerInterface $logger,

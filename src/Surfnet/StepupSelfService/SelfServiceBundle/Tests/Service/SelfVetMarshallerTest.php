@@ -40,9 +40,9 @@ class SelfVetMarshallerTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    final public const LOA_2_ID = '221cdaa5-1d23-4b01-9fd8-3c810a5c596a';
+    final public const string LOA_2_ID = '221cdaa5-1d23-4b01-9fd8-3c810a5c596a';
 
-    final public const LOA_3_ID = '331cdaa5-1d23-4b01-9fd8-3c810a5c596a';
+    final public const string LOA_3_ID = '331cdaa5-1d23-4b01-9fd8-3c810a5c596a';
     private ?SelfVetMarshaller $marshaller = null;
 
 

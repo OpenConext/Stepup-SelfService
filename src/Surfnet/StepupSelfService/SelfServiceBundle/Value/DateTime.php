@@ -33,7 +33,7 @@ class DateTime implements Stringable
     /**
      * This string can also be used with `DateTime::createFromString()`.
      */
-    final public const FORMAT = DATE_ATOM;
+    final public const string FORMAT = DATE_ATOM;
 
     /**
      * Allows for mocking of time via reflection.

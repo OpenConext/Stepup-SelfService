@@ -25,10 +25,10 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle\Service\SelfAssertedTokens
  */
 final readonly class ProofOfPossessionResult
 {
-    public const STATUS_CHALLENGE_OK = 0;
-    public const STATUS_INCORRECT_CHALLENGE = 1;
-    public const STATUS_CHALLENGE_EXPIRED = 2;
-    public const STATUS_TOO_MANY_ATTEMPTS = 3;
+    public const int STATUS_CHALLENGE_OK = 0;
+    public const int STATUS_INCORRECT_CHALLENGE = 1;
+    public const int STATUS_CHALLENGE_EXPIRED = 2;
+    public const int STATUS_TOO_MANY_ATTEMPTS = 3;
 
     private function __construct(private int $status, private ?string $recoveryTokenId = null)
     {

@@ -22,9 +22,11 @@ namespace Surfnet\StepupSelfService\SelfServiceBundle;
 
 use Assert\Assertion;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\AssertionFailedException;
+use Override;
 
 final class Assert extends Assertion
 {
+    #[Override]
     protected static $exceptionClass = AssertionFailedException::class;
 
     public static function keysAre(array $array, array $expectedKeys, $propertyPath = null): void
