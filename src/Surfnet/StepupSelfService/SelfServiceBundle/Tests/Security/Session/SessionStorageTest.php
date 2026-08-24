@@ -317,6 +317,6 @@ class SessionStorageTest extends TestCase
     private function setCurrentTime(?DateTime $now = null): void
     {
         $nowProperty = new ReflectionProperty(DateTime::class, 'now');
-        $nowProperty->setValue($now);
+        $nowProperty->setValue(null, $now);
     }
 }
