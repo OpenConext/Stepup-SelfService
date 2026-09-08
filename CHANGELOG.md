@@ -1,5 +1,8 @@
 # Changelog
 
+# 6.0.1
+- Upgrade Docker base images, Composer dependencies, and npm dependencies to support PHP 8.5 #533
+
 # 6.0.0
 - Upgrade code to run on Symfony 7.4
 
