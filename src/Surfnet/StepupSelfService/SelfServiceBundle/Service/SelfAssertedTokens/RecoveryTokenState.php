@@ -41,19 +41,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class RecoveryTokenState
 {
-    final public const RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER = 'recovery_token_step_up_request_id';
+    final public const string RECOVERY_TOKEN_STEP_UP_REQUEST_ID_IDENTIFIER = 'recovery_token_step_up_request_id';
 
-    private const RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER = 'recovery_token_step_up_given';
+    private const string RECOVERY_TOKEN_STEP_UP_GIVEN_IDENTIFIER = 'recovery_token_step_up_given';
 
-    private const RECOVERY_TOKEN_REGISTRATION_IDENTIFIER = 'recovery_token_created_during_registration';
+    private const string RECOVERY_TOKEN_REGISTRATION_IDENTIFIER = 'recovery_token_created_during_registration';
 
-    private const RECOVERY_TOKEN_RETURN_TO_IDENTIFIER = 'recovery_token_return_to';
+    private const string RECOVERY_TOKEN_RETURN_TO_IDENTIFIER = 'recovery_token_return_to';
 
-    final public const RECOVERY_TOKEN_RETURN_TO_CREATE_SAFE_STORE = 'ss_recovery_token_safe_store';
+    final public const string RECOVERY_TOKEN_RETURN_TO_CREATE_SAFE_STORE = 'ss_recovery_token_safe_store';
 
-    final public const RECOVERY_TOKEN_RETURN_TO_CREATE_SMS = 'ss_recovery_token_sms';
+    final public const string RECOVERY_TOKEN_RETURN_TO_CREATE_SMS = 'ss_recovery_token_sms';
 
-    private const SAFE_STORE_SESSION_NAME = 'safe_store_secret';
+    private const string SAFE_STORE_SESSION_NAME = 'safe_store_secret';
     
 
     public function __construct(private readonly RequestStack $requestStack)

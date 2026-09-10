@@ -161,14 +161,7 @@ class SecondFactorService
         if ($secondFactors->getElements() === []) {
             return false;
         }
-
-        foreach ($secondFactors->getElements() as $secondFactor) {
-            if ($secondFactor->id === $secondFactorId) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($secondFactors->getElements(), fn($secondFactor) => $secondFactor->id === $secondFactorId);
     }
 
     public function findOneUnverified(string $secondFactorId): ?UnverifiedSecondFactor

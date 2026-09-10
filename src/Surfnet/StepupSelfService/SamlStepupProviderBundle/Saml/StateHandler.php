@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final readonly class StateHandler
 {
-    const REQUEST_ID = 'request_id';
+    const string REQUEST_ID = 'request_id';
 
     public function __construct(
         private RequestStack $requestStack,

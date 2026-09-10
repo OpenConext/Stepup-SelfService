@@ -2,8 +2,8 @@ build:
     # Use Ubuntu 22.04.5 LTS (Jammy Jellyfish)
     image: default-jammy
     environment:
-        php: 8.2
-        node: v20
+        php: 8.5
+        node: v24
 
 filter:
     excluded_paths:

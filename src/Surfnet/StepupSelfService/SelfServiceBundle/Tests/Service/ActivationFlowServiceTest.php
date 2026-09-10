@@ -197,7 +197,7 @@ class ActivationFlowServiceTest extends MockeryTestCase
     }
 
 
-    private function mockToken(array $entitlements = null) {
+    private function mockToken(?array $entitlements = null) {
         $attributes = $entitlements != null ? ['urn:mace:dir:attribute-def:eduPersonEntitlement' => $entitlements] : [];
         $this->tokenStorage->shouldReceive('getToken')
             ->once()

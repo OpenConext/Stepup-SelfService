@@ -91,7 +91,7 @@ class FakeSession implements SessionInterface
 
     public function has($name): bool
     {
-        return array_key_exists($name, $this->sessionContent);
+        return array_key_exists((string) $name, $this->sessionContent);
     }
 
     public function get($name, $default = null): mixed
@@ -143,7 +143,7 @@ class FakeSession implements SessionInterface
 
     public function getBag($name): SessionBagInterface
     {
-        if (array_key_exists($name, $this->bags)) {
+        if (array_key_exists((string) $name, $this->bags)) {
             return $this->bags[$name];
         }
 

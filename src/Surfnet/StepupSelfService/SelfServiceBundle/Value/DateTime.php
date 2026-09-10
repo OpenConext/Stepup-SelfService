@@ -33,7 +33,7 @@ class DateTime implements Stringable
     /**
      * This string can also be used with `DateTime::createFromString()`.
      */
-    final public const FORMAT = DATE_ATOM;
+    final public const string FORMAT = DATE_ATOM;
 
     /**
      * Allows for mocking of time via reflection.
@@ -59,7 +59,7 @@ class DateTime implements Stringable
     public static function fromString($string): self
     {
         if (!is_string($string)) {
-            InvalidArgumentException::invalidType('string', 'string', $string);
+            throw InvalidArgumentException::invalidType('string', 'string', $string);
         }
 
         $dateTime = CoreDateTime::createFromFormat(self::FORMAT, $string);
@@ -74,7 +74,7 @@ class DateTime implements Stringable
     /**
      * @param CoreDateTime|null $dateTime
      */
-    public function __construct(CoreDateTime $dateTime = null)
+    public function __construct(?CoreDateTime $dateTime = null)
     {
         $this->dateTime = $dateTime ?: new CoreDateTime();
     }
