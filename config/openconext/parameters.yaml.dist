@@ -47,8 +47,8 @@ parameters:
     stepup_loa_self_asserted: 'http://dev.openconext.local/assurance/loa1.5'
 
     logout_redirect_url:
-        nl_NL: https://www.surf.nl/over-surf/werkmaatschappijen/surfnet
-        en_GB: https://www.surf.nl/en/about-surf/subsidiaries/surfnet
+        nl_NL: https://ssp.dev.openconext.local/simplesaml/sp.php
+        en_GB: https://ssp.dev.openconext.local/simplesaml/sp.php
 
     enabled_second_factors:
         - sms
