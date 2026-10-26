@@ -20,10 +20,13 @@ declare(strict_types = 1);
 
 namespace Surfnet\StepupSelfService\SelfServiceBundle\Controller;
 
+use Exception;
+use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
 use Surfnet\StepupSelfService\SelfServiceBundle\Exception\LogicException;
 use Psr\Log\LoggerInterface;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
 use Surfnet\StepupBundle\Value\PhoneNumber\InternationalPhoneNumber;
+use Surfnet\StepupSelfService\SelfServiceBundle\Service\AuthorizationService;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\PromiseSafeStorePossessionCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SafeStoreAuthenticationCommand;
 use Surfnet\StepupSelfService\SelfServiceBundle\Command\SelfAssertedTokenRegistrationCommand;
@@ -59,8 +62,30 @@ class SelfAssertedTokensController extends AbstractController
         private readonly SmsRecoveryTokenService $smsService,
         private readonly LoaResolutionService $loaResolutionService,
         private readonly AuthenticationRequestFactory $authnRequestFactory,
+        private readonly AuthorizationService $authorizationService,
         private readonly LoggerInterface $logger
     ) {
+    }
+
+    /**
+     * The authorization decision of the Middleware is enforced before any self-asserted token
+     * registration action is performed, not only when rendering the vetting type buttons.
+     * Without this an identity that possessed a non self-asserted token could manufacture the
+     * "no vetted tokens + recovery token" state and replace the institution-vetted token.
+     */
+    private function isSelfAssertedTokenRegistrationAllowed(Identity $identity): bool
+    {
+        $allowed = false;
+        try {
+            $allowed = $this->authorizationService->mayRegisterSelfAssertedTokens($identity);
+        } catch (Exception $e) {
+            $this->logger->warning(sprintf('Self-asserted token registration is not allowed. Message "%s"', $e->getMessage()));
+        }
+        if (!$allowed) {
+            $this->logger->error(sprintf('Self-asserted token registration denied for identity "%s"', $identity->id));
+            $this->addFlash('error', 'ss.self_asserted_tokens.second_factor.vetting.alert.failed');
+        }
+        return $allowed;
     }
 
     /**
@@ -84,6 +109,9 @@ class SelfAssertedTokensController extends AbstractController
         $this->logger->info('Checking if Identity has a recovery token');
         $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
+        if (!$this->isSelfAssertedTokenRegistrationAllowed($identity)) {
+            return $this->redirectToRoute('ss_second_factor_list');
+        }
         $secondFactor = $this->secondFactorService->findOneVerified($secondFactorId);
         if ($this->recoveryTokenService->hasRecoveryToken($identity)) {
             $tokens = $this->recoveryTokenService->getAvailableTokens($identity, $secondFactor);
@@ -143,6 +171,9 @@ class SelfAssertedTokensController extends AbstractController
         $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $identity);
+        if (!$this->isSelfAssertedTokenRegistrationAllowed($identity)) {
+            return $this->redirectToRoute('ss_second_factor_list');
+        }
         $token = $this->recoveryTokenService->getRecoveryToken($recoveryTokenId);
 
         switch ($token->type) {
@@ -268,6 +299,9 @@ class SelfAssertedTokensController extends AbstractController
         $identity = $this->getUser()->getIdentity();
         $this->assertSecondFactorInPossession($secondFactorId, $identity);
         $this->assertRecoveryTokenInPossession($recoveryTokenId, $identity);
+        if (!$this->isSelfAssertedTokenRegistrationAllowed($identity)) {
+            return $this->redirectToRoute('ss_second_factor_list');
+        }
 
         // Then render the authentication (proof of possession screen
         if (!$this->smsService->hasSmsVerificationState($recoveryTokenId)) {
