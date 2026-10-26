@@ -67,12 +67,6 @@ class SelfAssertedTokensController extends AbstractController
     ) {
     }
 
-    /**
-     * The authorization decision of the Middleware is enforced before any self-asserted token
-     * registration action is performed, not only when rendering the vetting type buttons.
-     * Without this an identity that possessed a non self-asserted token could manufacture the
-     * "no vetted tokens + recovery token" state and replace the institution-vetted token.
-     */
     private function isSelfAssertedTokenRegistrationAllowed(Identity $identity): bool
     {
         $allowed = false;
