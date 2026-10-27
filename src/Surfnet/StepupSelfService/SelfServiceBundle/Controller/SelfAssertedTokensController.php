@@ -72,11 +72,19 @@ class SelfAssertedTokensController extends AbstractController
         $allowed = false;
         try {
             $allowed = $this->authorizationService->mayRegisterSelfAssertedTokens($identity);
+            if (!$allowed) {
+                $this->logger->error(
+                    sprintf('Self-asserted token registration denied for identity "%s"', $identity->id)
+                );
+            }
         } catch (Exception $e) {
-            $this->logger->warning(sprintf('Self-asserted token registration is not allowed. Message "%s"', $e->getMessage()));
+            $this->logger->error(sprintf(
+                'Could not check whether self-asserted token registration is allowed for identity "%s". Message "%s"',
+                $identity->id,
+                $e->getMessage()
+            ));
         }
         if (!$allowed) {
-            $this->logger->error(sprintf('Self-asserted token registration denied for identity "%s"', $identity->id));
             $this->addFlash('error', 'ss.self_asserted_tokens.second_factor.vetting.alert.failed');
         }
         return $allowed;

@@ -23,6 +23,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Surfnet\StepupBundle\Service\LoaResolutionService;
 use Surfnet\StepupMiddlewareClientBundle\Identity\Dto\Identity;
@@ -58,6 +59,7 @@ class SelfAssertedTokensControllerTest extends TestCase
     private SmsRecoveryTokenService&MockInterface $smsService;
     private SecondFactorService&MockInterface $secondFactorService;
     private AuthorizationService&MockInterface $authorizationService;
+    private LoggerInterface&MockInterface $logger;
     private FlashBag $flashBag;
     private SelfAssertedTokensController $controller;
 
@@ -70,6 +72,7 @@ class SelfAssertedTokensControllerTest extends TestCase
         $this->smsService = m::mock(SmsRecoveryTokenService::class);
         $this->secondFactorService = m::mock(SecondFactorService::class);
         $this->authorizationService = m::mock(AuthorizationService::class);
+        $this->logger = m::spy(LoggerInterface::class);
 
         $this->secondFactorService
             ->shouldReceive('identityHasSecondFactorOfStateWithId')
@@ -112,7 +115,7 @@ class SelfAssertedTokensControllerTest extends TestCase
             m::mock(LoaResolutionService::class),
             m::mock(AuthenticationRequestFactory::class),
             $this->authorizationService,
-            new NullLogger(),
+            $this->logger,
         );
         $this->controller->setContainer(new ServiceLocator([
             'security.token_storage' => static fn () => $tokenStorage,
@@ -165,6 +168,7 @@ class SelfAssertedTokensControllerTest extends TestCase
         $response = $invokeRoute($this);
 
         $this->assertDeniedRedirect($response);
+        $this->logger->shouldHaveReceived('error')->once()->with(m::pattern('/^Self-asserted token registration denied/'));
     }
 
     /**
@@ -185,6 +189,7 @@ class SelfAssertedTokensControllerTest extends TestCase
         $response = $invokeRoute($this);
 
         $this->assertDeniedRedirect($response);
+        $this->logger->shouldHaveReceived('error')->once()->with(m::pattern('/^Could not check whether/'));
     }
 
     public function test_registration_entrypoint_continues_when_middleware_allows_registration(): void
