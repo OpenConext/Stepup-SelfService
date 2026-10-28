@@ -3,6 +3,7 @@ build:
     image: default-jammy
     environment:
         node: v24
+        php : 8.5.12
 
 filter:
     excluded_paths:
