@@ -2,7 +2,7 @@ build:
     # Use Ubuntu 22.04.5 LTS (Jammy Jellyfish)
     image: default-jammy
     environment:
-        node: v24
+        node: v22.14.0
         php : 8.5.12
 
 filter:
